@@ -36,16 +36,23 @@ class UnauthorizedDesfireTransitData (override val cardName: String): Unauthoriz
                     = TransitIdentity(getName(card), null)
         }
 
-        private val TYPES = mapOf(
-                0x31594f to "Oyster",
-                0x425301 to "Thailand BEM",
-                0x5011f2 to "Lítačka",
-                0x5010f2 to "Metrocard (Christchurch)")
+        private data class UnauthorizedType(
+                val appId: Int,
+                val name: String
+        )
+
+        private val TYPES = listOf(
+                UnauthorizedType(0x31594f, "Oyster"),
+                UnauthorizedType(0x425311, "Thailand BEM"),
+                UnauthorizedType(0x425303, "Rabbit Card"),
+                UnauthorizedType(0x5011f2, "Lítačka"),
+                UnauthorizedType(0x5010f2, "Metrocard (Christchurch)")
+        )
 
         private fun getName(card: DesfireCard): String {
-            for ((k, v) in TYPES) {
-                if (card.getApplication(k) != null)
-                    return v
+            for ((appId, name) in TYPES) {
+                if (card.getApplication(appId) != null)
+                    return name
             }
             return Localizer.localizeString(R.string.locked_mfd_card)
         }

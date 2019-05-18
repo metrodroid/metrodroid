@@ -45,7 +45,9 @@ data class DesfireCard constructor(
         @XMLListIdx("id")
         val applications: Map<Int, DesfireApplication>,
         @Optional
-        override val isPartialRead: Boolean = false) : CardProtocol() {
+        override val isPartialRead: Boolean = false,
+        @Optional
+        val appListLocked: Boolean = false) : CardProtocol() {
 
     @Transient
     override val manufacturingInfo: List<ListItem>

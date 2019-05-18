@@ -21,10 +21,7 @@
 
 package au.id.micolous.metrodroid.card.desfire
 
-import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.card.CardTransceiver
-import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
-import au.id.micolous.metrodroid.card.UnauthorizedException
+import au.id.micolous.metrodroid.card.*
 import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings
@@ -49,6 +46,7 @@ object DesfireCardReader {
         val apps = mutableMapOf<Int, DesfireApplication>()
 
         val manufData: ImmutableByteArray
+        var appListLocked: Boolean
 
         try {
             val desfireTag = DesfireProtocol(tech)
@@ -64,7 +62,14 @@ object DesfireCardReader {
             feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfd_reading))
             feedbackInterface.updateProgressBar(0, 1)
 
-            val appIds = desfireTag.getAppList()
+            var appIds: IntArray
+            try {
+                appIds = desfireTag.getAppList()
+                appListLocked = false
+            } catch (e: UnauthorizedException) {
+                appIds = IntArray(32) { 0x425300 + it }
+                appListLocked = true
+            }
             var maxProgress = appIds.size
             var progress = 0
 
@@ -81,7 +86,11 @@ object DesfireCardReader {
 
             for (appId in appIds) {
                 feedbackInterface.updateProgressBar(progress, maxProgress)
-                desfireTag.selectApp(appId)
+                try {
+                    desfireTag.selectApp(appId)
+                } catch (e: NotFoundException) {
+                    continue
+                }
                 progress++
 
                 val files = mutableMapOf<Int, RawDesfireFile>()
@@ -131,6 +140,6 @@ object DesfireCardReader {
         } finally {
         }
 
-        return DesfireCard(manufData, apps, isPartialRead = false)
+        return DesfireCard(manufData, apps, isPartialRead = false, appListLocked = appListLocked)
     }
 }
