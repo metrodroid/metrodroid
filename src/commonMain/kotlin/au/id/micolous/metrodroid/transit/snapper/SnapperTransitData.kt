@@ -66,7 +66,7 @@ class SnapperTransitData : TMoneyTransitData {
 
             // Snapper cards have a slightly different record format: some bytes are always FF.
             override fun check(card: KSX6924Application) = card.getSfiFile(4)?.recordList?.all {
-                    it.sliceArray(26 until 46).isAllFF()
+                    it.size == 46 && it.sliceArray(26 until 46).isAllFF()
                 } ?: false
         }
 
