@@ -20,23 +20,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.provider;
+package au.id.micolous.metrodroid.provider
 
-import android.provider.BaseColumns;
+import android.provider.BaseColumns
 
-import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NonNls
 
-public class KeysTableColumns implements BaseColumns {
-
-    public static final String TABLE_NAME = "keys";
+object KeysTableColumns {
+    const val TABLE_NAME = "keys"
     @NonNls
-    public static final String CARD_ID = "card_id";
+    const val CARD_ID = "card_id"
     @NonNls
-    public static final String CARD_TYPE = "card_type";
-    public static final String KEY_DATA = "key_data";
+    const val CARD_TYPE = "card_type"
+    const val KEY_DATA = "key_data"
     @NonNls
-    public static final String CREATED_AT = "created_at";
-
-    private KeysTableColumns() {
-    }
+    const val CREATED_AT = "created_at"
+    const val _ID = BaseColumns._ID
 }
