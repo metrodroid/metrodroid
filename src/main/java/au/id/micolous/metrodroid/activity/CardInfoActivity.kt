@@ -257,7 +257,7 @@ class CardInfoActivity : MetrodroidActivity() {
 
             R.id.copy_card_number -> {
                 if (mShowCopyCardNumber && mCardSerial != null) {
-                    Utils.copyTextToClipboard(this, "Card number", mCardSerial)
+                    Utils.copyTextToClipboard(this, "Card number", mCardSerial!!)
                 }
                 return true
             }

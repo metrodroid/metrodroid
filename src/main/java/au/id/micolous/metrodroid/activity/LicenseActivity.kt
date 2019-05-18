@@ -77,7 +77,7 @@ class LicenseActivity : MetrodroidActivity() {
         var s: InputStream? = null
         try {
             s = assets.open(path, AssetManager.ACCESS_RANDOM)
-            val i = IOUtils.lineIterator(s!!, Utils.getUTF8())
+            val i = IOUtils.lineIterator(s!!, Utils.UTF8)
 
             while (i.hasNext()) {
                 lblLicenseText!!.append(i.next())

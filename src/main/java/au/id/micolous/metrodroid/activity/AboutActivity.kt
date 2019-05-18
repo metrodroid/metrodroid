@@ -41,7 +41,7 @@ class AboutActivity : MetrodroidActivity() {
 
         setDisplayHomeAsUpEnabled(true)
 
-        this.findViewById<TextView>(R.id.lblDebugText).text = Utils.getDeviceInfoString()
+        this.findViewById<TextView>(R.id.lblDebugText).text = Utils.deviceInfoString
     }
 
     fun onWebsiteClick(view: View) {

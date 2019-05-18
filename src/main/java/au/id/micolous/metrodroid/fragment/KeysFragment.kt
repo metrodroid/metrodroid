@@ -287,7 +287,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
                                 val json = keys.toJSON().toString()
 
-                                IOUtils.write(json, os, Utils.getUTF8())
+                                IOUtils.write(json, os, Utils.UTF8)
                                 os.close()
                                 return null
 
@@ -390,7 +390,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = IOUtils.toByteArray(stream)
 
             try {
-                val json = JsonTreeParser.parse(String(keyData, Utils.getUTF8()))
+                val json = JsonTreeParser.parse(String(keyData, Utils.UTF8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this

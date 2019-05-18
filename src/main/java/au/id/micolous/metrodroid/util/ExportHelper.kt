@@ -59,9 +59,9 @@ object ExportHelper {
             throw RuntimeException(e)
         }
 
-        md.update(("(${serial.length}, ${data.length})").toByteArray(Utils.getUTF8()))
-        md.update(serial.toByteArray(Utils.getUTF8()))
-        md.update(data.toByteArray(Utils.getUTF8()))
+        md.update(("(${serial.length}, ${data.length})").toByteArray(Utils.UTF8))
+        md.update(serial.toByteArray(Utils.UTF8))
+        md.update(data.toByteArray(Utils.UTF8))
 
         return ImmutableByteArray.getHexString(md.digest())
     }
@@ -105,7 +105,7 @@ object ExportHelper {
             ze.time = now.timeInMillis
             zo.putNextEntry(ze)
         }
-        val readme = "Exported by Metrodroid at ${now.isoDateTimeFormat()}\n" + Utils.getDeviceInfoString()
+        val readme = "Exported by Metrodroid at ${now.isoDateTimeFormat()}\n" + Utils.deviceInfoString
         zo.write(ImmutableByteArray.fromUTF8(readme).dataCopy)
         zo.closeEntry()
 

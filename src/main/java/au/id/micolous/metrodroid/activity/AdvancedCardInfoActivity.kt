@@ -179,7 +179,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                         Log.d(TAG, "REQUEST_SAVE_FILE")
                         val os = contentResolver.openOutputStream(uri!!)
                         val json = CardSerializer.toJson(mCard!!)
-                        IOUtils.write(json, os, Utils.getUTF8())
+                        IOUtils.write(json, os, Utils.UTF8)
                         os!!.close()
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
                     }
