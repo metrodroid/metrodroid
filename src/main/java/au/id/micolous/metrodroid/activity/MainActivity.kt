@@ -53,7 +53,7 @@ class MainActivity : MetrodroidActivity() {
             arrayOf(NfcF::class.java.name),
 	    arrayOf(NfcV::class.java.name))
 
-    override fun getThemeVariant(): Int? = R.attr.MainActivityTheme
+    override val themeVariant get(): Int? = R.attr.MainActivityTheme
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
