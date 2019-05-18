@@ -16,13 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.ui;
+package au.id.micolous.metrodroid.ui
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.style.ReplacementSpan;
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.text.style.ReplacementSpan
 
 /**
  * Span which is not drawn on screen.
@@ -34,15 +32,8 @@ import android.text.style.ReplacementSpan;
  * Unicode characters without sufficient meaning to be read.
  */
 
-public class HiddenSpan extends ReplacementSpan {
-    public HiddenSpan() {}
+class HiddenSpan : ReplacementSpan() {
+    override fun draw(canvas: Canvas, text: CharSequence, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {}
 
-    @Override
-    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
-    }
-
-    @Override
-    public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, @Nullable Paint.FontMetricsInt fm) {
-        return 0;
-    }
+    override fun getSize(paint: Paint, text: CharSequence, start: Int, end: Int, fm: Paint.FontMetricsInt?): Int = 0
 }
