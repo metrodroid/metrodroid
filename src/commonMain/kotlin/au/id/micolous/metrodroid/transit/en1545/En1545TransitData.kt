@@ -82,7 +82,8 @@ abstract class En1545TransitData : TransitData {
                                 En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
                                 En1545FixedInteger.datePackedName(HOLDER_PROFILE),
                                 En1545FixedInteger.dateName(HOLDER_PROFILE),
-                                HOLDER_POSTAL_CODE
+                                HOLDER_POSTAL_CODE,
+                                ENV_CARD_SERIAL
                         )
                         else -> setOf()
                     })
