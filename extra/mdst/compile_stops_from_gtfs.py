@@ -43,7 +43,7 @@ def empty(s):
   return s is None or s.strip() == ''
 
 def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None,
-                            strip_suffixes='', agency_id=-1, tts_hint_language=None,
+                            strip_suffixes='', agency_ids=None, tts_hint_language=None,
                             operators_f=None, extra_f=None, local_languages=None,
                             license_notice_f=None):
   if all_matching_f is not None:
@@ -53,10 +53,15 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
   if extra_f is not None:
     extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
-  strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
+  strip_suffixes = [x.strip().lower() for x in strip_suffixes]
 
   all_gtfs = [Gtfs(x) for x in input_gtfs_f]
   first_gtfs = all_gtfs[0]
+  if agency_ids is None:
+    agency_ids = [-1]
+
+  if len(agency_ids) == 1 and len(all_gtfs) > 1:
+    agency_ids *= len(all_gtfs)
 
   if version is None:
     feed_start_date = None
@@ -87,6 +92,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
   station_count = 0
 
   for num, gtfs in enumerate(all_gtfs):
+    agency_id = agency_ids.pop(0)
     stops = gtfs.open('stops.txt')
     # See if there is a matching file
     if all_matching_f is not None and len(all_matching_f) > num:
@@ -239,15 +245,17 @@ def main():
     type=int,
     help='Enter a custom version to write to the file. If not specified, this tool will read it from feed_info.txt, reading the feed_start_date and converting it to a number of days since %s.' % (VERSION_EPOCH.date().isoformat(),))
 
-  parser.add_argument('--strip-suffixes',
-    default='railway station,train station,station',
+  parser.add_argument('-X', '--strip-suffixes',
+    default=['railway station', 'train station' , 'station'],
+    action='append',
+    required=False,
     help='Comma separated, case-insensitive list of suffixes to remove from station names when populating the database. [default: %(default)s]')
 
   parser.add_argument('-a', '--agency-id',
-    default=-1,
+    action='append',
     type=int,
     required=False,
-    help='If specified, annotates the stops from this GTFS data with an agency ID (integer). This is not the agency data included in the GTFS feed. [default: %(default)s]')
+    help='If specified, annotates the stops from this GTFS data with an agency ID (integer). This is not the agency data included in the GTFS feed.')
 
   parser.add_argument('-l', '--tts-hint-language',
     required=False,

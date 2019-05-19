@@ -1,4 +1,4 @@
 *.zip
 *.mdst
 tfi_leap.csv
-stops.txt
+stops*.txt
