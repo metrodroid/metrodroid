@@ -34,7 +34,6 @@ object VeneziaLookup : En1545LookupSTR("venezia") {
 
     override val timeZone get() = MetroTimeZone.ROME
 
-    // Irrelevant as RavKAv has EventCode
     override fun getMode(agency: Int?, route: Int?) = Trip.Mode.OTHER
 
     private val subs = mapOf(
@@ -42,6 +41,7 @@ object VeneziaLookup : En1545LookupSTR("venezia") {
             11209 to "Rete Unica 75'",
             11210 to "Rete Unica 100'",
             12101 to "Bus Ticket 75'",
+            12106 to "Airport bus ticket",
             11400 to "Carnet Traghetto")
     internal val TZ = MetroTimeZone.ROME
 }

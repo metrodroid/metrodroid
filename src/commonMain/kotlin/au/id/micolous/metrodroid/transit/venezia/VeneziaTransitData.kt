@@ -42,7 +42,7 @@ class VeneziaTransitData (val calypso: Calypso1545TransitDataCapsule) : Calypso1
                     ticketEnvHolderFields = TICKETING_ENV_FIELDS,
                     // Venezia Unica doesn't use contract list
                     contractListFields = null,
-                    createTrip = VeneziaTransaction.Companion::parse,
+                    createTrip = VeneziaTransactionCalypso.Companion::parse,
                     createSpecialEvent = { null },
                     createSubscription = { data, ctr, _, _ -> VeneziaSubscription.parse(data, ctr) },
                     serial = getSerial(card)))

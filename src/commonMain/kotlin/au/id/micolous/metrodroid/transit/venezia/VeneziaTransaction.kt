@@ -24,26 +24,34 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-@Parcelize
-data class VeneziaTransaction internal constructor(override val parsed: En1545Parsed) : En1545Transaction() {
+abstract class VeneziaTransaction : En1545Transaction() {
     override val lookup get() = VeneziaLookup
 
     override val mode: Trip.Mode
-        get() = mapMode(parsed.getIntOrZero(TRANSPORT_TYPE))
-
-    companion object {
-        fun mapMode(transport: Int): Trip.Mode = when (transport) {
-            1 -> Trip.Mode.BUS
-            5 -> Trip.Mode.FERRY
-            else -> Trip.Mode.OTHER
+        get() {
+            when (parsed.getInt(TRANSPORT_TYPE)) {
+                1 -> return Trip.Mode.BUS
+                5 -> return Trip.Mode.FERRY
+            }
+            if (parsed.getInt(Y_VALUE) == 1000)
+                return Trip.Mode.FERRY
+            return Trip.Mode.BUS
         }
 
+    companion object {
         const val TRANSPORT_TYPE = "TransportType"
+        const val Y_VALUE = "Y"
+    }
+}
+
+@Parcelize
+data class VeneziaTransactionCalypso internal constructor(override val parsed: En1545Parsed) : VeneziaTransaction() {
+    companion object {
         fun parse(data: ImmutableByteArray) =
                 if (data.sliceOffLen(9, data.size - 9).isAllZero())
                     null
                 else
-                    VeneziaTransaction(En1545Parser.parse(data, tripFields))
+                    VeneziaTransactionCalypso(En1545Parser.parse(data, tripFields))
 
         private fun contractsElement(id: Int) = En1545Container(
                 En1545FixedInteger(En1545TransitData.CONTRACTS_UNKNOWN_A + "$id", 1),
@@ -64,7 +72,7 @@ data class VeneziaTransaction internal constructor(override val parsed: En1545Pa
                 En1545FixedInteger.timePacked11Local(EVENT),
                 En1545FixedInteger(EVENT_UNKNOWN_C, 9),
                 En1545FixedInteger(TRANSPORT_TYPE, 4),
-                En1545FixedInteger("Y", 14),
+                En1545FixedInteger(Y_VALUE, 14),
                 En1545FixedInteger("Z", 16),
                 En1545FixedInteger(EVENT_UNKNOWN_E, 18),
                 En1545FixedInteger("PreviousZ", 16),

@@ -39,7 +39,8 @@ data class VeneziaUltralightSubscription(override val parsed: En1545Parsed,
     constructor(head: ImmutableByteArray, validTo: Timestamp?, mOtp: Int) : this(
             En1545Parser.parse(head,
                     En1545Container(
-                            En1545FixedHex(CONTRACT_UNKNOWN_A, 36),
+                            En1545FixedHex(CONTRACT_UNKNOWN_A, 32),
+                            En1545FixedInteger(TRIP_FORMAT, 4),
                             En1545FixedInteger(CONTRACT_TARIFF, 16),
                             En1545FixedHex(CONTRACT_UNKNOWN_B, 44),
                             En1545FixedInteger(CONTRACT_AUTHENTICATOR, 32)
@@ -54,19 +55,23 @@ data class VeneziaUltralightSubscription(override val parsed: En1545Parsed,
 
     override val subscriptionState: SubscriptionState
         get() = if (mOtp == 0) SubscriptionState.INACTIVE else SubscriptionState.STARTED
+
+    companion object {
+        const val TRIP_FORMAT = "TripFormat"
+    }
 }
 
 @Parcelize
-private data class VeneziaUltralightTransaction(override val parsed: En1545Parsed) : En1545Transaction() {
+private data class VeneziaUltralightTransaction(override val parsed: En1545Parsed) : VeneziaTransaction() {
     companion object {
-        fun parse(raw: ImmutableByteArray, magic: Int): VeneziaUltralightTransaction? {
-            if (raw.sliceOffLen(0, 12).isAllZero())
+        fun parse(raw: ImmutableByteArray, tripFormat: Int): VeneziaUltralightTransaction? {
+            if (raw.sliceOffLen(1, 11).isAllZero())
                 return null
-            val fields = when (magic) {
-                0x6221 -> En1545Container(
+            val fields = when (tripFormat) {
+                1 -> En1545Container(
                         En1545FixedInteger("A", 11),
                         En1545FixedInteger.timePacked11Local(EVENT),
-                        En1545FixedInteger("Y", 14),
+                        En1545FixedInteger(Y_VALUE, 14),
                         En1545FixedInteger("B", 2),
                         En1545FixedInteger.datePacked(EVENT),
                         En1545FixedInteger.timePacked11Local(EVENT_FIRST_STAMP),
@@ -74,17 +79,17 @@ private data class VeneziaUltralightTransaction(override val parsed: En1545Parse
                         En1545FixedInteger("C", 17),
                         En1545FixedInteger(EVENT_AUTHENTICATOR, 32)
                 )
-                else -> En1545Container(
+                else -> En1545Container( // so far only 2
                         En1545FixedInteger("A", 8),
                         En1545FixedInteger.timePacked11Local(EVENT),
-                        En1545FixedInteger("Y", 14),
+                        En1545FixedInteger(Y_VALUE, 14),
                         En1545FixedInteger("B", 2),
                         En1545FixedInteger.datePacked(EVENT),
                         En1545FixedInteger.timePacked11Local(EVENT_FIRST_STAMP),
                         En1545FixedInteger("D", 2),
                         En1545FixedInteger.datePacked(En1545Subscription.CONTRACT_END),
                         En1545FixedInteger.timePacked11Local(En1545Subscription.CONTRACT_END),
-                        En1545FixedInteger(VeneziaTransaction.TRANSPORT_TYPE, 4),
+                        En1545FixedInteger(TRANSPORT_TYPE, 4),
                         En1545FixedInteger("F", 5),
                         En1545FixedInteger(EVENT_AUTHENTICATOR, 32)
                 )
@@ -95,14 +100,6 @@ private data class VeneziaUltralightTransaction(override val parsed: En1545Parse
 
     val expiryTimestamp: Timestamp?
         get() = parsed.getTimeStamp(En1545Subscription.CONTRACT_END, VeneziaLookup.TZ)
-    override val lookup: En1545Lookup
-        get() = VeneziaLookup
-
-    override val timestamp: TimestampFull?
-        get() = super.timestamp as TimestampFull?
-
-    override val mode: Trip.Mode
-        get() = VeneziaTransaction.mapMode(parsed.getIntOrZero(VeneziaTransaction.TRANSPORT_TYPE))
 }
 
 @Parcelize
@@ -124,15 +121,16 @@ private fun getSerial(card: UltralightCard) =
 
 private fun parse(card: UltralightCard): VeneziaUltralightTransitData {
     val head = card.readPages(4, 4)
-    val magic = card.getPage(3).data.byteArrayToInt(0, 2)
     val blocks = listOf(
             card.readPages(8, 4),
             card.readPages(12, 4)
     )
 
-    val transactions = blocks.mapNotNull { VeneziaUltralightTransaction.parse(it, magic) }
+    val tripFormat = head.getBitsFromBuffer(32, 4)
 
-    val lastTransaction = transactions.maxWith (nullsFirst(compareBy { it.timestamp }))
+    val transactions = blocks.mapNotNull { VeneziaUltralightTransaction.parse(it, tripFormat) }
+
+    val lastTransaction = transactions.maxWith (nullsFirst(compareBy { it.timestamp as? TimestampFull }))
 
     val sub = VeneziaUltralightSubscription(
             head,
@@ -150,7 +148,7 @@ private fun parse(card: UltralightCard): VeneziaUltralightTransitData {
 
 class VeneziaUltralightTransitFactory : UltralightCardTransitFactory {
     override fun check(card: UltralightCard) =
-            card.getPage(3).data.byteArrayToInt(0, 2) in listOf(0x3186, 0x6221)
+            card.getPage(3).data.byteArrayToInt(0, 2) in listOf(0x30de, 0x3186, 0x4ca8, 0x6221)
 
     override fun parseTransitData(card: UltralightCard) = parse(card)
 
