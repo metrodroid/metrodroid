@@ -819,4 +819,8 @@
     <string name="seqgo_ticket_type_adult_explore">Volwassene Explore/seeQ</string>
     <string name="location_malaysia">Maleisië</string>
     <string name="import_mfc_file">Importeren uit MFC-bestand</string>
+    <string name="location_samara">Samara, Rusland</string>
+    <string name="card_name_samara_etk">Samara ETK</string>
+    <string name="card_name_samara_school">Samara-scholierenkaart</string>
+    <string name="card_name_samara_student">Samara-studentenkaart</string>
 </resources>
