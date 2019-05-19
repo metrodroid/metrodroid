@@ -25,6 +25,8 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransactionTripAbstract
 import au.id.micolous.metrodroid.transit.TransitBalance
+import au.id.micolous.metrodroid.ui.HeaderListItem
+import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 typealias SubCreator = (data: ImmutableByteArray, counter: Int?,
@@ -39,7 +41,8 @@ data class Calypso1545TransitDataCapsule(
         val trips: List<TransactionTripAbstract>?,
         val subscriptions: List<En1545Subscription>?,
         val balances: List<TransitBalance>?,
-        val serial: String?
+        val serial: String?,
+        val contractList: En1545Parsed?
 ): Parcelable
 
 abstract class Calypso1545TransitData constructor (
@@ -47,7 +50,8 @@ abstract class Calypso1545TransitData constructor (
         private val mTrips: List<TransactionTripAbstract>?,
         private val mSubscriptions: List<En1545Subscription>?,
         private val mBalances: List<TransitBalance>?,
-        private val mSerial: String?)
+        private val mSerial: String?,
+        private val contractList: En1545Parsed?)
     : En1545TransitData(ticketEnv) {
 
     override val trips get() = mTrips
@@ -63,11 +67,19 @@ abstract class Calypso1545TransitData constructor (
             mTrips = capsule.trips,
             mSubscriptions = capsule.subscriptions,
             mBalances = capsule.balances,
-            mSerial = capsule.serial
+            mSerial = capsule.serial,
+            contractList = capsule.contractList
     )
 
     val networkId
         get() = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID)
+
+    override fun getRawFields(level: RawLevel): List<ListItem>? {
+        if (contractList == null)
+            return super.getRawFields(level)
+        return super.getRawFields(level).orEmpty() + listOf(HeaderListItem("Contract List")) +
+                contractList.getInfo(setOf())
+    }
 
     companion object {
         private fun getContracts(card: CalypsoApplication) =
@@ -120,15 +132,16 @@ abstract class Calypso1545TransitData constructor (
         private fun parseContracts(card: CalypsoApplication,
                                    contractListFields: En1545Field?,
                                    createSubscription: SubCreator,
-                                   contracts: List<ImmutableByteArray>): Pair<List<En1545Subscription>,
-                List<TransitBalance>> {
+                                   contracts: List<ImmutableByteArray>): Triple<List<En1545Subscription>,
+                List<TransitBalance>, En1545Parsed?> {
             val subscriptions = mutableListOf<En1545Subscription>()
             val balances = mutableListOf<TransitBalance>()
 
             val parsed = hashSetOf<Int>()
+            val contractList: En1545Parsed?
 
             if (contractListFields != null) {
-                val contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST)
+                contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST)
                         ?.getRecord(1) ?: ImmutableByteArray.empty(), contractListFields)
                 for (i in 0..15) {
                     val ptr = contractList.getInt(En1545TransitData.CONTRACTS_POINTER, i)
@@ -142,7 +155,8 @@ abstract class Calypso1545TransitData constructor (
                     insertSub(card, balances, subscriptions, createSubscription,
                             recordData, contractList, i, ptr)
                 }
-            }
+            } else
+                contractList = null
 
             for ((idx, record) in contracts.withIndex()) {
                 if (record.isAllZero())
@@ -153,7 +167,7 @@ abstract class Calypso1545TransitData constructor (
                         record, null, null, idx+1)
             }
 
-            return Pair(subscriptions, balances)
+            return Triple(subscriptions, balances, contractList)
         }
 
         fun parseTicketEnv(card: CalypsoApplication,
@@ -173,14 +187,15 @@ abstract class Calypso1545TransitData constructor (
                          createSpecialEvent: TripCreator? = null,
                          contracts: List<ImmutableByteArray> = getContracts(card)):
                 Calypso1545TransitDataCapsule {
-            val (subscriptions, balances) = parseContracts(card,
+            val (subscriptions, balances, contractList) = parseContracts(card,
                     contractListFields,
                     createSubscription, contracts = contracts)
 
             return Calypso1545TransitDataCapsule(balances = if (balances.isNotEmpty()) balances else null,
                     subscriptions = subscriptions,
-                    trips = parseTrips(card, createTrip, createSpecialEvent),
-                    ticketEnv = ticketEnvParsed, serial = serial)
+                    trips = parseTrips(card, createTrip, createSpecialEvent = createSpecialEvent),
+                    ticketEnv = ticketEnvParsed, serial = serial,
+                    contractList = contractList)
         }
 
         fun parse(card: CalypsoApplication,
@@ -193,7 +208,7 @@ abstract class Calypso1545TransitData constructor (
                   contracts: List<ImmutableByteArray> = getContracts(card)): Calypso1545TransitDataCapsule =
                 parseWithEnv(card, parseTicketEnv(card, ticketEnvHolderFields),
                         contractListFields, serial, createSubscription, createTrip,
-                        createSpecialEvent, contracts)
+                        createSpecialEvent = createSpecialEvent, contracts = contracts)
 
         private val COUNTERS = arrayOf(CalypsoApplication.File.TICKETING_COUNTERS_1, CalypsoApplication.File.TICKETING_COUNTERS_2, CalypsoApplication.File.TICKETING_COUNTERS_3, CalypsoApplication.File.TICKETING_COUNTERS_4)
 
