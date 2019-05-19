@@ -154,6 +154,7 @@ abstract class En1545Transaction : Transaction() {
                         En1545FixedInteger.datePackedName(EVENT),
                         En1545FixedInteger.timePacked11LocalName(EVENT),
                         En1545FixedInteger.timeLocalName(EVENT),
+                        En1545FixedInteger.timeName(EVENT),
                         En1545FixedInteger.dateTimeName(EVENT),
                         En1545FixedInteger.dateName(EVENT_FIRST_STAMP),
                         En1545FixedInteger.timePacked11LocalName(EVENT_FIRST_STAMP),
@@ -175,9 +176,7 @@ abstract class En1545Transaction : Transaction() {
                 else -> setOf()
             })
 
-    override fun toString(): String {
-        return "En1545Transaction:" + parsed.toString()
-    }
+    override fun toString(): String = "En1545Transaction: $parsed"
 
     companion object {
         const val EVENT_ROUTE_NUMBER = "EventRouteNumber"
