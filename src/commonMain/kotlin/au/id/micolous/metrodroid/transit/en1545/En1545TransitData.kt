@@ -36,9 +36,9 @@ abstract class En1545TransitData : TransitData {
             if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
                 li.add(ListItem(R.string.en1545_network_id,
                         mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID).toString(16)))
-            if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END)) != 0)
-                li.add(ListItem(R.string.expiry_date,
-                        mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_VALIDITY_END, tz)))
+            mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_VALIDITY_END, tz)?.let {
+                li.add(ListItem(R.string.expiry_date, it))
+            }
             if (mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE) != 0)
                 li.add(ListItem(R.string.date_of_birth,
                         TimestampFormatter.longDateFormat(En1545FixedInteger.parseBCDDate(
@@ -49,8 +49,8 @@ abstract class En1545TransitData : TransitData {
             if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE)) != 0)
                 li.add(ListItem(R.string.issue_date, mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_ISSUE, tz)))
 
-            if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(HOLDER_PROFILE)) != 0)
-                li.add(ListItem(R.string.en1545_card_expiry_date_profile, mTicketEnvParsed.getTimeStampString(HOLDER_PROFILE, tz)))
+            mTicketEnvParsed.getTimeStampString(HOLDER_PROFILE, tz)?.let {
+                li.add(ListItem(R.string.en1545_card_expiry_date_profile, it)) }
 
             if (mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE) != 0)
                 li.add(ListItem(R.string.postal_code,

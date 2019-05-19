@@ -41,10 +41,12 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
         private const val TAG = "En1545FixedInteger"
 
         fun dateName(base: String) = "${base}Date"
+        fun datePackedName(base: String) = "${base}DatePacked"
 
         fun timeName(base: String) = "${base}Time"
 
         fun timePacked16Name(base: String) = "${base}TimePacked16"
+        fun timePacked11LocalName(base: String) = "${base}TimePacked11Local"
 
         fun timeLocalName(base: String) = "${base}TimeLocal"
         fun dateTimeName(base: String) = "${base}DateTime"
@@ -76,9 +78,22 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
             return parseTimePacked16(utcEpoch(tz), d, t)
         }
 
+        fun parseTimePacked11Local(day: Int, time: Int, tz: MetroTimeZone): TimestampFull? =
+                if (day == 0) null else TimestampFull(tz,
+                    (day shr 9) + 2000,
+                    ((day shr 5) and 0xf) - 1,
+                    day and 0x1f,
+                    time shr 6,
+                    time and 0x3f)
+
         fun parseDate(d: Int, tz: MetroTimeZone): Timestamp? {
             return if (d == 0) null else getEpoch(tz).days(d)
         }
+
+        fun parseDatePacked(day: Int): Daystamp? = if (day == 0) null else Daystamp(
+                            (day shr 9) + 2000,
+                            ((day shr 5) and 0xf) - 1,
+                            day and 0x1f)
 
         fun parseTimeSec(`val`: Int, tz: MetroTimeZone): Timestamp? {
             return if (`val` == 0) null else utcEpoch(tz).seconds(`val`.toLong())
@@ -95,8 +110,10 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
         }
 
         fun date(name: String) = En1545FixedInteger(dateName(name), 14)
+        fun datePacked(name: String) = En1545FixedInteger(datePackedName(name), 14)
         fun time(name: String) = En1545FixedInteger(timeName(name), 11)
         fun timePacked16(name: String) = En1545FixedInteger(timePacked16Name(name), 16)
+        fun timePacked11Local(name: String) = En1545FixedInteger(timePacked11LocalName(name), 11)
         fun BCDdate(name: String) = En1545FixedInteger(name, 32)
         fun dateTime(name: String) = En1545FixedInteger(dateTimeName(name), 30)
         fun dateTimeLocal(name: String) = En1545FixedInteger(dateTimeLocalName(name), 30)

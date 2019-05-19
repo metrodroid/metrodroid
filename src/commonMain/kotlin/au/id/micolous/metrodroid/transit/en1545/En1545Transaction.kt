@@ -198,6 +198,7 @@ abstract class En1545Transaction : Transaction() {
         const val EVENT_UNKNOWN_H = "EventUnknownH"
         const val EVENT_UNKNOWN_I = "EventUnknownI"
         const val EVENT_CONTRACT_POINTER = "EventContractPointer"
+        const val EVENT_CONTRACT_TARIFF = "EventContractTariff"
         const val EVENT_SERIAL_NUMBER = "EventSerialNumber"
         const val EVENT_AUTHENTICATOR = "EventAuthenticator"
         const val EVENT_NETWORK_ID = "EventNetworkId"
