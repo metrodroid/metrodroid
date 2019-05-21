@@ -313,6 +313,7 @@
 
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
+    <string name="vicinity_reading">Reading Vicinity card…</string>
     <!-- Translators: This is substituted with the name of a card, like "Unlocking Leap card…" -->
     <string name="mfd_unlocking">Unlocking <xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
 

@@ -23,6 +23,7 @@ import android.nfc.TagLostException
 import android.nfc.tech.IsoDep
 import android.nfc.tech.NfcA
 import android.nfc.tech.NfcF
+import android.nfc.tech.NfcV
 import au.id.micolous.metrodroid.card.CardTransceiver.Protocol
 import au.id.micolous.metrodroid.card.CardTransceiver.Protocol.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -51,6 +52,7 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
     private var isoDep: IsoDep? = null
 
     private var nfcA: NfcA? = null
+    private var nfcV: NfcV? = null
     override var sak: Short? = null
         private set
     override var atqa: ImmutableByteArray? = null
@@ -95,6 +97,14 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
                 this.nfcA = nfcA
             }
 
+            NFC_V -> {
+                val nfcV = NfcV.get(tag) ?:
+                throw CardProtocolUnsupportedException("nfcV not supported by this card")
+
+                nfcV.connect()
+                this.nfcV = nfcV
+            }
+
             else -> {
                 throw CardProtocolUnsupportedException("Protocol not supported on this platform")
             }
@@ -111,6 +121,8 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
         this.nfcF = null
         val nfcA = this.nfcA
         this.nfcA = null
+        val nfcV = this.nfcV
+        this.nfcV = null
         uid = null
         defaultSystemCode = null
         pmm = null
@@ -130,6 +142,10 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
             nfcF?.close()
         } catch (e: IOException) {
         }
+        try {
+            nfcV?.close()
+        } catch (e: IOException) {
+        }
     }
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
@@ -137,12 +153,14 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
         val isoDep = this.isoDep
         val nfcA = this.nfcA
         val nfcF = this.nfcF
+        val nfcV = this.nfcV
 
         return wrapAndroidExceptions {
             when {
                 isoDep != null -> isoDep.transceive(request)
                 nfcA != null -> nfcA.transceive(request)
                 nfcF != null -> nfcF.transceive(request)
+                nfcV != null -> nfcV.transceive(request)
                 else -> throw CardTransceiveException("Card not connected")
             }
         }.toImmutable()
