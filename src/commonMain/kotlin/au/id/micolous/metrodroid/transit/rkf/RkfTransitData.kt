@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
+import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -49,6 +50,12 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
         }
 }
 
+sealed class RkfRecord
+
+data class RkfSimpleRecord(val raw: ImmutableByteArray) : RkfRecord()
+
+data class RkfTctoRecord(val chunks: List<List<ImmutableByteArray>>) : RkfRecord()
+
 // Specification: https://github.com/mchro/RejsekortReader/tree/master/resekortsforeningen
 @Parcelize
 data class RkfTransitData internal constructor(
@@ -57,7 +64,8 @@ data class RkfTransitData internal constructor(
         private val mBalances: List<RkfPurse>,
         private val mLookup: RkfLookup,
         private val mTccps: List<En1545Parsed>,
-        private val mSerial: RkfSerial) : TransitData() {
+        private val mSerial: RkfSerial,
+        override val subscriptions: List<RkfTicket>) : TransitData() {
     override val cardName get(): String = issuerMap[aid]?.name ?: "RKF"
 
     private val aid
@@ -152,13 +160,15 @@ data class RkfTransitData internal constructor(
                 val balances = mutableListOf<RkfPurse>()
                 val tccps = mutableListOf<En1545Parsed>()
                 val unfilteredTrips = mutableListOf<RkfTCSTTrip>()
-                recordloop@ for (record in getRecords(card))
-                    when (record[0].toInt() and 0xff) {
-                        0x84 -> transactions += RkfTransaction.parseTransaction(record, lookup, tripVersion) ?: continue@recordloop
-                        0x85 -> balances += RkfPurse.parse(record, lookup)
-                        0xa2 -> tccps += En1545Parser.parseLeBits(record, TCCP_FIELDS)
-                        0xa3 -> unfilteredTrips += RkfTCSTTrip.parse(record, lookup) ?: continue@recordloop
+                val records = getRecords(card)
+                recordloop@ for (record in records.filterIsInstance<RkfSimpleRecord>())
+                    when (record.raw[0].toInt() and 0xff) {
+                        0x84 -> transactions += RkfTransaction.parseTransaction(record.raw, lookup, tripVersion) ?: continue@recordloop
+                        0x85 -> balances += RkfPurse.parse(record.raw, lookup)
+                        0xa2 -> tccps += En1545Parser.parseLeBits(record.raw, TCCP_FIELDS)
+                        0xa3 -> unfilteredTrips += RkfTCSTTrip.parse(record.raw, lookup) ?: continue@recordloop
                     }
+                val tickets = records.filterIsInstance<RkfTctoRecord>().map { RkfTicket.parse(it, lookup) }
                 transactions.sortBy { it.timestamp?.timeInMillis }
                 unfilteredTrips.sortBy { it.startTimestamp.timeInMillis }
                 val trips = mutableListOf<RkfTCSTTrip>()
@@ -194,14 +204,15 @@ data class RkfTransitData internal constructor(
                 return RkfTransitData(mTcci = tcci,
                         mTrips = TransactionTrip.merge(nonTripTransactions + remainingTransactions)
                                 + trips.map { it.tripLegs }.flatten(),
-                        mBalances = balances, mLookup = lookup, mTccps = tccps, mSerial = getSerial(card))
+                        mBalances = balances, mLookup = lookup, mTccps = tccps, mSerial = getSerial(card),
+                        subscriptions = tickets)
             }
         }
 
         internal fun clearSeconds(timeInMillis: Long) = timeInMillis / 60000 * 60000
 
-        private fun getRecords(card: ClassicCard): List<ImmutableByteArray> {
-            val records = mutableListOf<ImmutableByteArray>()
+        private fun getRecords(card: ClassicCard): List<RkfRecord> {
+            val records = mutableListOf<RkfRecord>()
             var sector = 3
             var block = 0
 
@@ -230,23 +241,68 @@ data class RkfTransitData internal constructor(
                     if (newType != type)
                         break
                     val version = blockData.getBitsFromBufferLeBits(8, 6)
-                    val blockCount = getBlockCount(type, version)
-                    if (blockCount == -1) {
-                        break
-                    }
-                    oldBlockCount = blockCount
-                    var dat = ImmutableByteArray(0)
-
-                    repeat(blockCount) {
-                        dat += card[sector, block].data
-                        block++
-                        if (block >= card[sector].blocks.size - 1) {
-                            sector++
-                            block = 0
+                    if (type in 0x86..0x87) {
+                        val chunks = mutableListOf<List<ImmutableByteArray>>()
+                        while (true) {
+                            if (card[sector, block].data[0] == 0.toByte() && block < card[sector].blocks.size - 2) {
+                                block++
+                                continue
+                            }
+                            if (card[sector, block].data[0].toInt() and 0xff !in 0x86..0x88)
+                                break
+                            var ptr = 0
+                            val tags = mutableListOf<ImmutableByteArray>()
+                            while (true) {
+                                val subType = card[sector, block].data[ptr].toInt() and 0xff
+                                var l = getTccoTagSize(subType, version)
+                                if (l == -1)
+                                    break
+                                var tag = ImmutableByteArray.empty()
+                                while (l > 0) {
+                                    if (ptr == 16) {
+                                        ptr = 0
+                                        block++
+                                        if (block >= card[sector].blocks.size - 1) {
+                                            sector++
+                                            block = 0
+                                        }
+                                    }
+                                    val c = minOf(16 - ptr, l)
+                                    tag += card[sector, block].data.sliceOffLen(ptr, c)
+                                    l -= c
+                                    ptr += c
+                                }
+                                tags += tag
+                            }
+                            chunks += listOf(tags)
+                            if (ptr != 0) {
+                                block++
+                                if (block >= card[sector].blocks.size - 1) {
+                                    sector++
+                                    block = 0
+                                }
+                            }
                         }
-                    }
+                        records.add(RkfTctoRecord(chunks))
+                    } else {
+                        val blockCount = getBlockCount(type, version)
+                        if (blockCount == -1) {
+                            break
+                        }
+                        oldBlockCount = blockCount
+                        var dat = ImmutableByteArray(0)
 
-                    records += dat
+                        repeat(blockCount) {
+                            dat += card[sector, block].data
+                            block++
+                            if (block >= card[sector].blocks.size - 1) {
+                                sector++
+                                block = 0
+                            }
+                        }
+
+                        records.add(RkfSimpleRecord(dat))
+                    }
                 }
                 if (block != 0 || sector == oldSector) {
                     sector++
@@ -254,6 +310,33 @@ data class RkfTransitData internal constructor(
                 }
             }
             return records
+        }
+
+        private fun getTccoTagSize(type: Int, version: Int) = when (type) {
+            0x86 -> 2
+            0x87 -> when (version) {
+                1, 2 -> 2
+                else -> 17 // No idea how it's actually supposed to be parsed but this works
+            }
+            0x88 -> 3 // tested: version 3
+            0x89 -> 11 // tested: version 3
+            0x8a -> 1
+            0x93 -> 4
+            0x94 -> 4
+            0x95 -> 2
+            0x96 -> when (version) {
+                1, 2 -> 15
+                else -> 21 // tested: 3
+            }
+            0x97 -> 18
+            0x98 -> 4
+            0x99 -> 5
+            0x9a -> 7
+            0x9c -> 7 // tested: version 3
+            0x9d -> 9
+            0x9e -> 5
+            0x9f -> 2
+            else -> -1
         }
 
         private fun getBlockCount(type: Int, version: Int) = when (type) {
@@ -279,10 +362,10 @@ data class RkfTransitData internal constructor(
 
             val hwSerial = card[0, 0].data.byteArrayToLongReversed(0, 4)
 
-            for (record in getRecords(card))
-                if ((record[0].toInt() and 0xff) == 0xa2) {
-                    val low = record.getBitsFromBufferLeBits(34, 20).toLong()
-                    val high = record.getBitsFromBufferLeBits(54, 14).toLong()
+            for (record in getRecords(card).filterIsInstance<RkfSimpleRecord>())
+                if ((record.raw[0].toInt() and 0xff) == 0xa2) {
+                    val low = record.raw.getBitsFromBufferLeBits(34, 20).toLong()
+                    val high = record.raw.getBitsFromBufferLeBits(54, 14).toLong()
                     return RkfSerial(mCompany = issuer, mHwSerial = hwSerial, mCustomerNumber = (high shl 20) or low)
                 }
             return RkfSerial(mCompany = issuer, mHwSerial = hwSerial, mCustomerNumber = 0)
@@ -292,9 +375,11 @@ data class RkfTransitData internal constructor(
 
         internal const val COMPANY = "Company"
         internal const val STATUS = "Status"
+        internal val ID_FIELD = En1545FixedInteger("Identifier", 8)
+        internal val VERSION_FIELD = En1545FixedInteger("Version", 6)
         internal val HEADER = En1545Container(
-                En1545FixedInteger("Identifier", 8),
-                En1545FixedInteger("Version", 6),
+                ID_FIELD,
+                VERSION_FIELD,
                 En1545FixedInteger(COMPANY, 12)
         )
 

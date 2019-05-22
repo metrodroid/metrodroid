@@ -87,12 +87,15 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
 
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = (
-            if (contractTariff != null)
-                "0x${contractTariff.toString(16)}" else "none")
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String =
+        subs[Pair(agency, contractTariff)] ?: if (contractTariff != null)
+                "0x${contractTariff.toString(16)}" else "none"
 
     companion object {
         const val SLACCESS = 101
         const val REJSEKORT = 2000
+        private val subs = mapOf(
+                Pair(0x65, 0x3fe) to "Stockholm 30-day"
+        )
     }
 }
