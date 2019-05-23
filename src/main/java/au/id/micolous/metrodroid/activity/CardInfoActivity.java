@@ -187,7 +187,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
                     }
 
-                    if (mTransitData.getInfo() != null) {
+                    if (TransitData.Companion.hasInfo(mTransitData)) {
                         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.info), CardInfoFragment.class, args);
                     }
 

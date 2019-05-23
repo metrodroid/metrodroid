@@ -20,9 +20,13 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.Preferences
 
 abstract class TransitData : Parcelable {
 
@@ -144,5 +148,37 @@ abstract class TransitData : Parcelable {
         // Find the last trip taken on the card.
         return trips?.mapNotNull { t -> t.endTimestamp ?: t.startTimestamp }?.map { it.toDaystamp() }
                 ?.maxBy { it.daysSinceEpoch }
+    }
+
+    enum class RawLevel {
+        NONE,
+        UNKNOWN_ONLY,
+        ALL;
+
+        companion object {
+            fun fromString(v: String): RawLevel? = values().find { it.toString() == v }
+        }
+    }
+
+    open fun getRawFields(level: RawLevel): List<ListItem>? = null
+
+    companion object {
+        fun mergeInfo(transitData: TransitData): List<ListItem>? {
+            val rawLevel = Preferences.rawLevel
+            val inf = transitData.info
+            if (rawLevel == RawLevel.NONE)
+                return inf
+            val rawInf = transitData.getRawFields(rawLevel) ?: return inf
+            return inf.orEmpty() + listOf(HeaderListItem(Localizer.localizeString(R.string.raw_header))) + rawInf
+        }
+
+        fun hasInfo(transitData: TransitData): Boolean {
+            if (transitData.info != null)
+                return true
+            val rawLevel = Preferences.rawLevel
+            if (rawLevel == RawLevel.NONE)
+                return false
+            return transitData.getRawFields(rawLevel) != null
+        }
     }
 }

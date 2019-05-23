@@ -27,7 +27,9 @@ import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.Preferences
 
 /**
  * Represents subscriptions on a card.  Subscriptions can be used to represent a number of different
@@ -194,6 +196,8 @@ abstract class Subscription : Parcelable {
     open val transferEndTimestamp: Timestamp?
         get() = null
 
+    open fun getRawFields(level: TransitData.RawLevel): List<ListItem>? = null
+
     /**
      * Allows [Subscription] implementors to show extra information that doesn't fit within the
      * standard bounds of the interface.  By default, this attempts to collect less common
@@ -351,5 +355,25 @@ abstract class Subscription : Parcelable {
         TRANSIT_CARD(R.string.payment_method_transit_card),
         /** The subscription costs nothing (gratis)  */
         FREE(R.string.payment_method_free)
+    }
+
+    companion object {
+        fun mergeInfo(sub: Subscription): List<ListItem>? {
+            val rawLevel = Preferences.rawLevel
+            val inf = sub.info
+            if (rawLevel == TransitData.RawLevel.NONE)
+                return inf
+            val rawInf = sub.getRawFields(rawLevel) ?: return inf
+            return inf.orEmpty() + listOf(HeaderListItem(Localizer.localizeString(R.string.raw_header))) + rawInf
+        }
+
+        fun hasInfo(sub: Subscription): Boolean {
+            if (sub.info != null)
+                return true
+            val rawLevel = Preferences.rawLevel
+            if (rawLevel == TransitData.RawLevel.NONE)
+                return false
+            return sub.getRawFields(rawLevel) != null
+        }
     }
 }

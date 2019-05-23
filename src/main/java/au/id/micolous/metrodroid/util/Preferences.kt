@@ -27,6 +27,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.transit.TransitData
 import java.util.*
 
 actual object Preferences {
@@ -45,6 +46,7 @@ actual object Preferences {
     private const val PREF_LOCALISE_PLACES = "pref_localise_places"
     private const val PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help"
     private const val PREF_CONVERT_TIMEZONES = "pref_convert_timezones"
+    private const val PREF_RAW_LEVEL = "pref_raw_level"
     const val PREF_THEME = "pref_theme"
     @VisibleForTesting
     const val PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english"
@@ -136,4 +138,7 @@ actual object Preferences {
     actual val mfcFallbackReader get() = getStringPreference(PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US)
 
     actual val language: String get() = Locale.getDefault().language
+
+    actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
+            TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
 }

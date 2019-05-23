@@ -19,10 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.*
 
 abstract class En1545Transaction : Transaction() {
     abstract val parsed: En1545Parsed
@@ -150,9 +147,36 @@ abstract class En1545Transaction : Transaction() {
                 && parsed.getIntOrZero(EVENT_ROUTE_VARIANT) == other.parsed.getIntOrZero(EVENT_ROUTE_VARIANT))
     }
 
-    override fun toString(): String {
-        return "En1545Transaction:" + parsed.toString()
-    }
+    override fun getRawFields(level: TransitData.RawLevel): String? = parsed.makeString(",",
+            when (level) {
+                TransitData.RawLevel.UNKNOWN_ONLY -> setOf(
+                        En1545FixedInteger.dateName(EVENT),
+                        En1545FixedInteger.datePackedName(EVENT),
+                        En1545FixedInteger.timePacked11LocalName(EVENT),
+                        En1545FixedInteger.timeLocalName(EVENT),
+                        En1545FixedInteger.timeName(EVENT),
+                        En1545FixedInteger.dateTimeName(EVENT),
+                        En1545FixedInteger.dateName(EVENT_FIRST_STAMP),
+                        En1545FixedInteger.timePacked11LocalName(EVENT_FIRST_STAMP),
+                        En1545FixedInteger.timeLocalName(EVENT_FIRST_STAMP),
+                        En1545FixedInteger.dateTimeName(EVENT_FIRST_STAMP),
+                        En1545FixedInteger.datePackedName(En1545Subscription.CONTRACT_END),
+                        En1545FixedInteger.timePacked11LocalName(En1545Subscription.CONTRACT_END),
+                        EVENT_ROUTE_NUMBER,
+                        EVENT_ROUTE_VARIANT,
+                        EVENT_CONTRACT_POINTER,
+                        EVENT_SERVICE_PROVIDER,
+                        EVENT_AUTHENTICATOR,
+                        EVENT_CODE,
+                        EVENT_VEHICLE_ID,
+                        EVENT_FIRST_LOCATION_ID,
+                        EVENT_PRICE_AMOUNT,
+                        EVENT_LOCATION_ID
+                )
+                else -> setOf()
+            })
+
+    override fun toString(): String = "En1545Transaction: $parsed"
 
     companion object {
         const val EVENT_ROUTE_NUMBER = "EventRouteNumber"

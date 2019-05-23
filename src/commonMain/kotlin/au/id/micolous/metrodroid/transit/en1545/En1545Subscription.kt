@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
 
 abstract class En1545Subscription : Subscription() {
@@ -135,6 +136,25 @@ abstract class En1545Subscription : Subscription() {
                 li.add(ListItem(Localizer.localizeString(R.string.without_receipt)))
             return super.info.orEmpty() + li
         }
+
+
+    override fun getRawFields(level: TransitData.RawLevel): List<ListItem>? =
+            parsed.getInfo(
+                    when (level) {
+                        TransitData.RawLevel.UNKNOWN_ONLY -> setOf(
+                                CONTRACT_AUTHENTICATOR, CONTRACT_TARIFF,
+                                En1545FixedInteger.datePackedName(CONTRACT_SALE),
+                                En1545FixedInteger.dateName(CONTRACT_SALE),
+                                En1545FixedInteger.timePacked11LocalName(CONTRACT_SALE),
+                                En1545FixedInteger.timeLocalName(CONTRACT_SALE),
+                                CONTRACT_PROVIDER,
+                                En1545FixedInteger.dateName(CONTRACT_START),
+                                En1545FixedInteger.dateName(CONTRACT_END),
+                                CONTRACT_STATUS,
+                                En1545FixedInteger.dateName(CONTRACT_LAST_USE)
+                        )
+                        else -> setOf()
+                    })
 
     override fun cost(): TransitCurrency? {
         val cost = parsed.getIntOrZero(CONTRACT_PRICE_AMOUNT)

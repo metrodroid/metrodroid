@@ -69,6 +69,25 @@ abstract class En1545TransitData : TransitData {
         mTicketEnvParsed = parsed
     }
 
+    override fun getRawFields(level: RawLevel): List<ListItem>? =
+            mTicketEnvParsed.getInfo(
+                    when (level) {
+                        RawLevel.UNKNOWN_ONLY -> setOf(
+                                ENV_NETWORK_ID,
+                                En1545FixedInteger.datePackedName(ENV_APPLICATION_VALIDITY_END),
+                                En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END),
+                                HOLDER_BIRTH_DATE,
+                                ENV_APPLICATION_ISSUER_ID,
+                                En1545FixedInteger.datePackedName(ENV_APPLICATION_ISSUE),
+                                En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
+                                En1545FixedInteger.datePackedName(HOLDER_PROFILE),
+                                En1545FixedInteger.dateName(HOLDER_PROFILE),
+                                HOLDER_POSTAL_CODE,
+                                ENV_CARD_SERIAL
+                        )
+                        else -> setOf()
+                    })
+
     companion object {
         const val ENV_NETWORK_ID = "EnvNetworkId"
         const val ENV_VERSION_NUMBER = "EnvVersionNumber"

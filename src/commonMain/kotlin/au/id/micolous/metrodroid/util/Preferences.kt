@@ -19,7 +19,10 @@
 
 package au.id.micolous.metrodroid.util
 
+import au.id.micolous.metrodroid.transit.TransitData
+
 expect object Preferences {
+    val rawLevel: TransitData.RawLevel
     val obfuscateBalance: Boolean
     val obfuscateTripFares: Boolean
     val hideCardNumbers: Boolean
