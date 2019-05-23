@@ -19,10 +19,14 @@
 
 package au.id.micolous.metrodroid.transit.ravkav
 
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
+import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val RAVKAV_STR = "ravkav"
 
@@ -39,8 +43,8 @@ internal object RavKavLookup : En1545LookupSTR(RAVKAV_STR) {
         return routeNumber.toString()
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? = contractTariff?.toString()
-        // TODO: Figure names out
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String?
+            = subs[contractTariff] ?: Localizer.localizeString(R.string.unknown_format, contractTariff?.toString())
 
     override fun parseCurrency(price: Int)= TransitCurrency.ILS(price)
 
@@ -48,4 +52,17 @@ internal object RavKavLookup : En1545LookupSTR(RAVKAV_STR) {
     override fun getMode(agency: Int?, route: Int?): Trip.Mode = Trip.Mode.OTHER
 
     private const val EGGED = 0x3
+
+    private val subs = mapOf(
+            641 to "Trips" // generic trips
+    )
+
+    override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {
+        if (station == 0)
+            return null
+        return StationTableReader.getStation(
+                RAVKAV_STR,
+                station,
+                station.toString())
+    }
 }
