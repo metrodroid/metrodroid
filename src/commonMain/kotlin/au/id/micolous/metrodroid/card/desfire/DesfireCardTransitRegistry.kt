@@ -21,5 +21,6 @@ object DesfireCardTransitRegistry {
             TrimetHopTransitData.FACTORY,
             AdelaideMetrocardTransitData.FACTORY,
             AtHopTransitData.FACTORY,
+            NextfareDesfireTransitFactory(),
             UnauthorizedDesfireTransitData.FACTORY)
 }
