@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData
+import au.id.micolous.metrodroid.transit.venezia.VeneziaTransitData
 
 object CalypsoRegistry {
     val allFactories: List<CalypsoCardTransitFactory> = listOf(
@@ -30,5 +31,6 @@ object CalypsoRegistry {
             OpusTransitData.FACTORY,
             MobibTransitData.FACTORY,
             IntercodeTransitData.FACTORY,
-            LisboaVivaTransitData.FACTORY)
+            LisboaVivaTransitData.FACTORY,
+            VeneziaTransitData.FACTORY)
 }

@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitDat
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
+import au.id.micolous.metrodroid.transit.venezia.VeneziaUltralightTransitFactory
 
 object UltralightTransitRegistry {
      val allFactories = listOf(
@@ -20,6 +21,7 @@ object UltralightTransitRegistry {
             ClipperUltralightTransitData.FACTORY,
             OvcUltralightTransitFactory(),
             MRTUltralightTransitFactory(),
+            VeneziaUltralightTransitFactory(),
             BlankUltralightTransitData.FACTORY,
             // This check must be LAST.
             //

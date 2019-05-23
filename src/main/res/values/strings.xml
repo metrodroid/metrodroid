@@ -729,6 +729,7 @@
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_toulouse">Toulouse, France</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
+    <string name="location_venezia">Venice, Italy</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wellington_nz">Wellington, New Zealand</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
@@ -1683,6 +1684,10 @@
     <string name="card_name_samara_etk">Samara ETK</string>
     <string name="card_name_samara_school">Samara school student card</string>
     <string name="card_name_samara_student">Samara student card</string>
+    <!-- Venezia specific strings -->
+    <string name="venezia_profile">Profile</string>
+    <!-- Translators: Profile aaplied to adults from outside of region. "Fuori REGIONE ordinario" -->
+    <string name="venezia_profile_normal">Normal, out of region</string>
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
