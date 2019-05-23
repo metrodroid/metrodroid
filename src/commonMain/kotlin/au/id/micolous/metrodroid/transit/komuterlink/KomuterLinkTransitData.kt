@@ -46,7 +46,7 @@ private fun parseTimestamp(input: ImmutableByteArray, off: Int): TimestampFull {
     val y = input.getBitsFromBuffer(off * 8 + 17, 6) + 2000
     val month = input.getBitsFromBuffer(off * 8 + 23, 4)
     val d = input.getBitsFromBuffer(off * 8 + 27, 5)
-    return TimestampFull(tz = MetroTimeZone.SINGAPORE, year = y, month = month - 1, day = d, hour = hour,
+    return TimestampFull(tz = MetroTimeZone.KUALA_LUMPUR, year = y, month = month - 1, day = d, hour = hour,
             min = min)
 }
 
