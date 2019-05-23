@@ -823,4 +823,7 @@
     <string name="card_name_samara_etk">Samara ETK</string>
     <string name="card_name_samara_school">Samara-scholierenkaart</string>
     <string name="card_name_samara_student">Samara-studentenkaart</string>
+    <string name="location_venezia">Venetië, Italië</string>
+    <string name="venezia_profile">Profiel</string>
+    <string name="venezia_profile_normal">Normaal - buiten de regio</string>
 </resources>
