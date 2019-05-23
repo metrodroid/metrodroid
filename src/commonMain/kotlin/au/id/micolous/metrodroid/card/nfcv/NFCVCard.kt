@@ -47,7 +47,7 @@ data class NFCVCard constructor(
         override val isPartialRead: Boolean = false) : CardProtocol() {
     @Transient
     override val rawData: List<ListItem>
-        get() = listOf(ListItem(FormattedString("System info"), sysInfo?.toHexDump())) +pages.mapIndexed { idx, sector ->
+        get() = listOf(ListItem(R.string.nfcv_system_info, sysInfo?.toHexDump())) +pages.mapIndexed { idx, sector ->
             val pageIndexString = idx.hexString
 
             if (sector.isUnauthorized) {

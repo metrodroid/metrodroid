@@ -130,6 +130,7 @@
     <!-- Translators: "Page" refers to a page of memory. %s replaced with a decimal or hexadecimal
     number. Displayed when we didn't have a correct key to unlock the memory page. -->
     <string name="unauthorized_page_title_format">Page: %s (unauthorized)</string>
+    <string name="nfcv_system_info">System info</string>
 
     <!-- Translators: %s replaced with a decimal or hexadecimal number -->
     <string name="sector_title_format">Sector: %s</string>
