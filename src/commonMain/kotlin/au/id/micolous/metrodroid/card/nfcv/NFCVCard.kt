@@ -1,5 +1,5 @@
 /*
- * UltralightCard.kt
+ * NFCVCard.kt
  *
  * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
@@ -36,7 +36,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 /**
- * Utility class for reading MIFARE Ultralight / Ultralight C
+ * Utility class for reading NfcV / Vicinity /  ISO 15693
  */
 @Serializable
 data class NFCVCard constructor(

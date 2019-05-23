@@ -1,5 +1,5 @@
 /*
- * UltralightCardReaderA.kt
+ * NFCVCardReader.kt
  *
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google

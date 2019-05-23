@@ -1,5 +1,5 @@
 /*
- * UltralightPage.java
+ * NFCVPage.java
  *
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
@@ -28,7 +28,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 /**
- * Represents a page of data on a MIFARE Ultralight (4 bytes)
+ * Represents a page of data on a NFC Vicinity card
  */
 @Serializable
 data class NFCVPage(
