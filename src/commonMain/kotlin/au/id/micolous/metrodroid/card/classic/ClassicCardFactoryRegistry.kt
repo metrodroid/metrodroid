@@ -1,6 +1,7 @@
 package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
+import au.id.micolous.metrodroid.transit.bonobus.BonobusTransitFactory
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
@@ -62,6 +63,7 @@ object ClassicCardFactoryRegistry {
             WaikatoCardTransitFactory(),
             TouchnGoTransitFactory(),
             KomuterLinkTransitFactory(),
+            BonobusTransitFactory,
 
             // This check must be THIRD TO LAST.
             //
