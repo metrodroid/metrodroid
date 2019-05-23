@@ -22,11 +22,13 @@
 
 package au.id.micolous.metrodroid.card.classic
 
+import android.nfc.TagLostException
 import android.nfc.tech.MifareClassic
 import au.id.micolous.metrodroid.card.wrapAndroidExceptions
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
+import java.io.IOException
 
 class ClassicCardTechAndroid(private val tech: MifareClassic,
                              override val tagId: ImmutableByteArray) : ClassicCardTech {
@@ -44,6 +46,12 @@ class ClassicCardTechAndroid(private val tech: MifareClassic,
     override val sectorCount = tech.sectorCount
 
     override fun readBlock(block: Int): ImmutableByteArray = wrapAndroidExceptions {
-        tech.readBlock(block).toImmutable()
+        try {
+            tech.readBlock(block).toImmutable()
+        } catch (e: TagLostException) {
+            throw e
+        } catch (e: IOException) {
+            ImmutableByteArray.empty()
+        }
     }
 }

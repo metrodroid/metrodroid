@@ -116,7 +116,18 @@ object ClassicReader {
                             ClassicSectorKey.KeyType.B) ?: false,
                             ClassicSectorKey.KeyType.B)
                     if (correctKeyB != null)
-                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKey))
+                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyB))
+                    // In cases of readable keyB, tag shouldn't succeed auth at all
+                    // yet some clones succeed auth but then fail to read any blocks.
+                } else if (sector.key?.type == ClassicSectorKey.KeyType.B
+                        && sector.blocks.all { it.isUnauthorized }) {
+                    val correctKeyA = auth.authenticate(
+                            tech, feedbackInterface,
+                            sectorIndex, cardType?.isDynamicKeys(sectors, sectorIndex,
+                            ClassicSectorKey.KeyType.A) ?: false,
+                            ClassicSectorKey.KeyType.A)
+                    if (correctKeyA != null)
+                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyA))
                 }
 
                 sectors.add(sector)
