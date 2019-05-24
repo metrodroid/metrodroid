@@ -1402,6 +1402,7 @@
     <string name="led_shared_taxi">Saint Petersburg Shared Taxi</string>
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
+    <string name="blank_nfcv_card">Blank Vicinity card</string>
     <string name="blank_mfc_card">Blank MIFARE Classic card</string>
     <string name="blank_mfd_card">Blank MIFARE Desfire card</string>
     <string name="fully_blank_desc">
