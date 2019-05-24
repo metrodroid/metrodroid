@@ -20,6 +20,7 @@
 
 package au.id.micolous.metrodroid.card.nfcv
 
+import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
@@ -28,9 +29,10 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object NFCVCardReader {
+    const val MAX_PAGES = 255
     suspend fun dumpTag(tech: CardTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface): NFCVCard {
-        feedbackInterface.updateProgressBar(0, 40)
+        feedbackInterface.updateProgressBar(0, MAX_PAGES)
 
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.vicinity_reading))
         feedbackInterface.showCardType(null)
@@ -42,19 +44,23 @@ object NFCVCardReader {
         }
 
         val sysInfo = sysInfoRsp?.sliceOffLen(1, sysInfoRsp.lastIndex)
+        var isPartialRead = false
 
         // Now iterate through the pages and grab all the datas
         var pageBuffer = ImmutableByteArray.empty()
         while (true) {
             // Find first unread page
             val page = pageBuffer.size / 4
-            if (page >= 40)
+            if (page >= MAX_PAGES)
                 break
             // read command
             val rd = ImmutableByteArray.of(0x22, 0x23) + tech.uid!! + ImmutableByteArray.ofB(page, 1)
             val res: ImmutableByteArray
             try {
                 res = tech.transceive(rd)
+            } catch (e: CardLostException) {
+                isPartialRead = true
+                break
             } catch (e: Exception) {
                 break
             }
@@ -70,6 +76,6 @@ object NFCVCardReader {
         }
 
         // Now we have pages to stuff in the card.
-        return NFCVCard(sysInfo, pages, isPartialRead = false)
+        return NFCVCard(sysInfo, pages, isPartialRead = isPartialRead)
     }
 }
