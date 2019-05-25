@@ -825,4 +825,5 @@
     <string name="raw_level">Rånivå</string>
     <string name="raw_level_desc">Hvor mye rådata skal vises i sendt data. Ikke alle fortolkere støtter dette valget</string>
     <string name="raw_header">Råfelter</string>
+    <string name="nfcv_system_info">Systeminfo</string>
 </resources>
