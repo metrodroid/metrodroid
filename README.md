@@ -60,10 +60,11 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 
 * [FeliCa][felica]
 * [FeliCa Lite][felica]
-* ISO 7816-4
+* ISO/IEC 7816-4
   * [Calypso][calypso]
   * [CEPAS][cepas]
   * [T-Money][tmoney]
+* [ISO/IEC 15693 "Vicinity"][nfcv]
 * [MIFARE Classic][mfc] (Not compatible with all devices)
 * [MIFARE DESFire][mfd]
 * [MIFARE Ultralight][mfu] (Not compatible with all devices)
@@ -213,6 +214,7 @@ This software and it's authors are not associated with any public transit agency
 [calypso]: http://www.calypsotechnology.net/
 [cepas]: https://en.wikipedia.org/wiki/CEPAS
 [felica]: https://en.wikipedia.org/wiki/FeliCa
+[nfcv]: https://en.wikipedia.org/wiki/ISO/IEC_15693
 [mfc]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic
 [mfd]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
 [mfu]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1

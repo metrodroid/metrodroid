@@ -37,6 +37,8 @@ import kotlinx.serialization.Transient
 
 /**
  * Utility class for reading NfcV / Vicinity /  ISO 15693
+ *
+ * Reference: https://www.ti.com/lit/an/sloa141/sloa141.pdf
  */
 @Serializable
 data class NFCVCard constructor(
