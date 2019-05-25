@@ -831,6 +831,7 @@
     <string name="raw_header">Aantal ruwe velden</string>
     <string name="nfcv_system_info">Systeeminformatie</string>
     <string name="vicinity_reading">Bezig met uitlezen van Vicinity-kaart…</string>
-    <string name="blank_mfd_card">Blanco MIFARE Desfire-kaart</string>
+    <string name="blank_mfd_card">Blanco MIFARE DESFire-kaart</string>
     <string name="location_cadiz">Cadiz, Spanje</string>
+    <string name="location_tampere">Tampere, Finland</string>
 </resources>
