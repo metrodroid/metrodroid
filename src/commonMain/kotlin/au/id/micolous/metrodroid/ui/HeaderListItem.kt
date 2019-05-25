@@ -25,7 +25,14 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.StringResource
 
 class HeaderListItem : ListItem {
-    constructor(titleResource: StringResource) : super(titleResource)
-    constructor(title: String) : super(title)
-    constructor(title: FormattedString) : super(title)
+    val headingLevel: Int
+    constructor(titleResource: StringResource, headingLevel: Int = 2) : super(titleResource) {
+        this.headingLevel = headingLevel
+    }
+    constructor(title: String) : super(title) {
+        this.headingLevel = 2
+    }
+    constructor(title: FormattedString) : super(title) {
+        this.headingLevel = 2
+    }
 }

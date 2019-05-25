@@ -1401,6 +1401,7 @@
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
     <string name="blank_mfc_card">Blank MIFARE Classic card</string>
+    <string name="blank_mfd_card">Blank MIFARE Desfire card</string>
     <string name="fully_blank_desc">
         This card is completely blank as far as we can tell. It is formatted
         but without any data written to it. It still has a serial number by which it can be

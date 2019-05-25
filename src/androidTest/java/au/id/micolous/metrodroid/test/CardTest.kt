@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
+import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
@@ -192,7 +193,7 @@ class CardTest {
         // Card with no files at all.
         val c1 = DesfireCard(ImmutableByteArray.empty(), emptyMap())
 
-        assertTrue(c1.parseTransitData() is UnauthorizedDesfireTransitData)
+        assertTrue(c1.parseTransitData() is BlankDesfireTransitData)
 
         // Card with only locked files.
         val c2 = DesfireCard(ImmutableByteArray.empty(),

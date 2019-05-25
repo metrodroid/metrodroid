@@ -1,5 +1,5 @@
 /*
- * UnauthorizedTransitData.java
+ * BlankTransitData.java
  *
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
@@ -25,18 +25,15 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.TextListItem
 
 /**
- * Base class for all types of cards where we are unable to read any useful data (without a key).
+ * Base class for all types of cards that are blank.
  */
-abstract class UnauthorizedTransitData : TransitData() {
+abstract class BlankTransitData : TransitData() {
     override val serialNumber: String?
         get() = null
 
-    open val isUnlockable: Boolean
-        get() = false
-
     override val info: List<ListItem>?
         get() = listOf(
-                HeaderListItem(R.string.fully_locked_title, headingLevel = 1),
-                TextListItem(if (isUnlockable) R.string.fully_locked_desc_unlockable else R.string.fully_locked_desc)
+                HeaderListItem(R.string.fully_blank_title, headingLevel = 1),
+                TextListItem(R.string.fully_blank_desc)
         )
 }

@@ -1,8 +1,9 @@
 /*
- * BlankCardFragment.java
+ * TextListItem.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
- * Copyright 2018 Google
+ * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +18,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.fragment;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+package au.id.micolous.metrodroid.ui
 
-import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.StringResource
 
-public class BlankCardFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_blank_card, container, false);
-    }
+class TextListItem : ListItem {
+    constructor(textResource: StringResource) : super(textResource)
+    constructor(text: String) : super(text)
+    constructor(text: FormattedString) : super(text)
 }

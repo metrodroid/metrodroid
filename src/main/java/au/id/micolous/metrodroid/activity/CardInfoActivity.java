@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -42,18 +43,14 @@ import android.widget.TextView;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
-import au.id.micolous.metrodroid.fragment.BlankCardFragment;
 import au.id.micolous.metrodroid.fragment.CardBalanceFragment;
 import au.id.micolous.metrodroid.fragment.CardInfoFragment;
 import au.id.micolous.metrodroid.fragment.CardTripsFragment;
-import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.serializers.CardSerializer;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
-import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
-import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
@@ -167,15 +164,14 @@ public class CardInfoActivity extends MetrodroidActivity {
                             CardSerializer.INSTANCE.toPersist(mCard));
                     args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
-                    if (mTransitData instanceof UnauthorizedTransitData) {
-                        mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
-                        return;
-                    }
-
-                    if (mTransitData instanceof BlankUltralightTransitData
-                            || mTransitData instanceof BlankClassicTransitData) {
-                        mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
-                        return;
+                    if (mTransitData instanceof UnauthorizedClassicTransitData) {
+                        View ucView = findViewById(R.id.unauthorized_card);
+                        View loadKeysView = findViewById(R.id.load_keys);
+                        ucView.setVisibility(View.VISIBLE);
+                        loadKeysView.setOnClickListener(subview -> new AlertDialog.Builder(CardInfoActivity.this)
+                                .setMessage(R.string.add_key_directions)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show());
                     }
 
                     if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
