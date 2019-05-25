@@ -85,7 +85,7 @@ object CardReader {
                         vicinity = u)
         }
 
-        throw UnsupportedTagException(techs, tagId.toHexString())
+        throw UnsupportedTagException(techs.toList(), tagId.toHexString())
     }
 
     @Throws(Exception::class)
