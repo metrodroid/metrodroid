@@ -829,4 +829,8 @@
     <string name="raw_level">Aantal ruwe gegevens</string>
     <string name="raw_level_desc">Hoeveel ruwe gegevens er moeten worden getoond in verwerkte gegevens; niet alle verwerkers ondersteunen dit</string>
     <string name="raw_header">Aantal ruwe velden</string>
+    <string name="nfcv_system_info">Systeeminformatie</string>
+    <string name="vicinity_reading">Bezig met uitlezen van Vicinity-kaart…</string>
+    <string name="blank_mfd_card">Blanco MIFARE Desfire-kaart</string>
+    <string name="location_cadiz">Cadiz, Spanje</string>
 </resources>
