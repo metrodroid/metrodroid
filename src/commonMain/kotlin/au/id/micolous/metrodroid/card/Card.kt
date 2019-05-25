@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
+import au.id.micolous.metrodroid.card.nfcv.NFCVCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitData
@@ -90,12 +91,14 @@ class Card(
         @Optional
         val felica: FelicaCard? = null,
         @Optional
-        val iso7816: ISO7816Card? = null
+        val iso7816: ISO7816Card? = null,
+        @Optional
+        val vicinity: NFCVCard? = null
 ) {
     @Transient
     val allProtocols: List<CardProtocol>
         get() = listOfNotNull(mifareClassic, mifareDesfire, mifareUltralight, cepasCompat,
-                felica, iso7816)
+                felica, iso7816, vicinity)
     @Transient
     val manufacturingInfo: List<ListItem>?
         get() = allProtocols.mapNotNull { it.manufacturingInfo }.flatten().ifEmpty { null }
@@ -115,6 +118,7 @@ class Card(
             cepasCompat != null -> CardType.CEPAS
             felica != null -> CardType.FeliCa
             iso7816 != null -> CardType.ISO7816
+            vicinity != null -> CardType.Vicinity
             else -> CardType.Unknown
         }
 

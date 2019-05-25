@@ -16,6 +16,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.Locale
 import au.id.micolous.metrodroid.card.ultralight.AndroidUltralightTransceiver
 import android.nfc.tech.MifareUltralight
+import au.id.micolous.metrodroid.card.nfcv.NFCVCard
+import au.id.micolous.metrodroid.card.nfcv.NFCVCardReader
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.toImmutable
@@ -78,6 +80,13 @@ object CardReader {
                         mifareUltralight = u)
         }
 
+        if (NfcV::class.java.name in techs) {
+            val u = dumpTagV(tag, feedbackInterface)
+            if (u != null)
+                return Card(tagId = tagId, scannedAt = TimestampFull.now(),
+                        vicinity = u)
+        }
+
         throw UnsupportedTagException(techs, tagId.toHexString())
     }
 
@@ -103,6 +112,16 @@ object CardReader {
             it.connect(CardTransceiver.Protocol.NFC_A)
             if (it.sak == 0.toShort() && it.atqa?.contentEquals(byteArrayOf(0x44, 0x00)) == true)
                 card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
+        }
+        return card
+    }
+
+    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? {
+        var card: NFCVCard? = null
+
+        AndroidCardTransceiver(tag).use {
+            it.connect(CardTransceiver.Protocol.NFC_V)
+            card = NFCVCardReader.dumpTag(it, feedbackInterface)
         }
         return card
     }

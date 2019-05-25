@@ -130,6 +130,7 @@
     <!-- Translators: "Page" refers to a page of memory. %s replaced with a decimal or hexadecimal
     number. Displayed when we didn't have a correct key to unlock the memory page. -->
     <string name="unauthorized_page_title_format">Page: %s (unauthorized)</string>
+    <string name="nfcv_system_info">System info</string>
 
     <!-- Translators: %s replaced with a decimal or hexadecimal number -->
     <string name="sector_title_format">Sector: %s</string>
@@ -313,6 +314,7 @@
 
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
+    <string name="vicinity_reading">Reading Vicinity card…</string>
     <!-- Translators: This is substituted with the name of a card, like "Unlocking Leap card…" -->
     <string name="mfd_unlocking">Unlocking <xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
 

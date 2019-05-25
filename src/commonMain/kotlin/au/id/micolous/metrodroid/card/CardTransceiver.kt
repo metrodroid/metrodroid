@@ -36,6 +36,8 @@ interface CardTransceiver : Closeable {
         JIS_X_6319_4,
         /** NFC-A */
         NFC_A,
+        /** NFC-V */
+        NFC_V,
         // TODO: Support other protocols
     }
 
