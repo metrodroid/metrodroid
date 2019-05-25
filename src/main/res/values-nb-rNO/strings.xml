@@ -819,4 +819,10 @@
     <string name="card_name_samara_etk">Samara ETK</string>
     <string name="card_name_samara_school">Samara skolestudentkort</string>
     <string name="card_name_samara_student">Samara studentkort</string>
+    <string name="location_venezia">Venezia, Italia</string>
+    <string name="venezia_profile">Profil</string>
+    <string name="venezia_profile_normal">Normal, ut av region</string>
+    <string name="raw_level">Rånivå</string>
+    <string name="raw_level_desc">Hvor mye rådata skal vises i sendt data. Ikke alle fortolkere støtter dette valget</string>
+    <string name="raw_header">Råfelter</string>
 </resources>
