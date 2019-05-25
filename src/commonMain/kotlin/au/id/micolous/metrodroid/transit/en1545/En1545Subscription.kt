@@ -115,7 +115,7 @@ abstract class En1545Subscription : Subscription() {
                 contractTariff)
 
     override val machineId: Int?
-        get() = parsed.getInt(CONTRACT_SALE_DEVICE)
+        get() = parsed.getInt(CONTRACT_SALE_DEVICE)?.let { if (it == 0) null else it }
 
     override val id: Int?
         get() = parsed.getInt(CONTRACT_SERIAL_NUMBER)
