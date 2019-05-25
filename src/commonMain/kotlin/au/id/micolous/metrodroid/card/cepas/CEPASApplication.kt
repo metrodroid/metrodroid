@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
@@ -112,11 +113,8 @@ data class CEPASApplication(
         private const val TAG = "CepasApplication"
         const val TYPE = "cepas"
 
-        private fun setProgress(feedbackInterface: TagReaderFeedbackInterface, `val`: Int) {
-            feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
-                    EZLinkTransitData.EZ_LINK_CARD_INFO.name))
-            feedbackInterface.updateProgressBar(`val`, 64)
-            feedbackInterface.showCardType(EZLinkTransitData.EZ_LINK_CARD_INFO)
+        private fun setProgress(feedbackInterface: TagReaderFeedbackInterface, value: Int) {
+            feedbackInterface.updateProgressBar(value, 64)
         }
 
         suspend fun dumpTag(iso7816Tag: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule,
@@ -144,6 +142,12 @@ data class CEPASApplication(
                 val purse = cepasTag.getPurse(purseId)
                 if (purse != null) {
                     cepasPurses[purseId] = ImmutableByteArray(purse)
+                    if (!isValid) {
+                        val cardInfo = EZLinkTransitData.earlyCardInfo(purse)
+                        feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
+                                cardInfo.name))
+                        feedbackInterface.showCardType(cardInfo)
+                    }
                     isValid = true
                 }
                 if (isValid)

@@ -94,6 +94,15 @@ class EZLinkTransitData (override val serialNumber: String?,
                 else -> "CEPAS"
             }
 
+        fun earlyCardInfo(purseData: ImmutableByteArray): CardInfo {
+            val canNo = purseData.sliceOffLen(8, 8).toHexString()
+            return when (canNo.substring(0, 3)) {
+                "100" -> EZ_LINK_CARD_INFO
+                "111" -> NETS_FLASHPAY_CARD_INFO
+                else -> EZ_LINK_CARD_INFO
+            }
+        }
+
         fun getStation(code: String): Station {
             return if (code.length != 3) Station.unknown(code) else StationTableReader.getStation(EZLINK_STR,
                     ImmutableByteArray.fromASCII(code).byteArrayToInt(), code)
