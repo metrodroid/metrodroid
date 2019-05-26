@@ -287,7 +287,7 @@
     <string name="cepas_issuer_data_length">Gegevenslengte van uitgever</string>
     <string name="cepas_issuer_data">Uitgever-specifieke gegevens</string>
     <string name="cepas_purse_info">Portemonnee-informatie</string>
-    <string name="trip_description">(Van )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (naar )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
+    <string name="trip_description">(Van )<xliff:g id="start_station" example="Tokio">%1$s</xliff:g> [→] (naar )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="mode_bus">Bus</string>
     <string name="mode_train">Trein</string>
@@ -382,9 +382,9 @@
     <string name="show_partial_data">Gedeeltelijke gegevens tonen</string>
     <plurals name="milliseconds_short">
         <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">1%s</xliff:g>2 ms</item>
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
         <item quantity="other">
-            <xliff:g id="milliseconds" example="20.6">3%s</xliff:g>4 ms</item>
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
     <string name="felica_manufacturer_code">Producentcode</string>
     <string name="felica_card_identification_number">Kaartidentificatienummer</string>
@@ -834,4 +834,5 @@
     <string name="blank_mfd_card">Blanco MIFARE DESFire-kaart</string>
     <string name="location_cadiz">Cadiz, Spanje</string>
     <string name="location_tampere">Tampere, Finland</string>
+    <string name="blank_nfcv_card">Blanco Vicinity-kaart</string>
 </resources>
