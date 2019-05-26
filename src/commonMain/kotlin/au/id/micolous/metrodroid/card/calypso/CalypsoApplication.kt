@@ -109,7 +109,7 @@ data class CalypsoApplication (
             return items
         }
 
-    override fun parseTransitData(): TransitData? {
+    override fun parseTransitData(card: ISO7816Card): TransitData? {
         val tenv = ticketEnv ?: return null
         for (f in CalypsoRegistry.allFactories) {
             if (f.check(tenv))
@@ -118,7 +118,7 @@ data class CalypsoApplication (
         return null
     }
 
-    override fun parseTransitIdentity(): TransitIdentity? {
+    override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? {
         val tenv = ticketEnv ?: return null
         for (f in CalypsoRegistry.allFactories) {
             if (f.check(tenv))

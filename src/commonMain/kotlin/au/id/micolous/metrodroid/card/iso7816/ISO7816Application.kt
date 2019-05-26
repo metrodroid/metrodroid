@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlin.reflect.KClass
 
 @Serializable
 data class ISO7816ApplicationCapsule(
@@ -134,6 +135,17 @@ class ISO7816ApplicationMutableCapsule(val appFci: ImmutableByteArray?,
     }
 }
 
+/**
+ * Returns `true` if the [List] of [ISO7816Application] contains the given [appName].
+ */
+fun List<ISO7816Application>.any(appName: ImmutableByteArray) =
+        this.any { it.appName == appName }
+
+/**
+ * Returns true if the [List] of [ISO7816Application] contains any of the given [appNames].
+ */
+fun List<ISO7816Application>.any(appNames: List<ImmutableByteArray>) =
+        this.any { appNames.contains(it.appName) }
 
 /**
  * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
@@ -154,6 +166,13 @@ abstract class ISO7816Application {
     val appName get() = generic.appName
     @Transient
     val appFci get() = generic.appFci
+
+    @Transient
+    val appProprietaryBerTlv : ImmutableByteArray? get() {
+        return this.appFci?.let {
+            ISO7816TLV.findBERTLV(it, "a5", true)
+        }
+    }
 
     @Transient
     open val rawData: List<ListItem>?
@@ -198,11 +217,13 @@ abstract class ISO7816Application {
 
     fun getSfiFile(sfi: Int): ISO7816File? = sfiFiles[sfi]
 
-    open fun parseTransitIdentity(): TransitIdentity? = null
+    open fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? = null
 
-    open fun parseTransitData(): TransitData? = null
+    open fun parseTransitData(card: ISO7816Card): TransitData? = null
 
     companion object {
         private const val TAG = "ISO7816Application"
+
+        private const val PROPRIETARY_BER_TLV_TAG = "a5"
     }
 }

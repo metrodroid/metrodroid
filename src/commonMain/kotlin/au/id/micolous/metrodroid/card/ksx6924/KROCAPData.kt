@@ -16,7 +16,7 @@ object KROCAPData {
             "9f10" to TagDesc("Additional file references", DUMP_SHORT),
             "45" to TagDesc("Usercode", DUMP_SHORT),
             "5f24" to TagDesc("Expiry", DUMP_SHORT),
-            "12" to TagDesc("Card serial number", DUMP_SHORT),
+            "12" to TagDesc("Card serial number", HIDE),
             "13" to TagDesc("Operator serial number", DUMP_SHORT),
             "bf0c" to TagDesc("Discretionary data", DUMP_SHORT)
     )

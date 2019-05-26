@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
@@ -93,11 +92,11 @@ data class CEPASApplication(
         }
 
 
-    override fun parseTransitIdentity(): TransitIdentity? {
+    override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? {
         return if (EZLinkTransitData.check(this)) EZLinkTransitData.parseTransitIdentity(this) else null
     }
 
-    override fun parseTransitData(): TransitData? {
+    override fun parseTransitData(card: ISO7816Card): TransitData? {
         return if (EZLinkTransitData.check(this)) EZLinkTransitData.parse(this) else null
     }
 

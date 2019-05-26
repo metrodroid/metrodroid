@@ -126,16 +126,15 @@ data class EmvTransitData(private val tlvs: List<ImmutableByteArray>,
         if (pinTriesRemaining != null)
             res += ListItem("PIN tries remaining", pinTriesRemaining.toString())
         res += listOf(HeaderListItem("TLV tags"))
-        val allIds = mutableSetOf<String>()
+        val unknownIds = mutableSetOf<String>()
         for (tlv in tlvs) {
-            ISO7816TLV.berTlvIterate(tlv) { id, _, data ->
-                res += listOfNotNull(interpretTagInfo(id, data))
-                allIds += id.toHexString()
-            }
+            val (li, unknowns) = ISO7816TLV.infoBerTLVWithUnknowns(tlv, TAGMAP)
+
+            res += li
+            unknownIds += unknowns
         }
 
-        allIds -= TAGMAP.keys
-        res += ListItem("Unparsed IDs", allIds.joinToString(", "))
+        res += ListItem("Unparsed IDs", unknownIds.joinToString(", "))
         return res
     }
 

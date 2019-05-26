@@ -85,7 +85,7 @@ data class KSX6924Application (
 
     @Transient
     private val purseInfoData: ImmutableByteArray?
-        get() = generic.appFci?.let { ISO7816TLV.findBERTLV(it, "b0", false) }
+        get() = generic.appFci?.let { ISO7816TLV.findBERTLV(it, TAG_PURSE_INFO, false) }
 
     @Transient
     val purseInfo: KSX6924PurseInfo
@@ -95,7 +95,7 @@ data class KSX6924Application (
     val serial: String
         get() = purseInfo.serial
 
-    override fun parseTransitIdentity(): TransitIdentity? {
+    override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? {
         for (factory in KSX6924Registry.allFactories) {
             if (factory.check(this)) {
                 return factory.parseTransitIdentity(this)
@@ -106,7 +106,7 @@ data class KSX6924Application (
         return TMoneyTransitData.FACTORY.parseTransitIdentity(this)
     }
 
-    override fun parseTransitData(): TransitData? {
+    override fun parseTransitData(card: ISO7816Card): TransitData? {
         for (factory in KSX6924Registry.allFactories) {
             if (factory.check(this)) {
                 val d = factory.parseTransitData(this)
@@ -124,10 +124,19 @@ data class KSX6924Application (
         private val TAG = "KSX6924Application"
 
         val APP_NAME = listOf(
+                // T-Money, Snapper
                 ImmutableByteArray.fromHex("d4100000030001"),
-                ImmutableByteArray.fromHex("d4100000140001")
-                )
+                // Cashbee / eB
+                ImmutableByteArray.fromHex("d4100000140001"),
+                // MOIBA (untested)
+                ImmutableByteArray.fromHex("d4100000300001"),
+                // K-Cash (untested)
+                ImmutableByteArray.fromHex("d4106509900020")
+        )
+
         val FILE_NAME = ImmutableByteArray.fromHex("d4100000030001")
+
+        val TAG_PURSE_INFO = ImmutableByteArray.fromHex("b0")
 
         private const val INS_GET_BALANCE: Byte = 0x4c
         private const val INS_GET_RECORD: Byte = 0x78

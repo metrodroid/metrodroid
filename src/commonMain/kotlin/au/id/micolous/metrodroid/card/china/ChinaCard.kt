@@ -45,9 +45,9 @@ data class ChinaCard(
 
     private fun findFactory() = ChinaRegistry.allFactories.find { it.check(this) }
 
-    override fun parseTransitIdentity(): TransitIdentity? = findFactory()?.parseTransitIdentity(this)
+    override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? = findFactory()?.parseTransitIdentity(this)
 
-    override fun parseTransitData(): TransitData? = findFactory()?.parseTransitData(this)
+    override fun parseTransitData(card: ISO7816Card): TransitData? = findFactory()?.parseTransitData(this)
 
     fun getBalance(idx: Int): ImmutableByteArray? = balances[idx]
 

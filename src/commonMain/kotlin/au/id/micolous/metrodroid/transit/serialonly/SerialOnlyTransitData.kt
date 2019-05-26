@@ -1,5 +1,5 @@
 /*
- * TrimetHopTransitData.java
+ * SerialOnlyTransitData.kt
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google Inc.
@@ -39,8 +39,8 @@ abstract class SerialOnlyTransitData : TransitData() {
         li += extraInfo ?: emptyList()
         li += ListItem(R.string.serial_only_card_header,
                 when (reason) {
-                    SerialOnlyTransitData.Reason.NOT_STORED -> R.string.serial_only_card_description_not_stored
-                    SerialOnlyTransitData.Reason.LOCKED -> R.string.serial_only_card_description_locked
+                    Reason.NOT_STORED -> R.string.serial_only_card_description_not_stored
+                    Reason.LOCKED -> R.string.serial_only_card_description_locked
                     else -> R.string.serial_only_card_description_more_research
                 }
         )
@@ -52,8 +52,11 @@ abstract class SerialOnlyTransitData : TransitData() {
 
     protected enum class Reason {
         UNSPECIFIED,
+        /** The card doesn't store the balance */
         NOT_STORED,
+        /** The data we want is locked */
         LOCKED,
+        /** More research about the card format is needed */
         MORE_RESEARCH_NEEDED
     }
 }

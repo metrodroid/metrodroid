@@ -6,6 +6,8 @@ import au.id.micolous.metrodroid.util.countryCodeToName
 import au.id.micolous.metrodroid.util.currencyNameByCode
 
 data class TagDesc(val name: String, val contents: TagContents) {
+    fun interpretTag(data: ImmutableByteArray) = Companion.interpretTag(contents, data)
+
     companion object {
         enum class TagContents {
             DUMP_SHORT,
@@ -17,12 +19,16 @@ data class TagDesc(val name: String, val contents: TagContents) {
             COUNTRY
         }
 
-        fun interpretTag(contents: TagContents, data: ImmutableByteArray) = when (contents) {
-            Companion.TagContents.ASCII -> data.readASCII()
-            Companion.TagContents.DUMP_SHORT -> data.toHexString()
-            Companion.TagContents.DUMP_LONG -> data.toHexString()
-            Companion.TagContents.CURRENCY -> currencyNameByCode(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
-            Companion.TagContents.COUNTRY -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
+        fun interpretTag(contents: TagContents, data: ImmutableByteArray) : String = when
+            (contents) {
+            TagContents.ASCII -> data.readASCII()
+            TagContents.DUMP_SHORT -> data.toHexString()
+            TagContents.DUMP_LONG -> data.toHexString()
+            TagContents.CURRENCY -> {
+                val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
+                currencyNameByCode(n) ?: n.toString()
+            }
+            TagContents.COUNTRY -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
             else -> data.toHexString()
         }
 

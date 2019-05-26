@@ -66,9 +66,9 @@ class EmvCardMain internal constructor(
     val pinTriesRemaining: ImmutableByteArray?
         get() = dataResponse[PIN_RETRY.toString(16)]
 
-    override fun parseTransitData() = parseEmvTransitData(this)
+    override fun parseTransitData(card: ISO7816Card) = parseEmvTransitData(this)
 
-    override fun parseTransitIdentity() = parseEmvTransitIdentity(this)
+    override fun parseTransitIdentity(card: ISO7816Card) = parseEmvTransitIdentity(this)
 
     @Transient
     override val rawData get() = super.rawData.orEmpty() +

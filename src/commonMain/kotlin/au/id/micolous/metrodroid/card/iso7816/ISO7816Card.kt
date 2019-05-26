@@ -75,10 +75,8 @@ data class ISO7816Card (
         CardProtocol() {
 
     override fun parseTransitIdentity(): TransitIdentity? {
-        // FIXME: At some point we want to support multi-app cards
-        // but currently we haven't come across one.
         for (app in applications) {
-            val id = app.parseTransitIdentity()
+            val id = app.parseTransitIdentity(this)
             if (id != null)
                 return id
         }
@@ -87,7 +85,7 @@ data class ISO7816Card (
 
     override fun parseTransitData(): TransitData? {
         for (app in applications) {
-            val d = app.parseTransitData()
+            val d = app.parseTransitData(this)
             if (d != null)
                 return d
         }

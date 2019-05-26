@@ -20,6 +20,7 @@
 
 package au.id.micolous.metrodroid.card.iso7816
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -44,27 +45,34 @@ object ISO7816TLV {
                 buf.byteArrayToInt(p + 1, numfollowingbytes))
     }
 
-    fun berTlvIterate(buf: ImmutableByteArray,
-                      iterator: (id: ImmutableByteArray,
-                                 header: ImmutableByteArray,
-                                 data: ImmutableByteArray) -> Unit) {
-        // Skip ID
-        var p = getTLVIDLen(buf, 0)
-        val (startoffset, alldatalen) = decodeTLVLen(buf, p)
-        p += startoffset
-        val fulllen = p + alldatalen
+    /**
+     * Iterates over BER-TLV encoded data lazily with a [Sequence].
+     *
+     * @param buf The BER-TLV encoded data to iterate over
+     * @return [Sequence] of [Triple] of `id, header, data`
+     */
+    fun berTlvIterate(buf: ImmutableByteArray) :
+            Sequence<Triple<ImmutableByteArray, ImmutableByteArray, ImmutableByteArray>> {
+        return sequence {
+            // Skip ID
+            var p = getTLVIDLen(buf, 0)
+            val (startoffset, alldatalen) = decodeTLVLen(buf, p)
+            p += startoffset
+            val fulllen = p + alldatalen
 
-        while (p < fulllen) {
-            val idlen = getTLVIDLen(buf, p)
-            val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-            iterator(buf.sliceOffLen(p, idlen),
-                    buf.sliceOffLen(p, idlen + lenlen),
-                    buf.sliceOffLen(p + idlen + lenlen, datalen))
+            while (p < fulllen) {
+                val idlen = getTLVIDLen(buf, p)
+                val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
+                yield(Triple(buf.sliceOffLen(p, idlen), // id
+                        buf.sliceOffLen(p, idlen + lenlen), // header
+                        buf.sliceOffLen(p + idlen + lenlen, datalen))) // data
 
-            p += idlen + lenlen + datalen
+                p += idlen + lenlen + datalen
+            }
         }
     }
 
+    // TODO: Replace with Sequence
     fun pdolIterate(buf: ImmutableByteArray,
                     iterator: (id: ImmutableByteArray,
                                len: Int) -> Unit) {
@@ -80,30 +88,36 @@ object ISO7816TLV {
     }
 
     fun findBERTLV(buf: ImmutableByteArray, target: String, keepHeader: Boolean): ImmutableByteArray? {
-        var result: ImmutableByteArray? = null
-        berTlvIterate(buf) { id, header, data ->
-            if (id.toHexString() == target) {
-                result = if (keepHeader) header + data else data
-            }
-        }
-        return result
+        return findBERTLV(buf, ImmutableByteArray.fromHex(target), keepHeader)
     }
 
-    private fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
-        val result = mutableListOf<ListItem>()
-        berTlvIterate(buf) { id, header, data ->
-            if (id[0].toInt() and 0xe0 == 0xa0)
-                try {
-                    result.add(ListItemRecursive(id.toHexString(),
-                            null, infoBerTLV(header + data)))
-                } catch (e: Exception) {
-                    result.add(ListItem(id.toHexDump(), data.toHexDump()))
-                }
-            else
-                result.add(ListItem(id.toHexDump(), data.toHexDump()))
+    fun findBERTLV(buf: ImmutableByteArray, target: ImmutableByteArray, keepHeader: Boolean):
+            ImmutableByteArray? {
+        val result = berTlvIterate(buf).firstOrNull { it.first == target } ?: return null
 
+        return if (keepHeader) {
+            result.second + result.third
+        } else {
+            result.third
         }
-        return result
+    }
+
+    /**
+     * Parses BER-TLV data, and builds [ListItem] and [ListItemRecursive] for each of the tags.
+     */
+    fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
+        return berTlvIterate(buf).map { (id, header, data) ->
+            if (id[0].toInt() and 0xe0 == 0xa0) {
+                try {
+                    ListItemRecursive(id.toHexString(),
+                            null, infoBerTLV(header + data))
+                } catch (e: Exception) {
+                    ListItem(id.toHexDump(), data.toHexDump())
+                }
+            } else {
+                ListItem(id.toHexDump(), data.toHexDump())
+            }
+        }.toList()
     }
 
     fun infoWithRaw(buf: ImmutableByteArray) = listOfNotNull(
@@ -118,5 +132,58 @@ object ISO7816TLV {
         val p = getTLVIDLen(buf, 0)
         val (startoffset, datalen) = decodeTLVLen(buf, p)
         return buf.sliceOffLen(p+startoffset, datalen)
+    }
+
+    private fun makeListItem(tagDesc: TagDesc, data: ImmutableByteArray) : ListItem? {
+        return when (tagDesc.contents) {
+            TagDesc.Companion.TagContents.HIDE -> null
+            TagDesc.Companion.TagContents.DUMP_LONG ->
+                ListItem(FormattedString(tagDesc.name), data.toHexDump())
+            else -> ListItem(tagDesc.name, tagDesc.interpretTag(data))
+        }
+    }
+
+    /**
+     * Parses BER-TLV data, and builds [ListItem] for each of the tags.
+     *
+     * This replaces the names with human-readable names, and does not operate recursively.
+     * @param includeUnknown If `true`, include tags that did not appear in [tagMap]
+     */
+    fun infoBerTLV(tlv: ImmutableByteArray,
+                   tagMap: Map<String, TagDesc>,
+                   includeUnknown: Boolean = false) =
+            berTlvIterate(tlv).mapNotNull { (id, _, data) ->
+                val idStr = id.toHexString()
+
+                val d = tagMap[idStr]
+                if (d == null) {
+                    if (includeUnknown) {
+                        ListItem(FormattedString(idStr), data.toHexDump())
+                    } else {
+                        null
+                    }
+                } else {
+                    makeListItem(d, data)
+                }
+            }.toList()
+
+    /**
+     * Like [infoBerTLV], but also returns a list of IDs that were unknown in the process.
+     */
+    fun infoBerTLVWithUnknowns(tlv: ImmutableByteArray, tagMap: Map<String, TagDesc>):
+            Pair<List<ListItem>, Set<String>> {
+        val unknownIds = mutableSetOf<String>()
+
+        return Pair(berTlvIterate(tlv).mapNotNull { (id, _, data) ->
+            val idStr = id.toHexString()
+
+            val d = tagMap[idStr]
+            if (d == null) {
+                unknownIds.add(idStr)
+                ListItem(FormattedString(idStr), data.toHexDump())
+            } else {
+                makeListItem(d, data)
+            }
+        }.toList(), unknownIds.toSet())
     }
 }
