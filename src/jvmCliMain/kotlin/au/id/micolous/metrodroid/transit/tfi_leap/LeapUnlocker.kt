@@ -1,7 +1,7 @@
 /*
- * Localizer.kt
+ * LeapUnlocker.java
  *
- * Copyright 2019 Google
+ * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.multi
+package au.id.micolous.metrodroid.transit.tfi_leap
 
-expect class StringResource
-expect class PluralsResource
-expect class DrawableResource
+import au.id.micolous.metrodroid.card.desfire.DesfireUnlocker
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-interface LocalizerInterface {
-    fun localizeString(res: StringResource, vararg v: Any?): String
-    fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String
-}
-
-expect object Localizer : LocalizerInterface
+internal actual fun createUnlockerDispatch(appId: Int, manufData: ImmutableByteArray): DesfireUnlocker? = null

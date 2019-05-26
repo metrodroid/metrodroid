@@ -20,12 +20,15 @@
 package au.id.micolous.metrodroid.multi
 
 import au.id.micolous.metrodroid.MetrodroidApplication
+import androidx.annotation.VisibleForTesting
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int
 actual typealias PluralsResource = Int
 
-actual object Localizer {
+actual object Localizer : LocalizerInterface {
+    @set:VisibleForTesting
+    var mock: LocalizerInterface? = null
     /**
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
@@ -34,7 +37,8 @@ actual object Localizer {
      * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
-    actual fun localizeString(res: StringResource, vararg v: Any?): String {
+    override fun localizeString(res: StringResource, vararg v: Any?): String {
+        mock?.let { return it.localizeString(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
         return appRes.getString(res, *v)
     }
@@ -47,7 +51,8 @@ actual object Localizer {
      * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
-    actual fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {
+    override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {
+            mock?.let { return it.localizePlural(res, count, *v) }
             val appRes = MetrodroidApplication.instance.resources
             return appRes.getQuantityString(res, count, *v)
     }
