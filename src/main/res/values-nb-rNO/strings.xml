@@ -469,7 +469,7 @@
     <string name="nfc_enabled">NFC: Påskrudd</string>
     <string name="nfc_disabled">NFC: Avskrudd</string>
     <string name="nfc_not_available">NFC: Ikke støttet</string>
-    <string name="mfc_supported">MIFARE CLASSIC: Støttet</string>
+    <string name="mfc_supported">MIFARE Classic: Støttet</string>
     <string name="mfc_not_supported">MIFARE Classic: Ikke støttet</string>
     <string name="balances_and_subscriptions">Billetter</string>
     <string name="card_number">Kortnummer</string>
@@ -826,4 +826,9 @@
     <string name="raw_level_desc">Hvor mye rådata skal vises i sendt data. Ikke alle fortolkere støtter dette valget</string>
     <string name="raw_header">Råfelter</string>
     <string name="nfcv_system_info">Systeminfo</string>
+    <string name="vicinity_reading">Leser Vicinity-kort…</string>
+    <string name="blank_mfd_card">Blankt MIFARE DESFire-kort</string>
+    <string name="location_cadiz">Cádiz, Spania</string>
+    <string name="location_tampere">Tammerfors, Finland</string>
+    <string name="blank_nfcv_card">Blankt Vicinity-kort</string>
 </resources>
