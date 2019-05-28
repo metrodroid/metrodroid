@@ -135,7 +135,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
 
         private fun neverSeenField(i: Int) = En1545FixedInteger(neverSeen(i), 8)
 
-        private val TRIP_FIELDS = En1545Bitmap.infixBitmap(
+        fun tripFields(reversed: Boolean = false) = En1545Bitmap.infixBitmap(
                 En1545Container(
                         En1545FixedInteger.date(EVENT),
                         En1545FixedInteger.timeLocal(EVENT)
@@ -186,7 +186,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         fun parseClassic(data: ImmutableByteArray): OVChipTransaction? {
             if (data.getBitsFromBuffer(0, 28) == 0)
                 return null
-            val parsed = En1545Parser.parse(data, OVChipTransaction.TRIP_FIELDS)
+            val parsed = En1545Parser.parse(data, tripFields())
             // 27 is not critical, ignore if ever
             for (i in 1..23)
                 if (parsed.contains(neverSeen(i)))
