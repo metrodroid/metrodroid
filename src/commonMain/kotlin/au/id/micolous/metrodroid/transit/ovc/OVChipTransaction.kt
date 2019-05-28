@@ -35,7 +35,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         get() = parsed.getIntOrZero(En1545FixedInteger.timeLocalName(En1545Transaction.EVENT))
 
     private val transfer: Int
-        get() = parsed.getIntOrZero(TRANSFER)
+        get() = parsed.getIntOrZero(TRANSACTION_TYPE)
 
     private val company: Int
         get() = parsed.getIntOrZero(En1545Transaction.EVENT_SERVICE_PROVIDER)
@@ -129,7 +129,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         private const val AGENCY_DUO = 0x0C    // Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
         private const val AGENCY_STORE = 0x19
 
-        private const val TRANSFER = "Transfer"
+        const val TRANSACTION_TYPE = "TransactionType"
 
         private fun neverSeen(i: Int) = "NeverSeen$i"
 
@@ -142,7 +142,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
                 ),
                 neverSeenField(1),
                 En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_A, 24),
-                En1545FixedInteger(OVChipTransaction.TRANSFER, 7),
+                En1545FixedInteger(OVChipTransaction.TRANSACTION_TYPE, 7),
                 neverSeenField(4),
                 En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 16),
                 neverSeenField(6),
@@ -168,14 +168,15 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
                 // Could be from 8 to 10
                 En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_C, 10),
                 neverSeenField(27),
-                En1545FixedInteger("EventExtra", 0)
+                En1545FixedInteger("EventExtra", 0),
+                reversed = reversed
         )
 
         private val OVC_UL_TRIP_FIELDS = En1545Container(
                 En1545FixedInteger("A", 8),
                 En1545FixedInteger(En1545Transaction.EVENT_SERIAL_NUMBER, 12),
                 En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 12),
-                En1545FixedInteger(TRANSFER, 3),
+                En1545FixedInteger(TRANSACTION_TYPE, 3),
                 En1545FixedInteger.date(En1545Transaction.EVENT),
                 En1545FixedInteger.timeLocal(En1545Transaction.EVENT),
                 En1545FixedInteger("balseqno", 4),
