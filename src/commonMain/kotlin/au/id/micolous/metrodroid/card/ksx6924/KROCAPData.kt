@@ -21,20 +21,32 @@ package au.id.micolous.metrodroid.card.ksx6924
 import au.id.micolous.metrodroid.card.iso7816.TagContents.DUMP_SHORT
 import au.id.micolous.metrodroid.card.iso7816.TagContents.HIDE
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
+import au.id.micolous.metrodroid.multi.R
 
 object KROCAPData {
-    // TODO: i18n
+    private const val TAG_BALANCE_COMMAND = "11"
+    const val TAG_SERIAL_NUMBER = "12"
+    private const val TAG_AGENCY_SERIAL_NUMBER = "13"
+    private const val TAG_CARD_ISSUER = "43"
+    private const val TAG_TICKET_TYPE = "45"
+    private const val TAG_SUPPORTED_PROTOCOLS = "47"
+    private const val TAG_ADF_AID = "4f"
+    private const val TAG_CARDTYPE = "50"
+    private const val TAG_EXPIRY_DATE = "5f24"
+    private const val TAG_DISCRETIONARY_DATA = "bf0c"
+    private const val TAG_ADDITIONAL_FILE_REFERENCES = "9f10"
+    
     val TAGMAP = mapOf(
-            "50" to TagDesc("Payment terms", DUMP_SHORT),
-            "47" to TagDesc("Supported protocols", DUMP_SHORT),
-            "43" to TagDesc("ID center", DUMP_SHORT),
-            "11" to TagDesc("Balance command", DUMP_SHORT),
-            "4f" to TagDesc("ADF AID", DUMP_SHORT),
-            "9f10" to TagDesc("Additional file references", DUMP_SHORT),
-            "45" to TagDesc("Usercode", DUMP_SHORT),
-            "5f24" to TagDesc("Expiry", DUMP_SHORT),
-            "12" to TagDesc("Card serial number", HIDE),
-            "13" to TagDesc("Operator serial number", DUMP_SHORT),
-            "bf0c" to TagDesc("Discretionary data", DUMP_SHORT)
+            TAG_CARDTYPE to TagDesc(R.string.cardtype_header, DUMP_SHORT),
+            TAG_SUPPORTED_PROTOCOLS to TagDesc(R.string.supported_protocols, DUMP_SHORT),
+            TAG_CARD_ISSUER to TagDesc(R.string.card_issuer, DUMP_SHORT),
+            TAG_BALANCE_COMMAND to TagDesc(R.string.balance_command, DUMP_SHORT),
+            TAG_ADF_AID to TagDesc(R.string.adf_aid, DUMP_SHORT),
+            TAG_ADDITIONAL_FILE_REFERENCES to TagDesc(R.string.additional_file_references, DUMP_SHORT),
+            TAG_TICKET_TYPE to TagDesc(R.string.ticket_type, DUMP_SHORT),
+            TAG_EXPIRY_DATE to TagDesc(R.string.expiry_date, DUMP_SHORT),
+            TAG_SERIAL_NUMBER to TagDesc(R.string.card_serial_number, HIDE),
+            TAG_AGENCY_SERIAL_NUMBER to TagDesc(R.string.agency_card_serial_number, DUMP_SHORT),
+            TAG_DISCRETIONARY_DATA to TagDesc(R.string.discretionary_data, DUMP_SHORT)
     )
 }

@@ -1430,6 +1430,17 @@
     <string name="authentication_id">Authentication ID</string>
     <!-- Translators: describes a field or value that is reserved for future usage -->
     <string name="rfu">Reserved for future use</string>
+    <string name="supported_protocols">Supported protocols</string>
+    <!-- Translators: binary command used to fetch a pre-paid card's purse balance -->
+    <string name="balance_command">Balance command</string>
+    <!-- Translators: Application Dedicated File (ADF) Application ID (AID). This is a reference
+    to the name of a ISO7816 dedicated file used for the primary card application. -->
+    <string name="adf_aid" translatable="false">ADF AID</string>
+    <string name="additional_file_references">Additional file references</string>
+    <!-- Translators: Additional serial number used by the transit agency -->
+    <string name="agency_card_serial_number">Agency card serial number</string>
+    <!-- Translators: Additional data that may be added at the card issuer's discretion -->
+    <string name="discretionary_data">Discretionary data</string>
 
     <string name="cardtype_header">Card payment terms</string>
     <!-- Translators: Indicates that this card's transactions are paid before travel. -->
@@ -1535,7 +1546,6 @@
     <!-- Translators: Snapper Services Limited (Ltd.) is the company that operates the Snapper
     card system in Wellington, New Zealand. -->
     <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
-
     <string name="charlie_2nd_card_number">Second number</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>

@@ -20,7 +20,8 @@ package au.id.micolous.metrodroid.transit.kr_ocap
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.card.ksx6924.KROCAPConfigDFApplication
-import au.id.micolous.metrodroid.card.ksx6924.KROCAPData
+import au.id.micolous.metrodroid.card.ksx6924.KROCAPData.TAGMAP
+import au.id.micolous.metrodroid.card.ksx6924.KROCAPData.TAG_SERIAL_NUMBER
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData
@@ -46,11 +47,10 @@ class KROCAPTransitData(val pdata: ImmutableByteArray) : SerialOnlyTransitData()
     override val cardName get() = NAME
 
     override val extraInfo: List<ListItem>?
-        get() = ISO7816TLV.infoBerTLV(pdata, KROCAPData.TAGMAP)
+        get() = ISO7816TLV.infoBerTLV(pdata, TAGMAP)
 
     companion object {
         private const val NAME = "One Card All Pass"
-        private val TAG_SERIAL_NUMBER = ImmutableByteArray.fromHex("12")
 
         private fun getSerial(pdata: ImmutableByteArray) =
                 ISO7816TLV.findBERTLV(pdata, TAG_SERIAL_NUMBER, false)?.getHexString()
