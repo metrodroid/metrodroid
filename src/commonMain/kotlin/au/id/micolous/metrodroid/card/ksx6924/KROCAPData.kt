@@ -1,7 +1,8 @@
 package au.id.micolous.metrodroid.card.ksx6924
 
+import au.id.micolous.metrodroid.card.iso7816.TagContents.DUMP_SHORT
+import au.id.micolous.metrodroid.card.iso7816.TagContents.HIDE
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
-import au.id.micolous.metrodroid.card.iso7816.TagDesc.Companion.TagContents.*
 
 object KROCAPData {
     const val PROPRIETARY_TEMPLATE = "a5"

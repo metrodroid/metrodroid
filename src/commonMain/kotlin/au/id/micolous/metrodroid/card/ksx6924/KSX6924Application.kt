@@ -42,6 +42,8 @@ import kotlinx.serialization.Transient
 /**
  * Implements the T-Money ISO 7816 application.  This is used by T-Money in South Korea, and
  * Snapper Plus cards in Wellington, New Zealand.
+ *
+ * @see [KROCAPConfigDFApplication], [TMoneyTransitData]
  */
 @Serializable
 data class KSX6924Application (
