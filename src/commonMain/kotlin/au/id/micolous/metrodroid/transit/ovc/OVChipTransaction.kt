@@ -160,7 +160,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
                 neverSeenField(18),
                 neverSeenField(19),
                 neverSeenField(20),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_B, 16),
+                En1545FixedInteger("TripDurationMinutes", 16),
                 neverSeenField(22),
                 neverSeenField(23),
                 En1545FixedInteger(En1545Transaction.EVENT_PRICE_AMOUNT, 16),
