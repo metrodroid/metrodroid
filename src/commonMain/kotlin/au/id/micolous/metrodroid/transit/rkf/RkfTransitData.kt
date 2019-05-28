@@ -202,7 +202,7 @@ data class RkfTransitData internal constructor(
                 if (i < tripTransactions.size)
                     remainingTransactions.addAll(tripTransactions.subList(i, tripTransactions.size))
                 return RkfTransitData(mTcci = tcci,
-                        mTrips = TransactionTrip.merge(nonTripTransactions + remainingTransactions)
+                        mTrips = TransactionTripLastPrice.merge(nonTripTransactions + remainingTransactions)
                                 + trips.map { it.tripLegs }.flatten(),
                         mBalances = balances, mLookup = lookup, mTccps = tccps, mSerial = getSerial(card),
                         subscriptions = tickets)
