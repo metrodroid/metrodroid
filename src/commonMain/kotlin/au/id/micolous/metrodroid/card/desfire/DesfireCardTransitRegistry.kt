@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.card.desfire
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
+import au.id.micolous.metrodroid.transit.magnacarta.MagnaCartaTransitData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData
 import au.id.micolous.metrodroid.transit.serialonly.*
@@ -25,6 +26,7 @@ object DesfireCardTransitRegistry {
             AtHopTransitData.FACTORY,
             NextfareDesfireTransitFactory(),
             TampereTransitData.FACTORY,
+            MagnaCartaTransitData.FACTORY,
             BlankDesfireTransitData.FACTORY,
             UnauthorizedDesfireTransitData.FACTORY)
 }
