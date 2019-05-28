@@ -78,12 +78,12 @@ class EmvCardMain internal constructor(
 
     fun getAllTlv(): List<ImmutableByteArray> {
         val res = mutableListOf<ImmutableByteArray>()
-        val fci = appFci
-        if (fci != null) {
-            val a5 = ISO7816TLV.findBERTLV(fci, "a5", true)
-            res += listOfNotNull(gpoResponse)
-            if (a5 != null)
-                res += listOfNotNull(a5, ISO7816TLV.findBERTLV(a5, "bf0c", true))
+        val a5 = appProprietaryBerTlv
+        if (a5 != null) {
+            res += listOfNotNull(
+                    gpoResponse,
+                    a5,
+                    ISO7816TLV.findBERTLV(a5, "bf0c", true))
         }
 
         // SFI's

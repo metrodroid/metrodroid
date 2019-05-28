@@ -1548,6 +1548,47 @@
     <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
     <string name="charlie_2nd_card_number">Second number</string>
 
+    <!-- EMV cards -->
+    <!-- Translators: The name of the card (first field). -->
+    <string name="emv_name_1">Name 1</string>
+    <!-- Translators: The name of the card (second field). -->
+    <string name="emv_name_2">Name 2</string>
+    <!-- Translators: EMV cards normally have a magnetic strip with data. This is the data in the
+    first track of the magnetic strip. -->
+    <string name="emv_track_1">Track 1</string>
+    <!-- Translators: EMV cards normally have a magnetic strip with data. This is the data in the
+    second track of the magnetic strip. -->
+    <string name="emv_track_2">Track 2</string>
+    <!-- Translators: The country from which the card issuer operates from -->
+    <string name="issuer_country">Issuer country</string>
+    <!-- Translators: EMV cards allow declaring the cardholder's preferred language for POS
+    terminals -->
+    <string name="emv_language_preference">Language preference</string>
+    <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_issuer_public_key_certificate">Issuer public key certificate</string>
+    <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_issuer_public_key_modulus">Issuer public key modulus</string>
+    <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_issuer_public_key_exponent">Issuer public key exponent</string>
+    <!-- Translators: ICC = integrated processor in EMV cards.
+    Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_icc_public_key_certificate">ICC public key certificate</string>
+    <!-- Translators: ICC = integrated processor in EMV cards.
+    Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_icc_public_key_modulus">ICC public key modulus</string>
+    <!-- Translators: ICC = integrated processor in EMV cards.
+    Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
+    <string name="emv_icc_public_key_exponent">ICC public key exponent</string>
+    <!-- Translators: Primary currency for an EMV card, eg: US dollar, Euro -->
+    <string name="emv_application_currency">Application currency</string>
+    <!-- Translators: Exponent for the primary currency. This is 2 for the Euro and most dollars,
+    0 for yen.  -->
+    <string name="emv_application_currency_exponent">Application currency exponent</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">PIN attempt remaining</item>
+        <item quantity="other">PIN attempts remaining</item>
+    </plurals>
+
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
     <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>

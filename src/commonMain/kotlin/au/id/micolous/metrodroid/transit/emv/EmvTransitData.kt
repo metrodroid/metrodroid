@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.emv.EmvCardMain
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
@@ -124,13 +125,15 @@ data class EmvTransitData(private val tlvs: List<ImmutableByteArray>,
                 res += ListItem(R.string.expiry_date, "${postPan.substring(2, 4)}/${postPan.substring(0, 2)}")
                 val serviceCode = postPan.substring(4, 7)
                 res += ListItem("Service code", serviceCode)
-                res += ListItem("Discretionary data",
+                res += ListItem(R.string.discretionary_data,
                         postPan.substring(7).let { it.substringBefore('f', it) }
                 )
             }
         }
         if (pinTriesRemaining != null)
-            res += ListItem("PIN tries remaining", pinTriesRemaining.toString())
+            res += ListItem(
+                    Localizer.localizePlural(R.plurals.emv_pin_attempts_remaining, pinTriesRemaining),
+                    pinTriesRemaining.toString())
         res += listOf(HeaderListItem("TLV tags"))
         val unknownIds = mutableSetOf<String>()
         for (tlv in tlvs) {
