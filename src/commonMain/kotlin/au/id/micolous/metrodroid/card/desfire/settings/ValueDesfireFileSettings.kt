@@ -29,8 +29,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class ValueDesfireFileSettings (buf: ImmutableByteArray) : DesfireFileSettingsImpl(buf) {
     private val lowerLimit = buf.byteArrayToIntReversed(4, 4)
     private val upperLimit = buf.byteArrayToIntReversed(8, 4)
-    private var limitedCreditValue = buf.byteArrayToIntReversed(12, 4)
-    private var limitedCreditEnabled = buf[16].toInt() != 0x00
+    val limitedCreditValue = buf.byteArrayToIntReversed(12, 4)
+    private val limitedCreditEnabled = buf[16].toInt() != 0x00
 
     override val subtitle: String
         get() = Localizer.localizeString(R.string.desfire_value_format,
