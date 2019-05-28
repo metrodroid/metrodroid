@@ -37,7 +37,9 @@ data class DesfireApplication(
         private val files: Map<Int, RawDesfireFile>,
         @XMLId("auth-log")
         @Optional
-        private val authLog: List<DesfireAuthLog> = emptyList()) {
+        private val authLog: List<DesfireAuthLog> = emptyList(),
+        @Optional
+        private val dirListLocked: Boolean = false) {
     @Transient
     val interpretedFiles: Map<Int, DesfireFile> = files.mapValues { (_, v) -> DesfireFile.create(v) }
     @Transient
