@@ -48,8 +48,8 @@ data class OVChipTransitData(
         private val mCreditId: Int,
         private val mCredit: Int,
         private val mBanbits: Int,
-        private val mTrips: List<TransactionTripAbstract>,
-        private val mSubscriptions: List<OVChipSubscription>
+        override val trips: List<TransactionTripAbstract>,
+        override val subscriptions: List<OVChipSubscription>
 ) : En1545TransitData(parsed) {
     override val cardName get() = NAME
 
@@ -59,10 +59,6 @@ data class OVChipTransitData(
                     OVChipTransitData.convertDate(mExpdate))
 
     override val serialNumber get(): String? = null
-
-    override val trips get() = mTrips
-
-    override val subscriptions get() = mSubscriptions
 
     override val lookup get() = OvcLookup.instance
 
@@ -131,8 +127,8 @@ data class OVChipTransitData(
                     mCredit = credit.getBitsFromBufferSigned(77, 16) xor 0x7fff.inv(),
                     // byte 0-2.5: unknown const
                     mType = card[0, 2].data.getBitsFromBuffer(20, 4),
-                    mTrips = getTrips(card),
-                    mSubscriptions = getSubscriptions(card, index))
+                    trips = getTrips(card),
+                    subscriptions = getSubscriptions(card, index, OVChipSubscription.Companion::parse))
         }
 
         private fun getTrips(card: ClassicCard): List<TransactionTripAbstract> {
@@ -151,7 +147,7 @@ data class OVChipTransitData(
             return TransactionTripLastPrice.merge(transactions)
         }
 
-        private fun getSubscriptions(card: ClassicCard, index: OVChipIndex): List<OVChipSubscription> {
+        fun<T: En1545Subscription> getSubscriptions(card: ClassicCard, index: OVChipIndex,  factory: (data: ImmutableByteArray, type1: Int, used: Int) -> T): List<T> {
             val data = card[39].readBlocks(if (index.recentSubscriptionSlot) 3 else 1, 2)
 
             /*
@@ -185,7 +181,7 @@ data class OVChipTransitData(
                 val subscriptionAddress = index.subscriptionIndex[subscriptionIndexId - 1]
                 val subData = card[32 + subscriptionAddress / 5].readBlocks(subscriptionAddress % 5 * 3, 3)
 
-                OVChipSubscription.parse(subData, type1, used)
+                factory(subData, type1, used)
             }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })
         }
 
