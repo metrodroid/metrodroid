@@ -1,13 +1,34 @@
+/*
+ * EmvTransitData.kt
+ *
+ * Copyright 2019 Google
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.emv.EmvCardMain
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.emv.EmvData.LOG_ENTRY
 import au.id.micolous.metrodroid.transit.emv.EmvData.T2Data
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME1
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME2
 import au.id.micolous.metrodroid.transit.emv.EmvLogEntry.Companion.parseEmvTrip
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
@@ -62,7 +83,7 @@ private fun getTag(tlvs: List<ImmutableByteArray>, id: String): ImmutableByteArr
 }
 
 private fun findName(tlvs: List<ImmutableByteArray>): String {
-    for (tag in listOf("9f12", "50")) {
+    for (tag in listOf(TAG_NAME2, TAG_NAME1)) {
         val variant = getTag(tlvs, tag) ?: continue
         return variant.readASCII()
     }
@@ -100,7 +121,7 @@ data class EmvTransitData(private val tlvs: List<ImmutableByteArray>,
             val postPan = getPostPan(t2)
             res += ListItem("PAN", splitby4(getPan(t2)))
             if (postPan != null) {
-                res += ListItem("Expiry", "${postPan.substring(2, 4)}/${postPan.substring(0, 2)}")
+                res += ListItem(R.string.expiry_date, "${postPan.substring(2, 4)}/${postPan.substring(0, 2)}")
                 val serviceCode = postPan.substring(4, 7)
                 res += ListItem("Service code", serviceCode)
                 res += ListItem("Discretionary data",

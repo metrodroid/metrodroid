@@ -136,8 +136,8 @@ object ISO7816TLV {
 
     private fun makeListItem(tagDesc: TagDesc, data: ImmutableByteArray) : ListItem? {
         return when (tagDesc.contents) {
-            TagDesc.Companion.TagContents.HIDE -> null
-            TagDesc.Companion.TagContents.DUMP_LONG ->
+            TagContents.HIDE -> null
+            TagContents.DUMP_LONG ->
                 ListItem(FormattedString(tagDesc.name), data.toHexDump())
             else -> ListItem(tagDesc.name, tagDesc.interpretTag(data))
         }

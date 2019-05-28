@@ -1,23 +1,44 @@
+/*
+ * EmvData.kt
+ *
+ * Copyright 2019 Google
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package au.id.micolous.metrodroid.transit.emv
 
+import au.id.micolous.metrodroid.card.iso7816.TagContents.*
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
-import au.id.micolous.metrodroid.card.iso7816.TagDesc.Companion.TagContents.*
 
 internal object EmvData {
 
+    const val TAG_NAME1 = "50"
     const val T2Data = "57"
+    const val TAG_NAME2 = "9f12"
     const val LOG_ENTRY = "9f4d"
 
     // TODO: i18n
     val TAGMAP = mapOf(
-            "50" to TagDesc("Name 1", ASCII),
+            TAG_NAME1 to TagDesc("Name 1", ASCII),
             "56" to TagDesc("Track 1", ASCII),
             T2Data to TagDesc("Track 2", DUMP_SHORT),
             "5a" to TagDesc("PAN", DUMP_SHORT), // TODO: group by 4
             "5f20" to TagDesc("Cardholder Name", ASCII),
             "5f24" to TagDesc("Expiry", DUMP_SHORT), // TODO: show as date
             "5f25" to TagDesc("Effective Date", DUMP_SHORT), // TODO: show as date
-            "5f28" to TagDesc("Issuer country", TagDesc.Companion.TagContents.COUNTRY),
+            "5f28" to TagDesc("Issuer country", COUNTRY),
             "5f2d" to TagDesc("Language preference", ASCII), // TODO: show language
             "5f34" to TagDesc("PAN sequence number", DUMP_SHORT), // TODO: show as int
             "82" to TagDesc("Application Interchange Profile", DUMP_SHORT),
@@ -37,7 +58,7 @@ internal object EmvData {
             "9f0f" to TagDesc("Issuer Action Code - Online", HIDE),
             "9f10" to TagDesc("Issuer Application Data", DUMP_LONG),
             "9f11" to TagDesc("Issuer Code Table Index", DUMP_SHORT), // TODO: show as int
-            "9f12" to TagDesc("Name 2", ASCII),
+            TAG_NAME2 to TagDesc("Name 2", ASCII),
             "9f1f" to TagDesc("Track 1 Discretionary Data", ASCII),
             "9f26" to TagDesc("Application Cryptogram", DUMP_LONG),
             "9f27" to TagDesc("Cryptogram Information Data", DUMP_LONG),
