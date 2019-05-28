@@ -70,8 +70,6 @@ data class OVChipTransitData(
             ListItem("Banned", if (mBanbits and 0xC0 == 0xC0) "Yes" else "No"),
 
             HeaderListItem(R.string.credit_information),
-            ListItem("Credit Slot ID", mCreditSlotId.toString()),
-            ListItem("Last Credit ID", mCreditId.toString()),
             ListItem(R.string.ovc_autocharge,
                     if (mTicketEnvParsed.getIntOrZero(AUTOCHARGE_ACTIVE) == 0x05) "Yes" else "No"),
             ListItem(R.string.ovc_autocharge_limit,
@@ -79,14 +77,11 @@ data class OVChipTransitData(
                             .maybeObfuscateBalance().formatCurrencyString(true)),
             ListItem(R.string.ovc_autocharge_amount,
                     TransitCurrency.EUR(mTicketEnvParsed.getIntOrZero(AUTOCHARGE_CHARGE))
-                            .maybeObfuscateBalance().formatCurrencyString(true)),
+                            .maybeObfuscateBalance().formatCurrencyString(true)))
 
-            HeaderListItem("Recent Slots"),
-            ListItem("Transaction Slot", if (mIndex.recentTransactionSlot) "B" else "A"),
-            ListItem("Info Slot", if (mIndex.recentInfoSlot) "B" else "A"),
-            ListItem("Subscription Slot", if (mIndex.recentSubscriptionSlot) "B" else "A"),
-            ListItem("Travelhistory Slot", if (mIndex.recentTravelhistorySlot) "B" else "A"),
-            ListItem("Credit Slot", if (mIndex.recentCreditSlot) "B" else "A"))
+    override fun getRawFields(level: RawLevel): List<ListItem>? = super.getRawFields(level).orEmpty() +
+            listOf(ListItem("Credit Slot ID", mCreditSlotId.toString()),
+                    ListItem("Last Credit ID", mCreditId.toString())) + mIndex.getRawFields(level)
 
     companion object {
         private const val NAME = "OV-chipkaart"
