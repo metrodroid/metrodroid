@@ -2,10 +2,6 @@ package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.emv.EmvCardMain
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
-import au.id.micolous.metrodroid.card.iso7816.TagDesc.Companion.TagContents.DUMP_LONG
-import au.id.micolous.metrodroid.card.iso7816.TagDesc.Companion.TagContents.HIDE
-import au.id.micolous.metrodroid.card.iso7816.TagDesc.Companion.interpretTag
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -88,17 +84,6 @@ private fun getPan(t2: ImmutableByteArray?): String? {
 private fun getPostPan(t2: ImmutableByteArray): String? {
     val t2s = t2.toHexString()
     return t2s.substringAfter('d')
-}
-
-
-private fun interpretTagInfo(id: ImmutableByteArray, data: ImmutableByteArray): ListItem? {
-    val idStr = id.toHexString()
-    val (name, contents) = TAGMAP[idStr] ?: return ListItem(FormattedString(idStr), data.toHexDump())
-    return when (contents) {
-        HIDE -> null
-        DUMP_LONG -> ListItem(FormattedString(name), data.toHexDump())
-        else -> ListItem(name, interpretTag(contents, data))
-    }
 }
 
 @Parcelize
