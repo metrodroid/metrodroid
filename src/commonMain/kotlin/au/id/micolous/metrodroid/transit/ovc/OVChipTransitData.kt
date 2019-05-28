@@ -153,7 +153,7 @@ data class OVChipTransitData(
                     nextTransaction
             }.values.toMutableList()
 
-            return TransactionTrip.merge(transactions)
+            return TransactionTripLastPrice.merge(transactions)
         }
 
         private fun getSubscriptions(card: ClassicCard, index: OVChipIndex): List<OVChipSubscription> {

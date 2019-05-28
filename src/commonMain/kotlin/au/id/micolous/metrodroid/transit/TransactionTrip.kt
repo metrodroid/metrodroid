@@ -39,6 +39,19 @@ class TransactionTrip(override val capsule: TransactionTripCapsule): Transaction
     }
 }
 
+@Parcelize
+class TransactionTripLastPrice(override val capsule: TransactionTripCapsule): TransactionTripAbstract() {
+    override val fare: TransitCurrency? get() = end?.fare ?: start?.fare
+
+    companion object {
+        fun merge(transactionsIn: List<Transaction>) =
+                TransactionTripAbstract.merge(transactionsIn) { TransactionTripLastPrice(makeCapsule(it)) }
+
+        fun merge(vararg transactions: Transaction): List<TransactionTripAbstract> =
+                merge(transactions.toList())
+    }
+}
+
 abstract class TransactionTripAbstract: Trip() {
     abstract val capsule: TransactionTripCapsule
 
