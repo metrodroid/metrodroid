@@ -1588,6 +1588,6 @@
     <string name="card_note_chc_metrocard">Only pre-2016 (MIFARE Classic) cards can be read. Newer fully locked DESFire cards are unsupportable.</string>
     <string name="import_mfc_file">Import from MFC file</string>
     <string name="raw_level">Raw level</string>
-    <string name="raw_level_desc">How much raw info to show in pased data. Not all parsers support this option</string>
+    <string name="raw_level_desc">How much raw info to show in passed data. Not all parsers support this option</string>
     <string name="raw_header">Raw fields</string>
 </resources>
