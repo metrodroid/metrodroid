@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -126,22 +127,14 @@ class CharlieCardTransitData (private val mSerial: Long,
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val earlySectors: Int
-                get() = 2
+                get() = 1
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 
-            override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                val sector0 = sectors[0]
-                var b = sector0.getBlock(1).data
-                if (!b.sliceOffLen(2, 14).contentEquals(byteArrayOf(0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10)))
-                    return false
-                val sector1 = sectors[1]
-                if (sector1 is UnauthorizedClassicSector)
-                    return true
-                b = sector1.getBlock(0).data
-                return b.sliceOffLen(0, 6).contentEquals(byteArrayOf(0x04, 0x10, 0x23, 0x45, 0x66, 0x77))
-            }
+            override fun earlyCheck(sectors: List<ClassicSector>): Boolean =
+                    HashUtils.checkKeyHash(sectors[0].key, "charlie",
+                            "63ee95c7340fceb524cae7aab66fb1f9", "2114a2414d6b378e36a4e9540d1adc9f") >= 0
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 return TransitIdentity(NAME, formatSerial(getSerial(card)))
