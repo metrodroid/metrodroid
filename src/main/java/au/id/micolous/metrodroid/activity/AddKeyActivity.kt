@@ -140,7 +140,7 @@ class AddKeyActivity : MetrodroidActivity() {
                 mKeyFormat.isJSON -> {
                     val o: JsonObject
                     try {
-                        o = JsonTreeParser.parse(String(keyData, Utils.getUTF8()))
+                        o = JsonTreeParser.parse(String(keyData, Utils.UTF8))
                     } catch (e: Exception) {
                         // Invalid JSON, grumble.
                         Utils.showErrorAndFinish(this, e)

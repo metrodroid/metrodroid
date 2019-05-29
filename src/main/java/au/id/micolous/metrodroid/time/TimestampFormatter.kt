@@ -72,7 +72,7 @@ actual object TimestampFormatter {
     }
 
     private fun longDateFormat(date: Calendar?): Spanned {
-        val s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()),
+        val s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -89,7 +89,7 @@ actual object TimestampFormatter {
     }
 
     private fun dateFormat(date: Calendar?): Spanned {
-        val s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()),
+        val s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -105,7 +105,7 @@ actual object TimestampFormatter {
     }
 
     private fun timeFormat(date: Calendar?): Spanned {
-        val s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()),
+        val s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -118,9 +118,9 @@ actual object TimestampFormatter {
     }
 
     private fun dateTimeFormat(date: Calendar?): Spanned {
-        val d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()),
+        val d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
-        val t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()), date)
+        val t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance), date)
 
         val b = SpannableStringBuilder(d)
         b.append(" ")

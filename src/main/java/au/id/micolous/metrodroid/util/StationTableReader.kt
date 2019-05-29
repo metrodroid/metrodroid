@@ -87,7 +87,7 @@ private constructor(dbName: String) {
     class InvalidHeaderException : Exception()
 
     init {
-        val context = MetrodroidApplication.getInstance()
+        val context = MetrodroidApplication.instance
         val i = context.assets.open(dbName, AssetManager.ACCESS_RANDOM)
         mTable = DataInputStream(i)
 
