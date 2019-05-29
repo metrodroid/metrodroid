@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.iso7816.HIDDEN_TAG
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.card.iso7816.TagContents.*
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.multi.R
@@ -29,6 +30,7 @@ internal object EmvData {
     const val TAG_NAME1 = "50"
     const val T2Data = "57"
     const val TAG_NAME2 = "9f12"
+    const val TAG_PDOL = "9f38"
     const val LOG_ENTRY = "9f4d"
 
     // TODO: i18n
@@ -75,7 +77,7 @@ internal object EmvData {
             "9f32" to TagDesc(R.string.emv_issuer_public_key_exponent, DUMP_LONG),
             // TODO: show as int
             "9f36" to TagDesc(R.string.emv_application_transaction_counter, DUMP_SHORT),
-            "9f38" to HIDDEN_TAG, // PDOL
+            TAG_PDOL to HIDDEN_TAG, // PDOL
             "9f42" to TagDesc(R.string.emv_application_currency, CURRENCY),
             // TODO: show currency
             "9f44" to TagDesc(R.string.emv_application_currency_exponent, DUMP_SHORT),
@@ -85,6 +87,6 @@ internal object EmvData {
             "9f49" to HIDDEN_TAG, // DDOL
             "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
             LOG_ENTRY to HIDDEN_TAG, // Log entry
-            "bf0c" to HIDDEN_TAG // Subtag
+            TAG_DISCRETIONARY_DATA to HIDDEN_TAG // Subtag
     )
 }

@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.card.iso7816
 
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_PROPRIETARY_BER_TLV
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
@@ -130,8 +131,17 @@ class ISO7816ApplicationMutableCapsule(val appFci: ImmutableByteArray?,
 
     fun freeze() = ISO7816ApplicationCapsule(this)
 
+    @Transient
+    val appProprietaryBerTlv : ImmutableByteArray? get() = getProprietaryBerTlv(this.appFci)
+
     companion object {
         private const val TAG = "ISO7816ApplicationMutableCapsule"
+    }
+}
+
+fun getProprietaryBerTlv(fci: ImmutableByteArray?): ImmutableByteArray? {
+    return fci?.let {
+        ISO7816TLV.findBERTLV(it, TAG_PROPRIETARY_BER_TLV, true)
     }
 }
 
@@ -168,11 +178,7 @@ abstract class ISO7816Application {
     val appFci get() = generic.appFci
 
     @Transient
-    val appProprietaryBerTlv : ImmutableByteArray? get() {
-        return this.appFci?.let {
-            ISO7816TLV.findBERTLV(it, "a5", true)
-        }
-    }
+    val appProprietaryBerTlv : ImmutableByteArray? get() = getProprietaryBerTlv(this.appFci)
 
     @Transient
     open val rawData: List<ListItem>?
@@ -223,7 +229,5 @@ abstract class ISO7816Application {
 
     companion object {
         private const val TAG = "ISO7816Application"
-
-        private const val PROPRIETARY_BER_TLV_TAG = "a5"
     }
 }

@@ -21,7 +21,9 @@ package au.id.micolous.metrodroid.card.emv
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.iso7816.*
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_PDOL
 import au.id.micolous.metrodroid.transit.emv.parseEmvTransitData
 import au.id.micolous.metrodroid.transit.emv.parseEmvTransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
@@ -30,10 +32,9 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-private fun getMainAppName(fci: ImmutableByteArray?): ImmutableByteArray? {
-    val l1 = ISO7816TLV.findBERTLV(fci ?: return null,
-            "a5", true) ?: return null
-    val l2 = ISO7816TLV.findBERTLV(l1, "bf0c", true) ?: return null
+private fun getMainAppName(appProprietaryBerTlv: ImmutableByteArray?): ImmutableByteArray? {
+    val l2 = ISO7816TLV.findBERTLV(appProprietaryBerTlv ?: return null,
+            TAG_DISCRETIONARY_DATA, true) ?: return null
     val l3 = ISO7816TLV.findBERTLV(l2, "61", true) ?: return null
     return ISO7816TLV.findBERTLV(l3, "4f", false)
 }
@@ -83,7 +84,7 @@ class EmvCardMain internal constructor(
             res += listOfNotNull(
                     gpoResponse,
                     a5,
-                    ISO7816TLV.findBERTLV(a5, "bf0c", true))
+                    ISO7816TLV.findBERTLV(a5, TAG_DISCRETIONARY_DATA, true))
         }
 
         // SFI's
@@ -114,7 +115,7 @@ class EmvFactory : ISO7816ApplicationFactory {
 
         Log.d("EMV", "EMV: FCI=$fci")
 
-        val mainAppName = getMainAppName(capsule.appFci)
+        val mainAppName = getMainAppName(capsule.appProprietaryBerTlv)
 
         if (mainAppName != null) {
             Log.d("EMV", "EMV: MAN=$mainAppName")
@@ -152,9 +153,9 @@ class EmvFactory : ISO7816ApplicationFactory {
             return null
         Log.d("EMV", "AD = $mainAppData")
 
-        val a5 = ISO7816TLV.findBERTLV(mainAppData, "a5", true) ?: return null
+        val a5 = getProprietaryBerTlv(mainAppData) ?: return null
 
-        val pdolTemplate = ISO7816TLV.findBERTLV(a5, "9f38", false) ?: return null
+        val pdolTemplate = ISO7816TLV.findBERTLV(a5, TAG_PDOL, false) ?: return null
 
         Log.d("EMV", "PDOL = $pdolTemplate")
 

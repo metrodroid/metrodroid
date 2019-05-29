@@ -22,7 +22,8 @@ package au.id.micolous.metrodroid.transit.ravkav
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
-import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
+import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV.findBERTLV
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -42,13 +43,13 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
 
     override val info: List<ListItem>?
         get() = listOf(
-                if (mTicketEnvParsed.getIntOrZero(En1545TransitData.HOLDER_ID_NUMBER) == 0) {
+                if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
                     ListItem(R.string.card_type, R.string.card_type_anonymous)
                 } else {
                     ListItem(R.string.card_type, R.string.card_type_personal)
                 }) + super.info.orEmpty()
 
-    private constructor(card: CalypsoApplication) : this(Calypso1545TransitData.parse(
+    private constructor(card: CalypsoApplication) : this(parse(
             card, TICKETING_ENV_FIELDS, null, getSerial(card),
             { data, counter, _, _ -> RavKavSubscription(data, counter) },
             { data -> createTrip(data) }))
@@ -69,22 +70,20 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
         )
 
         private val TICKETING_ENV_FIELDS = En1545Container(
-                En1545FixedInteger(En1545TransitData.ENV_VERSION_NUMBER, 3),
-                En1545FixedInteger(En1545TransitData.ENV_NETWORK_ID, 20),
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_A, 26),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_ISSUE),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
+                En1545FixedInteger(ENV_VERSION_NUMBER, 3),
+                En1545FixedInteger(ENV_NETWORK_ID, 20),
+                En1545FixedInteger(ENV_UNKNOWN_A, 26),
+                En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
+                En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
                 En1545FixedInteger("PayMethod", 3),
-                En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
-                En1545FixedHex(En1545TransitData.ENV_UNKNOWN_B, 44),
-                En1545FixedInteger(En1545TransitData.HOLDER_ID_NUMBER, 30)
+                En1545FixedInteger(HOLDER_BIRTH_DATE, 32),
+                En1545FixedHex(ENV_UNKNOWN_B, 44),
+                En1545FixedInteger(HOLDER_ID_NUMBER, 30)
         )
 
         private fun getSerial(card: CalypsoApplication): String? {
-            val a5 = ISO7816TLV.findBERTLV(card.appFci ?: return null, "a5", true)
-                    ?: return null
-            val bf0c = ISO7816TLV.findBERTLV(a5, "bf0c", true) ?: return null
-            val c7 = ISO7816TLV.findBERTLV(bf0c, "c7", false)
+            val bf0c = findBERTLV(card.appProprietaryBerTlv ?: return null, TAG_DISCRETIONARY_DATA, true) ?: return null
+            val c7 = findBERTLV(bf0c, "c7", false)
             return c7?.byteArrayToLong(4, 4).toString()
         }
 

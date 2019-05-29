@@ -97,8 +97,7 @@ class NewShenzhenTransitData (val validityStart: Int?,
             val file15 = ChinaTransitData.getFile(card, 0x15)
             if (file15 != null)
                 return file15.binaryData
-            val szttag = ISO7816TLV.findBERTLV(card.appFci ?: return null,
-                    "a5", true) ?: return null
+            val szttag = card.appProprietaryBerTlv ?: return null
             return ISO7816TLV.findBERTLV(szttag, "8c", false)
         }
 

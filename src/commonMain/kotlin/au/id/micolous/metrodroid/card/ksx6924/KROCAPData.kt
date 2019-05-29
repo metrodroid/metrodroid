@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.ksx6924
 
 import au.id.micolous.metrodroid.card.iso7816.HIDDEN_TAG
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.card.iso7816.TagContents.DUMP_SHORT
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.multi.R
@@ -33,7 +34,6 @@ object KROCAPData {
     private const val TAG_ADF_AID = "4f"
     private const val TAG_CARDTYPE = "50"
     private const val TAG_EXPIRY_DATE = "5f24"
-    private const val TAG_DISCRETIONARY_DATA = "bf0c"
     private const val TAG_ADDITIONAL_FILE_REFERENCES = "9f10"
     
     val TAGMAP = mapOf(
