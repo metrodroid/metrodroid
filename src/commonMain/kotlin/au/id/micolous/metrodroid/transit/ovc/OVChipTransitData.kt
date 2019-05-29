@@ -48,8 +48,8 @@ data class OVChipTransitData(
         private val mCreditId: Int,
         private val mCredit: Int,
         private val mBanbits: Int,
-        private val mTrips: List<TransactionTripAbstract>,
-        private val mSubscriptions: List<OVChipSubscription>
+        override val trips: List<TransactionTripAbstract>,
+        override val subscriptions: List<OVChipSubscription>
 ) : En1545TransitData(parsed) {
     override val cardName get() = NAME
 
@@ -60,18 +60,12 @@ data class OVChipTransitData(
 
     override val serialNumber get(): String? = null
 
-    override val trips get() = mTrips
-
-    override val subscriptions get() = mSubscriptions
-
     override val lookup get() = OvcLookup.instance
 
     override val info get() = super.info.orEmpty() + listOf(
             ListItem("Banned", if (mBanbits and 0xC0 == 0xC0) "Yes" else "No"),
 
             HeaderListItem(R.string.credit_information),
-            ListItem("Credit Slot ID", mCreditSlotId.toString()),
-            ListItem("Last Credit ID", mCreditId.toString()),
             ListItem(R.string.ovc_autocharge,
                     if (mTicketEnvParsed.getIntOrZero(AUTOCHARGE_ACTIVE) == 0x05) "Yes" else "No"),
             ListItem(R.string.ovc_autocharge_limit,
@@ -79,14 +73,11 @@ data class OVChipTransitData(
                             .maybeObfuscateBalance().formatCurrencyString(true)),
             ListItem(R.string.ovc_autocharge_amount,
                     TransitCurrency.EUR(mTicketEnvParsed.getIntOrZero(AUTOCHARGE_CHARGE))
-                            .maybeObfuscateBalance().formatCurrencyString(true)),
+                            .maybeObfuscateBalance().formatCurrencyString(true)))
 
-            HeaderListItem("Recent Slots"),
-            ListItem("Transaction Slot", if (mIndex.recentTransactionSlot) "B" else "A"),
-            ListItem("Info Slot", if (mIndex.recentInfoSlot) "B" else "A"),
-            ListItem("Subscription Slot", if (mIndex.recentSubscriptionSlot) "B" else "A"),
-            ListItem("Travelhistory Slot", if (mIndex.recentTravelhistorySlot) "B" else "A"),
-            ListItem("Credit Slot", if (mIndex.recentCreditSlot) "B" else "A"))
+    override fun getRawFields(level: RawLevel): List<ListItem>? = super.getRawFields(level).orEmpty() +
+            listOf(ListItem("Credit Slot ID", mCreditSlotId.toString()),
+                    ListItem("Last Credit ID", mCreditId.toString())) + mIndex.getRawFields(level)
 
     companion object {
         private const val NAME = "OV-chipkaart"
@@ -136,8 +127,8 @@ data class OVChipTransitData(
                     mCredit = credit.getBitsFromBufferSigned(77, 16) xor 0x7fff.inv(),
                     // byte 0-2.5: unknown const
                     mType = card[0, 2].data.getBitsFromBuffer(20, 4),
-                    mTrips = getTrips(card),
-                    mSubscriptions = getSubscriptions(card, index))
+                    trips = getTrips(card),
+                    subscriptions = getSubscriptions(card, index, OVChipSubscription.Companion::parse))
         }
 
         private fun getTrips(card: ClassicCard): List<TransactionTripAbstract> {
@@ -153,10 +144,10 @@ data class OVChipTransitData(
                     nextTransaction
             }.values.toMutableList()
 
-            return TransactionTrip.merge(transactions)
+            return TransactionTripLastPrice.merge(transactions)
         }
 
-        private fun getSubscriptions(card: ClassicCard, index: OVChipIndex): List<OVChipSubscription> {
+        fun<T: En1545Subscription> getSubscriptions(card: ClassicCard, index: OVChipIndex,  factory: (data: ImmutableByteArray, type1: Int, used: Int) -> T): List<T> {
             val data = card[39].readBlocks(if (index.recentSubscriptionSlot) 3 else 1, 2)
 
             /*
@@ -190,7 +181,7 @@ data class OVChipTransitData(
                 val subscriptionAddress = index.subscriptionIndex[subscriptionIndexId - 1]
                 val subData = card[32 + subscriptionAddress / 5].readBlocks(subscriptionAddress % 5 * 3, 3)
 
-                OVChipSubscription.parse(subData, type1, used)
+                factory(subData, type1, used)
             }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })
         }
 

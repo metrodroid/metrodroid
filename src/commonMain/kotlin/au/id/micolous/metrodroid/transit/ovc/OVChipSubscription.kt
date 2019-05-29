@@ -39,54 +39,49 @@ data class OVChipSubscription internal constructor(override val parsed: En1545Pa
     override val lookup get() = OvcLookup.instance
 
     companion object {
-        private val OVC_CONTRACT_FIELDS = En1545Container(
-                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_B, 4),
+        private fun neverSeen(i: Int) = "NeverSeen$i"
+
+        // Sizes fully invented
+        private fun neverSeenField(i: Int) = En1545FixedInteger(neverSeen(i), 8)
+        fun fields(reversed: Boolean = false) = En1545Container(
                 En1545Bitmap(
-                        // Sizes fully invented
-                        En1545FixedInteger("NeverSeen0", 8),
-                        En1545FixedInteger("NeverSeen1", 8),
-                        En1545FixedInteger("NeverSeen2", 8),
-                        En1545FixedInteger("NeverSeen3", 8),
-                        En1545FixedInteger("NeverSeen4", 8),
-                        En1545FixedInteger("NeverSeen5", 8),
-                        En1545FixedInteger("NeverSeen6", 8),
-                        En1545FixedInteger("NeverSeen7", 8),
-                        En1545FixedInteger("NeverSeen8", 8),
-                        // 9
-                        En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 8),
-                        // 10
+                        neverSeenField(1),
+                        En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 16),
                         En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 16),
-                        // 11
                         En1545FixedInteger(En1545Subscription.CONTRACT_SERIAL_NUMBER, 32),
-                        // 12
-                        En1545FixedInteger("NeverSeen12", 8),
-                        // 13
+                        neverSeenField(5),
                         En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 10),
-                        En1545FixedInteger("NeverSeen14", 8),
-                        En1545FixedInteger("NeverSeen15", 8),
-                        En1545FixedInteger("NeverSeen16", 8),
-                        En1545FixedInteger("NeverSeen17", 8),
-                        En1545FixedInteger("NeverSeen18", 8),
-                        En1545FixedInteger("NeverSeen19", 8),
-                        En1545FixedInteger("NeverSeen20", 8),
+                        neverSeenField(7),
+                        neverSeenField(8),
+                        neverSeenField(9),
+                        neverSeenField(10),
+                        neverSeenField(11),
+                        neverSeenField(12),
+                        neverSeenField(13),
                         En1545Bitmap(
                                 En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
                                 En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_START),
                                 En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
                                 En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_END),
-                                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_C, 53),
+                                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_C, 53),
                                 En1545FixedInteger("NeverSeenB", 8),
                                 En1545FixedInteger("NeverSeenC", 8),
                                 En1545FixedInteger("NeverSeenD", 8),
-                                En1545FixedInteger("NeverSeenE", 8)
+                                En1545FixedInteger("NeverSeenE", 8),
+                                reversed = reversed
                         ),
-                        En1545FixedInteger("NeverSeen22", 8),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 24)
+                        En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_D, 40),
+                        En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 24),
+                        neverSeenField(16),
+                        neverSeenField(17),
+                        neverSeenField(18),
+                        neverSeenField(19),
+                        reversed = reversed
                 )
         )
 
         fun parse(data: ImmutableByteArray, type1: Int, used: Int): OVChipSubscription = OVChipSubscription(
-                parsed = En1545Parser.parse(data, OVC_CONTRACT_FIELDS),
+                parsed = En1545Parser.parse(data, fields()),
                 mType1 = type1,
                 mUsed = used)
     }

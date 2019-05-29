@@ -27,23 +27,21 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * - 1 bit for every field present inside the bitmap.
  * - Where a bit is non-zero, the embedded field.
  */
-class En1545Bitmap : En1545Field {
-    private val mFields: List<En1545Field>
-    private val mInfix: En1545Field?
+class En1545Bitmap private constructor(
+        private val mInfix: En1545Field?,
+        private val mFields: List<En1545Field>,
+        private val reversed: Boolean
+): En1545Field {
 
-    constructor(vararg fields: En1545Field) {
-        this.mInfix = null
-        this.mFields = fields.toList()
-    }
-
-    private constructor(infix: En1545Field, fields: List<En1545Field>) {
-        this.mInfix = infix
-        this.mFields = fields
-    }
+    constructor(vararg fields: En1545Field, reversed: Boolean = false) : this(
+        mInfix = null,
+        mFields = fields.toList(),
+        reversed = reversed
+    )
 
     override fun parseField(b: ImmutableByteArray, off: Int, path: String, holder: En1545Parsed, bitParser: En1545Bits): Int {
         var off = off
-        var bitmask: Int
+        val bitmask: Int
         try {
             bitmask = bitParser(b, off, mFields.size)
         } catch (e: Exception) {
@@ -53,17 +51,17 @@ class En1545Bitmap : En1545Field {
         off += mFields.size
         if (mInfix != null)
             off = mInfix.parseField(b, off, path, holder, bitParser)
+        var curbit = if (reversed) (1 shl (mFields.size - 1)) else 1
         for (el in mFields) {
-            if (bitmask and 1 != 0)
+            if (bitmask and curbit != 0)
                 off = el.parseField(b, off, path, holder, bitParser)
-            bitmask = bitmask shr 1
+            curbit = if (reversed) curbit shr 1 else curbit shl 1
         }
         return off
     }
 
     companion object {
-        fun infixBitmap(infix: En1545Container, vararg fields: En1545Field): En1545Field {
-            return En1545Bitmap(infix, fields.toList())
-        }
+        fun infixBitmap(infix: En1545Container, vararg fields: En1545Field, reversed: Boolean = false): En1545Field
+                = En1545Bitmap(infix, fields.toList(), reversed = reversed)
     }
 }
