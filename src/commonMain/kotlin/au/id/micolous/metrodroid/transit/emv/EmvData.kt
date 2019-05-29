@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.card.iso7816.TagContents.*
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 internal object EmvData {
 
@@ -88,5 +89,20 @@ internal object EmvData {
             "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
             LOG_ENTRY to HIDDEN_TAG, // Log entry
             TAG_DISCRETIONARY_DATA to HIDDEN_TAG // Subtag
+    )
+
+    /**
+     * This instructs the EMV card parser to ignore these AID prefixes on EMV cards.
+     *
+     * This doesn't actually prevent dumping these sections of the card.
+     *
+     * This is a list of prefixes, per ISO 7816 AID behaviour where a prefix will correspond to a
+     * company or country.
+     */
+    val PARSER_IGNORED_AID_PREFIX = listOf(
+            // eftpos (Australia)
+            // Has limited data. Most Australian cards also have a Mastercard or Visa application,
+            // which has much more data. Few cards in the last 10 years are EFTPOS-only.
+            ImmutableByteArray.fromHex("a000000384")
     )
 }

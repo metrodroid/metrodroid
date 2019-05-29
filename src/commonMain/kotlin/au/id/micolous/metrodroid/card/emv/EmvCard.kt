@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.transit.emv.EmvData.PARSER_IGNORED_AID_PREFIX
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_PDOL
 import au.id.micolous.metrodroid.transit.emv.parseEmvTransitData
 import au.id.micolous.metrodroid.transit.emv.parseEmvTransitIdentity
@@ -67,9 +68,24 @@ class EmvCardMain internal constructor(
     val pinTriesRemaining: ImmutableByteArray?
         get() = dataResponse[PIN_RETRY.toString(16)]
 
-    override fun parseTransitData(card: ISO7816Card) = parseEmvTransitData(this)
+    @Transient
+    val parserIgnore: Boolean
+        get() = generic.appName?.let { appName ->
+            PARSER_IGNORED_AID_PREFIX.indexOfFirst {
+                appName.startsWith(it) } >= 0
+        } ?: false
 
-    override fun parseTransitIdentity(card: ISO7816Card) = parseEmvTransitIdentity(this)
+    override fun parseTransitData(card: ISO7816Card) = if (parserIgnore) {
+        null
+    } else {
+        parseEmvTransitData(this)
+    }
+
+    override fun parseTransitIdentity(card: ISO7816Card) = if (parserIgnore) {
+        null
+    } else {
+        parseEmvTransitIdentity(this)
+    }
 
     @Transient
     override val rawData get() = super.rawData.orEmpty() +
@@ -113,32 +129,44 @@ class EmvFactory : ISO7816ApplicationFactory {
 
         val fci = capsule.appFci
 
-        Log.d("EMV", "EMV: FCI=$fci")
+        Log.d(TAG, "EMV: FCI=$fci")
 
-        val mainAppName = getMainAppName(capsule.appProprietaryBerTlv)
+        // Iterate over apps
+        //
+        // This is useful for multi-application cards. For example, most Australian cards
+        // typically have two EFTPOS applications (savings and cheque), followed by a Mastercard
+        // or Visa application.
+        val mainApps = mutableListOf<ISO7816Application>(EmvCard(generic = capsule.freeze()))
 
-        if (mainAppName != null) {
-            Log.d("EMV", "EMV: MAN=$mainAppName")
-
-            val mainAppFci = protocol.selectByNameOrNull(mainAppName)
-            val mainAppCapsule = ISO7816ApplicationMutableCapsule(appFci = mainAppFci, appName = mainAppName)
-            mainAppCapsule.dumpAllSfis(protocol, feedbackInterface, 32, 64)
-            val gpoResponse = readGpo(protocol, mainAppFci)
-
-            val dr = mutableMapOf<String, ImmutableByteArray>()
-            for (p1p2 in listOf(0x9f13, PIN_RETRY, 0x9f36, LOG_FORMAT)) {
-                val r = readData(protocol, p1p2)
-                if (r != null)
-                    dr[p1p2.toString(16)] = r
-            }
-
-            return listOf(EmvCard(generic = capsule.freeze()),
-                    EmvCardMain(generic = mainAppCapsule.freeze(),
-                    dataResponse = dr,
-                    gpoResponse = gpoResponse))
+        val discretionaryData = capsule.appProprietaryBerTlv?.let {
+            ISO7816TLV.findBERTLV(it,TAG_DISCRETIONARY_DATA, true)
         }
 
-        return listOf(EmvCard(generic = capsule.freeze()))
+        if (discretionaryData != null) {
+            for (appInfo in ISO7816TLV.findRepeatedBERTLV(discretionaryData, "61", true)) {
+                val aid = ISO7816TLV.findBERTLV(appInfo, "4f", false) ?: continue
+                Log.d(TAG, "EMV: MAN=$aid")
+
+                val mainAppFci = protocol.selectByNameOrNull(aid)
+                val mainAppCapsule = ISO7816ApplicationMutableCapsule(appFci = mainAppFci,
+                        appName = aid)
+                mainAppCapsule.dumpAllSfis(protocol, feedbackInterface, 32, 64)
+                val gpoResponse = readGpo(protocol, mainAppFci)
+
+                val dr = mutableMapOf<String, ImmutableByteArray>()
+                for (p1p2 in listOf(0x9f13, PIN_RETRY, 0x9f36, LOG_FORMAT)) {
+                    val r = readData(protocol, p1p2)
+                    if (r != null)
+                        dr[p1p2.toString(16)] = r
+                }
+
+                mainApps.add(EmvCardMain(generic = mainAppCapsule.freeze(),
+                        dataResponse = dr,
+                        gpoResponse = gpoResponse))
+            }
+        }
+
+        return mainApps.toList()
     }
 
     private suspend fun readData(tag: ISO7816Protocol, p1p2: Int) = try {
@@ -151,13 +179,13 @@ class EmvFactory : ISO7816ApplicationFactory {
     private suspend fun readGpo(tag: ISO7816Protocol, mainAppData: ImmutableByteArray?): ImmutableByteArray? {
         if (mainAppData == null)
             return null
-        Log.d("EMV", "AD = $mainAppData")
+        Log.d(TAG, "AD = $mainAppData")
 
         val a5 = getProprietaryBerTlv(mainAppData) ?: return null
 
         val pdolTemplate = ISO7816TLV.findBERTLV(a5, TAG_PDOL, false) ?: return null
 
-        Log.d("EMV", "PDOL = $pdolTemplate")
+        Log.d(TAG, "PDOL = $pdolTemplate")
 
         var pdolFilled = ImmutableByteArray.empty()
         ISO7816TLV.pdolIterate(pdolTemplate) { id, len ->
@@ -200,3 +228,4 @@ class EmvFactory : ISO7816ApplicationFactory {
     }
 }
 
+private const val TAG = "EmvCard"

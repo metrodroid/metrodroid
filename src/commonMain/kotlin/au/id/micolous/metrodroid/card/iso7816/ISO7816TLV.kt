@@ -102,6 +102,23 @@ object ISO7816TLV {
         }
     }
 
+    fun findRepeatedBERTLV(buf: ImmutableByteArray, target: String, keepHeader: Boolean):
+            Sequence<ImmutableByteArray> {
+        return findRepeatedBERTLV(buf, ImmutableByteArray.fromHex(target), keepHeader)
+    }
+
+    fun findRepeatedBERTLV(
+            buf: ImmutableByteArray, target: ImmutableByteArray, keepHeader: Boolean):
+            Sequence<ImmutableByteArray> {
+        return berTlvIterate(buf).filter { it.first == target }.map {
+            if (keepHeader) {
+                it.second + it.third
+            } else {
+                it.third
+            }
+        }
+    }
+
     /**
      * Parses BER-TLV data, and builds [ListItem] and [ListItemRecursive] for each of the tags.
      */
