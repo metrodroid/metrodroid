@@ -43,7 +43,7 @@ data class KROCAPConfigDFApplication (
     override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? {
         if (card.applications.any(KSX6924Application.APP_NAME)) {
             // Don't try to handle something that has a KSX6924Application.
-            //return null
+            return null
         }
 
         return KROCAPTransitData.parseTransitIdentity(this)
@@ -52,7 +52,7 @@ data class KROCAPConfigDFApplication (
     override fun parseTransitData(card: ISO7816Card): TransitData? {
         if (card.applications.any(KSX6924Application.APP_NAME)) {
             // Don't try to handle something that has a KSX6924Application.
-            //return null
+            return null
         }
 
         return KROCAPTransitData.parseTransitData(this)
