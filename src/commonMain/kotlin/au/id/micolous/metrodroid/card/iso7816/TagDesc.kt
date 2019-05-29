@@ -52,3 +52,5 @@ enum class TagContents {
     CURRENCY,
     COUNTRY
 }
+
+val HIDDEN_TAG = TagDesc("", TagContents.HIDE)

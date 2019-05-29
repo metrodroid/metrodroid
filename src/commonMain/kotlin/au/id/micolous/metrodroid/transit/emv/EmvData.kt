@@ -19,6 +19,7 @@
  */
 package au.id.micolous.metrodroid.transit.emv
 
+import au.id.micolous.metrodroid.card.iso7816.HIDDEN_TAG
 import au.id.micolous.metrodroid.card.iso7816.TagContents.*
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.multi.R
@@ -50,20 +51,20 @@ internal object EmvData {
             "82" to TagDesc("Application Interchange Profile", DUMP_SHORT),
             // TODO: show as int
             "87" to TagDesc("Application Priority Indicator", DUMP_SHORT),
-            "8c" to TagDesc("CDOL1", HIDE),
-            "8d" to TagDesc("CDOL2", HIDE),
-            "8e" to TagDesc("CVM list", HIDE),
+            "8c" to HIDDEN_TAG, // CDOL1
+            "8d" to HIDDEN_TAG, // CDOL2
+            "8e" to HIDDEN_TAG, // CVM list
             // TODO: show as int
             "8f" to TagDesc("Certification Authority Public Key Index", DUMP_SHORT),
             "90" to TagDesc(R.string.emv_issuer_public_key_certificate, DUMP_LONG),
             "92" to TagDesc(R.string.emv_issuer_public_key_modulus, DUMP_LONG),
             "93" to TagDesc("Signed Static Application Data", DUMP_LONG),
             "94" to TagDesc("Application File Locator", DUMP_SHORT),
-            "9f07" to TagDesc("Application Usage Control", HIDE),
-            "9f08" to TagDesc("Application Version Number", HIDE),
-            "9f0d" to TagDesc("Issuer Action Code - Default", HIDE),
-            "9f0e" to TagDesc("Issuer Action Code - Denial", HIDE),
-            "9f0f" to TagDesc("Issuer Action Code - Online", HIDE),
+            "9f07" to HIDDEN_TAG, // Application Usage Control
+            "9f08" to HIDDEN_TAG, // Application Version Number
+            "9f0d" to HIDDEN_TAG, // Issuer Action Code - Default
+            "9f0e" to HIDDEN_TAG, // Issuer Action Code - Denial
+            "9f0f" to HIDDEN_TAG, // Issuer Action Code - Online
             "9f10" to TagDesc("Issuer Application Data", DUMP_LONG),
             // TODO: show as int
             "9f11" to TagDesc("Issuer Code Table Index", DUMP_SHORT),
@@ -74,16 +75,16 @@ internal object EmvData {
             "9f32" to TagDesc(R.string.emv_issuer_public_key_exponent, DUMP_LONG),
             // TODO: show as int
             "9f36" to TagDesc("Application Transaction Counter", DUMP_SHORT),
-            "9f38" to TagDesc("PDOL", HIDE),
+            "9f38" to HIDDEN_TAG, // PDOL
             "9f42" to TagDesc(R.string.emv_application_currency, CURRENCY),
             // TODO: show currency
             "9f44" to TagDesc(R.string.emv_application_currency_exponent, DUMP_SHORT),
             "9f46" to TagDesc(R.string.emv_icc_public_key_certificate, DUMP_LONG),
             "9f47" to TagDesc(R.string.emv_icc_public_key_exponent, DUMP_LONG),
             "9f48" to TagDesc(R.string.emv_icc_public_key_modulus, DUMP_LONG),
-            "9f49" to TagDesc("DDOL", HIDE),
-            "9f4a" to TagDesc("Static Data Authentication Tag List", HIDE),
-            LOG_ENTRY to TagDesc("Log entry", HIDE),
-            "bf0c" to TagDesc("Subtag", HIDE)
+            "9f49" to HIDDEN_TAG, // DDOL
+            "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
+            LOG_ENTRY to HIDDEN_TAG, // Log entry
+            "bf0c" to HIDDEN_TAG // Subtag
     )
 }

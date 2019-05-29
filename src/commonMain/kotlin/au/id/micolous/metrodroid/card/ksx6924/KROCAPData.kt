@@ -18,8 +18,8 @@
  */
 package au.id.micolous.metrodroid.card.ksx6924
 
+import au.id.micolous.metrodroid.card.iso7816.HIDDEN_TAG
 import au.id.micolous.metrodroid.card.iso7816.TagContents.DUMP_SHORT
-import au.id.micolous.metrodroid.card.iso7816.TagContents.HIDE
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.multi.R
 
@@ -45,7 +45,7 @@ object KROCAPData {
             TAG_ADDITIONAL_FILE_REFERENCES to TagDesc(R.string.additional_file_references, DUMP_SHORT),
             TAG_TICKET_TYPE to TagDesc(R.string.ticket_type, DUMP_SHORT),
             TAG_EXPIRY_DATE to TagDesc(R.string.expiry_date, DUMP_SHORT),
-            TAG_SERIAL_NUMBER to TagDesc(R.string.card_serial_number, HIDE),
+            TAG_SERIAL_NUMBER to HIDDEN_TAG, // Card serial number
             TAG_AGENCY_SERIAL_NUMBER to TagDesc(R.string.agency_card_serial_number, DUMP_SHORT),
             TAG_DISCRETIONARY_DATA to TagDesc(R.string.discretionary_data, DUMP_SHORT)
     )
