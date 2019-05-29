@@ -1,5 +1,5 @@
 /*
- * KSX6924Utils.java
+ * KSX6924Utils.kt
  *
  * Copyright 2018 Google
  * Copyright 2019 Michael Farrell <micolous+git@gmail.com>

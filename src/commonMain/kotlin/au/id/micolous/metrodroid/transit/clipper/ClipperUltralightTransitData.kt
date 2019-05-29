@@ -1,5 +1,5 @@
 /*
- * ClipperUltralightTransitData.java
+ * ClipperUltralightTransitData.kt
  *
  * Copyright 2018 Google
  *

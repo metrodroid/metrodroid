@@ -1,5 +1,5 @@
 /*
- * AdelaideMetrocardTransitData.java
+ * AdelaideMetrocardTransitData.kt
  *
  * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google

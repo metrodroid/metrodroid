@@ -1,5 +1,5 @@
 /*
- * FelicaProtocol.java
+ * FelicaProtocol.kt
  *
  * Copyright 2011 Kazzz
  * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>

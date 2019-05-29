@@ -1,5 +1,5 @@
 /*
- * DesfireAuthLog.java
+ * DesfireAuthLog.kt
  *
  * Copyright 2018 Google
  *

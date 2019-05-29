@@ -1,5 +1,5 @@
 /*
- * BilheteUnicoSPTransitData.java
+ * BilheteUnicoSPTransitData.kt
  *
  * Copyright 2013 Marcelo Liberato <mliberato@gmail.com>
  * Copyright 2014 Eric Butler <eric@codebutler.com>

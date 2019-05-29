@@ -1,5 +1,5 @@
 /*
- * MetrodroidActivity.java
+ * MetrodroidActivity.kt
  *
  * Copyright 2018 Google
  *

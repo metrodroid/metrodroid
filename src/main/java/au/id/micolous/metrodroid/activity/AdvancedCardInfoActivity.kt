@@ -1,5 +1,5 @@
 /*
- * AdvancedCardInfoActivity.java
+ * AdvancedCardInfoActivity.kt
  *
  * Copyright (C) 2011 Eric Butler
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>

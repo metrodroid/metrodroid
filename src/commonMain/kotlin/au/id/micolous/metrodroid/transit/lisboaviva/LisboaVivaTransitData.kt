@@ -1,5 +1,5 @@
 /*
- * LisboaVivaTransitData.java
+ * LisboaVivaTransitData.kt
  *
  * Copyright 2018 Google
  *

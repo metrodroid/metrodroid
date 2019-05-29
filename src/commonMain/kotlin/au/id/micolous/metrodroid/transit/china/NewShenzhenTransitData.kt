@@ -1,5 +1,5 @@
 /*
- * NewShenzhenTransitData.java
+ * NewShenzhenTransitData.kt
  *
  * Copyright 2018 Google
  *

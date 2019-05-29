@@ -1,5 +1,5 @@
 /*
- * DesfireApplication.java
+ * DesfireApplication.kt
  *
  * Copyright (C) 2011 Eric Butler
  *

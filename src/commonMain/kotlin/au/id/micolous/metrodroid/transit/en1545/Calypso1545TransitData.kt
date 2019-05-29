@@ -1,5 +1,5 @@
 /*
- * Calypso1545TransitData.java
+ * Calypso1545TransitData.kt
  *
  * Copyright 2018 Google
  *

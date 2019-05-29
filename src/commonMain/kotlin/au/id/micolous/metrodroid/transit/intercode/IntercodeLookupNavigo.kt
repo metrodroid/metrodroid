@@ -1,5 +1,5 @@
 /*
- * IntercodeLookupNavigo.java
+ * IntercodeLookupNavigo.kt
  *
  * Copyright 2009-2013 by 'L1L1'
  * Copyright 2018 Google

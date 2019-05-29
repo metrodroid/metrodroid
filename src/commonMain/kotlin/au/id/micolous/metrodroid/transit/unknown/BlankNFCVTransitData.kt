@@ -1,5 +1,5 @@
 /*
- * BlankNFCVTransitData.java
+ * BlankNFCVTransitData.kt
  *
  * Copyright 2018 Google
  *

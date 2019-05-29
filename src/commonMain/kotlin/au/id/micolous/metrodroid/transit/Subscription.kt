@@ -1,5 +1,5 @@
 /*
- * Subscription.java
+ * Subscription.kt
  *
  * Copyright (C) 2011 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
  *

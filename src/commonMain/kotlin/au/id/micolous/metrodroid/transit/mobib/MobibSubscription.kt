@@ -1,5 +1,5 @@
 /*
- * MobibSubscription.java
+ * MobibSubscription.kt
  *
  * Copyright 2018 Google
  *

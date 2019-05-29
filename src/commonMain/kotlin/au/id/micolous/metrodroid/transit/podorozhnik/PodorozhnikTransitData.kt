@@ -1,5 +1,5 @@
 /*
- * PodorozhnikTransitData.java
+ * PodorozhnikTransitData.kt
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google

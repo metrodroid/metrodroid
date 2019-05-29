@@ -1,5 +1,5 @@
 /*
- * CardsFragment.java
+ * CardsFragment.kt
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>

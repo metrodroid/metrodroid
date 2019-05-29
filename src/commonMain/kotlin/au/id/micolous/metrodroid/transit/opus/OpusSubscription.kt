@@ -1,5 +1,5 @@
 /*
- * OpusSubscription.java
+ * OpusSubscription.kt
  *
  * Copyright 2018 Google
  *

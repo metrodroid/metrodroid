@@ -1,5 +1,5 @@
 /*
- * CardsTableColumns.java
+ * CardsTableColumns.kt
  *
  * Copyright 2011-2013 Eric Butler
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>

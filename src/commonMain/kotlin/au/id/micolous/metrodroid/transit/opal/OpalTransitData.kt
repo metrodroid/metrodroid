@@ -1,5 +1,5 @@
 /*
- * OpalTransitData.java
+ * OpalTransitData.kt
  *
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *

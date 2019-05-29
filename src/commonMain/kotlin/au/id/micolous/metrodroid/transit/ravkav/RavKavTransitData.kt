@@ -1,5 +1,5 @@
 /*
- * RavKavTransitData.java
+ * RavKavTransitData.kt
  *
  * Copyright 2018 Google
  *

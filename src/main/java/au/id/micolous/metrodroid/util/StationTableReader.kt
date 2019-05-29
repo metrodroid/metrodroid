@@ -1,5 +1,5 @@
 /*
- * StationTableReader.java
+ * StationTableReader.kt
  * Reader for Metrodroid Station Table (MdST) files.
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>

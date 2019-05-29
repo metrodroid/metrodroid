@@ -1,5 +1,5 @@
 /*
- * AlertDialogPreference.java
+ * AlertDialogPreference.kt
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify

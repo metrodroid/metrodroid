@@ -1,5 +1,5 @@
 /*
- * HSLRefill.java
+ * HSLRefill.kt
  *
  * Copyright 2013 Lauri Andler <lauri.andler@gmail.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>

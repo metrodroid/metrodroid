@@ -1,5 +1,5 @@
 /*
- * LeapTransitData.java
+ * LeapTransitData.kt
  *
  * Copyright 2018-2019 Google
  *

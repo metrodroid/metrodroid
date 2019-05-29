@@ -1,5 +1,5 @@
 /*
- * BackgroundCardActivity.java
+ * BackgroundCardActivity.kt
  *
  * Copyright 2014 Eric Butler
  *

@@ -1,5 +1,5 @@
 /*
- * MainActivity.java
+ * MainActivity.kt
  *
  * Copyright (C) 2011 Eric Butler
  *

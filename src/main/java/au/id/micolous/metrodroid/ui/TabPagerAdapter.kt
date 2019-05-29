@@ -1,5 +1,5 @@
 /*
- * TabPagerAdapter.java
+ * TabPagerAdapter.kt
  *
  * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
  *

@@ -1,5 +1,5 @@
 /*
- * IntercodeLookupTisseo.java
+ * IntercodeLookupTisseo.kt
  *
  * Copyright 2018 Google
  *

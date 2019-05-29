@@ -1,5 +1,5 @@
 /*
- * RavKavTrip.java
+ * RavKavTrip.kt
  *
  * Copyright 2018 Google
  *

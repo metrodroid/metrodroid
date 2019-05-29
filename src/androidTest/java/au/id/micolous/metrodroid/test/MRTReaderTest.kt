@@ -1,5 +1,5 @@
 /*
- * MTRReaderTest.java
+ * MTRReaderTest.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * KeysTableColumns.java
+ * KeysTableColumns.kt
  *
  * Copyright (C) 2012 Eric Butler
  *

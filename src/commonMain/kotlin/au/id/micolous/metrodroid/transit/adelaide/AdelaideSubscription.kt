@@ -1,5 +1,5 @@
 /*
- * AdelaideSubscription.java
+ * AdelaideSubscription.kt
  *
  * Copyright 2018 Google
  *

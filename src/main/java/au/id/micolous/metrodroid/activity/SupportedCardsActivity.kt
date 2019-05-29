@@ -1,5 +1,5 @@
 /*
- * SupportedCardsActivity.java
+ * SupportedCardsActivity.kt
  *
  * Copyright 2011, 2017 Eric Butler
  * Copyright 2015-2018 Michael Farrell

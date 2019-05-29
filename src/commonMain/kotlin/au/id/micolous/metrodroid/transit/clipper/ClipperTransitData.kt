@@ -1,5 +1,5 @@
 /*
- * ClipperTransitData.java
+ * ClipperTransitData.kt
  *
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>

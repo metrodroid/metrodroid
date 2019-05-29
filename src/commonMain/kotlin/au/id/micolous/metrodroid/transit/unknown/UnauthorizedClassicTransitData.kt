@@ -1,5 +1,5 @@
 /*
- * UnauthorizedClassicTransitData.java
+ * UnauthorizedClassicTransitData.kt
  *
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *

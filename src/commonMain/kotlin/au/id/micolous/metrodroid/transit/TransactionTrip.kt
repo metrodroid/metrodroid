@@ -1,5 +1,5 @@
 /*
- * TransactionTrip.java
+ * TransactionTrip.kt
  *
  * Copyright 2018 Google
  *

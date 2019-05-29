@@ -1,5 +1,5 @@
 /*
- * TransitCurrency.java
+ * TransitCurrency.kt
  *
  * Copyright 2018 Google
  *

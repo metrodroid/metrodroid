@@ -1,5 +1,5 @@
 /*
- * OpusTrip.java
+ * OpusTrip.kt
  *
  * Copyright 2018 Etienne Dubeau
  * Copyright 2018 Google

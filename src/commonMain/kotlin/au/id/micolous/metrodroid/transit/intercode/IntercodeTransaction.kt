@@ -1,5 +1,5 @@
 /*
- * IntercodeTrip.java
+ * IntercodeTrip.kt
  *
  * Copyright 2018 Google
  *

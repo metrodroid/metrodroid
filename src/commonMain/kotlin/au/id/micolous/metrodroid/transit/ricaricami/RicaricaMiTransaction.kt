@@ -1,5 +1,5 @@
 /*
- * RicaricaMiTransaction.java
+ * RicaricaMiTransaction.kt
  *
  * Copyright 2018 Google
  *

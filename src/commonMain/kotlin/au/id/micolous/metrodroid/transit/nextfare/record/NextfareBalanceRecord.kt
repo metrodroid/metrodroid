@@ -1,5 +1,5 @@
 /*
- * NextfareBalanceRecord.java
+ * NextfareBalanceRecord.kt
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *

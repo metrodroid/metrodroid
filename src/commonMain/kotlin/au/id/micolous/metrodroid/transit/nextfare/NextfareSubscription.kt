@@ -1,5 +1,5 @@
 /*
- * NextfareSubscription.java
+ * NextfareSubscription.kt
  *
  * Copyright 2016-2017 Michael Farrell <micolous+git@gmail.com>
  *

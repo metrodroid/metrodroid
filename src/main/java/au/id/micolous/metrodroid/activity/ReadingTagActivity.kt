@@ -1,5 +1,5 @@
 /*
- * ReadingTagActivity.java
+ * ReadingTagActivity.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>

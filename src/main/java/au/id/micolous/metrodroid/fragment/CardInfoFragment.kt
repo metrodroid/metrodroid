@@ -1,5 +1,5 @@
 /*
- * CardInfoFragment.java
+ * CardInfoFragment.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  *

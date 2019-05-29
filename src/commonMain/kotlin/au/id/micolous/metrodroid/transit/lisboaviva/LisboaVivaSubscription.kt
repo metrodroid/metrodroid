@@ -1,5 +1,5 @@
 /*
- * LisboaVivaSubscription.java
+ * LisboaVivaSubscription.kt
  *
  * Copyright 2018 Google
  *

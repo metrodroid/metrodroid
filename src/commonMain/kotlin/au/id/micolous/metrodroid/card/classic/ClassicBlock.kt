@@ -1,5 +1,5 @@
 /*
- * ClassicBlock.java
+ * ClassicBlock.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>

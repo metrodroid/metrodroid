@@ -1,5 +1,5 @@
 /*
- * IntercodeLookupSTR.java
+ * IntercodeLookupSTR.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * MobibTransitData.java
+ * MobibTransitData.kt
  *
   * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * StandardDesfireFileSettings.java
+ * StandardDesfireFileSettings.kt
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
  *

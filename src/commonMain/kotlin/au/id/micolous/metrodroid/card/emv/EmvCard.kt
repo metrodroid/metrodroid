@@ -1,5 +1,5 @@
 /*
- * EmvCard.java
+ * EmvCard.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * KMTTrip.java
+ * KMTTrip.kt
  *
  * Copyright 2018 Bondan Sumbodo <sybond@gmail.com>
  *

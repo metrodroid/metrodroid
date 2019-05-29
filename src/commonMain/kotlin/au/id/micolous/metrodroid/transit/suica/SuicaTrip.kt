@@ -1,5 +1,5 @@
 /*
- * SuicaTrip.java
+ * SuicaTrip.kt
  *
  * Copyright 2011 Kazzz
  * Copyright 2014-2015 Eric Butler <eric@codebutler.com>

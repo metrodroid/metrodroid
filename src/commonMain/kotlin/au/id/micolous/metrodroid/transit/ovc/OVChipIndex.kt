@@ -1,5 +1,5 @@
 /*
- * OVChipIndex.java
+ * OVChipIndex.kt
  *
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
  * Copyright 2012 Eric Butler <eric@codebutler.com>

@@ -1,5 +1,5 @@
 /*
- * IntercodeTrip.java
+ * IntercodeTrip.kt
  *
  * Copyright 2009 by 'L1L1'
  * Copyright 2013-2014 by 'kalon33'

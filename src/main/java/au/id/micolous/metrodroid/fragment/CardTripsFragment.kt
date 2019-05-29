@@ -1,5 +1,5 @@
 /*
- * CardTripsActivity.java
+ * CardTripsActivity.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2013 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>

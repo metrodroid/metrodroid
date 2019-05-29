@@ -1,5 +1,5 @@
 /*
- * AtHopStubTransitData.java
+ * AtHopStubTransitData.kt
  *
  * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
  *

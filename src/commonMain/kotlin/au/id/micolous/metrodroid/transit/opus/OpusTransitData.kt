@@ -1,5 +1,5 @@
 /*
- * OpusTransitData.java
+ * OpusTransitData.kt
  *
  * Copyright 2018 Etienne Dubeau
  * Copyright 2018 Google

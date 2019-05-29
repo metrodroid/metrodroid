@@ -1,5 +1,5 @@
 /*
- * En1545Subscription.java
+ * En1545Subscription.kt
  *
  * Copyright 2018 Google
  *

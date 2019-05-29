@@ -1,5 +1,5 @@
 /*
- * EZLinkTrip.java
+ * EZLinkTrip.kt
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2011-2012 Eric Butler <eric@codebutler.com>

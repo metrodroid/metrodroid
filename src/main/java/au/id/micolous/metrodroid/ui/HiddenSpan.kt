@@ -1,5 +1,5 @@
 /*
- * HiddenSpan.java
+ * HiddenSpan.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *

@@ -1,5 +1,5 @@
 /*
- * MetroQTransitData.java
+ * MetroQTransitData.kt
  *
  * Copyright 2018 Google
  *

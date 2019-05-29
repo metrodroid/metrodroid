@@ -1,5 +1,5 @@
 /*
- * ClassicSector.java
+ * ClassicSector.kt
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>

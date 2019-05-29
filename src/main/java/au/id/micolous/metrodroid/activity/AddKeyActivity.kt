@@ -1,5 +1,5 @@
 /*
- * AddKeyActivity.java
+ * AddKeyActivity.kt
  *
  * Copyright 2012-2014 Eric Butler
  * Copyright 2016-2018 Michael Farrell

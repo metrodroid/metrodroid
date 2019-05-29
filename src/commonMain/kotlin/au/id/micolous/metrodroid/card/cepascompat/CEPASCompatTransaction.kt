@@ -1,5 +1,5 @@
 /*
- * CEPASTransaction.java
+ * CEPASCompatTransaction.kt
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2013-2014 Eric Butler <eric@codebutler.com>

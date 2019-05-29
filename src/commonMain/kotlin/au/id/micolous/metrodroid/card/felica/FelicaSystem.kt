@@ -1,5 +1,5 @@
 /*
- * FelicaSystem.java
+ * FelicaSystem.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
  *

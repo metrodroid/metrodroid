@@ -1,5 +1,5 @@
 /*
- * NextfareTravelPassRecord.java
+ * NextfareTravelPassRecord.kt
  *
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *

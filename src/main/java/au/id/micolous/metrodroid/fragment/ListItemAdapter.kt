@@ -1,5 +1,5 @@
 /*
- * ListItemAdapter.java
+ * ListItemAdapter.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  * Copyright 2016 Michael Farrell <micolous+git@gmail.com>

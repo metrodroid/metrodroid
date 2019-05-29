@@ -1,5 +1,5 @@
 /*
- * ISO7816Application.java
+ * ISO7816Application.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google

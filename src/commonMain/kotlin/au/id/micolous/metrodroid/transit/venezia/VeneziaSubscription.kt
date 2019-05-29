@@ -1,5 +1,5 @@
 /*
- * RavKavSubscription.java
+ * RavKavSubscription.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * KeysActivity.java
+ * KeysActivity.kt
  *
  * Copyright (C) 2012 Eric Butler
  *

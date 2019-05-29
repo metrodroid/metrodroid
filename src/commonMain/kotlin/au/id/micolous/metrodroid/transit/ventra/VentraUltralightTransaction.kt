@@ -1,5 +1,5 @@
 /*
- * VentraUltralightTrip.java
+ * VentraUltralightTrip.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * UnsupportedDesfireFileSettings.java
+ * UnsupportedDesfireFileSettings.kt
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
  *

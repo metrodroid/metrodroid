@@ -1,5 +1,5 @@
 /*
- * TransitData.java
+ * TransitData.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>

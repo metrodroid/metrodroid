@@ -1,5 +1,5 @@
 /*
- * BlankDesfireTransitData.java
+ * BlankDesfireTransitData.kt
  *
  * Copyright 2018 Google
  *

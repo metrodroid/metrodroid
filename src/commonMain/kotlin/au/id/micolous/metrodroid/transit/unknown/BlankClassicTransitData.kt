@@ -1,5 +1,5 @@
 /*
- * BlankClassicTransitData.java
+ * BlankClassicTransitData.kt
  *
  * Copyright 2018 Google
  *

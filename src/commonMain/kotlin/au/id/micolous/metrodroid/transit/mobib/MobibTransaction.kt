@@ -1,5 +1,5 @@
 /*
- * MobibTrip.java
+ * MobibTrip.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * IntercodeSubscription.java
+ * IntercodeSubscription.kt
  *
  * Copyright 2018 Google
  *

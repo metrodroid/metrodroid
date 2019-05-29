@@ -1,5 +1,5 @@
 /*
- * BlankUltralightTransitData.java
+ * BlankUltralightTransitData.kt
  *
  * Copyright 2018 Google
  *

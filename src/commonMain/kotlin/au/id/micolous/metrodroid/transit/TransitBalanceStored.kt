@@ -1,5 +1,5 @@
 /*
- * TransitBalanceStored.java
+ * TransitBalanceStored.kt
  *
  * Copyright 2018 Google
  *

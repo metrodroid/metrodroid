@@ -1,5 +1,5 @@
 /*
- * SuicaDBUtil.java
+ * SuicaDBUtil.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *

@@ -1,5 +1,5 @@
 /*
- * OrcaTransitData.java
+ * OrcaTransitData.kt
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
  * Copyright 2015 Sean CyberKitsune McClenaghan

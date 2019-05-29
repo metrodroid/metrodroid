@@ -1,5 +1,5 @@
 /*
- * BetterAsyncTask.java
+ * BetterAsyncTask.kt
  *
  * Copyright (C) 2012 Eric Butler <eric@codebutler.com>
  *

@@ -1,5 +1,5 @@
 /*
- * CardBalanceFragment.java
+ * CardBalanceFragment.kt
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2015 Michael Farrell <micolous+git@gmail.com>

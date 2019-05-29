@@ -1,5 +1,5 @@
 /*
- * UnauthorizedException.java
+ * UnauthorizedException.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  *

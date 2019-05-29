@@ -1,5 +1,5 @@
 /*
- * DesfireFileSettings.java
+ * DesfireFileSettings.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
  * Copyright 2016 Michael Farrell <micolous+git@gmail.com>

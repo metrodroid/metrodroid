@@ -1,5 +1,5 @@
 /*
- * TransitCurrencyRef.java
+ * TransitCurrencyRef.kt
  *
  * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *

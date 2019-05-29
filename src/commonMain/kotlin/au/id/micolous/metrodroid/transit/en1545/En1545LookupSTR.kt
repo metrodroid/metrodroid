@@ -1,5 +1,5 @@
 /*
- * En1545LookupSTR.java
+ * En1545LookupSTR.kt
  *
  * Copyright 2018 Google
  *

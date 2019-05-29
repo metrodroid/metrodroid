@@ -1,5 +1,5 @@
 /*
- * NewShenzhenTrip.java
+ * NewShenzhenTrip.kt
  *
  * Copyright 2018 Google
  *

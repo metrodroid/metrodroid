@@ -1,5 +1,5 @@
 /*
- * NextfareUnknownUltralightTrip.java
+ * NextfareUnknownUltralightTrip.kt
  *
  * Copyright 2018 Google
  *

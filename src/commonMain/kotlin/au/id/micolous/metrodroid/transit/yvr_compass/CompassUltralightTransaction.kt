@@ -1,5 +1,5 @@
 /*
- * CompassUltralightTrip.java
+ * CompassUltralightTrip.kt
  *
  * Copyright 2018 Google
  *

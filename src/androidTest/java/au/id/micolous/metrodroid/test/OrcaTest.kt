@@ -1,5 +1,5 @@
 /*
- * OrcaTest.java
+ * OrcaTest.kt
  *
  * Copyright 2018 Google
  *

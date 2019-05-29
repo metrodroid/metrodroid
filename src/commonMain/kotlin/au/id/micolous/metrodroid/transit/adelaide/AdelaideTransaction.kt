@@ -1,5 +1,5 @@
 /*
- * AdelaideTransaction.java
+ * AdelaideTransaction.kt
  *
  * Copyright 2018 Google
  *

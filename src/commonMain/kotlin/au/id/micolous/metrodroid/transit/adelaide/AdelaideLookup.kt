@@ -1,5 +1,5 @@
 /*
- * AdelaideLookup.java
+ * AdelaideLookup.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * LisboaVivaTrip.java
+ * LisboaVivaTrip.kt
  *
  * Copyright 2018 Google
  *

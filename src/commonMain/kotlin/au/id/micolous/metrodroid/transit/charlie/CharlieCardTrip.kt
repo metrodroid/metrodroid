@@ -1,5 +1,5 @@
 /*
- * CharlieCardTrip.java
+ * CharlieCardTrip.kt
  *
  * Copyright 2018 Google
  *

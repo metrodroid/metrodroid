@@ -1,5 +1,5 @@
 /*
- * Card.java
+ * Card.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2016 Michael Farrell <micolous+git@gmail.com>

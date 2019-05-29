@@ -1,5 +1,5 @@
 /*
- * ChinaCard.java
+ * ChinaCard.kt
  *
  * Copyright 2018 Google
  *

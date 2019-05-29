@@ -1,5 +1,5 @@
 /*
- * RavKavLookup.java
+ * RavKavLookup.kt
  *
  * Copyright 2018 Google
  *

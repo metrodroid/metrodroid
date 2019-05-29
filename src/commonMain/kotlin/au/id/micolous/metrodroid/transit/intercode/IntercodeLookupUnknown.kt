@@ -1,5 +1,5 @@
 /*
- * IntercodeLookupUnknown.java
+ * IntercodeLookupUnknown.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * CharlieCardTransitData.java
+ * CharlieCardTransitData.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * InvalidClassicSector.java
+ * InvalidClassicSector.kt
  *
  * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>

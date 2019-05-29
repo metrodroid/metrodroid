@@ -1,5 +1,5 @@
 /*
- * NumberPickerPreference.java
+ * NumberPickerPreference.kt
  * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
  *
  * Based on EditTextPreference from Android Open Source Project:

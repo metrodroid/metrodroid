@@ -1,5 +1,5 @@
 /*
- * TroikaUltralightTransitData.java
+ * TroikaUltralightTransitData.kt
  *
  * Copyright 2018 Google
  *

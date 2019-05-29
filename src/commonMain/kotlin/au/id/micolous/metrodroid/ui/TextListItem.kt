@@ -1,5 +1,5 @@
 /*
- * TextListItem.java
+ * TextListItem.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>

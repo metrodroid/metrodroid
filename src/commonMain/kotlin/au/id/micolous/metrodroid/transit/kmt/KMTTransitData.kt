@@ -1,5 +1,5 @@
 /*
- * KMTTransitData.java
+ * KMTTransitData.kt
  *
  * Copyright 2018 Bondan Sumbodo <sybond@gmail.com>
  *

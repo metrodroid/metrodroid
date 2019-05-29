@@ -1,5 +1,5 @@
 /*
- * LisboaVivaLookup.java
+ * LisboaVivaLookup.kt
  *
  * Copyright 2018 Google
  *

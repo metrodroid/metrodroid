@@ -1,5 +1,5 @@
 /*
- * CEPASPurse.java
+ * CEPASCompatPurse.kt
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>

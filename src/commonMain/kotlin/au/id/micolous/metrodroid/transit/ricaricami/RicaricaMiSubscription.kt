@@ -1,5 +1,5 @@
 /*
- * RicaricaMiSubscription.java
+ * RicaricaMiSubscription.kt
  *
  * Copyright 2018 Google
  *

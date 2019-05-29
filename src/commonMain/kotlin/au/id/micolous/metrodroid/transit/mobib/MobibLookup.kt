@@ -1,5 +1,5 @@
 /*
- * MobibLookup.java
+ * MobibLookup.kt
  *
  * Copyright 2018 Google
  *

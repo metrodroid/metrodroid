@@ -1,5 +1,5 @@
 /*
- * ValueDesfireFileSettings.java
+ * ValueDesfireFileSettings.kt
  *
  * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
  *

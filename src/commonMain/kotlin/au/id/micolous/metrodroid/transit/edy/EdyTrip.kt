@@ -1,5 +1,5 @@
 /*
- * EdyTransitData.java
+ * EdyTransitData.kt
  *
  * Copyright 2013 Chris Norden
  * Copyright 2013-2015 Eric Butler <eric@codebutler.com>

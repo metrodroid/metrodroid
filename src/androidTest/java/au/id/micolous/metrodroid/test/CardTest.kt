@@ -1,5 +1,5 @@
 /*
- * CardTest.java
+ * CardTest.kt
  *
  * Copyright 2017-2018 Michael Farrell <micolous+git@gmail.com>
  *

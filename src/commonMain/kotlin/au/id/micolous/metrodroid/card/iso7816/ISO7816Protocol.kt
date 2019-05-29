@@ -1,5 +1,5 @@
 /*
- * ISO7816Protocol.java
+ * ISO7816Protocol.kt
  *
  * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018-2019 Google

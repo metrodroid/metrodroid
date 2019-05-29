@@ -1,5 +1,5 @@
 /*
- * IntercodeTransitData.java
+ * IntercodeTransitData.kt
  *
  * Copyright 2018 Google
  *

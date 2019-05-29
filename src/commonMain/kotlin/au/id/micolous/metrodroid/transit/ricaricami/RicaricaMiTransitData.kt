@@ -1,5 +1,5 @@
 /*
- * RicaricaMiTransitData.java
+ * RicaricaMiTransitData.kt
  *
  * Copyright 2018 Google
  *

@@ -1,5 +1,5 @@
 /*
- * NumericalStringComparator.java
+ * NumericalStringComparator.kt
  *
  * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
  *
