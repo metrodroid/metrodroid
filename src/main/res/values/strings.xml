@@ -1588,6 +1588,23 @@
         <item quantity="one">PIN attempt remaining</item>
         <item quantity="other">PIN attempts remaining</item>
     </plurals>
+    <!-- Translators: PAN = Primary Account Number (commonly known as credit card number) -->
+    <string name="emv_pan">PAN</string>
+    <!-- Translators: PAN = Primary Account Number (commonly known as credit card number) -->
+    <string name="emv_pan_sequence_number">PAN sequence number</string>
+    <string name="emv_application_interchange_profile">Application interchange profile</string>
+    <string name="emv_application_priority_indicator">Application priority indicator</string>
+    <string name="emv_ca_public_key_index">Certification authority public key index</string>
+    <string name="emv_signed_static_application_data">Signed static application data</string>
+    <string name="emv_application_file_locator">Application file locator</string>
+    <!-- https://www.emvlab.org/emvtags/show/t9F10/ -->
+    <string name="emv_issuer_application_data">Issuer application data</string>
+    <!-- https://www.emvlab.org/emvtags/show/t9F11/ -->
+    <string name="emv_issuer_code_table_index">Issuer code table index</string>
+    <string name="emv_track_1_discretionary_data">Track 1 discretionary data</string>
+    <string name="emv_application_cryptogram">Application cryptogram</string>
+    <string name="emv_cryptogram_information_data">Cryptogram information data</string>
+    <string name="emv_application_transaction_counter">Application transaction counter</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>

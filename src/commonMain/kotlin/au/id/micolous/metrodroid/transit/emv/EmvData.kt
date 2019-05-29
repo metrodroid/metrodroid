@@ -37,7 +37,7 @@ internal object EmvData {
             "56" to TagDesc(R.string.emv_track_1, ASCII),
             T2Data to TagDesc(R.string.emv_track_2, DUMP_SHORT),
             // TODO: group by 4
-            "5a" to TagDesc("PAN", DUMP_SHORT),
+            "5a" to TagDesc(R.string.emv_pan, DUMP_SHORT),
             "5f20" to TagDesc(R.string.card_holders_name, ASCII),
             // TODO: show as date
             "5f24" to TagDesc(R.string.expiry_date, DUMP_SHORT),
@@ -47,34 +47,34 @@ internal object EmvData {
             // TODO: show language
             "5f2d" to TagDesc(R.string.emv_language_preference, ASCII),
             // TODO: show as int
-            "5f34" to TagDesc("PAN sequence number", DUMP_SHORT),
-            "82" to TagDesc("Application Interchange Profile", DUMP_SHORT),
+            "5f34" to TagDesc(R.string.emv_pan_sequence_number, DUMP_SHORT),
+            "82" to TagDesc(R.string.emv_application_interchange_profile, DUMP_SHORT),
             // TODO: show as int
-            "87" to TagDesc("Application Priority Indicator", DUMP_SHORT),
+            "87" to TagDesc(R.string.emv_application_priority_indicator, DUMP_SHORT),
             "8c" to HIDDEN_TAG, // CDOL1
             "8d" to HIDDEN_TAG, // CDOL2
             "8e" to HIDDEN_TAG, // CVM list
             // TODO: show as int
-            "8f" to TagDesc("Certification Authority Public Key Index", DUMP_SHORT),
+            "8f" to TagDesc(R.string.emv_ca_public_key_index, DUMP_SHORT),
             "90" to TagDesc(R.string.emv_issuer_public_key_certificate, DUMP_LONG),
             "92" to TagDesc(R.string.emv_issuer_public_key_modulus, DUMP_LONG),
-            "93" to TagDesc("Signed Static Application Data", DUMP_LONG),
-            "94" to TagDesc("Application File Locator", DUMP_SHORT),
+            "93" to TagDesc(R.string.emv_signed_static_application_data, DUMP_LONG),
+            "94" to TagDesc(R.string.emv_application_file_locator, DUMP_SHORT),
             "9f07" to HIDDEN_TAG, // Application Usage Control
             "9f08" to HIDDEN_TAG, // Application Version Number
             "9f0d" to HIDDEN_TAG, // Issuer Action Code - Default
             "9f0e" to HIDDEN_TAG, // Issuer Action Code - Denial
             "9f0f" to HIDDEN_TAG, // Issuer Action Code - Online
-            "9f10" to TagDesc("Issuer Application Data", DUMP_LONG),
+            "9f10" to TagDesc(R.string.emv_issuer_application_data, DUMP_LONG),
             // TODO: show as int
-            "9f11" to TagDesc("Issuer Code Table Index", DUMP_SHORT),
+            "9f11" to TagDesc(R.string.emv_issuer_code_table_index, DUMP_SHORT),
             TAG_NAME2 to TagDesc(R.string.emv_name_2, ASCII),
-            "9f1f" to TagDesc("Track 1 Discretionary Data", ASCII),
-            "9f26" to TagDesc("Application Cryptogram", DUMP_LONG),
-            "9f27" to TagDesc("Cryptogram Information Data", DUMP_LONG),
+            "9f1f" to TagDesc(R.string.emv_track_1_discretionary_data, ASCII),
+            "9f26" to TagDesc(R.string.emv_application_cryptogram, DUMP_LONG),
+            "9f27" to TagDesc(R.string.emv_cryptogram_information_data, DUMP_LONG),
             "9f32" to TagDesc(R.string.emv_issuer_public_key_exponent, DUMP_LONG),
             // TODO: show as int
-            "9f36" to TagDesc("Application Transaction Counter", DUMP_SHORT),
+            "9f36" to TagDesc(R.string.emv_application_transaction_counter, DUMP_SHORT),
             "9f38" to HIDDEN_TAG, // PDOL
             "9f42" to TagDesc(R.string.emv_application_currency, CURRENCY),
             // TODO: show currency

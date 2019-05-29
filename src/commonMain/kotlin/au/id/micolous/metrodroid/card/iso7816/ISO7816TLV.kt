@@ -138,7 +138,7 @@ object ISO7816TLV {
         return when (tagDesc.contents) {
             TagContents.HIDE -> null
             TagContents.DUMP_LONG ->
-                ListItem(FormattedString(tagDesc.name), data.toHexDump())
+                ListItem(tagDesc.name, data.toHexDump())
             else -> ListItem(tagDesc.name, tagDesc.interpretTag(data))
         }
     }

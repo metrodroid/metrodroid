@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -71,7 +72,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
         if (tag == null)
             it.key + "=" + it.value.toHexString()
         else
-            tag.name + "=" + tag.interpretTag(it.value)
+            Localizer.localizeString(tag.name) + "=" + tag.interpretTag(it.value)
     }
 
     companion object {

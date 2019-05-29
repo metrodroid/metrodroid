@@ -19,17 +19,14 @@
  */
 package au.id.micolous.metrodroid.card.iso7816
 
-import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.countryCodeToName
 import au.id.micolous.metrodroid.util.currencyNameByCode
 
-data class TagDesc(val name: String, val contents: TagContents) {
-    // TODO: Make this the primary constructor
-    constructor(name: StringResource, contents: TagContents) : this(Localizer.localizeString(name), contents)
-
+data class TagDesc(val name: StringResource, val contents: TagContents) {
     fun interpretTag(data: ImmutableByteArray) : String = when (contents) {
         TagContents.ASCII -> data.readASCII()
         TagContents.DUMP_SHORT -> data.toHexString()
@@ -53,4 +50,4 @@ enum class TagContents {
     COUNTRY
 }
 
-val HIDDEN_TAG = TagDesc("", TagContents.HIDE)
+val HIDDEN_TAG = TagDesc(R.string.unknown, TagContents.HIDE)
