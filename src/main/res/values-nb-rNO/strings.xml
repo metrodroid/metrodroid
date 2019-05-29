@@ -831,4 +831,16 @@
     <string name="location_cadiz">Cádiz, Spania</string>
     <string name="location_tampere">Tammerfors, Finland</string>
     <string name="blank_nfcv_card">Blankt Vicinity-kort</string>
+    <string name="supported_protocols">Støttede protokoller</string>
+    <string name="emv_name_1">Navn 1</string>
+    <string name="emv_name_2">Navn 2</string>
+    <string name="emv_track_1">Stripe 1</string>
+    <string name="emv_track_2">Stripe 2</string>
+    <string name="issuer_country">Utstederland</string>
+    <string name="emv_language_preference">Språkforvalg</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">PIN-forsøk gjenstår</item>
+        <item quantity="other">PIN-forsøk gjenstår</item>
+    </plurals>
+    <string name="location_gauteng">Gauteng, Sør-Afrika</string>
 </resources>
