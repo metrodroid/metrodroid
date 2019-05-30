@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from argparse import ArgumentParser, FileType
+from binascii import a2b_hex
 from base64 import b16encode, b64encode
 from io import TextIOWrapper
 from os.path import basename, getmtime
@@ -40,7 +41,8 @@ FORMATS = [
   'json-no-uid-keys', # JSON
   'json-static-keys', # JSON (static key mode)
   
-  # Third-party card formats -- not supported by Metrodroid
+  # Third-party card formats
+  'mfc',       # Raw MFC dump
   'mct',       # MIFARE Classic Tool -- https://github.com/ikarus23/MifareClassicTool/blob/master/tools/example-files/example-dump-file.txt
   'csv-keys',  # CSV file with keys
 ]
@@ -139,6 +141,25 @@ class Mct:
       output_f.write(l)
 
 
+class Mfc:
+  def make_block(self, block_no, data):
+    return data
+
+  def make_sector(self, sector_no, blocks, key):
+    for block in blocks:
+      yield block
+
+  def make_card(self, uid, scanned_at, label, sectors):
+    return itertools.chain(*sectors)
+
+  def write_cards(self, output_f, cards):
+    if len(cards) != 1:
+      raise Exception('expected only 1 card in mfc format')
+
+    for l in cards[0]:
+      output_f.write(l)
+
+
 class MetrodroidXml:
   def __init__(self, format_s):
     self.format = format_s
@@ -187,9 +208,95 @@ class MetrodroidXml:
     # We have made a structure, dump it to disk
     tree = etree.ElementTree(root)
     tree.write(output_f, encoding="utf-8", xml_declaration=True)
- 
 
-def mfc_converter(input_fs, output_f, format_s):
+
+def read_mfc_dump(input_f, writer):
+  # Read the MIFARE card entirely first
+  card_data = input_f.read()
+
+  # Card data should be 1K or 4K
+  assert len(card_data) in (1024, 4096)
+
+  if len(card_data) == 1024:
+    sector_count = 16
+  elif len(card_data) == 4096:
+    sector_count = 40
+
+  # Lets make some XML.
+  sectors = []
+  for sector_no in range(sector_count):
+    if sector_no < 32:
+      block_count = 4
+    else:
+      block_count = 16
+
+    block_data = None
+    blocks = []
+    for block_no in range(block_count):
+      if sector_no < 32:
+        offset = (sector_no * 64) + (block_no * 16)
+      else:
+        offset = 2048 + ((sector_no - 32) * 256) + (block_no * 16)
+
+      block_data = card_data[offset:offset+16]
+      blocks.append(writer.make_block(block_no, block_data))
+
+    # Put key A into the key attribute
+    sectors.append(writer.make_sector(sector_no, blocks, block_data[:6]))
+
+  return writer.make_card(
+    uid=card_data[0:4],
+    scanned_at=int(getmtime(input_f.name)),
+    label=basename(input_f.name),
+    sectors=sectors
+  )
+
+
+def read_metro_json(input_f, writer):
+  # Read the MIFARE card entirely first
+  card_data = json.load(input_f)
+
+  if 'mifareClassic' not in card_data:
+    raise Exception('expected mifareClassic dump')
+
+  sectors = []
+
+  for sector_no, sector in enumerate(card_data['mifareClassic']['sectors']):
+    blocks = []
+    key = b'\xFF' * 6 # default key
+    last_block = len(sector['blocks']) - 1
+    for block_no, block in enumerate(sector['blocks']):
+      block_data = a2b_hex(block)
+
+      if block_no == last_block:
+        # insert the key
+        if 'keyA' in sector:
+          key = a2b_hex(sector['keyA'])
+          block_data = key + block_data[6:]
+        if 'keyB' in sector:
+          key = a2b_hex(sector['keyB'])
+          block_data = block_data[:-6] + key
+
+      blocks.append(writer.make_block(block_no, block_data))
+
+    sectors.append(writer.make_sector(sector_no, blocks, key))
+
+  return writer.make_card(
+    uid=a2b_hex(card_data['tagId']),
+    scanned_at=int(getmtime(input_f.name)),
+    label=basename(input_f.name),
+    sectors=sectors
+  )
+
+
+INPUT_FORMATS = {
+  'mfc': read_mfc_dump,
+  'mjson': read_metro_json,
+  'metrojson': read_metro_json,
+}
+
+
+def mfc_converter(input_fs, output_f, format_s, informat_s):
   writer = None
   if is_xml(format_s):
     writer = MetrodroidXml(format_s)
@@ -201,62 +308,30 @@ def mfc_converter(input_fs, output_f, format_s):
     writer = CsvKeys()
   elif format_s == 'mct':
     writer = Mct()
+  elif format_s == 'mfc':
+    writer = Mfc()
   else:
     raise Exception
+
+  reader = INPUT_FORMATS.get(informat_s)
+  if reader is None:
+    raise Exception
+
   cards = []
 
   for input_f in input_fs:
-    # Read the MIFARE card entirely first
-    card_data = input_f.read()
-
-    # Card data should be 1K or 4K
-    assert len(card_data) in (1024, 4096)
-
-    if len(card_data) == 1024:
-      sector_count = 16
-    elif len(card_data) == 4096:
-      sector_count = 40
-
-    # Lets make some XML.
-    sectors = []
-    for sector_no in range(sector_count):
-      if sector_no < 32:
-        block_count = 4
-      else:
-        block_count = 16
-
-      block_data = None
-      blocks = []
-      for block_no in range(block_count):
-        if sector_no < 32:
-          offset = (sector_no * 64) + (block_no * 16)
-        else:
-          offset = 2048 + ((sector_no - 32) * 256) + (block_no * 16)
-
-        block_data = card_data[offset:offset+16]
-        blocks.append(writer.make_block(block_no, block_data))
-      
-      # Put key A into the key attribute
-      sectors.append(writer.make_sector(sector_no, blocks, block_data[:6]))
-
-    card = writer.make_card(
-      uid=card_data[0:4],
-      scanned_at=int(getmtime(input_f.name)),
-      label=basename(input_f.name),
-      sectors=sectors
-    )
-
+    card = reader(input_f, writer)
+    input_f.close()
     cards.append(card)
 
-  if is_xml(format_s) or format_s == 'raw-keys':
+  if is_xml(format_s) or format_s in ('raw-keys', 'mfc'):
     writer.write_cards(output_f, cards)
     output_f.flush()
     output_f.close()
   else:
     with TextIOWrapper(output_f, encoding='utf-8') as wrapper:
       writer.write_cards(wrapper, cards)
-  input_f.close()
-  
+
 
 def main():
   parser = ArgumentParser()
@@ -269,8 +344,12 @@ def main():
   parser.add_argument('-f', '--format', choices=FORMATS, default=FORMATS[0],
     help='File format to emit')
 
+  parser.add_argument('-F', '--input_format', choices=INPUT_FORMATS.keys(),
+                      default=list(INPUT_FORMATS.keys())[0])
+
   options = parser.parse_args()
-  mfc_converter(options.input_mfc, options.output, options.format)
+  mfc_converter(options.input_mfc, options.output,
+                options.format, options.input_format)
 
 
 if __name__ == '__main__':
