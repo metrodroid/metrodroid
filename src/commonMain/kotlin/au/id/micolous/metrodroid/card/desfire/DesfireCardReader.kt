@@ -67,13 +67,13 @@ object DesfireCardReader {
                 appIds = desfireTag.getAppList()
                 appListLocked = false
             } catch (e: UnauthorizedException) {
-                appIds = IntArray(32) { 0x425300 + it }
+                appIds = DesfireCardTransitRegistry.allFactories.flatMap { it.hiddenAppIds.orEmpty() }.toIntArray()
                 appListLocked = true
             }
             var maxProgress = appIds.size
             var progress = 0
 
-            val f = DesfireCardTransitRegistry.allFactories.find { it.earlyCheck(appIds) }
+            val f = if (appListLocked) null else DesfireCardTransitRegistry.allFactories.find { it.earlyCheck(appIds) }
             val i = f?.getCardInfo(appIds)
             if (i != null) {
                 Log.d(TAG, "Early Card Info: ${i.name}")

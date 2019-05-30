@@ -32,4 +32,7 @@ interface DesfireCardTransitFactory : CardTransitFactory<DesfireCard> {
 
     override fun check(card: DesfireCard): Boolean = earlyCheck(card.applications.keys.toIntArray())
     fun createUnlocker(appIds: Int, manufData: ImmutableByteArray): DesfireUnlocker? = null
+
+    // App IDs that are probed if we can't retrieve application list
+    val hiddenAppIds: List<Int>? get() = null
 }

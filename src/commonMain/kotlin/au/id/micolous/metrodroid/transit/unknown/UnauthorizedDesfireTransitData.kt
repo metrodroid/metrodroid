@@ -34,6 +34,9 @@ class UnauthorizedDesfireTransitData (override val cardName: String): Unauthoriz
 
             override fun parseTransitIdentity(card: DesfireCard)
                     = TransitIdentity(getName(card), null)
+
+            override val hiddenAppIds: List<Int>
+                get() = List(32) { 0x425300 + it }
         }
 
         private data class UnauthorizedType(
