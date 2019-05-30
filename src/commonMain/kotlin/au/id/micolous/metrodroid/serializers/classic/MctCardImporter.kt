@@ -62,7 +62,11 @@ class MctCardImporter : CardImporter {
             } else {
                 if (curSector >= 0) {
                     lastBlock = line
-                    curBlocks.add(ImmutableByteArray.fromHex(line.replace('-', '0')))
+                    curBlocks.add(
+                            if (line == "--------------------------------")
+                                ImmutableByteArray.empty()
+                            else
+                                ImmutableByteArray.fromHex(line.replace('-', '0')))
                 }
             }
         }
