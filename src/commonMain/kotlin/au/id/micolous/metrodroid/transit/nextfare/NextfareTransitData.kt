@@ -125,7 +125,7 @@ abstract class NextfareTransitData : TransitData() {
 
         override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
             val blockData = sectors[0].getBlock(1).data
-            return blockData.copyOfRange(1, 9).contentEquals(MANUFACTURER)
+            return blockData.copyOfRange(1, MANUFACTURER.size + 1).contentEquals(MANUFACTURER)
         }
 
         override fun parseTransitIdentity(card: ClassicCard): TransitIdentity? {
