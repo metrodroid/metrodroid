@@ -74,8 +74,7 @@ private data class WaikatoCardTrip(override val startTimestamp: TimestampFull,
                                    override val mode: Mode) : Trip() {
     override val fare get() = if (mCost == 0 && mode == Mode.TICKET_MACHINE) null else TransitCurrency.NZD(mCost)
 
-    override val routeName: String?
-        get() = "${mA.toString(16)}/${mB.toString(16)}"
+    override fun getRawFields(level: TransitData.RawLevel): String? = "${mA.toString(16)}/${mB.toString(16)}"
 
     companion object {
         fun parse(sector: ImmutableByteArray, mode: Mode): WaikatoCardTrip? {
