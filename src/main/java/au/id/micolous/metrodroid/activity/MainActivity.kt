@@ -52,7 +52,7 @@ class MainActivity : MetrodroidActivity() {
             arrayOf(MifareUltralight::class.java.name),
             arrayOf(NfcA::class.java.name),
             arrayOf(NfcF::class.java.name),
-	    arrayOf(NfcV::class.java.name))
+            arrayOf(NfcV::class.java.name))
 
     override val themeVariant get(): Int? = R.attr.MainActivityTheme
 
