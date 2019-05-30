@@ -79,6 +79,9 @@ abstract class Transaction : Parcelable, Comparable<Transaction> {
     open val isRejected: Boolean
         get() = false
 
+    open val isTransparent: Boolean
+        get() = mode in listOf(Trip.Mode.TICKET_MACHINE, Trip.Mode.VENDING_MACHINE)
+
     open fun getAgencyName(isShort: Boolean) : String? = null
 
     open fun shouldBeMerged(other: Transaction): Boolean {

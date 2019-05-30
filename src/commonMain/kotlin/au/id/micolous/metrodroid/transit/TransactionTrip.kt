@@ -148,13 +148,13 @@ abstract class TransactionTripAbstract: Trip() {
                   factory: (Transaction) -> TransactionTripAbstract):
                 List<TransactionTripAbstract> {
             val timedTransactions = mutableListOf<Pair<Transaction, TimestampFull>>()
-            val timelessTransactions = mutableListOf<Transaction>()
+            val unmergeableTransactions = mutableListOf<Transaction>()
             for (transaction in transactionsIn) {
                 val ts = transaction.timestamp
-                if (ts is TimestampFull)
+                if (!transaction.isTransparent && ts is TimestampFull)
                     timedTransactions.add(Pair(transaction, ts))
                 else
-                    timelessTransactions.add(transaction)
+                    unmergeableTransactions.add(transaction)
             }
             val transactions = timedTransactions.sortedBy { it.second.timeInMillis }
             val trips = mutableListOf<TransactionTripAbstract>()
@@ -169,7 +169,7 @@ abstract class TransactionTripAbstract: Trip() {
                 else
                     trips.add(factory(first))
             }
-            return trips + timelessTransactions.map { factory(it) }
+            return trips + unmergeableTransactions.map { factory(it) }
         }
     }
 }
