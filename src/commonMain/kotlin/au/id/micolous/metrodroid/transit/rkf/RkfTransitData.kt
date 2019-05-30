@@ -112,6 +112,11 @@ data class RkfTransitData internal constructor(
                 ListItem(R.string.rkf_card_status, cardStatus)
             })
 
+    override fun getRawFields(level: RawLevel): List<ListItem>? {
+        return mBalances.mapIndexed { index, rkfPurse -> listOf(HeaderListItem("Purse $index")) + rkfPurse.getRawFields(level) }.flatten() +
+                subscriptions.mapIndexed { index, rkfPurse -> listOf(HeaderListItem("Ticket $index")) + rkfPurse.getRawFields(level).orEmpty() }.flatten()
+    }
+
     companion object {
         private val issuerMap = mapOf(
                 RkfLookup.SLACCESS to CardInfo(
