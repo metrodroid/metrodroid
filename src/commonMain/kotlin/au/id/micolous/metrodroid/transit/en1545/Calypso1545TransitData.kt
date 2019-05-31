@@ -47,27 +47,19 @@ data class Calypso1545TransitDataCapsule(
 
 abstract class Calypso1545TransitData constructor (
         ticketEnv: En1545Parsed,
-        private val mTrips: List<TransactionTripAbstract>?,
-        private val mSubscriptions: List<En1545Subscription>?,
-        private val mBalances: List<TransitBalance>?,
-        private val mSerial: String?,
+        override val trips: List<TransactionTripAbstract>?,
+        override val subscriptions: List<En1545Subscription>?,
+        override val balances: List<TransitBalance>?,
+        override val serialNumber: String?,
         private val contractList: En1545Parsed?)
     : En1545TransitData(ticketEnv) {
 
-    override val trips get() = mTrips
-
-    override val subscriptions get() = mSubscriptions
-
-    override val balances get() = mBalances
-
-    override val serialNumber get(): String? = mSerial
-
     constructor(capsule: Calypso1545TransitDataCapsule): this(
             ticketEnv = capsule.ticketEnv,
-            mTrips = capsule.trips,
-            mSubscriptions = capsule.subscriptions,
-            mBalances = capsule.balances,
-            mSerial = capsule.serial,
+            trips = capsule.trips,
+            subscriptions = capsule.subscriptions,
+            balances = capsule.balances,
+            serialNumber = capsule.serial,
             contractList = capsule.contractList
     )
 
