@@ -71,6 +71,9 @@ abstract class TransactionTripAbstract: Trip() {
             return Trip.getRouteName(startLines, endLines)
         }
 
+    override val routeLanguage: String?
+        get() = start?.routeLanguage ?: end?.routeLanguage
+
     override// Try to get the route from the nested transactions.
     // This automatically falls back to using the MdST.
     val humanReadableRouteID: String?

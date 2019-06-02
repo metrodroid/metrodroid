@@ -55,6 +55,9 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
     override val routeNames: List<String>
         get() = listOf(mRoute)
 
+    override val routeLanguage: String?
+        get() = "en-AU"
+
     // TODO: verify this
     // There is also a bus with route number 300, but it is a free service.
     override val mode: Trip.Mode

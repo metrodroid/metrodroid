@@ -81,7 +81,7 @@ class SmartRiderTransitData (override val serialNumber: String?,
                 SmartRiderTagRecord.parse(mCardType, b.data) }.filter { it.isValid }
 
             // Build the Tag events into trips.
-            val trips = TransactionTripAbstract.merge(tagRecords) { el: Transaction -> SmartRiderTrip(el) }
+            val trips = TransactionTrip.merge(tagRecords)
 
             // TODO: Figure out balance priorities properly.
 

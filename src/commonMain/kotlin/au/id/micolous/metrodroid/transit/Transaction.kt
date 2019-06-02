@@ -38,6 +38,9 @@ abstract class Transaction : Parcelable, Comparable<Transaction> {
     open val routeNames: List<String>?
         get() = station?.lineNames ?: emptyList()
 
+    open val routeLanguage: String?
+        get() = null
+
     /**
      * This method may be overridden to provide candidate line names associated with the
      * transaction. This is useful if there is a separate field on the card which encodes the route
