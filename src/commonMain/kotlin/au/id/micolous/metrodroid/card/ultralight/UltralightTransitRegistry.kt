@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.card.ultralight
 import au.id.micolous.metrodroid.transit.clipper.ClipperUltralightTransitData
 import au.id.micolous.metrodroid.transit.ovc.OvcUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.nextfareul.NextfareUnknownUltralightTransitData
+import au.id.micolous.metrodroid.transit.pisa.PisaUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.serialonly.MRTUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
@@ -22,6 +23,7 @@ object UltralightTransitRegistry {
             OvcUltralightTransitFactory(),
             MRTUltralightTransitFactory(),
             VeneziaUltralightTransitFactory(),
+            PisaUltralightTransitFactory(),
             BlankUltralightTransitData.FACTORY,
             // This check must be LAST.
             //
