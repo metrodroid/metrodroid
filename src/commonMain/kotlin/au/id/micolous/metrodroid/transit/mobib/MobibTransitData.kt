@@ -77,7 +77,7 @@ class MobibTransitData (private val extHolderParsed: En1545Parsed,
     override val cardName: String
         get() = NAME
 
-    override val lookup get() = MobibLookup.instance
+    override val lookup get() = MobibLookup
 
     companion object {
         // 56 = Belgium

@@ -25,7 +25,9 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.StationTableReader
 
-class MobibLookup private constructor() : En1545LookupSTR(MOBIB_STR) {
+internal const val MOBIB_STR = "mobib"
+
+object MobibLookup : En1545LookupSTR(MOBIB_STR) {
     override val timeZone: MetroTimeZone
         get() = MobibTransitData.TZ
 
@@ -46,11 +48,5 @@ class MobibLookup private constructor() : En1545LookupSTR(MOBIB_STR) {
 
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
-    companion object {
-        internal const val MOBIB_STR = "mobib"
-
-        private const val BUS = 0xf
-
-        val instance = MobibLookup()
-    }
+    private const val BUS = 0xf
 }

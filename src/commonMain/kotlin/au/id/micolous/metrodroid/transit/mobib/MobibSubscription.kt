@@ -38,7 +38,7 @@ internal class MobibSubscription (override val parsed: En1545Parsed,
         get() = if (isSubscription) Localizer.localizeString(R.string.daily_subscription) else Localizer.localizeString(R.string.single_trips)
 
     override val lookup: En1545Lookup
-        get() = MobibLookup.instance
+        get() = MobibLookup
 
     constructor(dataSub: ImmutableByteArray, counter: Int?) :
             this(En1545Parser.parse(dataSub, FIELDS), counter)
