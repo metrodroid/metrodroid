@@ -842,4 +842,6 @@
         <item quantity="other">PIN-forsøk gjenstår</item>
     </plurals>
     <string name="location_gauteng">Gauteng, Sør-Afrika</string>
+    <string name="nfc_settings">NFC-innstillinger</string>
+    <string name="location_germany">Tyskland</string>
 </resources>
