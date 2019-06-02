@@ -71,7 +71,7 @@ data class RicaricaMiTransaction(override val parsed: En1545Parsed) : En1545Tran
         return super.stationId
     }
 
-    override val lookup get() = RicaricaMiLookup.instance
+    override val lookup get() = RicaricaMiLookup
 
     override fun isSameTrip(other: Transaction) =
             ((transport == RicaricaMiLookup.TRANSPORT_METRO || transport == RicaricaMiLookup.TRANSPORT_TRENORD1

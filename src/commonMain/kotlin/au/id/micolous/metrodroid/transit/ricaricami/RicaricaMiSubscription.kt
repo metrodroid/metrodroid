@@ -56,7 +56,7 @@ data class RicaricaMiSubscription(override val parsed: En1545Parsed, private val
 
     override val remainingTripCount get() = if (contractTariff == RicaricaMiLookup.TARIFF_SINGLE_URBAN) counter else null
 
-    override val lookup get() = RicaricaMiLookup.instance
+    override val lookup get() = RicaricaMiLookup
 
     override val info get() : List<ListItem> {
         val dyn = mutableListOf<ListItem>()

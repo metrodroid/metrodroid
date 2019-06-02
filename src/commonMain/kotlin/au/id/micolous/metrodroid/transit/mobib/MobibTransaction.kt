@@ -33,13 +33,13 @@ internal class MobibTransaction (override val parsed: En1545Parsed): En1545Trans
             val agency = parsed.getIntOrZero(En1545Transaction.EVENT_SERVICE_PROVIDER)
             if (agency == TRAM)
                 return null
-            return if (agency == BUS) StationTableReader.getStation(MobibLookup.MOBIB_STR,
+            return if (agency == BUS) StationTableReader.getStation(MOBIB_STR,
                     parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER) shl 13
                             or parsed.getIntOrZero(EVENT_LOCATION_ID_BUS) or (agency shl 22)) else super.station
         }
 
     override val lookup: En1545Lookup
-        get() = MobibLookup.instance
+        get() = MobibLookup
 
     constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, FIELDS))
 

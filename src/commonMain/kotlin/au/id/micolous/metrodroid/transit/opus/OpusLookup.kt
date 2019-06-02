@@ -27,7 +27,9 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.StationTableReader
 
-class OpusLookup private constructor() : En1545LookupSTR(OPUS_STR) {
+private const val OPUS_STR = "opus"
+
+object OpusLookup : En1545LookupSTR(OPUS_STR) {
 
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.MONTREAL
@@ -54,15 +56,9 @@ class OpusLookup private constructor() : En1545LookupSTR(OPUS_STR) {
 
     override fun parseCurrency(price: Int) = TransitCurrency.CAD(price)
 
-    companion object {
-        private const val OPUS_STR = "opus"
-
-        private val SUBSCRIPTIONS = mapOf(
-                0xb1 to R.string.monthly_subscription,
-                0xb2 to R.string.weekly_subscription,
-                0x1c7 to R.string.single_trips
-        )
-
-        val instance = OpusLookup()
-    }
+    private val SUBSCRIPTIONS = mapOf(
+            0xb1 to R.string.monthly_subscription,
+            0xb2 to R.string.weekly_subscription,
+            0x1c7 to R.string.single_trips
+    )
 }

@@ -25,14 +25,12 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.NumberUtils
 
-class AdelaideLookup private constructor() : En1545LookupSTR("adelaide") {
+object AdelaideLookup : En1545LookupSTR("adelaide") {
 
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.ADELAIDE
 
-    override fun parseCurrency(price: Int): TransitCurrency {
-        return TransitCurrency.AUD(price)
-    }
+    override fun parseCurrency(price: Int): TransitCurrency = TransitCurrency.AUD(price)
 
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
         if (contractTariff == null)
@@ -57,17 +55,13 @@ class AdelaideLookup private constructor() : En1545LookupSTR("adelaide") {
         return super.getRouteName(routeNumber, routeVariant, agency, transport)
     }
 
-    companion object {
-        private const val AGENCY_ADL_METRO = 1
+    private const val AGENCY_ADL_METRO = 1
 
-        private val TARIFFS = mapOf(
-                0x804 to R.string.adelaide_ticket_type_regular,
-                0x808 to R.string.adelaide_ticket_type_concession
-                // TODO: handle other tickets
+    private val TARIFFS = mapOf(
+            0x804 to R.string.adelaide_ticket_type_regular,
+            0x808 to R.string.adelaide_ticket_type_concession
+            // TODO: handle other tickets
 
-                // TODO: handle monthly subscriptions
-        )
-
-        val instance = AdelaideLookup()
-    }
+            // TODO: handle monthly subscriptions
+    )
 }

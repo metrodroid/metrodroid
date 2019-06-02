@@ -36,7 +36,7 @@ data class OVChipSubscription internal constructor(override val parsed: En1545Pa
                 if (mUsed != 0) Subscription.SubscriptionState.USED else Subscription.SubscriptionState.STARTED
             } else Subscription.SubscriptionState.INACTIVE
 
-    override val lookup get() = OvcLookup.instance
+    override val lookup get() = OvcLookup
 
     companion object {
         private fun neverSeen(i: Int) = "NeverSeen$i"

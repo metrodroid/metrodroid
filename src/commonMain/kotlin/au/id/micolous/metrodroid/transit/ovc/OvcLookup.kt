@@ -7,8 +7,9 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.StationTableReader
 
-class OvcLookup private constructor() : En1545LookupSTR(OVCHIP_STR) {
+private const val OVCHIP_STR = "ovc"
 
+object OvcLookup : En1545LookupSTR(OVCHIP_STR) {
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
     override val timeZone get() = MetroTimeZone.AMSTERDAM
@@ -35,42 +36,36 @@ class OvcLookup private constructor() : En1545LookupSTR(OVCHIP_STR) {
         return if (stationId <= 0) null else StationTableReader.getStation(OVCHIP_STR, stationId)
     }
 
-    companion object {
-        val instance = OvcLookup()
-
-        private const val OVCHIP_STR = "ovc"
-
-        // FIXME: i18n
-        private val SUBSCRIPTIONS = mapOf(
-                /* It seems that all the IDs are unique, so why bother with the companies? */
-                /* NS */
-                0x0005 to "OV-jaarkaart",
-                0x0007 to "OV-Bijkaart 1e klas",
-                0x0011 to "NS Businesscard",
-                0x0019 to "Voordeelurenabonnement (twee jaar)",
-                0x00AF to "Studenten OV-chipkaart week (2009)",
-                0x00B0 to "Studenten OV-chipkaart weekend (2009)",
-                0x00B1 to "Studentenkaart korting week (2009)",
-                0x00B2 to "Studentenkaart korting weekend (2009)",
-                0x00C9 to "Reizen op saldo bij NS, 1e klasse",
-                0x00CA to "Reizen op saldo bij NS, 2de klasse",
-                0x00CE to "Voordeelurenabonnement reizen op saldo",
-                0x00E5 to "Reizen op saldo (tijdelijk eerste klas)",
-                0x00E6 to "Reizen op saldo (tijdelijk tweede klas)",
-                0x00E7 to "Reizen op saldo (tijdelijk eerste klas korting)",
-                /* Arriva */
-                0x059A to "Dalkorting",
-                /* Veolia */
-                0x0626 to "DALU Dalkorting",
-                /* Connexxion */
-                0x0692 to "Daluren Oost-Nederland",
-                0x069C to "Daluren Oost-Nederland",
-                /* DUO */
-                0x09C6 to "Student weekend-vrij",
-                0x09C7 to "Student week-korting",
-                0x09C9 to "Student week-vrij",
-                0x09CA to "Student weekend-korting",
-                /* GVB */
-                0x0BBD to "Fietssupplement")
-    }
+    // FIXME: i18n
+    private val SUBSCRIPTIONS = mapOf(
+            /* It seems that all the IDs are unique, so why bother with the companies? */
+            /* NS */
+            0x0005 to "OV-jaarkaart",
+            0x0007 to "OV-Bijkaart 1e klas",
+            0x0011 to "NS Businesscard",
+            0x0019 to "Voordeelurenabonnement (twee jaar)",
+            0x00AF to "Studenten OV-chipkaart week (2009)",
+            0x00B0 to "Studenten OV-chipkaart weekend (2009)",
+            0x00B1 to "Studentenkaart korting week (2009)",
+            0x00B2 to "Studentenkaart korting weekend (2009)",
+            0x00C9 to "Reizen op saldo bij NS, 1e klasse",
+            0x00CA to "Reizen op saldo bij NS, 2de klasse",
+            0x00CE to "Voordeelurenabonnement reizen op saldo",
+            0x00E5 to "Reizen op saldo (tijdelijk eerste klas)",
+            0x00E6 to "Reizen op saldo (tijdelijk tweede klas)",
+            0x00E7 to "Reizen op saldo (tijdelijk eerste klas korting)",
+            /* Arriva */
+            0x059A to "Dalkorting",
+            /* Veolia */
+            0x0626 to "DALU Dalkorting",
+            /* Connexxion */
+            0x0692 to "Daluren Oost-Nederland",
+            0x069C to "Daluren Oost-Nederland",
+            /* DUO */
+            0x09C6 to "Student weekend-vrij",
+            0x09C7 to "Student week-korting",
+            0x09C9 to "Student week-vrij",
+            0x09CA to "Student weekend-korting",
+            /* GVB */
+            0x0BBD to "Fietssupplement")
 }

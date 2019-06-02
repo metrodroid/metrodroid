@@ -60,7 +60,7 @@ data class OVChipTransitData(
 
     override val serialNumber get(): String? = null
 
-    override val lookup get() = OvcLookup.instance
+    override val lookup get() = OvcLookup
 
     override val info get() = super.info.orEmpty() + listOf(
             ListItem("Banned", if (mBanbits and 0xC0 == 0xC0) "Yes" else "No"),
