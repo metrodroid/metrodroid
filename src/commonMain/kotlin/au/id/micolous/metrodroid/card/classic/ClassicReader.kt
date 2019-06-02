@@ -34,7 +34,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object ClassicReader {
     private fun readSectorWithKey(tech: ClassicCardTech, sectorIndex: Int,
-                                  correctKey: ClassicSectorKey): ClassicSectorRaw {
+        correctKey: ClassicSectorKey,
+        extraKey: ClassicSectorKey? = null): ClassicSectorRaw {
         val blocks = mutableListOf<ImmutableByteArray>()
         // FIXME: First read trailer block to get type of other blocks.
         val firstBlockIndex = tech.sectorToBlock(sectorIndex)
@@ -53,8 +54,8 @@ object ClassicReader {
             blocks.add(data)
         }
         if (correctKey.type == ClassicSectorKey.KeyType.B)
-            return ClassicSectorRaw(blocks = blocks, keyA = null, keyB = correctKey.key)
-        return ClassicSectorRaw(blocks = blocks, keyA = correctKey.key, keyB = null)
+            return ClassicSectorRaw(blocks = blocks, keyA = extraKey?.key, keyB = correctKey.key)
+        return ClassicSectorRaw(blocks = blocks, keyA = correctKey.key, keyB = extraKey?.key)
     }
 
     private const val TAG = "ClassicReader"
@@ -116,7 +117,7 @@ object ClassicReader {
                             ClassicSectorKey.KeyType.B) ?: false,
                             ClassicSectorKey.KeyType.B)
                     if (correctKeyB != null)
-                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyB))
+                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyB, extraKey = correctKey))
                     // In cases of readable keyB, tag shouldn't succeed auth at all
                     // yet some clones succeed auth but then fail to read any blocks.
                 } else if (sector.key?.type == ClassicSectorKey.KeyType.B
@@ -127,7 +128,7 @@ object ClassicReader {
                             ClassicSectorKey.KeyType.A) ?: false,
                             ClassicSectorKey.KeyType.A)
                     if (correctKeyA != null)
-                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyA))
+                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyA, extraKey = correctKey))
                 }
 
                 sectors.add(sector)
