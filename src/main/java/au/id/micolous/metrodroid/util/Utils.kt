@@ -118,7 +118,14 @@ object Utils {
                 .setMessage(R.string.turn_on_nfc)
                 .setCancelable(true)
                 .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
-                .setNeutralButton(R.string.wireless_settings) { _, _ -> activity.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
+                .setNeutralButton(R.string.nfc_settings) { _, _ ->
+                    activity.startActivity(Intent(
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                Settings.ACTION_NFC_SETTINGS
+                            } else {
+                                Settings.ACTION_WIRELESS_SETTINGS
+                            }))
+                }
                 .show()
     }
 

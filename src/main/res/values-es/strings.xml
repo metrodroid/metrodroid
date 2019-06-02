@@ -44,7 +44,6 @@
     <string name="fully_locked_title">Tarjeta completamente bloqueada.</string>
     <string name="nfc_off_error">NFC apagado</string>
     <string name="turn_on_nfc">Por favor encienda el NFC para leer la tarjeta.</string>
-    <string name="wireless_settings">Ajustes inalambricos</string>
     <string name="machine_id_format">Id Máquina %s</string>
     <string name="machine_id">ID Máquina</string>
     <string name="unknown_card_header">Formato de tarjeta no soportado</string>

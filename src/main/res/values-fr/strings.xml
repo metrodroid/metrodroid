@@ -42,7 +42,6 @@
     <string name="fully_locked_title">Carte entièrement verrouillée.</string>
     <string name="nfc_off_error">NFC désactivé</string>
     <string name="turn_on_nfc">Veuillez activer le NFC pour lire les informations de la carte.</string>
-    <string name="wireless_settings">Paramètres sans fil</string>
     <string name="unknown_card_header">Format de carte non supporté</string>
     <string name="unknown_card_description">Cette carte n\'est pas encore supportée par Metrodroid. Seules les données brutes peuvent être affichées.</string>
     <string name="unknown_more_info">Plus d\'informations</string>

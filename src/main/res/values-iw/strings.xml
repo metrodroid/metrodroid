@@ -50,7 +50,6 @@
     <string name="balance_speech">כמות
 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="pass_or_transfer">מעבר</string>
-    <string name="wireless_settings">הגדרות אלחוטיות</string>
     <string name="unknown_card_header">פורמט כרטיס לא ידוע</string>
     <string name="unknown_card_description">כרטיס זה עדיין אינו נתמך על ידי מטרו-דרואיד. ניתן להציג נתונים גולמיים בלבד.</string>
 

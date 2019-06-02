@@ -79,7 +79,7 @@
     <string name="fully_locked_title">Fully locked card.</string>
     <string name="nfc_off_error">NFC off</string>
     <string name="turn_on_nfc">Please enable NFC to read card info.</string>
-    <string name="wireless_settings">Wireless Settings</string>
+    <string name="nfc_settings">NFC settings</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
     <string name="machine_id_format">Machine ID %s</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->

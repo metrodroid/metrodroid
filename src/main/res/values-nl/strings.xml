@@ -42,7 +42,6 @@
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
-    <string name="wireless_settings">Draadloze instellingen</string>
     <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid; er kunnen alleen onbewerkte gegevens worden getoond.</string>
     <string name="unknown_more_info">Meer informatie</string>

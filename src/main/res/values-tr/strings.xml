@@ -35,7 +35,6 @@
     <string name="fully_locked_title">Tamamı kilitli kart.</string>
     <string name="nfc_off_error">NFC kapalı</string>
     <string name="turn_on_nfc">Lütfen kart bilgisini okumak için NFC\'yi etkinleştirin.</string>
-    <string name="wireless_settings">Kablosuz Ayarlar</string>
 
     <string name="unknown_card_header">Desteklenmeyen kart biçimi</string>
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>

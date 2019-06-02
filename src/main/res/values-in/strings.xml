@@ -44,7 +44,6 @@
 \nSilakan hubungi penerbit kartu untuk dapat membuka akses data pada kartu. Akan aman jika diperbolehkan untuk membuka, dengan mode \"read-only\" kepada data dengan menggunakan teknologi terkini smartcard. Beberapa penerbit kartu bahkan menyediakan dokumen tentang format data yang dipergunakan pada kartu!</string>
     <string name="fully_locked_title">Kartu terkunci semua.</string>
     <string name="nfc_off_error">NFC mati</string>
-    <string name="wireless_settings">Pengaturan Nirkabel</string>
     <string name="machine_id_format">ID Mesin %s</string>
 
     <string name="unknown_card_header">Format kartu tidak diketahui</string>

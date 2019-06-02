@@ -74,7 +74,6 @@
     <string name="felica_process_admission_thirdparty">精算 (他社入場精算)</string>
     <string name="nfc_off_error">NFCオフ</string>
     <string name="turn_on_nfc">カード情報を読み取るため NFC を有効にしてください。</string>
-    <string name="wireless_settings">無線設定</string>
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>

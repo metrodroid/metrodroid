@@ -33,7 +33,6 @@
     <string name="fully_locked_title">Helt låst kort.</string>
     <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
-    <string name="wireless_settings">Trådløsinnstillinger</string>
     <string name="unknown_card_header">Ustøttet kortformat</string>
     <string name="unknown_card_description">Dette kortet er ikke støttet av Metrodroid enda. Bare råkortdata kan vises.</string>
     <string name="unknown_more_info">Mer informasjon</string>

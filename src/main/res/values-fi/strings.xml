@@ -53,7 +53,6 @@
 
     <string name="nfc_off_error">NFC on pois päältä</string>
     <string name="turn_on_nfc">Salli NFC:n käyttö jotta voin lukea kortin tiedot.</string>
-    <string name="wireless_settings">Tiedonsiirtoasetukset</string>
     <string name="unknown_card_description">Metrodroid ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
 
     <string name="hsl_balance_refill">Arvon lataus</string>
