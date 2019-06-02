@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscription() {
     override val lookup: AdelaideLookup
-        get() = AdelaideLookup.instance
+        get() = AdelaideLookup
 
     override val info: List<ListItem>?
         get() = super.info.orEmpty() +

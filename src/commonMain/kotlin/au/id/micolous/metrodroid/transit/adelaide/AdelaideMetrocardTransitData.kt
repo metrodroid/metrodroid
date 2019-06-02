@@ -42,7 +42,7 @@ class AdelaideMetrocardTransitData (
         private val parsed : En1545Parsed
 ): En1545TransitData(parsed) {
     override val lookup: AdelaideLookup
-        get() = AdelaideLookup.instance
+        get() = AdelaideLookup
 
     override val serialNumber: String?
         get() = formatSerial(serial)

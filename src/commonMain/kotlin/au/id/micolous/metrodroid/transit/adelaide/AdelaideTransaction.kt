@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 open class AdelaideTransaction (override val parsed: En1545Parsed): En1545Transaction() {
     override val lookup: En1545Lookup
-        get() = AdelaideLookup.instance
+        get() = AdelaideLookup
 
     constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, TRIP_FIELDS))
 
