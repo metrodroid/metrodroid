@@ -43,7 +43,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
     val id: Int
         get() = parsed.getIntOrZero(En1545Transaction.EVENT_SERIAL_NUMBER)
 
-    override val lookup get() = OvcLookup.instance
+    override val lookup get() = OvcLookup
 
     override val isTapOn get() = transfer == PROCESS_CHECKIN
 
