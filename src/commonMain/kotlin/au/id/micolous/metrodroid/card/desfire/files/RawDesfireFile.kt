@@ -37,4 +37,6 @@ data class RawDesfireFile (
         val error: String? = null,
         @Optional
         @XMLId("unauthorized")
-        val isUnauthorized: Boolean = false)
+        val isUnauthorized: Boolean = false,
+        @Optional
+        val readCommand: Byte? = null)

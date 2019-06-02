@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 /**
  * Represents a value file in Desfire
  */
-data class ValueDesfireFile (override val fileSettings: DesfireFileSettings,
+data class ValueDesfireFile (override val fileSettings: DesfireFileSettings?,
                              override val raw: RawDesfireFile): DesfireFile() {
     val value: Int
       get() = data.byteArrayToIntReversed()

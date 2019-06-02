@@ -24,6 +24,7 @@
 
 package au.id.micolous.metrodroid.card.desfire.files
 
+import au.id.micolous.metrodroid.card.desfire.DesfireProtocol
 import au.id.micolous.metrodroid.card.desfire.settings.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
@@ -33,7 +34,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 
 abstract class DesfireFile {
-    abstract val fileSettings: DesfireFileSettings
+    abstract val fileSettings: DesfireFileSettings?
     abstract val raw: RawDesfireFile
     open val data: ImmutableByteArray
         get() = raw.data!!
@@ -41,14 +42,21 @@ abstract class DesfireFile {
     open fun getRawData(id: Int): ListItem {
         return ListItemRecursive(Localizer.localizeString(R.string.file_title_format,
                 id.hexString),
-                fileSettings.subtitle,
+                fileSettings?.subtitle,
                 listOf(ListItem(null, data.toHexDump())))
     }
 
     companion object {
         fun create(raw: RawDesfireFile): DesfireFile {
             if (raw.settings == null) {
-                return InvalidDesfireFile(fileSettings = InvalidDesfireFileSettings(), raw = raw)
+                return when (raw.readCommand) {
+                    DesfireProtocol.READ_DATA -> StandardDesfireFile(null, raw)
+                    DesfireProtocol.GET_VALUE -> ValueDesfireFile(null, raw)
+                    // FIXME: Record files heavily rely on settings. Fortunately so far
+                    // we didn't need to parse them on cards with locked directory listing
+                    //DesfireProtocol.READ_RECORD -> RecordDesfireFile(null, raw)
+                    else -> InvalidDesfireFile(fileSettings = InvalidDesfireFileSettings(), raw = raw)
+                }
             }
             val fileSettings = DesfireFileSettings.create(raw.settings)
             if (raw.error != null || raw.data == null) {

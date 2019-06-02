@@ -26,5 +26,5 @@ package au.id.micolous.metrodroid.card.desfire.files
 
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings
 
-data class StandardDesfireFile(override val fileSettings: StandardDesfireFileSettings,
+data class StandardDesfireFile(override val fileSettings: StandardDesfireFileSettings?,
                                override val raw: RawDesfireFile) : DesfireFile()

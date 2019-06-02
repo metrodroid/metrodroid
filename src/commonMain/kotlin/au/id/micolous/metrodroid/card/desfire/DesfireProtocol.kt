@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card.desfire
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.NotFoundException
 import au.id.micolous.metrodroid.card.UnauthorizedException
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.ImmutableByteArray.Companion.plus
 import au.id.micolous.metrodroid.util.toImmutable
@@ -110,9 +111,9 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         var output = ImmutableByteArray.empty()
 
         val sendBuffer = wrapMessage(command, parameters)
-        //Log.d(TAG, "Send: " + Utils.getHexString(sendBuffer));
+        Log.d(TAG, "Send: $sendBuffer")
         var recvBuffer = mTagTech.transceive(sendBuffer)
-        //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
+        Log.d(TAG, "Recv: $recvBuffer")
 
         loop@ while (true) {
             if (recvBuffer[recvBuffer.size - 2] != 0x91.toByte()) {
@@ -131,15 +132,18 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
                             ImmutableByteArray.empty()))
                     //Log.d(TAG, "Recv: (additional) " + Utils.getHexString(recvBuffer));
                 }
-                PERMISSION_DENIED -> throw UnauthorizedException("Permission denied")
+                PERMISSION_DENIED -> throw PermissionDeniedException()
                 AUTHENTICATION_ERROR -> throw UnauthorizedException("Authentication error")
                 AID_NOT_FOUND -> throw NotFoundException("AID not found")
+                FILE_NOT_FOUND -> throw NotFoundException("File not found")
                 else -> throw IllegalStateException("Unknown status code: $status")
             }
         }
 
         return output
     }
+
+    class PermissionDeniedException : UnauthorizedException("Permission denied")
 
 
     /**
@@ -183,5 +187,6 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         internal const val AID_NOT_FOUND = 0xA0.toByte()
         internal const val AUTHENTICATION_ERROR = 0xAE.toByte()
         const val ADDITIONAL_FRAME = 0xAF.toByte()
+        internal const val FILE_NOT_FOUND = 0xF0.toByte()
     }
 }

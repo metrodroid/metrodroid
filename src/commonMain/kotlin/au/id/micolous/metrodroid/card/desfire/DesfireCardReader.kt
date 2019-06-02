@@ -67,6 +67,7 @@ object DesfireCardReader {
                 appIds = desfireTag.getAppList()
                 appListLocked = false
             } catch (e: UnauthorizedException) {
+                Log.d(TAG, "Application list locked, switching to scanning")
                 appIds = DesfireCardTransitRegistry.allFactories.flatMap { it.hiddenAppIds.orEmpty() }.toIntArray()
                 appListLocked = true
             }
@@ -96,9 +97,15 @@ object DesfireCardReader {
                 val files = mutableMapOf<Int, RawDesfireFile>()
 
                 val unlocker = f?.createUnlocker(appId, manufData)
-                var fileIds = desfireTag.getFileList()
-                if (unlocker != null) {
-                    fileIds = unlocker.getOrder(desfireTag, fileIds)
+                var dirListLocked = false
+                val fileIds = try {
+                    desfireTag.getFileList()
+                } catch (e: UnauthorizedException) {
+                    Log.d(TAG, "File list locked, switching to scanning")
+                    dirListLocked = true
+                    IntArray(0x20) { it }
+                }.let {
+                    unlocker?.getOrder(desfireTag, it) ?: it
                 }
                 maxProgress += fileIds.size * if (unlocker == null) 1 else 2
                 val authLog = mutableListOf<DesfireAuthLog>()
@@ -115,15 +122,47 @@ object DesfireCardReader {
 
                     var settingsRaw: ImmutableByteArray? = null
                     try {
-                        settingsRaw = desfireTag.getFileSettings(fileId)
-                        val data: ImmutableByteArray
-                        val settings = DesfireFileSettings.create(settingsRaw)
-                        data = when (settings) {
-                            is StandardDesfireFileSettings -> desfireTag.readFile(fileId)
-                            is ValueDesfireFileSettings -> desfireTag.getValue(fileId)
-                            else -> desfireTag.readRecord(fileId)
+                        try {
+                            settingsRaw = desfireTag.getFileSettings(fileId)
+                        } catch (ex: UnauthorizedException) {
+                            settingsRaw = null
                         }
-                        files[fileId] = RawDesfireFile(settingsRaw, data, null, false)
+                        var data: ImmutableByteArray? = null
+                        var readCommand: Byte? = null
+                        if (settingsRaw == null) {
+                            for ((cmd, reader) in listOf(
+                                    Pair(DesfireProtocol.READ_DATA, desfireTag::readFile),
+                                    Pair(DesfireProtocol.GET_VALUE, desfireTag::getValue),
+                                    Pair(DesfireProtocol.READ_RECORD,desfireTag::readRecord))) {
+                                try {
+                                    data = reader(fileId)
+                                } catch (e: DesfireProtocol.PermissionDeniedException) {
+                                    continue
+                                }
+                                readCommand = cmd
+                                break
+                            }
+                        } else {
+                            val settings = DesfireFileSettings.create(settingsRaw)
+                            data = when (settings) {
+                                is StandardDesfireFileSettings -> {
+                                    readCommand = DesfireProtocol.READ_DATA
+                                    desfireTag.readFile(fileId)
+                                }
+                                is ValueDesfireFileSettings -> {
+                                    readCommand = DesfireProtocol.GET_VALUE
+                                    desfireTag.getValue(fileId)
+                                }
+                                else -> {
+                                    readCommand = DesfireProtocol.READ_RECORD
+                                    desfireTag.readRecord(fileId)
+                                }
+                            }
+                        }
+                        files[fileId] = RawDesfireFile(settingsRaw, data, null, false,
+                                readCommand = readCommand)
+                    } catch (e: NotFoundException) {
+                        continue
                     } catch (ex: UnauthorizedException) {
                         files[fileId] = RawDesfireFile(settingsRaw, null, ex.message, true)
                     } catch (ex: CardTransceiveException) {
@@ -135,7 +174,7 @@ object DesfireCardReader {
                     progress++
                 }
 
-                apps[appId] = DesfireApplication(files, authLog)
+                apps[appId] = DesfireApplication(files = files, authLog = authLog, dirListLocked = dirListLocked)
             }
         } finally {
         }
