@@ -44,7 +44,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
             // Contracts 2 is a copy of contract list on opus
             card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1)?.recordList.orEmpty()))
 
-    override val lookup get() = OpusLookup.instance
+    override val lookup get() = OpusLookup
 
     companion object {
         // 124 = Canada

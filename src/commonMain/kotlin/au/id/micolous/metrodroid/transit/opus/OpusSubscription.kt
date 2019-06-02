@@ -27,7 +27,7 @@ internal data class OpusSubscription(override val parsed: En1545Parsed,
                                      val ctr: Int?) : En1545Subscription() {
 
     override val lookup: En1545Lookup
-        get() = OpusLookup.instance
+        get() = OpusLookup
 
     override val remainingTripCount: Int?
         get() = if (parsed.getIntOrZero(En1545FixedInteger.dateName(En1545Subscription.CONTRACT_END)) == 0)

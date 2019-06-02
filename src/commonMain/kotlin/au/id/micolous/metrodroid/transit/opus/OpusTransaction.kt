@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 internal data class OpusTransaction(override val parsed: En1545Parsed) : En1545Transaction() {
     override val lookup: En1545Lookup
-        get() = OpusLookup.instance
+        get() = OpusLookup
 
     constructor(data: ImmutableByteArray) : this(parsed = En1545Parser.parse(data, tripFields))
 
