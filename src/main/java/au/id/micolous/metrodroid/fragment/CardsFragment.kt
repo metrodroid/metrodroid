@@ -589,9 +589,9 @@ class CardsFragment : ExpandableListFragment() {
             } else {
                 textView1.setText(R.string.unknown_card)
                 if (Preferences.hideCardNumbers) {
-                    textView2.text = CardType.values()[type].toString()
+                    textView2.text = CardType.parseValue(type).toString()
                 } else {
-                    textView2.text = "${CardType.values()[type]} - $serial"
+                    textView2.text = "${CardType.parseValue(type)} - $serial"
                 }
             }
             return convertView

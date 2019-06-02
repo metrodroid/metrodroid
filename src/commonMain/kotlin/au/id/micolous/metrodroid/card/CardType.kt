@@ -47,8 +47,6 @@ enum class CardType constructor(private val mValue: Int) {
     }
 
     companion object {
-        fun parseValue(value: String): CardType {
-            return values().find { it.mValue == value.toInt() }!!
-        }
+        fun parseValue(value: Int): CardType? = values().find { it.mValue == value }
     }
 }
