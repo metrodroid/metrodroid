@@ -39,7 +39,7 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
                                  private val ticketEnvParsed: En1545Parsed,
                                  private val contractList1: En1545Parsed,
                                  private val contractList2: En1545Parsed) : En1545TransitData(ticketEnvParsed) {
-    override val lookup get() = RicaricaMiLookup.instance
+    override val lookup get() = RicaricaMiLookup
 
     override val trips get() = mTrips
 

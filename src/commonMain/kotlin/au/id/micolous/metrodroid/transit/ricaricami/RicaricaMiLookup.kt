@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
-class RicaricaMiLookup private constructor() : En1545LookupSTR("ricaricami") {
+object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
 
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
@@ -68,20 +68,13 @@ class RicaricaMiLookup private constructor() : En1545LookupSTR("ricaricami") {
         return routeNumber.toString()
     }
 
-    companion object {
-        val TZ = MetroTimeZone.ROME
-        const val TRANSPORT_METRO = 1
-        const val TRANSPORT_BUS = 2
-        const val TRANSPORT_TRAM = 4
-        const val TRANSPORT_TRENORD1 = 7
-        const val TRANSPORT_TRENORD2 = 9
-        const val TARIFF_URBAN_2X6 = 0x1b39
-        const val TARIFF_SINGLE_URBAN = 0xfff
-        const val TARIFF_DAILY_URBAN = 0x100d
-
-        private val sInstance = RicaricaMiLookup()
-
-        val instance: En1545Lookup
-            get() = sInstance
-    }
+    val TZ = MetroTimeZone.ROME
+    const val TRANSPORT_METRO = 1
+    const val TRANSPORT_BUS = 2
+    const val TRANSPORT_TRAM = 4
+    const val TRANSPORT_TRENORD1 = 7
+    const val TRANSPORT_TRENORD2 = 9
+    const val TARIFF_URBAN_2X6 = 0x1b39
+    const val TARIFF_SINGLE_URBAN = 0xfff
+    const val TARIFF_DAILY_URBAN = 0x100d
 }
