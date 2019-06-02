@@ -48,6 +48,14 @@ data class RkfPurse(private val mStatic: En1545Parsed,
     val transactionNumber: Int
         get() = mDynamic.getIntOrZero(TRANSACTION_NUMBER)
 
+    fun getRawFields(level: TransitData.RawLevel): List<ListItem> {
+        val skipSet = when (level) {
+            TransitData.RawLevel.UNKNOWN_ONLY -> setOf(VALUE)
+            else -> setOf()
+        }
+        return mStatic.getInfo(skipSet) + mDynamic.getInfo(skipSet)
+    }
+
     companion object {
         private const val TAG = "RkfPurse"
         private const val VALUE = "Value"
