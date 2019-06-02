@@ -170,7 +170,7 @@ object Utils {
         if (ex == null)
             return "unknown error"
         val ex = ex.cause ?: ex
-        val errorMessage = ex.localizedMessage.ifEmpty { ex.message ?: "" }.ifEmpty { ex.toString() }
+        val errorMessage = ex.localizedMessage?.ifEmpty { null } ?: ex.message?.ifEmpty { null } ?: ex.toString()
         return ex.javaClass.simpleName + ": " + errorMessage
     }
 
