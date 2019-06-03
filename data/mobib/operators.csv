@@ -3,3 +3,4 @@ id,name,mode
 0x6,Tramway,TRAM
 0x7,Premetro,METRO
 0xf,Bus,BUS
+0x16,Tram,TRAM

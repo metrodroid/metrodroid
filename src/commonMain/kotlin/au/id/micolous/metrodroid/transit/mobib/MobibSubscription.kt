@@ -18,36 +18,56 @@
  */
 package au.id.micolous.metrodroid.transit.mobib
 
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-internal class MobibSubscription (override val parsed: En1545Parsed,
-                                  private val counter: Int?): En1545Subscription() {
-
-    private val isSubscription: Boolean
-        get() = counter == 0x2f02
-
+internal class MobibSubscription(override val parsed: En1545Parsed, private val counter: Int?) : En1545Subscription() {
+    private val counterUse: Int? get() = contractTariff?.shr(10)?.and(7)
     override val remainingTripCount: Int?
-        get() = if (isSubscription) null else counter
-
-    override val subscriptionName: String?
-        get() = if (isSubscription) Localizer.localizeString(R.string.daily_subscription) else Localizer.localizeString(R.string.single_trips)
+        get() = if (counterUse == 4) null else counter
 
     override val lookup: En1545Lookup
         get() = MobibLookup
 
-    constructor(dataSub: ImmutableByteArray, counter: Int?) :
-            this(En1545Parser.parse(dataSub, FIELDS), counter)
-
     companion object {
-        private val FIELDS = En1545Container(
-                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_A, 41),
-                En1545FixedInteger.date(En1545Subscription.CONTRACT_SALE),
-                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_B, 177)
-        )
+            fun parse(dataSub: ImmutableByteArray, counter: Int?): MobibSubscription? {
+                    if (dataSub.isAllZero())
+                    return null
+                    val version = dataSub.getBitsFromBuffer(0, 6)
+                    val fields = when {
+                            version <= 3 -> En1545Container(
+                                    En1545FixedInteger("ContractVersion", 6),
+                                    En1545FixedInteger(CONTRACT_UNKNOWN_B, 35 - 14),
+                                    En1545FixedInteger(CONTRACT_TARIFF, 14),
+                                    En1545FixedInteger.date(CONTRACT_SALE),
+                                    En1545FixedHex(CONTRACT_UNKNOWN_C, 48),
+                                    En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 16),
+                                    En1545FixedHex(CONTRACT_UNKNOWN_D, 113)
+                            )
+                            else -> En1545Container(
+                                    En1545FixedInteger("ContractVersion", 6),
+                                    En1545FixedInteger(CONTRACT_UNKNOWN_A, 19),
+                                    En1545FixedInteger(CONTRACT_TARIFF, 14),
+                                    En1545FixedHex(CONTRACT_UNKNOWN_B, 50),
+                                    En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 16),
+                                    En1545FixedInteger(CONTRACT_UNKNOWN_C, 6),
+                                    En1545Bitmap(
+                                            En1545FixedInteger("NeverSeen0", 5),
+                                            En1545FixedInteger("NeverSeen1", 5),
+                                            En1545FixedInteger.date(CONTRACT_SALE),
+                                            En1545Container(
+                                                    En1545FixedInteger("DurationUnits", 2),
+                                                    En1545FixedInteger(CONTRACT_DURATION, 8)
+                                            ),
+                                            En1545FixedInteger("NeverSeen4", 8)
+                                    ),
+                                    En1545FixedInteger(CONTRACT_UNKNOWN_D, 24)
+                            )
+                    }
+                    val parsed = En1545Parser.parse(dataSub, fields)
+                    return MobibSubscription(parsed, counter)
+            }
     }
 }

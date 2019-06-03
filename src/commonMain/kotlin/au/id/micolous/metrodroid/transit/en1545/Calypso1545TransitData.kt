@@ -212,7 +212,7 @@ abstract class Calypso1545TransitData constructor (
             return ownCtr?.getRecord(1)?.byteArrayToInt(0, 3)
         }
 
-        private fun getCounter(card: CalypsoApplication, recordNum: Int): Int? {
+        fun getCounter(card: CalypsoApplication, recordNum: Int): Int? {
             if (recordNum > 4)
                 return null
             val cnt = getCounter(card, recordNum, false)

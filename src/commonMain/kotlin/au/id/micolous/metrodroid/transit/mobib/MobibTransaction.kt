@@ -27,13 +27,11 @@ import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-internal class MobibTransaction (override val parsed: En1545Parsed): En1545Transaction() {
+internal class MobibTransaction(override val parsed: En1545Parsed) : En1545Transaction() {
     override val station: Station?
         get() {
             val agency = parsed.getIntOrZero(En1545Transaction.EVENT_SERVICE_PROVIDER)
-            if (agency == TRAM)
-                return null
-            return if (agency == BUS) StationTableReader.getStation(MOBIB_STR,
+            return if (agency == MobibLookup.BUS || agency == MobibLookup.TRAM) StationTableReader.getStation(MOBIB_STR,
                     parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER) shl 13
                             or parsed.getIntOrZero(EVENT_LOCATION_ID_BUS) or (agency shl 22)) else super.station
         }
@@ -41,32 +39,71 @@ internal class MobibTransaction (override val parsed: En1545Parsed): En1545Trans
     override val lookup: En1545Lookup
         get() = MobibLookup
 
-    constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, FIELDS))
+    val transactionNumber: Int
+        get() = parsed.getIntOrZero(EVENT_SERIAL_NUMBER)
 
     companion object {
-        private const val TRAM = 0x16
-        private const val BUS = 0xf
+            private const val EVENT_LOCATION_ID_BUS = "EventLocationIdBus"
+            private const val EVENT_VERSION = "EventVersion"
+            fun parse(data: ImmutableByteArray): MobibTransaction? {
+                    if (data.isAllZero())
+                    return null
+                    val version = data.getBitsFromBuffer(0, 6)
 
-        private const val EVENT_LOCATION_ID_BUS = "EventLocationIdBus"
-        private val FIELDS = En1545Container(
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_A, 6),
-                En1545FixedInteger.date(En1545Transaction.EVENT),
-                En1545FixedInteger.time(En1545Transaction.EVENT),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_B, 21),
-                En1545FixedInteger(En1545Transaction.EVENT_PASSENGER_COUNT, 5),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_C, 14),
-                En1545FixedInteger(EVENT_LOCATION_ID_BUS, 12), // Curious
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_D, 9),
-                En1545FixedInteger(En1545Transaction.EVENT_ROUTE_NUMBER, 7), // curious
-                En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 5), // Curious
-                En1545FixedInteger(En1545Transaction.EVENT_LOCATION_ID, 17), // Curious
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_E, 10),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_F, 7),
-                En1545FixedInteger(En1545Transaction.EVENT_SERIAL_NUMBER, 24),
-                En1545FixedInteger("EventTransferNumber", 24),
-                En1545FixedInteger.date(En1545Transaction.EVENT_FIRST_STAMP),
-                En1545FixedInteger.time(En1545Transaction.EVENT_FIRST_STAMP),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_G, 21)
-        )
+                    val fields = when {
+                            version <= 2 -> En1545Container(
+                                    En1545FixedInteger(EVENT_VERSION, 6),
+                                    En1545FixedInteger.date(EVENT),
+                                    En1545FixedInteger.time(EVENT),
+                                    En1545FixedInteger(EVENT_UNKNOWN_B, 21),
+                                    En1545FixedInteger(EVENT_PASSENGER_COUNT, 5),
+                                    En1545FixedInteger(EVENT_UNKNOWN_C, 14),
+                                    En1545FixedInteger(EVENT_LOCATION_ID_BUS, 12), // Curious
+                                    En1545FixedInteger(EVENT_ROUTE_NUMBER, 16),
+                                    En1545FixedInteger(EVENT_SERVICE_PROVIDER, 5), // Curious
+                                    En1545FixedInteger(EVENT_LOCATION_ID, 17), // Curious
+                                    En1545FixedInteger(EVENT_UNKNOWN_E, 10),
+                                    En1545FixedInteger(EVENT_UNKNOWN_F, 7),
+                                    En1545FixedInteger(EVENT_SERIAL_NUMBER, 24),
+                                    En1545FixedInteger("EventTransferNumber", 24),
+                                    En1545FixedInteger.date(EVENT_FIRST_STAMP),
+                                    En1545FixedInteger.time(EVENT_FIRST_STAMP),
+                                    En1545FixedInteger(EVENT_UNKNOWN_G, 21)
+                            )
+                            else -> En1545Container(
+                                    En1545FixedInteger(EVENT_VERSION, 6), // confirmed
+                                    En1545FixedInteger.date(EVENT), // confirmed
+                                    En1545FixedInteger.time(EVENT), // confirmed
+                                    En1545FixedInteger(EVENT_UNKNOWN_B + "1", 31),
+                                    En1545Bitmap(
+                                            En1545Container(
+                                                    En1545FixedInteger(EVENT_UNKNOWN_B + "2", 4), 
+                                                    En1545FixedInteger(EVENT_LOCATION_ID_BUS, 12) // confirmed
+                                            ),
+                                            En1545FixedInteger(EVENT_ROUTE_NUMBER, 16), // confirmed
+                                            En1545FixedInteger("NeverSeen2", 16),
+                                            En1545FixedInteger("NeverSeen3", 16),
+                                            En1545Container(
+                                                    En1545FixedInteger(EVENT_SERVICE_PROVIDER, 5), // confirmed
+                                                    En1545FixedInteger(EVENT_LOCATION_ID, 17), // confirmed
+                                                    En1545FixedInteger(EVENT_UNKNOWN_E + "1", 10)
+                                            )
+                                    ),
+                                    En1545Bitmap(
+                                            En1545FixedInteger(EVENT_SERIAL_NUMBER, 24), // confirmed
+                                            En1545FixedInteger(EVENT_UNKNOWN_F, 16), // zero?
+                                            En1545FixedInteger("EventTransferNumber", 8), // zero?
+                                            En1545FixedInteger("NeverSeenA3", 16),
+                                            En1545Container(
+                                                    En1545FixedInteger.date(EVENT_FIRST_STAMP), // confirmed
+                                                    En1545FixedInteger.time(EVENT_FIRST_STAMP) // confirmed
+                                            ),
+                                            En1545FixedInteger("NeverSeenA5", 16)
+                                    ),
+                                    En1545FixedInteger(EVENT_UNKNOWN_G, 21)
+                            )
+                    }
+                    return MobibTransaction(En1545Parser.parse(data, fields))
+            }
     }
 }
