@@ -844,4 +844,11 @@
     <string name="location_gauteng">Gauteng, Sør-Afrika</string>
     <string name="nfc_settings">NFC-innstillinger</string>
     <string name="location_germany">Tyskland</string>
+    <string name="balance_command">Saldokommando</string>
+    <string name="additional_file_references">Ytterligere filreferanser</string>
+    <string name="agency_card_serial_number">Byrå-kortserienummer</string>
+    <string name="discretionary_data">Tilleggsdata</string>
+    <string name="emv_issuer_public_key_certificate">Utsteders offentlige nøkkelsertifikat</string>
+    <string name="emv_track_1_discretionary_data">Spor 1-tilleggsdata</string>
+    <string name="location_germany_and_switzerland">Tyskland og sveits</string>
 </resources>
