@@ -874,4 +874,5 @@
     <string name="nfc_settings">NFC-instellingen</string>
     <string name="location_germany">Duitsland</string>
     <string name="location_germany_and_switzerland">Duitsland en Zwitserland</string>
+    <string name="location_pisa">Pisa, Italië</string>
 </resources>
