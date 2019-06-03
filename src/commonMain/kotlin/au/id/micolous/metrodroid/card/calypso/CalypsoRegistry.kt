@@ -22,6 +22,7 @@ import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData
 import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData
+import au.id.micolous.metrodroid.transit.pisa.PisaTransitData
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData
 import au.id.micolous.metrodroid.transit.venezia.VeneziaTransitData
 
@@ -32,5 +33,6 @@ object CalypsoRegistry {
             MobibTransitData.FACTORY,
             IntercodeTransitData.FACTORY,
             LisboaVivaTransitData.FACTORY,
-            VeneziaTransitData.FACTORY)
+            VeneziaTransitData.FACTORY,
+            PisaTransitData.FACTORY)
 }
