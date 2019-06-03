@@ -871,4 +871,7 @@
     <string name="emv_cryptogram_information_data">Informatie over cryptogram</string>
     <string name="emv_application_transaction_counter">Transactieteller</string>
     <string name="location_gauteng">Gauteng, Zuid-Afrika</string>
+    <string name="nfc_settings">NFC-instellingen</string>
+    <string name="location_germany">Duitsland</string>
+    <string name="location_germany_and_switzerland">Duitsland en Zwitserland</string>
 </resources>
