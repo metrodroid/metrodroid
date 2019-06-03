@@ -47,10 +47,10 @@ class ListItemAdapter(context: Context, items: List<ListItem>) : ArrayAdapter<Li
         val item = getItem(position)
 
         if (item is HeaderListItem) {
-            (convertView.findViewById<TextView>(android.R.id.text1)).text = item.text1!!.spanned
+            (convertView.findViewById<TextView>(android.R.id.text1)).text = item.text1?.spanned
         } else {
-            (convertView.findViewById<TextView>(android.R.id.text1)).text = item!!.text1!!.spanned
-            (convertView.findViewById<TextView>(android.R.id.text2)).text = item!!.text2!!.spanned
+            (convertView.findViewById<TextView>(android.R.id.text1)).text = item?.text1?.spanned
+            (convertView.findViewById<TextView>(android.R.id.text2)).text = item?.text2?.spanned
         }
 
         return convertView
