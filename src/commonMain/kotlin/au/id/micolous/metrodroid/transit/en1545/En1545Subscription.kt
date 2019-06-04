@@ -24,13 +24,12 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.util.NumberUtils
-
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.NumberUtils
 
 abstract class En1545Subscription : Subscription() {
     protected abstract val parsed: En1545Parsed
@@ -57,7 +56,7 @@ abstract class En1545Subscription : Subscription() {
 
     override val paymentMethod: Subscription.PaymentMethod
         get() {
-            if (cost() == null) {
+            if (cost == null) {
                 return super.paymentMethod
             }
 
@@ -156,12 +155,13 @@ abstract class En1545Subscription : Subscription() {
                         else -> setOf()
                     })
 
-    override fun cost(): TransitCurrency? {
-        val cost = parsed.getIntOrZero(CONTRACT_PRICE_AMOUNT)
-        return if (cost == 0) {
-            null
-        } else lookup.parseCurrency(cost)
-    }
+    override val cost: TransitCurrency?
+        get() {
+            val cost = parsed.getIntOrZero(CONTRACT_PRICE_AMOUNT)
+            return if (cost == 0) {
+                null
+            } else lookup.parseCurrency(cost)
+        }
 
     override fun getAgencyName(isShort: Boolean): String? {
         return lookup.getAgencyName(contractProvider, false)

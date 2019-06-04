@@ -241,7 +241,7 @@ abstract class Subscription : Parcelable {
                 items.add(ListItem(R.string.last_used_on, lastUseTS.format()))
             }
 
-            val cost = cost()
+            val cost = cost
             if (cost != null) {
                 items.add(ListItem(R.string.subscription_cost,
                         cost.maybeObfuscateFare().formatCurrencyString(true)))
@@ -338,9 +338,8 @@ abstract class Subscription : Parcelable {
     /**
      * The cost of the subscription, or null if unknown (default).
      */
-    open fun cost(): TransitCurrency? {
-        return null
-    }
+    open val cost: TransitCurrency?
+        get() = null
 
     /**
      * Describes payment methods for a [Subscription].
