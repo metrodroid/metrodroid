@@ -54,10 +54,6 @@ data class DesfireCard constructor(
         get() = DesfireManufacturingData(manufacturingData).info
 
     @Transient
-    val tagId: ImmutableByteArray
-        get() = DesfireManufacturingData(manufacturingData).uid
-
-    @Transient
     override val rawData: List<ListItem>
         get() = applications.map { (id,app) ->
                 ListItemRecursive(makeName(id),

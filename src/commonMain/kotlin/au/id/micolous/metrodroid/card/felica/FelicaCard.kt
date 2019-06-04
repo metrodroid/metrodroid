@@ -52,14 +52,6 @@ data class FelicaCard(
         @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
-    @Transient
-    private var tagId: ImmutableByteArray? = null
-
-    override fun postCreate(card: Card) {
-        super.postCreate(card)
-        tagId = card.tagId
-    }
-
     /**
      * Gets the Manufacturer Code of the card (part of IDm).  This is a 16 bit value.
      *
