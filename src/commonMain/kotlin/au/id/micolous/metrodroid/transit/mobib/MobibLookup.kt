@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.mobib
 
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -34,7 +36,7 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?) =
             when (agency) {
                 null -> null
-                BUS -> routeNumber?.toString()
+                BUS, TRAM -> routeNumber?.toString()
                 else -> null
             }
 
@@ -44,9 +46,24 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
         return StationTableReader.getStation(MOBIB_STR, station or ((agency ?: 0) shl 22))
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = contractTariff?.toString()
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = subs[contractTariff]
+    ?: Localizer.localizeString(R.string.unknown_format, contractTariff?.toString())
 
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
-    private const val BUS = 0xf
+    override fun getAgencyName(agency: Int?, isShort: Boolean): String? {
+        if (agency == null)
+            return null
+        return StationTableReader.getOperatorName(MOBIB_STR, agency, isShort)
+    }
+
+    const val BUS = 0xf
+    const val TRAM = 0x16
+
+    val subs = mapOf(
+            0x2801 to "Jump 1 trip",
+            0x2803 to "Jump 10 trips",
+            0x0805 to "Airport BUS",
+            0x303d to "Jump 24h + Bus Airport"
+    )
 }
