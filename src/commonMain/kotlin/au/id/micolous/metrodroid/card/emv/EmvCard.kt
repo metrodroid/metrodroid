@@ -25,8 +25,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.transit.emv.EmvData.PARSER_IGNORED_AID_PREFIX
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_PDOL
-import au.id.micolous.metrodroid.transit.emv.parseEmvTransitData
-import au.id.micolous.metrodroid.transit.emv.parseEmvTransitIdentity
+import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.KSerializer
@@ -78,13 +77,13 @@ class EmvCardMain internal constructor(
     override fun parseTransitData(card: ISO7816Card) = if (parserIgnore) {
         null
     } else {
-        parseEmvTransitData(this)
+        EmvTransitFactory.parseTransitData(this)
     }
 
     override fun parseTransitIdentity(card: ISO7816Card) = if (parserIgnore) {
         null
     } else {
-        parseEmvTransitIdentity(this)
+        EmvTransitFactory.parseTransitIdentity(this)
     }
 
     @Transient
