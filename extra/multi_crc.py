@@ -29,6 +29,7 @@ from argparse import ArgumentParser, FileType
 from base64 import b16encode
 import crcmod.predefined
 
+crc32s = ['32', '32-bzip2', '32c','32d', '32-mpeg', 'posix', '32-q', 'jamcrc', 'xfer']
 crc16s = ['16', '16buypass', '16dds110', '16dect', '16dnp', '16en13757', '16genibus', '16maxim', '16mcrf4xx', '16riello', '16t10dif', '16teledisk', '16usb', 'x-25', 'xmodem', 'modbus', 'kermit', 'ccitt-false', 'aug-ccitt']
 crc8s = ['8', '8-darc', '8-i-code', '8-itu', '8-maxim', '8-rohc', '8-wcdma']
 
@@ -51,7 +52,12 @@ def multi_crc(input_file, start_offset=0, length=None):
     print('Calculating checksum on input data:')
     print(b16encode(d).decode('ascii'))
     print()
-  
+
+  for x in crc32s:
+    crc_func = crcmod.predefined.mkCrcFun(x)
+    s = crc_func(d)
+    print('%15s : %08x / %d' % (x, s, s))
+
   for x in crc16s:
     crc_func = crcmod.predefined.mkCrcFun(x)
     s = crc_func(d)
