@@ -30,11 +30,7 @@ import java.io.IOException
 import java.io.InputStream
 
 import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
-import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData
+import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.Utils
 
 class LicenseActivity : MetrodroidActivity() {
@@ -56,21 +52,13 @@ class LicenseActivity : MetrodroidActivity() {
         readLicenseTextFromAsset("third_party/NOTICE.noto-emoji.txt")
         readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt")
 
-        // TODO: Get a list of files programatically
-        addNotice(SeqGoTransitData.notice)
-        addNotice(LaxTapTransitData.notice)
-        addNotice(ClipperTransitData.notice)
-        addNotice(EZLinkTransitData.notice)
-        addNotice(LeapTransitData.notice)
+        for (factory in CardInfoRegistry.allFactories) {
+                lblLicenseText!!.append(factory.notice ?: continue)
+                lblLicenseText!!.append("\n\n")
+        }
 
         lblLicenseText!!.endBatchEdit()
         lblLicenseText = null
-    }
-
-    private fun addNotice(notice: String?) {
-        if (notice == null) return
-        lblLicenseText!!.append(notice)
-        lblLicenseText!!.append("\n\n")
     }
 
     private fun readLicenseTextFromAsset(path: String) {

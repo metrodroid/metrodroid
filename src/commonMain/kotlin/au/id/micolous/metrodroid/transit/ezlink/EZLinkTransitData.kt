@@ -44,7 +44,7 @@ class EZLinkTransitData (override val serialNumber: String?,
         get() = if (mBalance != null) TransitCurrency.SGD(mBalance) else null
 
     companion object {
-        private const val EZLINK_STR = "ezlink"
+        const val EZLINK_STR = "ezlink"
 
         private val EPOCH = Epoch.utc(1995, MetroTimeZone.SINGAPORE, -8 * 60)
 
@@ -62,9 +62,6 @@ class EZLinkTransitData (override val serialNumber: String?,
             return if (code.length != 3) Station.unknown(code) else StationTableReader.getStation(EZLINK_STR,
                     ImmutableByteArray.fromASCII(code).byteArrayToInt(), code)
         }
-
-        val notice: String?
-            get() = StationTableReader.getNotice(EZLINK_STR)
     }
 }
 
@@ -123,4 +120,7 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
         val canNo = purse.can.toHexString()
         return TransitIdentity(EZLinkTransitData.getCardIssuer(canNo), canNo)
     }
+
+    override val notice: String?
+        get() = StationTableReader.getNotice(EZLinkTransitData.EZLINK_STR)
 }

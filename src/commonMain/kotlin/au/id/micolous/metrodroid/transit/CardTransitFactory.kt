@@ -9,4 +9,7 @@ interface CardTransitFactory<T> {
     fun parseTransitData(card: T): TransitData?
 
     fun check(card: T): Boolean
+
+    val notice: String?
+        get() = null
 }
