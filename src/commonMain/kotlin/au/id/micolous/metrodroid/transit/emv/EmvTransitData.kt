@@ -18,11 +18,14 @@
  */
 package au.id.micolous.metrodroid.transit.emv
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.emv.EmvCardMain
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.emv.EmvData.LOG_ENTRY
@@ -35,17 +38,6 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-
-private fun findT2Data(tlvs: List<ImmutableByteArray>): ImmutableByteArray? {
-    for (tlv in tlvs) {
-        val t2 = ISO7816TLV.findBERTLV(tlv, T2Data, false)
-        if (t2 != null)
-            return t2
-    }
-
-    return null
-}
-
 private fun splitby4(input: String?): String? {
     if (input == null)
         return null
@@ -54,66 +46,89 @@ private fun splitby4(input: String?): String? {
     return if (res.endsWith(' ')) res.substring(0, res.length - 1) else res
 }
 
-fun parseEmvTransitData(card: EmvCardMain): EmvTransitData {
-    val allTlv = card.getAllTlv()
-    val logEntry = getTag(allTlv, LOG_ENTRY)
-    val logFormat = card.logFormat
-    val logEntries = if (logEntry != null && logFormat != null) {
-        val logSfi = logEntry[0]
-        val logRecords = card.getSfiFile(logSfi.toInt())
-        logRecords?.recordList?.mapNotNull { parseEmvTrip(it, logFormat) }
-    } else
-        null
-    val pinTriesRemaining = card.pinTriesRemaining?.let {
-        ISO7816TLV.removeTlvHeader(it).byteArrayToInt()
-    }
-    return EmvTransitData(
-            tlvs = allTlv,
-            pinTriesRemaining = pinTriesRemaining,
-            logEntries = logEntries,
-            t2 = findT2Data(allTlv),
-            name = findName(allTlv))
-}
-
-
-private fun getTag(tlvs: List<ImmutableByteArray>, id: String): ImmutableByteArray? {
-    for (tlv in tlvs) {
-        return ISO7816TLV.findBERTLV(tlv, id, false) ?: continue
-    }
-    return null
-}
-
-private fun findName(tlvs: List<ImmutableByteArray>): String {
-    for (tag in listOf(TAG_NAME2, TAG_NAME1)) {
-        val variant = getTag(tlvs, tag) ?: continue
-        return variant.readASCII()
-    }
-    return "EMV"
-}
-
-fun parseEmvTransitIdentity(card: EmvCardMain): TransitIdentity {
-    val allTlv = card.getAllTlv()
-    return TransitIdentity(
-            findName(allTlv),
-            splitby4(getPan(findT2Data(allTlv))))
-}
-
 private fun getPan(t2: ImmutableByteArray?): String? {
     val t2s = t2?.toHexString() ?: return null
     return t2s.substringBefore('d', t2s)
 }
 
-private fun getPostPan(t2: ImmutableByteArray): String? {
-    val t2s = t2.toHexString()
-    return t2s.substringAfter('d')
+object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
+    private fun getTag(tlvs: List<ImmutableByteArray>, id: String): ImmutableByteArray? {
+        for (tlv in tlvs) {
+            return ISO7816TLV.findBERTLV(tlv, id, false) ?: continue
+        }
+        return null
+    }
+
+    private fun findT2Data(tlvs: List<ImmutableByteArray>): ImmutableByteArray? {
+        for (tlv in tlvs) {
+            val t2 = ISO7816TLV.findBERTLV(tlv, T2Data, false)
+            if (t2 != null)
+                return t2
+        }
+
+        return null
+    }
+
+    private fun findName(tlvs: List<ImmutableByteArray>): String {
+        for (tag in listOf(TAG_NAME2, TAG_NAME1)) {
+            val variant = getTag(tlvs, tag) ?: continue
+            return variant.readASCII()
+        }
+        return "EMV"
+    }
+
+    override fun parseTransitData(card: EmvCardMain): EmvTransitData {
+        val allTlv = card.getAllTlv()
+        val logEntry = getTag(allTlv, LOG_ENTRY)
+        val logFormat = card.logFormat
+        val logEntries = if (logEntry != null && logFormat != null) {
+            val logSfi = logEntry[0]
+            val logRecords = card.getSfiFile(logSfi.toInt())
+            logRecords?.recordList?.mapNotNull { parseEmvTrip(it, logFormat) }
+        } else
+            null
+        val pinTriesRemaining = card.pinTriesRemaining?.let {
+            ISO7816TLV.removeTlvHeader(it).byteArrayToInt()
+        }
+        return EmvTransitData(
+            tlvs = allTlv,
+            pinTriesRemaining = pinTriesRemaining,
+            logEntries = logEntries,
+            t2 = findT2Data(allTlv),
+            name = findName(allTlv))
+    }
+
+    override fun parseTransitIdentity(card: EmvCardMain): TransitIdentity {
+        val allTlv = card.getAllTlv()
+        return TransitIdentity(
+            findName(allTlv),
+            splitby4(getPan(findT2Data(allTlv))))
+    }
+
+    val CARD_INFO = CardInfo(
+        name = "EMV (Credit and Debit cards)",
+        locationId = R.string.location_worldwide,
+        cardType = CardType.ISO7816)
+
+    override val allCards: List<CardInfo>
+        get() = listOf(CARD_INFO)
+
+    override fun check(card: EmvCardMain) = true
 }
 
 @Parcelize
-data class EmvTransitData(private val tlvs: List<ImmutableByteArray>,
-                          private val name: String,
-                          private val pinTriesRemaining: Int?,
-                          private val t2: ImmutableByteArray?,
-                          private val logEntries: List<EmvLogEntry>?) : TransitData() {
+data class EmvTransitData(
+    private val tlvs: List<ImmutableByteArray>,
+    private val name: String,
+    private val pinTriesRemaining: Int?,
+    private val t2: ImmutableByteArray?,
+    private val logEntries: List<EmvLogEntry>?
+) : TransitData() {
+    private fun getPostPan(t2: ImmutableByteArray): String? {
+        val t2s = t2.toHexString()
+        return t2s.substringAfter('d')
+    }
+
     override val serialNumber get() = splitby4(getPan(t2))
 
     override val info get(): List<ListItem> {
