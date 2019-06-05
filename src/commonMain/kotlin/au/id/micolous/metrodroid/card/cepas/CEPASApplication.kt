@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
@@ -93,11 +93,11 @@ data class CEPASApplication(
 
 
     override fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? {
-        return if (EZLinkTransitData.check(this)) EZLinkTransitData.parseTransitIdentity(this) else null
+        return if (EZLinkTransitFactory.check(this)) EZLinkTransitFactory.parseTransitIdentity(this) else null
     }
 
     override fun parseTransitData(card: ISO7816Card): TransitData? {
-        return if (EZLinkTransitData.check(this)) EZLinkTransitData.parse(this) else null
+        return if (EZLinkTransitFactory.check(this)) EZLinkTransitFactory.parseTransitData(this) else null
     }
 
     fun getPurse(purseId: Int): ImmutableByteArray? = purses[purseId]
@@ -142,7 +142,7 @@ data class CEPASApplication(
                 if (purse != null) {
                     cepasPurses[purseId] = ImmutableByteArray(purse)
                     if (!isValid) {
-                        val cardInfo = EZLinkTransitData.earlyCardInfo(purse)
+                        val cardInfo = EZLinkTransitFactory.earlyCardInfo(purse)
                         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
                                 cardInfo.name))
                         feedbackInterface.showCardType(cardInfo)
