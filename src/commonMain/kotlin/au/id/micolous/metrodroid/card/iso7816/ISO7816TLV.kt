@@ -1,7 +1,7 @@
 /*
  * ISO7816TLV.kt
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,18 +21,40 @@
 package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object ISO7816TLV {
-    // return: <leadBits, id, idlen>
+    private const val TAG = "ISO7816TLV"
+
+    /**
+     * Gets the length of a TLV Tag ID
+     *
+     */
     private fun getTLVIDLen(buf: ImmutableByteArray, p: Int): Int {
-        if (buf[p].toInt() and 0x1f != 0x1f)
-            return 1
-        var len = 1
-        while (buf[p + len++].toInt() and 0x80 != 0);
-        return len
+        var s = p
+        // Seek past null bytes.
+        // "Before, between or after TLV-coded data
+        while (buf[s] == 0.toByte()) {
+            s++
+            if (s > buf.lastIndex) {
+                // EOF
+                return s
+            }
+        }
+
+        if (buf[s++].toInt() and 0x1f != 0x1f)
+            return s
+
+        while (buf[s++].toInt() and 0x80 != 0) {
+            if (s > buf.lastIndex) {
+                // EOF
+                return s
+            }
+        }
+        return s
     }
 
     // return lenlen, lenvalue
@@ -41,8 +63,25 @@ object ISO7816TLV {
         if (headByte shr 7 == 0)
             return intArrayOf(1, headByte and 0x7f)
         val numfollowingbytes = headByte and 0x7f
-        return intArrayOf(1 + numfollowingbytes,
-                buf.byteArrayToInt(p + 1, numfollowingbytes))
+        if (numfollowingbytes > 2) {
+            // We got 2 or more following bytes for storing the length. This is highly unlikely, and
+            // it is more likely we parsed some data that is not TLV.
+            //
+            // 64 KiB field length is likely enough for anyone(tm). :)
+            //
+            // Lets consume the remaining bytes as a fake header.
+            Log.w(TAG, "long length form at position $p of > 2 bytes ($numfollowingbytes)")
+            return intArrayOf(buf.size - p, 0)
+        }
+
+        val datalen = buf.byteArrayToInt(p + 1, numfollowingbytes)
+        if (datalen < 0) {
+            // Data lengths less than 0 don't make sense, bail.
+            Log.w(TAG, "long length form at position $p parses to < 0 bytes ($datalen)")
+            return intArrayOf(buf.size - p, 0)
+        }
+
+        return intArrayOf(1 + numfollowingbytes, datalen)
     }
 
     /**
@@ -57,17 +96,49 @@ object ISO7816TLV {
             // Skip ID
             var p = getTLVIDLen(buf, 0)
             val (startoffset, alldatalen) = decodeTLVLen(buf, p)
+            if (p < 0 || startoffset < 0 || alldatalen < 0) {
+                Log.w(TAG, "Invalid TLV reading header: p=$p, startoffset=$startoffset, " +
+                        "alldatalen=$alldatalen")
+                return@sequence
+            }
+
             p += startoffset
             val fulllen = p + alldatalen
 
             while (p < fulllen) {
                 val idlen = getTLVIDLen(buf, p)
-                val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-                yield(Triple(buf.sliceOffLen(p, idlen), // id
-                        buf.sliceOffLen(p, idlen + lenlen), // header
-                        buf.sliceOffLen(p + idlen + lenlen, datalen))) // data
+                // todo check past eof
+                val (hlen, datalen) = decodeTLVLen(buf, p + idlen)
 
-                p += idlen + lenlen + datalen
+                if (idlen < 0 || hlen < 0 || datalen < 0) {
+                    // Invalid lengths, abort!
+                    Log.w(TAG, "Invalid TLV data at $p: idlen=$idlen, hlen=$hlen, datalen=$datalen")
+                    break
+                }
+
+                val id = buf.sliceOffLenSafe(p, idlen)
+                val header = buf.sliceOffLenSafe(p, idlen + hlen)
+                val data = buf.sliceOffLenSafe(p + idlen + hlen, datalen)
+
+                if (id == null || header == null || data == null) {
+                    // Invalid ranges, abort!
+                    Log.w(TAG, "Invalid TLV data at $p: out of bounds")
+                    break
+                }
+
+                // todo: split nulls from start for gettlvidlen change
+
+                if ((id.isAllZero() || id.isEmpty()) && (header.isEmpty() || header.isAllZero())
+                        && data
+                                .isEmpty()) {
+                    // Skip empty tag
+                    continue
+                }
+
+                Log.d(TAG, "id=${id.toHexString()}, header=${header.getHexString()}, data=${data
+                        .getHexString()}")
+                yield(Triple(id, header, data))
+                p += idlen + hlen + datalen
             }
         }
     }
@@ -80,6 +151,7 @@ object ISO7816TLV {
 
         while (p < buf.size) {
             val idlen = getTLVIDLen(buf, p)
+            // todo check past eof
             val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
             iterator(buf.sliceOffLen(p, idlen), datalen)
 
@@ -147,6 +219,7 @@ object ISO7816TLV {
 
     fun removeTlvHeader(buf: ImmutableByteArray): ImmutableByteArray {
         val p = getTLVIDLen(buf, 0)
+        // todo check if past eof
         val (startoffset, datalen) = decodeTLVLen(buf, p)
         return buf.sliceOffLen(p+startoffset, datalen)
     }
