@@ -120,6 +120,61 @@ class ImmutableByteArray private constructor(
             mData.sliceArray(0 until other.size).contentEquals(other)
     fun startsWith(other: ImmutableByteArray) = startsWith(other.mData)
 
+    /**
+     * Returns the first index of [needle], or `-1` if it does not contain [needle].
+     *
+     * @param needle Array to search for
+     * @param start Index to start searching from. Defaults to the start of the array.
+     * @param end Index to end searching at. Defaults to the end of the array.
+     */
+    fun indexOf(needle: ImmutableByteArray, start: Int = 0, end: Int = size): Int {
+        val needleSize = needle.size
+
+        if (start < 0 || start > lastIndex || end > size || start > end) {
+            // Impossible request
+            return -1
+        } else if (needle.isEmpty()) {
+            // We can search for nothing in the space of something
+            return start
+        } else if ((start + needleSize) == end) {
+            // Optimise -- do a substring check
+            return if (start == 0 && end == size) {
+                // Whole string check
+                if (contentEquals(needle)) 0 else -1
+            } else {
+                // Need to slice first
+                if (sliceArray(start until end).contentEquals(needle)) start else -1
+            }
+        } else if ((start + needleSize) > end) {
+            // We can't possibly fulfill that request
+            return -1
+        }
+
+        var p = 0
+        for (i in start until end) {
+            if ((i + needleSize - p) > end) {
+                // Can't possibly find a good match now.
+                break
+            }
+
+            if (mData[i] == needle[p]) {
+                p++
+                if (p == needleSize) {
+                    // Success!
+                    return i + 1 - needleSize
+                } else {
+                    // Need more...
+                    continue
+                }
+            } else {
+                p = 0
+            }
+        }
+
+        // Failure
+        return -1
+    }
+
     fun map(function: (Byte) -> Byte) = ImmutableByteArray(
             mData = ByteArray(size) { it -> function(mData[it]) }
     )
