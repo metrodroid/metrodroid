@@ -28,6 +28,10 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_AMOUNT_AUTHORISED
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_CURRENCY_CODE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_DATE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_TIME
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -35,8 +39,8 @@ import au.id.micolous.metrodroid.util.NumberUtils
 @Parcelize
 data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Trip() {
     override val startTimestamp get(): Timestamp? {
-        val dateBin = values["9a"] ?: return null
-        val timeBin = values["9f21"]
+        val dateBin = values[TAG_TRANSACTION_DATE] ?: return null
+        val timeBin = values[TAG_TRANSACTION_TIME]
         if (timeBin != null)
             return TimestampFull(tz = MetroTimeZone.UNKNOWN,
                     year = 2000 + NumberUtils.convertBCDtoInteger(dateBin[0].toInt()),
@@ -51,12 +55,12 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
     }
 
     override val fare get(): TransitCurrency? {
-        val amountBin = values["9f02"] ?: return null
+        val amountBin = values[TAG_AMOUNT_AUTHORISED] ?: return null
         val amount = amountBin.fold(0L) { acc, b ->
             acc * 100 + NumberUtils.convertBCDtoInteger(b.toInt() and 0xff)
         }
 
-        val codeBin = values["5f2a"] ?: return TransitCurrency.XXX(amount.toInt())
+        val codeBin = values[TAG_TRANSACTION_CURRENCY_CODE] ?: return TransitCurrency.XXX(amount.toInt())
         val code = NumberUtils.convertBCDtoInteger(codeBin.byteArrayToInt())
 
         return TransitCurrency(amount.toInt(), code)
@@ -65,8 +69,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
     override val mode get() = Mode.POS
 
     override val routeName get() = values.entries.filter {
-        it.key != "9f02" && it.key != "5f2a"
-                && it.key != "9a" && it.key != "9f21"
+        !HANDLED_TAGS.contains(it.key)
     }.joinToString {
         val tag = TAGMAP[it.key]
         if (tag == null)
@@ -76,10 +79,17 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
     }
 
     companion object {
+        private val HANDLED_TAGS = listOf(
+                TAG_AMOUNT_AUTHORISED,
+                TAG_TRANSACTION_CURRENCY_CODE,
+                TAG_TRANSACTION_TIME,
+                TAG_TRANSACTION_DATE)
+
         fun parseEmvTrip(record: ImmutableByteArray, format: ImmutableByteArray): EmvLogEntry? {
+            // EMV transactions consist of the PDOL (format) which references offsets in the
+            // record data.
             val values = mutableMapOf<String, ImmutableByteArray>()
             var p = 0
-            // todo replace with normal iterate?
             val dol = ISO7816TLV.removeTlvHeader(format)
             ISO7816TLV.pdolIterate(dol) { id, len ->
                 if (p + len <= record.size)
