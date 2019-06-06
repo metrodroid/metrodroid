@@ -851,4 +851,6 @@
     <string name="emv_issuer_public_key_certificate">Utsteders offentlige nøkkelsertifikat</string>
     <string name="emv_track_1_discretionary_data">Spor 1-tilleggsdata</string>
     <string name="location_germany_and_switzerland">Tyskland og sveits</string>
+    <string name="location_pisa">Pisa, Italia</string>
+    <string name="location_worldwide">Verdensomspennende</string>
 </resources>
