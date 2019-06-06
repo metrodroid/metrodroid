@@ -70,14 +70,12 @@ class XmlOrJsonCardFormat : CardImporter {
         return IteratorTransformerNotNull(ZipIterator(ZipInputStream(stream))) {
             (ze, zi) ->
             Log.d("Importer", "Importing ${ze.name}")
-            if (ze.name.endsWith(".json"))
-                jsonKotlinFormat.readCard(IOUtils.toString(zi, Charsets.UTF_8))
-            else if (ze.name.endsWith(".xml"))
-                readCardXML(zi)
-            else if (ze.name.endsWith(".mfc"))
-                mfcFormat.readCard(zi)
-            else
-                null
+            when {
+                ze.name.endsWith(".json") -> jsonKotlinFormat.readCard(IOUtils.toString(zi, Charsets.UTF_8))
+                ze.name.endsWith(".xml") -> readCardXML(zi)
+                ze.name.endsWith(".mfc") -> mfcFormat.readCard(zi)
+                else -> null
+            }
         }
     }
 
