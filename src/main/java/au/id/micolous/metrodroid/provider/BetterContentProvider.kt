@@ -92,19 +92,19 @@ abstract class BetterContentProvider(private val mHelperClass: Class<out SQLiteO
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
         @NonNls val db = mHelper!!.writableDatabase
-        var count = 0
-        when (mUriMatcher.match(uri)) {
+        val count: Int = when (mUriMatcher.match(uri)) {
             CODE_SINGLE -> {
                 val rowId = uri.pathSegments[1]
                 if (TextUtils.isEmpty(selection)) {
-                    count = db.delete(mTableName, BaseColumns._ID + "=?", arrayOf(rowId))
+                    db.delete(mTableName, BaseColumns._ID + "=?", arrayOf(rowId))
                 } else {
-                    count = db.delete(mTableName,
-                            selection + " AND " + BaseColumns._ID + "=" + rowId,
+                    db.delete(mTableName,
+                            "$selection AND ${BaseColumns._ID}=$rowId",
                             selectionArgs)
                 }
             }
-            CODE_COLLECTION -> count = db.delete(mTableName, selection, selectionArgs)
+            CODE_COLLECTION -> db.delete(mTableName, selection, selectionArgs)
+            else -> 0
         }
         context!!.contentResolver.notifyChange(uri, null)
         return count

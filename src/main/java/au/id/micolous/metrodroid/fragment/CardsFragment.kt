@@ -118,22 +118,13 @@ class CardsFragment : ExpandableListFragment() {
     }
 
     private class Scan internal constructor(cursor: Cursor) {
-        internal val mScannedAt: Long
-        internal val mLabel: String?
-        internal val mType: Int
-        internal val mSerial: String
-        internal val mData: String
+        internal val mScannedAt: Long = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
+        internal val mLabel: String? = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL))
+        internal val mType: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
+        internal val mSerial: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
+        internal val mData: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
         internal var mTransitIdentity: TransitIdentity? = null
-        internal val mId: Int
-
-        init {
-            mId = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
-            mType = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
-            mSerial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
-            mScannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
-            mLabel = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL))
-            mData = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
-        }
+        internal val mId: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -314,11 +305,7 @@ class CardsFragment : ExpandableListFragment() {
     }
 
     private class DedupTask internal constructor(context: Context) : AsyncTask<Void, Int, Pair<String, Int>>() {
-        private val mContext: WeakReference<Context>
-
-        init {
-            mContext = WeakReference(context)
-        }
+        private val mContext: WeakReference<Context> = WeakReference(context)
 
         override fun doInBackground(vararg voids: Void): Pair<String, Int> {
             try {
@@ -420,11 +407,7 @@ class CardsFragment : ExpandableListFragment() {
 
     private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
                                                                private val mCardImporter: CardImporter) : AsyncTask<Uri, Int, Pair<String, Collection<Uri>>>() {
-        private val mCardsFragment: WeakReference<CardsFragment>
-
-        init {
-            mCardsFragment = WeakReference(cardsFragment)
-        }
+        private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
 
         override fun doInBackground(vararg uris: Uri): Pair<String, Collection<Uri>> {
             try {
