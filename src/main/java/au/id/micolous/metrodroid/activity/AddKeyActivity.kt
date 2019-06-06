@@ -52,7 +52,6 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonTreeParser
 import org.apache.commons.io.IOUtils
 import org.json.JSONException
 import org.json.JSONObject
@@ -62,6 +61,7 @@ import java.io.InputStream
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlinx.serialization.json.Json
 
 /**
  * Activity for associating a key import with a card.
@@ -140,7 +140,7 @@ class AddKeyActivity : MetrodroidActivity() {
                 mKeyFormat.isJSON -> {
                     val o: JsonObject
                     try {
-                        o = JsonTreeParser.parse(String(keyData, Utils.UTF8))
+                        o = Json.plain.parseJson(String(keyData, Utils.UTF8)).jsonObject
                     } catch (e: Exception) {
                         // Invalid JSON, grumble.
                         Utils.showErrorAndFinish(this, e)

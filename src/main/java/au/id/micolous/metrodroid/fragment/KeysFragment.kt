@@ -53,7 +53,6 @@ import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonTreeParser
 import org.apache.commons.io.IOUtils
 import org.jetbrains.annotations.NonNls
 import org.json.JSONException
@@ -72,6 +71,7 @@ import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
+import kotlinx.serialization.json.Json
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private var mActionMode: ActionMode? = null
@@ -323,7 +323,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     var fileType: String? = null
                     try {
                         val k = ClassicStaticKeys.fromJSON(
-                                JsonTreeParser.parse(keyData),
+                                Json.plain.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         desc = k!!.description
                         fileType = k.fileType
@@ -348,7 +348,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                     try {
                         val k = ClassicCardKeys.fromJSON(
-                                JsonTreeParser.parse(keyData),
+                                Json.plain.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         fileType = k.fileType
                     } catch (ignored: Exception) {
@@ -390,14 +390,14 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = IOUtils.toByteArray(stream)
 
             try {
-                val json = JsonTreeParser.parse(String(keyData, Utils.UTF8))
+                val json = Json.plain.parseJson(String(keyData, Utils.UTF8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this
                 @NonNls var path = uri.path
                 if (path == null)
                     path = "unspecified"
-                val k = ClassicStaticKeys.fromJSON(json, path)
+                val k = ClassicStaticKeys.fromJSON(json.jsonObject, path)
                 if (k!!.isEmpty()) {
                     return R.string.key_file_empty
                 }
