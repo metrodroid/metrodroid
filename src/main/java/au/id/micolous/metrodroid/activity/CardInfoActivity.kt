@@ -193,7 +193,7 @@ class CardInfoActivity : MetrodroidActivity() {
                         var txt = ""
                         if (hasUnknownStation)
                             txt = getString(R.string.need_stations)
-                        if (w != null && !txt.isEmpty())
+                        if (w != null && txt.isNotEmpty())
                             txt += "\n"
                         if (w != null)
                             txt += w
