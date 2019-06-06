@@ -79,6 +79,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
         fun parseEmvTrip(record: ImmutableByteArray, format: ImmutableByteArray): EmvLogEntry? {
             val values = mutableMapOf<String, ImmutableByteArray>()
             var p = 0
+            // todo replace with normal iterate?
             val dol = ISO7816TLV.removeTlvHeader(format)
             ISO7816TLV.pdolIterate(dol) { id, len ->
                 if (p + len <= record.size)
