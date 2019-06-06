@@ -219,12 +219,12 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
             conn.setRequestProperty("User-Agent", "Metrodroid/" + BuildConfig.VERSION_NAME)
             val send = conn.outputStream
 
-            Log.d(TAG, "Sending " + `in`.toString())
+            Log.d(TAG, "Sending $`in`")
             `in`.writeTo(send)
             val recv = conn.inputStream
             val reply = Leap.LeapMessage.parseFrom(recv)
 
-            Log.d(TAG, "Received " + reply.toString())
+            Log.d(TAG, "Received $reply")
             conn.disconnect()
             return reply
         }
