@@ -22,9 +22,20 @@ package au.id.micolous.metrodroid.card.emv
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.emv.EmvData.PARSER_IGNORED_AID_PREFIX
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_AMOUNT_AUTHORISED
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_AMOUNT_OTHER
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_PDOL
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TERMINAL_COUNTRY_CODE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TERMINAL_TRANSACTION_QUALIFIERS
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TERMINAL_VERIFICATION_RESULTS
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_CURRENCY_CODE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_DATE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_TYPE
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_UNPREDICTABLE_NUMBER
 import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -122,7 +133,8 @@ class EmvFactory : ISO7816ApplicationFactory {
     override suspend fun dumpTag(protocol: ISO7816Protocol,
                                  capsule: ISO7816ApplicationMutableCapsule,
                                  feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
-        feedbackInterface.updateStatusText("Reading EMV")
+        feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
+                "EMV"))
         feedbackInterface.updateProgressBar(0, 32)
         capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
 
@@ -190,23 +202,20 @@ class EmvFactory : ISO7816ApplicationFactory {
         ISO7816TLV.pdolIterate(pdolTemplate) { id, len ->
             val contents = when (id.toHexString()) {
                 // Currency: USD
-                "5f2a" -> ImmutableByteArray.fromHex("0840")
-                // Terminal Verification Results (TVR)
-                "95" -> ImmutableByteArray(5)
-                // Transaction Date: 1.1.2018
-                "9a" -> ImmutableByteArray.fromHex("180101")
+                TAG_TRANSACTION_CURRENCY_CODE -> ImmutableByteArray.fromHex("0840")
+                TAG_TERMINAL_VERIFICATION_RESULTS -> ImmutableByteArray(5)
+                // Transaction Date: 2018-01-01
+                TAG_TRANSACTION_DATE -> ImmutableByteArray.fromHex("180101")
                 // Transaction Type
-                "9c" -> ImmutableByteArray(1)
+                TAG_TRANSACTION_TYPE -> ImmutableByteArray(1)
                 // Amount, Authorised: 1 cent
-                "9f02" -> ImmutableByteArray.fromHex("000000000001")
+                TAG_AMOUNT_AUTHORISED -> ImmutableByteArray.fromHex("000000000001")
                 // Amount, Other: 0 cents
-                "9f03" -> ImmutableByteArray(6)
+                TAG_AMOUNT_OTHER -> ImmutableByteArray(6)
                 // Country: USA
-                "9f1a" -> ImmutableByteArray.fromHex("0840")
-                // "Unpredictable" number
-                "9f37" -> ImmutableByteArray.fromHex("08130CE7")
-                // Terminal Transaction Qualifiers
-                "9f66" -> ImmutableByteArray.fromHex("F620C000")
+                TAG_TERMINAL_COUNTRY_CODE -> ImmutableByteArray.fromHex("0840")
+                TAG_UNPREDICTABLE_NUMBER -> ImmutableByteArray.fromHex("08130CE7")
+                TAG_TERMINAL_TRANSACTION_QUALIFIERS -> ImmutableByteArray.fromHex("F620C000")
                 else -> ImmutableByteArray.empty()
             }
             val adjusted = when {
