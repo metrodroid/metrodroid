@@ -160,7 +160,7 @@ class CardInfoActivity : MetrodroidActivity() {
                         val ucView = findViewById<View>(R.id.unauthorized_card)
                         val loadKeysView = findViewById<View>(R.id.load_keys)
                         ucView.visibility = View.VISIBLE
-                        loadKeysView.setOnClickListener { subview ->
+                        loadKeysView.setOnClickListener {
                             AlertDialog.Builder(this@CardInfoActivity)
                                     .setMessage(R.string.add_key_directions)
                                     .setPositiveButton(android.R.string.ok, null)
@@ -200,7 +200,7 @@ class CardInfoActivity : MetrodroidActivity() {
                             View.GONE
                     }
                     if (hasUnknownStation)
-                        findViewById<View>(R.id.need_stations_button).setOnClickListener { view -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))) }
+                        findViewById<View>(R.id.need_stations_button).setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))) }
 
                     mShowMoreInfo = mTransitData!!.moreInfoPage != null
                     mShowOnlineServices = mTransitData!!.onlineServicesPage != null
