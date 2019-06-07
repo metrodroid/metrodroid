@@ -60,6 +60,7 @@ class AboutActivity : MetrodroidActivity() {
         startActivity(Intent(Intent.ACTION_VIEW, b.build()))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onLicenseClick(view: View) {
         startActivity(Intent(this, LicenseActivity::class.java))
     }

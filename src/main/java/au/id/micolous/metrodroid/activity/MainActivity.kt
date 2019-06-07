@@ -113,10 +113,12 @@ class MainActivity : MetrodroidActivity() {
         mNfcAdapter?.disableForegroundDispatch(this)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onSupportedCardsClick(view: View) {
         startActivity(Intent(this, SupportedCardsActivity::class.java))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onHistoryClick(view: View) {
         startActivity(Intent(this, CardsActivity::class.java))
     }
