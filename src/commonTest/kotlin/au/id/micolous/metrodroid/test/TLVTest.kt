@@ -22,7 +22,6 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class TLVTest {
     @Test
@@ -76,17 +75,5 @@ class TLVTest {
         val e = ImmutableByteArray.fromASCII("hello world")
 
         assertEquals(e, ISO7816TLV.findBERTLV(d, "51", false))
-    }
-
-    @Test
-    fun testFindDefiniteReallyLong() {
-        // tag 50 (parent, definite long, 0xffffffffffffffff bytes)
-        // -> tag 51: "hello world"
-        val d = (ImmutableByteArray.fromHex("5088") +
-                ImmutableByteArray(8) { 0xff.toByte() } +
-                ImmutableByteArray.fromHex("0e510b68656c6c6f20776f726c64"))
-
-        // Should fail
-        assertNull(ISO7816TLV.findBERTLV(d, "51", false))
     }
 }
