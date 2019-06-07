@@ -169,20 +169,16 @@ class CardInfoActivity : MetrodroidActivity() {
                     }
 
                     if (mTransitData!!.balances != null || mTransitData!!.subscriptions != null) {
-                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.balances_and_subscriptions),
+                        mTabsAdapter!!.addTab(R.string.balances_and_subscriptions,
                                 CardBalanceFragment::class.java, args)
                     }
 
                     if (mTransitData!!.trips != null) {
-                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.history), CardTripsFragment::class.java, args)
+                        mTabsAdapter!!.addTab(R.string.history, CardTripsFragment::class.java, args)
                     }
 
                     if (TransitData.hasInfo(mTransitData!!)) {
-                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.info), CardInfoFragment::class.java, args)
-                    }
-
-                    if (mTabsAdapter!!.count > 1) {
-                        supportActionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
+                        mTabsAdapter!!.addTab(R.string.info, CardInfoFragment::class.java, args)
                     }
 
                     val w = mTransitData!!.warning

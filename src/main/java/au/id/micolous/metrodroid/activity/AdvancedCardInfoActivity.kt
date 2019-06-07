@@ -98,14 +98,13 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         }
 
         if (card.manufacturingInfo != null) {
-            tabsAdapter.addTab(supportActionBar!!.newTab().setText(R.string.hw_detail), CardHWDetailFragment::class.java,
+            tabsAdapter.addTab(R.string.hw_detail, CardHWDetailFragment::class.java,
                     intent.extras)
         }
 
         if (card.rawData != null) {
-            tabsAdapter.addTab(supportActionBar!!.newTab().setText(R.string.data), CardRawDataFragment::class.java,
+            tabsAdapter.addTab(R.string.data, CardRawDataFragment::class.java,
                     intent.extras)
-            actionBar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
         }
     }
 
