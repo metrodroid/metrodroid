@@ -30,9 +30,19 @@ internal object EmvData {
 
     const val TAG_NAME1 = "50"
     const val T2Data = "57"
+    const val TAG_TRANSACTION_CURRENCY_CODE = "5f2a"
+    const val TAG_TERMINAL_VERIFICATION_RESULTS = "95"
+    const val TAG_TRANSACTION_DATE = "9a"
+    const val TAG_TRANSACTION_TYPE = "9c"
+    const val TAG_AMOUNT_AUTHORISED = "9f02"
+    const val TAG_AMOUNT_OTHER = "9f03"
+    const val TAG_TRANSACTION_TIME = "9f21"
     const val TAG_NAME2 = "9f12"
+    const val TAG_TERMINAL_COUNTRY_CODE = "9f1a"
+    const val TAG_UNPREDICTABLE_NUMBER = "9f37"
     const val TAG_PDOL = "9f38"
     const val LOG_ENTRY = "9f4d"
+    const val TAG_TERMINAL_TRANSACTION_QUALIFIERS = "9f66"
 
     // TODO: i18n
     val TAGMAP = mapOf(
@@ -65,6 +75,7 @@ internal object EmvData {
             "94" to TagDesc(R.string.emv_application_file_locator, DUMP_SHORT),
             "9f07" to HIDDEN_TAG, // Application Usage Control
             "9f08" to HIDDEN_TAG, // Application Version Number
+            "9f0b" to TagDesc(R.string.card_holders_name, ASCII),
             "9f0d" to HIDDEN_TAG, // Issuer Action Code - Default
             "9f0e" to HIDDEN_TAG, // Issuer Action Code - Denial
             "9f0f" to HIDDEN_TAG, // Issuer Action Code - Online
