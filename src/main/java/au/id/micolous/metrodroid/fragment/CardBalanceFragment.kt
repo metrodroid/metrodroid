@@ -20,9 +20,9 @@
 
 package au.id.micolous.metrodroid.fragment
 
-import android.app.ListFragment
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.ListFragment
 import android.support.v7.content.res.AppCompatResources
 import android.util.Log
 import android.view.View
@@ -48,7 +48,7 @@ class CardBalanceFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ class CardBalanceFragment : ListFragment() {
         val subscriptions = mTransitData!!.subscriptions
         if (subscriptions != null)
             combined.addAll(subscriptions)
-        listAdapter = BalancesAdapter(activity, combined)
+        listAdapter = BalancesAdapter(activity!!, combined)
     }
 
     private inner class BalancesAdapter internal constructor(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
@@ -83,7 +83,7 @@ class CardBalanceFragment : ListFragment() {
         private fun getErrorView(convertView: View?, parent: ViewGroup, err: String): View {
             var view = convertView
             if (view == null || view.tag !== TAG_ERROR_VIEW) {
-                view = activity.layoutInflater.inflate(R.layout.balance_item, parent, false)
+                view = activity?.layoutInflater?.inflate(R.layout.balance_item, parent, false)
                 view!!.tag = TAG_ERROR_VIEW
             }
 
@@ -94,7 +94,7 @@ class CardBalanceFragment : ListFragment() {
         fun getSubscriptionView(convertView: View?, parent: ViewGroup, subscription: Subscription): View {
             var view = convertView
             if (view == null || view.tag !== TAG_SUBSCRIPTION_VIEW) {
-                view = activity.layoutInflater.inflate(R.layout.subscription_item, parent, false)
+                view = activity?.layoutInflater?.inflate(R.layout.subscription_item, parent, false)
                 view!!.tag = TAG_SUBSCRIPTION_VIEW
             }
 
@@ -203,7 +203,7 @@ class CardBalanceFragment : ListFragment() {
                                    parent: ViewGroup, balance: TransitBalance): View {
             var view = convertView
             if (view == null || view.tag !== TAG_BALANCE_VIEW) {
-                view = activity.layoutInflater.inflate(R.layout.balance_item, parent, false)
+                view = activity?.layoutInflater?.inflate(R.layout.balance_item, parent, false)
                 view!!.tag = TAG_BALANCE_VIEW
             }
 
@@ -272,7 +272,7 @@ class CardBalanceFragment : ListFragment() {
             tv.visibility = View.GONE
             lv.visibility = View.INVISIBLE
 
-            val a = ListItemAdapter(activity, infos)
+            val a = ListItemAdapter(activity!!, infos)
             lv.adapter = a
 
             // Calculate correct height

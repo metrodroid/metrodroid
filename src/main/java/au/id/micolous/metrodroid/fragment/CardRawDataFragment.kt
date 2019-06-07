@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.ui.ListItem
 
 class CardRawDataFragment : TreeListFragment() {
     override val items: List<ListItem>
-        get() = CardSerializer.fromPersist(arguments.getString(AdvancedCardInfoActivity.EXTRA_CARD)!!).rawData.orEmpty()
+        get() = CardSerializer.fromPersist(arguments!!.getString(AdvancedCardInfoActivity.EXTRA_CARD)!!).rawData.orEmpty()
 
     override fun onClick(node: TreeNode, value: Any) {}
 }

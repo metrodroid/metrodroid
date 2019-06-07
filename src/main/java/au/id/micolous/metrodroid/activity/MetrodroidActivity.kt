@@ -25,19 +25,18 @@ import android.os.Bundle
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Preferences
 
-abstract class MetrodroidActivity : Activity() {
+class MetrodroidThemeManager {
     private var mAppliedTheme: Int = 0
 
-    protected open val themeVariant: Int?
-        get() = null
+    fun shouldRecreate() = (chooseTheme() != mAppliedTheme)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    fun onCreate(activity: Activity, themeVariant: Int?) {
         val variant = themeVariant
         val baseTheme = chooseTheme()
         val theme: Int
         mAppliedTheme = baseTheme
         if (variant != null) {
-            val a = obtainStyledAttributes(
+            val a = activity.obtainStyledAttributes(
                     baseTheme,
                     intArrayOf(variant))
 
@@ -45,7 +44,27 @@ abstract class MetrodroidActivity : Activity() {
             a.recycle()
         } else
             theme = baseTheme
-        setTheme(theme)
+        activity.setTheme(theme)
+    }
+
+    companion object {
+        fun chooseTheme(): Int = when (Preferences.themePreference) {
+            "light" -> R.style.Metrodroid_Light
+            "farebot" -> R.style.FareBot_Theme_Common
+            else -> R.style.Metrodroid_Dark
+        }
+    }
+}
+
+abstract class MetrodroidActivity : Activity() {
+    protected open val themeVariant: Int?
+       get() = null
+
+    private var themeManager: MetrodroidThemeManager? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        themeManager = MetrodroidThemeManager()
+        themeManager?.onCreate(this, themeVariant)
         super.onCreate(savedInstanceState)
     }
 
@@ -60,15 +79,27 @@ abstract class MetrodroidActivity : Activity() {
     override fun onResume() {
         super.onResume()
 
-        if (chooseTheme() != mAppliedTheme)
+        if (themeManager?.shouldRecreate() == true)
             recreate()
     }
+}
 
-    companion object {
-        fun chooseTheme(): Int = when (Preferences.themePreference) {
-            "light" -> R.style.Metrodroid_Light
-            "farebot" -> R.style.FareBot_Theme_Common
-            else -> R.style.Metrodroid_Dark
-        }
+abstract class MetrodroidCompatActivity : android.support.v7.app.AppCompatActivity() {
+    protected open val themeVariant: Int?
+       get() = null
+
+    private var themeManager: MetrodroidThemeManager? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        themeManager = MetrodroidThemeManager()
+        themeManager?.onCreate(this, themeVariant)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (themeManager?.shouldRecreate() == true)
+            recreate()
     }
 }

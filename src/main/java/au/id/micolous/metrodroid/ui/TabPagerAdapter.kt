@@ -20,10 +20,11 @@
 package au.id.micolous.metrodroid.ui
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Activity
-import android.app.Fragment
-import android.app.FragmentTransaction
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.view.PagerAdapter
@@ -32,8 +33,8 @@ import android.view.View
 
 import au.id.micolous.farebot.R
 
-class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: ViewPager) : PagerAdapter(), ActionBar.TabListener, ViewPager.OnPageChangeListener {
-    private val mActionBar: ActionBar? = mActivity.actionBar
+class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mViewPager: ViewPager) : PagerAdapter(), ActionBar.TabListener, ViewPager.OnPageChangeListener {
+    private val mActionBar: ActionBar? = mActivity.supportActionBar
     private val mTabs = ArrayList<TabInfo>()
     private var mCurTransaction: FragmentTransaction? = null
 
@@ -60,7 +61,7 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
         val info = mTabs[position]
 
         if (mCurTransaction == null) {
-            mCurTransaction = mActivity.fragmentManager.beginTransaction()
+            mCurTransaction = mActivity.supportFragmentManager.beginTransaction()
         }
 
         val fragment = Fragment.instantiate(mActivity, info.mClass.name, info.mArgs)
@@ -71,7 +72,7 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
     @SuppressLint("CommitTransaction")
     override fun destroyItem(view: View, i: Int, `object`: Any) {
         if (mCurTransaction == null) {
-            mCurTransaction = mActivity.fragmentManager.beginTransaction()
+            mCurTransaction = mActivity.supportFragmentManager.beginTransaction()
         }
         mCurTransaction!!.hide(`object` as Fragment)
     }
@@ -80,7 +81,7 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
         if (mCurTransaction != null) {
             mCurTransaction?.commitAllowingStateLoss()
             mCurTransaction = null
-            mActivity.fragmentManager.executePendingTransactions()
+            mActivity.supportFragmentManager.executePendingTransactions()
         }
     }
 

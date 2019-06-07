@@ -20,7 +20,7 @@
 
 package au.id.micolous.metrodroid.fragment
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.content.Context
 import android.os.Build
 import android.os.Bundle

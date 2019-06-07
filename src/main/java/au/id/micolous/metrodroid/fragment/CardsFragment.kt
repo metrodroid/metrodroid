@@ -22,20 +22,20 @@ package au.id.micolous.metrodroid.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.LoaderManager
 import android.content.ClipboardManager
 import android.content.ContentUris
 import android.content.Context
-import android.content.CursorLoader
 import android.content.Intent
-import android.content.Loader
 import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.CursorLoader
 import android.support.v4.content.FileProvider
+import android.support.v4.content.Loader
 import android.util.Log
 import android.util.Pair
 import android.view.ContextMenu
@@ -85,7 +85,7 @@ class CardsFragment : ExpandableListFragment() {
 
     private val mLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
         override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor> {
-            return CursorLoader(activity, CardProvider.CONTENT_URI_CARD,
+            return CursorLoader(activity!!, CardProvider.CONTENT_URI_CARD,
                     CardDBHelper.PROJECTION,
                     null, null,
                     "${CardsTableColumns.SCANNED_AT} DESC, ${CardsTableColumns._ID} DESC")
@@ -109,7 +109,7 @@ class CardsFragment : ExpandableListFragment() {
             }
 
             Log.d(TAG, "creating adapter " + cards.size)
-            listAdapter = CardsAdapter(activity, scans, cards)
+            listAdapter = CardsAdapter(activity!!, scans, cards)
             setListShown(true)
             setEmptyText(getString(R.string.no_scanned_cards))
         }
@@ -165,14 +165,14 @@ class CardsFragment : ExpandableListFragment() {
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenu.ContextMenuInfo) {
-        activity.menuInflater.inflate(R.menu.card_context_menu, menu)
+        activity!!.menuInflater.inflate(R.menu.card_context_menu, menu)
     }
 
     override fun onContextItemSelected(item: android.view.MenuItem): Boolean {
         if (item.itemId == R.id.delete_card) {
             val id = (item.menuInfo as ExpandableListView.ExpandableListContextMenuInfo).id
             val uri = ContentUris.withAppendedId(CardProvider.CONTENT_URI_CARD, id)
-            activity.contentResolver.delete(uri, null, null)
+            activity!!.contentResolver.delete(uri, null, null)
             return true
         }
         return false
@@ -188,7 +188,7 @@ class CardsFragment : ExpandableListFragment() {
             when (item.itemId) {
                 R.id.import_clipboard -> {
                     run {
-                        clipboard = activity.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
+                        clipboard = activity?.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
                         if (clipboard == null) {
                             Toast.makeText(activity, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
                             return true
@@ -201,11 +201,11 @@ class CardsFragment : ExpandableListFragment() {
                             val ci = d.getItemAt(0)
                             xml = ci.coerceToText(activity).toString()
 
-                            val uris = ExportHelper.importCards(xml, XmlOrJsonCardFormat(), activity)
+                            val uris = ExportHelper.importCards(xml, XmlOrJsonCardFormat(), activity!!)
 
                             updateListView()
                             val it = uris.iterator()
-                            onCardsImported(activity, uris.size, if (it.hasNext()) it.next() else null)
+                            onCardsImported(activity!!, uris.size, if (it.hasNext()) it.next() else null)
                         }
                     }
                     return true
@@ -267,8 +267,8 @@ class CardsFragment : ExpandableListFragment() {
                 }
 
                 R.id.copy_xml -> {
-                    val s = ExportHelper.exportCardsXml(activity)
-                    ExportHelper.copyXmlToClipboard(activity, s)
+                    val s = ExportHelper.exportCardsXml(activity!!)
+                    ExportHelper.copyXmlToClipboard(activity!!, s)
                     return true
                 }
 
@@ -278,7 +278,7 @@ class CardsFragment : ExpandableListFragment() {
                 }
 
                 R.id.deduplicate_cards -> {
-                    DedupTask(activity).execute()
+                    DedupTask(activity!!).execute()
                     return true
                 }
 
@@ -291,14 +291,14 @@ class CardsFragment : ExpandableListFragment() {
                         startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
                     } else {
                         val file = File(SD_EXPORT_PATH)
-                        ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), activity)
+                        ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), activity!!)
                         Toast.makeText(activity, R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show()
                     }
                     return true
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity, ex)
+            Utils.showError(activity!!, ex)
         }
 
         return false
@@ -436,7 +436,7 @@ class CardsFragment : ExpandableListFragment() {
             if (err == null) {
                 cf.updateListView()
                 val it = uris.iterator()
-                onCardsImported(cf.activity, uris.size, if (it.hasNext()) it.next() else null)
+                onCardsImported(cf.activity!!, uris.size, if (it.hasNext()) it.next() else null)
                 return
             }
             AlertDialog.Builder(cf.activity)
@@ -480,7 +480,7 @@ class CardsFragment : ExpandableListFragment() {
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity, ex)
+            Utils.showError(activity!!, ex)
         }
 
     }

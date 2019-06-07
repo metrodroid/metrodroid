@@ -58,7 +58,7 @@ import au.id.micolous.metrodroid.util.Utils
 /**
  * @author Eric Butler
  */
-class CardInfoActivity : MetrodroidActivity() {
+class CardInfoActivity : MetrodroidCompatActivity() {
 
     private var mCard: Card? = null
     private var mTransitData: TransitData? = null
@@ -170,16 +170,16 @@ class CardInfoActivity : MetrodroidActivity() {
                     }
 
                     if (mTransitData!!.balances != null || mTransitData!!.subscriptions != null) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
+                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.balances_and_subscriptions),
                                 CardBalanceFragment::class.java, args)
                     }
 
                     if (mTransitData!!.trips != null) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment::class.java, args)
+                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.history), CardTripsFragment::class.java, args)
                     }
 
                     if (TransitData.hasInfo(mTransitData!!)) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.info), CardInfoFragment::class.java, args)
+                        mTabsAdapter!!.addTab(supportActionBar!!.newTab().setText(R.string.info), CardInfoFragment::class.java, args)
                     }
 
                     if (mTabsAdapter!!.count > 1) {

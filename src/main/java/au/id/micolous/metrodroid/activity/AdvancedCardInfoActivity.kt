@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.fragment.CardHWDetailFragment
 import au.id.micolous.metrodroid.fragment.CardRawDataFragment
 import au.id.micolous.metrodroid.ui.TabPagerAdapter
 
-class AdvancedCardInfoActivity : MetrodroidActivity() {
+class AdvancedCardInfoActivity : MetrodroidCompatActivity() {
 
     private var mCard: Card? = null
 
@@ -101,12 +101,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         }
 
         if (card.manufacturingInfo != null) {
-            tabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment::class.java,
+            tabsAdapter.addTab(supportActionBar!!.newTab().setText(R.string.hw_detail), CardHWDetailFragment::class.java,
                     intent.extras)
         }
 
         if (card.rawData != null) {
-            tabsAdapter.addTab(actionBar.newTab().setText(R.string.data), CardRawDataFragment::class.java,
+            tabsAdapter.addTab(supportActionBar!!.newTab().setText(R.string.data), CardRawDataFragment::class.java,
                     intent.extras)
             actionBar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
         }
@@ -170,12 +170,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         return false
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {
                     REQUEST_SAVE_FILE -> {
-                        val uri: Uri? = data.data
+                        val uri: Uri? = data?.data
                         Log.d(TAG, "REQUEST_SAVE_FILE")
                         val os = contentResolver.openOutputStream(uri!!)
                         val json = CardSerializer.toJson(mCard!!)
