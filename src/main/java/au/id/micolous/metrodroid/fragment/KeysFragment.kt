@@ -97,7 +97,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     AlertDialog.Builder(activity)
                             .setTitle(R.string.cant_delete_with_obfuscation)
                             .setMessage(R.string.cant_delete_with_obfuscation_message)
-                            .setPositiveButton(android.R.string.ok) { dialog, which -> dialog.dismiss() }
+                            .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
                             .show()
                     return true
                 }
@@ -121,7 +121,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                 AlertDialog.Builder(activity)
                         .setTitle(R.string.delete_key_confirm_title)
                         .setMessage(deleteMessage)
-                        .setPositiveButton(R.string.delete) { dialog, which ->
+                        .setPositiveButton(R.string.delete) { dialog, _ ->
                             object : BetterAsyncTask<Void?>(activity, false, false) {
                                 override fun doInBackground(): Void? {
                                     val uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId.toLong())
@@ -136,7 +136,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                             }.execute()
                             dialog.dismiss()
                         }
-                        .setNegativeButton(android.R.string.cancel) { dialog, which -> dialog.cancel() }
+                        .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
                         .show()
                 return true
             } else if (item.itemId == R.id.export_key) {
