@@ -452,28 +452,28 @@ class CardsFragment : ExpandableListFragment() {
 
     private class MFCReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, MfcCardImporter())
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val uri: Uri?
         try {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {
                     REQUEST_SELECT_FILE -> {
-                        uri = data.data
+                        uri = data?.data
                         ReadTask(this).execute(uri)
                     }
 
                     REQUEST_SELECT_FILE_MCT -> {
-                        uri = data.data
+                        uri = data?.data
                         MCTReadTask(this).execute(uri)
                     }
 
                     REQUEST_SELECT_FILE_MFC -> {
-                        uri = data.data
+                        uri = data?.data
                         MFCReadTask(this).execute(uri)
                     }
 
                     REQUEST_SAVE_FILE -> {
-                        uri = data.data
+                        uri = data?.data
                         Log.d(TAG, "REQUEST_SAVE_FILE")
                         SaveTask().execute(uri)
                     }

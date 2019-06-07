@@ -19,24 +19,25 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.Activity
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Preferences
 
-class MetrodroidThemeManager {
+abstract class MetrodroidActivity : AppCompatActivity() {
     private var mAppliedTheme: Int = 0
 
-    fun shouldRecreate() = (chooseTheme() != mAppliedTheme)
+    protected open val themeVariant: Int?
+        get() = null
 
-    fun onCreate(activity: Activity, themeVariant: Int?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         val variant = themeVariant
         val baseTheme = chooseTheme()
         val theme: Int
         mAppliedTheme = baseTheme
         if (variant != null) {
-            val a = activity.obtainStyledAttributes(
+            val a = obtainStyledAttributes(
                     baseTheme,
                     intArrayOf(variant))
 
@@ -44,7 +45,23 @@ class MetrodroidThemeManager {
             a.recycle()
         } else
             theme = baseTheme
-        activity.setTheme(theme)
+        setTheme(theme)
+        super.onCreate(savedInstanceState)
+    }
+
+    protected fun setDisplayHomeAsUpEnabled(b: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(b)
+    }
+
+    protected fun setHomeButtonEnabled(b: Boolean) {
+        supportActionBar?.setHomeButtonEnabled(b)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (chooseTheme() != mAppliedTheme)
+            recreate()
     }
 
     companion object {
@@ -53,53 +70,5 @@ class MetrodroidThemeManager {
             "farebot" -> R.style.FareBot_Theme_Common
             else -> R.style.Metrodroid_Dark
         }
-    }
-}
-
-abstract class MetrodroidActivity : Activity() {
-    protected open val themeVariant: Int?
-       get() = null
-
-    private var themeManager: MetrodroidThemeManager? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        themeManager = MetrodroidThemeManager()
-        themeManager?.onCreate(this, themeVariant)
-        super.onCreate(savedInstanceState)
-    }
-
-    protected fun setDisplayHomeAsUpEnabled(b: Boolean) {
-        actionBar?.setDisplayHomeAsUpEnabled(b)
-    }
-
-    protected fun setHomeButtonEnabled(b: Boolean) {
-        actionBar?.setHomeButtonEnabled(b)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (themeManager?.shouldRecreate() == true)
-            recreate()
-    }
-}
-
-abstract class MetrodroidCompatActivity : android.support.v7.app.AppCompatActivity() {
-    protected open val themeVariant: Int?
-       get() = null
-
-    private var themeManager: MetrodroidThemeManager? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        themeManager = MetrodroidThemeManager()
-        themeManager?.onCreate(this, themeVariant)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (themeManager?.shouldRecreate() == true)
-            recreate()
     }
 }

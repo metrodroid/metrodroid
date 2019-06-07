@@ -31,14 +31,14 @@ import android.widget.LinearLayout
 
 import au.id.micolous.farebot.R
 
-abstract class FragmentWrapperActivity : MetrodroidCompatActivity() {
+abstract class FragmentWrapperActivity : MetrodroidActivity() {
 
     protected val fragment: Fragment?
         get() = supportFragmentManager.findFragmentByTag("fragment")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setDisplayHomeAsUpEnabled(true)
 
         val container = FrameLayout(this)
         container.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,

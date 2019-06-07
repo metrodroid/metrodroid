@@ -246,8 +246,8 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     }
 
     @SuppressLint("StaticFieldLeak")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        val uri: Uri? = data.data
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val uri: Uri? = data?.data
         try {
             if (resultCode == Activity.RESULT_OK && uri != null) {
                 when (requestCode) {

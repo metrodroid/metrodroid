@@ -53,7 +53,7 @@ class PreferencesActivity : PreferenceActivity(), Preference.OnPreferenceChangeL
         }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(MetrodroidThemeManager.chooseTheme())
+        setTheme(MetrodroidActivity.chooseTheme())
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.prefs)
 

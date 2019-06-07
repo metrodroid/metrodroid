@@ -58,7 +58,7 @@ import au.id.micolous.metrodroid.util.Utils
 /**
  * @author Eric Butler
  */
-class CardInfoActivity : MetrodroidCompatActivity() {
+class CardInfoActivity : MetrodroidActivity() {
 
     private var mCard: Card? = null
     private var mTransitData: TransitData? = null
@@ -89,9 +89,8 @@ class CardInfoActivity : MetrodroidCompatActivity() {
         val viewPager = findViewById<ViewPager>(R.id.pager)
         mTabsAdapter = TabPagerAdapter(this, viewPager)
 
-        val actionBar = actionBar
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar.setTitle(R.string.loading)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.loading)
 
         object : AsyncTask<Void?, Void?, Void?>() {
             private var mSpeakBalanceEnabled: Boolean = false
@@ -149,8 +148,8 @@ class CardInfoActivity : MetrodroidCompatActivity() {
                     } else {
                         mCardSerial = ""
                     }
-                    actionBar.title = mTransitData!!.cardName
-                    actionBar.subtitle = mCardSerial
+                    supportActionBar!!.title = mTransitData!!.cardName
+                    supportActionBar!!.subtitle = mCardSerial
 
                     val args = Bundle()
                     args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
@@ -183,7 +182,7 @@ class CardInfoActivity : MetrodroidCompatActivity() {
                     }
 
                     if (mTabsAdapter!!.count > 1) {
-                        actionBar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
+                        supportActionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
                     }
 
                     val w = mTransitData!!.warning

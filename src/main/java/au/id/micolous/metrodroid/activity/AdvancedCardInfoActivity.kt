@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -49,7 +48,7 @@ import au.id.micolous.metrodroid.fragment.CardHWDetailFragment
 import au.id.micolous.metrodroid.fragment.CardRawDataFragment
 import au.id.micolous.metrodroid.ui.TabPagerAdapter
 
-class AdvancedCardInfoActivity : MetrodroidCompatActivity() {
+class AdvancedCardInfoActivity : MetrodroidActivity() {
 
     private var mCard: Card? = null
 
@@ -82,14 +81,12 @@ class AdvancedCardInfoActivity : MetrodroidCompatActivity() {
             }
         }
 
-        val actionBar : ActionBar = actionBar ?: return
-
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (Preferences.hideCardNumbers) {
-            actionBar.title = card.cardType.toString()
+            supportActionBar?.title = card.cardType.toString()
         } else {
-            actionBar.title = card.cardType.toString() + " " + card.tagId.toHexString()
+            supportActionBar?.title = card.cardType.toString() + " " + card.tagId.toHexString()
         }
 
         var scannedAt = card.scannedAt
@@ -97,7 +94,7 @@ class AdvancedCardInfoActivity : MetrodroidCompatActivity() {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt)
             val date = TimestampFormatter.dateFormat(scannedAt).spanned
             val time = TimestampFormatter.timeFormat(scannedAt).spanned
-            actionBar.subtitle = Localizer.localizeString(R.string.scanned_at_format, time, date)
+            supportActionBar?.subtitle = Localizer.localizeString(R.string.scanned_at_format, time, date)
         }
 
         if (card.manufacturingInfo != null) {
