@@ -57,7 +57,7 @@ class KeyBase:
     pass
 
   def make_sector(self, sector_no, blocks, key):
-    return key
+    return key[0]
 
 
 class RawKeys(KeyBase):
@@ -74,19 +74,26 @@ class JsonKeys(KeyBase):
     self.format = format_s
 
   def make_sector(self, sector_no, blocks, key):
-    d = {
-      'keytype': 'KeyA',
-      'key': b16encode(key).decode('ascii').lower(),
-    }
-    if self.format == 'json-static-keys':
-      d['sector'] = sector_no
+    d = []
+    if key[0] is not None:
+      d += [{
+        'keytype': 'KeyA',
+        'key': b16encode(key[0]).decode('ascii').lower(),
+        'sector': sector_no
+      }]
+    if key[1] is not None:
+      d += [{
+        'keytype': 'KeyB',
+        'key': b16encode(key[1]).decode('ascii').lower(),
+        'sector': sector_no
+      }]
     return d
 
   def make_card(self, uid, scanned_at, label, sectors):
     d = {
       'KeyType': 'MifareClassicStatic' if self.format == 'json-static-keys' else 'MifareClassic',
       'Description': label,
-      'keys': sectors,
+      'keys': list(itertools.chain(*sectors))
     }
     if self.format == 'json-keys':
       d['TagId'] = b16encode(uid).decode('ascii').lower()
@@ -107,11 +114,12 @@ class JsonKeys(KeyBase):
 
 class CsvKeys(KeyBase):
   def make_sector(self, sector_no, blocks, key):
-    return (str(sector_no), b16encode(key).decode('ascii').lower())
+    return [(str(sector_no), b16encode(key[0]).decode('ascii').lower()),
+            (str(sector_no), b16encode(key[1]).decode('ascii').lower())]
 
   def make_card(self, uid, scanned_at, label, sectors):
     uid = b16encode(uid).decode('ascii').lower()
-    return [[uid, s[0], s[1]] for s in sectors]
+    return list(itertools.chain([[uid, s[0][0], s[0][1]], [uid, s[1][0], s[1][1]]] for s in sectors))
 
   def write_cards(self, output_f, cards):
     output_c = csv.writer(output_f)
@@ -180,7 +188,7 @@ class MetrodroidXml:
     sector_blocks = etree.SubElement(sector, 'blocks')
     sector_blocks.extend(blocks)
     if self.format != 'farebot':
-      sector.attrib['key'] = b64encode(key).decode('ascii')
+      sector.attrib['key'] = b64encode(key[0]).decode('ascii')
     if self.format == 'md34':
       sector.attrib['keytype'] = 'KeyA'
 
@@ -243,7 +251,8 @@ def read_mfc_dump(input_f, writer):
       blocks.append(writer.make_block(block_no, block_data))
 
     # Put key A into the key attribute
-    sectors.append(writer.make_sector(sector_no, blocks, block_data[:6]))
+    sectors.append(writer.make_sector(sector_no, blocks, (block_data[:6],
+                                                          block_data[10:])))
 
   return writer.make_card(
     uid=card_data[0:4],
@@ -264,7 +273,8 @@ def read_metro_json(input_f, writer):
 
   for sector_no, sector in enumerate(card_data['mifareClassic']['sectors']):
     blocks = []
-    key = b'\xFF' * 6 # default key
+    keyA = None
+    keyB = None
     last_block = len(sector['blocks']) - 1
     for block_no, block in enumerate(sector['blocks']):
       block_data = a2b_hex(block)
@@ -272,15 +282,15 @@ def read_metro_json(input_f, writer):
       if block_no == last_block:
         # insert the key
         if 'keyA' in sector:
-          key = a2b_hex(sector['keyA'])
-          block_data = key + block_data[6:]
+          keyA = a2b_hex(sector['keyA'])
+          block_data = keyA + block_data[6:]
         if 'keyB' in sector:
-          key = a2b_hex(sector['keyB'])
-          block_data = block_data[:-6] + key
+          keyB = a2b_hex(sector['keyB'])
+          block_data = block_data[:-6] + keyB
 
       blocks.append(writer.make_block(block_no, block_data))
 
-    sectors.append(writer.make_sector(sector_no, blocks, key))
+    sectors.append(writer.make_sector(sector_no, blocks, (keyA, keyB)))
 
   return writer.make_card(
     uid=a2b_hex(card_data['tagId']),
