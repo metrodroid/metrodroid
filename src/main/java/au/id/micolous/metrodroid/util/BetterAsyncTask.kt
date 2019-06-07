@@ -33,7 +33,7 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
 
     private var mProgressDialog: ProgressDialog? = null
 
-    constructor(activity: Activity, showLoading: Boolean, finishOnError: Boolean) : this(activity, showLoading, null, finishOnError) {}
+    constructor(activity: Activity, showLoading: Boolean, finishOnError: Boolean) : this(activity, showLoading, null, finishOnError)
 
     init {
         if (showLoading) {

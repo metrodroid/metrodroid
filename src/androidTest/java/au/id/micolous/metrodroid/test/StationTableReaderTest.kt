@@ -122,9 +122,8 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        var trip: Trip
+        var trip: Trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19)
 
-        trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19)
         assertEquals("Brown", trip.routeName)
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL23_BR24)

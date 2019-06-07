@@ -27,7 +27,7 @@ import com.unnamed.b.atv.model.TreeNode
 
 class CardHWDetailFragment : TreeListFragment() {
     override val items: List<ListItem>
-        get() = CardSerializer.fromPersist(arguments.getString(AdvancedCardInfoActivity.EXTRA_CARD)!!).manufacturingInfo.orEmpty()
+        get() = CardSerializer.fromPersist(arguments!!.getString(AdvancedCardInfoActivity.EXTRA_CARD)!!).manufacturingInfo.orEmpty()
 
     override fun onClick(node: TreeNode, value: Any) {}
 }

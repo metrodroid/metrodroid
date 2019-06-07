@@ -22,13 +22,9 @@ package au.id.micolous.metrodroid.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.ListFragment
-import android.app.LoaderManager
 import android.content.ContentUris
 import android.content.Context
-import android.content.CursorLoader
 import android.content.Intent
-import android.content.Loader
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.database.MergeCursor
@@ -37,6 +33,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.StringRes
+import android.support.v4.app.ListFragment
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.CursorLoader
+import android.support.v4.content.Loader
 import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
@@ -53,7 +53,6 @@ import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonTreeParser
 import org.apache.commons.io.IOUtils
 import org.jetbrains.annotations.NonNls
 import org.json.JSONException
@@ -72,6 +71,7 @@ import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
+import kotlinx.serialization.json.Json
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private var mActionMode: ActionMode? = null
@@ -97,7 +97,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     AlertDialog.Builder(activity)
                             .setTitle(R.string.cant_delete_with_obfuscation)
                             .setMessage(R.string.cant_delete_with_obfuscation_message)
-                            .setPositiveButton(android.R.string.ok) { dialog, which -> dialog.dismiss() }
+                            .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
                             .show()
                     return true
                 }
@@ -121,11 +121,11 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                 AlertDialog.Builder(activity)
                         .setTitle(R.string.delete_key_confirm_title)
                         .setMessage(deleteMessage)
-                        .setPositiveButton(R.string.delete) { dialog, which ->
-                            object : BetterAsyncTask<Void?>(activity, false, false) {
+                        .setPositiveButton(R.string.delete) { dialog, _ ->
+                            object : BetterAsyncTask<Void?>(activity!!, false, false) {
                                 override fun doInBackground(): Void? {
                                     val uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId.toLong())
-                                    activity.contentResolver.delete(uri, null, null)
+                                    activity!!.contentResolver.delete(uri, null, null)
                                     return null
                                 }
 
@@ -136,7 +136,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                             }.execute()
                             dialog.dismiss()
                         }
-                        .setNegativeButton(android.R.string.cancel) { dialog, which -> dialog.cancel() }
+                        .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
                         .show()
                 return true
             } else if (item.itemId == R.id.export_key) {
@@ -187,7 +187,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val cursor = super.loadInBackground()
             val embedList = ClassicAndroidReader.getKeyRetrieverEmbed(context).getKeyList()
             if (embedList.isEmpty())
-                return cursor
+                return cursor!!
             val embedCursor = list2Cursor(embedList)
             return MergeCursor(arrayOf(cursor, embedCursor))
         }
@@ -202,7 +202,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         super.onViewCreated(view, savedInstanceState)
         setEmptyText(getString(R.string.no_keys))
         listView.onItemLongClickListener = this
-        listAdapter = KeysAdapter(activity)
+        listAdapter = KeysAdapter(activity!!)
         loaderManager.initLoader(0, null, mLoaderCallbacks)
     }
 
@@ -210,7 +210,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         val cursor = listAdapter.getItem(position) as Cursor
 
         mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
-        mActionMode = activity.startActionMode(mActionModeCallback)
+        mActionMode = activity!!.startActionMode(mActionModeCallback)
 
         return true
     }
@@ -246,24 +246,24 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     }
 
     @SuppressLint("StaticFieldLeak")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        val uri: Uri? = data.data
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val uri: Uri? = data?.data
         try {
             if (resultCode == Activity.RESULT_OK && uri != null) {
                 when (requestCode) {
                     REQUEST_SELECT_FILE -> {
-                        val type = activity.contentResolver.getType(uri)
+                        val type = activity!!.contentResolver.getType(uri)
 
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = $type")
 
-                        val f: KeyFormat = Utils.detectKeyFormat(activity, uri)
+                        val f: KeyFormat = Utils.detectKeyFormat(activity!!, uri)
 
                         Log.d(TAG, "Detected file format: " + f.name)
 
                         when (f) {
                             KeyFormat.JSON_MFC_STATIC -> {
                                 // Static keys can't be prompted
-                                @StringRes val err = importKeysFromStaticJSON(activity, uri)
+                                @StringRes val err = importKeysFromStaticJSON(activity!!, uri)
                                 if (err != 0) {
                                     Toast.makeText(activity, err, Toast.LENGTH_SHORT).show()
                                 }
@@ -278,7 +278,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     REQUEST_SAVE_FILE -> {
                         Log.d(TAG, "REQUEST_SAVE_FILE")
 
-                        object : BetterAsyncTask<Void?>(activity, false, false) {
+                        object : BetterAsyncTask<Void?>(activity!!, false, false) {
                             @Throws(Exception::class)
                             override fun doInBackground(): Void? {
                                 val ctxt = MetrodroidApplication.instance
@@ -302,7 +302,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity, ex)
+            Utils.showError(activity!!, ex)
         }
 
     }
@@ -323,7 +323,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     var fileType: String? = null
                     try {
                         val k = ClassicStaticKeys.fromJSON(
-                                JsonTreeParser.parse(keyData),
+                                Json.plain.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         desc = k!!.description
                         fileType = k.fileType
@@ -348,7 +348,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                     try {
                         val k = ClassicCardKeys.fromJSON(
-                                JsonTreeParser.parse(keyData),
+                                Json.plain.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         fileType = k.fileType
                     } catch (ignored: Exception) {
@@ -390,14 +390,14 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = IOUtils.toByteArray(stream)
 
             try {
-                val json = JsonTreeParser.parse(String(keyData, Utils.UTF8))
+                val json = Json.plain.parseJson(String(keyData, Utils.UTF8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this
                 @NonNls var path = uri.path
                 if (path == null)
                     path = "unspecified"
-                val k = ClassicStaticKeys.fromJSON(json, path)
+                val k = ClassicStaticKeys.fromJSON(json.jsonObject, path)
                 if (k!!.isEmpty()) {
                     return R.string.key_file_empty
                 }

@@ -20,7 +20,7 @@ object DrawableUtils {
      * Adapted from http://www.piwai.info/transparent-jpegs-done-right, with pre-Honeycomb support
      * removed, and resource annotations added.
      *
-     * @param res [Resources] from the current context.
+     * @param context the current context.
      * @param sourceRes Source image to get R/G/B channels from.
      * @param maskRes Source image to get Alpha channel from. This is a greyscale + alpha image,
      * with a black mask and transparent pixels where they should be added. This must be the same

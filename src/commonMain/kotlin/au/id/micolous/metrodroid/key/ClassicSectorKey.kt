@@ -127,7 +127,7 @@ data class ClassicSectorKey internal constructor(
     fun updateType(keyType: KeyType) = ClassicSectorKey(key = key,
             type = keyType, bundle = bundle)
 
-    override fun toJSON(sectorIdx: Int): JsonObject = json {
+    override fun toJSON(sector: Int): JsonObject = json {
             when (type) {
                 ClassicSectorKey.KeyType.A -> KEY_TYPE to TYPE_KEYA
                 ClassicSectorKey.KeyType.B -> KEY_TYPE to TYPE_KEYB
@@ -135,7 +135,7 @@ data class ClassicSectorKey internal constructor(
                 }
             }
             KEY_VALUE to key.toHexString()
-            SECTOR_IDX to sectorIdx
+            SECTOR_IDX to sector
         }
 
     companion object {

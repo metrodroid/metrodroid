@@ -20,34 +20,34 @@
 package au.id.micolous.metrodroid.ui
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Activity
-import android.app.Fragment
-import android.app.FragmentTransaction
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
+import android.support.v4.app.FragmentPagerAdapter
+import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
+import au.id.micolous.metrodroid.multi.Localizer
 
 import au.id.micolous.farebot.R
 
-class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: ViewPager) : PagerAdapter(), ActionBar.TabListener, ViewPager.OnPageChangeListener {
-    private val mActionBar: ActionBar? = mActivity.actionBar
+class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mViewPager: ViewPager) : FragmentPagerAdapter(mActivity.supportFragmentManager) {
+    private val mActionBar: ActionBar? = mActivity.supportActionBar
     private val mTabs = ArrayList<TabInfo>()
     private var mCurTransaction: FragmentTransaction? = null
 
     init {
         mViewPager.adapter = this
-        mViewPager.setOnPageChangeListener(this)
     }
 
-    fun addTab(tab: ActionBar.Tab, clss: Class<*>, args: Bundle) {
-        val info = TabInfo(clss, args)
-        tab.tag = info
-        tab.setTabListener(this)
+    fun addTab(nameResource: Int, clss: Class<*>, args: Bundle?) {
+        val info = TabInfo(clss, args, Localizer.localizeString(nameResource))
         mTabs.add(info)
-        mActionBar!!.addTab(tab)
         notifyDataSetChanged()
     }
 
@@ -55,23 +55,17 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
 
     override fun startUpdate(view: View) {}
 
-    @SuppressLint("CommitTransaction")
-    override fun instantiateItem(view: View, position: Int): Any {
-        val info = mTabs[position]
-
-        if (mCurTransaction == null) {
-            mCurTransaction = mActivity.fragmentManager.beginTransaction()
-        }
-
-        val fragment = Fragment.instantiate(mActivity, info.mClass.name, info.mArgs)
-        mCurTransaction!!.add(R.id.pager, fragment)
-        return fragment
+    override fun getItem(p0: Int): Fragment {
+        val info = mTabs[p0]
+        return Fragment.instantiate(mActivity, info.mClass.name, info.mArgs)
     }
+
+    override fun getPageTitle(p0: Int): CharSequence = mTabs[p0].mName
 
     @SuppressLint("CommitTransaction")
     override fun destroyItem(view: View, i: Int, `object`: Any) {
         if (mCurTransaction == null) {
-            mCurTransaction = mActivity.fragmentManager.beginTransaction()
+            mCurTransaction = mActivity.supportFragmentManager.beginTransaction()
         }
         mCurTransaction!!.hide(`object` as Fragment)
     }
@@ -80,7 +74,7 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
         if (mCurTransaction != null) {
             mCurTransaction?.commitAllowingStateLoss()
             mCurTransaction = null
-            mActivity.fragmentManager.executePendingTransactions()
+            mActivity.supportFragmentManager.executePendingTransactions()
         }
     }
 
@@ -92,26 +86,5 @@ class TabPagerAdapter(private val mActivity: Activity, private val mViewPager: V
 
     override fun restoreState(parcelable: Parcelable?, classLoader: ClassLoader?) {}
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-    override fun onPageSelected(position: Int) {
-        mActionBar!!.setSelectedNavigationItem(position)
-    }
-
-    override fun onPageScrollStateChanged(state: Int) {}
-
-    override fun onTabSelected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {
-        val tag = tab.tag
-        for (i in mTabs.indices) {
-            if (mTabs[i] == tag) {
-                mViewPager.currentItem = i
-            }
-        }
-    }
-
-    override fun onTabUnselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
-    override fun onTabReselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
-    private class TabInfo internal constructor(internal val mClass: Class<*>, internal val mArgs: Bundle)
+    private class TabInfo internal constructor(internal val mClass: Class<*>, internal val mArgs: Bundle?, internal val mName: String)
 }

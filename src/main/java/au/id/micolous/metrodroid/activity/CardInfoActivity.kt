@@ -89,9 +89,8 @@ class CardInfoActivity : MetrodroidActivity() {
         val viewPager = findViewById<ViewPager>(R.id.pager)
         mTabsAdapter = TabPagerAdapter(this, viewPager)
 
-        val actionBar = actionBar
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar.setTitle(R.string.loading)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.loading)
 
         object : AsyncTask<Void?, Void?, Void?>() {
             private var mSpeakBalanceEnabled: Boolean = false
@@ -149,8 +148,8 @@ class CardInfoActivity : MetrodroidActivity() {
                     } else {
                         mCardSerial = ""
                     }
-                    actionBar.title = mTransitData!!.cardName
-                    actionBar.subtitle = mCardSerial
+                    supportActionBar!!.title = mTransitData!!.cardName
+                    supportActionBar!!.subtitle = mCardSerial
 
                     val args = Bundle()
                     args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
@@ -161,7 +160,7 @@ class CardInfoActivity : MetrodroidActivity() {
                         val ucView = findViewById<View>(R.id.unauthorized_card)
                         val loadKeysView = findViewById<View>(R.id.load_keys)
                         ucView.visibility = View.VISIBLE
-                        loadKeysView.setOnClickListener { subview ->
+                        loadKeysView.setOnClickListener {
                             AlertDialog.Builder(this@CardInfoActivity)
                                     .setMessage(R.string.add_key_directions)
                                     .setPositiveButton(android.R.string.ok, null)
@@ -170,20 +169,16 @@ class CardInfoActivity : MetrodroidActivity() {
                     }
 
                     if (mTransitData!!.balances != null || mTransitData!!.subscriptions != null) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
+                        mTabsAdapter!!.addTab(R.string.balances_and_subscriptions,
                                 CardBalanceFragment::class.java, args)
                     }
 
                     if (mTransitData!!.trips != null) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment::class.java, args)
+                        mTabsAdapter!!.addTab(R.string.history, CardTripsFragment::class.java, args)
                     }
 
                     if (TransitData.hasInfo(mTransitData!!)) {
-                        mTabsAdapter!!.addTab(actionBar.newTab().setText(R.string.info), CardInfoFragment::class.java, args)
-                    }
-
-                    if (mTabsAdapter!!.count > 1) {
-                        actionBar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
+                        mTabsAdapter!!.addTab(R.string.info, CardInfoFragment::class.java, args)
                     }
 
                     val w = mTransitData!!.warning
@@ -193,7 +188,7 @@ class CardInfoActivity : MetrodroidActivity() {
                         var txt = ""
                         if (hasUnknownStation)
                             txt = getString(R.string.need_stations)
-                        if (w != null && !txt.isEmpty())
+                        if (w != null && txt.isNotEmpty())
                             txt += "\n"
                         if (w != null)
                             txt += w
@@ -205,7 +200,7 @@ class CardInfoActivity : MetrodroidActivity() {
                             View.GONE
                     }
                     if (hasUnknownStation)
-                        findViewById<View>(R.id.need_stations_button).setOnClickListener { view -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))) }
+                        findViewById<View>(R.id.need_stations_button).setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))) }
 
                     mShowMoreInfo = mTransitData!!.moreInfoPage != null
                     mShowOnlineServices = mTransitData!!.onlineServicesPage != null

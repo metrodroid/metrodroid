@@ -22,7 +22,7 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -34,7 +34,7 @@ import au.id.micolous.farebot.R
 abstract class FragmentWrapperActivity : MetrodroidActivity() {
 
     protected val fragment: Fragment?
-        get() = fragmentManager.findFragmentByTag("fragment")
+        get() = supportFragmentManager.findFragmentByTag("fragment")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ abstract class FragmentWrapperActivity : MetrodroidActivity() {
         setContentView(container)
 
         if (fragment == null) {
-            val transaction = fragmentManager.beginTransaction()
+            val transaction = supportFragmentManager.beginTransaction()
             transaction.add(R.id.content, createFragment(), "fragment")
             transaction.commit()
         }

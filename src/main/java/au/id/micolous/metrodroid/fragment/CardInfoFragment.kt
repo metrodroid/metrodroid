@@ -44,7 +44,7 @@ class CardInfoFragment : TreeListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = arguments?.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onClick(node: TreeNode, value: Any) {

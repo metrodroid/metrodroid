@@ -22,7 +22,6 @@
 package au.id.micolous.metrodroid.fragment
 
 import android.app.Activity
-import android.app.ListFragment
 import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
@@ -32,6 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.StringRes
+import android.support.v4.app.ListFragment
 import android.support.v7.content.res.AppCompatResources
 import android.text.Spannable
 import android.text.SpannableString
@@ -71,7 +71,7 @@ class CardTripsFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -91,7 +91,7 @@ class CardTripsFragment : ListFragment() {
             } else
                 maybeObfuscatedTrips = trips
             // Explicitly sort these events
-            listAdapter = UseLogListAdapter(activity, maybeObfuscatedTrips.sortedWith(Trip.Comparator()).toTypedArray())
+            listAdapter = UseLogListAdapter(activity!!, maybeObfuscatedTrips.sortedWith(Trip.Comparator()).toTypedArray())
         } else {
             view.findViewById<View>(android.R.id.list).visibility = View.GONE
             view.findViewById<View>(R.id.error_text).visibility = View.VISIBLE

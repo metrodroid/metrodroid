@@ -19,13 +19,13 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.Activity
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Preferences
 
-abstract class MetrodroidActivity : Activity() {
+abstract class MetrodroidActivity : AppCompatActivity() {
     private var mAppliedTheme: Int = 0
 
     protected open val themeVariant: Int?
@@ -50,11 +50,11 @@ abstract class MetrodroidActivity : Activity() {
     }
 
     protected fun setDisplayHomeAsUpEnabled(b: Boolean) {
-        actionBar?.setDisplayHomeAsUpEnabled(b)
+        supportActionBar?.setDisplayHomeAsUpEnabled(b)
     }
 
     protected fun setHomeButtonEnabled(b: Boolean) {
-        actionBar?.setHomeButtonEnabled(b)
+        supportActionBar?.setHomeButtonEnabled(b)
     }
 
     override fun onResume() {

@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -82,14 +81,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
             }
         }
 
-        val actionBar : ActionBar = actionBar ?: return
-
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (Preferences.hideCardNumbers) {
-            actionBar.title = card.cardType.toString()
+            supportActionBar?.title = card.cardType.toString()
         } else {
-            actionBar.title = card.cardType.toString() + " " + card.tagId.toHexString()
+            supportActionBar?.title = card.cardType.toString() + " " + card.tagId.toHexString()
         }
 
         var scannedAt = card.scannedAt
@@ -97,18 +94,17 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt)
             val date = TimestampFormatter.dateFormat(scannedAt).spanned
             val time = TimestampFormatter.timeFormat(scannedAt).spanned
-            actionBar.subtitle = Localizer.localizeString(R.string.scanned_at_format, time, date)
+            supportActionBar?.subtitle = Localizer.localizeString(R.string.scanned_at_format, time, date)
         }
 
         if (card.manufacturingInfo != null) {
-            tabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment::class.java,
+            tabsAdapter.addTab(R.string.hw_detail, CardHWDetailFragment::class.java,
                     intent.extras)
         }
 
         if (card.rawData != null) {
-            tabsAdapter.addTab(actionBar.newTab().setText(R.string.data), CardRawDataFragment::class.java,
+            tabsAdapter.addTab(R.string.data, CardRawDataFragment::class.java,
                     intent.extras)
-            actionBar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
         }
     }
 
@@ -170,12 +166,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         return false
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {
                     REQUEST_SAVE_FILE -> {
-                        val uri: Uri? = data.data
+                        val uri: Uri? = data?.data
                         Log.d(TAG, "REQUEST_SAVE_FILE")
                         val os = contentResolver.openOutputStream(uri!!)
                         val json = CardSerializer.toJson(mCard!!)
