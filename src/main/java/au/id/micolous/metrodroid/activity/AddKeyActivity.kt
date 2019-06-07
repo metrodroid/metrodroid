@@ -94,7 +94,7 @@ class AddKeyActivity : MetrodroidActivity() {
             InsertKeyTask(this@AddKeyActivity, keyData).execute()
         }
 
-        (findViewById<View>(R.id.keys_radio) as RadioGroup).setOnCheckedChangeListener { view, checkedId ->
+        (findViewById<View>(R.id.keys_radio) as RadioGroup).setOnCheckedChangeListener { _, checkedId ->
             mKeyData?.setAllKeyTypes(if (checkedId == R.id.is_key_a)
                 ClassicSectorKey.KeyType.A
             else
