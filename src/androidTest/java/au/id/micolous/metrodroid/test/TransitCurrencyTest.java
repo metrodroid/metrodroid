@@ -167,7 +167,8 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
 
         // This may not have a proper symbol
         final Spanned jpy = TransitCurrency.Companion.JPY(1234).formatCurrencyString(true).getSpanned();
-        assertSpannedThat(jpy, Matchers.startsWith("1 234"));
+        // Accept either ordinary or narrow non-break space
+        assertSpannedThat(jpy, Matchers.anyOf(Matchers.startsWith("1 234"), Matchers.startsWith("1 234")));
 
         final Spanned eur = new TransitCurrency(1234, "EUR").formatCurrencyString(true).getSpanned();
         assertSpannedEquals("12,34 €", eur);
