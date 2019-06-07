@@ -27,6 +27,7 @@ from io import TextIOWrapper
 from os.path import basename, getmtime
 from xml.etree import ElementTree as etree
 import csv, itertools, json
+import codecs
 
 FORMATS = [
   'md34',     # Adds keytype = ('KeyA', 'KeyB')
@@ -254,7 +255,7 @@ def read_mfc_dump(input_f, writer):
 
 def read_metro_json(input_f, writer):
   # Read the MIFARE card entirely first
-  card_data = json.load(input_f)
+  card_data = json.load(codecs.getreader("utf-8")(input_f))
 
   if 'mifareClassic' not in card_data:
     raise Exception('expected mifareClassic dump')
@@ -329,7 +330,7 @@ def mfc_converter(input_fs, output_f, format_s, informat_s):
     output_f.flush()
     output_f.close()
   else:
-    with TextIOWrapper(output_f, encoding='utf-8') as wrapper:
+    with codecs.getwriter("utf-8")(output_f) as wrapper:
       writer.write_cards(wrapper, cards)
 
 
