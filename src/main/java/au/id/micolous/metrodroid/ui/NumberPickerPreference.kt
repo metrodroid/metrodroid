@@ -22,29 +22,39 @@ package au.id.micolous.metrodroid.ui
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.TypedArray
+import android.os.Build
 import android.os.Parcelable
-import android.preference.DialogPreference
+import androidx.preference.DialogPreference
 import android.util.AttributeSet
-import android.view.View
-import android.view.ViewGroup
-import android.widget.NumberPicker
+import androidx.annotation.RequiresApi
 import kotlinx.android.parcel.Parcelize
+import au.id.micolous.farebot.R
 
 
 /**
  * Implements a preference which allows the user to pick a number.
  */
 
-class NumberPickerPreference @JvmOverloads constructor(
-        context: Context,
-        attributes: AttributeSet? = null,
-        defStyleAttr: Int = android.R.attr.editTextPreferenceStyle) : DialogPreference(context, attributes, defStyleAttr) {
-    /**
-     * Returns the [NumberPicker] widget that will be shown in the dialog.
-     *
-     * @return The [NumberPicker] widget that will be shown in the dialog.
-     */
-    private val numberPicker: NumberPicker = NumberPicker(context, attributes)
+class NumberPickerPreference : DialogPreference {
+    val minValue: Int
+    val maxValue: Int
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        minValue = attrs.getAttributeIntValue(NPP_SCHEMA, "minValue", 0)
+        maxValue = attrs.getAttributeIntValue(NPP_SCHEMA, "maxValue", 100)
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        minValue = attrs.getAttributeIntValue(NPP_SCHEMA, "minValue", 0)
+        maxValue = attrs.getAttributeIntValue(NPP_SCHEMA, "maxValue", 100)
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        minValue = attrs.getAttributeIntValue(NPP_SCHEMA, "minValue", 0)
+        maxValue = attrs.getAttributeIntValue(NPP_SCHEMA, "maxValue", 100)
+    }
+
     /**
      * Gets the text from the [SharedPreferences].
      *
@@ -71,33 +81,6 @@ class NumberPickerPreference @JvmOverloads constructor(
         }
     private var mValueSet: Boolean = false
 
-    init {
-        numberPicker.id = android.R.id.edit
-        numberPicker.isEnabled = true
-        numberPicker.minValue = attributes!!.getAttributeIntValue(NPP_SCHEMA, "minValue", 0)
-        numberPicker.maxValue = attributes.getAttributeIntValue(NPP_SCHEMA, "maxValue", 100)
-    }
-
-    override fun onCreateDialogView(): View {
-        numberPicker.value = value
-        val parent = numberPicker.parent
-        if (parent != null) {
-            (parent as ViewGroup).removeView(numberPicker)
-        }
-        return numberPicker
-    }
-
-    override fun onDialogClosed(positiveResult: Boolean) {
-        super.onDialogClosed(positiveResult)
-
-        if (positiveResult) {
-            val value = numberPicker.value
-            if (callChangeListener(value)) {
-                this.value = value
-            }
-        }
-    }
-
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
         return a.getInteger(index, 0)
     }
@@ -117,16 +100,17 @@ class NumberPickerPreference @JvmOverloads constructor(
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state == null || state.javaClass != SavedState::class.java) {
+        if (state == null || state.javaClass != SavedState::class.java || state !is SavedState) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state)
             return
         }
 
-        val myState = state as SavedState?
-        super.onRestoreInstanceState(myState!!.superState)
-        value = myState.value
+        super.onRestoreInstanceState(state.superState)
+        value = state.value
     }
+
+    override fun getDialogLayoutResource(): Int = R.layout.pref_number_picker
 
     @Parcelize
     private class SavedState (

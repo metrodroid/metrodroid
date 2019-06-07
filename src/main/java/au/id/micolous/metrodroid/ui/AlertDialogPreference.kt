@@ -20,7 +20,7 @@ package au.id.micolous.metrodroid.ui
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
-import android.preference.DialogPreference
+import androidx.preference.DialogPreference
 import androidx.annotation.RequiresApi
 import android.util.AttributeSet
 
@@ -36,11 +36,7 @@ class AlertDialogPreference : DialogPreference {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    override fun setDialogLayoutResource(dialogLayoutResId: Int) {} // Do nothing.
-
     override fun getNegativeButtonText(): CharSequence? = null
 
-    override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
-        builder.setNegativeButton(null, null)
-    }
+    override fun getDialogLayoutResource(): Int = au.id.micolous.farebot.R.layout.pref_alert
 }

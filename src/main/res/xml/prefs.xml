@@ -88,6 +88,7 @@
 
     <PreferenceCategory android:title="@string/advanced_options">
         <PreferenceScreen android:title="@string/nfc"
+                          android:key="pref_nfc_screen"
             android:summary="@string/nfc_options_desc">
             <PreferenceCategory android:title="@string/mifare_classic">
                 <au.id.micolous.metrodroid.ui.NumberPickerPreference
@@ -119,6 +120,7 @@
 
     <PreferenceScreen
         android:title="@string/developer_options"
+        android:key="pref_dev_screen"
         android:summary="@string/developer_options_desc">
         <PreferenceCategory android:title="@string/station_database">
             <CheckBoxPreference

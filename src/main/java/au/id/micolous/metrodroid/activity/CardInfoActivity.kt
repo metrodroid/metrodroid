@@ -24,12 +24,10 @@ import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import androidx.viewpager.widget.ViewPager
@@ -108,8 +106,7 @@ class CardInfoActivity : MetrodroidActivity() {
                     mCard = CardSerializer.fromDb(data)
                     mTransitData = mCard!!.parseTransitData()
 
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(this@CardInfoActivity)
-                    mSpeakBalanceEnabled = prefs.getBoolean("pref_key_speak_balance", false)
+                    mSpeakBalanceEnabled = Preferences.speakBalance
                 } catch (ex: Exception) {
                     mException = ex
                 }

@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.nfc.Tag
 import android.nfc.TagLostException
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
