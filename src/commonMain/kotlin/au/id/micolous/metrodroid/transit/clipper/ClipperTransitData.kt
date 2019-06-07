@@ -153,14 +153,14 @@ class ClipperTransitData (private val mSerialNumber: Long?,
 
             override fun parseTransitIdentity(card: DesfireCard) =
                     TransitIdentity("Clipper",
-                            card.getApplication(APP_ID)?.getFile(0x08)?.data?.byteArrayToLong(1, 4)?.toString())
+                card.getApplication(APP_ID)?.getFile(0x08)?.data?.byteArrayToLong(1, 4)?.toString())
+
+            override val notice: String?
+                get() = StationTableReader.getNotice(ClipperData.CLIPPER_STR)
         }
 
         internal fun clipperTimestampToCalendar(timestamp: Long): TimestampFull? {
             return if (timestamp == 0L) null else CLIPPER_EPOCH.seconds(timestamp)
         }
-
-        val notice: String?
-            get() = StationTableReader.getNotice(ClipperData.CLIPPER_STR)
     }
 }

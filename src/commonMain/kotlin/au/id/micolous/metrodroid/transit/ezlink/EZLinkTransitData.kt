@@ -44,43 +44,7 @@ class EZLinkTransitData (override val serialNumber: String?,
         get() = if (mBalance != null) TransitCurrency.SGD(mBalance) else null
 
     companion object {
-        fun parse(cepasCard: CEPASApplication) : EZLinkTransitData {
-            val purse = cepasCard.getPurse(3) ?: return EZLinkTransitData(
-                    serialNumber = null,
-                    mBalance = null,
-                    trips = parseTrips(cepasCard, "CEPAS")
-            )
-            val canNo = CEPASPurse(purse).can.toHexString()
-            return EZLinkTransitData(
-                    serialNumber = canNo,
-                    mBalance = CEPASPurse(purse).purseBalance,
-                    trips = parseTrips(cepasCard, getCardIssuer(canNo))
-            )
-        }
-
-        private fun parseTrips(card: CEPASApplication, cardName : String): List<EZLinkTrip> {
-            val history = CEPASHistory(card.getHistory(3) ?: return emptyList())
-            val transactions = history.transactions
-            return transactions.map { EZLinkTrip(it, cardName) }
-        }
-
-        private const val EZLINK_STR = "ezlink"
-
-        val EZ_LINK_CARD_INFO = CardInfo(
-                imageId = R.drawable.ezlink_card,
-                name = "EZ-Link",
-                locationId = R.string.location_singapore,
-                cardType = CardType.CEPAS)
-
-        private val NETS_FLASHPAY_CARD_INFO = CardInfo(
-                imageId = R.drawable.nets_card,
-                name = "NETS FlashPay",
-                locationId = R.string.location_singapore,
-                cardType = CardType.CEPAS)
-        val ALL_CARD_INFOS = listOf(
-                EZLinkTransitData.EZ_LINK_CARD_INFO,
-                EZLinkTransitData.NETS_FLASHPAY_CARD_INFO
-        )
+        const val EZLINK_STR = "ezlink"
 
         private val EPOCH = Epoch.utc(1995, MetroTimeZone.SINGAPORE, -8 * 60)
 
@@ -94,32 +58,69 @@ class EZLinkTransitData (override val serialNumber: String?,
                 else -> "CEPAS"
             }
 
-        fun earlyCardInfo(purseData: ImmutableByteArray): CardInfo {
-            val canNo = purseData.sliceOffLen(8, 8).toHexString()
-            return when (canNo.substring(0, 3)) {
-                "100" -> EZ_LINK_CARD_INFO
-                "111" -> NETS_FLASHPAY_CARD_INFO
-                else -> EZ_LINK_CARD_INFO
-            }
-        }
-
         fun getStation(code: String): Station {
             return if (code.length != 3) Station.unknown(code) else StationTableReader.getStation(EZLINK_STR,
                     ImmutableByteArray.fromASCII(code).byteArrayToInt(), code)
         }
-
-        fun check(cepasCard: CEPASApplication): Boolean {
-            return cepasCard.getPurse(3) != null
-        }
-
-        fun parseTransitIdentity(card: CEPASApplication): TransitIdentity {
-            val purseRaw = card.getPurse(3) ?: return TransitIdentity("CEPAS", null)
-            val purse = CEPASPurse(purseRaw)
-            val canNo = purse.can.toHexString()
-            return TransitIdentity(getCardIssuer(canNo), canNo)
-        }
-
-        val notice: String?
-            get() = StationTableReader.getNotice(EZLINK_STR)
     }
+}
+
+object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
+    private val EZ_LINK_CARD_INFO = CardInfo(
+        imageId = R.drawable.ezlink_card,
+        name = "EZ-Link",
+        locationId = R.string.location_singapore,
+        cardType = CardType.CEPAS)
+
+    private val NETS_FLASHPAY_CARD_INFO = CardInfo(
+        imageId = R.drawable.nets_card,
+        name = "NETS FlashPay",
+        locationId = R.string.location_singapore,
+        cardType = CardType.CEPAS)
+
+    override val allCards = listOf(
+        EZ_LINK_CARD_INFO,
+        NETS_FLASHPAY_CARD_INFO
+    )
+
+    fun earlyCardInfo(purseData: ImmutableByteArray): CardInfo {
+        val canNo = purseData.sliceOffLen(8, 8).toHexString()
+        return when (canNo.substring(0, 3)) {
+            "100" -> EZ_LINK_CARD_INFO
+            "111" -> NETS_FLASHPAY_CARD_INFO
+            else -> EZ_LINK_CARD_INFO
+        }
+    }
+
+    private fun parseTrips(card: CEPASApplication, cardName: String): List<EZLinkTrip> {
+        val history = CEPASHistory(card.getHistory(3) ?: return emptyList())
+        val transactions = history.transactions
+        return transactions.map { EZLinkTrip(it, cardName) }
+    }
+
+    override fun parseTransitData(cepasCard: CEPASApplication): EZLinkTransitData {
+        val purse = cepasCard.getPurse(3) ?: return EZLinkTransitData(
+            serialNumber = null,
+            mBalance = null,
+            trips = parseTrips(cepasCard, "CEPAS")
+        )
+        val canNo = CEPASPurse(purse).can.toHexString()
+        return EZLinkTransitData(
+            serialNumber = canNo,
+            mBalance = CEPASPurse(purse).purseBalance,
+            trips = parseTrips(cepasCard, EZLinkTransitData.getCardIssuer(canNo))
+        )
+    }
+
+    override fun check(cepasCard: CEPASApplication): Boolean = cepasCard.getPurse(3) != null
+
+    override fun parseTransitIdentity(card: CEPASApplication): TransitIdentity {
+        val purseRaw = card.getPurse(3) ?: return TransitIdentity("CEPAS", null)
+        val purse = CEPASPurse(purseRaw)
+        val canNo = purse.can.toHexString()
+        return TransitIdentity(EZLinkTransitData.getCardIssuer(canNo), canNo)
+    }
+
+    override val notice: String?
+        get() = StationTableReader.getNotice(EZLinkTransitData.EZLINK_STR)
 }

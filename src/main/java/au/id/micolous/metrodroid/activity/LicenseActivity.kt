@@ -30,16 +30,10 @@ import java.io.IOException
 import java.io.InputStream
 
 import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
-import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData
+import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.Utils
 
 class LicenseActivity : MetrodroidActivity() {
-
-    private var lblLicenseText: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,51 +41,42 @@ class LicenseActivity : MetrodroidActivity() {
 
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        lblLicenseText = findViewById(R.id.lblLicenseText)
-        lblLicenseText!!.beginBatchEdit()
-        readLicenseTextFromAsset("Metrodroid-NOTICE.txt")
-        readLicenseTextFromAsset("third_party/leaflet/LICENSE-prefix")
-        readLicenseTextFromAsset("third_party/leaflet/LICENSE")
-        readLicenseTextFromAsset("third_party/NOTICE.AOSP.txt")
-        readLicenseTextFromAsset("third_party/NOTICE.noto-emoji.txt")
-        readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt")
+        val lblLicenseText = findViewById<TextView>(R.id.lblLicenseText)
+        lblLicenseText.beginBatchEdit()
+        readLicenseTextFromAsset(lblLicenseText, "Metrodroid-NOTICE.txt")
+        readLicenseTextFromAsset(lblLicenseText, "third_party/leaflet/LICENSE-prefix")
+        readLicenseTextFromAsset(lblLicenseText, "third_party/leaflet/LICENSE")
+        readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.AOSP.txt")
+        readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.noto-emoji.txt")
+        readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.protobuf.txt")
 
-        // TODO: Get a list of files programatically
-        addNotice(SeqGoTransitData.notice)
-        addNotice(LaxTapTransitData.notice)
-        addNotice(ClipperTransitData.notice)
-        addNotice(EZLinkTransitData.notice)
-        addNotice(LeapTransitData.notice)
+        for (factory in CardInfoRegistry.allFactories) {
+                lblLicenseText.append(factory.notice ?: continue)
+                lblLicenseText.append("\n\n")
+        }
 
-        lblLicenseText!!.endBatchEdit()
-        lblLicenseText = null
+        lblLicenseText.endBatchEdit()
     }
 
-    private fun addNotice(notice: String?) {
-        if (notice == null) return
-        lblLicenseText!!.append(notice)
-        lblLicenseText!!.append("\n\n")
-    }
-
-    private fun readLicenseTextFromAsset(path: String) {
+    private fun readLicenseTextFromAsset(lblLicenseText: TextView, path: String) {
         var s: InputStream? = null
         try {
-            s = assets.open(path, AssetManager.ACCESS_RANDOM)
-            val i = IOUtils.lineIterator(s!!, Utils.UTF8)
+            s = assets.open(path, AssetManager.ACCESS_RANDOM) ?: return
+            val i = IOUtils.lineIterator(s, Utils.UTF8)
 
             while (i.hasNext()) {
-                lblLicenseText!!.append(i.next())
-                lblLicenseText!!.append("\n")
+                lblLicenseText.append(i.next())
+                lblLicenseText.append("\n")
             }
         } catch (e: IOException) {
 
             Log.w(TAG, "Error reading license: $path", e)
-            lblLicenseText!!.append("\n\n** Error reading license notice from $path\n\n")
+            lblLicenseText.append("\n\n** Error reading license notice from $path\n\n")
         } finally {
             IOUtils.closeQuietly(s)
         }
 
-        lblLicenseText!!.append("\n\n")
+        lblLicenseText.append("\n\n")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

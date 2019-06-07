@@ -101,9 +101,9 @@ class LaxTapTransitData (override val capsule: NextfareTransitDataCapsule): Next
                         shouldMergeJourneys = false)
                 return LaxTapTransitData(capsule)
             }
-        }
 
-        val notice: String?
-            get() = StationTableReader.getNotice(LaxTapData.LAX_TAP_STR)
+            override val notice: String?
+                get() = StationTableReader.getNotice(LaxTapData.LAX_TAP_STR)
+        }
     }
 }

@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaRegistry
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Registry
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransitRegistry
 import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
 import au.id.micolous.metrodroid.util.Collator
 
 object CardInfoRegistry {
@@ -19,10 +19,10 @@ object CardInfoRegistry {
             UltralightTransitRegistry.allFactories +
             ChinaRegistry.allFactories +
             KSX6924Registry.allFactories +
-            EmvTransitFactory
+            EmvTransitFactory +
+            EZLinkTransitFactory
 
-    val allCards = allFactories.flatMap { it.allCards } +
-            EZLinkTransitData.ALL_CARD_INFOS
+    val allCards = allFactories.flatMap { it.allCards }
 
     val allCardsAlphabetical: List<CardInfo>
         get () {
