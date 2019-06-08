@@ -37,6 +37,10 @@ function download_sdk {
     return $?
 }
 
+# Fix up missing repository configuration
+mkdir -p $HOME/.android
+touch $HOME/.android/repositories.cfg
+
 # Check to see if we already have a working SDK installation, before trying to
 # download a new one.
 android_install "platform-tools" || download_sdk
