@@ -64,17 +64,9 @@ task checkstyle(type: Checkstyle) {
 */
 
 dependencies {
-    implementation ("com.android.support:appcompat-v7:$support_version") {
-        exclude module: 'animated-vector-drawable'
-        exclude module: 'support-fragment'
-    }
-    implementation "com.android.support:cardview-v7:$support_version"
-    implementation "com.android.support:support-annotations:$support_version"
-    implementation "com.android.support:support-core-ui:$support_version"
-    implementation ("com.android.support:support-core-utils:$support_version") {
-        exclude module: 'support-compat'
-    }
-    implementation "com.android.support:support-vector-drawable:$support_version"
+    implementation("androidx.appcompat:appcompat:1.0.0")
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.annotation:annotation:1.0.0"
     implementation 'commons-io:commons-io:2.5'
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
     implementation 'com.neovisionaries:nv-i18n:1.23'
@@ -82,7 +74,7 @@ dependencies {
     implementation project(':material-design-icons')
 
     implementation 'com.github.bmelnychuk:atv:1.2.9'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     androidTestUtil "androidx.test:orchestrator:$android_test_version"

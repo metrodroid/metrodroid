@@ -21,7 +21,7 @@
 
 package au.id.micolous.metrodroid.util
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
 import android.preference.PreferenceManager

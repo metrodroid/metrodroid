@@ -21,7 +21,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.preference.DialogPreference
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.util.AttributeSet
 
 /**

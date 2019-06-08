@@ -21,16 +21,16 @@ package au.id.micolous.metrodroid.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 import au.id.micolous.metrodroid.multi.Localizer
 

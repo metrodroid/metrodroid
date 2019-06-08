@@ -23,7 +23,7 @@ package au.id.micolous.metrodroid
 import android.app.Application
 import android.os.StrictMode
 import android.preference.PreferenceManager
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate
 
 import au.id.micolous.farebot.R
 

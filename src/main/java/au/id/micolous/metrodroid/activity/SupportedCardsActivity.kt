@@ -24,7 +24,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.nfc.NfcAdapter
 import android.os.Bundle
-import android.support.v7.content.res.AppCompatResources
+import androidx.appcompat.content.res.AppCompatResources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem

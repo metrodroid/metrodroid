@@ -5,7 +5,7 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.support.v7.content.res.AppCompatResources
+import androidx.appcompat.content.res.AppCompatResources
 import au.id.micolous.metrodroid.multi.DrawableResource
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.transit.CardInfo
