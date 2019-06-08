@@ -1,6 +1,8 @@
-reader_id,stop_name,short_name,stop_lat,stop_lon,
+reader_id,stop_name,short_name,stop_lat,stop_lon
 0x11001b,Evelyn (closed),Evelyn,,
 0x190001,San Francisco Ferry Building,San Francisco,37.795873,-122.391987
 0x190003,Larkspur Ferry Terminal,Larkspur,37.945509,-122.50916
 0x1b0001,Alameda Main Street Terminal,Alameda Main St.,37.790668,-122.294036
+0x1b0005,Oakland Terminal,Oakland,37.795032,-122.279777
 0x1b0008,San Francisco Ferry Building,Ferry Building,37.795873,-122.391987
+0x1b0009,Pier 41,Pier 41,37.809594,-122.412272
