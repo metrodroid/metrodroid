@@ -2,33 +2,42 @@ language: android
 jdk: oraclejdk8
 
 env:
-  matrix:
-    - EMULATOR_API=16
-    - EMULATOR_API=21
-    - EMULATOR_API=24
-# Not available in vanilla flavour
-#    - EMULATOR_API=27
-  
   global:
     - ANDROID_API=28
     - ANDROID_BUILD_TOOLS=28.0.3
+    - EMULATOR_ARCH=armeabi-v7a
+
+jobs:
+  include:
+    - stage: assemble code for android
+      # This only runs "assemble", which compiles the code. This is normally fast -- and allows
+      # quick feedback in case of compiler errors (before running the more expensive test cases).
+
+      # Don't set up emulator components
+      before_script: true
+      script: ./gradlew assemble
+
+    - stage: test
+      env: EMULATOR_API=16
+    - env: EMULATOR_API=21
+    - env: EMULATOR_API=24
+    # Not available in vanilla flavour
+    # - env: EMULATOR_API=27
 
 android:
   components:
-# Tools specified twice to support newest SDK tools
-# https://docs.travis-ci.com/user/languages/android/#installing-a-newer-sdk-platform-tools-revision
+    # Tools specified twice to support newest SDK tools
+    # https://docs.travis-ci.com/user/languages/android/#installing-a-newer-sdk-platform-tools-revision
     - tools
     - platform-tools
     - tools
 
-# Other dependencies:
-    - android-$EMULATOR_API
+    # Other dependencies:
     - build-tools-$ANDROID_BUILD_TOOLS
     - android-$ANDROID_API
     - extra-android-support
     - extra-android-m2repository
     - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-$EMULATOR_API
 
 # Android caching
 before_cache:
@@ -44,9 +53,9 @@ cache:
 before_script:
   - android list targets
   - echo y | android update sdk -a --no-ui --filter android-$EMULATOR_API
-  - echo y | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
+  - echo y | android update sdk -a --no-ui --filter sys-img-$EMULATOR_ARCH-android-$EMULATOR_API
   - android list targets
-  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi $EMULATOR_ARCH
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
