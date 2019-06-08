@@ -1,4 +1,4 @@
-language: android
+language: java
 jdk: oraclejdk8
 
 env:
@@ -14,7 +14,7 @@ jobs:
       # quick feedback in case of compiler errors (before running the more expensive test cases).
 
       # Don't set up emulator components
-      before_script: true
+      before_script: ./.travis/install_android_sdk.sh
       script: ./gradlew assemble
 
     - stage: test
@@ -23,21 +23,6 @@ jobs:
     - env: EMULATOR_API=24
     # Not available in vanilla flavour
     # - env: EMULATOR_API=27
-
-android:
-  components:
-    # Tools specified twice to support newest SDK tools
-    # https://docs.travis-ci.com/user/languages/android/#installing-a-newer-sdk-platform-tools-revision
-    - tools
-    - platform-tools
-    - tools
-
-    # Other dependencies:
-    - build-tools-$ANDROID_BUILD_TOOLS
-    - android-$ANDROID_API
-    - extra-android-support
-    - extra-android-m2repository
-    - extra-google-m2repository
 
 # Android caching
 before_cache:
@@ -49,14 +34,8 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
+    - $HOME/.cache/android-sdk
 
 before_script:
-  - android list targets
-  - echo y | android update sdk -a --no-ui --filter android-$EMULATOR_API
-  - echo y | android update sdk -a --no-ui --filter sys-img-$EMULATOR_ARCH-android-$EMULATOR_API
-  - android list targets
-  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi $EMULATOR_ARCH
-  - emulator -avd test -no-skin -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
+  - ./.travis/install_android_sdk.sh
+  - ./.travis/install_android_emulator.sh
