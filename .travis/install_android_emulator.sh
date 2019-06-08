@@ -2,11 +2,10 @@
 # Installs emulators on Travis CI
 # Assumes install_android_sdk.sh has already run.
 
-SDK_DIR="${HOME}/android-sdk"
-ADB="${SDK_DIR}/platform-tools/bin/adb"
-AVDMANAGER="${SDK_DIR}/tools/bin/avdmanager"
-SDKMANAGER="${SDK_DIR}/tools/bin/sdkmanager"
-EMULATOR="${SDK_DIR}/emulator/emulator"
+ADB="${ANDROID_HOME}/platform-tools/bin/adb"
+AVDMANAGER="${ANDROID_HOME}/tools/bin/avdmanager"
+SDKMANAGER="${ANDROID_HOME}/tools/bin/sdkmanager"
+EMULATOR="${ANDROID_HOME}/emulator/emulator"
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};default;${EMULATOR_ARCH}"
 

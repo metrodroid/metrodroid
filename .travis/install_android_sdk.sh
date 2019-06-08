@@ -6,8 +6,7 @@ SDK_SHA256="92ffee5a1d98d856634e8b71132e8a95d96c83a63fde1099be3d86df3106def9"
 
 SDK_CACHE_DIR="${HOME}/.cache/android-sdk"
 SDK_ZIP="${SDK_CACHE_DIR}/sdk-tools.zip"
-SDK_DIR="${HOME}/android-sdk"
-SDKMANAGER="${SDK_DIR}/tools/bin/sdkmanager"
+SDKMANAGER="${ANDROID_HOME}/tools/bin/sdkmanager"
 
 mkdir -p "${SDK_CACHE_DIR}"
 
@@ -25,8 +24,8 @@ then
     fi
 fi
 
-mkdir "${SDK_DIR}"
-unzip -qq -n "${SDK_ZIP}" -d "${SDK_DIR}"
+mkdir "${ANDROID_HOME}"
+unzip -qq -n "${SDK_ZIP}" -d "${ANDROID_HOME}"
 
 # Install/update Android SDK components
 echo y | ${SDKMANAGER} "platform-tools" > /dev/null

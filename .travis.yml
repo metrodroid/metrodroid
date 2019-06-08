@@ -6,6 +6,7 @@ env:
     - ANDROID_API=28
     - ANDROID_BUILD_TOOLS=28.0.3
     - EMULATOR_ARCH=armeabi-v7a
+    - ANDROID_HOME=$HOME/android-sdk
 
 jobs:
   include:
