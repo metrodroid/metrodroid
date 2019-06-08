@@ -14,7 +14,7 @@ jobs:
       # quick feedback in case of compiler errors (before running the more expensive test cases).
 
       # Don't set up emulator components
-      before_script: ./.travis/install_android_sdk.sh
+      install: ./.travis/install_android_sdk.sh
       script: ./gradlew assemble
 
     - stage: test
@@ -36,6 +36,6 @@ cache:
     - $HOME/.android/build-cache
     - $HOME/.cache/android-sdk
 
-before_script:
+install:
   - ./.travis/install_android_sdk.sh
   - ./.travis/install_android_emulator.sh
