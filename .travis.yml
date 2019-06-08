@@ -35,7 +35,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-    - $HOME/.cache/android-sdk
 
 install:
   - ./.travis/install_android_sdk.sh

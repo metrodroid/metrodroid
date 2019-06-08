@@ -1,28 +1,26 @@
 #!/bin/bash
 # Installs emulators on Travis CI
 # Assumes install_android_sdk.sh has already run.
-
-ADB="${ANDROID_HOME}/platform-tools/bin/adb"
-AVDMANAGER="${ANDROID_HOME}/tools/bin/avdmanager"
-SDKMANAGER="${ANDROID_HOME}/tools/bin/sdkmanager"
-EMULATOR="${ANDROID_HOME}/emulator/emulator"
+source ./.travis/utils.sh
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};default;${EMULATOR_ARCH}"
 
-echo y | ${SDKMANAGER} "emulator" > /dev/null
-echo y | ${SDKMANAGER} "platforms;android-${EMULATOR_API}" > /dev/null
-echo y | ${SDKMANAGER} "${EMULATOR_TARGET}" > /dev/null
+android_install \
+    "emulator" \
+    "platforms;android-${EMULATOR_API}" \
+    "${EMULATOR_TARGET}"
 
-echo "AVDs targets:"
-${AVDMANAGER} list target
+echo "** AVDs targets:"
+${AVDMANAGER} list
 
-echo "Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
-${AVDMANAGER} create avd -n emu -k "${EMULATOR_TARGET}" -f
+echo "** Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
+# Do you wish to create a custom hardware profile? [no]
+echo "no" | ${AVDMANAGER} create avd -n emu -k "${EMULATOR_TARGET}" -f
 
-echo "Starting emulator in background..."
+echo "** Starting emulator in background..."
 ${EMULATOR} -avd emu -no-skin -no-window &
 
-echo "Waiting for emulator..."
+echo "** Waiting for emulator..."
 ./.travis/android-wait-for-emulator
 
 ${ADB} shell input keyevent 82 &
