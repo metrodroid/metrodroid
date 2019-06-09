@@ -20,11 +20,9 @@ ${AVDMANAGER} list
 echo "** Possibly fixing broken images..."
 if ! [[ -e "${EMULATOR_DIR}/kernel-ranchu" ]]
 then
-    ln -v "${EMULATOR_DIR}/kernel-qemu" "${EMULATOR_DIR}/kernel-ranchu"
-fi
-if ! [[ -e "${EMULATOR_DIR}/kernel-qemu" ]]
-then
-    ln -v "${EMULATOR_DIR}/kernel-ranchu" "${EMULATOR_DIR}/kernel-qemu"
+    EMULATOR_ARGS="-kernel ${EMULATOR_DIR}/kernel-qemu"
+else
+    EMULATOR_ARGS=""
 fi
 
 echo "** Platform files:"
@@ -35,7 +33,7 @@ echo "** Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
 echo "no" | ${AVDMANAGER} create avd -n emu -k "${EMULATOR_TARGET}" -f
 
 echo "** Starting emulator in background..."
-${EMULATOR} -avd emu -no-skin -no-window &
+${EMULATOR} -avd emu -no-skin -no-window ${EMULATOR_ARGS} &
 
 echo "** Waiting for emulator..."
 ./.travis/android-wait-for-emulator
