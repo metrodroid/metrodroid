@@ -5,6 +5,9 @@ source ./.travis/utils.sh
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};default;${EMULATOR_ARCH}"
 
+echo "** Starting adb-server..."
+$ADB start-server
+
 android_install \
     "emulator" \
     "platforms;android-${EMULATOR_API}" \
