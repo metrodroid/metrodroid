@@ -86,10 +86,8 @@ abstract class En1545Transaction : Transaction() {
         get() = parsed.getTimeStamp(EVENT, lookup.timeZone)
 
     override val mode: Trip.Mode
-        get() {
-            val ec = parsed.getInt(EVENT_CODE)
-            return if (ec != null) eventCodeToMode(ec) else lookup.getMode(agency, parsed.getInt(EVENT_ROUTE_NUMBER))
-        }
+        get()  = parsed.getInt(EVENT_CODE)?.let { eventCodeToMode(it) }
+                ?: lookup.getMode(agency, parsed.getInt(EVENT_ROUTE_NUMBER))
 
     protected abstract val lookup: En1545Lookup
 
@@ -231,6 +229,7 @@ abstract class En1545Transaction : Transaction() {
         private const val EVENT_TYPE_EXIT_TRANSFER = 7
         const val EVENT_TYPE_TOPUP = 13
         const val EVENT_TYPE_CANCELLED = 9
+        const val TRANSPORT_UNSPECIFIED = 0
         const val TRANSPORT_BUS = 1
         private const val TRANSPORT_INTERCITY_BUS = 2
         const val TRANSPORT_METRO = 3
@@ -247,7 +246,7 @@ abstract class En1545Transaction : Transaction() {
             return eventCode shr 4
         }
 
-        private fun eventCodeToMode(ec: Int): Trip.Mode {
+        private fun eventCodeToMode(ec: Int): Trip.Mode? {
             if (ec and 0xf == EVENT_TYPE_TOPUP)
                 return Trip.Mode.TICKET_MACHINE
             return when (getTransport(ec)) {
@@ -258,6 +257,7 @@ abstract class En1545Transaction : Transaction() {
                 TRANSPORT_FERRY -> Trip.Mode.FERRY
                 TRANSPORT_PARKING, TRANSPORT_TAXI -> Trip.Mode.OTHER
                 TRANSPORT_TOPUP -> Trip.Mode.TICKET_MACHINE
+                TRANSPORT_UNSPECIFIED -> null
                 else -> Trip.Mode.OTHER
             }
         }
