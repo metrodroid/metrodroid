@@ -32,7 +32,9 @@ jobs:
     # This runs the full test suite, including using the Android emulator.
     - stage: test
       env: EMULATOR_API=16
-    - env: EMULATOR_API=21
+    # Broken, missing kernel-rashu
+    #- env: EMULATOR_API=21
+    - env: EMULATOR_API=21 EMULATOR_ARCH=x86
     - env: EMULATOR_API=24
     # Not available in vanilla flavour
     # - env: EMULATOR_API=27

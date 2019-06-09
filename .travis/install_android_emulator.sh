@@ -17,14 +17,6 @@ $ADB start-server
 echo "** AVDs targets:"
 ${AVDMANAGER} list
 
-echo "** Possibly fixing broken images..."
-if ! [[ -e "${EMULATOR_DIR}/kernel-ranchu" ]]
-then
-    EMULATOR_ARGS="-kernel ${EMULATOR_DIR}/kernel-qemu"
-else
-    EMULATOR_ARGS=""
-fi
-
 echo "** Platform files:"
 ls -laR "${ANDROID_SDK_ROOT}/system-images"
 
