@@ -10,7 +10,6 @@ $ADB start-server
 
 android_install \
     "emulator" \
-    "platforms;android-${EMULATOR_API}" \
     "${EMULATOR_TARGET}"
 
 echo "** AVDs targets:"
