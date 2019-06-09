@@ -195,7 +195,7 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                         En1545FixedInteger(En1545Subscription.LINKED_CONTRACT, 5)
                 )
         )
-        private val subFieldsType46 = commonFormat(
+        val subFieldsType46 = commonFormat(
                 En1545Bitmap(
                         OVD1_CONTAINER,
                         OD2_CONTAINER,

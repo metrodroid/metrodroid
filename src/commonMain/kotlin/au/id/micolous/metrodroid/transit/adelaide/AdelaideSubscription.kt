@@ -44,39 +44,5 @@ class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscripti
     val isPurse: Boolean
         get() = lookup.isPurseTariff(contractProvider, contractTariff)
 
-    override val id: Int?
-        get() = parsed.getIntOrZero(En1545Subscription.CONTRACT_SERIAL_NUMBER)
-
-    internal constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, SUB_FIELDS))
-
-    companion object {
-        // Basically Intercode but with Extra
-        private val SUB_FIELDS = IntercodeSubscription.commonFormat(
-                En1545Container(
-                        En1545FixedHex("BitmaskExtra0", 13), // 0800
-                        En1545Bitmap(
-                                // Unconfirmed
-                                En1545Container(
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_ORIGIN_1, 16),
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_VIA_1, 16),
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_DESTINATION_1, 16)
-                                ),
-                                // Unconfirmed
-                                En1545Container(
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_ORIGIN_2, 16),
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_DESTINATION_2, 16)
-                                ),
-                                // Unconfirmed
-                                En1545FixedInteger(En1545Subscription.CONTRACT_ZONES, 16),
-                                // Confirmed
-                                En1545Container(
-                                        En1545FixedInteger.date(En1545Subscription.CONTRACT_SALE),
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 16),
-                                        En1545FixedInteger(En1545Subscription.CONTRACT_SALE_AGENT, 8)
-                                )
-                        ),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_PRICE_AMOUNT, 14)
-                )
-        )
-    }
+    internal constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, IntercodeSubscription.subFieldsType46))
 }
