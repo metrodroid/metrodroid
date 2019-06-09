@@ -38,7 +38,9 @@ class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscripti
                         En1545Subscription.CONTRACT_SALE_DEVICE,
                         En1545Subscription.CONTRACT_PRICE_AMOUNT,
                         En1545Subscription.CONTRACT_SALE_AGENT,
-                        En1545Subscription.CONTRACT_PROVIDER, En1545Subscription.CONTRACT_STATUS)
+                        En1545Subscription.CONTRACT_SERIAL_NUMBER,
+                        En1545Subscription.CONTRACT_PROVIDER,
+                        En1545Subscription.CONTRACT_STATUS)
                 )
 
     val isPurse: Boolean
