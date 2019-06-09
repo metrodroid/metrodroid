@@ -32,8 +32,8 @@ function download_sdk {
         fi
     fi
 
-    mkdir -p "${ANDROID_HOME}"
-    unzip -qq -n "${SDK_ZIP}" -d "${ANDROID_HOME}"
+    mkdir -p "${ANDROID_SDK_ROOT}"
+    unzip -qq -n "${SDK_ZIP}" -d "${ANDROID_SDK_ROOT}"
     return $?
 }
 
