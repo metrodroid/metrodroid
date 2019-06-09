@@ -6,7 +6,10 @@ SDKMANAGER="${ANDROID_SDK_ROOT}/tools/bin/sdkmanager"
 EMULATOR="${ANDROID_SDK_ROOT}/emulator/emulator"
 
 function android_install {
+    OUTF="$(tmpfile)"
     echo "** Installing SDK package(s):" "$@"
-    echo y | ${SDKMANAGER} "$@" | tail
-    return $?
+    echo y | ${SDKMANAGER} "$@" > "$OUTF"
+    RET=$?
+    tail "$OUTF"
+    return $RET
 }
