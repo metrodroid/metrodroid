@@ -52,12 +52,13 @@ cache:
     - $HOME/android-sdk/fonts
     - $HOME/android-sdk/licenses
     - $HOME/android-sdk/patcher
-    - $HOME/android-sdk/platform-tools
     - $HOME/android-sdk/platforms/android-$ANDROID_API
     - $HOME/android-sdk/tools
 
+    # Android test environment.
     # Travis keeps a cache per environment, so lets cache emulators!
     - $HOME/android-sdk/emulator
+    - $HOME/android-sdk/platform-tools
     - $HOME/android-sdk/system-images/android-$EMULATOR_API/default/$EMULATOR_ARCH
 
 install:
