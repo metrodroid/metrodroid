@@ -7,7 +7,13 @@ env:
     - ANDROID_BUILD_TOOLS=28.0.3
     - EMULATOR_ARCH=armeabi-v7a
     - ANDROID_SDK_ROOT=$HOME/android-sdk
+
+    # Pointless in CI.
     - QEMU_AUDIO_DRV=none
+
+    # Disable the daemon -- we only run Gradle once. This ensures that all of its files are
+    # properly unlocked for caching.
+    - GRADLE_OPTS=-Dorg.gradle.daemon=false
 
 jobs:
   include:
@@ -37,7 +43,10 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
-    # Selectively cache parts of the SDK
+    # Selectively cache the installed Android SDK.
+    # Contrary to Travis CI's docs, the slow part is "installing" (particularly scanning remote
+    # repositories). This turns "installing the SDK" into a very simple download and extract
+    # operation (much simpler than what sdkmanager does).
     - $HOME/android-sdk/build-tools/$ANDROID_BUILD_TOOLS
     - $HOME/android-sdk/extras
     - $HOME/android-sdk/fonts
@@ -46,6 +55,10 @@ cache:
     - $HOME/android-sdk/platform-tools
     - $HOME/android-sdk/platforms/android-$ANDROID_API
     - $HOME/android-sdk/tools
+
+    # Travis keeps a cache per environment, so lets cache emulators!
+    - $HOME/android-sdk/emulator
+    - $HOME/android-sdk/system-images/android-$EMULATOR_API/default/$EMULATOR_ARCH
 
 install:
   - ./.travis/install_android_sdk.sh
