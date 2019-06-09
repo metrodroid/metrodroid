@@ -52,4 +52,3 @@ android_install \
     "platforms;android-${ANDROID_API}" \
     "extras;android;m2repository" \
     "extras;google;m2repository"
-

@@ -4,6 +4,7 @@
 source ./.travis/utils.sh
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};default;${EMULATOR_ARCH}"
+EMULATOR_DIR="${ANDROID_SDK_ROOT}/system-images/android-${EMULATOR_API}/default/${EMULATOR_ARCH}"
 
 android_install \
     "platform-tools" \
@@ -15,6 +16,16 @@ $ADB start-server
 
 echo "** AVDs targets:"
 ${AVDMANAGER} list
+
+echo "** Possibly fixing broken images..."
+if ! [[ -e "${EMULATOR_DIR}/kernel-ranchu" ]]
+then
+    ln -v "${EMULATOR_DIR}/kernel-qemu" "${EMULATOR_DIR}/kernel-ranchu"
+fi
+if ! [[ -e "${EMULATOR_DIR}/kernel-qemu" ]]
+then
+    ln -v "${EMULATOR_DIR}/kernel-ranchu" "${EMULATOR_DIR}/kernel-qemu"
+fi
 
 echo "** Platform files:"
 ls -laR "${ANDROID_SDK_ROOT}/system-images"
