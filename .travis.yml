@@ -36,6 +36,16 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
+    # Selectively cache parts of the SDK
+    - $HOME/android-sdk/build-tools/$ANDROID_BUILD_TOOLS
+    - $HOME/android-sdk/extras
+    - $HOME/android-sdk/fonts
+    - $HOME/android-sdk/licenses
+    - $HOME/android-sdk/patcher
+    - $HOME/android-sdk/platform-tools
+    - $HOME/android-sdk/platforms/android-$ANDROID_API
+    - $HOME/android-sdk/tools
+
 install:
   - ./.travis/install_android_sdk.sh
   - ./.travis/install_android_emulator.sh
