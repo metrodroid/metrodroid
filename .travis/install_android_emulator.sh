@@ -6,7 +6,7 @@ source ./.travis/utils.sh
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};default;${EMULATOR_ARCH}"
 
 android_install \
-    "platform-tools"
+    "platform-tools" \
     "emulator" \
     "${EMULATOR_TARGET}"
 
