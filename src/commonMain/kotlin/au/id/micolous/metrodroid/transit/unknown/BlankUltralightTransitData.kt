@@ -114,7 +114,7 @@ class BlankUltralightTransitData : BlankTransitData() {
                                 continue
                         }
 
-                        if (idx <= pages.size - 2) {
+                        if (idx == pages.size - 2) {
                             // PWD (always masked)
                             // PACK / RFUI
                             continue
