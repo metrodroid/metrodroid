@@ -16,6 +16,9 @@ $ADB start-server
 echo "** AVDs targets:"
 ${AVDMANAGER} list
 
+echo "** Platform files:"
+ls -laR "${ANDROID_SDK_ROOT}/system-images"
+
 echo "** Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
 # Do you wish to create a custom hardware profile? [no]
 echo "no" | ${AVDMANAGER} create avd -n emu -k "${EMULATOR_TARGET}" -f
