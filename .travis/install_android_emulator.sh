@@ -23,9 +23,6 @@ $AVDMANAGER list
 echo "** Platform files:"
 ls -laR "${ANDROID_SDK_ROOT}/system-images"
 
-echo "** Emulator files:"
-ls -laR "${ANDROID_SDK_ROOT}/emulator"
-
 check_exists "$EMULATOR"
 check_exists "$EMULATOR_DIR"
 check_exists "$EMULATOR_DIR/system.img"
