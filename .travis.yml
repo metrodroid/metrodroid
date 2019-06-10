@@ -3,10 +3,24 @@ jdk: oraclejdk8
 
 env:
   global:
+    # Android SDK tools package to use
+    - SDK_URL=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+    - SDK_SHA256=92ffee5a1d98d856634e8b71132e8a95d96c83a63fde1099be3d86df3106def9
+
+    # Android compile targets
     - ANDROID_API=28
     - ANDROID_BUILD_TOOLS=28.0.3
+
+    # EMULATOR
     - EMULATOR_ARCH=armeabi-v7a
+    - EMULATOR_FLAVOUR=default
+
+    # These are all constants -- you shouldn't need to update these.
     - ANDROID_SDK_ROOT=$HOME/android-sdk
+    - ADB=$ANDROID_SDK_ROOT/platform-tools/adb
+    - AVDMANAGER=$ANDROID_SDK_ROOT/tools/bin/avdmanager
+    - SDKMANAGER=$ANDROID_SDK_ROOT/tools/bin/sdkmanager
+    - EMULATOR=$ANDROID_SDK_ROOT/emulator/emulator
 
     # Pointless in CI.
     - QEMU_AUDIO_DRV=none
@@ -35,7 +49,7 @@ jobs:
     - env: EMULATOR_API=18
     # Disabled due to https://issuetracker.google.com/issues/134845202
     # - env: EMULATOR_API=21
-    - env: EMULATOR_API=23
+    - env: EMULATOR_API=21 EMULATOR_FLAVOUR=google_apis
     - env: EMULATOR_API=24
     - env: EMULATOR_API=24 EMULATOR_ARCH=arm64-v8a
     # Not available in vanilla flavour
