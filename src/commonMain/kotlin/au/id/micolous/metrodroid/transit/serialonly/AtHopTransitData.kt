@@ -50,6 +50,8 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
                 name = NAME,
                 locationId = R.string.location_auckland,
                 cardType = CardType.MifareDesfire,
+                imageId = R.drawable.athopcard,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun getSerial(card: DesfireCard) =
