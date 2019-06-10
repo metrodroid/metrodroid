@@ -54,6 +54,8 @@ data class PisaTransitData(val calypso: Calypso1545TransitDataCapsule) : Calypso
                 name = NAME,
                 locationId = R.string.location_pisa,
                 cardType = CardType.ISO7816,
+                imageId = R.drawable.cartamobile,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 preview = true)
 
         private val TICKETING_ENV_FIELDS = En1545Container(
