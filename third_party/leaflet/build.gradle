@@ -32,3 +32,8 @@ android {
     sourceSets.main.assets.srcDirs = ['build/assets/']
 }
 
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
