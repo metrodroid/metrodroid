@@ -17,7 +17,6 @@ function check_exists {
 }
 
 function android_install {
-    check_exists "$SDKMANAGER"
     echo "** Installing SDK package(s):" "$@"
     echo y | ${SDKMANAGER} "$@" > /dev/null
     return $?

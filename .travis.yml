@@ -31,17 +31,18 @@ env:
 
 jobs:
   include:
-    # This only runs "assemble", which compiles the code. This is normally fast -- and allows
-    # quick feedback in case of compiler errors (before running the more expensive test cases).
+    # This only runs "assemble", which compiles the code and runs non-Android unit tests. This is
+    # normally fast -- and allows quick feedback in case of compiler errors (before running the
+    # more expensive test cases).
     #
     # This is run in parallel (debug + dev + release)
-    - stage: assemble
+    - stage: assemble and unit test
       install: ./.travis/install_android_sdk.sh
-      script: ./gradlew assembleDebug
+      script: ./gradlew assembleDebug testDebugUnitTest
     - install: ./.travis/install_android_sdk.sh
-      script: ./gradlew assembleDev
+      script: ./gradlew assembleDev testDevUnitTest
     - install: ./.travis/install_android_sdk.sh
-      script: ./gradlew assembleRelease
+      script: ./gradlew assembleRelease testReleaseUnitTest
 
     # This runs the full test suite, including using the Android emulator.
     - stage: test
