@@ -41,6 +41,8 @@ private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_cadiz,
         cardType = CardType.MifareClassic,
+        imageId = R.drawable.cadizcard,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
         keysRequired = true)
 
 private fun getSerial(card: ClassicCard) = card[0,0].data.byteArrayToLongReversed(0, 4)
