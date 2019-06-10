@@ -1,6 +1,7 @@
 #!/bin/bash
 # Originally written by Ralf Kistner <ralf@embarkmobile.com>, but placed in the public domain
 source ./.travis/utils.sh
+check_exists "$ADB"
 
 bootanim=""
 failcounter=0
