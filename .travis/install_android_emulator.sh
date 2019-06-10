@@ -5,7 +5,7 @@ source ./.travis/utils.sh
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};${EMULATOR_FLAVOUR};${EMULATOR_ARCH}"
 EMULATOR_DIR="${ANDROID_SDK_ROOT}/system-images/android-${EMULATOR_API}/${EMULATOR_FLAVOUR}/${EMULATOR_ARCH}"
-AVD_NAME="emu${RANDOM}""
+AVD_NAME="emu${RANDOM}"
 
 android_install \
     "emulator" \
