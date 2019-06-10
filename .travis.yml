@@ -37,7 +37,7 @@ jobs:
     # - env: EMULATOR_API=21
     - env: EMULATOR_API=23
     - env: EMULATOR_API=24
-    - env: EMULATOR_API=24 EMULATOR_ARCH=arm-v8a
+    - env: EMULATOR_API=24 EMULATOR_ARCH=arm64-v8a
     # Not available in vanilla flavour
     # - env: EMULATOR_API=27
 
