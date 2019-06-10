@@ -315,3 +315,9 @@ repositories {
 configurations {
     compileClasspath
 }
+
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}

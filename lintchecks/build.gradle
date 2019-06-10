@@ -20,3 +20,9 @@ jar {
         attributes("Lint-Registry-v2": "au.id.micolous.metrodroid.lintchecks.MetrodroidIssueRegistry")
     }
 }
+
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
