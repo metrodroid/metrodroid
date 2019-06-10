@@ -56,9 +56,14 @@ jobs:
     # Not available in vanilla flavour
     # - env: EMULATOR_API=27
 
-# Android caching
 before_cache:
+  # Gradle, general files
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+
+  # Gradle, version-specific files
+  - rm -fr $HOME/.gradle/caches/*/executionHistory/
+  - rm -f  $HOME/.gradle/caches/*/fileHashes/fileHashes.lock
+  - rm -f  $HOME/.gradle/caches/*/javaCompile/javaCompile.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
