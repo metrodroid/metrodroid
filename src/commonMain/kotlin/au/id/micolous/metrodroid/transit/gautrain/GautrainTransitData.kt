@@ -40,6 +40,8 @@ private const val NAME = "Gautrain"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_gauteng,
+        imageId = R.drawable.gautrain,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
         keysRequired = true)
 
