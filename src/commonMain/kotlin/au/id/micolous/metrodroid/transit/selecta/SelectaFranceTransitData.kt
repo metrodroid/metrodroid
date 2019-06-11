@@ -48,6 +48,7 @@ data class SelectaFranceTransitData(private val mBalance: Int,
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_france,
+                imageId = R.drawable.selecta,
                 cardType = CardType.MifareClassic,
                 preview = true)
 
