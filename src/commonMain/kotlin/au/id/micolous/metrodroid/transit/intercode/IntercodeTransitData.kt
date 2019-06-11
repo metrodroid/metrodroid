@@ -60,6 +60,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val TISSEO_CARD_INFO = CardInfo(
                 name = "Pastel",
                 locationId = R.string.location_toulouse,
+                imageId = R.drawable.pastel,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 
