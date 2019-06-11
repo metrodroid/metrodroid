@@ -76,6 +76,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
 
         private val NAVIGO_CARD_INFO = CardInfo(
                 name = "Navigo",
+                imageId = R.drawable.navigo,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 locationId = R.string.location_paris,
                 cardType = CardType.ISO7816)
 
