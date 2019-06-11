@@ -123,6 +123,7 @@ data class RkfTransitData internal constructor(
                         name = "SLaccess",
                         locationId = R.string.location_stockholm,
                         cardType = CardType.MifareClassic,
+                        imageId = R.drawable.slaccess,
                         keysRequired = true,
                         preview = true),
                 RkfLookup.REJSEKORT to CardInfo(
