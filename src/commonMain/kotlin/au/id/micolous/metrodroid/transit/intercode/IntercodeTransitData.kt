@@ -85,6 +85,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
 
         private val ENVIBUS_CARD_INFO = CardInfo(
                 name = "Envibus",
+                imageId = R.drawable.envibus,
+                imageAlphaId = R.drawable.envibus_alpha,
                 locationId = R.string.location_sophia_antipolis,
                 cardType = CardType.ISO7816)
 

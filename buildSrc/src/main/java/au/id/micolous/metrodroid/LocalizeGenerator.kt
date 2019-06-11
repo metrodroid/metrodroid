@@ -41,7 +41,7 @@ object LocalizeGenerator {
             "cartamobile", "gautrain", "komuterlink", "metroq", "metromoney", "navigo",
             "nol", "rejsekort", "slaccess", "ricaricami", "otagogocard", "pastel", "rotorua",
             "suncard", "tampere", "tartu", "krasnodar_etk", "samara_etk", "samara_school", "yaroslavl_etk",
-            "beijing")
+            "beijing", "envibus", "envibus_alpha")
     
     const val pkg = "au.id.micolous.metrodroid.multi"
     const val androidR = "au.id.micolous.farebot.R"
