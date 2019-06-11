@@ -68,6 +68,8 @@ class MetroQTransitData (private val mSerial: Long,
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_houston,
+                imageId = R.drawable.metroq,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
                 preview = true)
