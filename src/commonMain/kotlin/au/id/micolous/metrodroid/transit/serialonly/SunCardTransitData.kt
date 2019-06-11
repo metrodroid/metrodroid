@@ -58,6 +58,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
                 locationId = R.string.location_orlando,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_card_number_only,
+                imageId = R.drawable.suncard,
                 keysRequired = true,
                 preview = true)
 
