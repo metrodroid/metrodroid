@@ -56,6 +56,8 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
 
         private val CARD_INFO = CardInfo(
                 name = "Lisboa Viva", // The card is literally branded like this.
+                imageId = R.drawable.lisboaviva,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 locationId = R.string.location_lisbon,
                 cardType = CardType.ISO7816,
                 preview = true)
