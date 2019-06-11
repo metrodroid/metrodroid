@@ -56,6 +56,8 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_milan,
+                imageId = R.drawable.ricaricami,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
                 preview = true)
