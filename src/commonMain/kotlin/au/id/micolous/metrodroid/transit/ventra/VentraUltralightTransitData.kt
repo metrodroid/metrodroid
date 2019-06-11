@@ -50,6 +50,7 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
         private val CARD_INFO = CardInfo(
                 name = VentraUltralightTransitData.NAME,
                 locationId = R.string.location_chicago,
+                imageId = R.drawable.ventra,
                 cardType = CardType.MifareUltralight,
                 resourceExtraNote = R.string.compass_note)
 
