@@ -185,6 +185,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         private val FALLBACK_CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_zolotaya_korona),
                 locationId = R.string.location_russia,
+                imageId = R.drawable.zolotayakorona,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
                 preview = true)
