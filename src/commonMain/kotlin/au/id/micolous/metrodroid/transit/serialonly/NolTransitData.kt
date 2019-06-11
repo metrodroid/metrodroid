@@ -52,6 +52,7 @@ data class NolTransitData (private val mSerial: Int?, private val mType: Int?): 
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_dubai,
+                imageId = R.drawable.nol,
                 cardType = CardType.MifareDesfire,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
