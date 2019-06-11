@@ -141,6 +141,8 @@ class TampereTransitData (
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_tampere,
+                imageId = R.drawable.tampere,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareDesfire)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
