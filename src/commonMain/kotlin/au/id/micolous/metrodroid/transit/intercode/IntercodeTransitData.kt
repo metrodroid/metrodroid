@@ -74,6 +74,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val OURA_CARD_INFO = CardInfo(
                 name = "OùRA",
                 locationId = R.string.location_grenoble,
+                imageId = R.drawable.oura,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816)
 
         private val NAVIGO_CARD_INFO = CardInfo(
