@@ -68,6 +68,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val TRANSGIRONDE_CARD_INFO = CardInfo(
                 name = "TransGironde",
                 locationId = R.string.location_gironde,
+                imageId = R.drawable.transgironde,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 
