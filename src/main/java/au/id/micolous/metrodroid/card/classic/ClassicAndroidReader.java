@@ -58,7 +58,12 @@ public final class ClassicAndroidReader {
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
 
     static {
+        // Devices which do **not** declare "com.nxp.mifare" feature, but have an NXP NFC chipset.
+        // Google
         devicesMifareWorks.add("Pixel 2");
+        devicesMifareWorks.add("Pixel 3a");
+
+        // Oppo
         devicesMifareWorks.add("Find7");
     }
 
