@@ -29,15 +29,6 @@ object LocalizeGenerator {
     val strings = mutableMapOf<String, String>()
 
     val plurals = mutableMapOf<String, Pair<String, String>>()
-
-    val drawables = listOf("opus_card", "ravkav_card", "mobib_card", "iso7810_id1_alpha",
-            "ezlink_card", "nets_card", "tmoney_card", "szt_card", "octopus_card", "octopus_card_alpha",
-            "icoca_card", "suica_card", "pasmo_card", "istanbulkart_card", "myki_card", "strelka_card",
-            "trimethop_card", "edy_card", "kmt_card", "ovchip_card", "orca_card", "opal_card", "clipper_card",
-            "hsl_card", "leap_card", "tpe_easy_card", "charlie_card", "bilheteunicosp_card",
-            "bilheteunicosp_card_alpha", "yvr_compass_card", "troika_card", "seqgo_card_alpha", "podorozhnik_card",
-            "smartrider_card", "myway_card", "seqgo_card", "msp_goto_card", "laxtap_card",
-            "manly_fast_ferry_card", "chc_metrocard")
     
     const val pkg = "au.id.micolous.metrodroid.multi"
     const val androidR = "au.id.micolous.farebot.R"
@@ -54,6 +45,7 @@ object LocalizeGenerator {
     
     private fun writeRfile(outputDir: File, flavour: String,
                            keyword: String,
+                           drawables: List<String>,
                            transform: (name: String, type: String) -> String) {
         val writer = makeRFile(outputDir, flavour)
         writer.write("package $pkg\n")
@@ -133,17 +125,18 @@ object LocalizeGenerator {
         }
     }
 
-    fun generateLocalize(outputDir: File, stringsFile: File) {
+    fun generateLocalize(outputDir: File, stringsFile: File, drawablesDirs: List<File>) {
         readStringsXml(stringsFile)
-        writeRfile(outputDir, "commonMain", "expect") {
+        val drawables = drawablesDirs.flatMap { it.list().toList() }.map { it.substringBefore(".") }
+        writeRfile(outputDir, "commonMain", "expect", drawables) {
             name, type -> "val $name: ${typeName(type)}" }
-        writeRfile(outputDir, "androidMain", "actual") { name, type -> "actual val $name = $androidR.$type.$name" }
-        writeFallbackRFile(outputDir, "chromeosMain")
-        writeFallbackRFile(outputDir, "jvmCliMain")
+        writeRfile(outputDir, "androidMain", "actual", drawables) { name, type -> "actual val $name = $androidR.$type.$name" }
+        writeFallbackRFile(outputDir, "chromeosMain", drawables)
+        writeFallbackRFile(outputDir, "jvmCliMain", drawables)
     }
 
-    private fun writeFallbackRFile(outputDir: File, flavour: String) {
-        writeRfile(outputDir, flavour, "actual") { name, type ->
+    private fun writeFallbackRFile(outputDir: File, flavour: String, drawables: List<String>) {
+        writeRfile(outputDir, flavour, "actual", drawables) { name, type ->
             when (type) {
                 "string" -> "actual val $name = ${typeName(type)}(\"$name\", \"${escape(strings[name]!!)}\")"
                 "plurals" -> "actual val $name = ${typeName(type)}(\"$name\", \"${escape(plurals[name]!!.first)}\", \"${escape(plurals[name]!!.second)}\")"

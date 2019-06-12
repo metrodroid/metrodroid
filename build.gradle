@@ -42,11 +42,17 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
 
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
+def drawableDir = new File(projectDir, "src/main/res/drawable")
+def drawableHdpiDir = new File(projectDir, "src/main/res/drawable-hdpi")
 def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
 
 task generateLocalize {
+    inputs.file stringsXmlFile
+    inputs.dir drawableDir
+    inputs.dir drawableHdpiDir
+    outputs.dir generatedLocalizeDir
     doLast {
-        LocalizeGenerator.INSTANCE.generateLocalize(generatedLocalizeDir, stringsXmlFile)
+        LocalizeGenerator.INSTANCE.generateLocalize(generatedLocalizeDir, stringsXmlFile, [drawableDir, drawableHdpiDir])
     }
 }
 
