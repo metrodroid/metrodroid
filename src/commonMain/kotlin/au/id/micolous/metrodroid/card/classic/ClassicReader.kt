@@ -109,7 +109,7 @@ object ClassicReader {
                 var sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKey))
 
                 // If we used keyA and it wasn't enough try finding B
-                if (sector.key?.type == ClassicSectorKey.KeyType.A
+                if (sector.keyA?.type == ClassicSectorKey.KeyType.A
                         && sector.blocks.any { it.isUnauthorized }) {
                     val correctKeyB = auth.authenticate(
                             tech, feedbackInterface,
@@ -120,7 +120,7 @@ object ClassicReader {
                         sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyB, extraKey = correctKey))
                     // In cases of readable keyB, tag shouldn't succeed auth at all
                     // yet some clones succeed auth but then fail to read any blocks.
-                } else if (sector.key?.type == ClassicSectorKey.KeyType.B
+                } else if (sector.keyB?.type == ClassicSectorKey.KeyType.B
                         && sector.blocks.all { it.isUnauthorized }) {
                     val correctKeyA = auth.authenticate(
                             tech, feedbackInterface,

@@ -50,8 +50,13 @@ class ClassicSectorValid(override val raw: ClassicSectorRaw) : ClassicSector() {
 
     override fun getRawData(idx: Int): ListItem {
         val sectorIndex = idx.hexString
-        val keyStr = Localizer.localizeString(R.string.classic_key_format,
-                key?.key?.toHexString())
+        val keyStrA = keyA?.key?.let { Localizer.localizeString(R.string.classic_key_format_a, it.toHexString()) }
+        val keyStrB = keyB?.key?.let { Localizer.localizeString(R.string.classic_key_format_b, it.toHexString()) }
+        val keyStr = when {
+            keyStrA != null && keyStrB != null -> "$keyStrA, $keyStrB"
+            keyStrA != null -> keyStrA
+            else -> keyStrB
+        }
         val bli = mutableListOf<ListItem>()
         for ((blockidx, block) in blocks.withIndex()) {
             if (block.isUnauthorized)

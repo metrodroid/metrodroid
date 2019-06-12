@@ -202,10 +202,8 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
                 get() = listOf(CARD_INFO)
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                val key = sectors[4].key
-
                 Log.d(TAG, "Checking for Podorozhnik key...")
-                return HashUtils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0
+                return HashUtils.checkKeyHash(sectors[4], KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0
             }
 
             override fun parseTransitIdentity(card: ClassicCard) =

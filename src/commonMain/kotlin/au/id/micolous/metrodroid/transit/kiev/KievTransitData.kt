@@ -78,7 +78,7 @@ class KievTransitData (private val mSerial: String,
                 get() = listOf(CARD_INFO)
 
             override fun earlyCheck(sectors: List<ClassicSector>) =
-                    HashUtils.checkKeyHash(sectors[1].key, "kiev",
+                    HashUtils.checkKeyHash(sectors[1], "kiev",
                         "902a69a9d68afa1ddac7b61a512f7d4f") >= 0
 
             override fun parseTransitIdentity(card: ClassicCard) =

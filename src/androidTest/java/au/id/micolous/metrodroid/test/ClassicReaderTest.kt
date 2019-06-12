@@ -107,7 +107,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
                 blockOffset++
             }
 
-            val key = sec.key!!
+            val key = (sec.keyA ?: sec.keyB)!!
 
             assertTrue(message = "$addMsg: KeyType must be A or B",
                     actual = key.type == ClassicSectorKey.KeyType.A

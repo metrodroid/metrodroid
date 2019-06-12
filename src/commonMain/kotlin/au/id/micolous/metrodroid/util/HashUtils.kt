@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.util
 
+import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
 
@@ -77,6 +78,15 @@ object HashUtils {
         if (key == null)
             return -1
         return checkKeyHash(key.key, salt, *expectedHashes)
+    }
+
+    fun checkKeyHash(key: ClassicSector?, salt: String, vararg expectedHashes: String): Int {
+        if (key == null)
+            return -1
+        val a = checkKeyHash(key.keyA, salt, *expectedHashes)
+        if (a != -1)
+            return a
+        return checkKeyHash(key.keyB, salt, *expectedHashes)
     }
 
     private const val TAG = "HashUtils"

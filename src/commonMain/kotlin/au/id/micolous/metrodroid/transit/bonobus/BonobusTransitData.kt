@@ -116,7 +116,7 @@ object BonobusTransitFactory : ClassicCardTransitFactory {
     }
 
     override fun earlyCheck(sectors: List<ClassicSector>) =
-            HashUtils.checkKeyHash(sectors[0].key, "cadiz",
+            HashUtils.checkKeyHash(sectors[0], "cadiz",
                     // KeyB is readable and so doesn't act as a key
                     "cc2f0d405a4968f95100f776161929f6") >= 0
 
