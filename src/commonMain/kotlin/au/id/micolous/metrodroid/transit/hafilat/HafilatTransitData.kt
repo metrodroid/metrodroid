@@ -134,6 +134,8 @@ class HafilatTransitData (
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_abu_dhabi,
+                imageId = R.drawable.hafilat,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareDesfire,
                 resourceExtraNote = R.string.card_note_adelaide,
                 preview = true)
