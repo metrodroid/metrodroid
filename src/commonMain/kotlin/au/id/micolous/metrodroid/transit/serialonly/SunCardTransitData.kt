@@ -59,7 +59,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_card_number_only,
                 imageId = R.drawable.suncard,
-                keysRequired = true,
+                keysRequired = false,
                 preview = true)
 
         private fun formatSerial(serial: Int) = serial.toString()
