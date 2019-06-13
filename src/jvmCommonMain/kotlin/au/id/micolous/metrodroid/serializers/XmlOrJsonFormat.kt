@@ -6,7 +6,6 @@ import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 import java.io.PushbackInputStream
-import org.apache.commons.io.IOUtils
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
@@ -36,7 +35,7 @@ class XmlOrJsonCardFormat : CardImporter {
         val pb = PushbackInputStream(stream)
         when (peek(pb)) {
             '<' -> return iterateXmlCards(pb) { readCard(it) }
-            '[', '{' -> return listOf(jsonKotlinFormat.readCard(IOUtils.toString(pb, Charsets.UTF_8))).iterator()
+            '[', '{' -> return listOf(jsonKotlinFormat.readCard(pb.bufferedReader().readText())).iterator()
             'P' -> return readZip(pb)
             else -> return null
         }
@@ -71,7 +70,7 @@ class XmlOrJsonCardFormat : CardImporter {
             (ze, zi) ->
             Log.d("Importer", "Importing ${ze.name}")
             when {
-                ze.name.endsWith(".json") -> jsonKotlinFormat.readCard(IOUtils.toString(zi, Charsets.UTF_8))
+                ze.name.endsWith(".json") -> jsonKotlinFormat.readCard(zi.bufferedReader().readText())
                 ze.name.endsWith(".xml") -> readCardXML(zi)
                 ze.name.endsWith(".mfc") -> mfcFormat.readCard(zi)
                 else -> null
@@ -83,7 +82,7 @@ class XmlOrJsonCardFormat : CardImporter {
         val pb = PushbackInputStream(stream)
         if (peek(pb) == '<')
             return readCardXML(pb)
-        return jsonKotlinFormat.readCard(IOUtils.toString(pb, Charsets.UTF_8))
+        return jsonKotlinFormat.readCard(pb.bufferedReader().readText())
     }
 
     override fun readCard(input: String): Card {

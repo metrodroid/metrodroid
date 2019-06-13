@@ -61,7 +61,6 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.Preferences
-import org.apache.commons.io.FileUtils
 import org.jetbrains.annotations.NonNls
 
 import java.io.File
@@ -291,7 +290,7 @@ class CardsFragment : ExpandableListFragment() {
                         startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
                     } else {
                         val file = File(SD_EXPORT_PATH)
-                        ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), activity!!)
+                        ExportHelper.exportCardsZip(file.outputStream(), activity!!)
                         Toast.makeText(activity, R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show()
                     }
                     return true

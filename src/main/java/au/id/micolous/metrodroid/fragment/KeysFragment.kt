@@ -53,7 +53,6 @@ import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.serialization.json.JsonObject
-import org.apache.commons.io.IOUtils
 import org.jetbrains.annotations.NonNls
 import org.json.JSONException
 
@@ -72,6 +71,7 @@ import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.toUtf8Bytes
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private var mActionMode: ActionMode? = null
@@ -287,7 +287,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
                                 val json = keys.toJSON().toString()
 
-                                IOUtils.write(json, os, Utils.UTF8)
+                                os.write(json.toUtf8Bytes())
                                 os.close()
                                 return null
 
@@ -387,7 +387,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         @Throws(IOException::class)
         private fun importKeysFromStaticJSON(activity: Activity, uri: Uri): Int {
             val stream = activity.contentResolver.openInputStream(uri) ?: return R.string.key_file_empty
-            val keyData = IOUtils.toByteArray(stream)
+            val keyData = stream.readBytes()
 
             try {
                 val json = Json.plain.parseJson(String(keyData, Utils.UTF8))

@@ -34,11 +34,12 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 
+import kotlinx.serialization.toUtf8Bytes
+
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.util.*
-import org.apache.commons.io.IOUtils
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.Card
@@ -173,10 +174,10 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                     REQUEST_SAVE_FILE -> {
                         val uri: Uri? = data?.data
                         Log.d(TAG, "REQUEST_SAVE_FILE")
-                        val os = contentResolver.openOutputStream(uri!!)
+                        val os = contentResolver.openOutputStream(uri!!)!!
                         val json = CardSerializer.toJson(mCard!!)
-                        IOUtils.write(json, os, Utils.UTF8)
-                        os!!.close()
+                        os.write(json.toUtf8Bytes())
+                        os.close()
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
                     }
                 }
