@@ -55,6 +55,8 @@ class ClassicStaticKeys private constructor(override val description: String?,
         })
     }
 
+    val allBundles get() = keys.values.flatten().map { it.bundle }.toSet()
+
     override val type = CardKeys.TYPE_MFC_STATIC
 
     override val uid = CardKeys.CLASSIC_STATIC_TAG_ID

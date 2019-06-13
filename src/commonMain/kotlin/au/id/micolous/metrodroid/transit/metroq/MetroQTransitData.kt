@@ -71,7 +71,7 @@ class MetroQTransitData (private val mSerial: Long,
                 imageId = R.drawable.metroq,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
-                keysRequired = true,
+                keysRequired = true, keyBundle = "metroq",
                 preview = true)
 
         private fun parseTimestamp(data: ImmutableByteArray, off: Int): Timestamp {

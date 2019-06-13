@@ -24,6 +24,7 @@
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
         <item name="CardIdTextColor">@color/Metrodroid.Dark.CardIdTextColor</item>
@@ -37,6 +38,7 @@
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
     </style>
 
@@ -63,6 +65,7 @@
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="MainActivityTheme">@style/Metrodroid.Light</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
@@ -76,6 +79,7 @@
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
     </style>
 
@@ -106,6 +110,7 @@
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
         <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>

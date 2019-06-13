@@ -168,6 +168,7 @@
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
+    <string name="keys_loaded">Encryption keys for this card are loaded.</string>
     <string name="load_keys">Load Keys</string>
     <string name="card_keys_not_supported">Metrodroid does not support keys for this type of card.</string>
     <string name="add_key">Add Key</string>

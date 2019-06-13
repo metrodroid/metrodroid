@@ -56,7 +56,7 @@ class KievTransitData (private val mSerial: String,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_kiev,
-                keysRequired = true, preview = true)
+                keysRequired = true, preview = true, keyBundle = "kiev")
 
         private fun parseTrips(card: ClassicCard): List<KievTrip> =
                 (0..5).map { card.getSector(3 + it / 3).getBlock(it % 3).data }
