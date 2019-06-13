@@ -88,6 +88,8 @@ class TartuTransitFactory : ClassicCardTransitFactory {
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 cardType = CardType.MifareClassic,
+                imageId = R.drawable.tartu,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 locationId = R.string.location_tartu,
                 resourceExtraNote = R.string.card_note_card_number_only)
 

@@ -134,6 +134,7 @@ class AdelaideMetrocardTransitData (
                 name = NAME,
                 locationId = R.string.location_adelaide,
                 cardType = CardType.MifareDesfire,
+                imageId = R.drawable.adelaide,
                 resourceExtraNote = R.string.card_note_adelaide,
                 preview = true)
 

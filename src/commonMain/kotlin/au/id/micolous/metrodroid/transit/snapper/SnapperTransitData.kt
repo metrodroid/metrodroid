@@ -52,6 +52,8 @@ class SnapperTransitData : TMoneyTransitData {
         val CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_snapper),
                 locationId = R.string.location_wellington_nz,
+                imageId = R.drawable.snapperplus,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true
         )

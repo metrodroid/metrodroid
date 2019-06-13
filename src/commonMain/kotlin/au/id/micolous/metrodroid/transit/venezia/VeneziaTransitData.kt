@@ -69,6 +69,8 @@ class VeneziaTransitData (val calypso: Calypso1545TransitDataCapsule) : Calypso1
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_venezia,
+                imageId = R.drawable.veneziaunica,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 

@@ -64,6 +64,8 @@ class BeijingTransitData (val validityStart: Int?,
         private val CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_beijing),
                 locationId = R.string.location_beijing,
+                imageId = R.drawable.beijing,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 

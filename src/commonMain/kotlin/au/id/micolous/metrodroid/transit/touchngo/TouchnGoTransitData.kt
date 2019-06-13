@@ -40,6 +40,7 @@ private const val NAME = "Touch 'n Go"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_malaysia,
+        imageId = R.drawable.touchngo,
         cardType = CardType.MifareClassic,
         keysRequired = true)
 

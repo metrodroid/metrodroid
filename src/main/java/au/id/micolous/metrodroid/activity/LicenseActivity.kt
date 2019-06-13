@@ -44,6 +44,7 @@ class LicenseActivity : MetrodroidActivity() {
         val lblLicenseText = findViewById<TextView>(R.id.lblLicenseText)
         lblLicenseText.beginBatchEdit()
         readLicenseTextFromAsset(lblLicenseText, "Metrodroid-NOTICE.txt")
+        readLicenseTextFromAsset(lblLicenseText, "Logos-NOTICE.txt")
         readLicenseTextFromAsset(lblLicenseText, "third_party/leaflet/LICENSE-prefix")
         readLicenseTextFromAsset(lblLicenseText, "third_party/leaflet/LICENSE")
         readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.AOSP.txt")

@@ -52,6 +52,8 @@ class KievTransitData (private val mSerial: String,
         private val CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_kiev),
                 locationId = R.string.location_kiev,
+                imageId = R.drawable.kiev,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_kiev,
                 keysRequired = true, preview = true)

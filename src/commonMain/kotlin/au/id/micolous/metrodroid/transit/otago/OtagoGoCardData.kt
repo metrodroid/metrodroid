@@ -35,6 +35,8 @@ private const val NAME = "GoCard (Otago)"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_otago,
+        imageId = R.drawable.otagogocard,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
         keysRequired = true)
 

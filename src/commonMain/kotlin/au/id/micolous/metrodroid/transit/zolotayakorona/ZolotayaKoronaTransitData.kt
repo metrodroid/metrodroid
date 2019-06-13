@@ -140,30 +140,39 @@ data class ZolotayaKoronaTransitData internal constructor(
                 0x230100 to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_krasnodar_etk),
                         locationId = R.string.location_krasnodar,
+                        imageId = R.drawable.krasnodar_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
                         keysRequired = true,
                         preview = true),
                 0x631500 to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_samara_school),
                         locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_school,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
                         keysRequired = true,
                         preview = true),
                 0x632600 to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_samara_etk),
                         locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
                         keysRequired = true,
                         preview = true),
                 0x632700 to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_samara_student),
                         locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_student,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
                         keysRequired = true,
                         preview = true),
                 0x760500 to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_yaroslavl_etk),
                         locationId = R.string.location_yaroslavl,
+                        imageId = R.drawable.yaroslavl_etk,
                         cardType = CardType.MifareClassic,
                         keysRequired = true,
                         preview = true)
@@ -176,6 +185,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         private val FALLBACK_CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_zolotaya_korona),
                 locationId = R.string.location_russia,
+                imageId = R.drawable.zolotayakorona,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
                 preview = true)

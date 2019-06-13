@@ -60,27 +60,37 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val TISSEO_CARD_INFO = CardInfo(
                 name = "Pastel",
                 locationId = R.string.location_toulouse,
+                imageId = R.drawable.pastel,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 
         private val TRANSGIRONDE_CARD_INFO = CardInfo(
                 name = "TransGironde",
                 locationId = R.string.location_gironde,
+                imageId = R.drawable.transgironde,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 preview = true)
 
         private val OURA_CARD_INFO = CardInfo(
                 name = "OùRA",
                 locationId = R.string.location_grenoble,
+                imageId = R.drawable.oura,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816)
 
         private val NAVIGO_CARD_INFO = CardInfo(
                 name = "Navigo",
+                imageId = R.drawable.navigo,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 locationId = R.string.location_paris,
                 cardType = CardType.ISO7816)
 
         private val ENVIBUS_CARD_INFO = CardInfo(
                 name = "Envibus",
+                imageId = R.drawable.envibus,
+                imageAlphaId = R.drawable.envibus_alpha,
                 locationId = R.string.location_sophia_antipolis,
                 cardType = CardType.ISO7816)
 

@@ -37,6 +37,8 @@ private const val NAME = "Metromoney"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_tbilisi,
+        imageId = R.drawable.metromoney,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
         keysRequired = true)
 

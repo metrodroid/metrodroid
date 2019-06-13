@@ -37,7 +37,13 @@ object LocalizeGenerator {
             "hsl_card", "leap_card", "tpe_easy_card", "charlie_card", "bilheteunicosp_card",
             "bilheteunicosp_card_alpha", "yvr_compass_card", "troika_card", "seqgo_card_alpha", "podorozhnik_card",
             "smartrider_card", "myway_card", "seqgo_card", "msp_goto_card", "laxtap_card",
-            "manly_fast_ferry_card", "chc_metrocard")
+            "manly_fast_ferry_card", "chc_metrocard", "athopcard", "cadizcard", "busitcard",
+            "cartamobile", "gautrain", "komuterlink", "metroq", "metromoney", "navigo",
+            "nol", "rejsekort", "slaccess", "ricaricami", "otagogocard", "pastel", "rotorua",
+            "suncard", "tampere", "tartu", "krasnodar_etk", "samara_etk", "samara_school", "yaroslavl_etk",
+            "beijing", "envibus", "envibus_alpha", "lisboaviva", "adelaide", "oura",
+            "samara_student", "tunion", "touchngo", "veneziaunica", "zolotayakorona",
+            "transgironde", "kiev", "ventra", "snapperplus", "wuhantong", "selecta")
     
     const val pkg = "au.id.micolous.metrodroid.multi"
     const val androidR = "au.id.micolous.farebot.R"
