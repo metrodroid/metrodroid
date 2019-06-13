@@ -98,21 +98,21 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
         return transactions.map { EZLinkTrip(it, cardName) }
     }
 
-    override fun parseTransitData(cepasCard: CEPASApplication): EZLinkTransitData {
-        val purse = cepasCard.getPurse(3) ?: return EZLinkTransitData(
+    override fun parseTransitData(card: CEPASApplication): EZLinkTransitData {
+        val purse = card.getPurse(3) ?: return EZLinkTransitData(
             serialNumber = null,
             mBalance = null,
-            trips = parseTrips(cepasCard, "CEPAS")
+            trips = parseTrips(card, "CEPAS")
         )
         val canNo = CEPASPurse(purse).can.toHexString()
         return EZLinkTransitData(
             serialNumber = canNo,
             mBalance = CEPASPurse(purse).purseBalance,
-            trips = parseTrips(cepasCard, EZLinkTransitData.getCardIssuer(canNo))
+            trips = parseTrips(card, EZLinkTransitData.getCardIssuer(canNo))
         )
     }
 
-    override fun check(cepasCard: CEPASApplication): Boolean = cepasCard.getPurse(3) != null
+    override fun check(card: CEPASApplication): Boolean = card.getPurse(3) != null
 
     override fun parseTransitIdentity(card: CEPASApplication): TransitIdentity {
         val purseRaw = card.getPurse(3) ?: return TransitIdentity("CEPAS", null)
