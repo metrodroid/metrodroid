@@ -88,8 +88,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
                 name = NAME,
                 locationId = R.string.location_brisbane_seq_australia,
                 cardType = CardType.MifareClassic,
-                keysRequired = true,
-                resourceExtraNote = R.string.card_note_seqgo)
+                keysRequired = true)
 
         val SYSTEM_CODE1 = ImmutableByteArray.fromHex(
                 "5A5B20212223"

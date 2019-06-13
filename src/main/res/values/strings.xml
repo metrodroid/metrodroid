@@ -1127,8 +1127,6 @@
     <string name="seqgo_refill_manual">Manual top-up</string>
     <string name="seqgo_refill_automatic">Automatic top-up</string>
 
-    <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
-
     <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
     IDs" is enabled in the preferences. -->
     <string name="suica_bus_area_line_stop">Bus Area %1$s Line %2$s Stop %3$s</string>

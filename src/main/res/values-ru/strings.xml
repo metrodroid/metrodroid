@@ -307,8 +307,6 @@
     <string name="seqgo_refill_manual">Ручное пополнение</string>
     <string name="seqgo_refill_automatic">Автоматическое пополнение</string>
 
-    <string name="card_note_seqgo">Карты Go Acces, Explore и SEEQ не поддерживаются.</string>
-
     <string name="nextfare_system_code">Код системы</string>
     <string name="nextfare_ticket_class">Билет с кодом класса %d</string>
 

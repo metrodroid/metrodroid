@@ -197,7 +197,6 @@
     <string name="seqgo_ticket_type_senior">Senior</string>
     <string name="seqgo_refill_manual">Recharge manuelle</string>
     <string name="seqgo_refill_automatic">Recharge automatique</string>
-    <string name="card_note_seqgo">Ne supporte pas les cartes Go Access, Explore ou SEEQ.</string>
     <string name="card_note_card_number_only">Seulement le numéro de la carte peut être lu.</string>
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>
