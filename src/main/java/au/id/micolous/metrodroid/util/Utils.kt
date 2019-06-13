@@ -32,7 +32,7 @@ import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
 import android.provider.Settings
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import android.text.TextUtils
 import android.util.Log
 import android.view.WindowManager

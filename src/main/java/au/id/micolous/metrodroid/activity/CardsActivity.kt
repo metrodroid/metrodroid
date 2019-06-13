@@ -22,7 +22,7 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 import au.id.micolous.metrodroid.fragment.CardsFragment
 

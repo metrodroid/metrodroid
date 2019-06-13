@@ -21,10 +21,10 @@
 
 package au.id.micolous.metrodroid.util
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.TransitData
@@ -111,7 +111,10 @@ actual object Preferences {
         get() = getBooleanPref(PREF_OBFUSCATE_TRIP_TIMES, false)
 
     val localisePlaces
-        get() = getBooleanPref(PREF_LOCALISE_PLACES, false)
+      get() = getBooleanPref(PREF_LOCALISE_PLACES, false)
+
+    val speakBalance
+      get() = getBooleanPref("pref_key_speak_balance", false)
 
     actual val showBothLocalAndEnglish
         get() = getBooleanPref(PREF_SHOW_LOCAL_AND_ENGLISH, false)

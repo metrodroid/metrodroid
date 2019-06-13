@@ -22,8 +22,8 @@ package au.id.micolous.metrodroid.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.ListFragment
-import android.support.v7.content.res.AppCompatResources
+import androidx.fragment.app.ListFragment
+import androidx.appcompat.content.res.AppCompatResources
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup

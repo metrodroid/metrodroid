@@ -32,10 +32,10 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.FileProvider
-import android.support.v4.content.Loader
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.CursorLoader
+import androidx.core.content.FileProvider
+import androidx.loader.content.Loader
 import android.util.Log
 import android.util.Pair
 import android.view.ContextMenu

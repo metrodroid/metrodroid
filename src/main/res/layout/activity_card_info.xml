@@ -61,17 +61,17 @@
                 android:text="@string/need_stations_submit" />
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:visibility="gone"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="fill_parent" >
-          <android.support.v4.view.PagerTabStrip
+          <androidx.viewpager.widget.PagerTabStrip
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_gravity="top"/>
-        </android.support.v4.view.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
 
         <LinearLayout
                 android:id="@+id/unauthorized_card"
