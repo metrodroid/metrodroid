@@ -60,6 +60,7 @@ public final class ClassicAndroidReader {
     static {
         // Devices which do **not** declare "com.nxp.mifare" feature, but have an NXP NFC chipset.
         // Google (both regular and XL)
+        // https://issuetracker.google.com/issues/135168804
         devicesMifareWorks.add("Pixel 2");
         devicesMifareWorks.add("Pixel 3");
         devicesMifareWorks.add("Pixel 3a");
