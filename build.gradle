@@ -17,8 +17,8 @@ buildscript {
         support_version = '28.0.0'
         android_test_version = '1.2.0'
         hamcrest_version = '1.3'
-        build_version = '28.0.3'
-        android_sdk_version = 28
+        build_version = '29.0.0'
+        android_sdk_version = 29
         android_min_version = 16
     }
     repositories {

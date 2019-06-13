@@ -40,7 +40,7 @@ class CardProvider : ContentProvider() {
     private var mDbHelper: CardDBHelper? = null
 
     override fun onCreate(): Boolean {
-        mDbHelper = CardDBHelper(context)
+        mDbHelper = CardDBHelper(context!!)
         return true
     }
 
