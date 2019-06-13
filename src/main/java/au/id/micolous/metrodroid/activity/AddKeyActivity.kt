@@ -52,7 +52,6 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 
 import kotlinx.serialization.json.JsonObject
-import org.apache.commons.io.IOUtils
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -122,7 +121,7 @@ class AddKeyActivity : MetrodroidActivity() {
 
             try {
                 val stream = contentResolver.openInputStream(intent.data!!)
-                keyData = IOUtils.toByteArray(stream!!)
+                keyData = stream!!.readBytes()
             } catch (e: IOException) {
                 Utils.showErrorAndFinish(this, e)
                 return

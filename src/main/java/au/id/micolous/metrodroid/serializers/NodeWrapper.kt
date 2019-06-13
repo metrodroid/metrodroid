@@ -6,7 +6,6 @@ import kotlinx.io.charsets.Charsets
 import kotlinx.serialization.toUtf8Bytes
 import org.w3c.dom.Node
 import javax.xml.parsers.DocumentBuilderFactory
-import org.apache.commons.io.IOUtils
 
 actual class NodeWrapper(val node: Node) {
     actual val childNodes: List<NodeWrapper>
@@ -31,7 +30,7 @@ actual class NodeWrapper(val node: Node) {
             val dbFactory = DocumentBuilderFactory.newInstance()
             val dBuilder = dbFactory.newDocumentBuilder()
             val doc = dBuilder.parse(ByteArrayInputStream(
-                    filterBadXMLChars(IOUtils.toString(stream, Charsets.UTF_8)).toUtf8Bytes()))
+                    filterBadXMLChars(stream.bufferedReader().readText()).toUtf8Bytes()))
             return NodeWrapper(doc.documentElement)
         }
     }

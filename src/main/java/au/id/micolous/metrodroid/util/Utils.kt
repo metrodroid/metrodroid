@@ -41,7 +41,6 @@ import android.widget.Toast
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.multi.Localizer
-import org.apache.commons.io.IOUtils
 
 import java.io.IOException
 import java.io.InputStream
@@ -178,7 +177,7 @@ object Utils {
         val data: ByteArray
         try {
             val stream = ctx.contentResolver.openInputStream(uri) ?: return KeyFormat.UNKNOWN
-            data = IOUtils.toByteArray(stream)
+            data = stream.readBytes()
         } catch (e: IOException) {
             Log.w(TAG, "error detecting key format", e)
             return KeyFormat.UNKNOWN

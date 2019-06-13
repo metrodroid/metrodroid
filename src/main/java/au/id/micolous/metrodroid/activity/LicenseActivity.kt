@@ -24,8 +24,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 
-import org.apache.commons.io.IOUtils
-
 import java.io.IOException
 import java.io.InputStream
 
@@ -63,10 +61,9 @@ class LicenseActivity : MetrodroidActivity() {
         var s: InputStream? = null
         try {
             s = assets.open(path, AssetManager.ACCESS_RANDOM) ?: return
-            val i = IOUtils.lineIterator(s, Utils.UTF8)
 
-            while (i.hasNext()) {
-                lblLicenseText.append(i.next())
+            s.reader().forEachLine {
+                lblLicenseText.append(it)
                 lblLicenseText.append("\n")
             }
         } catch (e: IOException) {
@@ -74,7 +71,11 @@ class LicenseActivity : MetrodroidActivity() {
             Log.w(TAG, "Error reading license: $path", e)
             lblLicenseText.append("\n\n** Error reading license notice from $path\n\n")
         } finally {
-            IOUtils.closeQuietly(s)
+            try {
+                s?.close()
+            } catch(e: Exception) {
+                // ignore
+            }
         }
 
         lblLicenseText.append("\n\n")
