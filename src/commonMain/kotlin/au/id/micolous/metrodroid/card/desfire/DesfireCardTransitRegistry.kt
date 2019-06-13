@@ -25,6 +25,7 @@ object DesfireCardTransitRegistry {
             TrimetHopTransitData.FACTORY,
             AdelaideMetrocardTransitData.FACTORY,
             AtHopTransitData.FACTORY,
+            NolTransitData.FACTORY,
             NextfareDesfireTransitFactory(),
             TampereTransitData.FACTORY,
             MagnaCartaTransitData.FACTORY,
