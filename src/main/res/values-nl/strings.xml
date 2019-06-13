@@ -877,4 +877,6 @@
     <string name="location_pisa">Pisa, Italië</string>
     <string name="location_tbilisi">Tbilisi, Georgië</string>
     <string name="location_worldwide">Wereldwijd</string>
+    <string name="location_abu_dhabi">Abu Dhabi, VAE</string>
+    <string name="location_dubai">Dubai, VAE</string>
 </resources>
