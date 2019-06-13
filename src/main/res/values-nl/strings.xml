@@ -879,4 +879,5 @@
     <string name="location_worldwide">Wereldwijd</string>
     <string name="location_abu_dhabi">Abu Dhabi, VAE</string>
     <string name="location_dubai">Dubai, VAE</string>
+    <string name="keys_loaded">De beveiligingssleutels van deze kaart zijn niet geladen.</string>
 </resources>
