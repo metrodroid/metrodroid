@@ -20,6 +20,7 @@
     <attr name="BorderlessButtonStyle" format="reference" />
     <attr name="MainActivityTheme" format="reference" />
     <attr name="LockImage" format="reference" />
+    <attr name="LockImageUnlocked" format="reference" />
     <attr name="ListHeaderTextColor" format="reference" />
     <attr name="TransportIcons" format="reference" />
     <attr name="CardIdTextColor" format="reference" />

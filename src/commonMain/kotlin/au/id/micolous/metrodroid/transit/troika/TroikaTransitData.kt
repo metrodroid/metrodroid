@@ -75,7 +75,7 @@ class TroikaTransitData(private val mBlock4: TroikaBlock?,
                 locationId = R.string.location_moscow,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_russia,
-                keysRequired = true, preview = true)
+                keysRequired = true, preview = true, keyBundle = "troika")
 
         private const val TAG = "TroikaTransitData"
 

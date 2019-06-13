@@ -59,7 +59,7 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
                 imageId = R.drawable.ricaricami,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
-                keysRequired = true,
+                keysRequired = true, keyBundle = "ricaricami",
                 preview = true)
 
         private val CONTRACT_LIST_FIELDS = En1545Container(

@@ -77,7 +77,7 @@ class CharlieCardTransitData (private val mSerial: Long,
                 cardType = CardType.MifareClassic,
                 imageId = R.drawable.charlie_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
-                keysRequired = true,
+                keysRequired = true, keyBundle = "charlie",
                 preview = true)
 
         private fun parse(card: ClassicCard): CharlieCardTransitData {

@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.util.DrawableUtils
  * @author Eric Butler, Michael Farrell
  */
 class SupportedCardsActivity : MetrodroidActivity() {
+    var keyBundles: Set<String>? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_supported_cards)
@@ -55,6 +56,8 @@ class SupportedCardsActivity : MetrodroidActivity() {
         setDisplayHomeAsUpEnabled(true)
 
         findViewById<ListView>(R.id.gallery).adapter = CardsAdapter(this)
+
+        keyBundles = ClassicAndroidReader.getKeyRetriever(this).forClassicStatic()?.allBundles
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -124,11 +127,19 @@ class SupportedCardsActivity : MetrodroidActivity() {
             }
 
             // Keys being required is secondary to the card not being supported.
-            if (info.keysRequired) {
+            val lockIcon = convertView.findViewById<ImageView>(R.id.card_locked)
+            if (info.keysRequired && info.keyBundle != null && info.keyBundle in keyBundles.orEmpty()) {
+                notes += Localizer.localizeString(R.string.keys_loaded) + " "
+                val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImageUnlocked))
+                lockIcon.setImageResource(a.getResourceId(0, R.drawable.unlocked))
+                lockIcon.visibility = View.VISIBLE
+            } else if (info.keysRequired) {
                 notes += Localizer.localizeString(R.string.keys_required) + " "
-                convertView.findViewById<View>(R.id.card_locked).visibility = View.VISIBLE
+                val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImage))
+                lockIcon.setImageResource(a.getResourceId(0, R.drawable.locked))
+                lockIcon.visibility = View.VISIBLE
             } else
-                convertView.findViewById<View>(R.id.card_locked).visibility = View.GONE
+                lockIcon.visibility = View.GONE
 
             if (info.preview) {
                 notes += Localizer.localizeString(R.string.card_preview_reader) + " "

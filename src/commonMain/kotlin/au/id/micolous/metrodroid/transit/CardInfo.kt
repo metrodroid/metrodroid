@@ -31,6 +31,7 @@ class CardInfo(val name: String,
                val cardType: CardType,
                val locationId: StringResource? = null,
                val keysRequired: Boolean = false,
+               val keyBundle: String? = null,
                /**
                 * Indicates if the card is a "preview" / beta decoder, with possibly
                 * incomplete / incorrect data.

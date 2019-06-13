@@ -42,7 +42,7 @@ private val CARD_INFO = CardInfo(
         locationId = R.string.location_malaysia,
         imageId = R.drawable.touchngo,
         cardType = CardType.MifareClassic,
-        keysRequired = true)
+        keysRequired = true, keyBundle = "touchngo")
 
 private fun parseTimestamp(input: ImmutableByteArray, off: Int): TimestampFull {
     val hour = input.getBitsFromBuffer(off * 8, 5)

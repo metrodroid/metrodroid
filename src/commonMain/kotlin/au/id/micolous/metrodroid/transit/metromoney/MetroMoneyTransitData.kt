@@ -40,7 +40,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.metromoney,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
-        keysRequired = true)
+        keysRequired = true, keyBundle = "metromoney")
 
 private fun formatSerial(serial: Long) = NumberUtils.zeroPad(serial, 10)
 

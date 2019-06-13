@@ -124,14 +124,14 @@ data class RkfTransitData internal constructor(
                         locationId = R.string.location_stockholm,
                         cardType = CardType.MifareClassic,
                         imageId = R.drawable.slaccess,
-                        keysRequired = true,
+                        keysRequired = true, keyBundle = "slaccess",
                         preview = true),
                 RkfLookup.REJSEKORT to CardInfo(
                         name = "Rejsekort",
                         locationId = R.string.location_denmark,
                         imageId = R.drawable.rejsekort,
                         cardType = CardType.MifareClassic,
-                        keysRequired = true,
+                        keysRequired = true, keyBundle = "rejsekort",
                         preview = true)
         )
 

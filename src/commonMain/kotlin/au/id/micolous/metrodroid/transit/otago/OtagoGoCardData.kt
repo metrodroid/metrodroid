@@ -38,7 +38,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.otagogocard,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
-        keysRequired = true)
+        keysRequired = true, keyBundle = "otago_go")
 
 private fun formatSerial(serial: Long) = serial.toString(16)
 
