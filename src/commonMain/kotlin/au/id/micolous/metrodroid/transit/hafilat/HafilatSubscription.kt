@@ -1,5 +1,5 @@
 /*
- * AdelaideSubscription.kt
+ * HafilatSubscription.kt
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.adelaide
+package au.id.micolous.metrodroid.transit.hafilat
 
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
@@ -27,21 +27,9 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscription() {
-    override val lookup: AdelaideLookup
-        get() = AdelaideLookup
-
-    override val info: List<ListItem>?
-        get() = super.info.orEmpty() +
-                parsed.getInfo(setOf(En1545Subscription.CONTRACT_TARIFF,
-                        En1545FixedInteger.dateName(En1545Subscription.CONTRACT_SALE),
-                        En1545Subscription.CONTRACT_SALE_DEVICE,
-                        En1545Subscription.CONTRACT_PRICE_AMOUNT,
-                        En1545Subscription.CONTRACT_SALE_AGENT,
-                        En1545Subscription.CONTRACT_SERIAL_NUMBER,
-                        En1545Subscription.CONTRACT_PROVIDER,
-                        En1545Subscription.CONTRACT_STATUS)
-                )
+class HafilatSubscription (override val parsed: En1545Parsed): En1545Subscription() {
+    override val lookup: HafilatLookup
+        get() = HafilatLookup
 
     val isPurse: Boolean
         get() = lookup.isPurseTariff(contractProvider, contractTariff)

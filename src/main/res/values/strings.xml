@@ -665,6 +665,7 @@
 
     <!-- Locations -->
     <string name="location_worldwide">Worldwide</string>
+    <string name="location_abu_dhabi">Abu Dhabi, UAE</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
     <string name="location_auckland">Auckland, New Zealand</string>

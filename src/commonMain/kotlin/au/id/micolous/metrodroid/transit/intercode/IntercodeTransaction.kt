@@ -33,14 +33,14 @@ internal data class IntercodeTransaction(private val networkId: Int,
 
     companion object {
         fun parse (data: ImmutableByteArray, networkId: Int): IntercodeTransaction {
-            val parsed = En1545Parser.parse(data, tripFields)
+            val parsed = En1545Parser.parse(data, tripFieldsUtc)
             return IntercodeTransaction(parsed.getInt(En1545Transaction.EVENT_NETWORK_ID) ?: networkId,
                     parsed)
         }
 
-        private val tripFields = En1545Container(
+        private fun tripFields(time: (String) -> En1545FixedInteger) = En1545Container(
                 En1545FixedInteger.date(En1545Transaction.EVENT),
-                En1545FixedInteger.time(En1545Transaction.EVENT),
+                time(En1545Transaction.EVENT),
                 En1545Bitmap(
                         En1545FixedInteger(En1545Transaction.EVENT_DISPLAY_DATA, 8),
                         En1545FixedInteger(En1545Transaction.EVENT_NETWORK_ID, 24),
@@ -71,12 +71,15 @@ internal data class IntercodeTransaction(private val networkId: Int,
                         En1545FixedInteger(En1545Transaction.EVENT_AUTHENTICATOR, 16),
                         En1545Bitmap(
                                 En1545FixedInteger.date(En1545Transaction.EVENT_FIRST_STAMP),
-                                En1545FixedInteger.time(En1545Transaction.EVENT_FIRST_STAMP),
+                                time(En1545Transaction.EVENT_FIRST_STAMP),
                                 En1545FixedInteger(En1545Transaction.EVENT_DATA_SIMULATION, 1),
                                 En1545FixedInteger(En1545Transaction.EVENT_DATA_TRIP, 2),
                                 En1545FixedInteger(En1545Transaction.EVENT_DATA_ROUTE_DIRECTION, 2)
                         )
                 )
         )
+
+        val tripFieldsUtc = tripFields(En1545FixedInteger.Companion::time)
+        val tripFieldsLocal = tripFields(En1545FixedInteger.Companion::timeLocal)
     }
 }
