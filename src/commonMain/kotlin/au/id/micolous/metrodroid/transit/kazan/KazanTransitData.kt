@@ -147,6 +147,6 @@ object KazanTransitFactory : ClassicCardTransitFactory {
     override val earlySectors get() = 9
 
     override fun earlyCheck(sectors: List<ClassicSector>) =
-            HashUtils.checkKeyHash(sectors[8], "kazan",
+            HashUtils.checkKeyHash(sectors[8].key, "kazan",
                     "0f30386921b6558b133f0f49081b932d", "ec1b1988a2021019074d4304b4aea772") >= 0
 }
