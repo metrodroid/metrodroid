@@ -716,6 +716,7 @@
     This is not a city or prefecture.
     -->
     <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_kazan">Kazan, Russia</string>
     <string name="location_kiev">Kiev, Ukraine</string>
     <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
@@ -1778,6 +1779,12 @@
     <string name="card_name_samara_etk">Samara ETK</string>
     <string name="card_name_samara_school">Samara school student card</string>
     <string name="card_name_samara_student">Samara student card</string>
+
+    <!-- Translators: it doesn't appear to have a brand name. More info:  transkart.ru -->
+    <string name="card_name_kazan">Kazan transport card</string>
+    <!-- Translators: card is issued but no ticket is loaded on it yet -->
+    <string name="kazan_blank">Blank</string>
+
     <!-- Venezia specific strings -->
     <string name="venezia_profile">Profile</string>
     <!-- Translators: Profile aaplied to adults from outside of region. "Fuori REGIONE ordinario" -->
