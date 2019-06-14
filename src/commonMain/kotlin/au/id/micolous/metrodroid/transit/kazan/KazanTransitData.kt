@@ -41,6 +41,8 @@ private val CARD_INFO = CardInfo(
         locationId = R.string.location_kazan,
         cardType = CardType.MifareClassic,
         keysRequired = true,
+        imageId = R.drawable.kazan,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
         keyBundle = "kazan",
         preview = true)
 
