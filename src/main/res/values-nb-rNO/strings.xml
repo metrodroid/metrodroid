@@ -180,7 +180,6 @@
     <string name="seqgo_ticket_type_senior">Senior</string>
     <string name="seqgo_refill_manual">Manuelt påfyll</string>
     <string name="seqgo_refill_automatic">Automatisk påfyll</string>
-    <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
     <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode %d</string>
