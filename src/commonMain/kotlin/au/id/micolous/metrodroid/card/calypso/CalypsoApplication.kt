@@ -104,8 +104,8 @@ data class CalypsoApplication (
                 items.add(ListItem(R.string.calypso_serial_number, data.getHexString(12, 8)))
             }
             items.add(ListItem(R.string.calypso_manufacture_country, countryName))
-            items.add(ListItem(R.string.calypso_manufacturer, manufacturerName))
-            items.add(ListItem(R.string.calypso_manufacture_date, TimestampFormatter.longDateFormat(manufactureDate)))
+            items.add(ListItem(R.string.manufacturer_name, manufacturerName))
+            items.add(ListItem(R.string.manufacture_date, TimestampFormatter.longDateFormat(manufactureDate)))
             return items
         }
 
