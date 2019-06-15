@@ -35,7 +35,7 @@ City Union | :cn: Mainland China | :new:
 [ERG][erg] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][ezlink] | :singapore: Singapore |
 [Go card][seqgo] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
-[GoCard][otago] | :new_zealand: Greater Dunedin (Otago), New Zealand | :new: `MFC`
+[GoCard][otago] | :new_zealand: Otago, including Greater Dunedin and Queenstown, New Zealand | :new: `MFC`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hafilat][] | :united_arab_emirates: Abu Dhabi, UAE | :new:
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: :id:
