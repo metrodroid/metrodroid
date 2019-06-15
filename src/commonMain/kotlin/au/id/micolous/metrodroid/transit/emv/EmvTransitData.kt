@@ -110,6 +110,7 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
     val CARD_INFO = CardInfo(
         name = "EMV (Credit and Debit cards)",
         locationId = R.string.location_worldwide,
+        imageId = R.drawable.ic_contactless,
         cardType = CardType.ISO7816)
 
     override val allCards: List<CardInfo>
