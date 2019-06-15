@@ -74,6 +74,8 @@ abstract class ErgTransitData : TransitData() {
     public override val balance: TransitBalance?
         get() = currency(capsule.balance)
 
+    override val trips: List<Trip>?
+        get() = capsule.trips
 
     override val info: List<ListItem>?
         get() {
