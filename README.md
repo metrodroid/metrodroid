@@ -73,7 +73,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 
 Card / Agency | Location | Notes
 ------------- | -------- | -----
-[AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: `123`
+[AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: :id:
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
@@ -92,9 +92,10 @@ City Union | :cn: Mainland China | :new:
 [Go card][seqgo] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [GoCard][otago] | :new_zealand: Greater Dunedin (Otago), New Zealand | :new: `MFC`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
-[Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: `123`
+[Hafilat][] | :united_arab_emirates: Abu Dhabi, UAE | :new:
+[Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: :id:
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
-[IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: `123`
+[IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
@@ -106,10 +107,11 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
 [Mobib][mobib] | :belgium: Brussels, Belgium | :new:
-[Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
+[Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: :id:
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [Navigo][navigo] | :fr: Paris, France | :new:
 [NETS FlashPay][nets] | :singapore: Singapore |
+[Nol][] | :united_arab_emirates: Dubai, UAE | :new: :id:
 [Octopus][octopus] | :hong_kong: Hong Kong | :new:
 [Opal][opal] | :australia: Sydney (and surrounds), NSW, Australia | :new:
 [Opus][opus] | :canada: Québec, Canada | :new:
@@ -126,11 +128,11 @@ Selecta | :fr: France | :new:
 [Smartride][smartride] | :new_zealand: Rotorua, New Zealand | :new: `MFC`
 [SmartRider][smartrider] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Snapper][snapper] | :new_zealand: Wellington, New Zealand | :new:
-[Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
+[Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: :id: `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan
-[SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: `123` `MFC`
+[SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: :id: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new:
-[Tartu Bus][tartu] | :estonia: Tartu, Estonia | :new: `123` `MFC`
+[Tartu Bus][tartu] | :estonia: Tartu, Estonia | :new: :id: `MFC`
 [T-Money][tmoney] | :kr: South Korea | :new:
 T-Union | :cn: Mainland China | :new:
 [TransGironde][gironde] | :fr: Gironde, France | :new:
@@ -141,17 +143,16 @@ T-Union | :cn: Mainland China | :new:
 Yaroslavl ETK | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
 [Zolotaya Korona][zolotaya] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 
-Note | Meaning
----- | -------
-:new: | New in Metrodroid.
+Note                   | Meaning
+---------------------- | -------
+:new:                  | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
-:unlock: | Encryption keys are downloaded from the operator.
-:singapore: | CEPAS cards (Singapore) are not compatible with all devices (ISO 14443-B).
-`MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
-`123` | Only the card number can be read.
-`FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
-`KMT` | Only new FeliCa-based cards can be read.
-`SINGLE` | Only single-use tickets can be read.
+:unlock:               | Encryption keys are downloaded from the operator.
+:singapore:            | CEPAS cards (Singapore) are not compatible with all devices (ISO 14443-B).
+`MFC`                  | MIFARE Classic card; requires NXP NFC chipset in your phone.
+:id:                   | Only the card number can be read.
+`KMT`                  | Only new FeliCa-based cards can be read.
+`SINGLE`               | Only single-use tickets can be read.
 
 This project **will only read data from the card itself**, without having to
 connect to the agency's back-office systems. In some cases, limited data is
@@ -239,6 +240,7 @@ This software and it's authors are not associated with any public transit agency
 [erg]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
 [ezlink]: http://www.ezlink.com.sg/
 [gironde]: https://www.transgironde.fr/
+[hafilat]: https://dot.abudhabi.ae/en/mediainfo/hafilat_smart_card
 [hfp]: https://myhopcard.com/
 [hsl]: http://www.hsl.fi/EN/
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
@@ -257,6 +259,7 @@ This software and it's authors are not associated with any public transit agency
 [navigo]: http://www.navigo.fr/
 [nets]: http://www.netsflashpay.com.sg/
 [nextfare]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
+[nol]: https://www.nol.ae/
 [octopus]: http://www.octopus.com.hk/home/en/index.html
 [opal]: http://www.opal.com.au/
 [opus]: http://www.stm.info/en/info/fares/opus-cards-and-other-fare-media/opus-card
