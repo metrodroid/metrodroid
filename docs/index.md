@@ -16,7 +16,6 @@ layout: home
 version of Metrodroid][repo]. [The release version][release] may be missing some of these cards --
 but it'll be available soon!
 
-
 Card / Agency | Location | Notes
 ------------- | -------- | -----
 [AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: :id:
@@ -27,7 +26,7 @@ Card / Agency | Location | Notes
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
-[Compass][compass] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
+[Compass][compass] | :canada: Vancouver, BC, Canada | :new: :one:
 [Cubic Nextfare][nextfare] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EasyCard][easycard] | :taiwan: Taipei, Taiwan | :closed_lock_with_key: `MFC`
 [Edy][edy] | :jp: Japan
@@ -84,7 +83,7 @@ T-Union | :cn: Mainland China | :new:
 [TransGironde][gironde] | :fr: Gironde, France | :new:
 [Transit Access Pass][laxtap] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][troika] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
-[Ventra][ventra] | :us: Chicago, IL, USA | :new: `SINGLE`
+[Ventra][ventra] | :us: Chicago, IL, USA | :new: :one:
 [Wuhan Tong][wuhan] | :cn: Wuhan, Hubei Province, China | :new:
 Yaroslavl ETK | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
 [Zolotaya Korona][zolotaya] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
@@ -98,7 +97,7 @@ Note                   | Meaning
 `MFC`                  | MIFARE Classic card; requires NXP NFC chipset in your phone.
 :id:                   | Only the card number can be read.
 `KMT`                  | Only new FeliCa-based cards can be read.
-`SINGLE`               | Only single-use tickets can be read.
+:one:                  | Only single-use tickets can be read.
 
 This project **will only read data from the card itself**, without having to
 connect to the agency's back-office systems. In some cases, limited data is
