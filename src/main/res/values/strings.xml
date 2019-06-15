@@ -1565,6 +1565,12 @@
     <!-- Translators: EMV cards normally have a magnetic strip with data. This is the data in the
     second track of the magnetic strip. -->
     <string name="emv_track_2">Track 2</string>
+    <!-- Translators: EMV cards normally have a magnetic strip with data. This is data that is
+    equivalent to the second track of the magnetic strip. -->
+    <string name="emv_track_2_equiv">Track 2 equivalent data</string>
+    <!-- Translators: EMV cards normally have a magnetic strip with data. This is data that is
+    equivalent to the third track of the magnetic strip. -->
+    <string name="emv_track_3_equiv">Track 3 equivalent data</string>
     <!-- Translators: The country from which the card issuer operates from -->
     <string name="issuer_country">Issuer country</string>
     <!-- Translators: EMV cards allow declaring the cardholder's preferred language for POS
@@ -1611,6 +1617,12 @@
     <string name="emv_application_cryptogram">Application cryptogram</string>
     <string name="emv_cryptogram_information_data">Cryptogram information data</string>
     <string name="emv_application_transaction_counter">Application transaction counter</string>
+    <!-- Translators: Service-specific data used on credit cards. -->
+    <string name="emv_service_code">Service code</string>
+    <!-- Translators: TLV (tag-length-value) is a binary encoding format. -->
+    <string name="tlv_tags">TLV tags</string>
+    <!-- Translators: Used for a list of unknown binary data tags -->
+    <string name="unknown_tags">Unknown tags</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>

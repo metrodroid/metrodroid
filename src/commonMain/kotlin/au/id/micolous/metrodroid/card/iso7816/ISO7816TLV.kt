@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
 
 /**
  * Utilities for decoding BER-TLV values.
@@ -292,9 +293,19 @@ object ISO7816TLV {
     private fun makeListItem(tagDesc: TagDesc, data: ImmutableByteArray) : ListItem? {
         return when (tagDesc.contents) {
             TagContents.HIDE -> null
-            TagContents.DUMP_LONG ->
+            // TODO: Move into TagDesc
+            TagContents.DUMP_LONG -> if (Preferences.hideCardNumbers) {
+                null
+            } else {
                 ListItem(tagDesc.name, data.toHexDump())
-            else -> ListItem(tagDesc.name, tagDesc.interpretTag(data))
+            }
+            else -> {
+                val v = tagDesc.interpretTag(data)
+                when {
+                    v.isEmpty() -> null
+                    else -> ListItem(tagDesc.name, v)
+                }
+            }
         }
     }
 

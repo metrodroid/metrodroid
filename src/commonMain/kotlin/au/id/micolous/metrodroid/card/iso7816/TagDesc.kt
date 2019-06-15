@@ -21,22 +21,29 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
-import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.countryCodeToName
-import au.id.micolous.metrodroid.util.currencyNameByCode
+import au.id.micolous.metrodroid.util.*
 
-data class TagDesc(val name: StringResource, val contents: TagContents) {
-    fun interpretTag(data: ImmutableByteArray) : String = when (contents) {
-        TagContents.ASCII -> data.readASCII()
-        TagContents.DUMP_SHORT -> data.toHexString()
-        TagContents.DUMP_LONG -> data.toHexString()
-        TagContents.CURRENCY -> {
-            val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
-            currencyNameByCode(n) ?: n.toString()
+data class TagDesc(val name: StringResource,
+                   val contents: TagContents,
+                   val hiding: TagHiding = TagHiding.NONE) {
+    fun interpretTag(data: ImmutableByteArray) : String {
+        when {
+            hiding == TagHiding.CARD_NUMBER && Preferences.hideCardNumbers -> return ""
+            // TODO: implement this properly
+            hiding == TagHiding.DATE && Preferences.obfuscateTripDates -> return ""
         }
-        TagContents.COUNTRY -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
-        else -> data.toHexString()
+
+        return when (contents) {
+            TagContents.ASCII -> data.readASCII()
+            TagContents.DUMP_SHORT -> data.toHexString()
+            TagContents.DUMP_LONG -> data.toHexString()
+            TagContents.CURRENCY -> {
+                val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
+                currencyNameByCode(n) ?: n.toString()
+            }
+            TagContents.COUNTRY -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
+            else -> data.toHexString()
+        }
     }
 }
 
@@ -48,6 +55,12 @@ enum class TagContents {
     HIDE,
     CURRENCY,
     COUNTRY
+}
+
+enum class TagHiding {
+    NONE,
+    CARD_NUMBER,
+    DATE
 }
 
 val HIDDEN_TAG = TagDesc(R.string.unknown, TagContents.HIDE)

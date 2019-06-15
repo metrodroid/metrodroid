@@ -2,6 +2,7 @@
  * EmvTransitData.kt
  *
  * Copyright 2019 Google
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +30,7 @@ import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.emv.EmvData.LOG_ENTRY
-import au.id.micolous.metrodroid.transit.emv.EmvData.T2Data
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRACK2_EQUIV
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME1
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME2
@@ -37,6 +38,7 @@ import au.id.micolous.metrodroid.transit.emv.EmvLogEntry.Companion.parseEmvTrip
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
 
 private fun splitby4(input: String?): String? {
     if (input == null)
@@ -61,7 +63,7 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
 
     private fun findT2Data(tlvs: List<ImmutableByteArray>): ImmutableByteArray? {
         for (tlv in tlvs) {
-            val t2 = ISO7816TLV.findBERTLV(tlv, T2Data, false)
+            val t2 = ISO7816TLV.findBERTLV(tlv, TAG_TRACK2_EQUIV, false)
             if (t2 != null)
                 return t2
         }
@@ -133,13 +135,16 @@ data class EmvTransitData(
 
     override val info get(): List<ListItem> {
         val res = mutableListOf<ListItem>()
-        if (t2 != null) {
+        val hideThings = Preferences.obfuscateTripDates || Preferences.hideCardNumbers
+
+        if (t2 != null && !hideThings) {
             val postPan = getPostPan(t2)
-            res += ListItem("PAN", splitby4(getPan(t2)))
+            // Already shown in title
+            // res += ListItem(R.string.emv_pan, splitby4(getPan(t2)))
             if (postPan != null) {
                 res += ListItem(R.string.expiry_date, "${postPan.substring(2, 4)}/${postPan.substring(0, 2)}")
                 val serviceCode = postPan.substring(4, 7)
-                res += ListItem("Service code", serviceCode)
+                res += ListItem(R.string.emv_service_code, serviceCode)
                 res += ListItem(R.string.discretionary_data,
                         postPan.substring(7).let { it.substringBefore('f', it) }
                 )
@@ -149,16 +154,24 @@ data class EmvTransitData(
             res += ListItem(
                     Localizer.localizePlural(R.plurals.emv_pin_attempts_remaining, pinTriesRemaining),
                     pinTriesRemaining.toString())
-        res += listOf(HeaderListItem("TLV tags"))
+        res += listOf(HeaderListItem(R.string.tlv_tags))
         val unknownIds = mutableSetOf<String>()
         for (tlv in tlvs) {
-            val (li, unknowns) = ISO7816TLV.infoBerTLVWithUnknowns(tlv, TAGMAP)
+            val li = if (hideThings) {
+                ISO7816TLV.infoBerTLV(tlv, TAGMAP)
+            } else {
+                val (li, unknowns) = ISO7816TLV.infoBerTLVWithUnknowns(tlv, TAGMAP)
+                unknownIds += unknowns
+                li
+            }
 
             res += li
-            unknownIds += unknowns
         }
 
-        res += ListItem("Unparsed IDs", unknownIds.joinToString(", "))
+        if (unknownIds.isNotEmpty()) {
+            res += ListItem(R.string.unknown_tags, unknownIds.joinToString(", "))
+        }
+
         return res
     }
 

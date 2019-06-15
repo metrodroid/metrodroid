@@ -2,6 +2,7 @@
  * EmvLogEntry.kt
  *
  * Copyright 2019 Google
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +35,7 @@ import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_DATE
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRANSACTION_TIME
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.Preferences
 
 
 @Parcelize
@@ -71,11 +73,24 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
     override val routeName get() = values.entries.filter {
         !HANDLED_TAGS.contains(it.key)
     }.joinToString {
-        val tag = TAGMAP[it.key]
-        if (tag == null)
-            it.key + "=" + it.value.toHexString()
-        else
-            Localizer.localizeString(tag.name) + "=" + tag.interpretTag(it.value)
+        when (val tag = TAGMAP[it.key]) {
+            // Unknown tag info
+            null -> if (Preferences.hideCardNumbers || Preferences.obfuscateTripDates) {
+                ""
+            } else {
+                it.key + "=" + it.value.toHexString()
+            }
+
+            // Unknown tag info
+            else -> {
+                val v = tag.interpretTag(it.value)
+                if (v.isEmpty()) {
+                    ""
+                } else {
+                    Localizer.localizeString(tag.name) + "=" + v
+                }
+            }
+        }
     }
 
     companion object {
