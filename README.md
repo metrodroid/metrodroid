@@ -42,7 +42,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 
 ## Translated by
 
-Thanks to those who have [helped to make Metrodroid available in languages other than English][22]:
+Thanks to those who have [helped to make Metrodroid available in languages other than English][weblate]:
 
 * Dutch: [Vistaus](https://github.com/Vistaus)
 * Finnish: Lari Oesch, Lauri Andler
