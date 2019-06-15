@@ -745,6 +745,7 @@
     <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
+    <string name="location_london">London, UK</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_malaysia">Malaysia</string>
     <string name="location_milan">Milan, Italy</string>
@@ -1745,6 +1746,9 @@
     - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
     -->
     <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
+
+    <!-- Oyster (London, UK) -->
+    <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
 
     <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
     <!--
