@@ -408,8 +408,8 @@
     <string name="felica_response_time_other">Commandes d\'émission</string>
     <string name="calypso_serial_number">Numéro de série</string>
     <string name="calypso_manufacture_country">Pays de fabrication</string>
-    <string name="calypso_manufacture_date">Date de fabrication</string>
-    <string name="calypso_manufacturer">Fabricant</string>
+    <string name="manufacture_date">Date de fabrication</string>
+    <string name="manufacturer_name">Fabricant</string>
     <string name="calypso_manufacturer_ask">ASK</string>
     <string name="calypso_manufacturer_intec">Intec</string>
     <string name="calypso_manufacturer_calypso">Calypso</string>

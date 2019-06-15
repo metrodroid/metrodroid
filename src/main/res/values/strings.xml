@@ -572,9 +572,11 @@
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
     <string name="calypso_manufacture_country">Country of manufacture</string>
-    <string name="calypso_manufacture_date">Date of manufacture</string>
-    <!-- Translators: The manufacturer is a company name. -->
-    <string name="calypso_manufacturer">Manufacturer</string>
+
+    <string name="manufacture_date">Date of manufacture</string>
+    <!-- Translators: Used as a header for a list item, to describe the company name of the
+    manufacturer. -->
+    <string name="manufacturer_name">Manufacturer</string>
 
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_ask">ASK</string>
