@@ -21,8 +21,9 @@
 
 package au.id.micolous.metrodroid.ui
 
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.PluralsResource
 import au.id.micolous.metrodroid.multi.StringResource
 
 open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
@@ -34,6 +35,9 @@ open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
     constructor(nameResource: StringResource, value: String?) : this(Localizer.localizeString(nameResource), value)
 
     constructor(nameResource: StringResource, value: FormattedString?) : this(FormattedString(Localizer.localizeString(nameResource)), value)
+
+    constructor(nameResource: StringResource, pluralsResource: PluralsResource, valueInt: Int) :
+            this(nameResource, Localizer.localizePlural(pluralsResource, valueInt, valueInt))
 
     constructor(name: String) : this(FormattedString(name), null)
 
