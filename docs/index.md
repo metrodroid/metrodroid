@@ -54,6 +54,7 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [ORCA][orca] | :us: Seattle, WA, USA |
 [OùRA][oura] | :fr: Grenoble, France | :new:
 [OV-chipkaart][ovc] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
+[Oyster][oyster] | :gb: London, United Kingdom | :closed_lock_with_key: `MFC`
 [Podorozhnik][podoro] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
 [Rejsekort][rejse] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
@@ -155,6 +156,7 @@ interpreted locally, and _connectivity is disabled by default._
 [orca]: http://www.orcacard.com/
 [oura]: https://www.oura.com/
 [ovc]: http://www.ov-chipkaart.nl/
+[oyster]: https://oyster.tfl.gov.uk/
 [pasmo]: https://en.wikipedia.org/wiki/PASMO
 [podoro]: http://podorozhnik.spb.ru/en/
 [ravkav]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
