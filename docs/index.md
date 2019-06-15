@@ -10,6 +10,8 @@ layout: home
 
 [More screenshots...](https://micolous.github.io/metrodroid/screenshots)
 
+## Supported cards / agencies
+
 **Note:** This list of supported cards is from the [current development (`git master`)
 version of Metrodroid][repo]. [The release version][release] may be missing some of these cards --
 but it'll be available soon!
