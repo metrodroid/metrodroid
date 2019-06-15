@@ -97,6 +97,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val TAM_MONTPELLIER_CARD_INFO = CardInfo(
                 name = "TaM", // Transports de l'agglomération de Montpellier
                 locationId = R.string.location_montpellier,
+                imageId = R.drawable.tam_montpellier,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816)
 
         val TICKET_ENV_FIELDS = En1545Container(
