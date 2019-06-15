@@ -122,7 +122,7 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
 [Rejsekort][rejse] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][ricarica] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
-Selecta | :fr: France | :new:
+[Selecta][] | :fr: France | :new:
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
 [Smartride][smartride] | :new_zealand: Rotorua, New Zealand | :new: `MFC`
@@ -273,6 +273,7 @@ This software and it's authors are not associated with any public transit agency
 [ravkav]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [rejse]: https://www.rejsekort.dk/
 [ricarica]: https://www.atm.it/en/ViaggiaConNoi/Biglietti/Pages/TesseraRIcaricaMI.aspx
+[selecta]: https://www.selecta.com/
 [seqgo]: http://translink.com.au/tickets-and-fares/go-card
 [shenzhen]: http://www.shenzhentong.com/
 [slaccess]: https://sl.se/en/eng-info/fares/sl-access/
