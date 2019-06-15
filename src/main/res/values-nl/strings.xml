@@ -340,8 +340,8 @@
     </plurals>
     <string name="calypso_serial_number">Serienummer</string>
     <string name="calypso_manufacture_country">Geproduceerd in</string>
-    <string name="calypso_manufacture_date">Productiedatum</string>
-    <string name="calypso_manufacturer">Producent</string>
+    <string name="manufacture_date">Productiedatum</string>
+    <string name="manufacturer_name">Producent</string>
     <string name="calypso_manufacturer_ask">ASK</string>
     <string name="calypso_manufacturer_intec">Intec</string>
     <string name="calypso_manufacturer_calypso">Calypso</string>

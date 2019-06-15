@@ -342,8 +342,8 @@
     <string name="calypso_reading">Leser Calypso-kort…</string>
     <string name="calypso_serial_number">Serienummer</string>
     <string name="calypso_manufacture_country">Produksjonsland</string>
-    <string name="calypso_manufacture_date">Produksjonsdato</string>
-    <string name="calypso_manufacturer">Produsent</string>
+    <string name="manufacture_date">Produksjonsdato</string>
+    <string name="manufacturer_name">Produsent</string>
     <string name="calypso_manufacturer_ask">ASK</string>
     <string name="calypso_manufacturer_intec">Intec</string>
     <string name="calypso_manufacturer_calypso">Calypso</string>

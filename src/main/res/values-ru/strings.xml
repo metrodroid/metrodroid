@@ -274,7 +274,7 @@
     <string name="felica_rom_type">Тип ПЗУ</string>
     <string name="felica_ic_type">Тип микросхемы</string>
     <string name="felica_maximum_response_time">Максималхное время отклика</string>
-    <string name="calypso_manufacturer">Производитель</string>
+    <string name="manufacturer_name">Производитель</string>
 
     <string name="location_vancouver">Ванкувер, Британская Колумбия, Канада</string>
     <string name="location_quebec">Провинция Квебек, Канада</string>
