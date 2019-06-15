@@ -55,6 +55,10 @@ abstract class CardProtocol {
 
     @Transient
     lateinit var scannedAt: TimestampFull
+        private set
+    @Transient
+    lateinit var tagId: ImmutableByteArray
+        private set
 
     /**
      * This is where a card is actually parsed into TransitData compatible data.
@@ -71,6 +75,7 @@ abstract class CardProtocol {
 
     open fun postCreate(card: Card) {
         scannedAt = card.scannedAt
+        tagId = card.tagId
     }
 }
 
