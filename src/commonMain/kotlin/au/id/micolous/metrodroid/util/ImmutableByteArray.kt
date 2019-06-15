@@ -68,6 +68,10 @@ class ImmutableByteArray private constructor(
         val unsigned = getBitsFromBuffer(off, len)
         return unsignedToTwoComplement(unsigned, len - 1)
     }
+    fun getBitsFromBufferSignedLeBits(off: Int, len: Int): Int {
+        val unsigned = getBitsFromBufferLeBits(off, len)
+        return unsignedToTwoComplement(unsigned, len - 1)
+    }
     fun convertBCDtoInteger() : Int = fold(0) {
         x, y -> (x * 100) + NumberUtils.convertBCDtoInteger(y)
     }

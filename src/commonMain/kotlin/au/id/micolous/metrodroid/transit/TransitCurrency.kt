@@ -251,6 +251,7 @@ open class TransitCurrency (
         fun CNY(fen: Int) = TransitCurrency(fen, "CNY")
         fun DKK(ore: Int) = TransitCurrency(ore, "DKK")
         fun EUR(cents: Int) = TransitCurrency(cents, "EUR")
+        fun GBP(pence: Int) = TransitCurrency(pence, "GBP")
         fun HKD(cents: Int) = TransitCurrency(cents, "HKD")
         fun IDR(cents: Int) = TransitCurrency(cents, "IDR", 1)
         fun ILS(agorot: Int) = TransitCurrency(agorot, "ILS")
