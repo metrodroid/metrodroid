@@ -22,7 +22,7 @@ Card / Agency | Location | Notes
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
-[Carta Mobile][pisa] | :italy: Pisa, Italy | :new:
+[Carta Mobile][pisa] | :it: Pisa, Italy | :new:
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
