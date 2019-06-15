@@ -448,7 +448,26 @@
         <item quantity="other">passengers</item>
     </plurals>
 
-    <!-- DESFire -->
+    <string name="manufacture_week">Week of manufacture</string>
+    <string name="manufacture_year">Year of manufacture</string>
+    <!-- Translators: This is data sent by the card in response to an ISO 14443 SELECT command.
+    Do not translate "SAK". -->
+    <string name="select_acknowledge">SAK (Select Acknowledge)</string>
+    <!-- Translators: This is data sent by the card as part of the ISO 14443-4 anti-collision
+    procedure. Do not translate "ATQA".-->
+    <string name="answer_to_request">ATQA (Answer to Request)</string>
+
+    <plurals name="bytes">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d bytes</item>
+    </plurals>
+
+    <!-- MIFARE Classic -->
+    <!-- Translators: MIFARE Classic cards have variable length UIDs (unique identifiers), this
+    is a header for a list item indicating a number of bytes. -->
+    <string name="mfc_uid_mode">UID length</string>
+
+    <!-- MIFARE DESFire -->
     <string name="desfire_standard_file">Standard file</string>
     <string name="desfire_backup_file">Backup file</string>
     <string name="desfire_value_file">Value file</string>
@@ -628,6 +647,10 @@
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
+    <!-- Translators: This is a company name. (Chinese: 复旦微电子集团) -->
+    <string name="manufacturer_fudan_microelectronics">Fudan Microelectronics</string>
+    <!-- Translators: This is a company name. -->
+    <string name="manufacturer_nxp">NXP Semiconductors</string>
 
     <!--
     Translators: This is shown below a trip entry to describe the start and end stations of a trip.

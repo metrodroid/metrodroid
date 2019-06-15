@@ -3,7 +3,7 @@
  *
  * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.card.*
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.serialization.Optional
@@ -30,6 +31,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.NumberUtils
 
 @Serializable
 class ClassicCard constructor(
@@ -44,38 +46,41 @@ class ClassicCard constructor(
 
     @Transient
     override val manufacturingInfo: List<ListItem>? get() {
-            val sector0 = sectorsRaw[0]
-            if (sector0.isUnauthorized || sector0.blocks[0].size < 16)
-                    return null
-            val block0 = sector0.blocks[0]
-            if (block0.sliceOffLen(8, 8) == ImmutableByteArray.fromASCII("bcdefghi"))
-                    return listOf(ListItem("Manufacturer", "Fudan electronics"),
-                                  ListItem("SAK", block0.getHexString(5, 1)),
-                                  ListItem("ATQA", block0.getHexString(6, 2)))
-            val main: List<ListItem>? = when {
-                    tagId.size == 7 && tagId[0] == 0x04.toByte() -> listOf(
-                            ListItem("Manufacturer", "NXP"),
-                            ListItem("UID-mode", "7-byte"),
-                            ListItem("SAK", block0.getHexString(7, 1)),
-                            ListItem("ATQA", block0.getHexString(8, 2))
-                            // FIXME: what do the bytes 10-13 mean?
-                    )
-                    else -> null
-            }
-            val week = block0[14].toInt() and 0xff
-            val year = block0[15].toInt() and 0xff
-            val manufDate: List<ListItem>? = if (week in 0x01..0x53 && week and 0xf in 0..9 && year and 0xf in 0..9 &&
-                    year > 0 && year < 0x25)
-                    listOf(
-                            ListItem("Week of Production", week.toString(16)),
-                            ListItem("Year of Production", year.toString(16))
-                    )
-                    else
-                            null
-            if (main == null && manufDate == null)
-                    return null
-            else
-                    return main.orEmpty() + manufDate.orEmpty()
+        val sector0 = sectorsRaw[0]
+        if (sector0.isUnauthorized || sector0.blocks[0].size < 16)
+                return null
+        val block0 = sector0.blocks[0]
+
+        // Fudan Microelectronics FM11RF08
+        if (block0.sliceOffLen(8, 8) == ImmutableByteArray.fromASCII("bcdefghi"))
+                return listOf(ListItem(R.string.manufacturer_name, R.string.manufacturer_fudan_microelectronics),
+                              ListItem(R.string.select_acknowledge, block0.getHexString(5, 1)),
+                              ListItem(R.string.answer_to_request, block0.getHexString(6, 2)))
+
+        val main: List<ListItem> = when {
+                tagId.size == 7 && tagId[0] == 0x04.toByte() -> listOf(
+                        ListItem(R.string.manufacturer_name, R.string.manufacturer_nxp),
+                        ListItem(R.string.mfc_uid_mode, R.plurals.bytes, 7),
+                        ListItem(R.string.select_acknowledge, block0.getHexString(7, 1)),
+                        ListItem(R.string.answer_to_request, block0.getHexString(8, 2))
+                        // FIXME: what do the bytes 10-13 mean?
+                )
+                else -> emptyList()
+        }
+
+        val week = block0[14].toInt() and 0xff
+        val year = block0[15].toInt() and 0xff
+        val manufDate: List<ListItem> = if (week in 0x01..0x53 && week and 0xf in 0..9 && year and 0xf in 0..9 &&
+                year > 0 && year < 0x25) {
+            val yearD = NumberUtils.convertBCDtoInteger(year) + 2000
+
+            // TODO: Show a date here
+            listOf(
+                    ListItem(R.string.manufacture_week, week.toString(16)),
+                    ListItem(R.string.manufacture_year, yearD.toString()))
+        } else { emptyList() }
+
+        return main + manufDate
     }
 
     constructor(sectors: List<ClassicSector>)
