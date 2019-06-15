@@ -10,16 +10,17 @@ layout: home
 
 [More screenshots...](https://micolous.github.io/metrodroid/screenshots)
 
-## Supported cards / agencies
-
-This table is from the _development_ version of Metrodroid -- some cards might not be supported yet
-in the version on F-Droid or Google Play!
+**Note:** This list of supported cards is from the [current development (`git master`)
+version of Metrodroid][repo]. [The release version][release] may be missing some of these cards --
+but it'll be available soon!
 
 Card / Agency | Location | Notes
 ------------- | -------- | -----
 [AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: `123`
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
+[BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
+[Carta Mobile][pisa] | :italy: Pisa, Italy | :new:
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
@@ -30,21 +31,24 @@ City Union | :cn: Mainland China | :new:
 [Envibus][envibus] | :fr: Sophia Antipolis, France | :new:
 [ERG][erg] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][ezlink] | :singapore: Singapore |
-[Go card][seqgo] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC` [Note][seqgonote]
+[Go card][seqgo] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[GoCard][otago] | :new_zealand: Greater Dunedin (Otago), New Zealand | :new: `MFC`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: `123`
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+[KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][lisboa] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][manly] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Metrocard][adl] | :australia: Adelaide, SA, Australia | :new:
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
+[Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
 [Mobib][mobib] | :belgium: Brussels, Belgium | :new:
-[Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123` [Note][mykinote]
+[Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [Navigo][navigo] | :fr: Paris, France | :new:
 [NETS FlashPay][nets] | :singapore: Singapore |
@@ -61,7 +65,9 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 Selecta | :fr: France | :new:
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
+[Smartride][smartride] | :new_zealand: Rotorua, New Zealand | :new: `MFC`
 [SmartRider][smartrider] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
+[Snapper][snapper] | :new_zealand: Wellington, New Zealand | :new:
 [Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan
 [SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: `123` `MFC`
@@ -82,6 +88,7 @@ Note | Meaning
 :new: | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
 :unlock: | Encryption keys are downloaded from the operator.
+:singapore: | CEPAS cards (Singapore) are not compatible with all devices (ISO 14443-B).
 `MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
 `123` | Only the card number can be read.
 `FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
@@ -100,13 +107,17 @@ interpreted locally, and _connectivity is disabled by default._
 
 * [FeliCa][felica]
 * [FeliCa Lite][felica]
-* ISO 7816-4
+* ISO/IEC 7816-4
   * [Calypso][calypso]
   * [CEPAS][cepas]
   * [T-Money][tmoney]
+* [ISO/IEC 15693 "Vicinity"][nfcv]
 * [MIFARE Classic][mfc] (Not compatible with all devices)
 * [MIFARE DESFire][mfd]
 * [MIFARE Ultralight][mfu] (Not compatible with all devices)
+
+[repo]: https://github.com/micolous/metrodroid
+[release]: https://github.com/micolous/metrodroid/releases
 
 [mykinote]: https://micolous.github.io/metrodroid/myki
 [seqgonote]: https://micolous.github.io/metrodroid/seqgo
@@ -114,6 +125,7 @@ interpreted locally, and _connectivity is disabled by default._
 [calypso]: http://www.calypsotechnology.net/
 [cepas]: https://en.wikipedia.org/wiki/CEPAS
 [felica]: https://en.wikipedia.org/wiki/FeliCa
+[nfcv]: https://en.wikipedia.org/wiki/ISO/IEC_15693
 [mfc]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic
 [mfd]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
 [mfu]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
@@ -122,6 +134,7 @@ interpreted locally, and _connectivity is disabled by default._
 [athop]: https://at.govt.nz/bus-train-ferry/at-hop-card/
 [beijing]: https://en.wikipedia.org/wiki/Yikatong
 [bu]: http://bilheteunico.sptrans.com.br/
+[busit]: https://www.busit.co.nz/
 [charlie]: https://www.mbta.com/fares/charliecard
 [chc]: http://www.metroinfo.co.nz/
 [clipper]: https://www.clippercard.com/
@@ -137,6 +150,7 @@ interpreted locally, and _connectivity is disabled by default._
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
+[komuterlink]: http://www.ktmb.com.my/KomuterLink.html
 [laxtap]: https://www.taptogo.net/
 [leap]: https://www.leapcard.ie/
 [lisboa]: https://www.portalviva.pt/
@@ -153,9 +167,11 @@ interpreted locally, and _connectivity is disabled by default._
 [opal]: http://www.opal.com.au/
 [opus]: http://www.stm.info/en/info/fares/opus-cards-and-other-fare-media/opus-card
 [orca]: http://www.orcacard.com/
+[otago]: https://www.orc.govt.nz/public-transport/dunedin-buses/fares-and-gocard
 [oura]: https://www.oura.com/
 [ovc]: http://www.ov-chipkaart.nl/
 [pasmo]: https://en.wikipedia.org/wiki/PASMO
+[pisa]: http://www.pisa.cttnord.it/Carta_Mobile/P/561
 [podoro]: http://podorozhnik.spb.ru/en/
 [ravkav]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [rejse]: https://www.rejsekort.dk/
@@ -163,15 +179,17 @@ interpreted locally, and _connectivity is disabled by default._
 [seqgo]: http://translink.com.au/tickets-and-fares/go-card
 [shenzhen]: http://www.shenzhentong.com/
 [slaccess]: https://sl.se/en/eng-info/fares/sl-access/
+[smartride]: https://www.baybus.co.nz/faqs/smartride-card/
 [smartrider]: http://www.transperth.wa.gov.au/SmartRider/
+[snapper]: https://www.snapper.co.nz/
 [strelka]: https://strelkacard.ru/
 [suica]: https://en.wikipedia.org/wiki/Suica
 [suncard]: https://sunrail.com/tickets-suncards/suncards/
 [tam]: http://www.tam-voyages.com/
 [tartu]: https://www.tartu.ee/en/tartu-bus-card
+[tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
 [tmoney]: https://www.t-money.co.kr/
 [troika]: http://troika.mos.ru/
 [ventra]: https://www.ventrachicago.com/
 [wuhan]: http://www.whcst.com/
 [zolotaya]: https://en.wikipedia.org/wiki/Zolotaya_Korona
-

@@ -77,6 +77,7 @@ Card / Agency | Location | Notes
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
+[Carta Mobile][pisa] | :italy: Pisa, Italy | :new:
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
@@ -84,6 +85,7 @@ City Union | :cn: Mainland China | :new:
 [Cubic Nextfare][nextfare] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EasyCard][easycard] | :taiwan: Taipei, Taiwan | :closed_lock_with_key: `MFC`
 [Edy][edy] | :jp: Japan
+[EMV][emv] | :earth_africa: _many locations_ | :new:
 [Envibus][envibus] | :fr: Sophia Antipolis, France | :new:
 [ERG][erg] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][ezlink] | :singapore: Singapore |
@@ -95,12 +97,14 @@ City Union | :cn: Mainland China | :new:
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+[KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][lisboa] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][manly] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Metrocard][adl] | :australia: Adelaide, SA, Australia | :new:
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
+[Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
 [Mobib][mobib] | :belgium: Brussels, Belgium | :new:
 [Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
@@ -165,7 +169,7 @@ Some devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compli
 
 ## License and copyright
 
-Copyright 2015 – 2018 Michael Farrell
+Copyright 2015 – 2019 Michael Farrell
 
 Copyright 2011 – 2013 Eric Butler
 
@@ -230,6 +234,7 @@ This software and it's authors are not associated with any public transit agency
 [compass]: https://www.compasscard.ca/
 [easycard]: https://www.easycard.com.tw/en/
 [edy]: https://en.wikipedia.org/wiki/Edy
+[emv]: https://en.wikipedia.org/wiki/EMV
 [envibus]: http://www.envibus.fr/
 [erg]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
 [ezlink]: http://www.ezlink.com.sg/
@@ -239,6 +244,7 @@ This software and it's authors are not associated with any public transit agency
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
+[komuterlink]: http://www.ktmb.com.my/KomuterLink.html
 [laxtap]: https://www.taptogo.net/
 [leap]: https://www.leapcard.ie/
 [lisboa]: https://www.portalviva.pt/
@@ -259,6 +265,7 @@ This software and it's authors are not associated with any public transit agency
 [oura]: https://www.oura.com/
 [ovc]: http://www.ov-chipkaart.nl/
 [pasmo]: https://en.wikipedia.org/wiki/PASMO
+[pisa]: http://www.pisa.cttnord.it/Carta_Mobile/P/561
 [podoro]: http://podorozhnik.spb.ru/en/
 [ravkav]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [rejse]: https://www.rejsekort.dk/
@@ -274,6 +281,7 @@ This software and it's authors are not associated with any public transit agency
 [suncard]: https://sunrail.com/tickets-suncards/suncards/
 [tam]: http://www.tam-voyages.com/
 [tartu]: https://www.tartu.ee/en/tartu-bus-card
+[tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
 [tmoney]: https://www.t-money.co.kr/
 [troika]: http://troika.mos.ru/
 [ventra]: https://www.ventrachicago.com/
