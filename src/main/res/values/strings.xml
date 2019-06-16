@@ -767,6 +767,7 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_seoul">Seoul, Korea</string>
+    <string name="location_shanghai">Shanghai, China</string>
     <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_stockholm">Stockholm, Sweden</string>
@@ -1194,6 +1195,7 @@
     Does not have a Chinese-language name.
     -->
     <string name="card_name_cityunion">City Union</string>
+    <string name="card_name_shanghai">Shanghai Public Transportation Card</string>
     <!--
     Translators: Name of an interoperable transit card system used in China. May be transliterated.
 
