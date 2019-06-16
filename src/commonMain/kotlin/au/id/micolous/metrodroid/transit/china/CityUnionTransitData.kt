@@ -70,6 +70,8 @@ class CityUnionTransitData (val validityStart: Int?,
                 SHANGHAI to CardInfo(
                         name = Localizer.localizeString(R.string.card_name_shanghai),
                         locationId = R.string.location_shanghai,
+                        imageId = R.drawable.shanghai,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.ISO7816,
                         preview = true
                 )
