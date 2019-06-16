@@ -36,6 +36,8 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
         TARIFF_SINGLE_URBAN -> "Urban ticket"
         TARIFF_DAILY_URBAN -> "Urban daily ticket"
         TARIFF_URBAN_2X6 -> "Urban weekly 2x6 ticket"
+        TARIFF_YEARLY_URBAN -> "Urban annual subscription"
+        TARIFF_MONTHLY_URBAN -> "Urban monthly subscription"
         null -> null
         else -> Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
     }
@@ -77,4 +79,6 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
     const val TARIFF_URBAN_2X6 = 0x1b39
     const val TARIFF_SINGLE_URBAN = 0xfff
     const val TARIFF_DAILY_URBAN = 0x100d
+    const val TARIFF_YEARLY_URBAN = 45
+    const val TARIFF_MONTHLY_URBAN = 46
 }
