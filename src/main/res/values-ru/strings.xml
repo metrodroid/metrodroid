@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Метродроид</string>
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Метродроид</string>
     <string name="license">Лицензии</string>
     <string name="directions">Приложите карту.</string>
     <string name="reading_card">Карта считывается…</string>
@@ -20,13 +20,13 @@
     <string name="export_all">Экспортировать всё</string>
     <string name="about">О программе</string>
     <string name="preferences">Настройки</string>
-    <string name="balance_speech">Остаток <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Остаток <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="supported_cards">Поддерживаемые карты</string>
     <string name="nfc_off_error">NFC оключён</string>
     <string name="turn_on_nfc">Пожалуйста, включите NFC чтобы прочитать карту.</string>
     <string name="unknown_card_header">Неизвестная карта</string>
     <string name="unknown_card_description">Эта карта ещё не поддерживается Метродроидом. Показаны необранотанные данные.</string>
-
     <string name="unknown_more_info">Более</string>
     <string name="scanned_cards">Ранее прочитанные карточки</string>
     <string name="keys_required">Для чтения этой карты необходимы ключи доступа.</string>
@@ -36,49 +36,42 @@
     <string name="card_format">Тип карты</string>
     <string name="obfuscation_card_numbers">Спрятать номера карт</string>
     <string name="obfuscation_card_numbers_desc">Нигде не показывать номера карт</string>
-
     <string name="hidden_card_number">Номер карты спрятан</string>
     <string name="pref_show_local_and_english_title">Показывать местное и английское название станций</string>
     <string name="pref_show_local_and_english_desc">Если включено, то показывает и местное и английское название станций. Если выключено то показывается только один, наиболее подходящий, вариант.</string>
-
     <plurals name="minutes">
-	<item quantity="one">%d минуту</item>
-	<item quantity="few">%d минуты</item>
-	<item quantity="many">%d минут</item>
-</plurals>
+        <item quantity="one">%d минуту</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+    </plurals>
     <plurals name="hours">
-	<item quantity="one">%d час</item>
-	<item quantity="few">%d часа</item>
-	<item quantity="many">%d часов</item>
-</plurals>
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="many">%d часов</item>
+    </plurals>
     <plurals name="days">
-	<item quantity="one">%d день</item>
-	<item quantity="few">%d дня</item>
-	<item quantity="many">%d дней</item>
-</plurals>
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+    </plurals>
     <plurals name="trips_remaining">
-	<item quantity="one">Осталось %d поездка</item>
-	<item quantity="few">Осталось %d поездки</item>
-	<item quantity="many">Осталось %d поездок</item>
-</plurals>
+        <item quantity="one">Осталось %d поездка</item>
+        <item quantity="few">Осталось %d поездки</item>
+        <item quantity="many">Осталось %d поездок</item>
+    </plurals>
     <plurals name="troika_rides">
-	<item quantity="one">%d поездка</item>
-	<item quantity="few">%d поездки</item>
-	<item quantity="many">%d поездок</item>
-</plurals>
-
+        <item quantity="one">%d поездка</item>
+        <item quantity="few">%d поездки</item>
+        <item quantity="many">%d поездок</item>
+    </plurals>
     <string name="enabled">Включено</string>
     <string name="disabled">Выключено</string>
-
     <string name="card_name_ravkav">Рав Кав</string>
     <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
-
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
     <string name="time_from_to">%1$s → %2$s</string>
     <string name="time_from_unknown_to">\?:?? → %s</string>
-
-
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
     <string name="location_san_francisco">Сан Франциско, Калифорния, США</string>
     <string name="location_singapore">Сингапур</string>
@@ -88,7 +81,7 @@
     <string name="location_sao_paulo">Сан Пауло, Бразилия</string>
     <string name="location_helsinki_finland">Хельсинки, Финляндия</string>
     <string name="location_sydney_australia">Сидней, Австралия</string>
-    <string name="location_brisbane_seq_australia">Брисбен</string>
+    <string name="location_brisbane_seq_australia">Брисбен, Австралия</string>
     <string name="location_victoria_australia">Виктория, Австралия</string>
     <string name="location_hong_kong">Гонг-Конг</string>
     <string name="location_shenzhen">Шэньчжэнь, Китай</string>
@@ -99,7 +92,6 @@
     <string name="location_moscow">Москва, Россия</string>
     <string name="location_saint_petersburg">Санкт-Петербург, Россия</string>
     <string name="location_israel">Израиль</string>
-
     <string name="mode_bus">Автобус</string>
     <string name="mode_train">Поезд</string>
     <string name="mode_tram">Трамвай</string>
@@ -109,7 +101,6 @@
     <string name="card_name_suica">Suica</string>
     <string name="card_name_icoca">ICOCA</string>
     <string name="card_name_pasmo">PASMO</string>
-
     <string name="opal_automatic_top_up">Автоматическое пополнение</string>
     <string name="opal_weekly_trips">Поездок за неделю</string>
     <string name="opal_vehicle_bus">Автобус</string>
@@ -119,7 +110,6 @@
     <string name="szt_metro">Метро Шэньчжэня</string>
     <string name="szt_bus">Автобус Шэньчжэня</string>
     <string name="szt_station_gate">турникет %s</string>
-
     <string name="card_name_troika">Тройка</string>
     <string name="card_name_podorozhnik">Подорожник</string>
     <string name="card_name_troika_podorozhnik_hybrid">Тройка+Подорожник</string>
@@ -133,23 +123,19 @@
     <string name="subway_trips">Поездок на метро</string>
     <string name="ground_trips">Поездок на наземном транспорте</string>
     <string name="podorozhnik_topup">Пополнение Подорожника</string>
-
     <string name="led_bus">Автобус Санкт-Петербурга</string>
     <string name="led_metro">Петербургское метро</string>
-
     <string name="nfc_enabled">NFC: включено</string>
     <string name="nfc_disabled">NFC: выключено</string>
     <string name="nfc_not_available">NFC: не доступно</string>
     <string name="balances_and_subscriptions">Билеты</string>
-<string name="scanned_at_format">Прочитано %2$s в %1$s</string>
+    <string name="scanned_at_format">Прочитано %2$s в %1$s</string>
     <string name="machine_id_format">Автомат %s</string>
-
     <string name="advanced_info">Расширенная информация</string>
     <string name="hw_detail">Информация о производителе</string>
     <string name="data">Необработанные данные</string>
     <string name="loading">Считывание…</string>
     <string name="unknown_more_info_desc">Больше информации о поддержки этой карты Метродроидом.</string>
-
     <string name="no_scanned_cards">Вы не прочитали ни одной карты.</string>
     <string name="block_title_format">Блок: %s</string>
     <string name="page_title_format">Страница: %s</string>
@@ -201,70 +187,55 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Количество попыток аутентификации</string>
     <string name="auth_retries_summary">Количество попыток аутентификации для каждого сектора</string>
-
     <string name="mfc_fallback_desc">На картах некоторых транспортных компаний нету идентификатора. Чтобы их прочитать вам нужно выбрать транспортную компанию явно.</string>
     <string name="requires_android_21">Требуется Андроид 5.0 или выше.</string>
-
     <string name="speak_balance">Прочитать остаток вслух</string>
     <string name="speak_balance_summary">Когда вы считываете карту, остаток будет автоматически прочитан вслух. Это работает даже без считывателя экрана.</string>
-
     <string name="unsupported_tag">Неподдерживаемый тип NFC карты</string>
-
     <string name="saving_card">Карта записывается…</string>
-
     <string name="mfc_reading">Считывание карты MIFARE Classic…</string>
     <string name="mfc_have_key">Пробуем пользовательский ключ для сектора %d…</string>
     <string name="mfc_other_key">Пробуем другие пользовательские ключи для сектора %d…</string>
     <string name="mfc_default_key">Пробуем известные ключи для сектора %d…</string>
     <string name="mfc_reading_blocks">Считываем сектор %d…</string>
-
     <string name="iso14a_detect">Определяем тип карты ISO 14443…</string>
     <string name="mfd_reading">Считываем карту MIFARE DESFire…</string>
     <string name="card_reading_type">Считываем <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
-
     <string name="mfu_detect">Определям тип карты MIFARE Ultralight…</string>
     <string name="mfu_reading">Считываем карту MIFARE Ultralight…</string>
-
     <string name="iso7816_probing">Сканируем карту ISO7816…</string>
     <string name="calypso_reading">Считываем карту Calypso…</string>
-
     <string name="card_partial_read_title">Частично считанная карта!</string>
     <string name="show_partial_data">Показать неполные данные</string>
-
     <string name="pref_theme">Скин</string>
     <string name="pref_theme_desc">Выберите внешний вид приложения</string>
-
     <plurals name="cards_imported">
-	<item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта!</item>
-	<item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты!</item>
-	<item quantity="many">Импортированао<xliff:g id="count" example="1">%d</xliff:g> карт!</item>
-</plurals>
-
+        <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта!</item>
+        <item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты!</item>
+        <item quantity="many">Импортированао<xliff:g id="count" example="1">%d</xliff:g> карт!</item>
+    </plurals>
     <plurals name="block_count">
-	<item quantity="one">%d блок</item>
-	<item quantity="few">%d блока</item>
-	<item quantity="many">%d блоков</item>
-</plurals>
-
+        <item quantity="one">%d блок</item>
+        <item quantity="few">%d блока</item>
+        <item quantity="many">%d блоков</item>
+    </plurals>
     <plurals name="record_count">
-	<item quantity="one">%d запись</item>
-	<item quantity="few">%d записи</item>
-	<item quantity="many">%d записей</item>
-</plurals>
-
+        <item quantity="one">%d запись</item>
+        <item quantity="few">%d записи</item>
+        <item quantity="many">%d записей</item>
+    </plurals>
     <plurals name="felica_service_count">
-	<item quantity="one">%d сервис</item>
-	<item quantity="few">%d сервиса</item>
-	<item quantity="many">%d сервисов</item>
-</plurals>
-
+        <item quantity="one">%d сервис</item>
+        <item quantity="few">%d сервиса</item>
+        <item quantity="many">%d сервисов</item>
+    </plurals>
     <string name="desfire_standard_file">Стандартный файл</string>
     <string name="desfire_backup_file">Резервный файл</string>
     <string name="desfire_value_file">Файл значений</string>
     <string name="desfire_linear_record">Линейная запись</string>
     <string name="desfire_cyclic_record">Циклическая запись</string>
     <string name="desfire_unknown_file">Неизвестный тип файла</string>
-    <string name="cepas_purse_id">ИДентификатор кошелька</string>
+    <string name="cepas_purse_id">Идентификатор кошелька</string>
     <string name="cepas_purse_status">Статус кошелька</string>
     <string name="cepas_purse_balance">Остаток на кошельке</string>
     <string name="cepas_purse_creation_date">Дата создания кошелька</string>
@@ -273,23 +244,17 @@
     <string name="felica_manufacturer_code">Код производителя</string>
     <string name="felica_rom_type">Тип ПЗУ</string>
     <string name="felica_ic_type">Тип микросхемы</string>
-    <string name="felica_maximum_response_time">Максималхное время отклика</string>
+    <string name="felica_maximum_response_time">Максимальное время отклика</string>
     <string name="manufacturer_name">Производитель</string>
-
     <string name="location_vancouver">Ванкувер, Британская Колумбия, Канада</string>
     <string name="location_quebec">Провинция Квебек, Канада</string>
-
     <string name="location_jakarta">Джакарта, Индонезия</string>
-
     <string name="mode_unknown">Неизвестно</string>
-
     <string name="clipper_end_of_line">(Конец линии)</string>
     <string name="clipper_zone_number">Зона #%s</string>
-
     <string name="ez_bus_number">Автобус #%s</string>
     <string name="felica_terminal_portable">Переносной терминал</string>
     <string name="kmt_extra_note">Только карты FeliCa.</string>
-
     <string name="opal_action_none">Нет (новая, неиспользованная карта)</string>
     <string name="opal_action_transfer_same_mode">Пересадка (тот же тип транспорта)</string>
     <string name="opal_action_transfer_diff_mode">Пересадка (с другого типа транспорта)</string>
@@ -300,37 +265,29 @@
     <string name="opal_action_journey_completed_flat_rate">Поездка завершена (фиксированный тариф)</string>
     <string name="orca_topup_machine">Автомат #%s</string>
     <string name="orca_topup">Пополнение</string>
-
     <string name="seqgo_ticket_type_regular">Обычный</string>
     <string name="seqgo_ticket_type_concession">Льготный</string>
     <string name="seqgo_ticket_type_child">Детский</string>
     <string name="seqgo_refill_manual">Ручное пополнение</string>
     <string name="seqgo_refill_automatic">Автоматическое пополнение</string>
-
     <string name="nextfare_system_code">Код системы</string>
     <string name="nextfare_ticket_class">Билет с кодом класса %d</string>
-
     <string name="general_information">Общая информация</string>
     <string name="personal_information">Личная информация</string>
     <string name="date_of_birth">Дата рождения</string>
     <string name="convert_timezones">Перевести время в текущий часовой пояс</string>
     <string name="convert_timezones_summary">По умолчанию, Метродроид показывает все времена в часовом поясе карты. Если эта опция включена, то Метродроид переведет время в текущий часовой пояс вашего устройства.</string>
-
     <string name="compass_product_type">Тип продукта</string>
     <string name="compass_machine_code">Код автомата</string>
     <string name="ticket_type">Тип билета</string>
     <string name="compass_ticket_type_concession">Льготный</string>
     <string name="compass_ticket_type_regular">Обычный</string>
     <string name="compass_note">Только одноразовые билеты</string>
-
     <string name="podorozhnik_gate">турникет %s</string>
     <string name="podorozhnik_tvm">Автомат %d</string>
-
     <string name="led_shared_taxi">Маршрутка Санкт-Петербурга</string>
-
     <string name="blank_mfu_card">Пустая карта MIFARE Ultralight</string>
     <string name="fully_blank_title">Пустая карта</string>
-
     <string name="location_seoul">Сеул, Южная Корея</string>
     <string name="app_version">Версия: %s</string>
     <string name="device_model">Модель: %1$s (%2$s)</string>
@@ -339,4 +296,106 @@
     <string name="mfc_not_supported">MIFARE Classic: не поддерживается</string>
     <string name="card_number">Номер карты</string>
     <string name="pref_show_raw_station_ids">Показывать необработанные коды станций</string>
+    <string name="machine_id">Номер терминала</string>
+    <string name="localise_places">Добавить индикации языка к географическим наименованиям</string>
+    <string name="localise_places_longdesc_button">О индикациях языка…</string>
+    <string name="localise_places_longdesc_title">О индикациях языка</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">%s мс</item>
+        <item quantity="few">%s мс</item>
+        <item quantity="many">%s мс</item>
+    </plurals>
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Тип: %1$s, Длина: %2$s байт</item>
+        <item quantity="few">Тип: %1$s, Длина: %2$s байта</item>
+        <item quantity="many">Тип: %1$s, Длина: %2$s байт</item>
+    </plurals>
+    <string name="hardware_information">Аппаратная информация</string>
+    <string name="cepas_version">Версия CEPAS</string>
+    <string name="cepas_expiry_date">Дата окончания действия кошелька</string>
+    <string name="cepas_purse_info">Информация о кошельке</string>
+    <string name="felica_card_identification_number">Идентификатор карты</string>
+    <string name="calypso_manufacture_country">Страна производства</string>
+    <string name="calypso_manufacture_date">Дата производства</string>
+    <string name="transaction_counter">Счётчик транзакций</string>
+    <string name="location_istanbul">Стамбул, Турция</string>
+    <string name="location_boston">Бостон, Массачусетс, США</string>
+    <string name="desfire_keyex">Обмен ключами</string>
+    <string name="desfire_key_number">Ключ %s</string>
+    <string name="location_ireland">Ирландия</string>
+    <string name="location_minneapolis">Миннеаполис, Миннесота, США</string>
+    <plurals name="passengers">
+        <item quantity="one">пассажир</item>
+        <item quantity="few">пассажира</item>
+        <item quantity="many">пассажиров</item>
+    </plurals>
+    <string name="delete_key_confirm_title">Действительно удалить ключ\?</string>
+    <string name="cant_delete_with_obfuscation">Удаление ключей сейчас недоступно</string>
+    <string name="file_exported">Файл экспортирован.</string>
+    <string name="valid_from_format">Годен с %1$s</string>
+    <string name="valid_not_used">Ещё не использовался</string>
+    <string name="location_brussels">Брюссель, Бельгия</string>
+    <string name="location_gironde">Жиронда, Франция</string>
+    <string name="location_grenoble">Гренобль, Франция</string>
+    <string name="location_lisbon">Лиссабон, Португалия</string>
+    <string name="location_milan">Милан, Италия</string>
+    <string name="location_paris">Париж, Франция</string>
+    <string name="location_chicago">Чикаго, Иллинойс, США</string>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Действителен на %d день</item>
+        <item quantity="few">Действителен на %d дня</item>
+        <item quantity="many">Действителен на %d дней</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="one">Действителен на %d месяц</item>
+        <item quantity="few">Действителен на %d месяца</item>
+        <item quantity="many">Действителен на %d месяцев</item>
+    </plurals>
+    <string name="location_sophia_antipolis">София Антиполис, Франция</string>
+    <string name="location_portland">Портленд, Орегон, США</string>
+    <string name="location_montpellier">Монпелье, Франция</string>
+    <string name="subscription_cost">Цена</string>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">Осталась %d поездка из %d</item>
+        <item quantity="few">Остались %d поездки из %d</item>
+        <item quantity="many">Остались %d поездок из %d</item>
+    </plurals>
+    <string name="location_toulouse">Тулуза, Франция</string>
+    <string name="location_houston">Хьюстон, Техас, США</string>
+    <string name="location_beijing">Пекин, Китай</string>
+    <string name="location_china_mainland">Континентальный Китай</string>
+    <string name="location_wuhan">Ухань, Китай</string>
+    <string name="location_kiev">Киев, Украина</string>
+    <string name="rejected">Отказано</string>
+    <string name="location_adelaide">Аделаида, Австралия</string>
+    <string name="location_tartu">Тарту, Эстония</string>
+    <string name="location_taipei">Тайбэй</string>
+    <string name="location_france">Франция</string>
+    <string name="location_orlando">Орландо, Флорида, США</string>
+    <string name="location_russia">Россия</string>
+    <string name="location_krasnodar">Краснодар, Россия</string>
+    <string name="location_denmark">Дания</string>
+    <string name="location_stockholm">Стокгольм, Швеция</string>
+    <string name="location_yaroslavl">Ярославль, Россия</string>
+    <string name="requires_android_17">Требует Android 4.2 или выше.</string>
+    <string name="location_auckland">Окленд, Новая Зеландия</string>
+    <string name="location_waikato">Вайкато, Новая Зеландия</string>
+    <string name="location_wellington_nz">Веллингтон, Новая Зеландия</string>
+    <string name="location_otago">Отаго, Новая Зеландия</string>
+    <string name="location_rotorua">Роторуа, Новая Зеландия</string>
+    <string name="location_malaysia">Малайзия</string>
+    <string name="location_samara">Самара, Россия</string>
+    <string name="location_venezia">Венеция, Италия</string>
+    <string name="vicinity_reading">Читаем карту Vicinity…</string>
+    <string name="location_cadiz">Кадис, Испания</string>
+    <string name="location_tampere">Тампере, Финляндия</string>
+    <string name="location_gauteng">Гаутенг, ЮАР</string>
+    <string name="nfc_settings">Настройки NFC</string>
+    <string name="location_germany">Германия</string>
+    <string name="location_germany_and_switzerland">Германия и Швейцария</string>
+    <string name="location_pisa">Пиза, Италия</string>
+    <string name="location_worldwide">Всемирно</string>
+    <string name="location_abu_dhabi">Абу-Даби, ОАЭ</string>
+    <string name="location_dubai">Дубай, ОАЭ</string>
+    <string name="keys_loaded">Ключи шифрования для этой карты загружены.</string>
 </resources>
