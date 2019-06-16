@@ -55,6 +55,7 @@ class IntercardTransitData (
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_germany_and_switzerland,
+                imageId = R.drawable.logo_intercard,
                 cardType = CardType.MifareDesfire)
 
 		// FIXME: Apparently this system may be either in euro or in Swiss Francs. Unfortunately
