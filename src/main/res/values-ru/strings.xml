@@ -398,4 +398,5 @@
     <string name="location_abu_dhabi">Абу-Даби, ОАЭ</string>
     <string name="location_dubai">Дубай, ОАЭ</string>
     <string name="keys_loaded">Ключи шифрования для этой карты загружены.</string>
+    <string name="mode_trolleybus">Троллейбус</string>
 </resources>
