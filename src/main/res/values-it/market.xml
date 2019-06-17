@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="market_title"></string>
+    <string name="market_short_desc"></string>
+    <string name="market_long_desc"></string>
+    <string name="market_changelog_generic"></string>
+    <string name="market_changelog_39"></string>
+    <string name="market_changelog_38"></string>
+</resources>
