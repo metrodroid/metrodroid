@@ -68,7 +68,7 @@ class NewShenzhenTransitData (val validityStart: Int?,
 
         val CARD_INFO = CardInfo(
                 imageId = R.drawable.szt_card,
-                name = Localizer.localizeString(R.string.card_name_szt),
+                name = R.string.card_name_szt,
                 locationId = R.string.location_shenzhen,
                 cardType = CardType.FeliCa,
                 preview = true)

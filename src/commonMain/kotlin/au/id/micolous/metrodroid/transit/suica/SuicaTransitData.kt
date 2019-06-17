@@ -188,19 +188,19 @@ class SuicaTransitData (override val trips: List<SuicaTrip>): TransitData() {
 
         private val ICOCA_CARD_INFO = CardInfo(
                 imageId = R.drawable.icoca_card,
-                name =Localizer.localizeString(R.string.card_name_icoca),
+                name = R.string.card_name_icoca,
                 locationId = R.string.location_kansai,
                 cardType = CardType.FeliCa)
 
         private val SUICA_CARD_INFO = CardInfo(
                 imageId = R.drawable.suica_card,
-                name = Localizer.localizeString(R.string.card_name_suica),
+                name = R.string.card_name_suica,
                 locationId = R.string.location_tokyo,
                 cardType = CardType.FeliCa)
 
         private val PASMO_CARD_INFO = CardInfo(
                 imageId = R.drawable.pasmo_card,
-                name = Localizer.localizeString(R.string.card_name_pasmo),
+                name = R.string.card_name_pasmo,
                 locationId = R.string.location_tokyo,
                 cardType = CardType.FeliCa)
 

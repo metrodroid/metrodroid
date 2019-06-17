@@ -50,7 +50,7 @@ class KievTransitData (private val mSerial: String,
         // It doesn't really have a name and is just called
         // "Ticket for Kiev Metro".
         private val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_kiev),
+                name = R.string.card_name_kiev,
                 locationId = R.string.location_kiev,
                 imageId = R.drawable.kiev,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,

@@ -71,7 +71,7 @@ class TroikaTransitData(private val mBlock4: TroikaBlock?,
                 // seqgo_card_alpha has identical geometry
                 imageId = R.drawable.troika_card,
                 imageAlphaId = R.drawable.seqgo_card_alpha,
-                name = Localizer.localizeString(R.string.card_name_troika),
+                name = R.string.card_name_troika,
                 locationId = R.string.location_moscow,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_russia,

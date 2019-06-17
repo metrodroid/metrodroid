@@ -89,7 +89,7 @@ class OctopusTransitData private constructor(private val mOctopusBalance: Int?,
         val CARD_INFO = CardInfo(
                 imageId = R.drawable.octopus_card,
                 imageAlphaId = R.drawable.octopus_card_alpha,
-                name = Localizer.localizeString(R.string.card_name_octopus),
+                name = R.string.card_name_octopus,
                 locationId = R.string.location_hong_kong,
                 cardType = CardType.FeliCa)
 

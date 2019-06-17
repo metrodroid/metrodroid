@@ -50,7 +50,7 @@ class SnapperTransitData : TMoneyTransitData {
         private const val NAME = "Snapper"
 
         val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_snapper),
+                name = R.string.card_name_snapper,
                 locationId = R.string.location_wellington_nz,
                 imageId = R.drawable.snapperplus,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,

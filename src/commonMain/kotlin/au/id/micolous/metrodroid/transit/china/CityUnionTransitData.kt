@@ -69,7 +69,7 @@ class CityUnionTransitData (val validityStart: Int?,
         }
 
         private val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_cityunion),
+                name = R.string.card_name_cityunion,
                 locationId = R.string.location_china_mainland,
                 cardType = CardType.ISO7816,
                 preview = true)

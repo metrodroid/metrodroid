@@ -51,7 +51,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
 
     companion object {
         private val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_strelka),
+                name = R.string.card_name_strelka,
                 locationId = R.string.location_moscow,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_card_number_only,

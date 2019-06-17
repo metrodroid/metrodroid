@@ -66,7 +66,7 @@ open class TMoneyTransitData internal constructor(
     companion object {
         val CARD_INFO = CardInfo(
                 imageId = R.drawable.tmoney_card,
-                name = Localizer.localizeString(R.string.card_name_tmoney),
+                name = R.string.card_name_tmoney,
                 locationId = R.string.location_seoul,
                 cardType = CardType.ISO7816,
                 preview = true)
