@@ -75,9 +75,10 @@ class TripMapActivity : MetrodroidActivity() {
 
         settings.userAgentString = "${settings.userAgentString} metrodroid/${BuildConfig.VERSION_NAME}"
 
-        val actionBar = actionBar
+        setDisplayHomeAsUpEnabled(true)
+
+        val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.title = TripFormatter.formatStationNames(trip)
             val agencyName = trip.getAgencyName(false)
             val routeName = Trip.getRouteDisplayName(trip)
@@ -166,12 +167,8 @@ class TripMapActivity : MetrodroidActivity() {
             get() = this.mMarkers.size
 
         @JavascriptInterface
-        fun getMarker(index: Int): Any {
+        fun getMarker(index: Int): Marker {
             return this.mMarkers[index]
-        }
-
-        companion object {
-            private const val TAG = "TripMapShim"
         }
     }
 

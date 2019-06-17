@@ -35,7 +35,7 @@ for (var i=0; i<TripMapShim.getMarkerCount(); i++) {
 		shadowSize:  [41, 41]
     });
 
-    L.marker(ll, {icon: icon}).bindPopup(m.getHTML()).addTo(map);
+    L.marker(ll, {icon: icon}).bindPopup(m.getHtml()).addTo(map);
 }
 
 map.setMaxBounds(bounds.pad(1)).fitBounds(bounds.pad(0.1));
