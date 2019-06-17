@@ -721,7 +721,9 @@
     -->
     <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
+    <string name="location_crimea">Crimea</string>
     <string name="location_dubai">Dubai, UAE</string>
+    <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
     <string name="location_france">France</string>
     <string name="location_denmark">Denmark</string>
     <string name="location_gauteng">Gauteng, South Africa</string>
@@ -735,6 +737,7 @@
     <string name="location_ireland">Ireland</string>
     <string name="location_israel">Israel</string>
     <string name="location_istanbul">Istanbul, Turkey</string>
+    <string name="location_izhevsk">Izhevsk, Russia</string>
     <string name="location_jakarta">Jakarta, Indonesia</string>
     <!--
     Translators: This refers to the Kansai region (Japanese: 関西地方 / Kansai-chihō).
@@ -743,6 +746,7 @@
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_kazan">Kazan, Russia</string>
     <string name="location_kiev">Kiev, Ukraine</string>
+    <string name="location_kirov">Kirov, Russia</string>
     <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
@@ -753,8 +757,10 @@
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="location_montpellier">Montpellier, France</string>
     <string name="location_moscow">Moscow, Russia</string>
+    <string name="location_nizhniy_novgorod">Nizhniy Novgorod, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_otago">Otago, New Zealand</string>
+    <string name="location_penza">Penza, Russia</string>
     <string name="location_paris">Paris, France</string>
     <string name="location_pisa">Pisa, Italy</string>
     <string name="location_portland">Portland, OR, USA</string>
@@ -789,6 +795,7 @@
     <string name="location_wuhan">Wuhan, China</string>
     <!-- Translators: "Yaroslavl" (Ярославль) here refers to the city, rather than the oblast (federal subject) -->
     <string name="location_yaroslavl">Yaroslavl, Russia</string>
+    <string name="location_yoshkar_ola">Yoshkar-Ola, Russia</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -1825,6 +1832,25 @@
     <string name="card_name_kazan">Kazan transport card</string>
     <!-- Translators: card is issued but no ticket is loaded on it yet -->
     <string name="kazan_blank">Blank</string>
+
+    <string name="card_name_strizh">Strizh</string>
+    <string name="card_name_penza">Penza</string>
+    <string name="card_name_siticard">Siticard</string>
+    <string name="card_name_kirov">Kirov</string>
+    <string name="card_name_ekarta">Ekarta</string>
+    <string name="card_name_crimea">Crimea</string>
+    <string name="siticard_aerial_tramway">Aerial tramway</string>
+    <string name="siticard_adult_60min_xfer_purse">60-minute transfer purse (adult)</string>
+    <string name="siticard_adult_90min_xfer_purse">90-minute transfer purse (adult)</string>
+    <string name="siticard_edinyj_16_trips">Edinyj 16 trips</string>
+    <string name="siticard_edinyj_30_trips">Edinyj 30 trips</string>
+    <string name="siticard_edinyj_3_days">Edinyj 3 days</string>
+    <string name="card_name_crimea_trolleybus">Crimea Trolleybus</string>
+    <string name="card_name_crimea_parus_school">Parus school card</string>
+    <string name="card_name_yoshkar_ola">Yoshkar-Ola transport card</string>
+    <string name="umarsh_school">School student</string>
+    <string name="umarsh_student">Student</string>
+    <string name="umarsh_adult">Adult</string>
 
     <!-- Venezia specific strings -->
     <string name="venezia_profile">Profile</string>
