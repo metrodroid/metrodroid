@@ -50,7 +50,7 @@ class WuhanTongTransitData(val validityStart: Int?,
 
     companion object {
         private val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_wuhantong),
+                name = R.string.card_name_wuhantong,
                 locationId = R.string.location_wuhan,
                 imageId = R.drawable.wuhantong,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,

@@ -138,7 +138,7 @@ data class ZolotayaKoronaTransitData internal constructor(
 
         private val CARDS = mapOf(
                 0x230100 to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_krasnodar_etk),
+                        name = R.string.card_name_krasnodar_etk,
                         locationId = R.string.location_krasnodar,
                         imageId = R.drawable.krasnodar_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
@@ -146,7 +146,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         keysRequired = true, keyBundle = "zolotayakoronakrasnodar",
                         preview = true),
                 0x631500 to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_samara_school),
+                        name = R.string.card_name_samara_school,
                         locationId = R.string.location_samara,
                         imageId = R.drawable.samara_school,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
@@ -154,7 +154,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
                 0x632600 to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_samara_etk),
+                        name = R.string.card_name_samara_etk,
                         locationId = R.string.location_samara,
                         imageId = R.drawable.samara_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
@@ -162,7 +162,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
                 0x632700 to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_samara_student),
+                        name = R.string.card_name_samara_student,
                         locationId = R.string.location_samara,
                         imageId = R.drawable.samara_student,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
@@ -170,7 +170,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
                 0x760500 to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_yaroslavl_etk),
+                        name = R.string.card_name_yaroslavl_etk,
                         locationId = R.string.location_yaroslavl,
                         imageId = R.drawable.yaroslavl_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
