@@ -879,4 +879,22 @@
     <string name="location_abu_dhabi">Abu Dhabi, VAE</string>
     <string name="location_dubai">Dubai, VAE</string>
     <string name="keys_loaded">De beveiligingssleutels van deze kaart zijn niet geladen.</string>
+    <string name="manufacture_week">Productieweek</string>
+    <string name="manufacture_year">Productiejaar</string>
+    <string name="select_acknowledge">SAK (Select Acknowledge)</string>
+    <string name="answer_to_request">ATQA (Answer to Request)</string>
+    <plurals name="bytes">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d bytes</item>
+    </plurals>
+    <string name="mfc_uid_mode">UID-lengte</string>
+    <string name="manufacturer_fudan_microelectronics">Fudan Microelectronics</string>
+    <string name="manufacturer_nxp">NXP Semiconductors</string>
+    <string name="location_london">Londen, VK</string>
+    <string name="emv_track_2_equiv">Spoor 2 - vergelijkbare gegevens</string>
+    <string name="emv_track_3_equiv">Spoor 3 - vergelijkbare gegevens</string>
+    <string name="emv_service_code">Dienstcode</string>
+    <string name="tlv_tags">TLV-labels</string>
+    <string name="unknown_tags">Onbekende labels</string>
+    <string name="card_note_oyster">Er is alleen ondersteuning voor de eerste generatie kaarten (MIFARE Classic). De huidige generatie (die met een D in de linker benedenhoek) is volledig versleuteld (DESFire) en kan dus niet worden ondersteund.</string>
 </resources>
