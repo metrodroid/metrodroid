@@ -752,6 +752,7 @@
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="location_montpellier">Montpellier, France</string>
     <string name="location_moscow">Moscow, Russia</string>
+    <string name="location_orenburg">Orenburg, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_otago">Otago, New Zealand</string>
     <string name="location_paris">Paris, France</string>
@@ -1817,6 +1818,11 @@
     <string name="card_name_samara_etk">Samara ETK</string>
     <string name="card_name_samara_school">Samara school student card</string>
     <string name="card_name_samara_student">Samara student card</string>
+
+    <string name="card_name_orenburg_ekg">Orenburg EKG</string>
+    <string name="card_name_orenburg_school">Orenburg school student card</string>
+    <string name="card_name_orenburg_student">Orenburg student card</string>
+
     <!-- Venezia specific strings -->
     <string name="venezia_profile">Profile</string>
     <!-- Translators: Profile aaplied to adults from outside of region. "Fuori REGIONE ordinario" -->
