@@ -59,6 +59,7 @@ internal class IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             0 ->
                 // TODO: i18n
                 return "Forfait"
+            3 -> return "Forfait jour"
         }
         return Localizer.localizeString(R.string.unknown_format, contractTariff)
     }
