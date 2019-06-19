@@ -33,7 +33,7 @@ internal data class IntercodeTransaction(private val networkId: Int,
 
     companion object {
         fun parse (data: ImmutableByteArray, networkId: Int): IntercodeTransaction {
-            val parsed = En1545Parser.parse(data, tripFieldsUtc)
+            val parsed = En1545Parser.parse(data, tripFieldsLocal)
             return IntercodeTransaction(parsed.getInt(En1545Transaction.EVENT_NETWORK_ID) ?: networkId,
                     parsed)
         }

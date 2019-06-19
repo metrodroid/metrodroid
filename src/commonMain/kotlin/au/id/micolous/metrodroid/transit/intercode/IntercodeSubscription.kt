@@ -94,8 +94,8 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                 En1545FixedInteger(En1545Subscription.CONTRACT_PRICE_AMOUNT, 16),
                 En1545FixedInteger("ContractPriceUnit", 16),
                 En1545Bitmap(
-                        En1545FixedInteger.time("ContractRestrictStart"),
-                        En1545FixedInteger.time("ContractRestrictEnd"),
+                        En1545FixedInteger.timeLocal("ContractRestrictStart"),
+                        En1545FixedInteger.timeLocal("ContractRestrictEnd"),
                         En1545FixedInteger("ContractRestrictDay", 8),
                         En1545FixedInteger("ContractRestrictTimeCode", 8),
                         En1545FixedInteger(En1545Subscription.CONTRACT_RESTRICT_CODE, 8),
@@ -104,9 +104,9 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                 ),
                 En1545Bitmap(
                         En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
-                        En1545FixedInteger.time(En1545Subscription.CONTRACT_START),
+                        En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_START),
                         En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
-                        En1545FixedInteger.time(En1545Subscription.CONTRACT_END),
+                        En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_END),
                         En1545FixedInteger(En1545Subscription.CONTRACT_DURATION, 8),
                         En1545FixedInteger.date("ContractLimit"),
                         En1545FixedInteger(En1545Subscription.CONTRACT_ZONES, 8),
@@ -125,7 +125,7 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                 ),
                 En1545Bitmap(
                         En1545FixedInteger.date(En1545Subscription.CONTRACT_SALE),
-                        En1545FixedInteger.time(En1545Subscription.CONTRACT_SALE),
+                        En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_SALE),
                         En1545FixedInteger(En1545Subscription.CONTRACT_SALE_AGENT, 8),
                         En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 16)
                 ),
@@ -207,8 +207,8 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                         SOLD_CONTAINER,
                         En1545FixedInteger(En1545Subscription.CONTRACT_VEHICULE_CLASS_ALLOWED, 4),
                         En1545FixedInteger(En1545Subscription.LINKED_CONTRACT, 5),
-                        En1545FixedInteger.time(En1545Subscription.CONTRACT_START),
-                        En1545FixedInteger.time(En1545Subscription.CONTRACT_END),
+                        En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_START),
+                        En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_END),
                         En1545FixedInteger.date("ContractDataEndInhibition"),
                         En1545FixedInteger.date("ContractDataValidityLimit"),
                         En1545FixedInteger("ContractDataGeoLine", 28),
