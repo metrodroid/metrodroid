@@ -150,7 +150,8 @@ abstract class En1545Subscription : Subscription() {
                                 En1545FixedInteger.dateName(CONTRACT_START),
                                 En1545FixedInteger.dateName(CONTRACT_END),
                                 CONTRACT_STATUS,
-                                En1545FixedInteger.dateName(CONTRACT_LAST_USE)
+                                En1545FixedInteger.dateName(CONTRACT_LAST_USE),
+                                CONTRACT_ZONES
                         )
                         else -> setOf()
                     })
@@ -191,7 +192,7 @@ abstract class En1545Subscription : Subscription() {
         const val CONTRACT_UNKNOWN_F = "ContractUnknownF"
         const val CONTRACT_NETWORK_ID = "ContractNetworkId"
         const val CONTRACT_PASSENGER_CLASS = "ContractPassengerClass"
-        const val CONTRACT_AUTHENTICATOR = "ContractAuthnticator"
+        const val CONTRACT_AUTHENTICATOR = "ContractAuthenticator"
         const val CONTRACT_SOLD = "ContractSold"
         const val CONTRACT_DEBIT_SOLD = "ContractDebitSold"
         const val CONTRACT_JOURNEYS = "ContractJourneys"

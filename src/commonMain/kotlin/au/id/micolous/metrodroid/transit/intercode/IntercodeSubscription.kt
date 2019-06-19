@@ -64,7 +64,9 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                     En1545Subscription.CONTRACT_STATUS,
                     En1545Subscription.CONTRACT_PROVIDER,
                     En1545Subscription.CONTRACT_RECEIPT_DELIVERED,
-                    En1545Subscription.CONTRACT_PASSENGER_CLASS
+                    En1545Subscription.CONTRACT_PASSENGER_CLASS,
+                    CONTRACT_ZONES,
+                    CONTRACT_AUTHENTICATOR
             ))
 
     companion object {
