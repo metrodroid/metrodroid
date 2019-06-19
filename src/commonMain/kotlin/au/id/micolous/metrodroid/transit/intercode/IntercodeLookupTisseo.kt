@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 
-internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo") {
+internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo"), IntercodeLookupSingle {
     override val cardInfo: CardInfo
         get() =
                 // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel

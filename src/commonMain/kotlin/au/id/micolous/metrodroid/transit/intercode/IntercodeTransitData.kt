@@ -35,7 +35,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calypso1545TransitData(capsule) {
 
     override val cardName: String
-        get() = lookup.cardInfo?.name ?: fallbackCardName(networkId)
+        get() = lookup.cardInfo { mTicketEnvParsed }?.name ?: fallbackCardName(networkId)
 
     override val info: List<ListItem>?
         get() = super.info.orEmpty() +
@@ -171,13 +171,10 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 else
                     "Intercode-" + networkId.toString(16))
 
-        private fun getCardName(networkId: Int): String =
-                NETWORKS[networkId]?.cardInfo?.name ?: fallbackCardName(networkId)
+        private fun getCardName(networkId: Int, env: ImmutableByteArray): String
+                = getLookup(networkId).cardInfo { parseTicketEnv(env) }?.name ?: fallbackCardName(networkId)
 
-        private fun getNetId(card: CalypsoApplication): Int {
-            return card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)!!.getRecord(1)!!
-                    .getBitsFromBuffer(13, 24)
-        }
+        private fun getNetId(env: ImmutableByteArray): Int = env.getBitsFromBuffer(13, 24)
 
         private fun getSerial(netId: Int, card: CalypsoApplication): String? {
             val data = card.getFile(CalypsoApplication.File.ICC)?.getRecord(1) ?: return null
@@ -196,13 +193,16 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             return null
         }
 
+        private fun parseTicketEnv(tenv: ImmutableByteArray) = En1545Parser.parse(tenv, TICKET_ENV_HOLDER_FIELDS)
+
         val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
-                get() = NETWORKS.values.mapNotNull { it.cardInfo }
+                get() = NETWORKS.values.flatMap { it.allCards }
 
             override fun parseTransitIdentity(card: CalypsoApplication): TransitIdentity {
-                val netId = getNetId(card)
-                return TransitIdentity(getCardName(netId), getSerial(netId, card))
+                val env = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)!!.getRecord(1)!!
+                val netId = getNetId(env)
+                return TransitIdentity(getCardName(netId, env), getSerial(netId, card))
             }
 
             override fun check(tenv: ImmutableByteArray): Boolean {
@@ -218,7 +218,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             override fun parseTransitData(card: CalypsoApplication) = parse(card)
 
             override fun getCardInfo(tenv: ImmutableByteArray) =
-                    NETWORKS[tenv.getBitsFromBuffer(13, 24)]?.cardInfo
+                    NETWORKS[tenv.getBitsFromBuffer(13, 24)]?.cardInfo { parseTicketEnv(tenv) }
         }
     }
 }

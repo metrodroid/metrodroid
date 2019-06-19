@@ -5,7 +5,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 
-internal object IntercodeLookupOura : IntercodeLookupSTR("oura") {
+internal object IntercodeLookupOura : IntercodeLookupSTR("oura"), IntercodeLookupSingle {
     override val cardInfo: CardInfo
         get() = CardInfo(
                 name = "OùRA",

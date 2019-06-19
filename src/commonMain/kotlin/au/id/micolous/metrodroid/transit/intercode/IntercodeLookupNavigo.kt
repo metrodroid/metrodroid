@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val NAVIGO_STR = "navigo"
 
-internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
+internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR), IntercodeLookupSingle {
     override val cardInfo: CardInfo get() = NAVIGO_CARD_INFO
 
     override fun getStation(locationId: Int, agency: Int?, transport: Int?): Station? {

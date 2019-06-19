@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 
-internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde") {
+internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde"), IntercodeLookupSingle {
 
     override val cardInfo: CardInfo
         get() = CardInfo(
