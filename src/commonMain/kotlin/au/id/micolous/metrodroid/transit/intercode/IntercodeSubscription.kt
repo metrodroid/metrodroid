@@ -71,7 +71,8 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                     CONTRACT_DESTINATION_1,
                     CONTRACT_VIA_1,
                     CONTRACT_ORIGIN_2,
-                    CONTRACT_DESTINATION_2
+                    CONTRACT_DESTINATION_2,
+                    CONTRACT_SERIAL_NUMBER
         ))
 
     companion object {

@@ -176,7 +176,12 @@ abstract class En1545Subscription : Subscription() {
                                 CONTRACT_DESTINATION_1,
                                 CONTRACT_VIA_1,
                                 CONTRACT_ORIGIN_2,
-                                CONTRACT_DESTINATION_2
+                                CONTRACT_DESTINATION_2,
+                                CONTRACT_SERIAL_NUMBER,
+                                CONTRACT_SALE_AGENT,
+                                CONTRACT_SALE_DEVICE,
+                                CONTRACT_PRICE_AMOUNT,
+                                CONTRACT_PAY_METHOD
                         )
                         else -> setOf()
                     })
