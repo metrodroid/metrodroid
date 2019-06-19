@@ -1360,8 +1360,10 @@
 
     <!-- Translators: Used to describe a card that is not registered to any individual. -->
     <string name="card_type_anonymous">Anonymous</string>
+    <string name="card_type_declarative">Declarative</string>
     <!-- Translators: Used to describe a card that has been registered in an individual's name. -->
     <string name="card_type_personal">Personal</string>
+    <string name="card_type_provider_specific">Provider-specific</string>
 
     <!--
     Translators: This should never be translated as "ZIP code".

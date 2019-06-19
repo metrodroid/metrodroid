@@ -46,7 +46,8 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                         En1545TransitData.ENV_AUTHENTICATOR,
                         En1545FixedInteger.dateName(En1545TransitData.HOLDER_PROFILE),
                         En1545TransitData.HOLDER_BIRTH_DATE,
-                        En1545TransitData.HOLDER_POSTAL_CODE))
+                        En1545TransitData.HOLDER_POSTAL_CODE,
+                        HOLDER_CARD_TYPE))
 
     override val lookup get() = getLookup(networkId)
 
@@ -138,7 +139,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                                 )
                         ),
                         En1545Bitmap(
-                                En1545FixedInteger("HolderDataCardStatus", 4),
+                                En1545FixedInteger(HOLDER_CARD_TYPE, 4),
                                 En1545FixedInteger("HolderDataTeleReglement", 4),
                                 En1545FixedInteger("HolderDataResidence", 17),
                                 En1545FixedInteger("HolderDataCommercialID", 6),
