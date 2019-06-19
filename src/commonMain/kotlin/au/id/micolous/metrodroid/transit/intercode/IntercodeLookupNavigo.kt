@@ -20,15 +20,20 @@
 
 package au.id.micolous.metrodroid.transit.intercode
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.Station
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction
+import au.id.micolous.metrodroid.transit.en1545.En1545TransitData
 import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val NAVIGO_STR = "navigo"
 
 internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
+    override val cardInfo: CardInfo get() = NAVIGO_CARD_INFO
 
     override fun getStation(locationId: Int, agency: Int?, transport: Int?): Station? {
         if (locationId == 0)
@@ -104,4 +109,11 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
 
     private const val RATP = 3
     private const val SNCF = 2
+
+    private val NAVIGO_CARD_INFO = CardInfo(
+            name = "Navigo",
+            imageId = R.drawable.navigo,
+            imageAlphaId = R.drawable.iso7810_id1_alpha,
+            locationId = R.string.location_paris,
+            cardType = CardType.ISO7816)
 }

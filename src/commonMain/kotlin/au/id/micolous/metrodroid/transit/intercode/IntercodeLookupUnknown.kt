@@ -20,10 +20,11 @@
 package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupUnknown
 
-class IntercodeLookupUnknown : En1545LookupUnknown() {
+class IntercodeLookupUnknown (override val cardInfo: CardInfo?): En1545LookupUnknown(), IntercodeLookup {
 
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.PARIS

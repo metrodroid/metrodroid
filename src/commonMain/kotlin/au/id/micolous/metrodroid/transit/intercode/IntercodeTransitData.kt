@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.intercode
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
@@ -34,7 +35,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calypso1545TransitData(capsule) {
 
     override val cardName: String
-        get() = getCardName(networkId)
+        get() = lookup.cardInfo?.name ?: fallbackCardName(networkId)
 
     override val info: List<ListItem>?
         get() = super.info.orEmpty() +
@@ -56,37 +57,6 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
 
         // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
         // de transport" (ticket). Here they take the name of the transit agency.
-
-        // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel
-        private val TISSEO_CARD_INFO = CardInfo(
-                name = "Pastel",
-                locationId = R.string.location_toulouse,
-                imageId = R.drawable.pastel,
-                imageAlphaId = R.drawable.iso7810_id1_alpha,
-                cardType = CardType.ISO7816,
-                preview = true)
-
-        private val TRANSGIRONDE_CARD_INFO = CardInfo(
-                name = "TransGironde",
-                locationId = R.string.location_gironde,
-                imageId = R.drawable.transgironde,
-                imageAlphaId = R.drawable.iso7810_id1_alpha,
-                cardType = CardType.ISO7816,
-                preview = true)
-
-        private val OURA_CARD_INFO = CardInfo(
-                name = "OùRA",
-                locationId = R.string.location_grenoble,
-                imageId = R.drawable.oura,
-                imageAlphaId = R.drawable.iso7810_id1_alpha,
-                cardType = CardType.ISO7816)
-
-        private val NAVIGO_CARD_INFO = CardInfo(
-                name = "Navigo",
-                imageId = R.drawable.navigo,
-                imageAlphaId = R.drawable.iso7810_id1_alpha,
-                locationId = R.string.location_paris,
-                cardType = CardType.ISO7816)
 
         private val ENVIBUS_CARD_INFO = CardInfo(
                 name = "Envibus",
@@ -185,22 +155,24 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             return IntercodeSubscription.parse(data, tariff shr 4 and 0xff, netID, counter)
         }
 
-        private val NETWORKS = mapOf(
-                0x250064 to Pair(TAM_MONTPELLIER_CARD_INFO, IntercodeLookupUnknown()),
-                0x250502 to Pair(OURA_CARD_INFO, IntercodeLookupSTR("oura")),
-                0x250901 to Pair(NAVIGO_CARD_INFO, IntercodeLookupNavigo),
-                0x250916 to Pair(TISSEO_CARD_INFO, IntercodeLookupTisseo),
-                0x250920 to Pair(ENVIBUS_CARD_INFO, IntercodeLookupUnknown()),
-                0x250921 to Pair(TRANSGIRONDE_CARD_INFO, IntercodeLookupGironde))
+        private val NETWORKS = mapOf<Int, IntercodeLookup> (
+                0x250064 to IntercodeLookupUnknown(TAM_MONTPELLIER_CARD_INFO),
+                0x250502 to IntercodeLookupOura,
+                0x250901 to IntercodeLookupNavigo,
+                0x250916 to IntercodeLookupTisseo,
+                0x250920 to IntercodeLookupUnknown(ENVIBUS_CARD_INFO),
+                0x250921 to IntercodeLookupGironde)
 
-        fun getLookup(networkId: Int) = NETWORKS[networkId]?.second ?: IntercodeLookupUnknown()
+        fun getLookup(networkId: Int) = NETWORKS[networkId] ?: IntercodeLookupUnknown(null)
+
+        private fun fallbackCardName(networkId: Int): String = (
+                if (networkId shr 12 == COUNTRY_ID_FRANCE)
+                    "Intercode-France-" + (networkId and 0xfff).toString(16)
+                else
+                    "Intercode-" + networkId.toString(16))
 
         private fun getCardName(networkId: Int): String =
-                NETWORKS[networkId]?.first?.name ?: (
-                    if (networkId shr 12 == COUNTRY_ID_FRANCE)
-                        "Intercode-France-" + (networkId and 0xfff).toString(16)
-                    else
-                        "Intercode-" + networkId.toString(16))
+                NETWORKS[networkId]?.cardInfo?.name ?: fallbackCardName(networkId)
 
         private fun getNetId(card: CalypsoApplication): Int {
             return card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)!!.getRecord(1)!!
@@ -226,7 +198,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
 
         val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
-                get() = NETWORKS.values.map { it.first }
+                get() = NETWORKS.values.mapNotNull { it.cardInfo }
 
             override fun parseTransitIdentity(card: CalypsoApplication): TransitIdentity {
                 val netId = getNetId(card)
@@ -246,7 +218,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             override fun parseTransitData(card: CalypsoApplication) = parse(card)
 
             override fun getCardInfo(tenv: ImmutableByteArray) =
-                    NETWORKS[tenv.getBitsFromBuffer(13, 24)]?.first
+                    NETWORKS[tenv.getBitsFromBuffer(13, 24)]?.cardInfo
         }
     }
 }

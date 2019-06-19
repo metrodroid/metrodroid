@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
-internal open class IntercodeLookupSTR(str: String) : En1545LookupSTR(str) {
+internal abstract class IntercodeLookupSTR(str: String) : En1545LookupSTR(str), IntercodeLookup {
 
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.PARIS

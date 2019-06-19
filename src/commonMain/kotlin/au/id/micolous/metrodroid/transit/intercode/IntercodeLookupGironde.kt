@@ -21,7 +21,21 @@
 
 package au.id.micolous.metrodroid.transit.intercode
 
+import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
+
 internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde") {
+
+    override val cardInfo: CardInfo
+        get() = CardInfo(
+            name = "TransGironde",
+            locationId = R.string.location_gironde,
+            imageId = R.drawable.transgironde,
+            imageAlphaId = R.drawable.iso7810_id1_alpha,
+            cardType = CardType.ISO7816,
+            preview = true)
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?,
                               agency: Int?, transport: Int?): String? {
