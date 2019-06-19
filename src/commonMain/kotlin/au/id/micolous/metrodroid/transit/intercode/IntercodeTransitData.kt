@@ -188,10 +188,10 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
         private val NETWORKS = mapOf(
                 0x250064 to Pair(TAM_MONTPELLIER_CARD_INFO, IntercodeLookupUnknown()),
                 0x250502 to Pair(OURA_CARD_INFO, IntercodeLookupSTR("oura")),
-                0x250901 to Pair(NAVIGO_CARD_INFO, IntercodeLookupNavigo()),
-                0x250916 to Pair(TISSEO_CARD_INFO, IntercodeLookupTisseo()),
+                0x250901 to Pair(NAVIGO_CARD_INFO, IntercodeLookupNavigo),
+                0x250916 to Pair(TISSEO_CARD_INFO, IntercodeLookupTisseo),
                 0x250920 to Pair(ENVIBUS_CARD_INFO, IntercodeLookupUnknown()),
-                0x250921 to Pair(TRANSGIRONDE_CARD_INFO, IntercodeLookupGironde()))
+                0x250921 to Pair(TRANSGIRONDE_CARD_INFO, IntercodeLookupGironde))
 
         fun getLookup(networkId: Int) = NETWORKS[networkId]?.second ?: IntercodeLookupUnknown()
 

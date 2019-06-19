@@ -26,12 +26,14 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction
 import au.id.micolous.metrodroid.util.StationTableReader
 
-internal class IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
+private const val NAVIGO_STR = "navigo"
+
+internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
 
     override fun getStation(locationId: Int, agency: Int?, transport: Int?): Station? {
         if (locationId == 0)
             return null
-        var mdstStationId = locationId or ((agency ?: 0) shl 16) or ((transport ?:0) shl 24)
+        var mdstStationId = locationId or ((agency ?: 0) shl 16) or ((transport ?: 0) shl 24)
         val sector_id = locationId shr 9
         val station_id = locationId shr 4 and 0x1F
         var humanReadableId = locationId.toString()
@@ -49,7 +51,8 @@ internal class IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             humanReadableId = sector_id.toString() + "/" + station_id
         }
 
-        return StationTableReader.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId) ?: Station.unknown(fallBackName)
+        return StationTableReader.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId)
+                ?: Station.unknown(fallBackName)
     }
 
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
@@ -64,44 +67,41 @@ internal class IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
         return Localizer.localizeString(R.string.unknown_format, contractTariff)
     }
 
-    companion object {
-        private val SECTOR_NAMES = mapOf(
-                // TODO: Move this to MdSt
-                1 to "Cité",
-                2 to "Rennes",
-                3 to "Villette",
-                4 to "Montparnasse",
-                5 to "Nation",
-                6 to "Saint-Lazare",
-                7 to "Auteuil",
-                8 to "République",
-                9 to "Austerlitz",
-                10 to "Invalides",
-                11 to "Sentier",
-                12 to "Île Saint-Louis",
-                13 to "Daumesnil",
-                14 to "Italie",
-                15 to "Denfert",
-                16 to "Félix Faure",
-                17 to "Passy",
-                18 to "Étoile",
-                19 to "Clichy - Saint Ouen",
-                20 to "Montmartre",
-                21 to "Lafayette",
-                22 to "Buttes Chaumont",
-                23 to "Belleville",
-                24 to "Père Lachaise",
-                25 to "Charenton",
-                26 to "Ivry - Villejuif",
-                27 to "Vanves",
-                28 to "Issy",
-                29 to "Levallois",
-                30 to "Péreire",
-                31 to "Pigalle"
-        )
-        private const val NAVIGO_STR = "navigo"
+    private val SECTOR_NAMES = mapOf(
+            // TODO: Move this to MdSt
+            1 to "Cité",
+            2 to "Rennes",
+            3 to "Villette",
+            4 to "Montparnasse",
+            5 to "Nation",
+            6 to "Saint-Lazare",
+            7 to "Auteuil",
+            8 to "République",
+            9 to "Austerlitz",
+            10 to "Invalides",
+            11 to "Sentier",
+            12 to "Île Saint-Louis",
+            13 to "Daumesnil",
+            14 to "Italie",
+            15 to "Denfert",
+            16 to "Félix Faure",
+            17 to "Passy",
+            18 to "Étoile",
+            19 to "Clichy - Saint Ouen",
+            20 to "Montmartre",
+            21 to "Lafayette",
+            22 to "Buttes Chaumont",
+            23 to "Belleville",
+            24 to "Père Lachaise",
+            25 to "Charenton",
+            26 to "Ivry - Villejuif",
+            27 to "Vanves",
+            28 to "Issy",
+            29 to "Levallois",
+            30 to "Péreire",
+            31 to "Pigalle"
+    )
 
-        private const val RATP = 3
-        private const val SNCF = 2
-    }
+    private const val RATP = 3
+    private const val SNCF = 2
 }

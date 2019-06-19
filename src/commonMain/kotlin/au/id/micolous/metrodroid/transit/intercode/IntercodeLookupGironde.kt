@@ -21,7 +21,7 @@
 
 package au.id.micolous.metrodroid.transit.intercode
 
-internal class IntercodeLookupGironde : IntercodeLookupSTR("gironde") {
+internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde") {
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?,
                               agency: Int?, transport: Int?): String? {
@@ -32,7 +32,5 @@ internal class IntercodeLookupGironde : IntercodeLookupSTR("gironde") {
         return super.getRouteName(routeNumber, routeNumber, agency, transport)
     }
 
-    companion object {
-        private const val TRANSGIRONDE = 16
-    }
+    private const val TRANSGIRONDE = 16
 }

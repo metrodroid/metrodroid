@@ -19,8 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.intercode
 
-internal class IntercodeLookupTisseo : IntercodeLookupSTR("tisseo") {
-    companion object {
-        private const val AGENCY_TISSEO = 1
-    }
+internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo") {
+    private const val AGENCY_TISSEO = 1
 }
