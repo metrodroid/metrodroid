@@ -193,6 +193,14 @@ data class ZolotayaKoronaTransitData internal constructor(
                         cardType = CardType.MifareClassic,
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
+                0x633500 to CardInfo(
+                        name = R.string.card_name_samara_garden_dacha,
+                        locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_garden_dacha,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronasamara",
+                        preview = true),
                 0x760500 to CardInfo(
                         name = R.string.card_name_yaroslavl_etk,
                         locationId = R.string.location_yaroslavl,
