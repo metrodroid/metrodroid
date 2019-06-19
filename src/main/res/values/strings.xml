@@ -163,6 +163,9 @@
     <!-- Translators: This is a start date, eg: "Valid from 3/12/2017". Dates are formatted according
      to user preferences. -->
     <string name="valid_from_format">Valid from %1$s</string>
+    <!-- Translations: Those are locations. E.g. "Valid from Awesome city to Home village" -->
+    <string name="valid_origin_destination">Valid %1$s to %2$s</string>
+    <string name="valid_origin_destination_via">Valid %1$s to %2$s via %3$s</string>
     <string name="subscription_cost">Cost</string>
     <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>

@@ -133,9 +133,29 @@ abstract class En1545Subscription : Subscription() {
                 li.add(ListItem(Localizer.localizeString(R.string.with_receipt)))
             if (receipt != null && receipt == 0)
                 li.add(ListItem(Localizer.localizeString(R.string.without_receipt)))
+            if (parsed.contains(CONTRACT_ORIGIN_1) || parsed.contains(CONTRACT_DESTINATION_1)) {
+                if (parsed.contains(CONTRACT_VIA_1))
+                li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination_via,
+                        getStationName(CONTRACT_ORIGIN_1),
+                        getStationName(CONTRACT_DESTINATION_1),
+                        getStationName(CONTRACT_VIA_1))))
+                else
+                    li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination,
+                            getStationName(CONTRACT_ORIGIN_1),
+                            getStationName(CONTRACT_DESTINATION_1))))
+
+            }
+            if (parsed.contains(CONTRACT_ORIGIN_2) || parsed.contains(CONTRACT_DESTINATION_2)) {
+                li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination,
+                        getStationName(CONTRACT_ORIGIN_2),
+                        getStationName(CONTRACT_DESTINATION_2))))
+            }
             return super.info.orEmpty() + li
         }
 
+    private fun getStationName(prop: String): String? {
+        return lookup.getStation(parsed.getInt(prop) ?: return null, contractProvider, null)?.stationName
+    }
 
     override fun getRawFields(level: TransitData.RawLevel): List<ListItem>? =
             parsed.getInfo(
@@ -151,7 +171,12 @@ abstract class En1545Subscription : Subscription() {
                                 En1545FixedInteger.dateName(CONTRACT_END),
                                 CONTRACT_STATUS,
                                 En1545FixedInteger.dateName(CONTRACT_LAST_USE),
-                                CONTRACT_ZONES
+                                CONTRACT_ZONES,
+                                CONTRACT_ORIGIN_1,
+                                CONTRACT_DESTINATION_1,
+                                CONTRACT_VIA_1,
+                                CONTRACT_ORIGIN_2,
+                                CONTRACT_DESTINATION_2
                         )
                         else -> setOf()
                     })

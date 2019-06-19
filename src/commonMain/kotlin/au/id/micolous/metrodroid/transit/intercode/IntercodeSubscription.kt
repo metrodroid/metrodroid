@@ -66,8 +66,13 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                     En1545Subscription.CONTRACT_RECEIPT_DELIVERED,
                     En1545Subscription.CONTRACT_PASSENGER_CLASS,
                     CONTRACT_ZONES,
-                    CONTRACT_AUTHENTICATOR
-            ))
+                    CONTRACT_AUTHENTICATOR,
+                    CONTRACT_ORIGIN_1,
+                    CONTRACT_DESTINATION_1,
+                    CONTRACT_VIA_1,
+                    CONTRACT_ORIGIN_2,
+                    CONTRACT_DESTINATION_2
+        ))
 
     companion object {
         fun parse(data: ImmutableByteArray, type: Int, networkId: Int, ctr: Int?):IntercodeSubscription {
@@ -116,12 +121,12 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
                         En1545FixedInteger("ContractPeriodJourneys", 16)
                 ),
                 En1545Bitmap(
-                        En1545FixedInteger("ContractOrigin", 16),
-                        En1545FixedInteger("ContractDestination", 16),
+                        En1545FixedInteger(CONTRACT_ORIGIN_1, 16),
+                        En1545FixedInteger(CONTRACT_DESTINATION_1, 16),
                         En1545FixedInteger("ContractRouteNumbers", 16),
                         En1545FixedInteger("ContractRouteVariants", 8),
                         En1545FixedInteger("ContractRun", 16),
-                        En1545FixedInteger("ContractVia", 16),
+                        En1545FixedInteger(CONTRACT_VIA_1, 16),
                         En1545FixedInteger("ContractDistance", 16),
                         En1545FixedInteger(En1545Subscription.CONTRACT_INTERCHANGE, 8)
                 ),
