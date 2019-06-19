@@ -22,9 +22,12 @@ package au.id.micolous.metrodroid.transit.ricaricami
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
+import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.StationTableReader
 
 object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
 
@@ -38,6 +41,15 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
         TARIFF_URBAN_2X6 -> "Urban weekly 2x6 ticket"
         null -> null
         else -> Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
+    }
+
+    override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {
+        if (station == 0)
+            return null
+        return StationTableReader.getStation(
+                mStr,
+                station or ((transport ?: 0) shl 24),
+                NumberUtils.intToHex(station))
     }
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
