@@ -32,8 +32,12 @@ import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val NAVIGO_STR = "navigo"
 
-internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR), IntercodeLookupSingle {
-    override val cardInfo: CardInfo get() = NAVIGO_CARD_INFO
+internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
+    override fun cardInfo(env: () -> En1545Parsed): CardInfo =
+            if (env().getIntOrZero(En1545TransitData.HOLDER_CARD_TYPE) == 1) NAVIGO_DECOUVERTE_CARD_INFO else NAVIGO_CARD_INFO
+
+    override val allCards: List<CardInfo>
+        get() = listOf(NAVIGO_CARD_INFO, NAVIGO_DECOUVERTE_CARD_INFO)
 
     override fun getStation(locationId: Int, agency: Int?, transport: Int?): Station? {
         if (locationId == 0)
@@ -112,6 +116,12 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR), Intercod
 
     private val NAVIGO_CARD_INFO = CardInfo(
             name = "Navigo",
+            imageId = R.drawable.navigo,
+            imageAlphaId = R.drawable.iso7810_id1_alpha,
+            locationId = R.string.location_paris,
+            cardType = CardType.ISO7816)
+    private val NAVIGO_DECOUVERTE_CARD_INFO = CardInfo(
+            name = "Navigo découverte",
             imageId = R.drawable.navigo,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
