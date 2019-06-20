@@ -127,7 +127,17 @@ object LocalizeGenerator {
 
     fun generateLocalize(outputDir: File, stringsFile: File, drawablesDirs: List<File>) {
         readStringsXml(stringsFile)
-        val drawables = drawablesDirs.flatMap { it.list().toList() }.map { it.substringBefore(".") }
+
+        val drawables = drawablesDirs.flatMap {
+            it.list().toList()
+        }.filterNotNull().filter {
+            it.endsWith(".jpeg") || it.endsWith(".png") || it.endsWith(".xml")
+        }.map {
+            it.substringBefore(".").trim()
+        }.filterNot {
+            it.isBlank()
+        }
+
         writeRfile(outputDir, "commonMain", "expect", drawables) {
             name, type -> "val $name: ${typeName(type)}" }
         writeRfile(outputDir, "androidMain", "actual", drawables) { name, type -> "actual val $name = $androidR.$type.$name" }
