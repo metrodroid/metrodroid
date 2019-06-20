@@ -116,7 +116,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         Log.d(TAG, "Recv: $recvBuffer")
 
         loop@ while (true) {
-            if (recvBuffer[recvBuffer.size - 2] != 0x91.toByte()) {
+            if (recvBuffer.size < 2 || recvBuffer[recvBuffer.size - 2] != 0x91.toByte()) {
                 throw IllegalArgumentException("Invalid response: $recvBuffer")
             }
 
