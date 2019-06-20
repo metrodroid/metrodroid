@@ -202,6 +202,7 @@ android {
                 'he', 'iw',
                 // Indonesian
                 'id', 'in',
+                'it',
                 'ja',
                 'kab',
                 'mi',
