@@ -2,41 +2,48 @@
 <resources>
     <string name="market_title">Metrodroid</string>
     <string name="market_short_desc">Metrodroid leest informatie uit van sommige NFC-smartcards voor het OV.</string>
-    <string name="market_long_desc">Metrodroid leest informatie uit van sommige openbaarvervoerskaarten (\'NFC smart cards\'). 
-\n 
-\nDit is een fork van Eric Butler\\\'s Farebot-project, met ondersteuning voor meer kaarten en opgeloste fouten. 
+    <string name="market_long_desc">"Metrodroid leest sommige openbaarvervoerskaarten (\'NFC smart cards\') uit.  
 \n 
 \nOndersteunde kaarten: 
 \n- AT HOP - Auckland, Nieuw-Zeeland [0] [4] 
 \n- Beijing Municipal Card - Peking, China [0] 
 \n- Bilhete Único - São Paulo, Brazilië [1] [2] 
+\n- BUS-IT - Greater Hamilton (Waikato), Nieuw-Zeeland [0] [1] [2]
+\n- Carta Mobile - Pisa, Italië [0]
 \n- CharlieCard - Boston, MA, VS [0] [1] [2] 
 \n- City Union, T-Union - Chinees Vasteland [0] 
 \n- Clipper - San Francisco, CA, VS 
 \n- Compass (single-use tickets) - Vancouver, BC, Canada [0] 
 \n- EasyCard - Taipei, Taiwan [1] [2] 
+\n- EMV-bankkaarten [0]
 \n- EZ-Link, NETS Flashpay - Singapore [3] 
 \n- Go card - Brisbane en South East Queensland, Australië [0] [1] [2] 
+\n- GoCard - Otago (incl. Greater Dunedin (Otagoand Queenstown), Nieuw-Zeeland [0] [1]
 \n- Go-to Card - Minneapolis-St. Paul, MN, VS [0] [1] [2] 
+\n- Hafilat - Abu Dhabi, VAE [0]
 \n- Hop Fastpass - Portland, OR, VS [0] [4] 
 \n- HSL, Matkakortti - Finland 
 \n- Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Frankrijk 
 \n- IstanbulKart - Istanboel, Turkije [0] [4] 
 \n- Kartu Multi Trip - Jakarta, Indonesië 
 \n- Kiev Metro - Kiev, Ukraine [0] [1] [2] 
+\n- KomuterLink - Maleisië [0] [1] [2]
 \n- Krasnodar ETK - Krasnodar, Rusland [0] [1] [2] 
 \n- Leap - Ierland [0] [6] 
 \n- Lisboa Viva - Lissabon, Portugal [0] 
 \n- Manly Fast Ferry - Sydney, NZW, Australië [0] [1] [2] 
-\n- Metrocard - Christchurch, Nieuw-Zeeland [0] [1] [2] 
+\n- Metrocard (eerste gen.) - Christchurch, Nieuw-Zeeland [0] [1] [2] 
+\n- Metromoney - Tbilisi, Georgië [0] [1] [2]
 \n- Mobib - Brussel, België [0] 
 \n- Myki - Melbourne (en omgeving), VIC, Australië [0] [4] 
 \n- MyWay - Australisch Hoofdstedelijk Territorium, Australië [0] [1] [2] 
+\n- Nol - Dubai, VAE [0] [4]
 \n- Octopus - Hongkong [0] 
 \n- Opal - Sydney (en omgeving), NZW, Australië [0] 
 \n- Opus - Québec, Canada [0] 
 \n- ORCA - Seattle, WA, VS 
 \n- OV-chipkaart - Nederland [1] [2] 
+\n- Oyster (eerste gen.) - Londen, VK [0] [1] [2]
 \n- Podorozhnik - Sint-Petersburg, Rusland [0] [1] [2] 
 \n- Rav-Kav - Israël [0] 
 \n- Rejsekort - Noorwegen [0] [1] [2] 
@@ -44,11 +51,12 @@
 \n- Shenzhen Tong - Shenzhen, Guangdong-provincie, China [0] 
 \n- SLAccess - Stockholm, Zweden [0] [1] [2] 
 \n- SmartRider - West-Australië, Australië [0] [1] [2] 
+\n- Snapper (plus) - Wellington, Nieuw-Zeeland [0]
 \n- Strelka - Moskou, Rusland [0] [1] [4] 
 \n- Suica, IOCOA, PASMO, Edy - Japan 
 \n- SunCard - Orlando, FL, VS [0] [1] [2] [4] 
 \n- Tartu Bus - Tartu, Estland [0] [1] [4] 
-\n- T-Money - Zuid-Korea [0]
+\n- T-Money - Zuid-Korea [0] 
 \n- Touch ’n Go - Maleisië [0] [1] [2 
 \n- Transit Access Pass - Los Angeles, CA, VS [0] [1] [2] 
 \n- Troika - Moskou, Rusland [0] [1] [2] 
@@ -64,7 +72,7 @@
 \n[4]: Alleen het kaartnummer kan worden uitgelezen. 
 \n[5]: Terugval -- moet worden ingeschakeld in de app-instellingen. 
 \n 
-\nJe hebt een NFC-compatibele telefoon nodig.
+\nJe hebt een NFC-compatibele telefoon nodig. 
 \n 
 \nJe hebt een NXP NFC-chipset nodig in je telefoon om MIFARE Classic cards uit te kunnen lezen. Sommige telefoons hebben NFC-chips van andere makers, welke MIFARE Classic cards niet kunnen uitlezen (bijv.: Nexus 4, Nexus 5, Samsung Galaxy S4). Zie het Over-scherm in de app om te zien of je telefoon MIFARE Classic ondersteunt. 
 \n 
@@ -72,9 +80,11 @@
 \n 
 \nSommige vervoerders met Cubic Nextfare of ERG kunnen werken op MIFARE Classic. 
 \n 
-\nZie de privacy-overeenkomst voor de machtigingen. 
+\nLees de privacy-overeenkomst om Metrodroid\'s machtigingen te bekijken.
+\n
+\nDit is een fork van Eric Butler\\\'s Farebot-project, met ondersteuning voor meer kaarten en opgeloste fouten.
 \n 
-\nDeze software heeft als licentie GNU GPLv3+; de broncode is beschikbaar op https://github.com/micolous/metrodroid/</string>
+\nDeze software heeft als licentie GNU GPLv3+; de broncode is beschikbaar op https://github.com/micolous/metrodroid/"</string>
     <string name="market_changelog_30">* Meerdere fouten opgelost i.c.m. Cubix Nextfare-kaarten.
 * Fudan FM11RF08-kaarten worden niet langer herkend als Bilhete Único.
 * Experimentele ondersteuning voor MyWay (ACT, Australië).
@@ -143,9 +153,9 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n* Veel wijzigingen onder de motorkap.
 \n
 \nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_generic">Bugs opgelost en nieuwe functies en gegevens toegevoegd.
-\n
-\nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic">Bugs opgelost en nieuwe functies en gegevens toegevoegd. 
+\n 
+\nMeer informatie en bekende problemen (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_36">* Ondersteuning toegevoegd voor de volgende kaarten: CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Frankrijk), InstanbulKart, Mobib, Leap, RicaciraMi en Streika.
 \n* HSL-lezer gerepareerd.
 \n* Nieuwe stations toegevoegd voor Clipper en Kartu Multi Trip.
@@ -173,5 +183,12 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n* Problemen opgelost met EZ-Link- en Octopus-kaarten. 
 \n* Vele wijzigingen onder de motorkap. 
 \n 
+\nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_41">* Ondersteunt nu ook de volgende kaarten: EMV Bank, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, eerste gen. Londen Oyster, UAE Hafilat en Nol.
+\n* Nieuwe stations bij EZ-Link- en ORCA-kaarten.
+\n* Problemen opgelost met de Mobib-lezer.
+\n* Ondersteuning toegevoegd voor het importeren van binaire MFC-bestanden en het uitlezen van DESFire-kaarten met versleutelde lijsten.
+\n* Vele onderhuidse wijzigingen.
+\n
 \nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
