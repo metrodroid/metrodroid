@@ -173,6 +173,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         name = Localizer.localizeString(R.string.card_name_yaroslavl_etk),
                         locationId = R.string.location_yaroslavl,
                         imageId = R.drawable.yaroslavl_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
                         keysRequired = true, keyBundle = "zolotayakoronayaroslavl",
                         preview = true)
