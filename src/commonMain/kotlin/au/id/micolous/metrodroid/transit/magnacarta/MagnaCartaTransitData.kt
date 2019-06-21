@@ -48,6 +48,7 @@ class MagnaCartaTransitData (
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_germany,
+                imageId = R.drawable.ximedes,
                 cardType = CardType.MifareDesfire)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
