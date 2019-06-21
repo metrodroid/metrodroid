@@ -133,7 +133,7 @@ class CharlieCardTransitData (private val mSerial: Long,
                 get() = listOf(CARD_INFO)
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean =
-                    HashUtils.checkKeyHash(sectors[0].key, "charlie",
+                    HashUtils.checkKeyHash(sectors[0], "charlie",
                             "63ee95c7340fceb524cae7aab66fb1f9", "2114a2414d6b378e36a4e9540d1adc9f") >= 0
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {

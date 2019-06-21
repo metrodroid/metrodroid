@@ -146,7 +146,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
                     TroikaBlock.check(card.getSector(8).getBlock(0).data)
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                return HashUtils.checkKeyHash(sectors[1].key, "troika",
+                return HashUtils.checkKeyHash(sectors[1], "troika",
                         "0045ccfe4749673d77273162e8d53015") >= 0
             }
 

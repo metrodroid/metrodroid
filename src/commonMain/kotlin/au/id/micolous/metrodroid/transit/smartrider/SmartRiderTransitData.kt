@@ -120,15 +120,15 @@ class SmartRiderTransitData (override val serialNumber: String?,
 
         private fun detectKeyType(sectors: List<ClassicSector>): CardType {
             try {
-                val key = sectors[7].key
+                val sector = sectors[7]
 
                 Log.d(TAG, "Checking for MyWay key...")
-                if (HashUtils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
+                if (HashUtils.checkKeyHash(sector, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
                     return CardType.MYWAY
                 }
 
                 Log.d(TAG, "Checking for SmartRider key...")
-                if (HashUtils.checkKeyHash(key, SMARTRIDER_KEY_SALT,
+                if (HashUtils.checkKeyHash(sector, SMARTRIDER_KEY_SALT,
                                 SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST) >= 0) {
                     return CardType.SMARTRIDER
                 }

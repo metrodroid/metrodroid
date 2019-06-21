@@ -30,15 +30,14 @@ abstract class ClassicSector {
     abstract fun getRawData(idx: Int): ListItem
     abstract val raw: ClassicSectorRaw
 
-    val key: ClassicSectorKey?
-        get() {
-            val keyA = raw.keyA
-            if (keyA != null)
-                return ClassicSectorKey(key = keyA, type = ClassicSectorKey.KeyType.A, bundle = "read-back")
-            val keyB = raw.keyB
-            if (keyB != null)
-                return ClassicSectorKey(key = keyB, type = ClassicSectorKey.KeyType.B, bundle = "read-back")
-            return null
+    val keyA: ClassicSectorKey?
+        get() = raw.keyA?.let { keyA ->
+            ClassicSectorKey(key = keyA, type = ClassicSectorKey.KeyType.A, bundle = "read-back")
+        }
+
+    val keyB: ClassicSectorKey?
+        get() = raw.keyB?.let { keyB ->
+            ClassicSectorKey(key = keyB, type = ClassicSectorKey.KeyType.B, bundle = "read-back")
         }
 
     fun readBlocks(startBlock: Int, blockCount: Int): ImmutableByteArray {

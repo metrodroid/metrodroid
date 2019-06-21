@@ -139,7 +139,7 @@ data class RkfTransitData internal constructor(
             override fun earlyCardInfo(sectors: List<ClassicSector>) = issuerMap[getIssuer(sectors[0])]
 
             override fun earlyCheck(sectors: List<ClassicSector>) =
-                    HashUtils.checkKeyHash(sectors[0].key, "rkf",
+                    HashUtils.checkKeyHash(sectors[0], "rkf",
                             // Most cards
                             "b9ae9b2f6855aa199b4af7bdc130ba1c",
                             "2107bb612627fb1dfe57348fea8a8b58",

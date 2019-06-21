@@ -68,7 +68,7 @@ class MetroMoneyTransitFactory : ClassicCardTransitFactory {
     }
 
     override fun earlyCheck(sectors: List<ClassicSector>) =
-            HashUtils.checkKeyHash(sectors[0].key, "metromoney",
+            HashUtils.checkKeyHash(sectors[0], "metromoney",
                     "c48676dac68ec332570a7c20e12e08cb", "5d2457ed5f196e1757b43d074216d0d0") >= 0
 
     override val earlySectors get() = 1
