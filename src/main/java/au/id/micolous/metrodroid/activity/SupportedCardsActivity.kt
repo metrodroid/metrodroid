@@ -115,7 +115,7 @@ class SupportedCardsActivity : MetrodroidActivity() {
 
             val cardSupported = nfcAvailable && (
                     info.cardType != CardType.MifareClassic ||
-                            ClassicAndroidReader.getMifareClassicSupport())
+                            ClassicAndroidReader.mifareClassicSupport != false)
 
             convertView.findViewById<View>(R.id.card_not_supported).visibility = View.GONE
             if (cardSupported) {
