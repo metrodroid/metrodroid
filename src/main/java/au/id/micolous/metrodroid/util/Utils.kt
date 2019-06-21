@@ -195,7 +195,7 @@ object Utils {
             Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
             return
         }
-        clipboard.primaryClip = data
+        clipboard.setPrimaryClip(data)
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
     }
 }
