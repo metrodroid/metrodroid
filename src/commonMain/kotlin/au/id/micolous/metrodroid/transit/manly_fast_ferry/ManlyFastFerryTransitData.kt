@@ -54,6 +54,7 @@ class ManlyFastFerryTransitData(override val capsule: ErgTransitDataCapsule) : E
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.manly_fast_ferry_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,
                 locationId = R.string.location_sydney_australia,
                 cardType = CardType.MifareClassic,
