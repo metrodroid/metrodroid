@@ -35,7 +35,7 @@ class CityUnionTransitData (val validityStart: Int?,
                             val validityEnd: Int?,
                             override val trips: List<ChinaTrip>?,
                             val mBalance: Int?,
-                            private val mSerial: Int,
+                            private val mSerial: Int?,
                             private val mCity: Int?): TransitData() {
 
     public override val balance: TransitBalance?
@@ -51,19 +51,40 @@ class CityUnionTransitData (val validityStart: Int?,
         get() = mSerial.toString()
 
     override val cardName: String
-        get() = Localizer.localizeString(R.string.card_name_cityunion)
+        get() = nameCity(mCity)
 
-    override val info: List<ListItem>
-        get() = listOf(ListItem(R.string.city_union_city, mCity?.toString(16)))
+    override val info: List<ListItem>?
+        get() {
+            if (mCity == null)
+                return null
+            val locId = cities[mCity]?.locationId
+            if (locId != null)
+                return listOf(ListItem (R.string.city_union_city, locId))
+            return listOf(ListItem (R.string.city_union_city,
+                    Localizer.localizeString(R.string.unknown_format, mCity.toString(16))))
+        }
 
     companion object {
+        private const val SHANGHAI = 0x2000
+        private val cities = mapOf(
+                SHANGHAI to CardInfo(
+                        name = Localizer.localizeString(R.string.card_name_shanghai),
+                        locationId = R.string.location_shanghai,
+                        imageId = R.drawable.shanghai,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.ISO7816,
+                        preview = true
+                )
+
+        )
         private fun parse (card: ChinaCard): CityUnionTransitData {
             val file15 = ChinaTransitData.getFile(card, 0x15)?.binaryData
+            val (serial, city) = parseSerialAndCity(card)
 
-            return CityUnionTransitData(mSerial = parseSerial(card),
+            return CityUnionTransitData(mSerial = serial,
                     validityStart = file15?.byteArrayToInt(20, 4),
                     validityEnd = file15?.byteArrayToInt(24, 4),
-                    mCity = file15?.byteArrayToInt(2, 2),
+                    mCity = city,
                     mBalance = ChinaTransitData.parseBalance(card),
                     trips = ChinaTransitData.parseTrips(card) { ChinaTrip(it)} )
         }
@@ -71,6 +92,7 @@ class CityUnionTransitData (val validityStart: Int?,
         private val CARD_INFO = CardInfo(
                 name = Localizer.localizeString(R.string.card_name_cityunion),
                 locationId = R.string.location_china_mainland,
+                imageId = R.drawable.city_union,
                 cardType = CardType.ISO7816,
                 preview = true)
 
@@ -79,20 +101,24 @@ class CityUnionTransitData (val validityStart: Int?,
                 get() = listOf(ImmutableByteArray.fromHex("A00000000386980701"))
 
             override val allCards: List<CardInfo>
-                get() = listOf(CARD_INFO)
+                get() = listOf(CARD_INFO) + cities.values
 
-            override fun parseTransitIdentity(card: ChinaCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_cityunion),
-                        parseSerial(card).toString())
+            override fun parseTransitIdentity(card: ChinaCard): TransitIdentity {
+                val (serial, city) = parseSerialAndCity(card)
+                return TransitIdentity(nameCity(city), serial.toString())
+            }
 
             override fun parseTransitData(card: ChinaCard) = parse(card)
         }
 
-        private fun parseSerial(card: ChinaCard): Int {
+        private fun nameCity(city: Int?): String = cities[city]?.name ?: Localizer.localizeString(R.string.card_name_cityunion)
+
+        private fun parseSerialAndCity(card: ChinaCard): Pair<Int?, Int?> {
             val file15 = ChinaTransitData.getFile(card, 0x15)?.binaryData
-            if (file15?.byteArrayToInt(2, 2) == 0x2000)
-                return file15.byteArrayToInt(16, 4)
-            return file15?.byteArrayToIntReversed(16, 4) ?: 0
+            val city = file15?.byteArrayToInt(2, 2)
+            if (city == SHANGHAI)
+                return Pair(file15.byteArrayToInt(16, 4), city)
+            return Pair(file15?.byteArrayToIntReversed(16, 4) ?: 0, city)
         }
     }
 }
