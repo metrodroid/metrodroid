@@ -21,17 +21,9 @@ package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
-internal open class IntercodeLookupSTR(str: String) : En1545LookupSTR(str) {
-
-    override val timeZone: MetroTimeZone
-        get() = MetroTimeZone.PARIS
-
-    override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
-
+internal abstract class IntercodeLookupSTR(str: String) : En1545LookupSTR(str), IntercodeLookup {
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
         return if (contractTariff == null) null else Localizer.localizeString(R.string.unknown_format, contractTariff)
     }

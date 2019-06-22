@@ -56,6 +56,15 @@ abstract class En1545TransitData : TransitData {
                 li.add(ListItem(R.string.postal_code,
                         mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE).toString()))
 
+            mTicketEnvParsed.getInt(HOLDER_CARD_TYPE).let {
+                li.add(ListItem(R.string.card_type, when (it) {
+                    0 -> R.string.card_type_anonymous
+                    1 -> R.string.card_type_declarative
+                    2 -> R.string.card_type_personal
+                    else -> R.string.card_type_provider_specific
+                }))
+            }
+
             return li
         }
 
@@ -78,12 +87,14 @@ abstract class En1545TransitData : TransitData {
                                 En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END),
                                 HOLDER_BIRTH_DATE,
                                 ENV_APPLICATION_ISSUER_ID,
+                                HOLDER_CARD_TYPE,
                                 En1545FixedInteger.datePackedName(ENV_APPLICATION_ISSUE),
                                 En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
                                 En1545FixedInteger.datePackedName(HOLDER_PROFILE),
                                 En1545FixedInteger.dateName(HOLDER_PROFILE),
                                 HOLDER_POSTAL_CODE,
-                                ENV_CARD_SERIAL
+                                ENV_CARD_SERIAL,
+                                ENV_AUTHENTICATOR
                         )
                         else -> setOf()
                     })
@@ -97,6 +108,7 @@ abstract class En1545TransitData : TransitData {
         const val ENV_APPLICATION_ISSUE = "EnvApplicationIssue"
         const val HOLDER_PROFILE = "HolderProfile"
         const val HOLDER_POSTAL_CODE = "HolderPostalCode"
+        const val HOLDER_CARD_TYPE = "HolderDataCardStatus"
         const val ENV_AUTHENTICATOR = "EnvAuthenticator"
         const val ENV_UNKNOWN_A = "EnvUnknownA"
         const val ENV_UNKNOWN_B = "EnvUnknownB"

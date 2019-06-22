@@ -19,8 +19,22 @@
 
 package au.id.micolous.metrodroid.transit.intercode
 
-internal class IntercodeLookupTisseo : IntercodeLookupSTR("tisseo") {
-    companion object {
-        private const val AGENCY_TISSEO = 1
-    }
+import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
+
+internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo"), IntercodeLookupSingle {
+    override val cardInfo: CardInfo
+        get() =
+                // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel
+            CardInfo(
+                    name = "Pastel",
+                    locationId = R.string.location_toulouse,
+                    imageId = R.drawable.pastel,
+                    imageAlphaId = R.drawable.iso7810_id1_alpha,
+                    cardType = CardType.ISO7816,
+                    preview = true)
+
+    private const val AGENCY_TISSEO = 1
 }
