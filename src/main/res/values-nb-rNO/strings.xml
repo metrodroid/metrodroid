@@ -852,4 +852,5 @@
     <string name="location_germany_and_switzerland">Tyskland og sveits</string>
     <string name="location_pisa">Pisa, Italia</string>
     <string name="location_worldwide">Verdensomspennende</string>
+    <string name="emv_application_currency">Programvaluta</string>
 </resources>
