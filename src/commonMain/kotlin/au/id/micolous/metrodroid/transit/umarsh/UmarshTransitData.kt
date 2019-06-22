@@ -49,6 +49,7 @@ internal data class UmarshSystem(
 )
 
 // This implements reader for umarsh format: https://umarsh.com
+// Reference: https://github.com/micolous/metrodroid/wiki/Umarsh
 
 private val systemsMap = mapOf(
         // This seems to be in reverse order of region numbers
@@ -58,6 +59,7 @@ private val systemsMap = mapOf(
                         cardType = CardType.MifareClassic,
                         locationId = R.string.location_ekaterinburg,
                         imageId = R.drawable.ekarta,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
@@ -175,6 +177,7 @@ private val systemsMap = mapOf(
                         cardType = CardType.MifareClassic,
                         locationId = R.string.location_izhevsk,
                         imageId = R.drawable.strizh,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
