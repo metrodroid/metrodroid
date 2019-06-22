@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -140,6 +141,8 @@ class BlankUltralightTransitData : BlankTransitData() {
 
             override fun parseTransitIdentity(card: UltralightCard) =
                     TransitIdentity(Localizer.localizeString(R.string.blank_mfu_card), null)
+
+            override val allCards get() = emptyList<CardInfo>() // Not worth bragging about
         }
     }
 }

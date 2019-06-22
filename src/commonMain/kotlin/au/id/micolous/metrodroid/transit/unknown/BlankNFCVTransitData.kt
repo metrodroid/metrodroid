@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.nfcv.NFCVCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -50,6 +51,8 @@ class BlankNFCVTransitData : BlankTransitData() {
 
             override fun parseTransitIdentity(card: NFCVCard) =
                     TransitIdentity(Localizer.localizeString(R.string.blank_nfcv_card), null)
+
+            override val allCards get() = emptyList<CardInfo>() // Not worth bragging about
         }
     }
 }

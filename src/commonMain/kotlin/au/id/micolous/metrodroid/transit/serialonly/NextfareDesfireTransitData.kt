@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -65,5 +66,8 @@ class NextfareDesfireTransitFactory : DesfireCardTransitFactory {
 
     override fun parseTransitIdentity(card: DesfireCard) = TransitIdentity(NAME,
             formatSerial(getSerial(card)))
+
+    override val allCards: List<CardInfo>
+        get() = emptyList()
 }
 

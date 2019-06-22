@@ -6,6 +6,7 @@ import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -37,6 +38,8 @@ class UnauthorizedDesfireTransitData (override val cardName: String): Unauthoriz
 
             override val hiddenAppIds: List<Int>
                 get() = List(32) { 0x425300 + it }
+
+            override val allCards get() = emptyList<CardInfo>() // Not worth bragging about
         }
 
         private data class UnauthorizedType(

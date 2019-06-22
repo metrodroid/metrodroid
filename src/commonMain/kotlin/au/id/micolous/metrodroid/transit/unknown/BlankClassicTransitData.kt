@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -74,6 +75,8 @@ class BlankClassicTransitData : BlankTransitData() {
                     TransitIdentity(Localizer.localizeString(R.string.blank_mfc_card), null)
 
             override fun parseTransitData(card: ClassicCard) = BlankClassicTransitData()
+
+            override val allCards get() = emptyList<CardInfo>() // Not worth bragging about
         }
     }
 }

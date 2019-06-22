@@ -22,6 +22,7 @@
 
 package au.id.micolous.metrodroid.card.classic
 
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.util.Preferences
 
@@ -49,6 +50,8 @@ internal class FallbackFactory : ClassicCardTransitFactory {
         in SMARTRIDER -> SmartRiderTransitData.FACTORY.parseTransitData(card)
         else -> null
     }
+
+    override val allCards get() = emptyList<CardInfo>() // Doesn't add any cards currently
 
     companion object {
         private val SMARTRIDER = listOf("myway", "smartrider")

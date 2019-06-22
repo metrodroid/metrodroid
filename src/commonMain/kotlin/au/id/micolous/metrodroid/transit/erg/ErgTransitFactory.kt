@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
 
-internal open class ErgTransitFactory : ClassicCardTransitFactory {
+internal abstract class ErgTransitFactory : ClassicCardTransitFactory {
 
     /**
      * Used for checks on the ERG agencyID ID. Subclasses must implement this, and return

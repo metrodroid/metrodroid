@@ -165,7 +165,9 @@ abstract class ErgTransitData : TransitData() {
 
         internal val NAME = "ERG"
         val SIGNATURE = byteArrayOf(0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01)
-        val FALLBACK_FACTORY: ClassicCardTransitFactory = ErgTransitFactory()
+        val FALLBACK_FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
+            override val allCards get() = emptyList<CardInfo>()
+        }
 
         internal fun getMetadataRecord(sector0: ClassicSector): ErgMetadataRecord? {
             val file2: ImmutableByteArray
