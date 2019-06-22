@@ -36,7 +36,8 @@ WEB_TARGETS := \
 	mobib \
 	ricaricami \
 	seq_go \
-	tfi_leap
+	tfi_leap \
+	amiibo
 
 ALL_TARGETS := $(HERMETIC_TARGETS) $(WEB_TARGETS)
 
