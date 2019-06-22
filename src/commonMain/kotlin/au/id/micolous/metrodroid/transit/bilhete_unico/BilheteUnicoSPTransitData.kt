@@ -66,7 +66,7 @@ class BilheteUnicoSPTransitData (private val mCredit: Int,
         private const val NAME = "Bilhete Único"
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.bilheteunicosp_card,
-                imageAlphaId = R.drawable.bilheteunicosp_card_alpha,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,
                 locationId = R.string.location_sao_paulo,
                 cardType = CardType.MifareClassic,
