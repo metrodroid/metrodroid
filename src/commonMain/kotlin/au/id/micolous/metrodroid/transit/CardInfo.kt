@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.DrawableResource
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 
 /**
@@ -42,6 +43,24 @@ class CardInfo(val name: String,
                val resourceExtraNote: StringResource? = null,
                val imageId: DrawableResource? = null,
                val imageAlphaId: DrawableResource? = null) {
+    constructor(name: StringResource,
+                cardType: CardType,
+                locationId: StringResource? = null,
+                keysRequired: Boolean = false,
+                keyBundle: String? = null,
+                /**
+                 * Indicates if the card is a "preview" / beta decoder, with possibly
+                 * incomplete / incorrect data.
+                 *
+                 * @return true if this is a beta version of the card decoder.
+                 */
+                preview: Boolean = false,
+                resourceExtraNote: StringResource? = null,
+                imageId: DrawableResource? = null,
+                imageAlphaId: DrawableResource? = null
+                ) : this(name = Localizer.localizeString(name), cardType = cardType,
+            locationId = locationId, keysRequired = keysRequired, keyBundle = keyBundle,
+            preview = preview, resourceExtraNote = resourceExtraNote, imageId = imageId, imageAlphaId = imageAlphaId)
 
     val hasBitmap get() = imageId != null
 }

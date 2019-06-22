@@ -50,7 +50,7 @@ class TUnionTransitData (override val serialNumber: String?,
 
     companion object {
         private val CARD_INFO = CardInfo(
-                name = Localizer.localizeString(R.string.card_name_tunion),
+                name = R.string.card_name_tunion,
                 locationId = R.string.location_china_mainland,
                 imageId = R.drawable.tunion,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,

@@ -63,7 +63,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.ravkav_card,
-                name = Localizer.localizeString(R.string.card_name_ravkav),
+                name = R.string.card_name_ravkav,
                 locationId = R.string.location_israel,
                 cardType = CardType.ISO7816,
                 preview = true

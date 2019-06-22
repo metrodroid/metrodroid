@@ -173,7 +173,7 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
                 // seqgo_card_alpha has identical geometry
                 imageId = R.drawable.podorozhnik_card,
                 imageAlphaId = R.drawable.seqgo_card_alpha,
-                name = Localizer.localizeString(R.string.card_name_podorozhnik),
+                name = R.string.card_name_podorozhnik,
                 locationId = R.string.location_saint_petersburg,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_russia,
