@@ -18,16 +18,19 @@
  */
 package au.id.micolous.metrodroid.transit.pisa
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransactionTripAbstract
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 
-private const val NAME = "Pisa Ultralight"
+private const val NAME = "Pisa CTT single-use"
 
 @Parcelize
 data class PisaUltralightTransitData(override val trips: List<TransactionTripAbstract>,
@@ -59,4 +62,16 @@ class PisaUltralightTransitFactory : UltralightCardTransitFactory {
     override fun parseTransitData(card: UltralightCard) = parse(card)
 
     override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, null)
+
+    override val allCards get() = listOf(CARD_INFO)
+
+    companion object {
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                locationId = R.string.location_pisa,
+                cardType = CardType.MifareUltralight,
+                imageId = R.drawable.pisa_ul,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
+                preview = true)
+    }
 }
