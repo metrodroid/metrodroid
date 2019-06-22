@@ -115,15 +115,17 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
     private const val SNCF = 2
 
     private val NAVIGO_CARD_INFO = CardInfo(
-            name = "Navigo",
+            name = "Navigo",  // personalised card
             imageId = R.drawable.navigo,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
             cardType = CardType.ISO7816)
+
     private val NAVIGO_DECOUVERTE_CARD_INFO = CardInfo(
-            name = "Navigo découverte",
+            name = "Navigo découverte",  // anonymous card (lit: discovery)
             imageId = R.drawable.navigo_decouverte,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
-            cardType = CardType.ISO7816)
+            cardType = CardType.ISO7816,
+            hidden = true)
 }
