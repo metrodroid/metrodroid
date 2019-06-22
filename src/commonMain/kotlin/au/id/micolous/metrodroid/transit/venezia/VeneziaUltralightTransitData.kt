@@ -18,10 +18,12 @@
  */
 package au.id.micolous.metrodroid.transit.venezia
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
@@ -30,7 +32,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-private const val NAME = "Venezia Ultralight"
+private const val NAME = "Venezia single-use"
 
 @Parcelize
 data class VeneziaUltralightSubscription(override val parsed: En1545Parsed,
@@ -153,4 +155,16 @@ class VeneziaUltralightTransitFactory : UltralightCardTransitFactory {
     override fun parseTransitData(card: UltralightCard) = parse(card)
 
     override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, getSerial(card).toString())
+    
+    override val allCards get() = listOf(CARD_INFO)
+
+    companion object {
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                locationId = R.string.location_venezia,
+                cardType = CardType.MifareUltralight,
+                imageId = R.drawable.venezia_ul,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
+                preview = true)
+    }
 }
