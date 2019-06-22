@@ -65,6 +65,7 @@ class LaxTapTransitData (override val capsule: NextfareTransitDataCapsule): Next
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.laxtap_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 // Using the short name (TAP) may be ambiguous
                 name = LONG_NAME,
                 locationId = R.string.location_los_angeles,
