@@ -926,14 +926,6 @@
     This is used for return tickets (A -> B -> A).
     -->
     <string name="clipper_return">Return (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
-    <!--
-    Translators:
-    Clipper card is the transit card for the San Francisco Bay Area.
-
-    Clipper card has been available as a plastic, reloadable value card for a long time. Two
-    operators have introduced single-use paper Clipper cards: Golden Gate Ferry, and Muni.
-    -->
-    <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
 
     <string name="ez_bus_number">Bus #%s</string>
     <string name="ez_bus_refund">Bus Refund</string>

@@ -18,10 +18,12 @@
  */
 package au.id.micolous.metrodroid.transit.clipper
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -55,7 +57,7 @@ class ClipperUltralightTransitData private constructor(private val mSerial: Long
         )
 
     companion object {
-        private const val NAME = "Clipper Ultralight"
+        private const val NAME = "Clipper (paper)"
 
         private fun parse(card: UltralightCard): ClipperUltralightTransitData {
             val page0 = card.getPage(4).data
@@ -78,8 +80,18 @@ class ClipperUltralightTransitData private constructor(private val mSerial: Long
                     mBaseDate = mBaseDate)
         }
 
+        private val CARD_INFO = CardInfo(
+                imageId = R.drawable.clipper_paper,
+                imageAlphaId = R.drawable.clipper_paper_alpha,
+                name = NAME,
+                locationId = R.string.location_san_francisco,
+                cardType = CardType.MifareUltralight)
 
         val FACTORY: UltralightCardTransitFactory = object : UltralightCardTransitFactory {
+
+            override val allCards: List<CardInfo>
+                get() = listOf(CARD_INFO)
+
             override fun check(card: UltralightCard) = card.getPage(4).data[0].toInt() == 0x13
 
             override fun parseTransitData(card: UltralightCard) = parse(card)

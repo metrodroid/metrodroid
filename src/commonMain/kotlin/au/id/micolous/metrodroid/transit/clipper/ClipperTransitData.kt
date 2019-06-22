@@ -137,8 +137,7 @@ class ClipperTransitData (private val mSerialNumber: Long?,
                 imageId = R.drawable.clipper_card,
                 name = "Clipper",
                 locationId = R.string.location_san_francisco,
-                cardType = CardType.MifareDesfire,
-                resourceExtraNote = R.string.card_note_clipper)
+                cardType = CardType.MifareDesfire)
 
         const val APP_ID = 0x9011f2
 
