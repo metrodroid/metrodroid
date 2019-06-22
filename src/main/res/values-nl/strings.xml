@@ -897,4 +897,9 @@
     <string name="tlv_tags">TLV-labels</string>
     <string name="unknown_tags">Onbekende labels</string>
     <string name="card_note_oyster">Er is alleen ondersteuning voor de eerste generatie kaarten (MIFARE Classic). De huidige generatie (die met een D in de linker benedenhoek) is volledig versleuteld (DESFire) en kan dus niet worden ondersteund.</string>
+    <string name="location_kazan">Kazan, Rusland</string>
+    <string name="card_name_kazan">Kazan OV-kaart</string>
+    <string name="kazan_blank">Leeg</string>
+    <string name="location_shanghai">Shanghai, China</string>
+    <string name="card_name_shanghai">Shanghai OV-kaart</string>
 </resources>
