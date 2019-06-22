@@ -84,7 +84,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.seqgo_card,
-                imageAlphaId = R.drawable.seqgo_card_alpha,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,
                 locationId = R.string.location_brisbane_seq_australia,
                 cardType = CardType.MifareClassic,

@@ -170,9 +170,8 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
         private const val KEY_DIGEST_B = "3823b5f0b45f3519d0ce4a8b5b9f1437"
 
         private val CARD_INFO = CardInfo(
-                // seqgo_card_alpha has identical geometry
                 imageId = R.drawable.podorozhnik_card,
-                imageAlphaId = R.drawable.seqgo_card_alpha,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = R.string.card_name_podorozhnik,
                 locationId = R.string.location_saint_petersburg,
                 cardType = CardType.MifareClassic,
