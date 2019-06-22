@@ -18,13 +18,13 @@ Module          | Description
 <table>
 
 <tr>
-    <td colspan="4">
+    <td colspan="11">
         <strong>androidTest, dev</strong>
     </td>
 </tr>
 
 <tr>
-    <td colspan="4">
+    <td colspan="11">
         <h3>main</h3>
         <ul>
             <li><strong>Android application</strong></li>
@@ -43,7 +43,7 @@ Module          | Description
 </tr>
 
 <tr>
-    <td>
+    <td colspan="4">
         <h3>jvmCommonMain</h3>
         <ul>
             <li>Timestamp and Timezone bindings for Java</li>
@@ -52,20 +52,25 @@ Module          | Description
         </ul>
     </td>
     <td>Android platform libraries</td>
+    <td>AndroidX</td>
+    <td>KotlinX</td>
+    <td>Leaflet</td>
+    <td>nv-i18n</td>
     <td>Protobuf</td>
     <td>XML pull parser</td>
 </tr>
 
 <tr>
-    <td>
+    <td colspan="3">
         <h3>commonMain</h3>
     </td>
+    <td>Java platform</td>
 </tr>
 
 <tr>
-    <td>
-        Kotlin platform
-    </td>
+    <td>Kotlin platform</td>
+    <td>KotlinX</td>
+    <td>PB and K</td>
 </tr>
 
 </table>
