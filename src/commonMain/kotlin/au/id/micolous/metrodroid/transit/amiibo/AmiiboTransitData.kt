@@ -36,7 +36,8 @@ private const val NAME = "Amiibo"
 private val CARD_INFO = CardInfo(
         name = NAME,
         cardType = CardType.MifareUltralight,
-        locationId = R.string.location_worldwide
+        locationId = R.string.location_worldwide,
+        imageId = R.drawable.amiibo
 )
 
 @Parcelize
