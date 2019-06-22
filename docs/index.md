@@ -44,7 +44,7 @@ City Union | :cn: Mainland China | :new:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
-Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
+[Krasnodar ETK][krasnodar] | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][lisboa] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][manly] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
@@ -61,6 +61,7 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Opal][opal] | :australia: Sydney (and surrounds), NSW, Australia | :new:
 [Opus][opus] | :canada: Québec, Canada | :new:
 [ORCA][orca] | :us: Seattle, WA, USA |
+[Orenburg EKG][orenburg] | :ru: Orenburg, Russia | :new: :closed_lock_with_key: `MFC`
 [OùRA][oura] | :fr: Grenoble, France | :new:
 [OV-chipkaart][ovc] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Oyster][oyster] | :gb: London, United Kingdom | :closed_lock_with_key: `MFC`
@@ -68,6 +69,7 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
 [Rejsekort][rejse] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][ricarica] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
+[Samara ETK][samara] | :ru: Samara, Russia | :new: :closed_lock_with_key: `MFC`
 [Selecta][] | :fr: France | :new:
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
@@ -86,7 +88,7 @@ T-Union | :cn: Mainland China | :new:
 [Troika][troika] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 [Ventra][ventra] | :us: Chicago, IL, USA | :new: :one:
 [Wuhan Tong][wuhan] | :cn: Wuhan, Hubei Province, China | :new:
-Yaroslavl ETK | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
+[Yaroslavl ETK][yaroslavl] | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
 [Zolotaya Korona][zolotaya] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 
 Note                   | Meaning
@@ -158,6 +160,7 @@ interpreted locally, and _connectivity is disabled by default._
 [istanbul]: https://www.istanbulkart.istanbul/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 [komuterlink]: http://www.ktmb.com.my/KomuterLink.html
+[krasnodar]: https://t-karta.ru/Cards/Krasnodar
 [laxtap]: https://www.taptogo.net/
 [leap]: https://www.leapcard.ie/
 [lisboa]: https://www.portalviva.pt/
@@ -175,6 +178,7 @@ interpreted locally, and _connectivity is disabled by default._
 [opal]: http://www.opal.com.au/
 [opus]: http://www.stm.info/en/info/fares/opus-cards-and-other-fare-media/opus-card
 [orca]: http://www.orcacard.com/
+[orenburg]: https://t-karta.ru/Cards/Orenburg
 [otago]: https://www.orc.govt.nz/public-transport/dunedin-buses/fares-and-gocard
 [oura]: https://www.oura.com/
 [ovc]: http://www.ov-chipkaart.nl/
@@ -185,6 +189,7 @@ interpreted locally, and _connectivity is disabled by default._
 [ravkav]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [rejse]: https://www.rejsekort.dk/
 [ricarica]: https://www.atm.it/en/ViaggiaConNoi/Biglietti/Pages/TesseraRIcaricaMI.aspx
+[samara]: https://t-karta.ru/Cards/Samara
 [selecta]: https://www.selecta.com/
 [seqgo]: http://translink.com.au/tickets-and-fares/go-card
 [shenzhen]: http://www.shenzhentong.com/
@@ -202,4 +207,6 @@ interpreted locally, and _connectivity is disabled by default._
 [troika]: http://troika.mos.ru/
 [ventra]: https://www.ventrachicago.com/
 [wuhan]: http://www.whcst.com/
+[yaroslavl]: https://t-karta.ru/Cards/Yaroslavl
 [zolotaya]: https://en.wikipedia.org/wiki/Zolotaya_Korona
+
