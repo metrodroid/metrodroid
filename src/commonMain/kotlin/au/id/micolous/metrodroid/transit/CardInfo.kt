@@ -2,7 +2,7 @@
  * CardInfo.kt
  *
  * Copyright 2011 Eric Butler
- * Copyright 2015-2018 Michael Farrell
+ * Copyright 2015-2019 Michael Farrell
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,39 +28,55 @@ import au.id.micolous.metrodroid.multi.StringResource
  * List of all the cards we know about.
  */
 
-class CardInfo(val name: String,
-               val cardType: CardType,
-               val locationId: StringResource? = null,
-               val keysRequired: Boolean = false,
-               val keyBundle: String? = null,
-               /**
-                * Indicates if the card is a "preview" / beta decoder, with possibly
-                * incomplete / incorrect data.
-                *
-                * @return true if this is a beta version of the card decoder.
-                */
-               val preview: Boolean = false,
-               val resourceExtraNote: StringResource? = null,
-               val imageId: DrawableResource? = null,
-               val imageAlphaId: DrawableResource? = null) {
-    constructor(name: StringResource,
-                cardType: CardType,
-                locationId: StringResource? = null,
-                keysRequired: Boolean = false,
-                keyBundle: String? = null,
-                /**
-                 * Indicates if the card is a "preview" / beta decoder, with possibly
-                 * incomplete / incorrect data.
-                 *
-                 * @return true if this is a beta version of the card decoder.
-                 */
-                preview: Boolean = false,
-                resourceExtraNote: StringResource? = null,
-                imageId: DrawableResource? = null,
-                imageAlphaId: DrawableResource? = null
-                ) : this(name = Localizer.localizeString(name), cardType = cardType,
-            locationId = locationId, keysRequired = keysRequired, keyBundle = keyBundle,
-            preview = preview, resourceExtraNote = resourceExtraNote, imageId = imageId, imageAlphaId = imageAlphaId)
+class CardInfo(
+        val name: String,
+        val cardType: CardType,
+        val locationId: StringResource? = null,
+        val keysRequired: Boolean = false,
+        val keyBundle: String? = null,
+
+        /**
+         * Indicates if the card is a "preview" / beta decoder, with possibly
+         * incomplete / incorrect data.
+         */
+        val preview: Boolean = false,
+
+        val resourceExtraNote: StringResource? = null,
+
+        val imageId: DrawableResource? = null,
+        val imageAlphaId: DrawableResource? = null,
+
+        /**
+         * If true, this hides this card from the "supported cards list".
+         *
+         * This is useful for cities where we have artwork for each ticket type.  It can be
+         * re-enabled in developer options.
+         */
+        val hidden: Boolean = false) {
+
+    // TODO: Make this the primary constructor
+    constructor(
+            name: StringResource,
+            cardType: CardType,
+            locationId: StringResource? = null,
+            keysRequired: Boolean = false,
+            keyBundle: String? = null,
+            preview: Boolean = false,
+            resourceExtraNote: StringResource? = null,
+            imageId: DrawableResource? = null,
+            imageAlphaId: DrawableResource? = null,
+            hidden: Boolean = false
+    ) : this(
+            name = Localizer.localizeString(name),
+            cardType = cardType,
+            locationId = locationId,
+            keysRequired = keysRequired,
+            keyBundle = keyBundle,
+            preview = preview,
+            resourceExtraNote = resourceExtraNote,
+            imageId = imageId,
+            imageAlphaId = imageAlphaId,
+            hidden = hidden)
 
     val hasBitmap get() = imageId != null
 }

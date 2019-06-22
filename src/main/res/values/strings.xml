@@ -238,7 +238,22 @@
     <!-- Shown as a preference description when a feature needs Android 5.0 or later. -->
     <string name="requires_android_21">Requires Android 5.0 or later.</string>
 
-    <!-- Obfuscation options -->
+    <!-- Developer options, supported cards -->
+    <string name="pref_show_hidden_cards">Show hidden cards</string>
+    <!-- "Supported Cards" is a screen named in the string supported_cards -->
+    <string name="pref_show_hidden_cards_desc_off">Only the regular card forms and artwork will be shown in the ‘supported cards’ list</string>
+    <!-- "Supported Cards" is a screen named in the string supported_cards -->
+    <string name="pref_show_hidden_cards_desc_on">All card forms and artwork will be shown in the ‘supported cards’ list</string>
+
+    <!-- "Not supported ribbon" refers to the message card_not_supported_on_device, which is
+    displayed over card artwork whenever it is that card cannot be read by this device -->
+    <string name="pref_hide_unsupported_ribbon">Hide ‘not supported’ ribbon</string>
+    <!-- "Not supported ribbon" refers to the message card_not_supported_on_device, which is
+    displayed over card artwork whenever it is that card cannot be read by this device -->
+    <string name="pref_hide_unsupported_ribbon_desc_off">Cards which cannot be read by this device will have a red ‘not supported’ warning displayed over its artwork</string>
+    <string name="pref_hide_unsupported_ribbon_desc_on">Unsupported cards will not have anything covering their artwork</string>
+
+    <!-- Developer options, obfuscation options -->
     <string name="obfuscation_title">Obfuscation</string>
     <string name="obfuscation_card_numbers">Hide card numbers</string>
     <string name="obfuscation_card_numbers_desc">Don\'t show card numbers anywhere</string>

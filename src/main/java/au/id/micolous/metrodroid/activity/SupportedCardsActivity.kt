@@ -2,7 +2,7 @@
  * SupportedCardsActivity.kt
  *
  * Copyright 2011, 2017 Eric Butler
- * Copyright 2015-2018 Michael Farrell
+ * Copyright 2015-2019 Michael Farrell
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.DrawableUtils
+import au.id.micolous.metrodroid.util.Preferences
 
 /**
  * @author Eric Butler, Michael Farrell
@@ -74,7 +75,8 @@ class SupportedCardsActivity : MetrodroidActivity() {
         private val mLayoutInflater: LayoutInflater
 
         init {
-            addAll(CardInfoRegistry.allCardsAlphabetical)
+            val hideCards = !Preferences.showHiddenCards
+            addAll(CardInfoRegistry.allCardsAlphabetical.filterNot { hideCards && it.hidden })
             mLayoutInflater = context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
@@ -111,18 +113,20 @@ class SupportedCardsActivity : MetrodroidActivity() {
             val nfcAdapter = NfcAdapter.getDefaultAdapter(app)
             val nfcAvailable = nfcAdapter != null
 
-            if (nfcAvailable) {
-                if (info.cardType === CardType.MifareClassic && !ClassicAndroidReader.getMifareClassicSupport()) {
-                    // MIFARE Classic is not supported by this device.
-                    convertView.findViewById<View>(R.id.card_not_supported).visibility = View.VISIBLE
-                    convertView.findViewById<View>(R.id.card_not_supported_icon).visibility = View.VISIBLE
-                } else {
-                    convertView.findViewById<View>(R.id.card_not_supported).visibility = View.GONE
-                    convertView.findViewById<View>(R.id.card_not_supported_icon).visibility = View.GONE
-                }
+            val cardSupported = nfcAvailable && (
+                    info.cardType != CardType.MifareClassic ||
+                            ClassicAndroidReader.getMifareClassicSupport())
+
+            convertView.findViewById<View>(R.id.card_not_supported).visibility = View.GONE
+            if (cardSupported) {
+                convertView.findViewById<View>(R.id.card_not_supported_icon).visibility = View.GONE
             } else {
                 // This device does not support NFC, so all cards are not supported.
-                convertView.findViewById<View>(R.id.card_not_supported).visibility = View.VISIBLE
+                if (Preferences.hideUnsupportedRibbon) {
+                    notes += Localizer.localizeString(R.string.card_not_supported_on_device) + " "
+                } else {
+                    convertView.findViewById<View>(R.id.card_not_supported).visibility = View.VISIBLE
+                }
                 convertView.findViewById<View>(R.id.card_not_supported_icon).visibility = View.VISIBLE
             }
 
@@ -132,11 +136,13 @@ class SupportedCardsActivity : MetrodroidActivity() {
                 notes += Localizer.localizeString(R.string.keys_loaded) + " "
                 val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImageUnlocked))
                 lockIcon.setImageResource(a.getResourceId(0, R.drawable.unlocked))
+                a.recycle()
                 lockIcon.visibility = View.VISIBLE
             } else if (info.keysRequired) {
                 notes += Localizer.localizeString(R.string.keys_required) + " "
                 val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImage))
                 lockIcon.setImageResource(a.getResourceId(0, R.drawable.locked))
+                a.recycle()
                 lockIcon.visibility = View.VISIBLE
             } else
                 lockIcon.visibility = View.GONE
