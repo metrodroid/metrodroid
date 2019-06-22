@@ -83,6 +83,7 @@ data class OVChipTransitData(
         private const val NAME = "OV-chipkaart"
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.ovchip_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,
                 locationId = R.string.location_the_netherlands,
                 cardType = CardType.MifareClassic,

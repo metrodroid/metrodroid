@@ -18,14 +18,23 @@
  */
 package au.id.micolous.metrodroid.transit.ovc
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
-private const val NAME = "OVC Ultralight"
+private const val NAME = "OV-chipkaart (single-use)"
+private val CARD_INFO = CardInfo(
+        name = NAME,
+        locationId = R.string.location_the_netherlands,
+        imageId = R.drawable.ovchip_single_card,
+        imageAlphaId = R.drawable.iso7810_id1_alpha,
+        cardType = CardType.MifareUltralight)
 
 @Parcelize
 data class OvcUltralightTransitData(private val mTrips: List<OVChipTransaction>) : TransitData() {
@@ -45,7 +54,10 @@ private fun parse(card: UltralightCard): OvcUltralightTransitData {
 }
 
 class OvcUltralightTransitFactory : UltralightCardTransitFactory {
-    // getAllCards not implemented -- Classic already adds it to supported cards
+    // These are listed twice, because unlike regular OVC, single use cards don't need keys, and
+    // they are supported on more devices than regular OVC (MFC).
+    override val allCards: List<CardInfo>
+        get() = listOf(CARD_INFO)
 
     // FIXME: check with more samples
     override fun check(card: UltralightCard) =
