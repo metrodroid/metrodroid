@@ -15,4 +15,59 @@ Module          | Description
 `jvmCommonMain` | Contains implementations of platform abstractions that are used on both Android and the JVM (`actual class`)
 `main`          | Contains Android-specific application and platform code. This is also where the MdST implementation lives.
 
+<table>
+
+<tr>
+    <td colspan="4">
+        <strong>androidTest, dev</strong>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="4">
+        <h3>main</h3>
+        <ul>
+            <li><strong>Android application</strong></li>
+            <li>Android CardTransceiver</li>
+            <li>Android Logging</li>
+            <li>Android Localisation</li>
+            <li>Card and key storage</li>
+            <li>Country and currency information</li>
+            <li>Leap Unlocker</li>
+            <li>Preferences</li>
+            <li>MdST implementation</li>
+            <li>User interface</li>
+            <li>XML parser</li>
+        </ul>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <h3>jvmCommonMain</h3>
+        <ul>
+            <li>Timestamp and Timezone bindings for Java</li>
+            <li>ZIP bindings for Java</li>
+            <li>Collator binding for Java</li>
+        </ul>
+    </td>
+    <td>Android platform libraries</td>
+    <td>Protobuf</td>
+    <td>XML pull parser</td>
+</tr>
+
+<tr>
+    <td>
+        <h3>commonMain</h3>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        Kotlin platform
+    </td>
+</tr>
+
+</table>
+
 [kmp]: https://kotlinlang.org/docs/reference/multiplatform.html
