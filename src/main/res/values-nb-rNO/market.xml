@@ -171,4 +171,11 @@
 \n* Mange usynlige endringer.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_41">* Leser EMV bank, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, førstegenerasjons London Oyster, UAE Hafilat og Nol-kort.
+\n* Legger til nye stasjoner for EZ-Link og ORCA-kort.
+\n* Fikser problemer med Mobib-leser.
+\n* Legger til støtte for importering av binære MFC-filer, og lesing av DESFire-kort, med blokkerte mappeoversikter.
+\n* Mange usynlige endringer.
+\n
+\nFlere detaljer og kjente feil: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
