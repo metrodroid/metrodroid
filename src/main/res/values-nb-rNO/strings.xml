@@ -853,4 +853,10 @@
     <string name="location_pisa">Pisa, Italia</string>
     <string name="location_worldwide">Verdensomspennende</string>
     <string name="emv_application_currency">Programvaluta</string>
+    <plurals name="bytes">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d byte</item>
+    </plurals>
+    <string name="mfc_uid_mode">UID-lengde</string>
+    <string name="pref_show_hidden_cards">Vis skjulte kort</string>
 </resources>
