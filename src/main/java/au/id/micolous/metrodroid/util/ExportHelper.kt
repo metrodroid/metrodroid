@@ -41,6 +41,8 @@ import au.id.micolous.metrodroid.provider.CardDBHelper
 import au.id.micolous.metrodroid.provider.CardProvider
 import au.id.micolous.metrodroid.provider.CardsTableColumns
 
+import kotlin.text.Charsets
+
 object ExportHelper {
 
     fun copyXmlToClipboard(context: Context, xml: String) {
@@ -52,16 +54,11 @@ object ExportHelper {
         @NonNls val serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL)).trim { it <= ' ' }
         @NonNls val data = XmlUtils.cutXmlDef(
                 cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim { it <= ' ' })
-        val md: MessageDigest
-        try {
-            md = MessageDigest.getInstance("SHA-512")
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+        val md = MessageDigest.getInstance("SHA-512")
 
-        md.update(("(${serial.length}, ${data.length})").toByteArray(Utils.UTF8))
-        md.update(serial.toByteArray(Utils.UTF8))
-        md.update(data.toByteArray(Utils.UTF8))
+        md.update(("(${serial.length}, ${data.length})").toByteArray(Charsets.UTF_8))
+        md.update(serial.toByteArray(Charsets.UTF_8))
+        md.update(data.toByteArray(Charsets.UTF_8))
 
         return ImmutableByteArray.getHexString(md.digest())
     }

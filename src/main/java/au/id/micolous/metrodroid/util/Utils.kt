@@ -44,21 +44,12 @@ import au.id.micolous.metrodroid.multi.Localizer
 
 import java.io.IOException
 import java.io.InputStream
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 
 object Utils {
     private const val TAG = "Utils"
-
-    val UTF8: Charset
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            StandardCharsets.UTF_8
-        } else {
-            Charset.forName("UTF-8")
-        }
 
     // Version:
     // Model
