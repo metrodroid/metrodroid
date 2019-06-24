@@ -79,7 +79,6 @@ private class XmlPullParserIterator(
 
     }
 
-    @Throws(IOException::class)
     private fun newCard() {
         mCurrentCard = StringWriter()
         mSerializer = XmlPullFactory.newSerializer().also {
@@ -89,7 +88,6 @@ private class XmlPullParserIterator(
         copyStartTag()
     }
 
-    @Throws(IOException::class)
     private fun copyStartTag() {
         mSerializer!!.startTag(mxpp.namespace, mxpp.name)
         for (i in 0 until mxpp.attributeCount) {
@@ -99,12 +97,10 @@ private class XmlPullParserIterator(
         }
     }
 
-    @Throws(IOException::class)
     private fun copyEndTag() {
         mSerializer!!.endTag(mxpp.namespace, mxpp.name)
     }
 
-    @Throws(IOException::class)
     private fun copyText() {
         mSerializer!!.text(filterBadXMLChars(mxpp.text))
     }
@@ -112,7 +108,6 @@ private class XmlPullParserIterator(
     private fun isCard(s: String) = s.toLowerCase() == "card"
 
     @SuppressWarnings("CallToSuspiciousStringMethod")
-    @Throws(IOException::class, XmlPullParserException::class)
     private fun prepareMore(): Boolean {
         var eventType = mxpp.eventType
         while (eventType != XmlPullParser.END_DOCUMENT) {

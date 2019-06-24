@@ -88,7 +88,6 @@ object CardReader {
         throw UnsupportedTagException(techs.toList(), tagId.toHexString())
     }
 
-    @Throws(Exception::class)
     fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard {
         val tech = MifareUltralight.get(tag)?: throw UnsupportedTagException(listOf("Ultralight"), "Ultralight interface failed")
 

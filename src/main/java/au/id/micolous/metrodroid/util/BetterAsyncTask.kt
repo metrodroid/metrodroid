@@ -97,7 +97,6 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
         dialog.show()
     }
 
-    @Throws(Exception::class)
     protected abstract fun doInBackground(): Result
 
     protected abstract fun onResult(result: Result?)

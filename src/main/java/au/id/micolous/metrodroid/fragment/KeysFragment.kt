@@ -279,7 +279,6 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                         Log.d(TAG, "REQUEST_SAVE_FILE")
 
                         object : BetterAsyncTask<Void?>(activity!!, false, false) {
-                            @Throws(Exception::class)
                             override fun doInBackground(): Void? {
                                 val ctxt = MetrodroidApplication.instance
                                 val os = ctxt.contentResolver.openOutputStream(uri!!)!!
@@ -384,7 +383,6 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         private const val TAG = "KeysFragment"
 
         @StringRes
-        @Throws(IOException::class)
         private fun importKeysFromStaticJSON(activity: Activity, uri: Uri): Int {
             val stream = activity.contentResolver.openInputStream(uri) ?: return R.string.key_file_empty
             val keyData = stream.readBytes()
