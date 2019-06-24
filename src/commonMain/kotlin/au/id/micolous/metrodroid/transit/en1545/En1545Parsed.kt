@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 
@@ -131,14 +132,14 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
         // TODO: any need to support time-only cases?
     }
 
-    fun getTimeStampString(name: String, tz: MetroTimeZone): String? {
+    fun getTimeStampString(name: String, tz: MetroTimeZone): FormattedString? {
         val timeFlag = getTimeStamp(name, tz)
         if (timeFlag == null) {
             val value = getInt(En1545FixedInteger.timeName(name)) ?: getInt(En1545FixedInteger.timeLocalName(name))
             ?: return null
-            return dig2(value / 60) + ":" + dig2(value % 60)
+            return FormattedString(dig2(value / 60) + ":" + dig2(value % 60))
         }
-        return timeFlag.format().toString()
+        return timeFlag.format()
     }
 
     fun contains(name: String, path: String = ""): Boolean {
