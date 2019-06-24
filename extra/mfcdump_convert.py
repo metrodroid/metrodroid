@@ -109,7 +109,7 @@ class JsonKeys(KeyBase):
       for c in cards[1:]:
         card['keys'] += c['keys']
 
-    json.dump(card, output_f)
+    json.dump(card, output_f, indent=2,sort_keys=True)
 
 
 class CsvKeys(KeyBase):
