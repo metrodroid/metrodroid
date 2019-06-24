@@ -1,5 +1,5 @@
 /*
- * PisaTrip.java
+ * PisaTransaction.kt
  *
  * Copyright 2018-2019 Google
  *
