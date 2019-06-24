@@ -57,18 +57,22 @@ class ClassicSectorValid(override val raw: ClassicSectorRaw) : ClassicSector() {
             keyStrA != null -> keyStrA
             else -> keyStrB
         }
+        val acs = ClassicAccessBits(blocks[blocks.size - 1].data.sliceOffLen(6, 3))
+
         val bli = mutableListOf<ListItem>()
         for ((blockidx, block) in blocks.withIndex()) {
+            val acsSlot = if (blocks.size == 4) blockidx else blockidx / 5
+            val acsDescription = acs.getSlotString(acsSlot)
             if (block.isUnauthorized)
                 bli.add(ListItem(
                         Localizer.localizeString(R.string.block_title_format_unauthorized,
-                                blockidx.hexString)
+                                blockidx.hexString, acsDescription)
                 ))
             else
                 bli.add(ListItemRecursive(
                         Localizer.localizeString(R.string.block_title_format,
                                 blockidx.hexString),
-                        null, listOf(ListItem(null, block.data.toHexDump())))
+                        acsDescription, listOf(ListItem(null, block.data.toHexDump())))
                 )
         }
         if (isEmpty(idx)) {
