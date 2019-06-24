@@ -19,9 +19,12 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -29,7 +32,16 @@ import au.id.micolous.metrodroid.util.NumberUtils
  * MRT Ultralight cards.
  */
 
-private const val NAME = "MRT Ultralight"
+private const val NAME = "MRT single-use"
+
+private val CARD_INFO = CardInfo(
+        name = NAME,
+        cardType = CardType.MifareUltralight,
+        locationId = R.string.location_singapore,
+        imageId = R.drawable.mrt_ul,
+        imageAlphaId = R.drawable.mrt_ul_alpha,
+        resourceExtraNote = R.string.card_note_card_number_only
+)
 
 private fun formatSerial(sn: Int) = "0001 ${NumberUtils.formatNumber(sn.toLong(), " ", 4, 4, 4)}"
 
@@ -57,5 +69,8 @@ class MRTUltralightTransitFactory : UltralightCardTransitFactory {
 
     override fun check(card: UltralightCard) =
             card.getPage(3).data.byteArrayToInt() == 0x204f2400
+
+    override val allCards: List<CardInfo>
+        get() = listOf(CARD_INFO)
 }
 
