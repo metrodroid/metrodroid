@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.classic.ClassicAccessBits
 import au.id.micolous.metrodroid.card.classic.ClassicCardTech
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
@@ -36,42 +37,12 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
         return raw.sliceOffLen(trailerOffset + 6, 4)
     }
 
-    data class AccBits(val C1: Int, val C2: Int, val C3: Int) {
-        operator fun get(slot: Int) =
-                (((C1 shr slot) and 0x1) shl 2) or
-                (((C2 shr slot) and 0x1) shl 1) or
-                ((C3 shr slot) and 0x1)
-
-        constructor(raw: ImmutableByteArray) : this(
-                C1 = (raw[1].toInt() and 0xf0) shr 4,
-                C2 = raw[2].toInt() and 0xf,
-                C3 = (raw[2].toInt() and 0xf0) shr 4
-        )
-    }
-
-    private fun isDataBlockReadable(accBits: ImmutableByteArray, slot: Int,
-                                    keyType: ClassicSectorKey.KeyType) =
-            when (AccBits(accBits)[slot]) {
-                0, 1, 2, 4, 6 -> true
-                3, 5 -> keyType == ClassicSectorKey.KeyType.B
-                7 -> false
-                else -> throw IllegalArgumentException()
-            }
-
-    private fun isKeyBReadable(accBits: ImmutableByteArray) = AccBits(accBits)[3] in listOf(0, 1, 2)
-
     private fun maskOutTrailer(accBits: ImmutableByteArray, block: ImmutableByteArray): ImmutableByteArray {
         val keyZero = ImmutableByteArray(6) { 0 }
-        if (isKeyBReadable(accBits))
+        if (!ClassicAccessBits(accBits).isKeyBReadable)
             return keyZero + block.sliceOffLen(6, 4) + keyZero
         else
             return keyZero + block.sliceOffLen(6, 10)
-    }
-
-    private fun isAccBitsValid(accBits: ImmutableByteArray): Boolean {
-        val c123inv = (accBits[0].toInt() and 0xff) or ((accBits[1].toInt() and 0xf) shl 8)
-        val c123 = ((accBits[1].toInt() and 0xf0) shr 4) or ((accBits[2].toInt() and 0xff) shl 4)
-        return c123inv == c123.inv() and 0xfff
     }
 
     override fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
@@ -81,8 +52,8 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
         Log.d(TAG, "auth ${key.key}, ${key.type} vs ${getKey(sectorIndex, type)}, accbits=$accBits")
         if (key.key != getKey(sectorIndex, type)
                 // TODO: verify behaviour in these 2 cases on a real card
-                || (key.type == ClassicSectorKey.KeyType.B && isKeyBReadable(accBits))
-                || !isAccBitsValid(accBits)) {
+                || (key.type == ClassicSectorKey.KeyType.B && ClassicAccessBits(accBits).isKeyBReadable)
+                || !ClassicAccessBits.isAccBitsValid(accBits)) {
             authSector = -1
             authKey = ClassicSectorKey.KeyType.UNKNOWN
             return false
@@ -110,7 +81,7 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
         val blockContents = raw.sliceOffLen(BLOCK_SIZE * block, BLOCK_SIZE)
         val accBits = getAccessBits(sectorIdx)
         val blkCnt = getBlockCountInSector(sectorIdx)
-        if (!isAccBitsValid(accBits))
+        if (!ClassicAccessBits.isAccBitsValid(accBits))
             return byteArrayOf(4).toImmutable()
         if (blockOffset == blkCnt - 1) {
             return maskOutTrailer(accBits, blockContents)
@@ -120,7 +91,7 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
             16 -> blockOffset / 5
             else -> throw IllegalArgumentException()
         }
-        if (!isDataBlockReadable(accBits, slot, authKey))
+        if (!ClassicAccessBits(accBits).isDataBlockReadable(slot, authKey))
             return byteArrayOf(4).toImmutable()
         return blockContents
     }
