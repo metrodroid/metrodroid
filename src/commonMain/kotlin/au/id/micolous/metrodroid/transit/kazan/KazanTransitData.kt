@@ -37,7 +37,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
 
 private fun name() = Localizer.localizeString(R.string.card_name_kazan)
 private val CARD_INFO = CardInfo(
-        name = name(),
+        name = R.string.card_name_kazan,
         locationId = R.string.location_kazan,
         cardType = CardType.MifareClassic,
         keysRequired = true,
