@@ -140,6 +140,8 @@ data class WarsawTransitData (private val mSerial: Pair<Int, Int>,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_card_number_only,
                 keysRequired = true, keyBundle = "warsaw",
+                imageId = R.drawable.warsaw_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
                 preview = true)
 
         private fun formatSerial(serial: Pair<Int, Int>) =
