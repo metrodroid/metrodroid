@@ -31,6 +31,7 @@ buildscript {
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.8'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
     }
 }
 
@@ -40,6 +41,7 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
 def drawableDir = new File(projectDir, "src/main/res/drawable")
