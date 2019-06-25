@@ -1,0 +1,56 @@
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+include ../Makefile.jq
+include ../Makefile.git
+
+GITHUB_REPOS_API   := https://api.github.com/repos
+GITHUB_CONTENT_URL := https://raw.githubusercontent.com
+GITHUB_ERROR = $(error Error reading from metadata file, try deleting $(1))
+
+## Gets the URL to a project's commit info JSON
+## args: project_path, commit
+## returns: url to metadata JSON
+github-get-metadata-url = $(GITHUB_REPOS_API)/$(1)/commits/$(call git-verify-hash,$(2))
+
+## Gets the URL for a file in a project.
+## args: project_path, file_path, commit
+## returns: url to file
+github-get-file-url = $(GITHUB_CONTENT_URL)/$(1)/$(3)/$(2)
+
+## Downloads the branch metadata for a GitHub project
+## args: project_path, commit
+## writes to $@
+define github-get-metadata
+	curl -f -o $@ -z $@ $(call github-get-metadata-url,$(1),$(2))
+endef
+
+## Gets the commit ID for a branch metadata file.
+##
+## args: metadata_filename
+## returns: commit sha1
+## errors: on failure reading JSON file
+github-get-commit = $(or $(shell jq -e -r .sha $(1)),$(GITHUB_ERROR))
+
+## Gets the timestamp of a commit in a branch metadata file.
+##
+## args: metadata_filename
+## returns: timestamp as int
+## errors: on failure reading JSON file
+github-get-ts = $(or $(shell jq -e -r ".commit.committer.date|fromdateiso8601" $(1)),$(GITHUB_ERROR))
+
+## Fetches a file from GitHub
+##
+## args: project_path, file, commit
+## writes to $@
+define github-fetch-file
+	mkdir -p "$(dir $@)"
+	curl -f -o $@ -z $@ $(call github-get-file-url,$(1),$(2),$(call git-verify-hash,$(3)))
+endef
+
+## Fetches a file from GitHub, referencing a branch metadata file.
+##
+## args: project_path, file
+## $< is the metadata file (throws error on read failure)
+## writes to $@
+define github-fetch-file-md
+	$(call github-fetch-file,$(1),$(2),$(call github-get-commit,$(<)))
+endef

@@ -1,6 +1,6 @@
 # data
 
-This directory contains data that is used to build stop databases (MdST).
+This directory contains data that is used to build stop databases ([MdST][]).
 
 The normal process with these files is to check in built versions of these files
 to `mdst/`.
@@ -23,13 +23,12 @@ Makefiles.
   * `web_copy`: copies all `web` targets to `mdst/`
   * `web_clean`: deletes all generated data for `web` targets
 
-## Simple examples
+### Simple examples
 
 These are recommended examples to copy from:
 
 * `lax_tap`: Shows how to build an MdST from GTFS data, where the GTFS files are
-  distributed in a remote git repository. `third_party/gtfs_lacmta_rail`
-  contains the ZIP files for this, which gets fetched as a git submodule.
+  distributed in a remote GitLab repository.
 
 * `seq_go`: Shows how to build an MdST from GTFS data, where the GTFS files are
   distributed via HTTP.
@@ -51,7 +50,10 @@ These are recommended examples to copy from:
   localisation. All the local names of stops are written in both English and
   Russian.
 
-## Complex examples
+### Complex examples
+
+* `amiibo`: Shows a custom schema for non-transit data, where required data
+  files are distributed in a remote GitHub repository.
 
 * `ezlink`: Shows how to build an MdST file manually (see
   `extra/mdst/ezlink.py`). This merges a mapping CSV, a bilingual stop list CSV
@@ -61,10 +63,22 @@ These are recommended examples to copy from:
 * `opus`: Builds an MdST file manually from an external XML format. Makefiles
   for this are not yet implemented.
 
-## Historic examples
+### Historic examples
 
 Don't do these anymore.
 
 * `ovc`, `suica`: These both import data from Farebot's sqlite3 format. This is
   not recommended anymore.
 
+## Other tools
+
+* `Makefile.common`: Common methods used by per-source Makefiles.
+* `Makefile.jq`: Used to test for the presence of [jq][].
+* `Makefile.github`: A tool for interfacing with GitHub's API and fetching
+  files.  Requires [jq][].
+* `Makefile.gitlab`: A tool for interfacing with GitLab's API and fetching
+  files.  Requires [jq][].
+
+
+[jq]: https://stedolan.github.io/jq/
+[mdst]: https://github.com/micolous/metrodroid/tree/master/extra/mdst

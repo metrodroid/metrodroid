@@ -1,0 +1,6 @@
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+
+GIT_HASH_ERROR = $(error Commit hash is required for git functions)
+
+## Checks that we have a commit reference, and not literal "master" or nothing.
+git-verify-hash = $(or $(subst master,,$(1)),$(GIT_HASH_ERROR))

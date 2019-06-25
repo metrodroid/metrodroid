@@ -23,3 +23,9 @@ mdst: $(MDST)/stations_pb2.py $(mdst_sources)
 # Deletes the generated Python proto definitions.
 mdst_clean:
 	make -C $(MDST) clean
+
+# Checks the sha512sums
+define sha512
+	rm -f $@
+	shasum -wa 512 -c $< && touch $@
+endef
