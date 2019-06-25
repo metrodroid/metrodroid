@@ -192,8 +192,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 This program contains Leaflet, a JavaScript mapping library, licensed under the BSD license.
 
-This program contains nfc-felica-lib, a library for communicating with Sony FeliCa cards, licensed under the Apache 2.0 license.
-
 This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.
 
 ## Building / hacking on this software
@@ -204,7 +202,7 @@ This software and it's authors are not associated with any public transit agency
    $ git clone --recursive https://github.com/micolous/metrodroid.git
    ```
    
-   [If you get an error from Gradle about `:nfc-felica-lib` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
+   [If you get an error from Gradle about `:material-design-icons` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
 
 2. Import the directory into Android Studio.
 
@@ -213,7 +211,7 @@ This software and it's authors are not associated with any public transit agency
 [3]: https://twitter.com/supersat
 [4]: https://twitter.com/xobs
 [5]: https://twitter.com/codebutler
-[13]: http://code.google.com/p/nfc-felica/
+[13]: https://github.com/Kazzz/nfc-felica
 [14]: http://www014.upp.so-net.ne.jp/SFCardFan/
 [15]: http://www.thenounproject.com/
 [weblate]: https://hosted.weblate.org/engage/metrodroid/
