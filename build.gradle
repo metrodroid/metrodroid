@@ -290,6 +290,13 @@ android {
         disable 'MissingTranslation'
     }
 }
+
+kotlin.sourceSets.all {
+    languageSettings {
+        useExperimentalAnnotation('kotlin.ExperimentalUnsignedTypes')
+    }
+}
+
 androidExtensions {
     // Needed for kotlinx.android.parcel.Parcelize
     experimental = true
