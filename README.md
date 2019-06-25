@@ -10,13 +10,13 @@
 
 Version: 2.9.42
 
-View your remaining balance, recent trips, and other information from contactless public transit
-cards using your NFC-enabled Android device!
+View remaining balance, recent trips, and other info from contactless public transit
+cards using NFC on Android.
 
 * [Michael Farrell](https://github.com/micolous)
 
-I presented Metrodroid and the work I did on supporting a number of Australian agencies' cards at
-linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
+View the presentation of work undergone to support a number of Australian agencies' cards, given at
+linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M)_.
 
 ## Thanks to
 
@@ -51,7 +51,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
 * Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
-* Norwegian Bokmål: [comradekingu](https://github.com/comradekingu), Petter Reinholdtsen
+* Norwegian Bokmål: [Allan Nordhøy](https://github.com/comradekingu), [Petter Reinholdtsen](https://github.com/petterreinholdtsen)
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
 * Spanish: [NokisDemox](https://github.com/NokisDemox)
 * Turkish: [omersiar](https://github.com/omersiar)
@@ -122,7 +122,7 @@ Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Oyster][oyster] | :gb: London, United Kingdom | :closed_lock_with_key: `MFC`
 [Podorozhnik][podoro] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
-[Rejsekort][rejse] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
+[Rejsekort][rejse] | :denmark: Denmark | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][ricarica] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 [Samara ETK][samara] | :ru: Samara, Russia | :new: :closed_lock_with_key: `MFC`
 [Selecta][] | :fr: France | :new:
@@ -169,7 +169,7 @@ interpreted locally, and _connectivity is disabled by default._
 
 Metrodroid requires an Android phone running 4.1 or later, with NFC support.
 
-Some devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
+Some devices do not support MIFARE Classic. MIFARE Classic is not an NFC-compliant card format, so they can only be read on devices with NXP chipsets.
 
 ## License and copyright
 
@@ -188,7 +188,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 This program contains Leaflet, a JavaScript mapping library, licensed under the BSD license.
 
