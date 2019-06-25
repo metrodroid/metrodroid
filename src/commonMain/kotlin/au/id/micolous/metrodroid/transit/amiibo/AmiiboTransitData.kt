@@ -40,6 +40,11 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.amiibo
 )
 
+/**
+ * Reader for Nintendo Amiibo tags.
+ *
+ * https://3dbrew.org/wiki/Amiibo#Data_structures
+ */
 @Parcelize
 data class AmiiboTransitData internal constructor(
         private val character: Int,

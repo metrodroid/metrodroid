@@ -1,23 +1,35 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
 MDROOT = ../..
 
-AMIIBO_URL=https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/database/amiibo.json
-LICENSE_URL=https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/LICENSE
+include ../Makefile.github
+
+GITHUB_PROJECT := N3evin/AmiiboAPI
+GITHUB_COMMIT  := b5703ef93413941aa58c46ef42202af6c24c160d
+DATA_FILES      = database/amiibo.json LICENSE
 
 all: amiibo.mdst amiibo.csv
 
-amiibo.json:
-	curl -o $@ -z $@ $(AMIIBO_URL)
+commit_info.json:
+	$(call github-get-metadata,$(GITHUB_PROJECT),$(GITHUB_COMMIT))
 
-LICENSE:
-	curl -o $@ -z $@ $(LICENSE_URL)
+$(DATA_FILES): commit_info.json
+	$(call github-fetch-file-md,$(GITHUB_PROJECT),$@)
 
-amiibo.mdst: mdst amiibo.json LICENSE
-	python3 $(MDST)/amiibo2pb.py -V 2 -o $@ -n LICENSE amiibo.json 
+NOTICE: NOTICE-prefix LICENSE
+	cat $^ > $@
+
+sha512ok: sha512sums $(DATA_FILES)
+	$(call sha512)
+
+amiibo.mdst: mdst sha512ok commit_info.json database/amiibo.json NOTICE
+	python3 $(MDST)/amiibo2pb.py \
+		-V "$(call github-get-ts,commit_info.json)" \
+		-o $@ -n NOTICE database/amiibo.json
 
 copy: amiibo.copy
 
 clean:
-	rm -f amiibo.mdst amiibo.csv
+	rm -f amiibo.mdst amiibo.csv commit_info.json NOTICE sha512ok $(DATA_FILES)
+	[[ -e database ]] && rmdir database || true
 
 include ../Makefile.common

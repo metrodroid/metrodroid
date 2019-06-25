@@ -31,6 +31,7 @@ HERMETIC_TARGETS := \
 # All targets that need to fetch some data from the internet, so may not always
 # return the same result.
 WEB_TARGETS := \
+	amiibo \
 	clipper \
 	ezlink \
 	mobib \

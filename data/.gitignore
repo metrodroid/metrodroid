@@ -1,2 +1,4 @@
 *.db3
 .~lock*\#
+commit_info.json
+sha512ok

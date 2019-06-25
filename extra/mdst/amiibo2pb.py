@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- mode: python; indent-tabs-mode: nil; tab-width: 2 -*-
 """
-csv2pb.py
-Compiles MdST stop database from CSV data.
+amiibo2pb.py
+Downloads information about Ambiibos from AmiiboAPI.
 
-Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
-Copyright 2018 Google
+Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
+Copyright 2018-2019 Google
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import print_function
 from argparse import ArgumentParser, FileType
-from datetime import datetime, timedelta
-from stations_pb2 import Station, Operator, Line
+from stations_pb2 import Station, Operator
 import mdst
 import codecs, json
 
@@ -36,7 +35,6 @@ def compile_stops_from_csv(json_f, output_f, version=None, notice_f=None):
   aroot = json.loads(json_f.read())
 
   operators = {}
-  lines = {}
 
   for (opid, opname) in aroot["amiibo_series"].items():
     oppb = Operator()
@@ -47,9 +45,6 @@ def compile_stops_from_csv(json_f, output_f, version=None, notice_f=None):
     fh=open(output_f, 'wb'),
     version=version,
     operators=operators,
-    lines=lines,
-    local_languages=[],
-    tts_hint_language=None,
     license_notice_f=notice_f,
   )
 
