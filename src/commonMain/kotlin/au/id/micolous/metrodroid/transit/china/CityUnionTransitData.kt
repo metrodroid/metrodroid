@@ -68,7 +68,7 @@ class CityUnionTransitData (val validityStart: Int?,
         private const val SHANGHAI = 0x2000
         private val cities = mapOf(
                 SHANGHAI to CardInfo(
-                        name = Localizer.localizeString(R.string.card_name_shanghai),
+                        name = R.string.card_name_shanghai,
                         locationId = R.string.location_shanghai,
                         imageId = R.drawable.shanghai,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
