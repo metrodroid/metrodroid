@@ -34,7 +34,7 @@ linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.b
 * [Steven Steiner](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejesekort)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejsekort)
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)

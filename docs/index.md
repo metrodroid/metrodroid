@@ -67,7 +67,7 @@ Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Oyster][oyster] | :gb: London, United Kingdom | :closed_lock_with_key: `MFC`
 [Podorozhnik][podoro] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
-[Rejsekort][rejse] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
+[Rejsekort][rejse] | :denmark: Denmark | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][ricarica] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 [Samara ETK][samara] | :ru: Samara, Russia | :new: :closed_lock_with_key: `MFC`
 [Selecta][] | :fr: France | :new:
