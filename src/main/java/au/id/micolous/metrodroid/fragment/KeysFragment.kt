@@ -72,6 +72,7 @@ import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.toUtf8Bytes
+import kotlin.text.Charsets
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private var mActionMode: ActionMode? = null
@@ -388,7 +389,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = stream.readBytes()
 
             try {
-                val json = Json.plain.parseJson(String(keyData, Utils.UTF8))
+                val json = Json.plain.parseJson(String(keyData, Charsets.UTF_8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this
