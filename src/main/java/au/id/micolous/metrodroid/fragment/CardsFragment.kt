@@ -67,8 +67,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.lang.ref.WeakReference
 
-import javax.xml.parsers.ParserConfigurationException
-
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.activity.CardInfoActivity
@@ -445,7 +443,7 @@ class CardsFragment : ExpandableListFragment() {
     }
 
 
-    private class ReadTask @Throws(ParserConfigurationException::class) internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, XmlOrJsonCardFormat())
+    private class ReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, XmlOrJsonCardFormat())
 
     private class MCTReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, MctCardImporter())
 

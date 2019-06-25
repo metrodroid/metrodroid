@@ -95,7 +95,6 @@ object ExportHelper {
     fun makeFilename(card: Card): String = makeFilename(card.tagId.toHexString(),
                 card.scannedAt, "json", 0)
 
-    @Throws(Exception::class)
     fun exportCardsZip(os: OutputStream, context: Context) {
         val cursor = CardDBHelper.createCursor(context) ?: return
         val zo = ZipOutputStream(os)
@@ -130,11 +129,9 @@ object ExportHelper {
         zo.close()
     }
 
-    @Throws(Exception::class)
     fun exportCardsXml(context: Context): String = XmlUtils.concatCardsFromString(CardDBHelper.createCursor(context)?.let { cursor ->
                 readCardsXml(cursor) } ?: listOf<String>().iterator())
 
-    @Throws(Exception::class)
     fun importCards(`is`: InputStream,
                     importer: CardImporter,
                     context: Context): Collection<Uri> {
@@ -143,7 +140,6 @@ object ExportHelper {
         return importCards(it, context)
     }
 
-    @Throws(Exception::class)
     fun importCards(s: String,
                     importer: CardImporter,
                     context: Context): Collection<Uri> {
