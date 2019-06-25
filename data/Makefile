@@ -13,8 +13,8 @@ HERMETIC_TARGETS := \
 	compass \
 	gautrain \
 	gironde \
+	hafilat \
 	kmt \
-	lax_tap \
 	lisboa_viva \
 	navigo \
 	orca \
@@ -25,8 +25,7 @@ HERMETIC_TARGETS := \
 	szt \
 	tisseo \
 	touchngo \
-	troika \
-	hafilat
+	troika
 
 # All targets that need to fetch some data from the internet, so may not always
 # return the same result.
@@ -34,6 +33,7 @@ WEB_TARGETS := \
 	amiibo \
 	clipper \
 	ezlink \
+	lax_tap \
 	mobib \
 	ricaricami \
 	seq_go \

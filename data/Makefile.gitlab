@@ -1,0 +1,59 @@
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+include ../Makefile.jq
+include ../Makefile.git
+
+GITLAB_URL := https://gitlab.com
+GITLAB_PROJECTS_API := $(GITLAB_URL)/api/v4/projects
+GITLAB_ERROR = $(error Error reading from metadata file, try deleting $(1))
+
+## Escapes a path for use in the GitLab API.
+escape-path = $(subst /,%2F,$1)
+
+## Gets the URL to a project's commit info JSON
+## args: project_path, commit
+## returns: url to metadata JSON
+gitlab-get-metadata-url = $(GITLAB_PROJECTS_API)/$(call escape-path,$(1))/repository/commits/$(call git-verify-hash,$(2))
+
+## Gets the URL for a file in a project.
+## args: project_path, file_path, branch_or_commit
+## returns: url to file
+gitlab-get-file-url = $(GITLAB_URL)/$(1)/raw/$(3)/$(2)
+
+## Downloads the branch metadata for a GitLab project
+## args: project_path, branch(optional)
+## writes to $@
+define gitlab-get-metadata
+	curl -f -o $@ -z $@ $(call gitlab-get-metadata-url,$(1),$(2))
+endef
+
+## Gets the commit ID for a branch metadata file.
+##
+## args: metadata_filename
+## returns: commit sha1
+## errors: on failure reading JSON file
+gitlab-get-commit = $(or $(shell jq -e -r .id $(1)),$(GITLAB_ERROR))
+
+## Gets the timestamp of a commit in a branch metadata file.
+##
+## args: metadata_filename
+## returns: timestamp as int
+## errors: on failure reading JSON file
+gitlab-get-ts = $(or $(shell jq -e -r ".created_at|fromdateiso8601" $(1)),$(GITLAB_ERROR))
+
+## Fetches a file from GitLab.
+##
+## args: project_path, file, branch_or_commit(optional)
+## writes to $@
+define gitlab-fetch-file
+	mkdir -p "$(dir $@)"
+	curl -f -o $@ -z $@ $(call gitlab-get-file-url,$(1),$(2),$(call git-verify-hash,$(3)))
+endef
+
+## Fetches a file from GitLab, referencing a branch metadata file.
+##
+## args: project_path, file
+## $< is the metadata file (throws error on read failure)
+## writes to $@
+define gitlab-fetch-file-md
+	$(call gitlab-fetch-file,$(1),$(2),$(call gitlab-get-commit,$(<)))
+endef
