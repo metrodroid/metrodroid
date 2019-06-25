@@ -325,6 +325,11 @@
     <string name="mfc_other_key">Trying alternate user-supplied keys for sector %d…</string>
     <string name="mfc_default_key">Trying well-known keys for sector %d…</string>
     <string name="mfc_reading_blocks">Reading sector %d…</string>
+    <string name="mfc_rwid">Read: %s, write: %s, increment: %s, decrement: %s</string>
+    <string name="mfc_key_never">never</string>
+    <string name="mfc_key_a">key A</string>
+    <string name="mfc_key_b">key B</string>
+    <string name="mfc_key_ab">key A|B</string>
 
     <string name="iso14a_detect">Detecting ISO 14443 card type…</string>
     <string name="mfd_reading">Reading MIFARE DESFire card…</string>
