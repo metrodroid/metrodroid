@@ -1,5 +1,5 @@
 /*
- * PisaSpecialEvent.java
+ * PisaSpecialEvent.kt
  *
  * Copyright 2018-2019 Google
  *

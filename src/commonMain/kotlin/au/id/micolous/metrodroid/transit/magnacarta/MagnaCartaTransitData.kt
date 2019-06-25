@@ -1,5 +1,5 @@
 /*
- * MagnaCartaTransitData.java
+ * MagnaCartaTransitData.kt
  *
  * Copyright 2019 Google
  *
