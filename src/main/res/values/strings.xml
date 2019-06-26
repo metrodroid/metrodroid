@@ -620,12 +620,14 @@
     manufacturer. -->
     <string name="manufacturer_name">Manufacturer</string>
 
+    <string name="calypso_name" translatable="false">Calypso</string>
+
     <!-- Translators: This is a company name. -->
     <string name="calypso_manufacturer_ask" translatable="false">ASK</string>
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_intec" translatable="false">Intec</string>
     <!-- Translators: This is a company name, https://www.calypsonet-asso.org/ -->
-    <string name="calypso_manufacturer_calypso" translatable="false">Calypso</string>
+    <string name="calypso_manufacturer_calypso" translatable="false">Calypso Networks Association</string>
     <!-- Translators: This is a company name: https://www.wikidata.org/wiki/Q663942
     Should only be transliterated. -->
     <string name="calypso_manufacturer_ascom" translatable="false">Ascom</string>

@@ -1,5 +1,10 @@
 package au.id.micolous.metrodroid.card.calypso
 
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.Preferences
+
 /**
  * Contains constants related to Calypso.
  */
@@ -12,35 +17,44 @@ object CalypsoData {
             //
             // Company names can be found at http://www.innovatron.fr/licensees.html
 
-            0x00 to "ASK",
-            0x01 to "Intec",
-            0x02 to "Calypso",
-            0x03 to "Ascom",
-            0x04 to "Thales",
-            0x05 to "Sagem",
-            0x06 to "Axalto",
-            0x07 to "Bull",
-            0x08 to "Spirtech",
-            0x09 to "BMS",
-            0x0A to "Oberthur",
-            0x0B to "Gemplus",
-            0x0C to "Magnadata",
-            0x0D to "Calmell",
-            0x0E to "Mecstar",
-            0x0F to "ACG Identification",
-            0x10 to "STMicroelectronics",
-            0x11 to "Calypso",
-            0x12 to "Giesecke &amp; Devrient GmbH",
-            0x13 to "OTI",
-            0x14 to "Gemalto",
-            0x15 to "Watchdata",
-            0x16 to "Alios",
-            0x17 to "S-P-S",
-            0x18 to "IRSA",
-            0x20 to "Calypso",
-            0x21 to "Innovatron",
-            0x2E to "Calypso"
+            0x00 to R.string.calypso_manufacturer_ask,
+            0x01 to R.string.calypso_manufacturer_intec,
+            0x02 to R.string.calypso_manufacturer_calypso,
+            0x03 to R.string.calypso_manufacturer_ascom,
+            0x04 to R.string.calypso_manufacturer_thales,
+            0x05 to R.string.calypso_manufacturer_sagem,
+            0x06 to R.string.calypso_manufacturer_axalto,
+            0x07 to R.string.calypso_manufacturer_bull,
+            0x08 to R.string.calypso_manufacturer_spirtech,
+            0x09 to R.string.calypso_manufacturer_bms,
+            0x0A to R.string.calypso_manufacturer_oberthur,
+            0x0B to R.string.calypso_manufacturer_gemplus,
+            0x0C to R.string.calypso_manufacturer_magnadata,
+            0x0D to R.string.calypso_manufacturer_calmell,
+            0x0E to R.string.calypso_manufacturer_mecstar,
+            0x0F to R.string.calypso_manufacturer_acg,
+            0x10 to R.string.calypso_manufacturer_stm,
+            0x11 to R.string.calypso_manufacturer_calypso,
+            0x12 to R.string.calypso_manufacturer_gide,
+            0x13 to R.string.calypso_manufacturer_oti,
+            0x14 to R.string.calypso_manufacturer_gemalto,
+            0x15 to R.string.calypso_manufacturer_watchdata,
+            0x16 to R.string.calypso_manufacturer_alios,
+            0x17 to R.string.calypso_manufacturer_sps,
+            0x18 to R.string.calypso_manufacturer_irsa,
+            0x20 to R.string.calypso_manufacturer_calypso,
+            0x21 to R.string.calypso_manufacturer_innovatron,
+            0x2E to R.string.calypso_manufacturer_calypso
     )
 
-    fun getCompanyName(datum: Byte) = manufacturerNames[datum.toInt() and 0xff]
+    fun getCompanyName(
+            datum: Byte, showRaw: Boolean = Preferences.showRawStationIds) : String {
+        val hexId = NumberUtils.byteToHex(datum)
+        val res = manufacturerNames[datum.toInt() and 0xff]
+        return when {
+            res == null -> Localizer.localizeString(R.string.unknown_format, hexId)
+            showRaw -> "${Localizer.localizeString(res)} [$hexId]"
+            else -> Localizer.localizeString(res)
+        }
+    }
 }

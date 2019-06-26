@@ -33,10 +33,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.countryCodeToName
+import au.id.micolous.metrodroid.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -79,34 +76,21 @@ data class CalypsoApplication (
         get() {
             val iccFile = getFile(File.ICC)
             val data = iccFile?.getRecord(1) ?: return emptyList()
-            val countryCode =
-                    try {
-                        data.getHexString(20, 2).toInt()
-                    } catch (ignored: NumberFormatException) {
-                        0
-                    }
-
+            val countryCode = data.convertBCDtoInteger(20, 2)
             val countryName = countryCodeToName(countryCode)
-
-            val manufacturer = CalypsoData.getCompanyName(data[22])
-            val manufacturerHex = NumberUtils.intToHex(data[22].toInt() and 0xff)
-            val manufacturerName =
-                    if (manufacturer != null)
-                        "$manufacturer ($manufacturerHex)"
-                    else
-                        Localizer.localizeString(R.string.unknown_format,
-                                manufacturerHex)
+            val manufacturerName = CalypsoData.getCompanyName(data[22])
             val manufactureDate = MANUFACTURE_EPOCH.days(data.byteArrayToInt(25, 2))
 
-            val items = mutableListOf<ListItem>()
-            items.add(HeaderListItem("Calypso"))
-            if (!Preferences.hideCardNumbers) {
-                items.add(ListItem(R.string.calypso_serial_number, data.getHexString(12, 8)))
-            }
-            items.add(ListItem(R.string.calypso_manufacture_country, countryName))
-            items.add(ListItem(R.string.manufacturer_name, manufacturerName))
-            items.add(ListItem(R.string.manufacture_date, TimestampFormatter.longDateFormat(manufactureDate)))
-            return items
+            return listOfNotNull(
+                    HeaderListItem(R.string.calypso_name),
+                    Preferences.hideCardNumbers.ifFalse {
+                        ListItem(R.string.calypso_serial_number, data.getHexString(12, 8))
+                    },
+                    ListItem(R.string.calypso_manufacture_country, countryName),
+                    ListItem(R.string.manufacturer_name, manufacturerName),
+                    ListItem(R.string.manufacture_date,
+                            TimestampFormatter.longDateFormat(manufactureDate))
+            )
         }
 
     override fun parseTransitData(card: ISO7816Card): TransitData? {
