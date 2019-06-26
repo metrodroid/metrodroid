@@ -34,7 +34,6 @@
 
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="scanned_at_format">Discan pada %1$s di %2$s</string>
-    <string name="pass_or_transfer">Pass/Xfer</string>
     <string name="fully_locked_desc">Tidak ada bagian dari kartu yang tidak dapat dibaca tanpa kunci. Anda tidak memiliki kunci yang terpasang.
 \n
 \nJika didukung oleh Metrodroid, kartu hanya dapat dibaca ketika kunci telah terpasang. Tiap kartu akan berbeda. Info tambahan mengenai cara mendapatkan dan memasang kunci dapat dicari di dokumen.
@@ -190,12 +189,6 @@
 	<item quantity="other">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
 </plurals>
 
-    <plurals name="minutes">
-	<item quantity="other">%d menit</item>
-</plurals>
-    <plurals name="hours">
-	<item quantity="other">%d jam</item>
-</plurals>
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Hanya untuk kartu FeliCa baru.</string>
 

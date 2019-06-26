@@ -86,7 +86,6 @@
         <item quantity="one">%d blokk</item>
         <item quantity="other">%d blokker</item>
     </plurals>
-    <string name="hsl_person_format">%s person</string>
     <string name="hsl_mins_format">%s min</string>
     <string name="opal_vehicle_bus">Buss</string>
     <string name="opal_vehicle_rail">Tog</string>
@@ -149,7 +148,6 @@
     <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
-    <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
     <string name="fully_locked_desc">"Ingen del av dette kortet kan leses ut på vanlig måte uten en nøkkel. Du har ingen gyldig nøkkel installert for det.
 \n
@@ -253,8 +251,6 @@
     <string name="felica_process_bus_pitapa">Buss (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Buss (IruCa)</string>
     <string name="felica_process_payment_shinkansen">Shinkansen-betaling</string>
-    <string name="general_information">Generell informasjon</string>
-    <string name="personal_information">Personlig informasjon</string>
     <string name="date_of_birth">Fødselsdato</string>
     <string name="software_information">Programvareinformasjon</string>
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
@@ -271,7 +267,6 @@
     <string name="cepas_purse_status">Portemoné-status</string>
     <string name="cepas_purse_balance">Portemoné-saldo</string>
     <string name="cepas_purse_creation_date">Portemoné-opprettelsesdato</string>
-    <string name="cepas_expiry_date">Portemoné-utløpsdato</string>
     <string name="cepas_autoload_amount">Autoladingsbeløp</string>
     <string name="cepas_last_txn_info">Informasjon om siste overføring</string>
     <string name="cepas_credit_header">Kreditt-topptekst</string>
@@ -292,7 +287,6 @@
     <string name="opal_action_journey_completed_auto_on">Tur fullført (grunnet manglende innstempling)</string>
     <string name="opal_action_tap_on_rejected">Innstempling avslått</string>
     <string name="card_note_opal">Gratisreisepass og enkeltturbilletter støttes ikke.</string>
-    <string name="card_note_bilhete_unico">Må velges som tilbakefallsleser i innstillingene.</string>
     <string name="erg_agency_id">Agentur-ID</string>
     <string name="ovc_autocharge_limit">Autoladingsgrense</string>
     <string name="ovc_autocharge_amount">Autoladingsbeløp</string>
@@ -377,18 +371,6 @@
     <string name="pref_theme">Drakt</string>
     <string name="pref_theme_desc">Velg utseende og oppførsel</string>
     <string name="pref_show_local_and_english_title">Vis både lokale og engelske stasjonsnavn</string>
-    <plurals name="minutes">
-        <item quantity="one">%d minutt</item>
-        <item quantity="other">%d minutter</item>
-    </plurals>
-    <plurals name="hours">
-        <item quantity="one">%d time</item>
-        <item quantity="other">%d timer</item>
-    </plurals>
-    <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dager</item>
-    </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d tur gjenstår</item>
         <item quantity="other">%d turer gjenstår</item>
@@ -411,7 +393,6 @@
     <string name="ez_topup">Påfylling</string>
     <string name="ez_first_use">Første bruk</string>
     <string name="kmt_extra_note">Kun for nye FeliCa-kort.</string>
-    <string name="orca_topup_machine">Maskin #%s</string>
     <string name="orca_topup">Fyll på</string>
     <string name="suica_bus_area_line_stop">Bussområde %1$s Linje %2$s Stopp %3$s</string>
     <string name="compass_product_type">Produkttype</string>
@@ -422,7 +403,6 @@
     <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
     <string name="troika_fare_90mins">90 minutter</string>
-    <string name="validity_length">Gyldig i %s</string>
     <string name="podorozhnik_topup">Podorozhnik påfylling</string>
     <string name="led_bus">St. Petersburgs buss</string>
     <string name="led_metro">St. Petersburgs metro</string>
@@ -432,7 +412,6 @@
     <string name="fully_blank_title">Blankt kort</string>
     <string name="location_seoul">Seoul, Sør-Korea</string>
     <string name="card_name_tmoney">T-Money</string>
-    <string name="tmoney_date">T-money-dato</string>
     <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
     <string name="app_version">Versjon: %s</string>
     <string name="device_model">Modell: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
@@ -468,8 +447,6 @@
     <string name="kmt_agency">Kereta Commuter (pendler) Indonesia</string>
     <string name="kmt_other_data">Annen data</string>
     <string name="kmt_last_trx_amount">Siste overføringsmengde</string>
-    <string name="hsl_line_vehicle">Rute %$s, kjøretøy %2$s</string>
-    <string name="orca_coach_number">Vogn #%s</string>
     <string name="suica_area_line_station">Område %1$s rute %2$s stasjon %3$s</string>
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
@@ -492,7 +469,6 @@
     <string name="subway_trips">Undergrunnsbaneturer</string>
     <string name="ground_trips">Jernbaneturer</string>
     <string name="podorozhnik_gate">gate %s</string>
-    <string name="podorozhnik_tvm">TVM %d</string>
     <string name="blank_mfc_card">Blankt MIFARE Classic-kort</string>
     <string name="charlie_2nd_card_number">Sekundært tall</string>
     <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
@@ -527,7 +503,6 @@
     <string name="initialisation_date">Igangsettingsdato</string>
     <string name="issue_date">Utstedelsesdato</string>
     <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i NFC-innstillingene.</string>
-    <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
     <string name="delete_key_confirm_title">Vil du virkelig slette nøkkelen?</string>
     <string name="delete_key_confirm_message">Nøkkelfilen <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (som inneholder <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) vil gå tapt for alltid.</string>
     <string name="cant_delete_with_obfuscation">Sletting av nøkler er foreløpig utilgjengelig</string>
@@ -545,7 +520,6 @@
     <string name="invalid_json">Ugyldig JSON</string>
     <string name="invalid_key_file">Ugyldig nøkkelfil</string>
     <string name="key_file_empty">Nøkkelfilen er tom!</string>
-    <string name="static_imported">Importert: %s</string>
     <string name="untitled_key_group">Nøkkelgruppe uten tittel</string>
     <plurals name="keytype_mfc">
         <item quantity="one">%d MIFARE Classic-nøkkel</item>
@@ -561,7 +535,6 @@
     <string name="card_note_leap">Krever innhenting av nøkler fra TFI, som må skrus på i NFC-innstillingene i Metrodroid.</string>
     <string name="machine_id">Maskin-ID</string>
     <string name="valid_from_format">Gyldig fra %1$s</string>
-    <string name="valid_not_used">Ikke brukt enda</string>
     <string name="location_brussels">Brussel, Belgia</string>
     <string name="location_gironde">Gironde, Frankrike</string>
     <string name="location_grenoble">Grenoble, Frankrike</string>
@@ -575,10 +548,6 @@
     <string name="gender_male">Mann</string>
     <string name="seller_agency">Salgsbyrå</string>
     <string name="remaining_trip_count">Turer gjenstår</string>
-    <plurals name="remaining_trips_total">
-        <item quantity="one">Ingen turer gjenstår</item>
-        <item quantity="other">%1$d tur gjenstår</item>
-    </plurals>
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d tur gjenstår på %2$s</item>
         <item quantity="other">%1$d turer gjenstår på %2$s</item>

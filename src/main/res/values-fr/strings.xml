@@ -33,7 +33,6 @@
     <string name="loading">Chargement…</string>
     <string name="scanned_at_format">Scanné à %1$s le %2$s</string>
     <string name="supported_cards">Cartes supportées</string>
-    <string name="pass_or_transfer">Pass/Transfer</string>
     <string name="fully_locked_desc">Aucune partie de cette carte n\'est librement lisible sans clé et actuellement ce format n\'a aucune vulnérabilité pratique.
 \n
 \nVotre carte n\'est pas supportée par Metrodroid et il est peu probable qu\'elle le soit un jour, sauf si la clé est déchiffrée.
@@ -173,7 +172,6 @@
     <string name="hsl_balance_refill">Recharge du solde</string>
     <string name="hsl_balance_ticket">Valeur du billet</string>
     <string name="hsl_pass_ticket">Ticket saisonnier</string>
-    <string name="hsl_person_format">%s personne</string>
     <string name="hsl_mins_format">%s min</string>
     <string name="opal_automatic_top_up">Recharge automatique</string>
     <string name="opal_weekly_trips">Déplacements hebdomadaires</string>
@@ -200,7 +198,6 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>
     <string name="nextfare_ticket_class">Code de classe billet %d</string>
-    <string name="card_note_bilhete_unico">Doit être sélectionné en tant que lecteur de secours dans les préférences.</string>
     <string name="opal_action_tap_on_reversal">Insérer dans l\'autre sens</string>
     <string name="locked_mfc_card">Carte MIFARE Classic verrouillée</string>
     <string name="locked_mfu_card">Carte MIFARE Ultralight verrouillée</string>
@@ -226,7 +223,6 @@
     <string name="binary_title_format">Données binaires</string>
     <string name="valid_from_format">Valable à partir du %1$s</string>
     <string name="subscription_cost">Coût</string>
-    <string name="valid_not_used">Pas encore utilisé</string>
     <string name="delete_key_confirm_title">Supprimer la clé \?</string>
     <string name="rejected">Rejeté</string>
     <string name="delete_key_confirm_message">Le fichier de clé <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (contenant <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) sera effacé pour toujours.</string>
@@ -336,18 +332,6 @@
         <item quantity="one">Type : 1$s, Enregistrement : %2$s (%3$s maximum), Taille de l\'enregistrement : %4$s</item>
         <item quantity="other">Type : 1$s, Enregistrements : %2$s (%3$s maximum), Taille de l\'enregistrement : %4$s</item>
     </plurals>
-    <plurals name="minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
-    <plurals name="hours">
-        <item quantity="one">%d heure</item>
-        <item quantity="other">%d heures</item>
-    </plurals>
-    <plurals name="days">
-        <item quantity="one">%d jour</item>
-        <item quantity="other">%d jours</item>
-    </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d voyage restant</item>
         <item quantity="other">%d voyages restants</item>
@@ -381,7 +365,6 @@
     <string name="cepas_purse_status">Statut Purse</string>
     <string name="cepas_purse_balance">Solde Purse</string>
     <string name="cepas_purse_creation_date">Date de création de Purse</string>
-    <string name="cepas_expiry_date">Date d\'expiration de Purse</string>
     <string name="cepas_autoload_amount">Montant chargé automatiquement</string>
     <string name="cepas_last_txn_info">Infos sur la dernière Transaction</string>
     <string name="cepas_credit_header">En-tête de crédit</string>
@@ -493,14 +476,11 @@
     <string name="kmt_extra_note">Uniquement pour les nouvelles cartes FeliCa.</string>
     <string name="kmt_other_data">Autres données</string>
     <string name="kmt_last_trx_amount">Montant de la dernière transaction</string>
-    <string name="hsl_line_vehicle">Ligne %1$s, Véhicule %2$s</string>
     <string name="metroq_fare_card">Grille des tarifs</string>
     <string name="metroq_day_pass">Pass journalier</string>
     <string name="opal_action_tap_on_rejected">Tapez sur rejeté</string>
     <string name="opal_agency_tfnsw">Transport pour NSW</string>
     <string name="card_note_opal">Les titres de transport gratuits et les billets aller simple ne sont pas pris en charge.</string>
-    <string name="orca_coach_number">Entraîneur N°%s</string>
-    <string name="orca_topup_machine">Machine N°%s</string>
     <string name="orca_topup">Recharge</string>
     <string name="card_note_adelaide">Seuls les numéro de série, les voyages et les abonnements peuvent être lus</string>
     <string name="purse_serial_number">Numéro de série de Purse</string>
@@ -521,8 +501,6 @@
     <string name="ovc_autocharge_limit">Limite de recharge automatique</string>
     <string name="ovc_autocharge_amount">Frais de recharge automatique</string>
     <string name="ovc_autocharge">Recharge automatique</string>
-    <string name="general_information">Informations générales</string>
-    <string name="personal_information">Informations personnelles</string>
     <string name="date_of_birth">Date de naissance</string>
     <string name="credit_information">Informations bancaires</string>
     <string name="software_information">Informations sur le logiciel</string>
@@ -549,10 +527,6 @@
     <string name="with_receipt">Avec reçu</string>
     <string name="seller_agency">Agence de vente</string>
     <string name="remaining_trip_count">Voyages restants</string>
-    <plurals name="remaining_trips_total">
-        <item quantity="one">Aucun voyage restant</item>
-        <item quantity="other">%1$d voyage(s) restant(s)</item>
-    </plurals>
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d voyage restant sur %2$s</item>
         <item quantity="other">%1$d voyages restants sur %2$s</item>
@@ -599,7 +573,6 @@
     <string name="card_name_troika_podorozhnik_hybrid">Troika + Podorozhnik</string>
     <string name="troika_fare_single">Aller simple</string>
     <string name="troika_fare_90mins">90 minutes</string>
-    <string name="validity_length">Valable pour %s</string>
     <string name="troika_layout">Code Troika</string>
     <string name="moscow_subway">Métro de Moscou</string>
     <string name="moscow_monorail">Monorail de Moscou</string>
@@ -614,7 +587,6 @@
     <string name="ground_trips">Voyages au sol</string>
     <string name="podorozhnik_topup">Recharge Podorozhnik</string>
     <string name="podorozhnik_gate">porte %s</string>
-    <string name="podorozhnik_tvm">TVM %d</string>
     <string name="led_bus">Bus de Saint-Pétersbourg</string>
     <string name="led_metro">Métro de Saint-Pétersbourg</string>
     <string name="led_shared_taxi">Taxi partagé de Saint-Pétersbourg</string>
@@ -623,7 +595,6 @@
     <string name="fully_blank_desc">Cette carte est complètement vierge. Elle est formaté mais sans aucune donnée écrite dessus. Elle possède toujours un numéro de série par lequel elle peut être identifiée de façon unique et liée à une base de données, mais la carte elle-même ne contient pas d\'autres données.</string>
     <string name="fully_blank_title">Carte vierge</string>
     <string name="card_name_tmoney">T-Money</string>
-    <string name="tmoney_date">Date de l\'émission de T-money</string>
     <string name="charlie_2nd_card_number">Second numéro</string>
     <string name="no_data_in_clipboard">Aucune donnée dans le presse-papiers.</string>
     <string name="app_version">Version : %s</string>
@@ -673,11 +644,9 @@
     <string name="card_note_leap">Requiert la récupération des clés depuis TFI, cela doit être activé dans l\'écran Préférences NFC.</string>
     <string name="lisboaviva_unknown_period">Validité inconnue %x/%x</string>
     <string name="about_key_formats">À propos des formats de clé…</string>
-    <string name="invalid_json_key_type">JSON invalide : type de clé manquant</string>
     <string name="invalid_json">JSON non valide</string>
     <string name="invalid_key_file">Fichier de clé non valide</string>
     <string name="key_file_empty">Fichier de clé vide !</string>
-    <string name="static_imported">Importé : %s</string>
     <string name="untitled_key_group">Groupe de clés sans titre</string>
     <plurals name="keytype_mfc">
         <item quantity="one">%d clé MIFARE Classic</item>

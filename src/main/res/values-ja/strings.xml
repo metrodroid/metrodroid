@@ -28,7 +28,6 @@
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
-    <string name="pass_or_transfer">パス／乗り換え</string>
     <string name="felica_terminal_fare_adjustment">精算機</string>
     <string name="felica_terminal_portable">携帯型端末</string>
     <string name="felica_terminal_vehicle">等車載端末</string>
@@ -143,7 +142,6 @@
     <string name="hsl_balance_refill">残高チャージ</string>
     <string name="hsl_balance_ticket">バリュー チケット</string>
     <string name="hsl_pass_ticket">シーズン チケット</string>
-    <string name="hsl_person_format">%s 人</string>
     <string name="hsl_mins_format">%s 分</string>
     <string name="opal_automatic_top_up">自動チャージ</string>
     <string name="opal_weekly_trips">毎週の旅行</string>
@@ -200,7 +198,6 @@
     <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>
     <string name="location_act_australia">オーストラリア首都特別地域, オーストラリア</string>
-    <string name="card_note_bilhete_unico">設定でフォールバック リーダーとして選択する必要があります。</string>
     <string name="location_wa_australia">西オーストラリア州, オーストラリア</string>
     <string name="obfuscation_title">難読化</string>
     <string name="obfuscation_card_numbers">カード番号を非表示</string>
@@ -269,7 +266,6 @@
     <string name="cepas_purse_status">財布の状態</string>
     <string name="cepas_purse_balance">財布の残高</string>
     <string name="cepas_purse_creation_date">財布の作成日</string>
-    <string name="cepas_expiry_date">財布の有効期限</string>
     <string name="cepas_autoload_amount">自動チャージ金額</string>
     <string name="cepas_last_txn_info">最後のトランザクション情報</string>
     <string name="cepas_credit_header">クレジットヘッダー</string>
@@ -293,8 +289,6 @@
     <string name="ovc_autocharge_limit">自動チャージ限度</string>
     <string name="ovc_autocharge_amount">自動チャージのチャージ</string>
     <string name="ovc_autocharge">自動チャージ</string>
-    <string name="general_information">全般情報</string>
-    <string name="personal_information">個人情報</string>
     <string name="date_of_birth">生年月日</string>
     <string name="credit_information">クレジット情報</string>
     <string name="software_information">ソフトウェア情報</string>
