@@ -24,7 +24,7 @@
     * 30 character limit.
     * Used in Play Store as "Title".
     -->
-    <string name="market_title">Metrodroid</string>
+    <string name="market_title" translatable="false">Metrodroid</string>
 
     <!--
     Translators:
@@ -105,6 +105,8 @@
     * The full changelog is only in English.
     -->
     <string name="market_changelog_generic">Fixes bugs, adds new features and data.\n\nMore details and known issues (in English): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    <!-- Changelog 42 is same as 41. -->
 
     <!--
     Translators:
