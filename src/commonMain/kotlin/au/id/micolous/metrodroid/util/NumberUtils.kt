@@ -35,7 +35,15 @@ object NumberUtils {
             res = res * 10 + ((data shr (4 * (7 - i))) and 0xf)
         return res
     }
-    fun convertBCDtoInteger(data: Byte): Int = ((data.toInt() and 0xF0) shr 4) * 10 + (data.toInt() and 0x0F)
+    fun convertBCDtoInteger(data: Byte): Int {
+        val d = data.toInt()
+        val h = (d and 0xf0) shr 4
+        val l = (d and 0x0f)
+
+        return (if (h >= 9) { 90 } else { h * 10 }) +
+                (if (l >= 9) { 9 } else { l })
+    }
+
     fun zeroPad(value: Int, minDigits: Int): String {
         val cand = value.toString()
         if (cand.length >= minDigits)
