@@ -191,7 +191,6 @@
     <string name="opal_action_journey_completed_flat_rate">Voyage terminé (tarif forfaitaire)</string>
     <string name="opal_action_journey_completed_auto_off">Voyage terminé (défaut de sortie)</string>
     <string name="opal_action_journey_completed_auto_on">Voyage terminé (défaut d\'entrée)</string>
-    <string name="seqgo_ticket_type_regular">Normal</string>
     <string name="seqgo_ticket_type_concession">Réduit</string>
     <string name="seqgo_ticket_type_child">Enfant</string>
     <string name="seqgo_ticket_type_senior">Senior</string>

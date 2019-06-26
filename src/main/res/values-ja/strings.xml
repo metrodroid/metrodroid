@@ -186,7 +186,6 @@
     <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
     <string name="valid_to_format">%1$s まで有効</string>
     <string name="unknown">不明</string>
-    <string name="seqgo_ticket_type_regular">正規</string>
     <string name="seqgo_ticket_type_concession">割引</string>
     <string name="seqgo_ticket_type_child">子供</string>
     <string name="seqgo_ticket_type_senior">シニア</string>

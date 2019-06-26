@@ -265,7 +265,6 @@
     <string name="opal_action_journey_completed_flat_rate">Поездка завершена (фиксированный тариф)</string>
     <string name="orca_topup_machine">Автомат #%s</string>
     <string name="orca_topup">Пополнение</string>
-    <string name="seqgo_ticket_type_regular">Обычный</string>
     <string name="seqgo_ticket_type_concession">Льготный</string>
     <string name="seqgo_ticket_type_child">Детский</string>
     <string name="seqgo_refill_manual">Ручное пополнение</string>
@@ -276,7 +275,6 @@
     <string name="personal_information">Личная информация</string>
     <string name="date_of_birth">Дата рождения</string>
     <string name="convert_timezones">Перевести время в текущий часовой пояс</string>
-    <string name="convert_timezones_summary">По умолчанию, Метродроид показывает все времена в часовом поясе карты. Если эта опция включена, то Метродроид переведет время в текущий часовой пояс вашего устройства.</string>
     <string name="compass_product_type">Тип продукта</string>
     <string name="compass_machine_code">Код автомата</string>
     <string name="ticket_type">Тип билета</string>
@@ -316,7 +314,6 @@
     <string name="cepas_purse_info">Информация о кошельке</string>
     <string name="felica_card_identification_number">Идентификатор карты</string>
     <string name="calypso_manufacture_country">Страна производства</string>
-    <string name="calypso_manufacture_date">Дата производства</string>
     <string name="transaction_counter">Счётчик транзакций</string>
     <string name="location_istanbul">Стамбул, Турция</string>
     <string name="location_boston">Бостон, Массачусетс, США</string>

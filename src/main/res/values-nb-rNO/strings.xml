@@ -174,7 +174,6 @@
     <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
     <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
     <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
-    <string name="seqgo_ticket_type_regular">Vanlig</string>
     <string name="seqgo_ticket_type_concession">Honnør</string>
     <string name="seqgo_ticket_type_child">Barn</string>
     <string name="seqgo_ticket_type_senior">Senior</string>
@@ -260,7 +259,6 @@
     <string name="software_information">Programvareinformasjon</string>
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
     <string name="convert_timezones">Konverter tidssoner</string>
-    <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
     <string name="felica_system_title_format">System: %1$s (%2$s)</string>
     <string name="mfc_have_key">Prøver bruker-oppgitt nøkkel for sektoren %d…</string>
     <string name="mfc_default_key">Prøver velkjente nøkler for sektoren %d…</string>
@@ -585,7 +583,6 @@
         <item quantity="one">%1$d tur gjenstår på %2$s</item>
         <item quantity="other">%1$d turer gjenstår på %2$s</item>
     </plurals>
-    <string name="remaining_day_count">Dager gjenstår</string>
     <plurals name="travel_zones">
         <item quantity="one">Reisesone</item>
         <item quantity="other">Reisesoner</item>

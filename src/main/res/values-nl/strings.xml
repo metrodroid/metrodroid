@@ -192,7 +192,6 @@
     <string name="opal_action_journey_completed_auto_off">Reis voltooid (niet uitgecheckt)</string>
     <string name="opal_action_journey_completed_auto_on">Reis voltooid (niet ingecheckt)</string>
     <string name="opal_action_tap_on_reversal">Omgekeerd inchecken</string>
-    <string name="seqgo_ticket_type_regular">Regulier</string>
     <string name="seqgo_ticket_type_concession">Concessie</string>
     <string name="seqgo_ticket_type_child">Kind</string>
     <string name="seqgo_ticket_type_senior">Oudere</string>
@@ -329,7 +328,6 @@
 \n 
 \nDit vereist toegankelijkheidssoftware die ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
     <string name="convert_timezones">Aanpassen aan tijdzones</string>
-    <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen aan de huidige tijdzone van uw apparaat.</string>
     <string name="record_title_format">Vermelding: %s</string>
     <string name="iso7816_probing">Bezig met verbinding leggen met ISO7816-kaart…</string>
     <string name="calypso_reading">Bezig met uitlezen van Calypso-kaart…</string>
@@ -589,7 +587,6 @@
         <item quantity="one">%1$d resterende reis op %2$s</item>
         <item quantity="other">%1$d resterende reizen op %2$s</item>
     </plurals>
-    <string name="remaining_day_count">Resterende dagen</string>
     <plurals name="travel_zones">
         <item quantity="one">Reisgebied</item>
         <item quantity="other">Reisgebieden</item>
