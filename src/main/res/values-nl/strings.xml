@@ -914,4 +914,21 @@
     <string name="umarsh_school">Scholier</string>
     <string name="umarsh_student">Student</string>
     <string name="umarsh_adult">Volwassene</string>
+    <plurals name="remaining_day_count">
+        <item quantity="one">Geen resterende dagen</item>
+        <item quantity="other">1 resterende dag</item>
+    </plurals>
+    <string name="mfc_rwid">Uitgelezen: %s, weggeschreven: %s, verhoging: %s, verlaging: %s</string>
+    <string name="mfc_key_never">nooit</string>
+    <string name="mfc_key_a">sleutel A</string>
+    <string name="mfc_key_b">sleutel B</string>
+    <string name="mfc_key_ab">sleutel A|B</string>
+    <string name="amiibo_type">Soort</string>
+    <string name="amiibo_type_figure">Figuur</string>
+    <string name="amiibo_type_card">Kaart</string>
+    <string name="amiibo_type_yarn">Koord</string>
+    <string name="amiibo_character">Teken</string>
+    <string name="amiibo_character_variant">Tekenvariant</string>
+    <string name="amiibo_model_number">Serienummer</string>
+    <string name="amiibo_series">Serie</string>
 </resources>
