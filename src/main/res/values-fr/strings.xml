@@ -410,31 +410,6 @@
     <string name="calypso_manufacture_country">Pays de fabrication</string>
     <string name="manufacture_date">Date de fabrication</string>
     <string name="manufacturer_name">Fabricant</string>
-    <string name="calypso_manufacturer_ask">ASK</string>
-    <string name="calypso_manufacturer_intec">Intec</string>
-    <string name="calypso_manufacturer_calypso">Calypso</string>
-    <string name="calypso_manufacturer_ascom">Ascom</string>
-    <string name="calypso_manufacturer_thales">Thales</string>
-    <string name="calypso_manufacturer_sagem">Sagem</string>
-    <string name="calypso_manufacturer_axalto">Axalto</string>
-    <string name="calypso_manufacturer_bull">Bull</string>
-    <string name="calypso_manufacturer_spirtech">Spirtech</string>
-    <string name="calypso_manufacturer_bms">BMS</string>
-    <string name="calypso_manufacturer_oberthur">Oberthur</string>
-    <string name="calypso_manufacturer_gemplus">Gemplus</string>
-    <string name="calypso_manufacturer_magnadata">Magnadata</string>
-    <string name="calypso_manufacturer_calmell">Calmell</string>
-    <string name="calypso_manufacturer_mecstar">Mecstar</string>
-    <string name="calypso_manufacturer_acg">ACG Identification</string>
-    <string name="calypso_manufacturer_stm">STMicroelectronics</string>
-    <string name="calypso_manufacturer_gide">Giesecke &amp; Devrient GmbH</string>
-    <string name="calypso_manufacturer_oti">OTI</string>
-    <string name="calypso_manufacturer_gemalto">Gemalto</string>
-    <string name="calypso_manufacturer_watchdata">Watchdata</string>
-    <string name="calypso_manufacturer_alios">Alios</string>
-    <string name="calypso_manufacturer_sps">S-P-S</string>
-    <string name="calypso_manufacturer_irsa">IRSA</string>
-    <string name="calypso_manufacturer_innovatron">Innovatron</string>
     <string name="trip_description">(Depuis )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (vers )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="trip_description_unknown_start">vers %s</string>
