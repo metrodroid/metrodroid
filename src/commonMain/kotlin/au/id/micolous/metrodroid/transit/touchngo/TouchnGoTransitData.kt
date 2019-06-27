@@ -23,13 +23,11 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.Daystamp
-import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -64,7 +62,7 @@ private fun parseDaystamp(input: ImmutableByteArray, off: Int): Daystamp {
 
 private const val TNG_STR = "touchngo"
 
-abstract private class TouchnGoTripCommon : Trip(), Parcelable {
+private abstract class TouchnGoTripCommon : Trip(), Parcelable {
     abstract val header: ImmutableByteArray
     protected val transactionId
         get() = header.byteArrayToInt(0, 2)
@@ -81,13 +79,11 @@ abstract private class TouchnGoTripCommon : Trip(), Parcelable {
     override val fare: TransitCurrency?
         get() = TransitCurrency.MYR(amount)
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return StationTableReader.getOperatorName(
+    override fun getAgencyName(isShort: Boolean): String? = StationTableReader.getOperatorName(
                 TNG_STR,
                 agencyRaw.byteArrayToInt(),
                 isShort,
                 if (agencyRaw.isASCII()) agencyRaw.readASCII() else agencyRaw.toHexString())
-    }
 }
 
 @Parcelize
@@ -96,7 +92,7 @@ private data class TouchnGoRefill(
     override val fare: TransitCurrency?
         get() = super.fare?.negate()
     override val mode: Mode
-        get() = Trip.Mode.TICKET_MACHINE
+        get() = Mode.TICKET_MACHINE
 
     companion object {
         fun parse (sec: ClassicSector): TouchnGoRefill? {
@@ -187,9 +183,8 @@ private data class TouchnGoInProgressTrip(
         private val startStationCode: TouchnGoStationId,
         val agencyRawShort: ImmutableByteArray
 ): Trip() {
-    override fun getAgencyName(isShort: Boolean): String? {
-        return if (agencyRawShort.isASCII()) agencyRawShort.readASCII() else agencyRawShort.toHexString()
-    }
+    override fun getAgencyName(isShort: Boolean): String? =
+            if (agencyRawShort.isASCII()) agencyRawShort.readASCII() else agencyRawShort.toHexString()
     override val fare: TransitCurrency?
         get() = null
     override val mode: Mode
