@@ -212,7 +212,7 @@
     <plurals name="cards_imported">
         <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта!</item>
         <item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты!</item>
-        <item quantity="many">Импортированао<xliff:g id="count" example="1">%d</xliff:g> карт!</item>
+        <item quantity="many">Импортировано <xliff:g id="count" example="1">%d</xliff:g> карт!</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d блок</item>
@@ -540,4 +540,138 @@
     <string name="supported_protocols">Поддерживаемые протоколы</string>
     <string name="location_tbilisi">Тбилиси, Грузия</string>
     <string name="card_note_oyster">Поддерживаются только карты первого поколения (MIFARE Classic). Карты текущего поколения (с буквой D в левом нижнем углу) - полностью заблокированные DESFire карты, и, таким образом, неподдерживаемые.</string>
+    <string name="obfuscation_title">Обфускация</string>
+    <string name="obfuscation_balance">Обфускация баланса</string>
+    <string name="obfuscation_balance_desc">Изменить показанный баланс на случайную сумму</string>
+    <string name="obfuscation_dates">Обфускация дат</string>
+    <string name="obfuscation_times">Обфускация времени</string>
+    <string name="obfuscation_fares">Обфускация тарифов</string>
+    <string name="card_partial_read_desc">Карта вышла из поля во время чтения.
+\n
+\nНекоторые данные были прочитаны, но их может быть недостаточно для получения полезных данных.
+\n
+\nТолстые чехлы и металл могут помешать работе NFC. Сбой может также указывать на то, что карта или антенна NFC вашего устройства повреждена.</string>
+    <string name="calypso_serial_number">Серийный номер</string>
+    <string name="felica_process_bus_pitapa">Автобус (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Автобус (IruCa)</string>
+    <string name="felica_process_reissue">Повторная выдача</string>
+    <string name="felica_process_payment_shinkansen">Оплата Синкансена</string>
+    <string name="card_note_opal">Бесплатные и одноразовые билеты не поддерживаются.</string>
+    <string name="no_data_in_clipboard">Нет данных в буфере обмена.</string>
+    <string name="developer_options">Настройки для разработчиков</string>
+    <string name="station_database">База данных станций</string>
+    <string name="developer_options_desc">Использование баз данных станций, режимов обфускации…</string>
+    <string name="advanced_options">Расширенные настройки</string>
+    <string name="nfc">NFC</string>
+    <string name="kmt_last_trx_amount">Сумма последней транзакции</string>
+    <string name="istanbulkart_2nd_card_number">Вторичный серийный номер</string>
+    <string name="charlie_2nd_card_number">Второй номер</string>
+    <string name="desfire_challenge">Запрос (Challenge)</string>
+    <string name="desfire_response">Ответ (Response)</string>
+    <string name="desfire_confirmation">Подтверждение (Confirmation)</string>
+    <string name="mfd_unlocking">Разблокирование карты <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
+    <string name="cant_delete_with_obfuscation_message">По соображениям безопасности нельзя удалять ключи, пока включена обфускация номеров карты. Выключите ее, если вы хотите удалить ключи.</string>
+    <string name="untitled_key_group">Безымянная группа ключей</string>
+    <string name="card_issuer">Эмитент</string>
+    <string name="single_trips">Разовые поездки</string>
+    <string name="en1545_card_expiry_date_profile">Дата окончания действия профиля</string>
+    <string name="subscription_inactive">Неактивен</string>
+    <string name="subscription_unused">Неиспользованный</string>
+    <string name="subscription_started">Начатый</string>
+    <string name="subscription_expired">Просрочен</string>
+    <string name="last_used_on">Последнее использование</string>
+    <string name="payment_method_transit_card">Транзитная карта</string>
+    <string name="card_name_kiev">Киевский метрополитен</string>
+    <plurals name="cards_deduped">
+        <item quantity="one">Удалено %d дупликат</item>
+        <item quantity="few">Удалено %d дупликата</item>
+        <item quantity="many">Удалено %d дупликатов</item>
+    </plurals>
+    <string name="deduplicate_cards">Удалить дупликаты</string>
+    <string name="pref_show_raw_station_ids_desc_on">В дополнение к названиям станции и маршрута отображають их идентификаторы</string>
+    <string name="pref_show_raw_station_ids_desc_off">Идентификаторы станции и маршрута скрыты, за исключением неизвестных станций/маршрутов</string>
+    <string name="encryption_key_version">Версия ключа шифрования</string>
+    <string name="rfu">Зарезервировано для будущего использования</string>
+    <string name="cardtype_prepaid">Предоплата</string>
+    <string name="crypto_algo_header">Алгоритм шифрования</string>
+    <string name="crypto_algo_seed">SEED</string>
+    <string name="crypto_algo_3des">3DES</string>
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <string name="tmoney_usercode_child">Детский</string>
+    <string name="tmoney_usercode_youth">Молодой</string>
+    <string name="discount_type">Тип скидки</string>
+    <string name="tmoney_disrate_none">Без скидки</string>
+    <string name="tmoney_disrate_disabled_basic">Инвалид</string>
+    <string name="tmoney_disrate_disabled_companion">Сопровождающий</string>
+    <string name="mobile_carrier">Мобильный оператор</string>
+    <string name="financial_institution_name">Название финансового учреждения</string>
+    <string name="emv_name_1">Название 1</string>
+    <string name="emv_name_2">Название 2</string>
+    <string name="emv_track_1">Дорожка 1</string>
+    <string name="emv_track_2">Дорожка 2</string>
+    <string name="issuer_country">Страна эмитента</string>
+    <string name="emv_language_preference">Языковые предпочтения</string>
+    <string name="emv_issuer_public_key_certificate">Сертификат открытого ключа эмитента</string>
+    <string name="emv_issuer_public_key_modulus">Модуль публичного ключа эмитента</string>
+    <string name="emv_issuer_public_key_exponent">Экспонент публичного ключа эмитента</string>
+    <string name="emv_application_currency">Валюта приложения</string>
+    <string name="emv_application_currency_exponent">Экспонент валюты приложения</string>
+    <string name="manufacture_week">Неделя производства</string>
+    <string name="manufacture_year">Год производства</string>
+    <plurals name="bytes">
+        <item quantity="one">%d байт</item>
+        <item quantity="few">%d байта</item>
+        <item quantity="many">%d байт</item>
+    </plurals>
+    <string name="mfc_uid_mode">Длина UID</string>
+    <string name="manufacture_date">Дата производства</string>
+    <string name="location_london">Лондон, Великобритания</string>
+    <string name="unknown_tags">Неизвестные теги</string>
+    <string name="location_kazan">Казань, Россия</string>
+    <string name="card_name_kazan">Казанская транспортная карта</string>
+    <string name="kazan_blank">Заготовка</string>
+    <string name="location_shanghai">Шанхай, Китай</string>
+    <string name="card_name_shanghai">Шанхайская карта общественного транспорта</string>
+    <string name="valid_origin_destination">Действительно на пути от %1$s до %2$s</string>
+    <string name="valid_origin_destination_via">Действителен с %1$s по %2$s через %3$s</string>
+    <string name="pref_show_hidden_cards">Показать скрытые карты</string>
+    <string name="pref_show_hidden_cards_desc_off">В списке \"Поддерживаемые карты\" отображаются только обычные карты</string>
+    <string name="pref_show_hidden_cards_desc_on">Все карты и иллюстрации будут отображаться в списке \"поддерживаемых карточек\"</string>
+    <string name="location_crimea">Крым</string>
+    <string name="location_ekaterinburg">Екатеринбург, Россия</string>
+    <string name="location_izhevsk">Ижевск, Россия</string>
+    <string name="location_kirov">Киров, Россия</string>
+    <string name="location_nizhniy_novgorod">Нижний Новгород, Россия</string>
+    <string name="location_orenburg">Оренбург, Россия</string>
+    <string name="location_penza">Пенза, Россия</string>
+    <string name="location_yoshkar_ola">Йошкар-Ола, Россия</string>
+    <string name="card_type_declarative">Декларативный</string>
+    <string name="card_name_samara_garden_dacha">Садово-дачная транспортная карта Самары</string>
+    <string name="card_name_orenburg_ekg">Оренбургская ЕКГ</string>
+    <string name="card_name_orenburg_school">Карта школьника Оренбург</string>
+    <string name="card_name_orenburg_student">Студенческая карта Оренбург</string>
+    <string name="card_name_strizh">Стриж</string>
+    <string name="card_name_penza">Транспортная карта Пензы</string>
+    <string name="card_name_siticard">Ситикард</string>
+    <string name="card_name_kirov">Кировская транспортная карта</string>
+    <string name="card_name_ekarta">Екарта</string>
+    <string name="siticard_aerial_tramway">Канатная дорога</string>
+    <string name="siticard_edinyj_16_trips">Единый - 16 поездок</string>
+    <string name="siticard_edinyj_30_trips">Единый - 30 поездок</string>
+    <string name="siticard_edinyj_3_days">Единый - 3 дня</string>
+    <string name="card_name_crimea_trolleybus">Крымский троллейбус</string>
+    <string name="card_name_crimea_parus_school">Карта школьника Парус</string>
+    <string name="card_name_yoshkar_ola">Транспортная карта Йошкар-Олы</string>
+    <string name="umarsh_school">Школьник</string>
+    <string name="umarsh_student">Студент</string>
+    <string name="umarsh_adult">Взрослый</string>
+    <string name="mfc_rwid">Чтение: %s, запись: %s, увеличение: %s, уменьшение: %s</string>
+    <string name="mfc_key_never">никогда</string>
+    <string name="mfc_key_a">ключ A</string>
+    <string name="mfc_key_b">ключ B</string>
+    <string name="mfc_key_ab">ключ A или B</string>
+    <string name="amiibo_type">Тип</string>
+    <string name="amiibo_type_card">Карта</string>
+    <string name="amiibo_character">Персонаж</string>
+    <string name="amiibo_character_variant">Вариант персонажа</string>
 </resources>
