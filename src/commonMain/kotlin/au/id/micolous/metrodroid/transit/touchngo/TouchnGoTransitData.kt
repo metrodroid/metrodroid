@@ -209,13 +209,23 @@ private data class TouchnGoInProgressTrip(
 }
 
 @Parcelize
+private data class TouchnGoTravelPass(override val validFrom: Daystamp): Subscription() {
+    override val validTo: Timestamp
+        get() = validFrom + Duration.daysLocal(1)
+    override val subscriptionName: String?
+        get() = Localizer.localizeString(R.string.touchngo_travel_pass)
+}
+
+@Parcelize
 private data class TouchnGoTransitData(private val mBalance: Int, private val mSerial: Long,
-                               override val trips: List<Trip>,
-                               private val mCardNo: Int,
-                               private val mStoredLuhn: Int,
-                               private val mIssueCounter: Int,
-                               private val mIssueDate: Daystamp,
-                               private val mExpiryDate: Daystamp) : TransitData() {
+                                       private val mTxnCounter: Int,
+                                       private val mIsTravelPass: Boolean,
+                                       override val trips: List<Trip>,
+                                       private val mCardNo: Int,
+                                       private val mStoredLuhn: Int,
+                                       private val mIssueCounter: Int,
+                                       private val mIssueDate: Daystamp,
+                                       private val mExpiryDate: Daystamp) : TransitData() {
     override val serialNumber: String?
         get() = NumberUtils.zeroPad(mSerial, 10)
     override val cardName get() = NAME
@@ -227,12 +237,16 @@ private data class TouchnGoTransitData(private val mBalance: Int, private val mS
             validTo = mExpiryDate
     )
 
+    override val subscriptions: List<Subscription>?
+        get() = if (mIsTravelPass) listOf(TouchnGoTravelPass(mIssueDate)) else null
+
     override val info: List<ListItem>?
         get() {
             val partialCardNo = "6014640" + NumberUtils.zeroPad(mCardNo, 10)
             val cardNo = partialCardNo + NumberUtils.calculateLuhn(partialCardNo)
             return listOf(
-                    ListItem("CardNo", cardNo)
+                    ListItem("CardNo", cardNo),
+                    ListItem(R.string.transaction_counter, mTxnCounter.toString())
             )
         }
 }
@@ -246,6 +260,9 @@ class TouchnGoTransitFactory : ClassicCardTransitFactory {
     override fun parseTransitData(card: ClassicCard): TransitData {
         return TouchnGoTransitData(
                 mBalance = card[2, 0].data.byteArrayToIntReversed(0, 4),
+                mTxnCounter = 0xf9ff - card[3, 0].data.byteArrayToIntReversed(0, 4),
+                mIsTravelPass = card[1, 0].data.let {it.byteArrayToInt(0, 2) == 0x3233
+                        && it.byteArrayToInt(4, 2) == 0x5230 && it.byteArrayToInt(10, 2) == 0x4602 },
                 mSerial = card[0, 0].data.byteArrayToLongReversed(0, 4),
                 trips = listOfNotNull(
                         TouchnGoGeneric.parse(card[5], Trip.Mode.POS,

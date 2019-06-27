@@ -1907,6 +1907,8 @@
     <string name="amiibo_model_number">Model number</string>
     <string name="amiibo_series">Series</string>
 
+    <string name="touchngo_travel_pass">Kuala Lumpur travel pass</string>
+
     <!-- Venezia specific strings -->
     <string name="venezia_profile">Profile</string>
     <!-- Translators: Profile aaplied to adults from outside of region. "Fuori REGIONE ordinario" -->
