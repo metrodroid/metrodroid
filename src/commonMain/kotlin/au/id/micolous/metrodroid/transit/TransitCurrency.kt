@@ -257,6 +257,7 @@ open class TransitCurrency (
         fun ILS(agorot: Int) = TransitCurrency(agorot, "ILS")
         fun JPY(yen: Int) = TransitCurrency(yen, "JPY", 1)
         fun KRW(won: Int) = TransitCurrency(won, "KRW", 1)
+        fun MYR(sen: Int) = TransitCurrency(sen, "MYR")
         fun NZD(cents: Int) = TransitCurrency(cents, "NZD")
         fun RUB(kopeyka: Int) = TransitCurrency(kopeyka, "RUB")
         fun SGD(cents: Int) = TransitCurrency(cents, "SGD")

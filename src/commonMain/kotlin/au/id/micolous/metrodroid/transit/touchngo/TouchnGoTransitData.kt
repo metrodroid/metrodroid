@@ -79,7 +79,7 @@ abstract private class TouchnGoTripCommon : Trip(), Parcelable {
     override val startTimestamp: Timestamp?
         get() = headerTimestamp
     override val fare: TransitCurrency?
-        get() = TransitCurrency(amount, "MYR")
+        get() = TransitCurrency.MYR(amount)
 
     override fun getAgencyName(isShort: Boolean): String? {
         return StationTableReader.getOperatorName(
@@ -226,7 +226,7 @@ private data class TouchnGoTransitData(private val mBalance: Int, private val mS
     override val cardName get() = NAME
 
     override val balance get() = TransitBalanceStored(
-            TransitCurrency(mBalance, "MYR"),
+            TransitCurrency.MYR(mBalance),
             name = null,
             validFrom = mIssueDate,
             validTo = mExpiryDate
