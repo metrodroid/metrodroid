@@ -55,7 +55,7 @@ data class AmiiboTransitData internal constructor(
 ) : TransitData() {
     override val serialNumber: String? get() = null
 
-    override val info: List<ListItem> = listOf(
+    override val info: List<ListItem> get() = listOf(
             ListItem(R.string.amiibo_type, figureTypes[figureType]?.let { Localizer.localizeString(it) }
                     ?: Localizer.localizeString(R.string.unknown_format, figureType)),
             ListItem(R.string.amiibo_character, StationTableReader.getStation(AMIIBO_STR, character).stationName),
