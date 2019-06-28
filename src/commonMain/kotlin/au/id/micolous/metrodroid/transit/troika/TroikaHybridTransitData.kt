@@ -121,6 +121,8 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
     )
 
     companion object {
+        val mainBlocks = listOf(8,4)
+
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override val earlySectors: Int
                 get() = 2
@@ -134,16 +136,17 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
                     nameRes = R.string.card_name_troika_strelka_hybrid
                 if (PodorozhnikTransitData.FACTORY.check(card))
                     nameRes = R.string.card_name_troika_podorozhnik_hybrid
+                val block = mainBlocks.find { TroikaBlock.check(card.getSector(it).getBlock(0).data) }!!
                 return TransitIdentity(Localizer.localizeString(nameRes),
-                        TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).data)))
+                        TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(block).getBlock(0).data)))
             }
 
             override fun parseTransitData(card: ClassicCard): TransitData {
                 return TroikaHybridTransitData(card)
             }
 
-            override fun check(card: ClassicCard): Boolean =
-                    TroikaBlock.check(card.getSector(8).getBlock(0).data)
+            override fun check(card: ClassicCard): Boolean = 
+                    mainBlocks.any { TroikaBlock.check(card.getSector(it).getBlock(0).data) }
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 return HashUtils.checkKeyHash(sectors[1], "troika",
