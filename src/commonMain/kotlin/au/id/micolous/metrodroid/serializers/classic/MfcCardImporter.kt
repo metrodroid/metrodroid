@@ -31,12 +31,22 @@ class MfcCardImporter : CardImporter {
 
             for (blockNum in 0 until blockCount) {
                 val blockData = ByteArray(16)
-                val r = stream.read(blockData)
-                if (r <= 0 && blockNum == 0) {
-                    // We got to the end of the file.
-                    break@sectorloop
-                } else if (r != blockData.size) {
-                    throw IOException("Incomplete MFC read at sector $sectorNum block $blockNum ($r bytes)")
+                var readBytes = 0
+                while(readBytes < blockData.size){
+                    val buf = if (readBytes == 0) blockData else ByteArray(blockData.size - readBytes)
+                    val r = stream.read(buf)
+                    if (r <= 0 && blockNum == 0) {
+                        // We got to the end of the file.
+                        break@sectorloop
+                    }
+                    if (r <= 0) {
+                        throw IOException("Incomplete MFC read at sector $sectorNum block $blockNum ($readBytes bytes)")
+                    }
+
+                    if (buf != blockData)
+                        buf.copyInto(blockData, readBytes, 0, r)
+
+                    readBytes += r
                 }
 
                 if (sectorNum == 0 && blockNum == 0) {
