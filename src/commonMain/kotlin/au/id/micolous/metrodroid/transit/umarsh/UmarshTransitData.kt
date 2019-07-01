@@ -91,6 +91,21 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
+        22 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_barnaul,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_barnaul,
+                        imageId = R.drawable.barnaul,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x0a002e to UmarshTariff(
+                                name = R.string.barnaul_ewallet
+                        )
+                )
+        ),
         43 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_kirov,

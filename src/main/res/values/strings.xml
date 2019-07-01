@@ -722,6 +722,7 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
     <string name="location_auckland">Auckland, New Zealand</string>
+    <string name="location_barnaul">Barnaul, Russia</string>
     <string name="location_beijing">Beijing, China</string>
     <!--
       Translators:
@@ -1880,6 +1881,8 @@
     <string name="card_name_orenburg_student">Orenburg student card</string>
 
     <string name="card_name_strizh">Strizh</string>
+    <string name="card_name_barnaul">Electronic Barnaul</string>
+    <string name="barnaul_ewallet">E-wallet</string>
     <string name="card_name_penza">Penza</string>
     <string name="card_name_siticard">Siticard</string>
     <string name="card_name_kirov">Kirov</string>
