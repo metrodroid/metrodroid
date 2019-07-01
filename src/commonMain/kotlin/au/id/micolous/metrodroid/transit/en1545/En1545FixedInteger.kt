@@ -95,9 +95,8 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
                             ((day shr 5) and 0xf) - 1,
                             day and 0x1f)
 
-        fun parseTimeSec(`val`: Int, tz: MetroTimeZone): Timestamp? {
-            return if (`val` == 0) null else utcEpoch(tz).seconds(`val`.toLong())
-        }
+        fun parseTimeSec(value: Int, tz: MetroTimeZone): Timestamp? =
+            if (value == 0) null else utcEpoch(tz).seconds(value.toLong())
 
         fun parseTimeSecLocal(sec: Int, tz: MetroTimeZone): Timestamp? {
             return if (sec == 0) null else getEpoch(tz).daySecond(sec / 86400, sec % 86400)

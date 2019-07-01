@@ -129,10 +129,10 @@ object ExportHelper {
     fun exportCardsXml(context: Context): String = XmlUtils.concatCardsFromString(CardDBHelper.createCursor(context)?.let { cursor ->
                 readCardsXml(cursor) } ?: listOf<String>().iterator())
 
-    fun importCards(`is`: InputStream,
+    fun importCards(istream: InputStream,
                     importer: CardImporter,
                     context: Context): Collection<Uri> {
-        val it = importer.readCards(`is`) ?: return emptyList()
+        val it = importer.readCards(istream) ?: return emptyList()
 
         return importCards(it, context)
     }

@@ -107,11 +107,11 @@ class CharlieCardTransitData (private val mSerial: Long,
         }
 
         fun getPrice(data: ImmutableByteArray, off: Int): Int {
-            var `val` = data.byteArrayToInt(off, 2)
-            if (`val` and 0x8000 != 0) {
-                `val` = -(`val` and 0x7fff)
+            var value = data.byteArrayToInt(off, 2)
+            if (value and 0x8000 != 0) {
+                value = -(value and 0x7fff)
             }
-            return `val` / 2
+            return value / 2
         }
 
         internal fun parseTimestamp(timestamp: Int): TimestampFull {
