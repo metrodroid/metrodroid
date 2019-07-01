@@ -77,13 +77,13 @@ class JsonKeys(KeyBase):
     d = []
     if key[0] is not None:
       d += [{
-        'keytype': 'KeyA',
+        'type': 'KeyA',
         'key': b16encode(key[0]).decode('ascii').lower(),
         'sector': sector_no
       }]
     if key[1] is not None:
       d += [{
-        'keytype': 'KeyB',
+        'type': 'KeyB',
         'key': b16encode(key[1]).decode('ascii').lower(),
         'sector': sector_no
       }]
