@@ -52,45 +52,6 @@ internal data class UmarshSystem(
 // Reference: https://github.com/micolous/metrodroid/wiki/Umarsh
 
 private val systemsMap = mapOf(
-        // This seems to be in reverse order of region numbers
-        66 to UmarshSystem(
-                CardInfo(
-                        name = R.string.card_name_ekarta,
-                        cardType = CardType.MifareClassic,
-                        locationId = R.string.location_ekaterinburg,
-                        imageId = R.drawable.ekarta,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        keysRequired = true,
-                        preview = true),
-                tariffs = mapOf(
-                        0x42640f to UmarshTariff(
-                                name = R.string.monthly_subscription,
-                                denomination = UmarshDenomination.UNLIMITED
-                        )
-                )
-        ),
-        91 to UmarshSystem(
-                CardInfo(
-                        name = R.string.card_name_crimea_trolleybus,
-                        cardType = CardType.MifareClassic,
-                        locationId = R.string.location_crimea,
-                        imageId = R.drawable.crimea_trolley,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        keysRequired = true,
-                        preview = true),
-                tariffs = mapOf(
-                        0x3d7f00 to UmarshTariff(
-                                name = R.string.card_name_crimea_parus_school,
-                                cardName = R.string.card_name_crimea_parus_school,
-                                denomination = UmarshDenomination.UNLIMITED
-                        ),
-                        0x467f00 to UmarshTariff(
-                                name = R.string.card_name_crimea_trolleybus,
-                                cardName = R.string.card_name_crimea_trolleybus,
-                                denomination = UmarshDenomination.UNLIMITED
-                        )
-                )
-        ),
         12 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_yoshkar_ola,
@@ -106,17 +67,41 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
-        58 to UmarshSystem(
+        18 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_penza,
+                        name = R.string.card_name_strizh,
                         cardType = CardType.MifareClassic,
-                        locationId = R.string.location_penza,
-                        imageId = R.drawable.penza,
+                        locationId = R.string.location_izhevsk,
+                        imageId = R.drawable.strizh,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x1400ff to UmarshTariff(R.string.umarsh_adult)
+                        0x0a7f00 to UmarshTariff(
+                                name = R.string.umarsh_adult
+                        ),
+                        0x1e7f00 to UmarshTariff(
+                                name = R.string.umarsh_student
+                        ),
+                        0x247f00 to UmarshTariff(
+                                name = R.string.umarsh_school
+                        ),
+                        0x587f00 to UmarshTariff(
+                                name = R.string.umarsh_adult
+                        )
+                )
+        ),
+        43 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_kirov,
+                        cardType = CardType.MifareClassic,
+                        imageId = R.drawable.kirov,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        locationId = R.string.location_kirov,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x5000ff to UmarshTariff(R.string.umarsh_adult)
                 )
         ),
         52 to UmarshSystem(
@@ -158,40 +143,54 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
-        43 to UmarshSystem(
+        58 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_kirov,
+                        name = R.string.card_name_penza,
                         cardType = CardType.MifareClassic,
-                        imageId = R.drawable.kirov,
+                        locationId = R.string.location_penza,
+                        imageId = R.drawable.penza,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        locationId = R.string.location_kirov,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x5000ff to UmarshTariff(R.string.umarsh_adult)
+                        0x1400ff to UmarshTariff(R.string.umarsh_adult)
                 )
         ),
-        18 to UmarshSystem(
+        66 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_strizh,
+                        name = R.string.card_name_ekarta,
                         cardType = CardType.MifareClassic,
-                        locationId = R.string.location_izhevsk,
-                        imageId = R.drawable.strizh,
+                        locationId = R.string.location_ekaterinburg,
+                        imageId = R.drawable.ekarta,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x0a7f00 to UmarshTariff(
-                                name = R.string.umarsh_adult
+                        0x42640f to UmarshTariff(
+                                name = R.string.monthly_subscription,
+                                denomination = UmarshDenomination.UNLIMITED
+                        )
+                )
+        ),
+        91 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_crimea_trolleybus,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_crimea,
+                        imageId = R.drawable.crimea_trolley,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x3d7f00 to UmarshTariff(
+                                name = R.string.card_name_crimea_parus_school,
+                                cardName = R.string.card_name_crimea_parus_school,
+                                denomination = UmarshDenomination.UNLIMITED
                         ),
-                        0x1e7f00 to UmarshTariff(
-                                name = R.string.umarsh_student
-                        ),
-                        0x247f00 to UmarshTariff(
-                                name = R.string.umarsh_school
-                        ),
-                        0x587f00 to UmarshTariff(
-                                name = R.string.umarsh_adult
+                        0x467f00 to UmarshTariff(
+                                name = R.string.card_name_crimea_trolleybus,
+                                cardName = R.string.card_name_crimea_trolleybus,
+                                denomination = UmarshDenomination.UNLIMITED
                         )
                 )
         )
