@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import au.id.micolous.metrodroid.transit.bonobus.BonobusTransitFactory
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData
+import au.id.micolous.metrodroid.transit.chilebip.ChileBipTransitFactory
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.gautrain.GautrainTransitFactory
@@ -74,6 +75,7 @@ object ClassicCardFactoryRegistry {
             OysterTransitData.FACTORY,
             KazanTransitFactory,
             UmarshTransitFactory,
+            ChileBipTransitFactory,
 
             // This check must be THIRD TO LAST.
             //
