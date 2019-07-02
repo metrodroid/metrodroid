@@ -32,6 +32,8 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.ifTrue
 
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c376n3.lua
 // supplemented with personal experimentation
@@ -42,12 +44,14 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
         get() = Localizer.localizeString(R.string.card_name_ravkav)
 
     override val info: List<ListItem>?
-        get() = listOf(
+        get() = listOfNotNull<ListItem>(
                 if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
                     ListItem(R.string.card_type, R.string.card_type_anonymous)
                 } else {
                     ListItem(R.string.card_type, R.string.card_type_personal)
-                }) + super.info.orEmpty()
+                }, (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) != 0 && !Preferences.hideCardNumbers).ifTrue {
+            ListItem(R.string.card_holders_id, mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER).toString())
+        }) + super.info.orEmpty()
 
     private constructor(card: CalypsoApplication) : this(parse(
             card, TICKETING_ENV_FIELDS, null, getSerial(card),

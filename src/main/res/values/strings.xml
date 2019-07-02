@@ -1359,6 +1359,7 @@
 
     <!-- Translators: This refers to a person's name. -->
     <string name="card_holders_name">Cardholder\'s name</string>
+    <string name="card_holders_id">Cardholder\'s ID number</string>
 
     <!--
     Translators: This is used to describe whether a card is personalised (registered to an
