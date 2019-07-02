@@ -40,8 +40,7 @@ private const val NAME = "bip!"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_santiago_chile,
-  //      imageId = R.drawable.chilebip,
-        imageAlphaId = R.drawable.iso7810_id1_alpha,
+        imageId = R.drawable.chilebip,
         cardType = CardType.MifareClassic,
         keysRequired = true, keyBundle = "chilebip")
 
