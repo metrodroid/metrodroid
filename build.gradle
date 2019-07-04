@@ -138,7 +138,6 @@ kotlin {
                 api 'org.jetbrains.kotlin:kotlin-stdlib-common'
                 api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinserial_version"
                 api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
-                api "com.github.cretz.pbandk:pbandk-runtime-common:0.3.0"
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'commonMain/kotlin')
