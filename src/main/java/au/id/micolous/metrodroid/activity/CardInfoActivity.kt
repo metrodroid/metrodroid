@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.fragment.CardInfoFragment
 import au.id.micolous.metrodroid.fragment.CardTripsFragment
 import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardSerializer
+import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
@@ -103,7 +104,7 @@ class CardInfoActivity : MetrodroidActivity() {
 
                     val data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
 
-                    mCard = CardSerializer.fromDb(data)
+                    mCard = XmlOrJsonCardFormat.parseString(data)
                     mTransitData = mCard!!.parseTransitData()
 
                     mSpeakBalanceEnabled = Preferences.speakBalance

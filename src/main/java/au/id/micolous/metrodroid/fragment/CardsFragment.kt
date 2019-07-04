@@ -528,7 +528,7 @@ class CardsFragment : ExpandableListFragment() {
 
             if (scan.mTransitIdentity == null) {
                 try {
-                    scan.mTransitIdentity = CardSerializer.fromDb(scan.mData)!!.parseTransitIdentity()
+                    scan.mTransitIdentity = XmlOrJsonCardFormat.parseString(scan.mData)!!.parseTransitIdentity()
                 } catch (ex: Exception) {
                     val error = String.format("Error: %s", Utils.getErrorMessage(ex))
                     scan.mTransitIdentity = TransitIdentity(error, null)
