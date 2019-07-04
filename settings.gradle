@@ -4,3 +4,4 @@ project(':leaflet').projectDir = new File('third_party/leaflet')
 include 'material-design-icons'
 project(':material-design-icons').projectDir = new File('third_party/material-design-icons')
 include ':jvmcli'
+include ':proto'
