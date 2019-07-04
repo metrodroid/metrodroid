@@ -20,9 +20,10 @@
 package au.id.micolous.metrodroid.util
 
 import android.content.res.AssetManager
-import android.util.Log
 
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import org.jetbrains.annotations.NonNls
 
 import java.io.DataInputStream
@@ -32,7 +33,6 @@ import java.util.Arrays
 import java.util.HashMap
 import java.util.Locale
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.proto.Stations
 import au.id.micolous.metrodroid.transit.Station
