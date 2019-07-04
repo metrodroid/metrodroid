@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.util
 
 import android.content.res.AssetManager
 import android.util.Log
-import android.util.SparseArray
 
 import au.id.micolous.metrodroid.multi.Localizer
 import org.jetbrains.annotations.NonNls
@@ -207,11 +206,11 @@ private constructor(dbName: String) {
     @Throws(IOException::class)
     private fun getStationById(id: Int, humanReadableID: String): Station? {
         val ps = getProtoStationById(id) ?: return null
-        val lines = SparseArray<Stations.Line>()
+        val lines = mutableMapOf<Int, Stations.Line>()
         for (lineId in ps.lineIdList) {
             val l = mStationDb.getLinesOrDefault(lineId, null)
             if (l != null) {
-                lines.append(lineId, l)
+                lines[lineId] = l
             }
         }
 
@@ -305,7 +304,7 @@ private constructor(dbName: String) {
         }
 
         private fun fromProto(humanReadableID: String, ps: Stations.Station,
-                              po: Stations.Operator?, pl: SparseArray<Stations.Line>?,
+                              po: Stations.Operator?, pl: Map<Int, Stations.Line>?,
                               ttsHintLanguage: String, str: StationTableReader): Station {
             val hasLocation = ps.latitude != 0f && ps.longitude != 0f
 
@@ -315,9 +314,7 @@ private constructor(dbName: String) {
             if (pl != null) {
                 lines = ArrayList()
                 lineIds = ArrayList()
-                val it = SparseArrayIterator(pl)
-                while (it.hasNext()) {
-                    val (first, second) = it.next()
+                for ((first, second) in pl) {
                     lines.addAll(listOfNotNull(str.selectBestName(second.getName(), true)))
                     lineIds.add(NumberUtils.intToHex(first))
                 }
