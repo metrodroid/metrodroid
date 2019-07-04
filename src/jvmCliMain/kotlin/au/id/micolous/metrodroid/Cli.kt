@@ -123,7 +123,9 @@ fun parseCards(fname: String) {
         for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
             System.out.println("   trip $idx")
             trip.startTimestamp?.let { System.out.println("      departure ${it.format().unformatted}") }
+            trip.startStation?.stationName?.let { System.out.println("      from $it") }
             trip.endTimestamp?.let { System.out.println("      arrival ${it.format().unformatted}") }
+            trip.endStation?.stationName?.let { System.out.println("      to $it") }
             System.out.println("      mode ${trip.mode}")
             trip.fare?.let { System.out.println("      fare ${it.formatCurrencyString(false).unformatted}") }
         }
