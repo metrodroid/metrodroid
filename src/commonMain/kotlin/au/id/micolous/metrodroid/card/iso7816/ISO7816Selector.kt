@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.StringDescriptor
 
-@Serializable
+@Serializable(with = ISO7816Selector.Companion::class)
 data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
     fun formatString(): String {
         val ret = StringBuilder()
