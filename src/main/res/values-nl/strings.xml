@@ -898,4 +898,11 @@
     <string name="amiibo_character_variant">Tekenvariant</string>
     <string name="amiibo_model_number">Serienummer</string>
     <string name="amiibo_series">Serie</string>
+    <string name="location_barnaul">Barnaoel, Rusland</string>
+    <string name="card_name_barnaul">Electronic Barnaoel</string>
+    <string name="barnaul_ewallet">E-portemonnee</string>
+    <string name="card_name_umarsh">Umarsh</string>
+    <string name="touchngo_travel_pass">Kuala Lumpur-reiskaart</string>
+    <string name="card_holders_id">ID-nummer van kaarteigenaar</string>
+    <string name="location_santiago_chile">Santiago, Chili</string>
 </resources>
