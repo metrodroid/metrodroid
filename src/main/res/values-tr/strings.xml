@@ -31,7 +31,6 @@
     <string name="loading">Yükleniyor…</string>
     <string name="scanned_at_format">%1$s Tarihinde %2$s Tarandı</string>
     <string name="supported_cards">Desteklenen Kartlar</string>
-    <string name="pass_or_transfer">Aktarma</string>
     <string name="fully_locked_title">Tamamı kilitli kart.</string>
     <string name="nfc_off_error">NFC kapalı</string>
     <string name="turn_on_nfc">Lütfen kart bilgisini okumak için NFC\'yi etkinleştirin.</string>

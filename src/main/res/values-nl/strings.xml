@@ -33,7 +33,6 @@
     <string name="loading">Bezig met laden…</string>
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
-    <string name="pass_or_transfer">Pas/Overstap</string>
     <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en is momenteel geen manier om dit te omzeilen.
 \n 
 \nJe kaart wordt niet ondersteund door Metrodroid, en zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
@@ -173,7 +172,6 @@
     <string name="hsl_balance_refill">Saldo-oplading</string>
     <string name="hsl_balance_ticket">Voordeelkaart</string>
     <string name="hsl_pass_ticket">Seizoenskaart</string>
-    <string name="hsl_person_format">%s persoon</string>
     <string name="hsl_mins_format">%s minuten</string>
     <string name="opal_automatic_top_up">Automatisch opladen</string>
     <string name="opal_weekly_trips">Wekelijkse reizen</string>
@@ -201,7 +199,6 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
     <string name="nextfare_ticket_class">Ticketklassificatie %d</string>
-    <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
     <string name="location_wa_australia">West-Australië, Australië</string>
     <string name="obfuscation_title">Privacy-opties</string>
     <string name="obfuscation_card_numbers">Kaartnummers verbergen</string>
@@ -274,7 +271,6 @@
     <string name="cepas_purse_status">Portemonnee-status</string>
     <string name="cepas_purse_balance">Portemonnee-saldo</string>
     <string name="cepas_purse_creation_date">Portemonnee-creatiedatum</string>
-    <string name="cepas_expiry_date">Portemonnee-vervaldatum</string>
     <string name="cepas_autoload_amount">Automatisch op te laden bedrag</string>
     <string name="cepas_last_txn_info">Laatste transactie-informatie</string>
     <string name="cepas_credit_header">Krediet-kop</string>
@@ -299,8 +295,6 @@
     <string name="ovc_autocharge_limit">Automatisch opladen-limiet</string>
     <string name="ovc_autocharge_amount">Automatisch opladen-bedrag</string>
     <string name="ovc_autocharge">Automatisch opladen</string>
-    <string name="general_information">Algemene informatie</string>
-    <string name="personal_information">Persoonlijke informatie</string>
     <string name="date_of_birth">Geboortedatum</string>
     <string name="credit_information">Kredietinformatie</string>
     <string name="software_information">Software-informatie</string>
@@ -394,8 +388,6 @@
     <string name="card_name_icoca">ICOCA</string>
     <string name="card_name_pasmo">PASMO</string>
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
-    <string name="hsl_line_vehicle">Lijn %1$s, Voertuig %2$s</string>
-    <string name="orca_coach_number">#%s klas</string>
     <string name="suica_bus_area_line_stop">Buszone %1$s, lijn %2$s, halte %3$s</string>
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
@@ -424,18 +416,6 @@
     </string>
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
     <string name="pref_show_local_and_english_desc">Als dit wordt ingeschakeld, dan worden zowel de lokale als de Engelse naam getoond, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
-    <plurals name="minutes">
-        <item quantity="one">%d minuut</item>
-        <item quantity="other">%d minuten</item>
-    </plurals>
-    <plurals name="hours">
-        <item quantity="one">%d uur</item>
-        <item quantity="other">%d uur</item>
-    </plurals>
-    <plurals name="days">
-        <item quantity="one">%d dag</item>
-        <item quantity="other">%d dagen</item>
-    </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d resterende reis</item>
         <item quantity="other">%d resterende reizen</item>
@@ -453,7 +433,6 @@
     <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
     <string name="troika_fare_single">Eén rit</string>
     <string name="troika_fare_90mins">90 minuten</string>
-    <string name="validity_length">Geldigheidsduur: %s</string>
     <string name="troika_layout">Troika-layout</string>
     <string name="moscow_subway">Moskou Metro</string>
     <string name="moscow_monorail">Moskou Monorail</string>
@@ -465,7 +444,6 @@
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_jakarta">Jakarta, Indonesië</string>
     <string name="kmt_extra_note">Alleen voor nieuwe FeliCa-kaarten.</string>
-    <string name="orca_topup_machine">Automaat #%s</string>
     <string name="orca_topup">Opladen</string>
     <string name="compass_product_type">Productsoort</string>
     <string name="compass_machine_code">Automaatcode</string>
@@ -476,12 +454,10 @@
     <string name="compass_note">Alleen voor enkele reizen</string>
     <string name="location_seoul">Seoel, Zuid-Korea</string>
     <string name="card_name_tmoney">T-Money</string>
-    <string name="tmoney_date">T-Money-datum</string>
     <string name="card_number">Kaartnummer</string>
     <string name="pref_show_raw_station_ids">Stationsverkortingen en route-ID\'s tonen</string>
     <string name="location_quebec">Quebec, Canada</string>
     <string name="podorozhnik_gate">poortje %s</string>
-    <string name="podorozhnik_tvm">Kaartautomaat %d</string>
     <string name="led_shared_taxi">Sint-Petersburg Gedeelde Taxi</string>
     <string name="developer_options">Ontwikkelaarsopties</string>
     <string name="station_database">Stationsdatabank</string>
@@ -531,7 +507,6 @@
     <string name="issue_date">Uitgavedatum</string>
     <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de NFC-instellingen.</string>
     <string name="location_minneapolis">Minneapolis, MN, VS</string>
-    <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
     <string name="invalid_json">Ongeldige JSON</string>
     <plurals name="passengers">
         <item quantity="one">passagier</item>
@@ -549,7 +524,6 @@
     <string name="about_key_formats">Over sleutelindelingen…</string>
     <string name="invalid_key_file">Ongeldig sleutelbestand</string>
     <string name="key_file_empty">Leeg sleutelbestand!</string>
-    <string name="static_imported">Geïmporteerd: %s</string>
     <string name="untitled_key_group">Naamloze sleutelgroep</string>
     <plurals name="keytype_mfc">
         <item quantity="one">%d MIFARE Classic-sleutel</item>
@@ -565,7 +539,6 @@
     <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
     <string name="machine_id">Automaat-ID</string>
     <string name="valid_from_format">Geldig vanaf %1$s</string>
-    <string name="valid_not_used">Nog niet in gebruik</string>
     <string name="location_brussels">Brussel, België</string>
     <string name="location_gironde">Gironde, Frankrijk</string>
     <string name="location_grenoble">Grenoble, Frankrijk</string>
@@ -579,10 +552,6 @@
     <string name="gender_male">Man</string>
     <string name="seller_agency">Verkoopmaatschappij</string>
     <string name="remaining_trip_count">Resterende reizen</string>
-    <plurals name="remaining_trips_total">
-        <item quantity="one">Geen resterende reizen</item>
-        <item quantity="other">%1$d resterende reis</item>
-    </plurals>
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d resterende reis op %2$s</item>
         <item quantity="other">%1$d resterende reizen op %2$s</item>
@@ -828,7 +797,6 @@
         <item quantity="one">pincode-poging resterend</item>
         <item quantity="other">pincode-pogingen resterend</item>
     </plurals>
-    <string name="emv_pan">PAN</string>
     <string name="emv_pan_sequence_number">PAN-opvolgnummer</string>
     <string name="emv_application_interchange_profile">Overstapprofiel</string>
     <string name="emv_application_priority_indicator">Prioriteitsindicator</string>
@@ -901,7 +869,6 @@
     <string name="card_name_siticard">Siticard</string>
     <string name="card_name_kirov">Kirov</string>
     <string name="card_name_ekarta">Ekarta</string>
-    <string name="card_name_crimea">Krim</string>
     <string name="siticard_aerial_tramway">Kabelbaan</string>
     <string name="siticard_adult_60min_xfer_purse">Overstapkaart - 60 minuten (volwassene)</string>
     <string name="siticard_adult_90min_xfer_purse">Overstapkaart - 90 minuten (volwassene)</string>

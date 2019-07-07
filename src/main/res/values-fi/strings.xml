@@ -48,7 +48,6 @@
     <string name="loading">Lataa…</string>
     <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
     <string name="supported_cards">Tuetut kortit</string>
-    <string name="pass_or_transfer"/>
 
 
     <string name="nfc_off_error">NFC on pois päältä</string>
@@ -58,6 +57,4 @@
     <string name="hsl_balance_refill">Arvon lataus</string>
     <string name="hsl_balance_ticket">Arvolippu</string>
     <string name="hsl_pass_ticket">Kausilippu</string>
-    <string name="hsl_person_format">%s henkilö</string>
-
 </resources>

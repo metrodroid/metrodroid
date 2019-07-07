@@ -35,7 +35,6 @@
 \nTu tarjeta no es soportada por Metrodroid y es difícil que alguna vez lo sea, a no ser que encuentres la clave.
 \n
 \nPor favor presiona el editor de la tarjeta para permitir tener acceso a la tarjeta. Es seguro dejarla abierta, datos de solo lectura con tecnología moderna de tarjetas inteligentes. Algunas agencias incluso ofrecen documentación sobre el tipo de datos!</string>
-    <string name="pass_or_transfer">Transferir</string>
     <string name="fully_locked_desc_unlockable">Ningún sector se puede leer sin la clave. No tienes ninguna clave válida instalada.
 \n
 \nLa tarjeta trabajara una vez que las claves se hayan instalado. Estas son diferentes para cada tarjeta. Mas información sobre adquirir e instalara tarjetas se puede encontrar en la documentación.
@@ -71,7 +70,6 @@
     <string name="valid_to_format">Válido hasta %1$s</string>
     <string name="valid_from_format">Válido desde %1$s</string>
     <string name="subscription_cost">Coste</string>
-    <string name="valid_not_used">No se ha usado todavía</string>
     <string name="unknown_format">Desconocido (%s)</string>
     <string name="unknown">Desconocido</string>
     <string name="keys_required">Claves de encriptación son requeridas para leer la tarjeta.</string>

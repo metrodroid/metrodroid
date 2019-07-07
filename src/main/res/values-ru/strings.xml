@@ -39,21 +39,6 @@
     <string name="hidden_card_number">Номер карты спрятан</string>
     <string name="pref_show_local_and_english_title">Показывать местное и английское название станций</string>
     <string name="pref_show_local_and_english_desc">Если включено, то показывает и местное и английское название станций. Если выключено то показывается только один, наиболее подходящий, вариант.</string>
-    <plurals name="minutes">
-        <item quantity="one">%d минуту</item>
-        <item quantity="few">%d минуты</item>
-        <item quantity="many">%d минут</item>
-    </plurals>
-    <plurals name="hours">
-        <item quantity="one">%d час</item>
-        <item quantity="few">%d часа</item>
-        <item quantity="many">%d часов</item>
-    </plurals>
-    <plurals name="days">
-        <item quantity="one">%d день</item>
-        <item quantity="few">%d дня</item>
-        <item quantity="many">%d дней</item>
-    </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">Осталось %d поездка</item>
         <item quantity="few">Осталось %d поездки</item>
@@ -115,7 +100,6 @@
     <string name="card_name_troika_podorozhnik_hybrid">Тройка+Подорожник</string>
     <string name="troika_fare_single">Единый</string>
     <string name="troika_fare_90mins">90 минут</string>
-    <string name="validity_length">Валиден %s</string>
     <string name="moscow_subway">Московское метро</string>
     <string name="moscow_monorail">Московский Монорельс</string>
     <string name="moscow_ground_transport">Москова, наземный транспорт</string>
@@ -263,7 +247,6 @@
     <string name="opal_action_manly_transfer_diff_mode">Пересадка (с другого транспорта на Manly Ferry)</string>
     <string name="opal_action_journey_completed_distance">Поездка завершена (тариф по расстоянию)</string>
     <string name="opal_action_journey_completed_flat_rate">Поездка завершена (фиксированный тариф)</string>
-    <string name="orca_topup_machine">Автомат #%s</string>
     <string name="orca_topup">Пополнение</string>
     <string name="seqgo_ticket_type_concession">Льготный</string>
     <string name="seqgo_ticket_type_child">Детский</string>
@@ -271,8 +254,6 @@
     <string name="seqgo_refill_automatic">Автоматическое пополнение</string>
     <string name="nextfare_system_code">Код системы</string>
     <string name="nextfare_ticket_class">Билет с кодом класса %d</string>
-    <string name="general_information">Общая информация</string>
-    <string name="personal_information">Личная информация</string>
     <string name="date_of_birth">Дата рождения</string>
     <string name="convert_timezones">Перевести время в текущий часовой пояс</string>
     <string name="compass_product_type">Тип продукта</string>
@@ -282,7 +263,6 @@
     <string name="compass_ticket_type_regular">Обычный</string>
     <string name="compass_note">Только одноразовые билеты</string>
     <string name="podorozhnik_gate">турникет %s</string>
-    <string name="podorozhnik_tvm">Автомат %d</string>
     <string name="led_shared_taxi">Маршрутка Санкт-Петербурга</string>
     <string name="blank_mfu_card">Пустая карта MIFARE Ultralight</string>
     <string name="fully_blank_title">Пустая карта</string>
@@ -310,7 +290,6 @@
     </plurals>
     <string name="hardware_information">Аппаратная информация</string>
     <string name="cepas_version">Версия CEPAS</string>
-    <string name="cepas_expiry_date">Дата окончания действия кошелька</string>
     <string name="cepas_purse_info">Информация о кошельке</string>
     <string name="felica_card_identification_number">Идентификатор карты</string>
     <string name="calypso_manufacture_country">Страна производства</string>
@@ -330,7 +309,6 @@
     <string name="cant_delete_with_obfuscation">Удаление ключей сейчас недоступно</string>
     <string name="file_exported">Файл экспортирован.</string>
     <string name="valid_from_format">Годен с %1$s</string>
-    <string name="valid_not_used">Ещё не использовался</string>
     <string name="location_brussels">Брюссель, Бельгия</string>
     <string name="location_gironde">Жиронда, Франция</string>
     <string name="location_grenoble">Гренобль, Франция</string>
@@ -400,14 +378,12 @@
     <string name="locked_mfc_card">Заблокированная карта MIFARE Classic</string>
     <string name="locked_mfu_card">Заблокированная карта MIFARE Ultralight</string>
     <string name="locked_mfd_card">Заблокированная карта MIFARE DESFire</string>
-    <string name="pass_or_transfer">Пересадка</string>
     <string name="fully_locked_title">Полностью заблокированная карта.</string>
     <string name="lawyercats">Мптродроид и его авторы не связаны с каким-либо агентством общественного транспорта.</string>
     <string name="card_type">Тип карты</string>
     <string name="ez_first_use">Первое использование</string>
     <string name="ez_retail_purchase">Розничная покупка</string>
     <string name="hsl_balance_refill">Пополнение баланса</string>
-    <string name="orca_coach_number">Автобус #%s</string>
     <string name="seqgo_ticket_type_senior">Пожилой</string>
     <string name="nextfare">Cubic Nextfare</string>
     <string name="card_name_szt">Shenzhen Tong</string>
@@ -438,7 +414,6 @@
     <string name="leap_accumulator_region">Регион</string>
     <string name="issue_date">Дата выпуска</string>
     <string name="leap_locked_warning">Эта карта не была разблокирована. Пожалуйста, включите скачивание ключей Leap на экране настроек NFC.</string>
-    <string name="invalid_json_key_type">Недопустимый формат JSON: тип ключа отсутствует</string>
     <string name="invalid_json">Недопустимый формат JSON</string>
     <string name="delete_key_confirm_message">Файл ключей <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (с <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) будет удален навсегда.</string>
     <string name="classic_key">Ключ MIFARE Classic</string>
@@ -447,7 +422,6 @@
     <string name="about_key_formats">О форматах ключей…</string>
     <string name="invalid_key_file">Неверный файл ключей</string>
     <string name="key_file_empty">Файл ключа пуст!</string>
-    <string name="static_imported">Импортировано: %s</string>
     <string name="no_static_key_assignment">Статические ключи не могут быть назначены одной карте.</string>
     <string name="card_id">Идентификатор карты</string>
     <string name="vehicle_number">Транспортное средство %s</string>
@@ -458,11 +432,6 @@
     <string name="gender_male">Мужской</string>
     <string name="seller_agency">Компания-продавец</string>
     <string name="remaining_trip_count">Оставшиеся поездки</string>
-    <plurals name="remaining_trips_total">
-        <item quantity="one">Осталась %1$d поездка</item>
-        <item quantity="few">Осталась %1$d поездки</item>
-        <item quantity="many">Осталась %1$d поездок</item>
-    </plurals>
     <string name="purchase_date">Дата покупки</string>
     <string name="monthly_subscription">Проездной на месяц</string>
     <string name="weekly_subscription">Проездной на неделю</string>

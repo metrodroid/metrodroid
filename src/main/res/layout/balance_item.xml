@@ -49,7 +49,7 @@
             android:layout_weight="1"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="@string/seqgo_ticket_type_regular" />
+            tools:text="@string/seqgo_ticket_type_adult" />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
