@@ -58,7 +58,7 @@ data class KomuterLinkTrip(private val mAmount: Int, private val mNewBalance: In
                            override val mode: Mode,
                            private val mTransactionId: Int) : Trip() {
     override val fare: TransitCurrency?
-        get() = TransitCurrency(mAmount, "MYR")
+        get() = TransitCurrency.MYR(mAmount)
 
     companion object {
         fun parse (sec: ClassicSector, sign: Int, mode: Mode): KomuterLinkTrip? {
@@ -86,7 +86,7 @@ data class KomuterLinkTransitData(private val mBalance: Int, private val mSerial
         get() = NumberUtils.zeroPad(mSerial, 10)
     override val cardName get() = NAME
 
-    override val balance get() = TransitCurrency(mBalance, "MYR")
+    override val balance get() = TransitCurrency.MYR(mBalance)
 
     override val info: List<ListItem>?
         get() {
