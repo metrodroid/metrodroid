@@ -248,6 +248,7 @@ open class TransitCurrency (
         fun AUD(cents: Int) = TransitCurrency(cents, "AUD")
         fun BRL(centavos: Int) = TransitCurrency(centavos, "BRL")
         fun CAD(cents: Int) = TransitCurrency(cents, "CAD")
+        fun CLP(pesos: Int) = TransitCurrency(pesos, "CLP", 1)
         fun CNY(fen: Int) = TransitCurrency(fen, "CNY")
         fun DKK(ore: Int) = TransitCurrency(ore, "DKK")
         fun EUR(cents: Int) = TransitCurrency(cents, "EUR")
