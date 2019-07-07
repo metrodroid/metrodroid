@@ -48,7 +48,7 @@ private val CARD_INFO = CardInfo(
 
 private fun formatSerial(serial: Long) = NumberUtils.zeroPad(serial, 10)
 
-private fun getSerial(card: ClassicCard) = card[0,0].data.byteArrayToLongReversed(0, 4)
+private fun getSerial(card: ClassicCard) = card.tagId.byteArrayToLongReversed()
 
 private fun parseDate(raw: ImmutableByteArray, off: Int) = if (raw.byteArrayToInt(off, 3) == 0) null else Daystamp(
         year = raw[off].toInt() + 2000,
