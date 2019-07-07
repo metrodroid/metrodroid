@@ -63,11 +63,11 @@ class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mVie
     override fun getPageTitle(p0: Int): CharSequence = mTabs[p0].mName
 
     @SuppressLint("CommitTransaction")
-    override fun destroyItem(view: View, i: Int, `object`: Any) {
+    override fun destroyItem(view: View, i: Int, obj: Any) {
         if (mCurTransaction == null) {
             mCurTransaction = mActivity.supportFragmentManager.beginTransaction()
         }
-        mCurTransaction!!.hide(`object` as Fragment)
+        mCurTransaction!!.hide(obj as Fragment)
     }
 
     override fun finishUpdate(view: View) {
@@ -78,8 +78,8 @@ class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mVie
         }
     }
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return (`object` as Fragment).view === view
+    override fun isViewFromObject(view: View, obj: Any): Boolean {
+        return (obj as Fragment).view === view
     }
 
     override fun saveState(): Parcelable? = null

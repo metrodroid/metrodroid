@@ -82,7 +82,7 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
             return
         }
 
-        onResult(result.`object`)
+        onResult(result.obj)
     }
 
     private fun onError(ex: Exception) {
@@ -102,17 +102,17 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
     protected abstract fun onResult(result: Result?)
 
     class TaskResult<T> {
-        val `object`: T?
+        val obj: T?
         val exception: Exception?
 
-        constructor(`object`: T) {
-            this.`object` = `object`
+        constructor(obj: T) {
+            this.obj = obj
             exception = null
         }
 
         constructor(exception: Exception) {
             this.exception = exception
-            `object` = null
+            obj = null
         }
     }
 
