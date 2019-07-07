@@ -707,6 +707,7 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
     <string name="location_auckland">Auckland, New Zealand</string>
+    <string name="location_barnaul">Barnaul, Russia</string>
     <string name="location_beijing">Beijing, China</string>
     <!--
       Translators:
@@ -1840,6 +1841,11 @@
     <string name="card_name_orenburg_student">Orenburg student card</string>
 
     <string name="card_name_strizh">Strizh</string>
+    <!-- Translators: Barnaul is city in Russia. Electronic Barnaul
+         is the name of the transit card there. Original: Электронный Барнаул -->
+    <string name="card_name_barnaul">Electronic Barnaul</string>
+    <!-- Translators: Original in Russian is Электронный кошелек (lit. Electronic Wallet). -->
+    <string name="barnaul_ewallet">E-wallet</string>
     <string name="card_name_penza">Penza</string>
     <string name="card_name_siticard">Siticard</string>
     <string name="card_name_kirov">Kirov</string>
@@ -1853,6 +1859,7 @@
     <string name="card_name_crimea_trolleybus">Crimea Trolleybus</string>
     <string name="card_name_crimea_parus_school">Parus school card</string>
     <string name="card_name_yoshkar_ola">Yoshkar-Ola transport card</string>
+    <string name="card_name_umarsh">Umarsh</string>
     <string name="umarsh_school">School student</string>
     <string name="umarsh_student">Student</string>
     <string name="umarsh_adult">Adult</string>

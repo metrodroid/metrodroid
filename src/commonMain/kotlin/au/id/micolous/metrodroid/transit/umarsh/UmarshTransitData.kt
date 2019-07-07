@@ -52,46 +52,7 @@ internal data class UmarshSystem(
 // Reference: https://github.com/micolous/metrodroid/wiki/Umarsh
 
 private val systemsMap = mapOf(
-        // This seems to be in reverse order of region numbers
-        Pair(0x1cda, 66) to UmarshSystem(
-                CardInfo(
-                        name = R.string.card_name_ekarta,
-                        cardType = CardType.MifareClassic,
-                        locationId = R.string.location_ekaterinburg,
-                        imageId = R.drawable.ekarta,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        keysRequired = true,
-                        preview = true),
-                tariffs = mapOf(
-                        0x42640f to UmarshTariff(
-                                name = R.string.monthly_subscription,
-                                denomination = UmarshDenomination.UNLIMITED
-                        )
-                )
-        ),
-        Pair(0x2b9f, 91) to UmarshSystem(
-                CardInfo(
-                        name = R.string.card_name_crimea_trolleybus,
-                        cardType = CardType.MifareClassic,
-                        locationId = R.string.location_crimea,
-                        imageId = R.drawable.crimea_trolley,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        keysRequired = true,
-                        preview = true),
-                tariffs = mapOf(
-                        0x3d7f00 to UmarshTariff(
-                                name = R.string.card_name_crimea_parus_school,
-                                cardName = R.string.card_name_crimea_parus_school,
-                                denomination = UmarshDenomination.UNLIMITED
-                        ),
-                        0x467f00 to UmarshTariff(
-                                name = R.string.card_name_crimea_trolleybus,
-                                cardName = R.string.card_name_crimea_trolleybus,
-                                denomination = UmarshDenomination.UNLIMITED
-                        )
-                )
-        ),
-        Pair(0x2b9f, 12) to UmarshSystem(
+        12 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_yoshkar_ola,
                         cardType = CardType.MifareClassic,
@@ -106,20 +67,59 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
-        Pair(0x399f, 58) to UmarshSystem(
+        18 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_penza,
+                        name = R.string.card_name_strizh,
                         cardType = CardType.MifareClassic,
-                        locationId = R.string.location_penza,
-                        imageId = R.drawable.penza,
+                        locationId = R.string.location_izhevsk,
+                        imageId = R.drawable.strizh,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x1400ff to UmarshTariff(R.string.umarsh_adult)
+                        0x0a7f00 to UmarshTariff(
+                                name = R.string.umarsh_adult
+                        ),
+                        0x1e7f00 to UmarshTariff(
+                                name = R.string.umarsh_student
+                        ),
+                        0x247f00 to UmarshTariff(
+                                name = R.string.umarsh_school
+                        ),
+                        0x587f00 to UmarshTariff(
+                                name = R.string.umarsh_adult
+                        )
                 )
         ),
-        Pair(0x3d9f, 52) to UmarshSystem(
+        22 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_barnaul,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_barnaul,
+                        imageId = R.drawable.barnaul,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x0a002e to UmarshTariff(
+                                name = R.string.barnaul_ewallet
+                        )
+                )
+        ),
+        43 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_kirov,
+                        cardType = CardType.MifareClassic,
+                        imageId = R.drawable.kirov,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        locationId = R.string.location_kirov,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x5000ff to UmarshTariff(R.string.umarsh_adult)
+                )
+        ),
+        52 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_siticard,
                         cardType = CardType.MifareClassic,
@@ -158,40 +158,54 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
-        Pair(0x4881, 43) to UmarshSystem(
+        58 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_kirov,
+                        name = R.string.card_name_penza,
                         cardType = CardType.MifareClassic,
-                        imageId = R.drawable.kirov,
+                        locationId = R.string.location_penza,
+                        imageId = R.drawable.penza,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        locationId = R.string.location_kirov,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x5000ff to UmarshTariff(R.string.umarsh_adult)
+                        0x1400ff to UmarshTariff(R.string.umarsh_adult)
                 )
         ),
-        Pair(0x659f, 18) to UmarshSystem(
+        66 to UmarshSystem(
                 CardInfo(
-                        name = R.string.card_name_strizh,
+                        name = R.string.card_name_ekarta,
                         cardType = CardType.MifareClassic,
-                        locationId = R.string.location_izhevsk,
-                        imageId = R.drawable.strizh,
+                        locationId = R.string.location_ekaterinburg,
+                        imageId = R.drawable.ekarta,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
                         preview = true),
                 tariffs = mapOf(
-                        0x0a7f00 to UmarshTariff(
-                                name = R.string.umarsh_adult
+                        0x42640f to UmarshTariff(
+                                name = R.string.monthly_subscription,
+                                denomination = UmarshDenomination.UNLIMITED
+                        )
+                )
+        ),
+        91 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_crimea_trolleybus,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_crimea,
+                        imageId = R.drawable.crimea_trolley,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        preview = true),
+                tariffs = mapOf(
+                        0x3d7f00 to UmarshTariff(
+                                name = R.string.card_name_crimea_parus_school,
+                                cardName = R.string.card_name_crimea_parus_school,
+                                denomination = UmarshDenomination.UNLIMITED
                         ),
-                        0x1e7f00 to UmarshTariff(
-                                name = R.string.umarsh_student
-                        ),
-                        0x247f00 to UmarshTariff(
-                                name = R.string.umarsh_school
-                        ),
-                        0x587f00 to UmarshTariff(
-                                name = R.string.umarsh_adult
+                        0x467f00 to UmarshTariff(
+                                name = R.string.card_name_crimea_trolleybus,
+                                cardName = R.string.card_name_crimea_trolleybus,
+                                denomination = UmarshDenomination.UNLIMITED
                         )
                 )
         )
@@ -208,11 +222,12 @@ private fun parseDate(raw: ImmutableByteArray, off: Int) = if (raw.getBitsFromBu
 
 @Parcelize
 data class UmarshSector(val counter: Int, val serialNumber: Int,
-                      val balanceRaw: Int, val systemNum: Int,
+                      val balanceRaw: Int,
                       val total: Int,
                       val tariffRaw: Int,
                       val lastRefill: Daystamp?,
                       override val validTo: Daystamp?,
+                      private val cardExpiry: Daystamp?,
                       val refillCounter: Int,
                       val hash: ImmutableByteArray,
                       val mA: ImmutableByteArray,
@@ -223,7 +238,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
                       val mD: Int,
                       val mE: Int,
                       val secno: Int) : Subscription() {
-    val hasExtraSector: Boolean get() = systemNum == 0x3d9f
+    val hasExtraSector: Boolean get() = region == 52
 
     val header
         get() = when {
@@ -240,6 +255,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
     val genericInfo
         get() = listOfNotNull(header) + listOf(
                 ListItem(R.string.refill_counter, refillCounter.toString()),
+                ListItem(R.string.expiry_date, cardExpiry?.format()),
                 ListItem(R.string.zolotaya_korona_region, region.toString())
         ) + if (denomination == UmarshDenomination.RUB)
             listOf(
@@ -249,14 +265,14 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
         else
             emptyList()
 
-    private val system get() = systemsMap.getValue(Pair(systemNum, region))
+    private val system get() = systemsMap[region]
 
-    val cardName get() = tariff?.cardName?.let { Localizer.localizeString(it) } ?: system.cardInfo.name
+    val cardName get() = tariff?.cardName?.let { Localizer.localizeString(it) } ?: system?.cardInfo?.name ?: Localizer.localizeString(R.string.card_name_umarsh)
 
     internal val denomination
         get() = tariff?.denomination ?: if (total == 0) UmarshDenomination.RUB else UmarshDenomination.TRIPS
 
-    private val tariff get() = system.tariffs[tariffRaw]
+    private val tariff get() = system?.tariffs?.get(tariffRaw)
 
     override val subscriptionName: String?
         get() = tariff?.name?.let { Localizer.localizeString(it) }
@@ -303,7 +319,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
 
         fun parse(sector: ClassicSector, secno: Int): UmarshSector =
                 UmarshSector(counter = 0x7fffffff - sector[0].data.byteArrayToIntReversed(0, 4),
-                        systemNum = sector[1].data.byteArrayToInt(0, 3),
+                        cardExpiry = parseDate(sector[1].data, 8),
                         mA = sector[1].data.sliceOffLen(3, 2),
                         total = sector[1].data.byteArrayToInt(5, 2),
                         refillCounter = sector[1].data.byteArrayToInt(7, 1),
@@ -321,8 +337,8 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
                         hash = sector[2].data.sliceOffLen(11, 5),
                         secno = secno)
 
-        fun check(sector: ClassicSector): Boolean = Pair(sector[1].data.byteArrayToInt(0, 3), getRegion(sector)) in systemsMap
-        internal fun system(sector: ClassicSector) = systemsMap[Pair(sector[1].data.byteArrayToInt(0, 3), getRegion(sector))]
+        fun check(sector: ClassicSector): Boolean = sector[0].data.byteArrayToIntReversed(0, 4) == sector[0].data.byteArrayToIntReversed(4, 4).inv() && sector[0].data.byteArrayToIntReversed(0, 4) == sector[0].data.byteArrayToIntReversed(8, 4) && sector[0].data[12] + sector[0].data[13] == -1 && sector[0].data[12] == sector[0].data[14] && sector[0].data[13] == sector[0].data[15] && sector[0].data.byteArrayToIntReversed(0, 4) >= 0x7fffff00 && sector[0].data[13] >= 0x70.toByte()
+        internal fun system(sector: ClassicSector) = systemsMap[getRegion(sector)]
     }
 }
 
