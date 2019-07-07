@@ -47,7 +47,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  */
 @Parcelize
 class ChcMetrocardTransitData(override val capsule: ErgTransitDataCapsule) : ErgTransitData() {
-    override val currency: TransitCurrencyRef = CURRENCY
+    override val currency: TransitCurrencyRef get() = CURRENCY
     override val cardName get() = NAME
     override val timezone get() = TIME_ZONE
 

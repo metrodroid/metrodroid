@@ -235,10 +235,10 @@ class AddKeyActivity : MetrodroidActivity() {
 
     override fun onNewIntent(intent: Intent) {
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-        val tagId = tag.id
+        val tagId = tag?.id
 
-        if (MifareClassic::class.java.name in tag.techList
-                && tagId != null && tagId.isNotEmpty()) {
+        if (tagId != null && MifareClassic::class.java.name in tag.techList
+                && tagId.isNotEmpty()) {
             mKeyData?.uid = ImmutableByteArray.getHexString(tagId)
             drawUI()
         } else {

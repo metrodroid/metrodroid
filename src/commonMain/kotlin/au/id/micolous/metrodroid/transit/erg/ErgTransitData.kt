@@ -50,7 +50,7 @@ class ErgTransitDataCapsule(
 @Parcelize
 class ErgUnknownTransitData(
         override val capsule: ErgTransitDataCapsule): ErgTransitData() {
-    override val currency: TransitCurrencyRef = ::XXX
+    override val currency: TransitCurrencyRef get() = ::XXX
 }
 
 /**

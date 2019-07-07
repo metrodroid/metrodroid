@@ -107,7 +107,7 @@ class ClassicCardKeys(override var uid: String?,
          */
         fun fromJSON(json: JsonObject, defaultBundle: String) =
             ClassicCardKeys(uid = json.getPrimitiveOrNull(CardKeys.JSON_TAG_ID_KEY)?.contentOrNull,
-                    keys = keysFromJSON(json, true, defaultBundle).mapValues { (sector, keys) -> keys.filterIsInstance<ClassicSectorKey>() },
+                    keys = keysFromJSON(json, true, defaultBundle).mapValues { (_, keys) -> keys.filterIsInstance<ClassicSectorKey>() },
                     sourceDataLength = json.toString().length)
     }
 }

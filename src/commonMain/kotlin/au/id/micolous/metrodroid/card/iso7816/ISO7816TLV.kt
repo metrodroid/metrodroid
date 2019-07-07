@@ -286,7 +286,7 @@ object ISO7816TLV {
     fun removeTlvHeader(buf: ImmutableByteArray): ImmutableByteArray {
         val p = getTLVIDLen(buf, 0)
         // todo check if past eof
-        val (startoffset, datalen, eoclen) = decodeTLVLen(buf, p) ?: return ImmutableByteArray.empty()
+        val (startoffset, datalen, _) = decodeTLVLen(buf, p) ?: return ImmutableByteArray.empty()
         return buf.sliceOffLen(p+startoffset, datalen)
     }
 

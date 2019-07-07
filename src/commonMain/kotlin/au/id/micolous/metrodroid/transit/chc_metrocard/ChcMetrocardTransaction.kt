@@ -29,8 +29,8 @@ import au.id.micolous.metrodroid.util.StationTableReader
 class ChcMetrocardTransaction(
         override val purse: ErgPurseRecord,
         override val epoch: Int) : ErgTransaction() {
-    override val currency = ChcMetrocardTransitData.CURRENCY
-    override val timezone = ChcMetrocardTransitData.TIME_ZONE
+    override val currency get() = ChcMetrocardTransitData.CURRENCY
+    override val timezone get() = ChcMetrocardTransitData.TIME_ZONE
 
     override fun getAgencyName(isShort: Boolean): String? {
         return StationTableReader.getOperatorName(
