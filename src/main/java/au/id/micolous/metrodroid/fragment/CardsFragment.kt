@@ -263,12 +263,17 @@ class CardsFragment : ExpandableListFragment() {
                     return true
                 }
 
+                R.id.share_xml -> {
+                    ShareTask(activity!!).execute()
+                    return true
+                }
+
                 R.id.deduplicate_cards -> {
                     DedupTask(activity!!).execute()
                     return true
                 }
 
-                R.id.export_all -> {
+                R.id.save_xml -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         i = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         i.addCategory(Intent.CATEGORY_OPENABLE)
@@ -320,6 +325,47 @@ class CardsFragment : ExpandableListFragment() {
             Toast.makeText(context,
                     Localizer.localizePlural(R.plurals.cards_deduped, tf!!, tf),
                     Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private class ShareTask (val activity: Activity): AsyncTask<Void, Int, Pair<String, File>>() {
+
+        override fun doInBackground(vararg voids: Void): Pair<String, File> {
+            try {
+                val folder = File(MetrodroidApplication.instance.cacheDir, "share")
+                folder.mkdirs()
+                val tf = File.createTempFile("cards", ".zip",
+                        folder)
+                val os = FileOutputStream(tf)
+                ExportHelper.exportCardsZip(os, MetrodroidApplication.instance)
+                os.close()
+                return Pair<String, File>(null, tf)
+            } catch (ex: Exception) {
+                Log.e(TAG, ex.message, ex)
+                return Pair<String, File>(Utils.getErrorMessage(ex), null)
+            }
+
+        }
+
+        override fun onPostExecute(res: Pair<String, File>) {
+            val err = res.first
+            val tf = res.second
+
+            if (err != null) {
+                AlertDialog.Builder(MetrodroidApplication.instance)
+                        .setMessage(err)
+                        .show()
+                return
+            }
+
+            val i = Intent(Intent.ACTION_SEND)
+            val apkURI = FileProvider.getUriForFile(
+                    MetrodroidApplication.instance,
+                    MetrodroidApplication.instance.packageName + ".provider", tf)
+            i.type = "application/zip"
+            i.putExtra(Intent.EXTRA_STREAM, apkURI)
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            activity.startActivity(i)
         }
     }
 
