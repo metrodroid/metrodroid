@@ -75,10 +75,7 @@ class MctCardImporter : CardImporter {
         val uid: ImmutableByteArray
         if (sectors[0] !is UnauthorizedClassicSector) {
             val block0 = sectors[0].getBlock(0).data
-            if (block0[0].toInt() == 4)
-                uid = block0.copyOfRange(0, 7)
-            else
-                uid = block0.copyOfRange(0, 4)
+            uid = MfcCardImporter.block0ToUid(block0)
         } else
             uid = ImmutableByteArray.fromASCII("fake")
 
