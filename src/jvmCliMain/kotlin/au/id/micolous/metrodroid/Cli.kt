@@ -14,14 +14,14 @@ import java.util.*
 
 fun listCards() {
     for (card in CardInfoRegistry.allCardsAlphabetical) {
-        System.out.println("card name = ${card.name}")
-        System.out.println("     type = ${card.cardType}")
+        println("card name = ${card.name}")
+        println("     type = ${card.cardType}")
         if (card.locationId != null)
-            System.out.println("     location = ${Localizer.localizeString(card.locationId)}")
-        System.out.println("     keysRequired = ${card.keysRequired}")
-        System.out.println("     preview = ${card.preview}")
+            println("     location = ${Localizer.localizeString(card.locationId)}")
+        println("     keysRequired = ${card.keysRequired}")
+        println("     preview = ${card.preview}")
         if (card.resourceExtraNote != null) {
-            System.out.println("     note = ${Localizer.localizeString(card.resourceExtraNote)}")
+            println("     note = ${Localizer.localizeString(card.resourceExtraNote)}")
         }
     }
 }
@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
         "identify" -> identifyCards(args[1])
         "parse" -> parseCards(args[1])
         "unrecognized" -> unrecognizedCards(args[1])
-        else -> System.out.println("Unknown command ${args.getOrNull(0)}")
+        else -> println("Unknown command ${args.getOrNull(0)}")
     }
 }
 
@@ -40,22 +40,22 @@ fun loadCards(fname: String): Iterator<Card>? {
     val by = File(fname).inputStream()
     val cards = XmlOrJsonCardFormat().readCards(by)
     if (cards == null) {
-        System.out.println("No cards found")
+        println("No cards found")
     }
     return cards
 }    
 
 fun identifyCards(fname: String) {
     for (card in loadCards(fname) ?: return) {
-        System.out.println("card UID = ${card.tagId}")
+        println("card UID = ${card.tagId}")
         val ti = try {
             card.parseTransitIdentity()
         } catch (e: Exception) {
-            System.out.println("   exception = $e")
+            println("   exception = $e")
             null
         }
-        System.out.println("   name = ${ti?.name}")
-        System.out.println("   serial = ${ti?.serialNumber}")
+        println("   name = ${ti?.name}")
+        println("   serial = ${ti?.serialNumber}")
     }
 }
 
@@ -75,7 +75,7 @@ fun unrecognizedCards(fname: String) {
             goodUIDs += pid
     }
     for (uid in allUIDs - goodUIDs)
-        System.out.println(uid)
+        println(uid)
 }
 
 private fun printBalance(balance: TransitBalance, idx: Int?) {
@@ -87,20 +87,20 @@ private fun printBalance(balance: TransitBalance, idx: Int?) {
     balance.validFrom?.let { str.append(" from ${it.format().unformatted}")}
     balance.validTo?.let { str.append(" to ${it.format().unformatted}")}
     balance.name?.let { str.append(", \"$it\"") }
-    System.out.println(str)
+    println(str)
 }
 
 fun parseCards(fname: String) {
     for (card in loadCards(fname) ?: return) {
-        System.out.println("card UID = ${card.tagId}")
+        println("card UID = ${card.tagId}")
         val td = try {
             card.parseTransitData()
         } catch (e: Exception) {
-            System.out.println("   exception = $e")
+            println("   exception = $e")
             null
         }
-        System.out.println("   name = ${td?.cardName}")
-        System.out.println("   serial = ${td?.serialNumber}")
+        println("   name = ${td?.cardName}")
+        println("   serial = ${td?.serialNumber}")
         val balances = td?.balances
         when (balances?.size) {
             0, null -> {}
@@ -108,44 +108,42 @@ fun parseCards(fname: String) {
             else -> balances.forEachIndexed { idx, balance -> printBalance(balance, idx) }
         }
         for ((idx, sub) in td?.subscriptions.orEmpty().withIndex()) {
-            System.out.println("   subscription $idx: ${sub.subscriptionName}")
-            sub.validFrom?.let { System.out.println("      from ${it.format().unformatted}") }
-            sub.validTo?.let { System.out.println("      to ${it.format().unformatted}") }
+            println("   subscription $idx: ${sub.subscriptionName}")
+            sub.validFrom?.let { println("      from ${it.format().unformatted}") }
+            sub.validTo?.let { println("      to ${it.format().unformatted}") }
             val infos = sub.info.orEmpty()
-            if (!infos.isEmpty()) {
-                System.out.println("      info")
+            if (infos.isNotEmpty()) {
+                println("      info")
             }
         
             for (info in infos) {
-                System.out.println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+                println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
             }
         }
         for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
-            System.out.println("   trip $idx")
-            trip.startTimestamp?.let { System.out.println("      departure ${it.format().unformatted}") }
-            trip.startStation?.stationName?.let { System.out.println("      from $it") }
-            trip.endTimestamp?.let { System.out.println("      arrival ${it.format().unformatted}") }
-            trip.endStation?.stationName?.let { System.out.println("      to $it") }
-            System.out.println("      mode ${trip.mode}")
-            trip.fare?.let { System.out.println("      fare ${it.formatCurrencyString(false).unformatted}") }
+            println("   trip $idx")
+            trip.startTimestamp?.let { println("      departure ${it.format().unformatted}") }
+            trip.endTimestamp?.let { println("      arrival ${it.format().unformatted}") }
+            println("      mode ${trip.mode}")
+            trip.fare?.let { println("      fare ${it.formatCurrencyString(false).unformatted}") }
+            trip.getRawFields(TransitData.RawLevel.ALL)?.let { println("      raw $it") }
         }
         val infos = td?.info.orEmpty()
-        if (!infos.isEmpty()) {
-            System.out.println("   info")
+        if (infos.isNotEmpty()) {
+            println("   info")
         }
         
         for (info in infos) {
-            System.out.println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+            println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
         }
 
         val raw = td?.getRawFields(TransitData.RawLevel.ALL).orEmpty()
-        if (!raw.isEmpty()) {
-            System.out.println("   raw")
+        if (raw.isNotEmpty()) {
+            println("   raw")
         }
 
         for (info in raw) {
-            System.out.println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+            println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
         }
-
     }
 }
