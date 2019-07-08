@@ -137,6 +137,10 @@ private val systemsMap = mapOf(
                                 name = R.string.siticard_adult_60min_xfer_purse,
                                 denomination = UmarshDenomination.RUB
                         ),
+                        0x21007f to UmarshTariff(
+                                name = R.string.siticard_purse_sarov,
+                                denomination = UmarshDenomination.RUB
+                        ),
                         0x2564ff to UmarshTariff(
                                 name = R.string.siticard_edinyj_3_days,
                                 denomination = UmarshDenomination.UNLIMITED
