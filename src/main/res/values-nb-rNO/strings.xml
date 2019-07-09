@@ -800,4 +800,19 @@
     </plurals>
     <string name="mfc_uid_mode">UID-lengde</string>
     <string name="pref_show_hidden_cards">Vis skjulte kort</string>
+    <string name="keys_loaded">Krypteringsnøkler for dette kortet er innlastet.</string>
+    <string name="manufacture_week">Tilvirkningsuke</string>
+    <string name="manufacture_year">Tilvirkningsår</string>
+    <string name="location_london">London, Storbritannia</string>
+    <string name="kazan_blank">Blankt</string>
+    <string name="location_crimea">Krim</string>
+    <string name="card_type_provider_specific">Tilbyderspesifikk</string>
+    <string name="umarsh_school">Skolestudent</string>
+    <string name="umarsh_student">Student</string>
+    <string name="umarsh_adult">Voksen</string>
+    <string name="amiibo_type">Type</string>
+    <string name="amiibo_type_card">Kort</string>
+    <string name="amiibo_model_number">Modellnummer</string>
+    <string name="amiibo_series">Serie</string>
+    <string name="card_holders_id">Korteiers ID-nummer</string>
 </resources>
