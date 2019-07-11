@@ -30,17 +30,17 @@
 
     <!-- General application strings -->
     <string name="license">Licenses</string>
-    <string name="title_activity_license">Open Source Licenses</string>
+    <string name="title_activity_license">Libre software licenses</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading card…</string>
     <string name="dont_move">Do not move card</string>
-    <string name="advanced_info">Advanced Info</string>
-    <string name="delete_card">Delete Card</string>
-    <string name="unknown_card">Unknown Card</string>
+    <string name="advanced_info">Advanced info</string>
+    <string name="delete_card">Delete card</string>
+    <string name="unknown_card">Unknown card</string>
     <string name="locked_mfc_card">Locked MIFARE Classic card</string>
     <string name="locked_mfu_card">Locked MIFARE Ultralight card</string>
     <string name="locked_mfd_card">Locked MIFARE DESFire card</string>
-    <string name="hw_detail">Manufacturing Info</string>
+    <string name="hw_detail">Manufacturing info</string>
     <string name="data">Raw Data</string>
     <string name="copy_xml">Copy</string>
     <string name="share_xml">Share</string>
@@ -48,17 +48,17 @@
     <string name="history">History</string>
     <string name="no_trip_data">No trips found. Has this card been used?</string>
     <string name="import_xml">Import</string>
-    <string name="import_clipboard">Paste from Clipboard</string>
-    <string name="import_file">Import from File</string>
+    <string name="import_clipboard">Paste from clipboard</string>
+    <string name="import_file">Import from file</string>
     <string name="export">Export</string>
-    <string name="export_filename">Export Filename</string>
-    <string name="export_all">Export All</string>
+    <string name="export_filename">Export filename</string>
+    <string name="export_all">Export all</string>
     <string name="about">About</string>
     <string name="preferences">Preferences</string>
     <string name="balance_speech">Balance <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Loading…</string>
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
-    <string name="supported_cards">Supported Cards</string>
+    <string name="supported_cards">Supported cards</string>
     <!--
     Translators: This is used for a total number of transactions that have been performed on the
     card. This is slightly different to a "trip counter", as many tickets count both the tap-on
@@ -191,7 +191,7 @@
     <string name="cant_delete_with_obfuscation_message">For safety reasons, you can\'t delete keys while card number obfuscation is enabled. Turn it off if you want to delete keys.</string>
     <string name="add_key_directions">Save a binary dump of your keys as a file with a .farebotkeys extension, e-mail it as an attachment to yourself, and then open it on this device.</string>
     <string name="no_keys">No keys.</string>
-    <string name="nfc_unavailable">NFC Unavailable</string>
+    <string name="nfc_unavailable">NFC unavailable</string>
     <string name="general">General</string>
     <string name="launch_from_background">Launch from background</string>
     <string name="checksum">Checksum</string>
@@ -212,8 +212,8 @@
 
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
-    <string name="saved_metrodroid_zip">Wrote Metrodroid-Export.zip to USB Storage.</string>
-    <string name="saved_xml_custom">Wrote XML to USB Storage.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip saved to USB storage.</string>
+    <string name="saved_xml_custom">XML saved to USB storage.</string>
     <string name="file_exported">File exported.</string>
     <string name="map_tiles_url">Map tiles URL</string>
     <string name="map_tiles_url_summary">Use a custom tile server for embedded maps, using Leaflet TileLayer syntax.</string>
@@ -225,7 +225,7 @@
     available regardless of what language Metrodroid is run in. You should indicate to the reader
     this documentation has not been translated from English.
     -->
-    <string name="map_tiles_help_summary">For help on using Map tile URLs, see Leaflet\'s online documentation (only available in English).</string>
+    <string name="map_tiles_help_summary">For help on using map tile URLs, see Leaflet\'s online documentation (only available in English).</string>
     <string name="about_card_format">About this card format</string>
     <string name="online_services">Online services</string>
     <string name="mifare_classic">MIFARE Classic</string>
@@ -340,7 +340,7 @@
     <!-- Translators: This is substituted with the name of a card, like "Unlocking Leap card…" -->
     <string name="mfd_unlocking">Unlocking <xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
 
-    <string name="iso7816_probing">Probing ISO7816 card…</string>
+    <string name="iso7816_probing">Probing ISO/IEC 7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
 
     <string name="card_partial_read_title">Card partially read!</string>
@@ -436,11 +436,11 @@
     <string name="default_map_tile_subdomains">123456</string>
 
     <string name="pref_show_local_and_english_title">Show both local and English station names</string>
-    <string name="pref_show_local_and_english_desc">If enabled, both local and English names will be shown regardless of locale. If disabled, the most appropriate variant is chosen.</string>
+    <string name="pref_show_local_and_english_desc">Shows both local and English names regardless of locale, using the most appropriate variant when off.</string>
 
     <plurals name="cards_imported">
-        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
-        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cards imported!</item>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> card imported.</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cards imported.</item>
     </plurals>
 
     <!-- Translators: "block" is referring to a block of storage. -->
@@ -503,19 +503,19 @@
 
     <!-- Type: Standard file, Length: 16 bytes -->
     <plurals name="desfire_standard_format">
-        <item quantity="one">Type: %1$s, Length: %2$s byte</item>
-        <item quantity="other">Type: %1$s, Length: %2$s bytes</item>
+        <item quantity="one">Type: %1$s, length: %2$s byte</item>
+        <item quantity="other">Type: %1$s, length: %2$s bytes</item>
     </plurals>
 
     <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
     <plurals name="desfire_record_format">
-        <item quantity="one">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
-        <item quantity="other">Type: %1$s, Records: %2$s (%3$s maximum), Record Size: %4$s</item>
+        <item quantity="one">Type: %1$s, record: %2$s (%3$s maximum), record size: %4$s</item>
+        <item quantity="other">Type: %1$s, records: %2$s (%3$s maximum), record size: %4$s</item>
     </plurals>
 
     <plurals name="trips_remaining">
-        <item quantity="one">%d trip remaining</item>
-        <item quantity="other">%d trips remaining</item>
+        <item quantity="one">%d trip left</item>
+        <item quantity="other">%d trips left</item>
     </plurals>
     <plurals name="trips_remaining_total">
         <item quantity="one">%d trip remaining out of %d</item>
@@ -539,27 +539,27 @@
     </plurals>
 
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
-    <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
+    <string name="desfire_value_format">Type: %1$s, range: %2$s - %3$s, limited credit: %4$s (%5$s)</string>
 
-    <string name="hardware_information">Hardware Info</string>
-    <string name="enabled">Enabled</string>
-    <string name="disabled">Disabled</string>
+    <string name="hardware_information">Hardware info</string>
+    <string name="enabled">On</string>
+    <string name="disabled">Off</string>
 
     <!-- CEPAS hardware information -->
-    <string name="cepas_version">CEPAS Version</string>
+    <string name="cepas_version">CEPAS version</string>
     <string name="cepas_purse_id">Purse ID</string>
-    <string name="cepas_purse_status">Purse Status</string>
-    <string name="cepas_purse_balance">Purse Balance</string>
-    <string name="cepas_purse_creation_date">Date of Purse Creation</string>
-    <string name="cepas_autoload_amount">Autoload Amount</string>
-    <string name="cepas_last_txn_info">Info About Last Transaction</string>
-    <string name="cepas_credit_header">Credit Header</string>
-    <string name="cepas_debit_options">Debit Options</string>
-    <string name="cepas_other_purse_info">Other Purse Info</string>
-    <string name="cepas_logfile_record_count">Logfile Record Count</string>
-    <string name="cepas_issuer_data_length">Issuer Data Length</string>
-    <string name="cepas_issuer_data">Issuer-specific Data</string>
-    <string name="cepas_purse_info">Purse Info</string>
+    <string name="cepas_purse_status">Purse status</string>
+    <string name="cepas_purse_balance">Purse balance</string>
+    <string name="cepas_purse_creation_date">Date of purse creation</string>
+    <string name="cepas_autoload_amount">Autoload amount</string>
+    <string name="cepas_last_txn_info">Info about last transaction</string>
+    <string name="cepas_credit_header">Credit header</string>
+    <string name="cepas_debit_options">Debit options</string>
+    <string name="cepas_other_purse_info">Other purse info</string>
+    <string name="cepas_logfile_record_count">Logfile record count</string>
+    <string name="cepas_issuer_data_length">Issuer data length</string>
+    <string name="cepas_issuer_data">Issuer-specific data</string>
+    <string name="cepas_purse_info">Purse info</string>
 
     <!--
     Felica hardware information
@@ -640,11 +640,11 @@
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_mecstar" translatable="false">Mecstar</string>
     <!-- Translators: This is a company name -->
-    <string name="calypso_manufacturer_acg" translatable="false">ACG Identification</string>
+    <string name="calypso_manufacturer_acg" translatable="false">ACG Identification Technologies</string>
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_stm" translatable="false">STMicroelectronics</string>
     <!-- Translators: This is a company name -->
-    <string name="calypso_manufacturer_gide" translatable="false">Giesecke &amp; Devrient GmbH</string>
+    <string name="calypso_manufacturer_gide" translatable="false">Giesecke &amp; Devrient</string>
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_oti" translatable="false">OTI</string>
     <!-- Translators: This is a company name -->
@@ -734,7 +734,7 @@
     -->
     <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-    <string name="location_crimea">Crimea</string>
+    <string name="location_crimea">Crimea, Russia</string>
     <string name="location_dubai">Dubai, UAE</string>
     <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
     <string name="location_france">France</string>
@@ -795,7 +795,7 @@
     <string name="location_stockholm">Stockholm, Sweden</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
-    <string name="location_taipei">Taipei</string>
+    <string name="location_taipei">Taipei, Taiwan</string>
     <string name="location_tampere">Tampere, Finland</string>
     <string name="location_tartu">Tartu, Estonia</string>
     <string name="location_the_netherlands">The Netherlands</string>
@@ -932,22 +932,22 @@
     <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
 
     <string name="ez_bus_number">Bus #%s</string>
-    <string name="ez_bus_refund">Bus Refund</string>
+    <string name="ez_bus_refund">Bus refund</string>
     <string name="ez_mrt">MRT</string>
     <string name="ez_topup">Top-up</string>
     <string name="ez_first_use">First use</string>
-    <string name="ez_retail_purchase">Retail Purchase</string>
-    <string name="ez_service_charge">Service Charge</string>
+    <string name="ez_retail_purchase">Retail purchase</string>
+    <string name="ez_service_charge">Service charge</string>
 
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Edy is a pre-paid debit card in Japan. -->
-    <string name="edy_file_history">Edy History</string>
+    <string name="edy_file_history">Edy history</string>
     <!-- Translators: Describes the name of a file. This file contains information that identifies
     the card. Edy is a pre-paid debit card in Japan. -->
-    <string name="edy_file_id">Edy Identity</string>
+    <string name="edy_file_id">Edy identity</string>
     <!-- Translators: Describes the name of a file. This file contains information about the balance
     of the purse stored on this card. Edy is a pre-paid debit card in Japan. -->
-    <string name="edy_file_purse_balance">Edy Purse Balance</string>
+    <string name="edy_file_purse_balance">Edy purse balance</string>
 
     <!-- Felica / Suica: These strings must only be used for Felica. -->
 
@@ -968,13 +968,13 @@
         These are ticket machines, inside the "ticketed area" of a station, where you can top-up
         your IC card, if you do not have enough credit remaining on it to exit the station.
     -->
-    <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
-    <string name="felica_terminal_portable">Portable Terminal</string>
-    <string name="felica_terminal_vehicle">Vehicle Terminal (on bus)</string>
-    <string name="felica_terminal_ticket">Ticket Machine</string>
-    <string name="felica_terminal_deposit_quick_charge">Quick Charge Machine</string>
-    <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail Ticket Machine</string>
-    <string name="felica_terminal_tvm_etc">Ticket Machine, etc.</string>
+    <string name="felica_terminal_fare_adjustment">Fare adjustment machine</string>
+    <string name="felica_terminal_portable">Portable terminal</string>
+    <string name="felica_terminal_vehicle">Vehicle terminal (on bus)</string>
+    <string name="felica_terminal_ticket">Ticket machine</string>
+    <string name="felica_terminal_deposit_quick_charge">Quick charge machine</string>
+    <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail ticket machine</string>
+    <string name="felica_terminal_tvm_etc">Ticket machine, etc.</string>
     <!-- Translators: Japanese ビューアルッテ（VIEW ALTTE) -->
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
     <!--
@@ -993,14 +993,14 @@
         there is no barrier between the passenger and the platform or exit. The traveller is trusted
         to scan or validate their ticket at the station at the beginning or end of their journey.
     -->
-    <string name="felica_terminal_ticket_validator">Ticket Validator</string>
+    <string name="felica_terminal_ticket_validator">Ticket validator</string>
     <!--
         Translators:
         Japanese: 窓口端末
         This is a place where common ticket types are sold. It is commonly a window at a train
         stations.
     -->
-    <string name="felica_terminal_ticket_booth">Ticket Booth</string>
+    <string name="felica_terminal_ticket_booth">Ticket booth</string>
     <!--
         Translators:
         Japanese: 窓口端末(みどりの窓口)
@@ -1013,7 +1013,7 @@
 
         みどりの窓口 (Midori no Madoguchi / The Green Window) is a trademark of JR East.
     -->
-    <string name="felica_terminal_ticket_office_green">Ticket Office (Green Window)</string>
+    <string name="felica_terminal_ticket_office_green">Ticket office (Green Window)</string>
     <!--
         Translators:
         Japanese: 改札端末
@@ -1021,22 +1021,22 @@
         Maybe this is for long distance services, where you need to pay for a paper ticket in
         advance with your Suica card at a computer terminal in the train station.
     -->
-    <string name="felica_terminal_ticket_gate_terminal">Ticket Gate Terminal</string>
-    <string name="felica_terminal_mobile_phone">Mobile Phone</string>
-    <string name="felica_terminal_connection_adjustment">Connection Adjustment Machine</string>
-    <string name="felica_terminal_transfer_adjustment">Transfer Adjustment Machine</string>
-    <string name="felica_terminal_simple_deposit">Simple Deposit Machine</string>
-    <string name="felica_terminal_pos">Point of Sale Terminal</string>
-    <string name="felica_terminal_vending">Vending Machine</string>
+    <string name="felica_terminal_ticket_gate_terminal">Ticket gate terminal</string>
+    <string name="felica_terminal_mobile_phone">Mobile phone</string>
+    <string name="felica_terminal_connection_adjustment">Connection adjustment machine</string>
+    <string name="felica_terminal_transfer_adjustment">Transfer Adjustment machine</string>
+    <string name="felica_terminal_simple_deposit">Simple deposit machine</string>
+    <string name="felica_terminal_pos">Point of sale terminal</string>
+    <string name="felica_terminal_vending">Vending machine</string>
 
-    <string name="felica_process_fare_exit_gate">Exit Turnstile</string>
+    <string name="felica_process_fare_exit_gate">Exit turnstile</string>
     <string name="felica_process_charge">Charge</string>
-    <string name="felica_process_purchase_magnetic">Magnetic Ticket</string>
-    <string name="felica_process_fare_adjustment">Fare Adjustment</string>
-    <string name="felica_process_admission_payment">Admission Payment</string>
-    <string name="felica_process_booth_exit">Station Master Booth Exit</string>
-    <string name="felica_process_issue_new">New Issue</string>
-    <string name="felica_process_booth_deduction">Booth Deduction</string>
+    <string name="felica_process_purchase_magnetic">Magnetic ticket</string>
+    <string name="felica_process_fare_adjustment">Fare adjustment</string>
+    <string name="felica_process_admission_payment">Admission payment</string>
+    <string name="felica_process_booth_exit">Station Master booth exit</string>
+    <string name="felica_process_issue_new">New issue</string>
+    <string name="felica_process_booth_deduction">Booth deduction</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Re-issue</string>
@@ -1046,27 +1046,27 @@
         The "Shinkansen" (Japanese: 新幹線) is a high speed (240-320 km/h) railway network connecting
         Japan's largest cities.
     -->
-    <string name="felica_process_payment_shinkansen">Shinkansen Payment</string>
-    <string name="felica_process_entry_a_autocharge">Entry A (Autocharge)</string>
-    <string name="felica_process_exit_a_autocharge">Exit A (Autocharge)</string>
-    <string name="felica_process_deposit_bus">Bus Deposit</string>
-    <string name="felica_process_purchase_special_ticket">Ticket (Special Bus/Streetcar)</string>
+    <string name="felica_process_payment_shinkansen">Shinkansen payment</string>
+    <string name="felica_process_entry_a_autocharge">Entry A (autocharge)</string>
+    <string name="felica_process_exit_a_autocharge">Exit A (autocharge)</string>
+    <string name="felica_process_deposit_bus">Bus deposit</string>
+    <string name="felica_process_purchase_special_ticket">Ticket (special Bus/streetcar)</string>
     <string name="felica_process_merchandise_purchase">Merchandise</string>
     <string name="felica_process_bonus_charge">Bonus Charge</string>
-    <string name="felica_process_register_deposit">Register Deposit</string>
-    <string name="felica_process_merchandise_cancel">Cancel Merchandise</string>
-    <string name="felica_process_merchandise_admission">Merchandise/Admission</string>
+    <string name="felica_process_register_deposit">Register deposit</string>
+    <string name="felica_process_merchandise_cancel">Cancel merchandise</string>
+    <string name="felica_process_merchandise_admission">Merchandise/admission</string>
     <string name="felica_process_merchandise_purchase_cash">Merchandise (partially with cash)</string>
-    <string name="felica_process_merchandise_admission_cash">Merchandise/Admission (partially with cash)</string>
-    <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
-    <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
+    <string name="felica_process_merchandise_admission_cash">Merchandise/admission (partially with cash)</string>
+    <string name="felica_process_payment_thirdparty">Payment (third-Party)</string>
+    <string name="felica_process_admission_thirdparty">Admission payment (third-Party)</string>
 
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Suica is a transit card in Japan. -->
-    <string name="suica_file_history">Suica History</string>
+    <string name="suica_file_history">Suica history</string>
     <!-- Translators: Describes the name of a file. This file contains the last use of the card to
     enter (in) or exit (out) a train station. Suica is a transit card in Japan. -->
-    <string name="suica_file_in_out">Suica In/Out</string>
+    <string name="suica_file_in_out">Suica in/out</string>
 
     <!--
         Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
@@ -1100,7 +1100,7 @@
     <string name="kmt_file_id">KMT Identity</string>
     <!-- Translators: Describes the name of a file. This file contains information about the balance
     of the purse stored on this card. KMT is a transit card in Indonesia. -->
-    <string name="kmt_file_purse_balance">KMT Purse Balance</string>
+    <string name="kmt_file_purse_balance">KMT purse balance</string>
     <!-- Translators: Name of a transit card in Indonesia. -->
     <string name="card_name_kmt">Kartu Multi Trip</string>
 
@@ -1121,7 +1121,7 @@
     <string name="opal_automatic_top_up">Automatic top up</string>
     <string name="opal_weekly_trips">Weekly trips</string>
     <string name="opal_vehicle_bus">Bus</string>
-    <string name="opal_vehicle_ferry_lr">Ferry or Light Rail</string>
+    <string name="opal_vehicle_ferry_lr">Ferry or light rail</string>
     <string name="opal_vehicle_rail">Rail</string>
     <string name="opal_action_none">None (new, unused card)</string>
     <string name="opal_action_new_journey">New journey</string>
@@ -1175,10 +1175,10 @@
 
     <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
     IDs" is enabled in the preferences. -->
-    <string name="suica_bus_area_line_stop">Bus Area %1$s Line %2$s Stop %3$s</string>
+    <string name="suica_bus_area_line_stop">Bus Area %1$s, line %2$s, stop %3$s</string>
     <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
     IDs" is enabled in the preferences. -->
-    <string name="suica_area_line_station">Area %1$s Line %2$s Station %3$s</string>
+    <string name="suica_area_line_station">Area %1$s, line %2$s, station %3$s</string>
 
     <!--
         Myki (Victoria, AU)
@@ -1206,7 +1206,7 @@
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
 
-    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_beijing">Beijing Municipal Administration & Communication Card</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <!--
     Translators: Name of an interoperable transit card system used in China. May be transliterated.
@@ -1229,15 +1229,15 @@
     <string name="erg_agency_id">Agency ID</string>
 
     <!-- OVC -->
-    <string name="ovc_autocharge_limit">Autocharge Limit</string>
-    <string name="ovc_autocharge_amount">Autocharge Charge</string>
+    <string name="ovc_autocharge_limit">Autocharge limit</string>
+    <string name="ovc_autocharge_amount">Autocharge charge</string>
     <string name="ovc_autocharge">Autocharge</string>
 
 
     <string name="date_of_birth">Date of birth</string>
-    <string name="credit_information">Credit Info</string>
-    <string name="software_information">Software Info</string>
-    <string name="clipboard_error">Unable to access the clipboard</string>
+    <string name="credit_information">Credit info</string>
+    <string name="software_information">Software info</string>
+    <string name="clipboard_error">Could not access the clipboard</string>
     <string name="convert_timezones">Convert time zones</string>
     <string name="convert_timezones_summary_off">Trip times will be shown in the transit agency\'s local time zone.</string>
     <string name="convert_timezones_summary_on">Trip times will be converted to your current time zone.</string>
@@ -1385,7 +1385,7 @@
  May be transliterated. -->
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
-    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
+    <string name="ravkav_agency_topup_app">RavKav HopOn app</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
@@ -1447,9 +1447,9 @@
     <string name="blank_mfc_card">Blank MIFARE Classic card</string>
     <string name="blank_mfd_card">Blank MIFARE DESFire card</string>
     <string name="fully_blank_desc">
-        This card is completely blank as far as we can tell. It is formatted
-        but without any data written to it. It still has a serial number by which it can be
-        uniquely identified and linked to a database but card itself contains no other data.
+        This card appears to be blank. It is formatted,
+        but without any data written to it other than a serial number by which it can be
+        uniquely identified and linked to a database.
     </string>
     <string name="fully_blank_title">Blank card</string>
 
@@ -1538,7 +1538,7 @@
     <!-- Translators: T-Money cards may have discounted fares applied for certain people.
     This indicates the card has no discount applied. -->
     <string name="tmoney_disrate_none">No discount</string>
-    <!-- Translators: T-Money card for person with disabilities (Korean: 장애, 기본) -->
+    <!-- Translators: T-Money card for a person with disabilities (Korean: 장애, 기본) -->
     <string name="tmoney_disrate_disabled_basic">Disabled, basic</string>
     <!-- Translators: T-Money card for travelling companion of person with disabilities
     (Korean: 장애, 동반 무임 -->
@@ -1611,11 +1611,11 @@
     terminals -->
     <string name="emv_language_preference">Language preference</string>
     <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
-    <string name="emv_issuer_public_key_certificate">Issuer public key certificate</string>
+    <string name="emv_issuer_public_key_certificate">Issuer\'s public key certificate</string>
     <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
-    <string name="emv_issuer_public_key_modulus">Issuer public key modulus</string>
+    <string name="emv_issuer_public_key_modulus">Issuer\'s public key modulus</string>
     <!-- Translators: Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
-    <string name="emv_issuer_public_key_exponent">Issuer public key exponent</string>
+    <string name="emv_issuer_public_key_exponent">Issuer\'s public key exponent</string>
     <!-- Translators: ICC = integrated processor in EMV cards.
     Public key material, see https://en.wikipedia.org/wiki/RSA_(cryptosystem) -->
     <string name="emv_icc_public_key_certificate">ICC public key certificate</string>
@@ -1661,11 +1661,11 @@
     <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
     <string name="device_manufacturer">Manufacturer: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
     <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
-    <string name="nfc_enabled">NFC: enabled</string>
-    <string name="nfc_disabled">NFC: disabled</string>
-    <string name="nfc_not_available">NFC: not available</string>
-    <string name="mfc_supported">MIFARE Classic: supported</string>
-    <string name="mfc_not_supported">MIFARE Classic: not supported</string>
+    <string name="nfc_enabled">NFC: On</string>
+    <string name="nfc_disabled">NFC: Off</string>
+    <string name="nfc_not_available">NFC: Not available</string>
+    <string name="mfc_supported">MIFARE Classic: Supported</string>
+    <string name="mfc_not_supported">MIFARE Classic: Not supported</string>
     <string name="balances_and_subscriptions">Tickets</string>
     <string name="card_number">Card number</string>
     <string name="pref_show_raw_station_ids">Show raw station &amp; route IDs</string>
@@ -1720,17 +1720,17 @@
 
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
-    <string name="leap_retrieve_keys_longdesc">This will share your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will be able to know that you used Metrodroid on this card. The card is not readable without this key.</string>
+    <string name="leap_retrieve_keys_longdesc">Shares your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will know you used Metrodroid on this card. The card can not be read without this key.</string>
 
     <string name="locked_leap">Locked Leap</string>
     <string name="leap_period_start">Period start</string>
     <string name="leap_accumulator_region">Region</string>
-    <string name="leap_accumulator_total">Total spend</string>
+    <string name="leap_accumulator_total">Total spent</string>
     <!--
     Translators: "%s" will be replaced with the name of a transit operator.
      eg: "Dublin Bus total spend"
     -->
-    <string name="leap_accumulator_agency">%s total spend</string>
+    <string name="leap_accumulator_agency">%s total expenditure</string>
     <string name="leap_daily_accumulators">Daily fare caps</string>
     <string name="leap_weekly_accumulators">Weekly fare caps</string>
 
@@ -1744,14 +1744,14 @@
     Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
     encryption keys.
     -->
-    <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in the NFC Preferences screen.</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on \"Retrieval of Leap keys\" in the NFC Preferences screen.</string>
     <!--
     Translators:
     - Shown in "supported cards" list.
     - keys = encryption keys
     - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
     -->
-    <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
+    <string name="card_note_leap">Requires retrieving keys from TFI, which must be turned on in the NFC Preferences screen.</string>
 
     <!-- Oyster (London, UK) -->
     <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
@@ -1763,9 +1763,9 @@
     -->
     <string name="about_key_formats">About key formats…</string>
     <string name="invalid_json">Invalid JSON</string>
-    <string name="invalid_key_file">Invalid key file</string>
+    <string name="invalid_key_file">Invalid keyfile</string>
     <!-- Translators: "key file" is a file containing encryption keys. -->
-    <string name="key_file_empty">Key file is empty!</string>
+    <string name="key_file_empty">Empty keyfile"</string>
 
     <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
     <string name="untitled_key_group">Untitled key group</string>
@@ -1791,7 +1791,7 @@
     <string name="tap_for_more_info">Tap for more info…</string>
     <!-- Translators: used as a preference category label, for settings related to the display of maps -->
     <string name="maps">Maps</string>
-    <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read</string>
+    <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read.</string>
     <string name="card_name_kiev">Kiev Metro</string>
     <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
     within a time period. -->
@@ -1799,9 +1799,9 @@
     <string name="copy_card_number">Copy card number</string>
     <string name="card_serial_number">Serial number</string>
     <string name="serial_only_card_header">Serial-only card</string>
-    <string name="serial_only_card_description_not_stored">This card contains no data other than its serial number. Its balance and history are only stored in a central database.</string>
-    <string name="serial_only_card_description_locked">This card is locked, and only serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
-    <string name="serial_only_card_description_more_research">Support for this card is in development, and currently only serial number can be read.</string>
+    <string name="serial_only_card_description_not_stored">This card only contains a serial number. Its balance and history are only stored in a central database.</string>
+    <string name="serial_only_card_description_locked">This card is locked, and only the serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
+    <string name="serial_only_card_description_more_research">Support for this card is in development, and currently only the serial number can be read.</string>
     <!-- Translators: some card serial numbers are very long, this is shown as a list item for
     the full version of the card's serial number -->
     <string name="full_serial_number">Full serial number</string>
@@ -1849,7 +1849,7 @@
     <!-- Translators: Original in Russian is Электронный кошелек (lit. Electronic Wallet). -->
     <string name="barnaul_ewallet">E-wallet</string>
     <string name="card_name_penza">Penza</string>
-    <string name="card_name_siticard">Siticard</string>
+    <string name="card_name_siticard">SitiCard</string>
     <string name="card_name_kirov">Kirov</string>
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_aerial_tramway">Aerial tramway</string>
@@ -1884,13 +1884,13 @@
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_ok">OK, enabled</string>
+    <string name="rkf_status_ok">OK, on</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_action_pending">Action pending</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
+    <string name="rkf_status_temp_disabled">Temporarily off or suspended</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_not_ok">Permanently disabled</string>
+    <string name="rkf_status_not_ok">Permanently off</string>
     <string name="location_tbilisi">Tbilisi, Georgia</string>
     <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
