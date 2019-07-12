@@ -19,8 +19,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                                                /**
                             * Last transport type
                             */
-                                               private val mLastTransportLeadingCode: Int,
-                                               private val mLastTransportLongCode: Int,
+                                               private val mLastTransportLeadingCode: Int?,
+                                               private val mLastTransportLongCode: Int?,
                                                private val mLastTransportRaw: String?,
 
                                                /**
@@ -81,9 +81,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
     val trips: List<Trip>
         get() {
             val t = mutableListOf<Trip>()
-            var rawTransport = mLastTransportRaw
-            if (rawTransport == null)
-                rawTransport = (mLastTransportLeadingCode shl 8 or mLastTransportLongCode).toString(16)
+            val rawTransport = mLastTransportRaw ?: (mLastTransportLeadingCode?.shl(8)?.or(mLastTransportLongCode ?: 0))?.toString(16)
             if (mLastValidationTime != null) {
                 if (mLastTransfer != null && mLastTransfer != 0) {
                     val lastTransfer = mLastValidationTime.plus(Duration.mins(mLastTransfer))
@@ -102,8 +100,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
         get() = null
 
     constructor(rawData: ImmutableByteArray,
-                mLastTransportLeadingCode: Int = 0,
-                mLastTransportLongCode: Int = 0,
+                mLastTransportLeadingCode: Int? = null,
+                mLastTransportLongCode: Int? = null,
                 mLastTransportRaw: String? = null,
                 mLastValidator: Int? = null,
                 mValidityLengthMinutes: Int? = null,
@@ -152,7 +150,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             else -> return TroikaTransportType.UNKNOWN
         }
 
-        if (mLastTransportLongCode == 0)
+        if (mLastTransportLongCode == 0 || mLastTransportLongCode == null)
             return TroikaTransportType.UNKNOWN
 
         // This is actually 4 fields used in sequence.
@@ -227,6 +225,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                 0x5d3d, 0x5d3e, 0x5d48, 0x2135 ->
                     // This should never be shown to user, don't localize.
                     return "Empty ticket holder"
+                0x183d, 0x2129 -> return Localizer.localizeString(R.string.troika_druzhinnik_card)
                 0x5d9b -> return troikaRides(1)
                 0x5d9c -> return troikaRides(2)
                 0x5da0 -> return troikaRides(20)
@@ -242,9 +241,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             return Localizer.localizePlural(R.plurals.troika_rides, rides, rides)
         }
 
-        fun check(rawData: ImmutableByteArray): Boolean {
-            return rawData.getBitsFromBuffer(0, 10) == 0x117 || rawData.getBitsFromBuffer(0, 10) == 0x108
-        }
+        fun check(rawData: ImmutableByteArray): Boolean =
+            rawData.getBitsFromBuffer(0, 10) in listOf(0x117, 0x108, 0x106)
 
         fun parseBlock(rawData: ImmutableByteArray): TroikaBlock {
             val layout = getLayout(rawData)

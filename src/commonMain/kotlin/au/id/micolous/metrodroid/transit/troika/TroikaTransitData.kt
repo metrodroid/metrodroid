@@ -31,39 +31,35 @@ import au.id.micolous.metrodroid.ui.ListItem
  */
 
 @Parcelize
-class TroikaTransitData(private val mBlock4: TroikaBlock?,
-                        private val mBlock7: TroikaBlock?,
-                        private val mBlock8: TroikaBlock?) : Parcelable {
+class TroikaTransitData(private val mBlocks: List<TroikaBlock>) : Parcelable {
 
     val serialNumber: String?
-        get() = (mBlock8 ?: mBlock7 ?: mBlock4)?.serialNumber
+        get() = mBlocks[0].serialNumber
 
     val info: List<ListItem>?
-        get() = (mBlock4?.info.orEmpty() + mBlock7?.info.orEmpty() + mBlock8?.info.orEmpty())
-                .ifEmpty { null }
+        get() = mBlocks.flatMap { it.info.orEmpty() }.ifEmpty { null }
 
     val balance: TransitBalance
-        get() = mBlock8?.balance ?: TransitCurrency.RUB(0)
+        get() = mBlocks[0].balance ?: TransitCurrency.RUB(0)
 
     val warning: String?
-        get() = if (mBlock8?.balance == null)
+        get() = if (mBlocks[0].balance == null && subscriptions.isEmpty())
             Localizer.localizeString(R.string.troika_unformatted)
         else
             null
 
     val trips: List<Trip>
-        get() = mBlock7?.trips.orEmpty() + mBlock8?.trips.orEmpty() + mBlock4?.trips.orEmpty()
+        get() = mBlocks.flatMap { it.trips.orEmpty() }
 
     val subscriptions: List<Subscription>
-        get() = listOfNotNull(
-                mBlock4?.subscription,
-                mBlock7?.subscription,
-                mBlock8?.subscription)
+        get() = mBlocks.mapNotNull { it.subscription }
 
-    constructor(card: ClassicCard) : this(
-            mBlock8 = decodeSector(card, 8),
-            mBlock7 = decodeSector(card, 7),
-            mBlock4 = decodeSector(card, 4)
+    constructor(card: ClassicCard) : this(listOfNotNull(
+            decodeSector(card, 8),
+            decodeSector(card, 7),
+            decodeSector(card, 4),
+            decodeSector(card, 1)
+        )
     )
 
     companion object {

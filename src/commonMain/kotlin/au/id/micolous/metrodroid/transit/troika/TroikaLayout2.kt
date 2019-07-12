@@ -6,8 +6,18 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 // This was seen only as placeholder for Troika card sector 7
 @Parcelize
-class TroikaLayout2(private val rawData: ImmutableByteArray) : TroikaBlock(rawData,
-        mExpiryDate = convertDateTime1992(rawData.getBitsFromBuffer(56, 16), 0)) {
+class TroikaLayout2(private val rawData: ImmutableByteArray) : TroikaBlock(
+    rawData,
+    mExpiryDate = convertDateTime1992(rawData.getBitsFromBuffer(56, 16), 0),
+    // 69 bits unknown
+    mLastValidationTime = convertDateTime1992(rawData.getBitsFromBuffer(141, 16),
+                  rawData.getBitsFromBuffer(130, 11)),
+    mValidityStart = convertDateTime1992(rawData.getBitsFromBuffer(157, 16), 0),
+    mValidityEnd = convertDateTime1992(rawData.getBitsFromBuffer(173, 16), 0),
+    // 16 bits unknown
+    mLastValidator = rawData.getBitsFromBuffer(205, 16)
+    // 35 bits unknown
+) {
 
     // Empty holder
     override val subscription: Subscription?
