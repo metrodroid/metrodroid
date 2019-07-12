@@ -905,4 +905,8 @@
     <string name="touchngo_travel_pass">Kuala Lumpur-reiskaart</string>
     <string name="card_holders_id">ID-nummer van kaarteigenaar</string>
     <string name="location_santiago_chile">Santiago, Chili</string>
+    <string name="troika_druzhinnik_card">Druzhinnik-kaart</string>
+    <string name="siticard_purse_sarov">Sarov-e-portemonnee</string>
+    <string name="location_warsaw">Warschau, Polen</string>
+    <string name="warsaw_90_days">90-dagenkaart</string>
 </resources>
