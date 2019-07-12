@@ -16,7 +16,7 @@ class MfcCardImporter : CardImporter {
     override fun readCard(stream: InputStream): Card {
         // Read the blocks of the card.
         val sectors = mutableListOf<ClassicSector>()
-        var uid: ByteArray? = null
+        var uid: ImmutableByteArray? = null
         var maxSector = 0
 
         sectorloop@ for (sectorNum in 0 until MAX_SECTORS) {
@@ -51,7 +51,7 @@ class MfcCardImporter : CardImporter {
 
                 if (sectorNum == 0 && blockNum == 0) {
                     // Manufacturer data
-                    uid = blockData.sliceArray(0..3)
+                    uid = block0ToUid(blockData.toImmutable())
                 } else if (blockNum == blockCount - 1) {
                     keyA = blockData.sliceArray(0..5)
                     keyB = blockData.sliceArray(10..15)
@@ -80,11 +80,17 @@ class MfcCardImporter : CardImporter {
             sectors.add(UnauthorizedClassicSector())
         }
 
-        return Card(uid!!.toImmutable(),
+        return Card(uid!!,
                 TimestampFull.now(), mifareClassic = ClassicCard(sectors))
     }
 
     companion object {
         private const val MAX_SECTORS = 40
+
+        fun block0ToUid(block0: ImmutableByteArray) =
+                if (block0[0] == 4.toByte() && block0.byteArrayToInt(8, 2) in listOf(0x0400, 0x4400))
+                    block0.copyOfRange(0, 7)
+                else
+                    block0.copyOfRange(0, 4)
     }
 }
