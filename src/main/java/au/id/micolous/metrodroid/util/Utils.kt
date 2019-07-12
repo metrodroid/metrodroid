@@ -2,7 +2,7 @@
  * Utils.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,31 +22,23 @@ package au.id.micolous.metrodroid.util
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
-import android.provider.Settings
-import androidx.annotation.StringRes
-import android.text.TextUtils
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
-
+import androidx.annotation.StringRes
+import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.multi.Localizer
-
+import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
-import java.io.InputStream
-
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.MetrodroidApplication
 
 object Utils {
     private const val TAG = "Utils"
@@ -100,6 +92,22 @@ object Utils {
 
         }
 
+    /**
+     * Tries to start the activity associated with [action].
+     *
+     * See [Intent] constructor for more details.
+     *
+     * @return `true` if the activity was started, `false` if the activity could not be found.
+     */
+    fun tryStartActivity(context: Context, action: String): Boolean {
+        return try {
+            context.startActivity(Intent(action))
+            true
+        } catch (_: ActivityNotFoundException) {
+            false
+        }
+    }
+
     fun checkNfcEnabled(activity: Activity, adapter: NfcAdapter?) {
         if (adapter != null && adapter.isEnabled) {
             return
@@ -110,12 +118,7 @@ object Utils {
                 .setCancelable(true)
                 .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
                 .setNeutralButton(R.string.nfc_settings) { _, _ ->
-                    activity.startActivity(Intent(
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                Settings.ACTION_NFC_SETTINGS
-                            } else {
-                                Settings.ACTION_WIRELESS_SETTINGS
-                            }))
+                    NfcSettingsPreference.showNfcSettings(activity)
                 }
                 .show()
     }
