@@ -73,11 +73,12 @@ object Utils {
                 if (nfcEnabled) R.string.nfc_enabled else R.string.nfc_disabled
             else
                 R.string.nfc_not_available) + "\n"
-            ret += Localizer.localizeString(if (ClassicAndroidReader.getMifareClassicSupport())
-                R.string.mfc_supported
-            else
-                R.string.mfc_not_supported) + "\n"
-            ret += "\n"
+            ret += when (ClassicAndroidReader.mifareClassicSupport) {
+                true -> Localizer.localizeString(R.string.mfc_supported)
+                false -> Localizer.localizeString(R.string.mfc_not_supported)
+                null -> "Mifare Classic: Unknown" // Shouldn't happen, don't bother translating
+            }
+            ret += "\n\n"
 
             return ret
         }
