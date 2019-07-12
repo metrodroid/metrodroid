@@ -807,6 +807,7 @@
     <string name="location_wellington_nz">Wellington, New Zealand</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_waikato">Waikato, New Zealand</string>
+    <string name="location_warsaw">Warsaw, Poland</string>
     <string name="location_wuhan">Wuhan, China</string>
     <!-- Translators: "Yaroslavl" (Ярославль) here refers to the city, rather than the oblast (federal subject) -->
     <string name="location_yaroslavl">Yaroslavl, Russia</string>
@@ -1879,6 +1880,8 @@
     <string name="amiibo_series">Series</string>
 
     <string name="touchngo_travel_pass">Kuala Lumpur travel pass</string>
+
+    <string name="warsaw_90_days">90-day subscription</string>
 
     <!-- Venezia specific strings -->
     <string name="venezia_profile">Profile</string>
