@@ -60,7 +60,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
         const val SERVICE_KMT_ID = 0x300B
         const val SERVICE_KMT_BALANCE = 0x1017
         const val SERVICE_KMT_HISTORY = 0x200F
-        val KMT_EPOCH = Epoch.utc(2000, MetroTimeZone.JAKARTA, -6 * 60)
+        val KMT_EPOCH = Epoch.utc(2000, MetroTimeZone.JAKARTA, 0)
 
         private fun parse(card: FelicaCard): KMTTransitData {
             val serialNumber = getSerial(card)
@@ -115,4 +115,3 @@ class KMTTransitData (override val trips: List<KMTTrip>,
         }
     }
 }
-
