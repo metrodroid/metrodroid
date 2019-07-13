@@ -99,22 +99,12 @@ class CardBalanceFragment : ListFragment() {
             }
 
             val validView = view.findViewById<TextView>(R.id.valid)
-            if (subscription.validFrom != null && subscription.validTo != null) {
-                val validFrom = TimestampFormatter.dateFormat(subscription.validFrom!!).spanned
-                val validTo = subscription.validTo!!.format().spanned
-                validView.text = getString(R.string.valid_format, validFrom, validTo)
+            val validity = Subscription.formatValidity(subscription)
+            if (validity != null) {
+                validView.text = validity.spanned
                 validView.visibility = View.VISIBLE
-            } else if (subscription.validTo != null) {
-                val validTo = subscription.validTo!!.format().spanned
-                validView.text = getString(R.string.valid_to_format, validTo)
-                validView.visibility = View.VISIBLE
-            } else if (subscription.validFrom != null) {
-                val validFrom = subscription.validFrom!!.format().spanned
-                validView.text = getString(R.string.valid_from_format, validFrom)
-                validView.visibility = View.VISIBLE
-            } else {
+            } else
                 validView.visibility = View.GONE
-            }
 
             val tripsView = view.findViewById<TextView>(R.id.trips)
             val daysView = view.findViewById<TextView>(R.id.days)
@@ -214,18 +204,12 @@ class CardBalanceFragment : ListFragment() {
             }
 
             val validView = view.findViewById<TextView>(R.id.valid)
-            if (balance.validFrom != null && balance.validTo != null) {
-                val validFrom = balance.validFrom!!.format().spanned
-                val validTo = balance.validTo!!.format().spanned
-                validView.text = getString(R.string.valid_format, validFrom, validTo)
+            val validity = TransitBalance.formatValidity(balance)
+            if (validity != null) {
+                validView.text = validity.spanned
                 validView.visibility = View.VISIBLE
-            } else if (balance.validTo != null) {
-                val validTo = balance.validTo!!.format().spanned
-                validView.text = getString(R.string.valid_to_format, validTo)
-                validView.visibility = View.VISIBLE
-            } else {
+            } else
                 validView.visibility = View.GONE
-            }
 
             val name = balance.name
             val nameView = view.findViewById<TextView>(R.id.name)

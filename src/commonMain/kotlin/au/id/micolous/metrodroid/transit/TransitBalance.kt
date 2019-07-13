@@ -19,7 +19,10 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 
 interface TransitBalance : Parcelable {
@@ -33,4 +36,18 @@ interface TransitBalance : Parcelable {
 
     val name: String?
         get() = null
+
+    companion object {
+        fun formatValidity(balance: TransitBalance): FormattedString? {
+            val validFrom = balance.validFrom?.format()
+            val validTo = balance.validTo?.format()
+
+            return when {
+                validFrom != null && validTo != null -> Localizer.localizeFormatted(R.string.valid_format, validFrom, validTo)
+                validTo != null -> Localizer.localizeFormatted(R.string.valid_to_format, validTo)
+                else -> null
+            }
+        }
+
+    }
 }

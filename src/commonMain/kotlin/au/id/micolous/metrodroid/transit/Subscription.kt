@@ -22,11 +22,9 @@
 
 package au.id.micolous.metrodroid.transit
 
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences
@@ -368,6 +366,17 @@ abstract class Subscription : Parcelable {
             if (rawLevel == TransitData.RawLevel.NONE)
                 return false
             return sub.getRawFields(rawLevel) != null
+        }
+
+        fun formatValidity(subscription: Subscription): FormattedString? {
+            val validFrom = subscription.validFrom?.format()
+            val validTo = subscription.validTo?.format()
+            return when {
+                validFrom != null && validTo != null -> Localizer.localizeFormatted(R.string.valid_format, validFrom, validTo)
+                validTo != null -> Localizer.localizeFormatted(R.string.valid_to_format, validTo)
+                subscription.validFrom != null -> Localizer.localizeFormatted(R.string.valid_to_format, validFrom)
+                else -> null
+            }
         }
     }
 }
