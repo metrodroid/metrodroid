@@ -73,16 +73,12 @@ annotation class XMLDesfireManufacturingData
 @Target(AnnotationTarget.CLASS)
 annotation class XMLIgnore(val ignore: String)
 
-expect class NodeWrapper {
+interface NodeWrapper {
     val childNodes: List<NodeWrapper>
     val nodeName: String
     val nodeValue: String?
     val textContent: String?
     val attributes: Map <String, String>
-
-    companion object {
-        fun read(stream: InputStream): NodeWrapper
-    }
 }
 
 /**
@@ -565,8 +561,7 @@ class ISO7816ApplicationXmlAdapter(
         }
 }
 
-fun readCardXML(reader: InputStream): Card {
-    val root = NodeWrapper.read(reader)
+fun readCardXML(root: NodeWrapper): Card {
     if (root.nodeName != "card")
         throw Exception("Invalid root ${root.nodeName}")
     val cardType = root.attributes["type"] ?: throw Exception("type attribute not found")
@@ -599,5 +594,3 @@ fun readCardXML(reader: InputStream): Card {
         else -> throw Exception("Unknown card type $cardType")
     }
 }
-
-expect class XmlCardFormat (): CardImporter

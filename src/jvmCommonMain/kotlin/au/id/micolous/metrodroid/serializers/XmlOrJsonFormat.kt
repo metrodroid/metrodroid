@@ -9,7 +9,7 @@ import java.io.PushbackInputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
-actual class XmlCardFormat : CardImporter {
+class XmlCardFormat : CardImporter {
     override fun readCard(stream: InputStream): Card = readCardXML(stream)
 
     override fun readCards(stream: InputStream): Iterator<Card> {
@@ -18,7 +18,6 @@ actual class XmlCardFormat : CardImporter {
 }
 
 class XmlOrJsonCardFormat : CardImporter {
-    private val jsonKotlinFormat = JsonKotlinFormat()
     private val mfcFormat = MfcCardImporter()
     private fun peek(pb: PushbackInputStream): Char {
         var c: Int
@@ -90,5 +89,21 @@ class XmlOrJsonCardFormat : CardImporter {
         if (trimmed[0] == '<')
             return readCardXML(trimmed.byteInputStream(Charsets.UTF_8))
         return jsonKotlinFormat.readCard(trimmed)
+    }
+
+    companion object {
+        private val jsonKotlinFormat = JsonKotlinFormat()
+        private val xmlFormat = XmlCardFormat()
+
+        fun parseString(xml: String) = try {
+            when (xml.find { it !in listOf('\n', '\r', '\t', ' ') }) {
+                '<' -> xmlFormat.readCard(xml)
+                '{', '[' -> jsonKotlinFormat.readCard(xml)
+                else -> null
+            }
+        } catch (ex: Exception) {
+            Log.e("Card", "Failed to deserialize", ex)
+            throw RuntimeException(ex)
+        }
     }
 }

@@ -47,14 +47,14 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
     )
 
     companion object {
+        private const val NAME = "Ventra"
+
         private val CARD_INFO = CardInfo(
-                name = VentraUltralightTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_chicago,
                 imageId = R.drawable.ventra,
                 cardType = CardType.MifareUltralight,
                 resourceExtraNote = R.string.compass_note)
-
-        private const val NAME = "Ventra"
 
         internal val TZ = MetroTimeZone.CHICAGO
 

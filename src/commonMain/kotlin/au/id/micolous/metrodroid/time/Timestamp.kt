@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlinx.serialization.*
 
 @Parcelize
-@Serializable
+@Serializable(with = MetroTimeZone.Companion::class)
 data class MetroTimeZone(val olson: String): Parcelable {
     override fun toString(): String = olson
 

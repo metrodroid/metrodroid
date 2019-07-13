@@ -6,7 +6,6 @@ import kotlinx.io.InputStream
 
 object CardSerializer {
     private val jsonKotlinFormat = JsonKotlinFormat()
-    private val xmlFormat = XmlCardFormat()
 
     fun load(importer: CardImporter, stream: InputStream): Card? {
         try {
@@ -26,17 +25,6 @@ object CardSerializer {
         }
     }
 
-    fun fromXmlOrJson(xml: String) = try {
-        when (xml.find { it !in listOf('\n', '\r', '\t', ' ') }) {
-            '<' -> xmlFormat.readCard(xml)
-            '{', '[' -> jsonKotlinFormat.readCard(xml)
-            else -> null
-        }
-    } catch (ex: Exception) {
-        Log.e("Card", "Failed to deserialize", ex)
-        throw RuntimeException(ex)
-    }
-
     fun toJson(card: Card): String {
         try {
             return jsonKotlinFormat.writeCard(card)
@@ -48,5 +36,4 @@ object CardSerializer {
 
     fun fromPersist(input: String): Card = fromJson(input)
     fun toPersist(card: Card): String = toJson(card)
-    fun fromDb(data: String): Card? = fromXmlOrJson(data)
 }
