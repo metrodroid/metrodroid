@@ -51,7 +51,6 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
 
     private val isoCard : ISO7816Card = mCard.iso7816 ?:
             throw IllegalArgumentException("Virtual card must have iso7816 part")
-    private var connected = false
     private var currentApplication : ISO7816Application? = null
     private var currentPath : ISO7816Selector? = null
     private var currentFile : ISO7816File? = null
@@ -67,10 +66,6 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
     }
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        if (!connected) {
-            throw CardTransceiveException("Card not connected")
-        }
-
         val cls = data[0]
         if (cls != CLASS_ISO7816) {
             return COMMAND_NOT_ALLOWED
