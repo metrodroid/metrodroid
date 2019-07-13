@@ -54,7 +54,7 @@ data class EasyCardTopUp(
 
     override val mode get() = Mode.TICKET_MACHINE
 
-    override val routeName get(): String? = null
+    override val routeName get() = null
 
     override val humanReadableRouteID get(): String? = null
 

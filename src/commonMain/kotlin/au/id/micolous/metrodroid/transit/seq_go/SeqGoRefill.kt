@@ -35,8 +35,8 @@ class SeqGoRefill (override val capsule: NextfareTripCapsule,
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
 
-    override fun getAgencyName(isShort: Boolean): String? =
-        Localizer.localizeString(if (mAutomatic)
+    override fun getAgencyName(isShort: Boolean) =
+        Localizer.localizeFormatted(if (mAutomatic)
             R.string.seqgo_refill_automatic
         else
             R.string.seqgo_refill_manual)

@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.ravkav
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -35,12 +36,12 @@ internal object RavKavLookup : En1545LookupSTR(RAVKAV_STR) {
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.JERUSALEM
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null || routeNumber == 0)
             return null
         if (agency != null && agency == EGGED)
-            return (routeNumber % 1000).toString()
-        return routeNumber.toString()
+            return FormattedString((routeNumber % 1000).toString())
+        return FormattedString(routeNumber.toString())
     }
 
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String?

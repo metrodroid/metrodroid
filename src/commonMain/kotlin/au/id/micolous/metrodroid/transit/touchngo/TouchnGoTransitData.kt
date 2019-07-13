@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
@@ -79,7 +80,7 @@ private abstract class TouchnGoTripCommon : Trip(), Parcelable {
     override val fare: TransitCurrency?
         get() = TransitCurrency.MYR(amount)
 
-    override fun getAgencyName(isShort: Boolean): String? = StationTableReader.getOperatorName(
+    override fun getAgencyName(isShort: Boolean) = StationTableReader.getOperatorName(
                 TNG_STR,
                 agencyRaw.byteArrayToInt(),
                 isShort,
@@ -109,7 +110,7 @@ private data class TouchnGoRefill(
 @Parcelize
 private data class TouchnGoGeneric(
         override val header: ImmutableByteArray,
-        override val routeName: String?,
+        override val routeName: FormattedString?,
         override val mode: Mode) : TouchnGoTripCommon() {
 
     companion object {
@@ -121,7 +122,7 @@ private data class TouchnGoGeneric(
             return TouchnGoGeneric(
                     mode = mode,
                     header = sec[0].data,
-                    routeName = routeName
+                    routeName = routeName?.let { FormattedString(it) }
             )
         }
     }
@@ -183,8 +184,6 @@ private data class TouchnGoInProgressTrip(
         private val startStationCode: TouchnGoStationId,
         val agencyRawShort: ImmutableByteArray
 ): Trip() {
-    override fun getAgencyName(isShort: Boolean): String? =
-            if (agencyRawShort.isASCII()) agencyRawShort.readASCII() else agencyRawShort.toHexString()
     override val fare: TransitCurrency?
         get() = null
     override val mode: Mode

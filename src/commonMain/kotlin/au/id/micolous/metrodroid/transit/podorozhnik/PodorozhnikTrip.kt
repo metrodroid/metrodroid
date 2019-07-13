@@ -48,17 +48,17 @@ internal class PodorozhnikTrip(private val mTimestamp: Int,
                     "$mLastTransport/$mLastValidator")
         }
 
-    override fun getAgencyName(isShort: Boolean): String? =
+    override fun getAgencyName(isShort: Boolean) =
     // Always include "Saint Petersburg" in names here to distinguish from Troika (Moscow)
     // trips on hybrid cards
             when (mLastTransport) {
                 // Some validators are misconfigured and show up as Metro, station 0, gate 0.
                 // Assume bus.
-                TRANSPORT_METRO -> if (mLastValidator == 0) Localizer.localizeString(R.string.led_bus) else Localizer.localizeString(R.string.led_metro)
-                TRANSPORT_BUS, TRANSPORT_BUS_MOBILE -> Localizer.localizeString(R.string.led_bus)
-                TRANSPORT_SHARED_TAXI -> Localizer.localizeString(R.string.led_shared_taxi)
+                TRANSPORT_METRO -> if (mLastValidator == 0) Localizer.localizeFormatted(R.string.led_bus) else Localizer.localizeFormatted(R.string.led_metro)
+                TRANSPORT_BUS, TRANSPORT_BUS_MOBILE -> Localizer.localizeFormatted(R.string.led_bus)
+                TRANSPORT_SHARED_TAXI -> Localizer.localizeFormatted(R.string.led_shared_taxi)
 // TODO: Handle trams
-                else -> Localizer.localizeString(R.string.unknown_format, mLastTransport)
+                else -> Localizer.localizeFormatted(R.string.unknown_format, mLastTransport)
             }
 
     companion object {

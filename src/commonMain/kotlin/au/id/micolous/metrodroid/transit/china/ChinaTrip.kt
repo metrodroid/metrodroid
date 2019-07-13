@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.china
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
@@ -69,8 +70,8 @@ abstract class ChinaTripAbstract: Trip() {
         get() = if (isTopup) Trip.Mode.TICKET_MACHINE else Trip.Mode.OTHER
 
     // Should be overridden if anything is known about transports
-    override val routeName: String?
-        get() = humanReadableRouteID
+    override val routeName: FormattedString?
+        get() = humanReadableRouteID?.let { FormattedString(it) }
 
     override val humanReadableRouteID: String?
         get() = mStation.toString(16) + "/" + mType

@@ -20,6 +20,7 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
@@ -58,19 +59,12 @@ abstract class Trip : Parcelable {
      *
      * If getting for display purposes, use {@link #getRouteDisplayName()} instead.
      */
-    open val routeName: String?
+    open val routeName: FormattedString?
         get() {
             val startLines = startStation?.lineNames.orEmpty()
             val endLines = endStation?.lineNames.orEmpty()
             return getRouteName(startLines, endLines)
         }
-
-    /**
-     * Language that the route name is written in. This is used to aid text to speech software
-     * with pronunciation. If null, then uses the system language instead.
-     */
-    open val routeLanguage: String?
-        get() = null
 
     /**
      * Vehicle number where the event was recorded.
@@ -182,7 +176,7 @@ abstract class Trip : Parcelable {
      *
      * When isShort is true it means to return short name for trip list where space is limited.
      */
-    open fun getAgencyName(isShort: Boolean): String? = null
+    open fun getAgencyName(isShort: Boolean): FormattedString? = null
 
     /**
      * Is there geographic data associated with this trip?
@@ -306,12 +300,23 @@ abstract class Trip : Parcelable {
             return startLines[0]
         }
 
+        fun getRouteName(startLines: List<FormattedString>,
+                         endLines: List<FormattedString>): FormattedString? {
+            val unformatted = getRouteName(
+                startLines.map { it.unformatted },
+                endLines.map { it.unformatted }) ?: return null
+            return startLines.find { it.unformatted == unformatted }
+                ?: endLines.find { it.unformatted == unformatted }
+                ?: FormattedString(unformatted)
+        }
+
+        
         /**
          * Get the route name for display purposes.
          *
          * This handles the "showRawStationIds" setting.
          */
-        fun getRouteDisplayName(trip: Trip): String? {
+        fun getRouteDisplayName(trip: Trip): FormattedString? {
             if (!Preferences.showRawStationIds)
                 return trip.routeName
             val routeName = trip.routeName
@@ -321,15 +326,15 @@ abstract class Trip : Parcelable {
                 // No Name
                 // Only do this if the raw display is on, because the route name may be hidden
                 // because it is zero.
-                return routeID
+                return FormattedString(routeID)
             }
 
-            return if (routeName.contains(routeID)) {
+            return if (routeName.unformatted.contains(routeID)) {
                 // Likely unknown route
                 routeName
             } else {
                 // Known route
-                "$routeName [$routeID]"
+                routeName + " [$routeID]"
             }
         }
     }

@@ -24,6 +24,7 @@
 package au.id.micolous.metrodroid.transit.ezlinkcompat
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCompatTransaction
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
@@ -42,7 +43,7 @@ class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
         get() = EZLinkTransitData.timestampToCalendar(
                 mTransaction.unixDate - 788947200 + 16 * 3600)
 
-    override val routeName: String?
+    override val routeName: FormattedString?
         get() = EZUserData.parse(mTransaction.userData, type).routeName
 
     override val fare: TransitCurrency?
@@ -60,6 +61,6 @@ class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
     override val mode: Trip.Mode
         get() = EZLinkTrip.getMode(type)
 
-    override fun getAgencyName(isShort: Boolean): String? =
+    override fun getAgencyName(isShort: Boolean) =
             EZLinkTrip.getAgencyName(type, mCardName, isShort)
 }

@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.opus
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -35,13 +36,10 @@ object OpusLookup : En1545LookupSTR(OPUS_STR) {
         get() = MetroTimeZone.MONTREAL
 
     // For opus we ignore transport
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
-        var agency = agency
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null || routeNumber == 0)
             return null
-        if (agency == null)
-            agency = 0
-        return StationTableReader.getLineName(OPUS_STR, routeNumber or (agency shl 16))
+        return StationTableReader.getLineName(OPUS_STR, routeNumber or ((agency ?: 0) shl 16))
     }
 
     // Opus doesn't store stations

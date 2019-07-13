@@ -66,9 +66,8 @@ class ClipperUltralightTrip (private val mTime: Int,
         // Last 4 bytes are hash
     )
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return ClipperData.getAgencyName(mAgency, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        ClipperData.getAgencyName(mAgency, isShort)
 
     fun isSeqGreater(other: ClipperUltralightTrip): Boolean {
         return if (other.mBalanceSeqCounter != mBalanceSeqCounter) mBalanceSeqCounter - other.mBalanceSeqCounter and 0x8 == 0 else mSeqCounter - other.mSeqCounter and 0x40 == 0

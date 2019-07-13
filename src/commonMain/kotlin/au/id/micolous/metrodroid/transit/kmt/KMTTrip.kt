@@ -61,7 +61,7 @@ class KMTTrip (private val mProcessType: Int,
             TransitCurrency.IDR(mTransactionAmount).negate()
         } else TransitCurrency.IDR(mTransactionAmount)
 
-    override fun getAgencyName(isShort: Boolean) = Localizer.localizeString(R.string.kmt_agency)
+    override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(R.string.kmt_agency)
 
     companion object {
         fun parse(block: FelicaBlock): KMTTrip {

@@ -25,9 +25,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.style.LocaleSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
+import au.id.micolous.metrodroid.util.Preferences
 import androidx.annotation.VisibleForTesting
 import java.util.*
+
+import java.util.Locale
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int
@@ -53,7 +57,11 @@ actual object Localizer : LocalizerInterface {
     override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString {
         mock?.let { return it.localizeFormatted(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
-        return FormattedString(appRes.getText(res).let { if (it is Spanned) it else SpannableString(it)}).format(*v)
+        val spanned = SpannableString(appRes.getText(res))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Preferences.localisePlaces) {
+            spanned.setSpan(LocaleSpan(Locale.getDefault()), 0, spanned.length, 0)
+        }
+        return FormattedString(spanned).format(*v)
     }
     /**
      * Given a plural resource (R.plurals), localize the string according to the language preferences

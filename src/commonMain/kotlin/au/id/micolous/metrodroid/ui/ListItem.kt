@@ -44,7 +44,7 @@ open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
     constructor(name: String?, value: String?) : this(if (name != null) FormattedString(name) else null,
             if (value != null) FormattedString(value) else null)
 
-    protected constructor(name: FormattedString) : this(name, null)
+    constructor(name: FormattedString) : this(name, null)
 
     override fun equals(other: Any?): Boolean {
         return when (other) {

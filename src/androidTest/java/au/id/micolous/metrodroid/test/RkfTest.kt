@@ -33,7 +33,7 @@ class RkfTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         assertEquals("308430 000 027 859 5", c.serialNumber)
         assertEquals(TransitCurrency.DKK(100 * 100), c.balances[0].balance)
         assertEquals("Europe/Copenhagen", (c.trips[0].startTimestamp as TimestampFull).tz.olson)
-        assertEquals("Rejsekort", c.issuer)
+        assertEquals("Rejsekort", c.issuer?.unformatted)
         //assertEquals("2014-12-31", Utils.isoDateFormat(c.expiryDate!!))
         assertEquals(R.string.rkf_status_action_pending, c.cardStatus)
     }

@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
@@ -33,8 +34,8 @@ data class RkfTripLeg(override val startTimestamp: Timestamp,
                       override val fare: TransitCurrency?,
                       override val mode: Mode,
                       override val passengerCount: Int,
-                      private val mShortAgencyName: String?,
+                      private val mShortAgencyName: FormattedString?,
                       override val isTransfer: Boolean,
-                      private val mAgencyName: String?) : Trip() {
+                      private val mAgencyName: FormattedString?) : Trip() {
     override fun getAgencyName(isShort: Boolean) = if (isShort) mShortAgencyName else mAgencyName
 }

@@ -40,16 +40,14 @@ internal class TroikaTrip (override val startTimestamp: Timestamp?,
             else -> Trip.Mode.OTHER
         }
 
-    override fun getAgencyName(isShort: Boolean): String? =
+    override fun getAgencyName(isShort: Boolean) =
             when (mTransportType) {
-                null -> mRawTransport
-                TroikaBlock.TroikaTransportType.UNKNOWN -> Localizer.localizeString(R.string.unknown)
-                TroikaBlock.TroikaTransportType.NONE -> mRawTransport
-                TroikaBlock.TroikaTransportType.SUBWAY -> Localizer.localizeString(R.string.moscow_subway)
-                TroikaBlock.TroikaTransportType.MONORAIL -> Localizer.localizeString(R.string.moscow_monorail)
-                TroikaBlock.TroikaTransportType.GROUND -> Localizer.localizeString(R.string.moscow_ground_transport)
-                TroikaBlock.TroikaTransportType.MCC -> Localizer.localizeString(R.string.moscow_mcc)
-                else -> mRawTransport
+                TroikaBlock.TroikaTransportType.UNKNOWN -> Localizer.localizeFormatted(R.string.unknown)
+                null, TroikaBlock.TroikaTransportType.NONE -> mRawTransport?.let { FormattedString(it) }
+                TroikaBlock.TroikaTransportType.SUBWAY -> Localizer.localizeFormatted(R.string.moscow_subway)
+                TroikaBlock.TroikaTransportType.MONORAIL -> Localizer.localizeFormatted(R.string.moscow_monorail)
+                TroikaBlock.TroikaTransportType.GROUND -> Localizer.localizeFormatted(R.string.moscow_ground_transport)
+                TroikaBlock.TroikaTransportType.MCC -> Localizer.localizeFormatted(R.string.moscow_mcc)
             }
 
     companion object {

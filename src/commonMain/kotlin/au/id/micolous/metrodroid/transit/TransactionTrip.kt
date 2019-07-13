@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
@@ -63,16 +64,13 @@ abstract class TransactionTripAbstract: Trip() {
 
     override// Try to get the route from the nested transactions.
     // This automatically falls back to using the MdST.
-    val routeName: String?
+    val routeName: FormattedString?
         get() {
             val startLines = start?.routeNames ?: emptyList()
             val endLines = end?.routeNames ?: emptyList()
 
             return Trip.getRouteName(startLines, endLines)
         }
-
-    override val routeLanguage: String?
-        get() = start?.routeLanguage ?: end?.routeLanguage
 
     override// Try to get the route from the nested transactions.
     // This automatically falls back to using the MdST.
@@ -138,7 +136,7 @@ abstract class TransactionTripAbstract: Trip() {
         }
     }
 
-    override fun getAgencyName(isShort: Boolean): String? = any?.getAgencyName(isShort)
+    override fun getAgencyName(isShort: Boolean): FormattedString? = any?.getAgencyName(isShort)
 
     companion object {
         fun makeCapsule(transaction: Transaction) : TransactionTripCapsule =

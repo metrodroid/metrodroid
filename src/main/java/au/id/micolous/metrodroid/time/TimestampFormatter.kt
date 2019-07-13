@@ -71,7 +71,7 @@ actual object TimestampFormatter {
         return df.format(c.time)
     }
 
-    private fun longDateFormat(date: Calendar?): Spanned {
+    private fun longDateFormat(date: Calendar?): SpannableString {
         val s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
@@ -88,7 +88,7 @@ actual object TimestampFormatter {
         return b
     }
 
-    private fun dateFormat(date: Calendar?): Spanned {
+    private fun dateFormat(date: Calendar?): SpannableString {
         val s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
@@ -104,7 +104,7 @@ actual object TimestampFormatter {
         return b
     }
 
-    private fun timeFormat(date: Calendar?): Spanned {
+    private fun timeFormat(date: Calendar?): SpannableString {
         val s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
 
@@ -117,14 +117,12 @@ actual object TimestampFormatter {
         return b
     }
 
-    private fun dateTimeFormat(date: Calendar?): Spanned {
+    private fun dateTimeFormat(date: Calendar?): SpannableString {
         val d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
                 date ?: return SpannableString(""))
         val t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance), date)
 
-        val b = SpannableStringBuilder(d)
-        b.append(" ")
-        b.append(t)
+        val b = SpannableString("$d $t")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             b.setSpan(TtsSpan.DateBuilder()

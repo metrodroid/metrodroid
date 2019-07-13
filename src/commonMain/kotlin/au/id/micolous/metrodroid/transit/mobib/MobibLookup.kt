@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.mobib
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -36,7 +37,7 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?) =
             when (agency) {
                 null -> null
-                BUS, TRAM -> routeNumber?.toString()
+                BUS, TRAM -> routeNumber?.toString()?.let { FormattedString(it) }
                 else -> null
             }
 
@@ -51,11 +52,11 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
 
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
-    override fun getAgencyName(agency: Int?, isShort: Boolean): String? {
+    override fun getAgencyName(agency: Int?, isShort: Boolean) =
         if (agency == null)
-            return null
-        return StationTableReader.getOperatorName(MOBIB_STR, agency, isShort)
-    }
+            null
+        else
+            StationTableReader.getOperatorName(MOBIB_STR, agency, isShort)
 
     const val BUS = 0xf
     const val TRAM = 0x16

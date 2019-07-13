@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -68,7 +69,7 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
         else -> MetroTimeZone.STOCKHOLM
     }
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null)
             return null
         val routeId = routeNumber or ((agency ?: 0) shl 16)

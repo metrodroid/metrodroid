@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.bilhete_unico
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Epoch
@@ -49,8 +50,8 @@ internal class BilheteUnicoSPTrip (private val mDay: Int,
                 else -> Trip.Mode.OTHER
             }
 
-    override val routeName: String?
-        get() = if (mTransport == BUS && mLine == 0x38222) mLocation.toString(16) else mLine.toString(16)
+    override val routeName: FormattedString?
+        get() = FormattedString(if (mTransport == BUS && mLine == 0x38222) mLocation.toString(16) else mLine.toString(16))
 
     override val humanReadableRouteID: String?
         get() = if (mTransport == BUS && mLine == 0x38222) mLocation.toString(16) else mLine.toString(16)
@@ -58,7 +59,7 @@ internal class BilheteUnicoSPTrip (private val mDay: Int,
     override val startStation: Station?
         get() = if (mTransport == BUS && mLine == 0x38222) null else Station.unknown(mLocation)
 
-    override fun getAgencyName(isShort: Boolean) = mTransport.toString(16)
+    override fun getAgencyName(isShort: Boolean) = FormattedString(mTransport.toString(16))
 
     companion object {
         val EPOCH = Epoch.local(2000, MetroTimeZone.SAO_PAULO)

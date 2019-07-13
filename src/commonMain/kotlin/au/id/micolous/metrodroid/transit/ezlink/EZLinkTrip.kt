@@ -24,6 +24,7 @@
 package au.id.micolous.metrodroid.transit.ezlink
 
 import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
@@ -33,27 +34,27 @@ import au.id.micolous.metrodroid.transit.Trip
 
 data class EZUserData(val startStation: Station?,
                       val endStation: Station?,
-                      val routeName: String) {
+                      val routeName: FormattedString) {
     companion object {
         fun parse(userData: String, type: CEPASTransaction.TransactionType): EZUserData {
             if (type == CEPASTransaction.TransactionType.BUS && (
                             userData.startsWith("SVC")
                                     || userData.startsWith("BUS")))
                 return EZUserData(null, null,
-                        Localizer.localizeString(R.string.ez_bus_number, userData.substring(3, 7).replace(" ", "")))
+                        Localizer.localizeFormatted(R.string.ez_bus_number, userData.substring(3, 7).replace(" ", "")))
             if (type == CEPASTransaction.TransactionType.CREATION)
-                return EZUserData(Station.nameOnly(userData), null, Localizer.localizeString(R.string.ez_first_use))
+                return EZUserData(Station.nameOnly(userData), null, Localizer.localizeFormatted(R.string.ez_first_use))
             if (type == CEPASTransaction.TransactionType.RETAIL)
-                return EZUserData(Station.nameOnly(userData), null, Localizer.localizeString(R.string.ez_retail_purchase))
+                return EZUserData(Station.nameOnly(userData), null, Localizer.localizeFormatted(R.string.ez_retail_purchase))
 
             val routeName = when (type) {
-                CEPASTransaction.TransactionType.BUS -> Localizer.localizeString(R.string.unknown_format, userData)
+                CEPASTransaction.TransactionType.BUS -> Localizer.localizeFormatted(R.string.unknown_format, userData)
                 // FIXME: These aren't actually routes...
-                CEPASTransaction.TransactionType.BUS_REFUND -> Localizer.localizeString(R.string.ez_bus_refund)
-                CEPASTransaction.TransactionType.MRT -> Localizer.localizeString(R.string.ez_mrt)
-                CEPASTransaction.TransactionType.TOP_UP -> Localizer.localizeString(R.string.ez_topup)
-                CEPASTransaction.TransactionType.SERVICE -> Localizer.localizeString(R.string.ez_service_charge)
-                else -> Localizer.localizeString(R.string.unknown_format, type.toString())
+                CEPASTransaction.TransactionType.BUS_REFUND -> Localizer.localizeFormatted(R.string.ez_bus_refund)
+                CEPASTransaction.TransactionType.MRT -> Localizer.localizeFormatted(R.string.ez_mrt)
+                CEPASTransaction.TransactionType.TOP_UP -> Localizer.localizeFormatted(R.string.ez_topup)
+                CEPASTransaction.TransactionType.SERVICE -> Localizer.localizeFormatted(R.string.ez_service_charge)
+                else -> Localizer.localizeFormatted(R.string.unknown_format, type.toString())
             }
 
             if (userData.length > 6 && (userData[3] == '-' || userData[3] == ' ')) {
@@ -73,7 +74,7 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
     override val startTimestamp: Timestamp?
         get() = mTransaction.timestamp
 
-    override val routeName: String?
+    override val routeName: FormattedString?
         get() = EZUserData.parse(mTransaction.userData, mTransaction.type).routeName
 
     override val humanReadableRouteID: String?
@@ -91,9 +92,8 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
     override val mode: Trip.Mode
         get() = getMode(mTransaction.type)
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return getAgencyName(mTransaction.type, mCardName, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        getAgencyName(mTransaction.type, mCardName, isShort)
 
     companion object {
         fun getMode(type: CEPASTransaction.TransactionType) =
@@ -105,7 +105,7 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
                     else -> Trip.Mode.OTHER
                 }
 
-        fun getAgencyName(type: CEPASTransaction.TransactionType, cardName: String, isShort: Boolean): String =
+        fun getAgencyName(type: CEPASTransaction.TransactionType, cardName: String, isShort: Boolean) = FormattedString.english(
                 when (type) {
                     CEPASTransaction.TransactionType.BUS, CEPASTransaction.TransactionType.BUS_REFUND -> "BUS"
                     CEPASTransaction.TransactionType.CREATION,
@@ -114,5 +114,6 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
                     CEPASTransaction.TransactionType.RETAIL -> "POS"
                     else -> "SMRT"
                 }
+            )
     }
 }

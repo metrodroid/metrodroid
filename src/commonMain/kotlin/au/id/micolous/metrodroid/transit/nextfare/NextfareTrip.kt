@@ -88,11 +88,11 @@ abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
         return this.startTimestamp!!.compareTo(other.startTimestamp!!)
     }
 
-    override fun getAgencyName(isShort: Boolean): String? {
+    override fun getAgencyName(isShort: Boolean) =
         if (capsule.isTopup && capsule.mModeInt == 0)
-            return null
-        return StationTableReader.getOperatorName(str, capsule.mModeInt, isShort)
-    }
+            null
+        else
+            StationTableReader.getOperatorName(str, capsule.mModeInt, isShort)
 }
 
 @Parcelize

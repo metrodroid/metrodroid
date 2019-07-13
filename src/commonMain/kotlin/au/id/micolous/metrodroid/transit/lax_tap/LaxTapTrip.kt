@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.lax_tap
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -36,13 +37,13 @@ import au.id.micolous.metrodroid.util.NumberUtils
  */
 @Parcelize
 class LaxTapTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
-    override val routeName: String?
+    override val routeName: FormattedString?
         get() {
             if (capsule.mModeInt == AGENCY_METRO &&
                     capsule.mStartStation >= METRO_BUS_START) {
                 // Metro Bus uses the station_id for route numbers.
-                return METRO_BUS_ROUTES[capsule.mStartStation] ?:
-                        Localizer.localizeString(R.string.unknown_format, capsule.mStartStation)
+                return METRO_BUS_ROUTES[capsule.mStartStation]?.let { FormattedString.language(it, "en-US") } ?:
+                        Localizer.localizeFormatted(R.string.unknown_format, capsule.mStartStation)
             }
 
             // Normally not possible to guess what the route is.
@@ -60,9 +61,6 @@ class LaxTapTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
             // Normally not possible to guess what the route is.
             return null
         }
-
-    override val routeLanguage: String?
-        get() = "en-US"
 
     override val currency
         get() = ::USD

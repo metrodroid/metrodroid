@@ -40,8 +40,8 @@ internal class PodorozhnikTopup (private val mTimestamp: Int,
         }
 
 
-    override fun getAgencyName(isShort: Boolean): String? = when (mAgency) {
-            1 -> Localizer.localizeString(R.string.podorozhnik_topup)
-            else -> Localizer.localizeString(R.string.unknown_format, mAgency)
+    override fun getAgencyName(isShort: Boolean) = when (mAgency) {
+            1 -> Localizer.localizeFormatted(R.string.podorozhnik_topup)
+            else -> Localizer.localizeFormatted(R.string.unknown_format, mAgency)
         }
 }

@@ -107,7 +107,7 @@ abstract class Subscription : Parcelable {
      *
      * By default, this returns null (and doesn't display any information).
      */
-    open val saleAgencyName: String?
+    open val saleAgencyName: FormattedString?
         get() = null
 
     /**
@@ -278,7 +278,7 @@ abstract class Subscription : Parcelable {
             return items.ifEmpty { null }
         }
 
-    open fun getAgencyName(isShort: Boolean): String? =  null
+    open fun getAgencyName(isShort: Boolean): FormattedString? =  null
 
     enum class SubscriptionState(val descriptionRes: StringResource) {
         /** No state is known, display no UI for the state.  */

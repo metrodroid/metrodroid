@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.ricaricami
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -54,16 +55,16 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
                 NumberUtils.intToHex(station))
     }
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null)
             return null
         when(transport) {
             TRANSPORT_METRO -> {
                 when (routeNumber) {
-                    101 -> return "M1"
-                    104 -> return "M2"
-                    107 -> return "M5"
-                    301 -> return "M3"
+                    101 -> return FormattedString("M1")
+                    104 -> return FormattedString("M2")
+                    107 -> return FormattedString("M5")
+                    301 -> return FormattedString("M3")
                 }
             }
             TRANSPORT_TRENORD1, TRANSPORT_TRENORD2 -> {
@@ -77,9 +78,9 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
             }
         }
         if (routeVariant != null) {
-            return "$routeNumber/$routeVariant"
+            return FormattedString("$routeNumber/$routeVariant")
         }
-        return routeNumber.toString()
+        return FormattedString(routeNumber.toString())
     }
 
     val TZ = MetroTimeZone.ROME

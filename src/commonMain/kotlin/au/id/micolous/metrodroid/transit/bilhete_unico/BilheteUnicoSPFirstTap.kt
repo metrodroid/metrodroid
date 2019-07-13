@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.bilhete_unico
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -44,8 +45,8 @@ internal class BilheteUnicoSPFirstTap (private val mDay: Int,
             return Trip.Mode.OTHER
         }
 
-    override val routeName: String?
-        get() = mLine.toString(16)
+    override val routeName: FormattedString?
+        get() = FormattedString(mLine.toString(16))
 
     override val humanReadableRouteID: String?
         get() = mLine.toString(16)

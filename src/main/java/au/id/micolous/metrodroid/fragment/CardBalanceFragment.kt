@@ -135,7 +135,7 @@ class CardBalanceFragment : ListFragment() {
             val companyView = view.findViewById<TextView>(R.id.company)
             val agencyName = subscription.getAgencyName(true)
             if (agencyName != null) {
-                companyView.text = agencyName
+                companyView.text = agencyName.spanned
                 companyView.visibility = View.VISIBLE
             } else {
                 companyView.text = ""

@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.kiev
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
@@ -59,8 +60,8 @@ class KievTrip (
         mCounter1 = data.getBitsFromBuffer(72, 16),
         mCounter2 = data.getBitsFromBuffer(98, 16))
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return if (mTransactionType == "84/04/40/53") Localizer.localizeString(R.string.mode_metro) else mTransactionType?.let { Localizer.localizeString(R.string.unknown_format, it) }
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
+        return if (mTransactionType == "84/04/40/53") Localizer.localizeFormatted(R.string.mode_metro) else mTransactionType?.let { Localizer.localizeFormatted(R.string.unknown_format, it) }
     }
 
     companion object {

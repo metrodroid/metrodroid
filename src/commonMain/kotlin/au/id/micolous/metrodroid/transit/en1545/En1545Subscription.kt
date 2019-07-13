@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
-
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
@@ -85,7 +85,7 @@ abstract class En1545Subscription : Subscription() {
             return Subscription.SubscriptionState.UNKNOWN
         }
 
-    override val saleAgencyName: String?
+    override val saleAgencyName: FormattedString?
         get() {
             val agency = parsed.getInt(CONTRACT_SALE_AGENT) ?: return null
 
@@ -135,25 +135,25 @@ abstract class En1545Subscription : Subscription() {
                 li.add(ListItem(Localizer.localizeString(R.string.without_receipt)))
             if (parsed.contains(CONTRACT_ORIGIN_1) || parsed.contains(CONTRACT_DESTINATION_1)) {
                 if (parsed.contains(CONTRACT_VIA_1))
-                li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination_via,
+                li.add(ListItem(Localizer.localizeFormatted(R.string.valid_origin_destination_via,
                         getStationName(CONTRACT_ORIGIN_1),
                         getStationName(CONTRACT_DESTINATION_1),
                         getStationName(CONTRACT_VIA_1))))
                 else
-                    li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination,
+                    li.add(ListItem(Localizer.localizeFormatted(R.string.valid_origin_destination,
                             getStationName(CONTRACT_ORIGIN_1),
                             getStationName(CONTRACT_DESTINATION_1))))
 
             }
             if (parsed.contains(CONTRACT_ORIGIN_2) || parsed.contains(CONTRACT_DESTINATION_2)) {
-                li.add(ListItem(Localizer.localizeString(R.string.valid_origin_destination,
+                li.add(ListItem(Localizer.localizeFormatted(R.string.valid_origin_destination,
                         getStationName(CONTRACT_ORIGIN_2),
                         getStationName(CONTRACT_DESTINATION_2))))
             }
             return super.info.orEmpty() + li
         }
 
-    private fun getStationName(prop: String): String? {
+    private fun getStationName(prop: String): FormattedString? {
         return lookup.getStation(parsed.getInt(prop) ?: return null, contractProvider, null)?.stationName
     }
 
@@ -194,9 +194,8 @@ abstract class En1545Subscription : Subscription() {
             } else lookup.parseCurrency(cost)
         }
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return lookup.getAgencyName(contractProvider, false)
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        lookup.getAgencyName(contractProvider, false)
 
     companion object {
         private const val TAG = "En1545Subscription"

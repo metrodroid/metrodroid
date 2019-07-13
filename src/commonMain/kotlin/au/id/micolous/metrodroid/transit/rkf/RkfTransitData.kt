@@ -83,7 +83,7 @@ data class RkfTransitData internal constructor(
             .map { (_, bal) -> bal.balance }
 
     @VisibleForTesting
-    val issuer: String?
+    val issuer
         get() = mLookup.getAgencyName(mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID), false)
 
     private val expiryDate: Timestamp?

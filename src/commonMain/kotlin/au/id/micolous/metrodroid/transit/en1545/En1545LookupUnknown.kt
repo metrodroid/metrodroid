@@ -19,23 +19,24 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Trip
 
 abstract class En1545LookupUnknown : En1545Lookup {
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null)
             return null
         var routeReadable = routeNumber.toString()
         if (routeVariant != null) {
             routeReadable += "/$routeVariant"
         }
-        return routeReadable
+        return FormattedString(routeReadable)
     }
 
-    override fun getAgencyName(agency: Int?, isShort: Boolean): String? {
-        return if (agency == null || agency == 0) null else agency.toString()
+    override fun getAgencyName(agency: Int?, isShort: Boolean): FormattedString? {
+        return if (agency == null || agency == 0) null else FormattedString(agency.toString())
     }
 
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {

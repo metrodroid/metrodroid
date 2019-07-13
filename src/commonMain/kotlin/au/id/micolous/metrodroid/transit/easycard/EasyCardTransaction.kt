@@ -24,6 +24,7 @@
 package au.id.micolous.metrodroid.transit.easycard
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
@@ -80,7 +81,7 @@ data class EasyCardTransaction internal constructor(
 
     override val isTapOn get() = !isEndTap
 
-    override val routeNames get(): List<String>? = when (mode) {
+    override val routeNames get(): List<FormattedString>? = when (mode) {
         Trip.Mode.METRO -> super.routeNames
         else -> emptyList()
     }

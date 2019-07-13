@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.ricaricami
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Transaction
@@ -57,12 +58,12 @@ data class RicaricaMiTransaction(override val parsed: En1545Parsed) : En1545Tran
         }
     }
 
-    override fun getAgencyName(isShort: Boolean) = when (transport) {
+    override fun getAgencyName(isShort: Boolean) = FormattedString.language(when (transport) {
         RicaricaMiLookup.TRANSPORT_METRO, RicaricaMiLookup.TRANSPORT_TRAM, RicaricaMiLookup.TRANSPORT_BUS -> if (isShort) "ATM" else "Azienda Trasporti Milanesi"
         RicaricaMiLookup.TRANSPORT_TRENORD1 -> "Trenord (1)"
         RicaricaMiLookup.TRANSPORT_TRENORD2 -> "Trenord (2)"
         else -> "$transport"
-    }
+    }, "it-IT")
 
     override val stationId get(): Int? {
         val id = super.stationId

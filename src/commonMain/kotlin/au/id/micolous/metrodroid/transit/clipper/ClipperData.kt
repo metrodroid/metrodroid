@@ -30,6 +30,7 @@ package au.id.micolous.metrodroid.transit.clipper
 
 import au.id.micolous.metrodroid.util.NumberUtils
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.Station
@@ -44,8 +45,8 @@ internal object ClipperData {
     const val AGENCY_BAY_FERRY = 0x1b
 
     val GG_FERRY_ROUTES = mapOf(
-            0x03 to "Larkspur",
-            0x04 to "San Francisco")
+            0x03 to FormattedString.language("Larkspur", "en-US"),
+            0x04 to FormattedString.language("San Francisco", "en-US"))
 
     const val CLIPPER_STR = "clipper"
 
@@ -53,10 +54,8 @@ internal object ClipperData {
         return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency)
     }
 
-    fun getAgencyName(agency: Int, isShort: Boolean): String? {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort)
-    }
-
+    fun getAgencyName(agency: Int, isShort: Boolean) =
+        StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort)
 
     fun getStation(agency: Int, stationId: Int, isEnd: Boolean): Station? {
         val humanReadableId = NumberUtils.intToHex(agency) + "/" + NumberUtils.intToHex(stationId)
