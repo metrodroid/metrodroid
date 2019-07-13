@@ -62,20 +62,14 @@ import au.id.micolous.metrodroid.util.toImmutable
  * https://github.com/nfcpy/nfcpy/blob/master/src/nfc/tag/tt3.py
  * https://github.com/nfcpy/nfcpy/blob/master/src/nfc/tag/tt3_sony.py
  */
-class FelicaProtocol(tag: CardTransceiver, idm: ImmutableByteArray)
-    : AbstractProtocol(tag, CardTransceiver.Protocol.JIS_X_6319_4) {
+class FelicaProtocol(val tag: FelicaTransceiver,
+                     /**
+                      * IDm (Manufacture Identifier).
+                      *
+                      * This is the serial number of a FeliCa card.
+                      */
+                     val idm: ImmutableByteArray) {
 
-    /**
-     * IDm (Manufacture Identifier).
-     *
-     * This is the serial number of a FeliCa card.
-     */
-    var idm: ImmutableByteArray
-        private set
-
-    init {
-        this.idm = idm
-    }
 
     /**
      * Gets the PMm (Manufacturing Parameters).

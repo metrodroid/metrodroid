@@ -37,11 +37,9 @@ class ISO7816Test : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
 
         // Load the card into the emulator
         val vcard = VirtualISO7816Card(card)
-        vcard.connect(CardTransceiver.Protocol.ISO_14443A)
 
         // Try to dump the tag from the emulator
         val rcard = ISO7816Card.dumpTag(vcard, MockFeedbackInterface.get())
-        vcard.close()
 
         // Check that we got an expected number of applications
         assertEquals(cardIso7816.applications.size, rcard.applications.size)

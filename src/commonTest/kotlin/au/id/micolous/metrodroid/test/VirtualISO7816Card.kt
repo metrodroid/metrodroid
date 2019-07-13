@@ -46,19 +46,6 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * This is intended as a test fixture.
  */
 open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
-    override fun connect(protocol: CardTransceiver.Protocol) {
-        if (protocol != CardTransceiver.Protocol.ISO_14443A) {
-            throw CardProtocolUnsupportedException("Only iso14a card is supported")
-        }
-
-        connected = true
-    }
-
-    override fun close() {
-        connected = false
-        super.close()
-    }
-
     override val uid: ImmutableByteArray?
         get() = mCard.tagId
 

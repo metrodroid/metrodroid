@@ -24,11 +24,11 @@ import android.nfc.tech.IsoDep
 import android.nfc.tech.NfcA
 import android.nfc.tech.NfcF
 import android.nfc.tech.NfcV
-import au.id.micolous.metrodroid.card.CardTransceiver.Protocol
-import au.id.micolous.metrodroid.card.CardTransceiver.Protocol.*
+import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.toImmutable
+import kotlinx.io.core.Closeable
 import java.io.IOException
 
 fun <T>wrapAndroidExceptions(f: () -> T): T {
@@ -41,21 +41,12 @@ fun <T>wrapAndroidExceptions(f: () -> T): T {
     }
 }
 
+
 /**
  * Wrapper for Android's [Tag] class, to implement the [CardTransceiver] interface.
  */
-class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
-    private var protocol: Protocol? = null
+class AndroidFelicaTransceiver(private val tag: Tag) : FelicaTransceiver, Closeable {
     override var uid: ImmutableByteArray? = null
-        private set
-
-    private var isoDep: IsoDep? = null
-
-    private var nfcA: NfcA? = null
-    private var nfcV: NfcV? = null
-    override var sak: Short? = null
-        private set
-    override var atqa: ImmutableByteArray? = null
         private set
 
     private var nfcF: NfcF? = null
@@ -64,105 +55,136 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
     override var pmm: ImmutableByteArray? = null
         private set
 
-    @Suppress("REDUNDANT_ELSE_IN_WHEN")
-    override fun connect(protocol: Protocol) {
+    fun connect() {
         close()
 
-        when (protocol) {
-            ISO_14443A -> {
-                val isoDep = IsoDep.get(tag) ?:
-                    throw CardProtocolUnsupportedException("iso14a not supported by this card")
+        val nfcF = NfcF.get(tag) ?: throw CardProtocolUnsupportedException("nfcF not supported by this card")
 
-                isoDep.connect()
-                this.isoDep = isoDep
-            }
-
-            JIS_X_6319_4 -> {
-                val nfcF = NfcF.get(tag) ?:
-                    throw CardProtocolUnsupportedException("nfcF not supported by this card")
-
-                nfcF.connect()
-                this.nfcF = nfcF
-                this.defaultSystemCode = nfcF.systemCode.toImmutable().byteArrayToInt()
-                this.pmm = nfcF.manufacturer.toImmutable()
-            }
-
-            NFC_A -> {
-                val nfcA = NfcA.get(tag) ?:
-                    throw CardProtocolUnsupportedException("nfcA not supported by this card")
-
-                nfcA.connect()
-                this.sak = nfcA.sak
-                this.atqa = nfcA.atqa.toImmutable()
-                this.nfcA = nfcA
-            }
-
-            NFC_V -> {
-                val nfcV = NfcV.get(tag) ?:
-                throw CardProtocolUnsupportedException("nfcV not supported by this card")
-
-                nfcV.connect()
-                this.nfcV = nfcV
-            }
-
-            else -> {
-                throw CardProtocolUnsupportedException("Protocol not supported on this platform")
-            }
-        }
-
-        uid = tag.id.toImmutable()
-        this.protocol = protocol
+        nfcF.connect()
+        this.nfcF = nfcF
+        this.defaultSystemCode = nfcF.systemCode.toImmutable().byteArrayToInt()
+        this.pmm = nfcF.manufacturer.toImmutable()
+        this.uid = tag.id.toImmutable()
     }
 
     override fun close() {
-        val isoDep = this.isoDep
-        this.isoDep = null
         val nfcF = this.nfcF
         this.nfcF = null
-        val nfcA = this.nfcA
-        this.nfcA = null
-        val nfcV = this.nfcV
-        this.nfcV = null
-        uid = null
-        defaultSystemCode = null
-        pmm = null
-
-        // Android can declare IOExecption here but we really don't care.
-        try {
-            isoDep?.close()
-        } catch (e: IOException) {
-        }
-
-        try {
-            nfcA?.close()
-        } catch (e: IOException) {
-        }
-
         try {
             nfcF?.close()
         } catch (e: IOException) {
         }
+    }
+
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+            nfcF!!.transceive(data.dataCopy)
+        }.toImmutable()
+}
+
+/**
+ * Wrapper for Android's [Tag] class, to implement the [CardTransceiver] interface.
+ */
+class AndroidNfcVTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
+    override var uid: ImmutableByteArray? = null
+        private set
+
+    private var nfcV: NfcV? = null
+
+    fun connect() {
+        close()
+
+        val nfcV = NfcV.get(tag) ?: throw CardProtocolUnsupportedException("nfcV not supported by this card")
+
+        nfcV.connect()
+        this.nfcV = nfcV
+        uid = tag.id.toImmutable()
+    }
+
+    override fun close() {
+        val nfcV = this.nfcV
+        this.nfcV = null
+        uid = null
+
         try {
             nfcV?.close()
         } catch (e: IOException) {
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val request = data.dataCopy
-        val isoDep = this.isoDep
-        val nfcA = this.nfcA
-        val nfcF = this.nfcF
-        val nfcV = this.nfcV
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray =
+            wrapAndroidExceptions { nfcV!!.transceive(data.dataCopy) }.toImmutable()
+}
 
-        return wrapAndroidExceptions {
-            when {
-                isoDep != null -> isoDep.transceive(request)
-                nfcA != null -> nfcA.transceive(request)
-                nfcF != null -> nfcF.transceive(request)
-                nfcV != null -> nfcV.transceive(request)
-                else -> throw CardTransceiveException("Card not connected")
-            }
-        }.toImmutable()
+class AndroidIsoTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
+    override var uid: ImmutableByteArray? = null
+        private set
+
+    private var isoDep: IsoDep? = null
+
+    fun connect() {
+        close()
+
+        val isoDep = IsoDep.get(tag) ?: throw CardProtocolUnsupportedException("iso14a not supported by this card")
+
+        isoDep.connect()
+        this.isoDep = isoDep
+
+        uid = tag.id.toImmutable()
     }
+
+    override fun close() {
+        val isoDep = this.isoDep
+        this.isoDep = null
+
+
+        // Android can declare IOExecption here but we really don't care.
+        try {
+            isoDep?.close()
+        } catch (e: IOException) {
+        }
+    }
+
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray =
+            wrapAndroidExceptions { isoDep!!.transceive(data.dataCopy)
+        }.toImmutable()
+}
+
+
+class AndroidNfcATransceiver(private val tag: Tag) : CardTransceiver, Closeable {
+    override var uid: ImmutableByteArray? = null
+        private set
+
+    private var nfcA: NfcA? = null
+    var sak: Short? = null
+        private set
+    var atqa: ImmutableByteArray? = null
+        private set
+
+    fun connect() {
+        close()
+
+        val nfcA = NfcA.get(tag) ?: throw CardProtocolUnsupportedException("nfcA not supported by this card")
+
+        nfcA.connect()
+        this.sak = nfcA.sak
+        this.atqa = nfcA.atqa.toImmutable()
+        this.nfcA = nfcA
+
+        uid = tag.id.toImmutable()
+    }
+
+    override fun close() {
+        val nfcA = this.nfcA
+        this.nfcA = null
+        uid = null
+
+        try {
+            nfcA?.close()
+        } catch (e: IOException) {
+        }
+    }
+
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+            nfcA!!.transceive(data.dataCopy)
+        }.toImmutable()
 }

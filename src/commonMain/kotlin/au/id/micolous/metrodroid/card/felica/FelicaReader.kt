@@ -71,15 +71,14 @@ object FelicaReader {
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
-    suspend fun dumpTag(tag: CardTransceiver, tagId: ImmutableByteArray,
+    suspend fun dumpTag(tag: FelicaTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface):
             FelicaCard {
         var magic = false
         var liteMagic = false
         var partialRead = false
 
-        val fp = FelicaProtocol(tag, tagId)
-        fp.connect()
+        val fp = FelicaProtocol(tag, tag.uid!!)
 
         Log.d(TAG, "Default system code: ${fp.defaultSystemCode.hexString}")
         val pmm = fp.pmm

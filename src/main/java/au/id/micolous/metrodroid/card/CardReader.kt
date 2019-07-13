@@ -38,8 +38,8 @@ object CardReader {
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            AndroidCardTransceiver(tag).use {
-                it.connect(CardTransceiver.Protocol.ISO_14443A)
+            AndroidIsoTransceiver(tag).use {
+                it.connect()
 
                 val d = DesfireCardReader.dumpTag(it, feedbackInterface)
                 if (d != null) {
@@ -52,9 +52,10 @@ object CardReader {
         }
 
         if (NfcF::class.java.name in techs) {
-            val transceiver = AndroidCardTransceiver(tag)
+            val transceiver = AndroidFelicaTransceiver(tag)
 
-            val c = FelicaReader.dumpTag(transceiver, tagId, feedbackInterface)
+            transceiver.connect()
+            val c = FelicaReader.dumpTag(transceiver, feedbackInterface)
             transceiver.close()
             return Card(tagId = tagId, scannedAt = TimestampFull.now(), felica = c)
 
@@ -105,8 +106,8 @@ object CardReader {
     private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? {
         var card: UltralightCard? = null
 
-        AndroidCardTransceiver(tag).use {
-            it.connect(CardTransceiver.Protocol.NFC_A)
+        AndroidNfcATransceiver(tag).use {
+            it.connect()
             if (it.sak == 0.toShort() && it.atqa?.contentEquals(byteArrayOf(0x44, 0x00)) == true)
                 card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
@@ -116,8 +117,8 @@ object CardReader {
     private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? {
         var card: NFCVCard? = null
 
-        AndroidCardTransceiver(tag).use {
-            it.connect(CardTransceiver.Protocol.NFC_V)
+        AndroidNfcVTransceiver(tag).use {
+            it.connect()
             card = NFCVCardReader.dumpTag(it, feedbackInterface)
         }
         return card

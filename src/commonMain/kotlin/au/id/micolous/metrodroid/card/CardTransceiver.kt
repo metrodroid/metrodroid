@@ -25,46 +25,7 @@ import kotlinx.io.core.Closeable
 /**
  * Abstracts platform-specific interfaces to NFC cards.
  */
-interface CardTransceiver : Closeable {
-    /**
-     * The physical-layer protocol which is used to connect to a card.
-     */
-    enum class Protocol {
-        /** ISO/IEC 144443 Type A */
-        ISO_14443A,
-        /** NFC-F (JIS X 6319-4) */
-        JIS_X_6319_4,
-        /** NFC-A */
-        NFC_A,
-        /** NFC-V */
-        NFC_V,
-        // TODO: Support other protocols
-    }
-
-    /**
-     * Connects to the card with the given physical-layer protocol.
-     *
-     * If the card is already connected on any protocol, this will be disconnected first.
-     *
-     * Calling this method while connected, with the same protocol parameter, resets connectivity
-     * with the card.
-     *
-     * @param protocol Physical-layer protocol to use
-     * @throws CardProtocolUnsupportedException If the protocol is not supported by the card or
-     * platform.
-     */
-    fun connect(protocol: Protocol)
-
-    /**
-     * Disconnects from the card.
-     *
-     * If not implemented, this does nothing.
-     *
-     * This must not throw an error -- if the tag is _already_ disconnected, fine, good, lets
-     * move on, no need to ask for permission.
-     */
-    override fun close() { }
-
+interface CardTransceiver {
     /**
      * Gets the UID of the card that is currently connected.
      *
@@ -73,27 +34,6 @@ interface CardTransceiver : Closeable {
      * Returns null if no card is presently connected.
      */
     val uid : ImmutableByteArray?
-
-    /**
-     * Gets the default system code associated with the card.
-     *
-     * Only valid after [connect] has been called, and for [Protocol.JIS_X_6319_4] cards.
-     *
-     * Returns null otherwise.
-     */
-    val defaultSystemCode : Int? get() = null
-
-    /**
-     * Gets the Manufacture Parameters (PMm) of the card that is currently selected.
-     *
-     * Only valid after [connect] has been called, and for [Protocol.JIS_X_6319_4] cards.
-     *
-     * Returns null otherwise.
-     */
-    val pmm : ImmutableByteArray? get() = null
-
-    val atqa : ImmutableByteArray? get() = null
-    val sak : Short? get() = null
 
     /**
      * Sends a message to the card, and returns the response.
