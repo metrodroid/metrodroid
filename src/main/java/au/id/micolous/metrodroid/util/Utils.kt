@@ -48,6 +48,14 @@ import java.io.InputStream
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 
+fun AlertDialog.Builder.safeShow() {
+    try {
+        this.show()
+    } catch (unused: WindowManager.BadTokenException) {
+        /* Ignore... happens if the activity was destroyed */
+    }    
+}
+
 object Utils {
     private const val TAG = "Utils"
 
@@ -117,44 +125,34 @@ object Utils {
                                 Settings.ACTION_WIRELESS_SETTINGS
                             }))
                 }
-                .show()
+                .safeShow()
     }
 
     fun showError(activity: Activity, ex: Exception) {
         Log.e(activity.javaClass.name, ex.message, ex)
         AlertDialog.Builder(activity)
                 .setMessage(getErrorMessage(ex))
-                .show()
+                .safeShow()
     }
 
     fun showErrorAndFinish(activity: Activity, ex: Exception?) {
-        try {
-            Log.e(activity.javaClass.name, getErrorMessage(ex))
-            ex?.printStackTrace()
+        Log.e(activity.javaClass.name, getErrorMessage(ex))
+        ex?.printStackTrace()
 
-            AlertDialog.Builder(activity)
-                    .setMessage(getErrorMessage(ex))
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
-                    .show()
-        } catch (unused: WindowManager.BadTokenException) {
-            /* Ignore... happens if the activity was destroyed */
-        }
-
+        AlertDialog.Builder(activity)
+                .setMessage(getErrorMessage(ex))
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
+                .safeShow()
     }
 
     fun showErrorAndFinish(activity: Activity, @StringRes errorResource: Int) {
-        try {
-            Log.e(activity.javaClass.name, Localizer.localizeString(errorResource))
-            AlertDialog.Builder(activity)
-                    .setMessage(errorResource)
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
-                    .show()
-        } catch (unused: WindowManager.BadTokenException) {
-            /* Ignore... happens if the activity was destroyed */
-        }
-
+        Log.e(activity.javaClass.name, Localizer.localizeString(errorResource))
+        AlertDialog.Builder(activity)
+                .setMessage(errorResource)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
+                .safeShow()
     }
 
     fun getErrorMessage(ex: Throwable?): String {

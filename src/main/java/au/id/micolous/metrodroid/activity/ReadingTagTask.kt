@@ -18,6 +18,7 @@ import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.safeShow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -84,7 +85,7 @@ internal class ReadingTagTask private constructor(
                     .setCancelable(false)
                     .setPositiveButton(R.string.show_partial_data) { _, _ -> showCard(cardUri) }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> readingTagActivity.finish() }
-                    .show()
+                    .safeShow()
             return
         }
 
@@ -102,7 +103,7 @@ internal class ReadingTagTask private constructor(
                     .setMessage(exception.message)
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok) { _, _ -> readingTagActivity.finish() }
-                    .show()
+                    .safeShow()
             else -> Utils.showErrorAndFinish(readingTagActivity, exception)
         }
     }
