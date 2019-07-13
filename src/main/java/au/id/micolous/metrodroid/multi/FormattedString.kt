@@ -1,3 +1,4 @@
+@file:JvmName("FormattedStringActualKt")
 /*
  * FormattedString.kt
  *
@@ -21,6 +22,7 @@ package au.id.micolous.metrodroid.multi
 
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.TypefaceSpan
 
 actual class FormattedString (val spanned: android.text.Spanned) {
@@ -37,5 +39,32 @@ actual class FormattedString (val spanned: android.text.Spanned) {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             return FormattedString(res)
         }
+    }
+}
+
+actual class FormattedStringBuilder {
+    actual fun append(value: StringBuilder): FormattedStringBuilder {
+        ssb.append(value)
+        return this
+    }
+    actual fun append(value: String): FormattedStringBuilder {
+        ssb.append(value)
+        return this
+    }
+    actual fun append(value: FormattedString): FormattedStringBuilder {
+        ssb.append(value.spanned)
+        return this
+    }
+    actual fun append(value: FormattedString, start: Int, end: Int): FormattedStringBuilder {
+        ssb.append(value.spanned, start, end)
+        return this
+    }
+
+    actual fun build(): FormattedString = FormattedString(ssb)
+
+    private val ssb: SpannableStringBuilder
+
+    actual constructor() {
+        ssb = SpannableStringBuilder()
     }
 }
