@@ -56,7 +56,7 @@ interface CardKeys {
         }
 
         fun fromJSON(keyJSON: JsonObject, defaultBundle: String): CardKeys? = fromJSON(keyJSON,
-                keyJSON[CardKeys.JSON_KEY_TYPE_KEY].primitive.content, defaultBundle)
+                keyJSON[CardKeys.JSON_KEY_TYPE_KEY]!!.primitive.content, defaultBundle)
 
         fun fromJSON(keyJSON: String, defaultBundle: String) = fromJSON(
                 Json.plain.parseJson(keyJSON).jsonObject, defaultBundle)
