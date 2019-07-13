@@ -214,6 +214,6 @@ object FelicaReader {
             Log.w(TAG, "Could not detect any systems on the card!")
         }
 
-        return FelicaCard(pmm!!, systems, isPartialRead = partialRead)
+        return FelicaCard(pmm, systems, isPartialRead = partialRead)
     }
 }

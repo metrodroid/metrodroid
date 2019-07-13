@@ -46,7 +46,7 @@ import kotlin.math.roundToInt
 @Serializable
 data class FelicaCard(
         @XMLId("pmm")
-        val pMm: ImmutableByteArray,
+        val pMm: ImmutableByteArray?,
         @XMLListIdx("code")
         val systems: Map<Int, FelicaSystem>,
         @Optional
@@ -82,8 +82,8 @@ data class FelicaCard(
      * @return ROM type
      */
     @Transient
-    private val romType: Int
-        get() = pMm.byteArrayToInt(0, 1)
+    private val romType: Int?
+        get() = pMm?.byteArrayToInt(0, 1)
 
     /**
      * Gets the IC type of the card (part of PMm).
@@ -92,19 +92,19 @@ data class FelicaCard(
      * @return IC type
      */
     @Transient
-    private val icType: Int
-        get() = pMm.byteArrayToInt(1, 1)
+    private val icType: Int?
+        get() = pMm?.byteArrayToInt(1, 1)
 
     @Transient
-    private val fixedResponseTime: Double
+    private val fixedResponseTime: Double?
         get() = calculateMaximumResponseTime(1, 0)
 
     @Transient
-    private val mutualAuthentication2Time: Double
+    private val mutualAuthentication2Time: Double?
         get() = getMutualAuthentication1Time(0)
 
     @Transient
-    private val otherCommandsTime: Double
+    private val otherCommandsTime: Double?
         get() = calculateMaximumResponseTime(5, 0)
 
     /**
@@ -114,8 +114,8 @@ data class FelicaCard(
      * @return Maximum response time
      */
     @Transient
-    private val maximumResponseTime: Long
-        get() = pMm.byteArrayToLong(2, 6)
+    private val maximumResponseTime: Long?
+        get() = pMm?.byteArrayToLong(2, 6)
 
     @Transient
     override val manufacturingInfo: List<ListItem>
@@ -130,39 +130,41 @@ data class FelicaCard(
                         cardIdentificationNumber.toString()))
             }
 
-            items.add(HeaderListItem(R.string.felica_pmm))
-            items.add(ListItem(R.string.felica_rom_type, romType.toString()))
-            items.add(ListItem(R.string.felica_ic_type, icType.toString()))
+            if (pMm != null) {
+                items.add(HeaderListItem(R.string.felica_pmm))
+                items.add(ListItem(R.string.felica_rom_type, romType.toString()))
+                items.add(ListItem(R.string.felica_ic_type, icType.toString()))
 
-            items.add(HeaderListItem(R.string.felica_maximum_response_time))
+                items.add(HeaderListItem(R.string.felica_maximum_response_time))
 
-            var d = getVariableResponseTime(1)
-            items.add(ListItem(R.string.felica_response_time_variable,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                var d = getVariableResponseTime(1)
+                items.add(ListItem(R.string.felica_response_time_variable,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = fixedResponseTime
-            items.add(ListItem(R.string.felica_response_time_fixed,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = fixedResponseTime
+                items.add(ListItem(R.string.felica_response_time_fixed,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = getMutualAuthentication1Time(1)
-            items.add(ListItem(R.string.felica_response_time_auth1,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = getMutualAuthentication1Time(1)
+                items.add(ListItem(R.string.felica_response_time_auth1,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = mutualAuthentication2Time
-            items.add(ListItem(R.string.felica_response_time_auth2,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = mutualAuthentication2Time
+                items.add(ListItem(R.string.felica_response_time_auth2,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = getDataReadTime(1)
-            items.add(ListItem(R.string.felica_response_time_read,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = getDataReadTime(1)
+                items.add(ListItem(R.string.felica_response_time_read,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = getDataWriteTime(1)
-            items.add(ListItem(R.string.felica_response_time_write,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = getDataWriteTime(1)
+                items.add(ListItem(R.string.felica_response_time_write,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
 
-            d = otherCommandsTime
-            items.add(ListItem(R.string.felica_response_time_other,
-                    Localizer.localizePlural(R.plurals.milliseconds_short, d.toInt(), formatDouble(d))))
+                d = otherCommandsTime
+                items.add(ListItem(R.string.felica_response_time_other,
+                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
+            }
             return items
         }
 
@@ -184,12 +186,15 @@ data class FelicaCard(
      * @param n N value in calculation formula
      * @return Response time, in milliseconds.
      */
-    private fun calculateMaximumResponseTime(position: Int, n: Int): Double {
+    private fun calculateMaximumResponseTime(position: Int, n: Int): Double? {
         // Following FeliCa documentation, first configuration byte for maximum response time
         // parameter is "D10", and the last is "D15". position(0) = D10, position 5 = D15.
         if (position < 0 || position > 5) {
-            return Double.NaN
+            return null
         }
+
+        if (pMm == null)
+           return null
 
         // Position is offset by 2.
         val configurationByte = pMm[position + 2].toInt() and 0xFF
@@ -200,19 +205,19 @@ data class FelicaCard(
         return T * (b * n + a).toDouble() * (1 shl 2 * e).toDouble() // seconds
     }
 
-    private fun getVariableResponseTime(nodes: Int): Double {
+    private fun getVariableResponseTime(nodes: Int): Double? {
         return calculateMaximumResponseTime(0, nodes)
     }
 
-    private fun getMutualAuthentication1Time(nodes: Int): Double {
+    private fun getMutualAuthentication1Time(nodes: Int): Double? {
         return calculateMaximumResponseTime(2, nodes)
     }
 
-    private fun getDataReadTime(blocks: Int): Double {
+    private fun getDataReadTime(blocks: Int): Double? {
         return calculateMaximumResponseTime(3, blocks)
     }
 
-    private fun getDataWriteTime(blocks: Int): Double {
+    private fun getDataWriteTime(blocks: Int): Double? {
         return calculateMaximumResponseTime(4, blocks)
     }
 
@@ -241,7 +246,8 @@ data class FelicaCard(
         // DecimalFormatter is not available in JS. We don't
         // care too much about milliseconds formatting, so just
         // implement formatting with '.' as decimal separator.
-        private fun formatDouble(d: Double): String {
+        private fun formatDouble(d: Double?): String {
+            d ?: return "null"
             val xd = (d * 10).roundToInt()
             return "${xd / 10}.${xd % 10}"
         }
