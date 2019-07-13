@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
 class KMTTrip (private val mProcessType: Int,
@@ -70,20 +69,12 @@ class KMTTrip (private val mProcessType: Int,
             return KMTTrip(
                     mProcessType = data[12].toInt() and 0xff,
                     mSequenceNumber = data.byteArrayToInt(13, 3),
-                    startTimestamp = calcDate(data),
+                    startTimestamp = KMTTransitData.parseTimestamp(data),
                     mTransactionAmount = data.byteArrayToInt(4, 4),
                     mEndGateCode = data.byteArrayToInt(8, 2))
         }
 
         private const val KMT_STR = "kmt"
-
-        private fun calcDate(data: ImmutableByteArray): Timestamp? {
-            val fulloffset = data.byteArrayToInt(0, 4)
-            if (fulloffset == 0) {
-                return null
-            }
-            return KMTTransitData.KMT_EPOCH.seconds(fulloffset.toLong())
-        }
 
         private fun getStation(code: Int) = StationTableReader.getStation(KMT_STR, code)
     }

@@ -19,8 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.kmt
 
-import au.id.micolous.metrodroid.time.Epoch
-import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.felica.FelicaCard
@@ -28,8 +26,10 @@ import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
 class KMTTransitData (override val trips: List<KMTTrip>,
@@ -56,11 +56,33 @@ class KMTTransitData (override val trips: List<KMTTrip>,
     companion object {
         // defines
         private const val NAME = "Kartu Multi Trip"
+        private val TZ = MetroTimeZone.JAKARTA
+
         const val SYSTEMCODE_KMT = 0x90b7
         const val SERVICE_KMT_ID = 0x300B
         const val SERVICE_KMT_BALANCE = 0x1017
         const val SERVICE_KMT_HISTORY = 0x200F
-        val KMT_EPOCH = Epoch.utc(2000, MetroTimeZone.JAKARTA, 0)
+
+        // Context: https://github.com/micolous/metrodroid/pull/522
+        private val KMT_EPOCH1 = Epoch.utc(2000, TZ, -6 * 60)
+        private val KMT_EPOCH2 = Epoch.utc(2000, TZ)
+
+        // TODO: Figure out what the proper epoch transition point is; this is a guess (2019)
+        // This is a guess (2019-01-01 00:00 local time)
+        private val KMT_EPOCH_TRANSITION = TimestampFull(TZ, 2019, 0, 1, 0, 0)
+
+        internal fun parseTimestamp(data: ImmutableByteArray): Timestamp? {
+            val fulloffset = data.byteArrayToLong(0, 4)
+            if (fulloffset == 0L) {
+                return null
+            }
+
+            val ts = KMT_EPOCH2.seconds(fulloffset)
+            return when {
+                ts >= KMT_EPOCH_TRANSITION -> ts
+                else -> KMT_EPOCH1.seconds(fulloffset)
+            }
+        }
 
         private fun parse(card: FelicaCard): KMTTransitData {
             val serialNumber = getSerial(card)
