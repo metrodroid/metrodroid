@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.card.*
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.serialization.Optional
@@ -41,25 +42,33 @@ class ClassicCard constructor(
         @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
+    companion object {
+        @VisibleForTesting
+        val MANUFACTURER_FUDAN = ListItem(
+                R.string.manufacturer_name, R.string.manufacturer_fudan_microelectronics)
+        private val MANUFACTURER_NXP = ListItem(
+                R.string.manufacturer_name, R.string.manufacturer_nxp)
+    }
+
     @Transient
     val sectors: List<ClassicSector> = sectorsRaw.map { ClassicSector.create(it) }
 
     @Transient
     override val manufacturingInfo: List<ListItem>? get() {
         val sector0 = sectorsRaw[0]
-        if (sector0.isUnauthorized || sector0.blocks[0].size < 16)
+        if (sector0.isUnauthorized || sector0.blocks.isEmpty() || sector0.blocks[0].size < 16)
                 return null
         val block0 = sector0.blocks[0]
 
         // Fudan Microelectronics FM11RF08
         if (block0.sliceOffLen(8, 8) == ImmutableByteArray.fromASCII("bcdefghi"))
-                return listOf(ListItem(R.string.manufacturer_name, R.string.manufacturer_fudan_microelectronics),
+                return listOf(MANUFACTURER_FUDAN,
                               ListItem(R.string.select_acknowledge, block0.getHexString(5, 1)),
                               ListItem(R.string.answer_to_request, block0.getHexString(6, 2)))
 
         val main: List<ListItem> = when {
                 tagId.size == 7 && tagId[0] == 0x04.toByte() -> listOf(
-                        ListItem(R.string.manufacturer_name, R.string.manufacturer_nxp),
+                        MANUFACTURER_NXP,
                         ListItem(R.string.mfc_uid_mode, R.plurals.bytes, 7),
                         ListItem(R.string.select_acknowledge, block0.getHexString(7, 1)),
                         ListItem(R.string.answer_to_request, block0.getHexString(8, 2))
