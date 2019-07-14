@@ -20,10 +20,13 @@
 
 package au.id.micolous.metrodroid.multi
 
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.TypefaceSpan
+import android.graphics.Color
+import au.id.micolous.metrodroid.util.Preferences
+import android.os.Build
+import android.os.Parcel
+import android.text.*
+import android.text.style.*
+import au.id.micolous.metrodroid.ui.HiddenSpan
 
 actual class FormattedString (val spanned: android.text.Spanned) {
     actual val unformatted: String
@@ -52,12 +55,53 @@ actual class FormattedStringBuilder {
         return this
     }
     actual fun append(value: FormattedString): FormattedStringBuilder {
-        ssb.append(value.spanned)
+        ssb.append(duplicateSpans(value.spanned))
         return this
     }
     actual fun append(value: FormattedString, start: Int, end: Int): FormattedStringBuilder {
-        ssb.append(value.spanned, start, end)
+        ssb.append(duplicateSpans(value.spanned), start, end)
         return this
+    }
+
+    private fun duplicateSpan(span: Any): Any {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            when (span) {
+                is LocaleSpan -> return LocaleSpan(span.locales)
+                is TypefaceSpan -> return TypefaceSpan(span.typeface ?: return span)
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            when (span) {
+                is LocaleSpan -> return LocaleSpan(span.locale)
+                is TtsSpan -> return TtsSpan(span.type, span.args)
+            }
+        }
+        return when (span) {
+            is ForegroundColorSpan -> ForegroundColorSpan(span.foregroundColor)
+            is TypefaceSpan -> TypefaceSpan(span.family ?: return span)
+            is StyleSpan -> StyleSpan(span.style)
+            is HiddenSpan -> HiddenSpan()
+            else -> span
+        }
+    }
+
+    // Android interface dosn't allow the same object to be spanned
+    // several times in the same string. So if we copy 2 different parts of
+    // same input string only first copy preserves any common spans.
+    // To overcome this we duplicate the spans before passing
+    // string to SpannableStringBuilder.
+    private fun duplicateSpans(input: Spanned): Spanned {
+        val spans = input.getSpans(0, input.length, Any::class.java)
+        if (spans.isEmpty())
+            return input
+        val result = SpannableString(input.toString())
+        for (span in spans) {
+            val copy = duplicateSpan(span)
+            result.setSpan(copy, input.getSpanStart(span), input.getSpanEnd(span),
+                    input.getSpanFlags(span))
+        }
+        return result
     }
 
     actual fun build(): FormattedString = FormattedString(ssb)
