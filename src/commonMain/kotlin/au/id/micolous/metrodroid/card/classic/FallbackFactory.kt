@@ -25,9 +25,9 @@ package au.id.micolous.metrodroid.card.classic
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.util.Preferences
 
-internal class FallbackFactory : ClassicCardTransitFactory {
+object FallbackFactory : ClassicCardTransitFactory {
     val fallback
-        get () = Preferences.mfcFallbackReader
+        get() = Preferences.mfcFallbackReader
 
     override fun check(card: ClassicCard) =
             fallback in SMARTRIDER
@@ -50,7 +50,5 @@ internal class FallbackFactory : ClassicCardTransitFactory {
         else -> null
     }
 
-    companion object {
-        private val SMARTRIDER = listOf("myway", "smartrider")
-    }
+    private val SMARTRIDER = listOf("myway", "smartrider")
 }

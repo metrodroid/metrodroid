@@ -88,7 +88,7 @@ data class GautrainTransitData(private val mSerial: Long,
     } + mIndex.getRawFields(level)
 }
 
-class GautrainTransitFactory : ClassicCardTransitFactory {
+object GautrainTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(

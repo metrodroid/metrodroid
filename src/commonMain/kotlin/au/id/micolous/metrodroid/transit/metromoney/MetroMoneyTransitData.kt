@@ -55,7 +55,7 @@ data class MetroMoneyTransitData(private val mSerial: Long, private val mBalance
     override val balance get() = TransitCurrency(mBalance, "GEL")
 }
 
-class MetroMoneyTransitFactory : ClassicCardTransitFactory {
+object MetroMoneyTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(
