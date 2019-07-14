@@ -265,8 +265,7 @@ class TouchnGoTransitFactory : ClassicCardTransitFactory {
                         && it.byteArrayToInt(4, 2) == 0x5230 && it.byteArrayToInt(10, 2) == 0x4602 },
                 mSerial = card[0, 0].data.byteArrayToLongReversed(0, 4),
                 trips = listOfNotNull(
-                        TouchnGoGeneric.parse(card[5], Trip.Mode.POS,
-                                "Toll"), // FIXME: type POS is kinda wrong
+                        TouchnGoGeneric.parse(card[5], Trip.Mode.TOLL_ROAD),
                         TouchnGoTrip.parse(card[6]),
                         TouchnGoInProgressTrip.parse(card[6]),
                         TouchnGoRefill.parse(card[7]),

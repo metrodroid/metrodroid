@@ -839,6 +839,8 @@
     <string name="mode_banned">Banned</string>
     <!-- Used as descriptive text for the trolleybus icon. -->
     <string name="mode_trolleybus">Trolleybus</string>
+    <!-- Used as descriptive text for the road toll icon. -->
+    <string name="mode_toll_road">Toll road</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
