@@ -909,4 +909,7 @@
     <string name="siticard_purse_sarov">Sarov-e-portemonnee</string>
     <string name="location_warsaw">Warschau, Polen</string>
     <string name="warsaw_90_days">90-dagenkaart</string>
+    <string name="mode_toll_road">Tolweg</string>
+    <string name="hardware">Hardware</string>
+    <string name="android_nfc_settings">Android NFC-instellingen</string>
 </resources>
