@@ -43,7 +43,16 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TartuBus
  */
-class TartuTransitFactory : ClassicCardTransitFactory {
+object TartuTransitFactory : ClassicCardTransitFactory {
+    private const val NAME = "Tartu Bus"
+
+    private val CARD_INFO = CardInfo(
+            name = NAME,
+            cardType = CardType.MifareClassic,
+            imageId = R.drawable.tartu,
+            imageAlphaId = R.drawable.iso7810_id1_alpha,
+            locationId = R.string.location_tartu,
+            resourceExtraNote = R.string.card_note_card_number_only)
 
     override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
         val sector0 = sectors[0]
@@ -82,19 +91,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
         override val cardName get() = NAME
     }
 
-    companion object {
-        private const val NAME = "Tartu Bus"
-
-        private val CARD_INFO = CardInfo(
-                name = NAME,
-                cardType = CardType.MifareClassic,
-                imageId = R.drawable.tartu,
-                imageAlphaId = R.drawable.iso7810_id1_alpha,
-                locationId = R.string.location_tartu,
-                resourceExtraNote = R.string.card_note_card_number_only)
-
-        private fun parseSerial(card: ClassicCard) =
-                card[2, 0].data.sliceOffLen(7, 9).readASCII() +
-                        card[2, 1].data.sliceOffLen(0, 10).readASCII()
-    }
+    private fun parseSerial(card: ClassicCard) =
+            card[2, 0].data.sliceOffLen(7, 9).readASCII() +
+                    card[2, 1].data.sliceOffLen(0, 10).readASCII()
 }

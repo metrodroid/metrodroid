@@ -99,7 +99,7 @@ data class KomuterLinkTransitData(private val mBalance: Int, private val mSerial
         }
 }
 
-class KomuterLinkTransitFactory : ClassicCardTransitFactory {
+object KomuterLinkTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(

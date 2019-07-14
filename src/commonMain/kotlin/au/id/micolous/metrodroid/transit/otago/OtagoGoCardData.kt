@@ -105,7 +105,7 @@ private data class OtagoGoCardTransitData internal constructor(
         get() = listOfNotNull(mRefill) + mTrips
 }
 
-class OtagoGoCardTransitFactory : ClassicCardTransitFactory {
+object OtagoGoCardTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(

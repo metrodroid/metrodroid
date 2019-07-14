@@ -251,7 +251,7 @@ private data class TouchnGoTransitData(private val mBalance: Int, private val mS
         }
 }
 
-class TouchnGoTransitFactory : ClassicCardTransitFactory {
+object TouchnGoTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(

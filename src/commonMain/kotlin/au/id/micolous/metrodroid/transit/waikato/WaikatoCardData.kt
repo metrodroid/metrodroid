@@ -104,7 +104,7 @@ private data class WaikatoCardTransitData internal constructor(
     override val balance get() = TransitCurrency.NZD(mBalance)
 }
 
-class WaikatoCardTransitFactory : ClassicCardTransitFactory {
+object WaikatoCardTransitFactory : ClassicCardTransitFactory {
     override val allCards get() = listOf(ROTORUA_CARD_INFO, BUSIT_CARD_INFO)
 
     override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(

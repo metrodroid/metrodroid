@@ -39,19 +39,21 @@ import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitDat
 object ClassicCardFactoryRegistry {
     val allFactories = listOf(
             OVChipTransitData.FACTORY,
-            // Search through ERG on MIFARE Classic compatibles.
+
+            // ERG
             ManlyFastFerryTransitData.FACTORY,
             ChcMetrocardTransitData.FACTORY,
-            // Fallback
+            // ERG Fallback
             ErgTransitData.FALLBACK_FACTORY,
-            // Nextfare
+
+            // Cubic Nextfare
             SeqGoTransitData.FACTORY,
-            LaxTapTransitData.FACTORY, MspGotoTransitData.FACTORY,
-            // Fallback
+            LaxTapTransitData.FACTORY,
+            MspGotoTransitData.FACTORY,
+            // Cubic Nextfare Fallback
             NextfareTransitData.FALLBACK_FACTORY,
 
             SmartRiderTransitData.FACTORY,
-
             TroikaHybridTransitData.FACTORY,
             PodorozhnikTransitData.FACTORY,
             StrelkaTransitData.FACTORY,
@@ -61,18 +63,18 @@ object ClassicCardFactoryRegistry {
             KievTransitData.FACTORY,
             MetroQTransitData.FACTORY,
             EasyCardTransitData.FACTORY,
-            TartuTransitFactory(),
+            TartuTransitFactory,
             SelectaFranceTransitData.FACTORY,
             SunCardTransitData.FACTORY,
             ZolotayaKoronaTransitData.FACTORY,
             RkfTransitData.FACTORY,
-            OtagoGoCardTransitFactory(),
-            WaikatoCardTransitFactory(),
-            TouchnGoTransitFactory(),
-            KomuterLinkTransitFactory(),
+            OtagoGoCardTransitFactory,
+            WaikatoCardTransitFactory,
+            TouchnGoTransitFactory,
+            KomuterLinkTransitFactory,
             BonobusTransitFactory,
-            GautrainTransitFactory(),
-            MetroMoneyTransitFactory(),
+            GautrainTransitFactory,
+            MetroMoneyTransitFactory,
             OysterTransitData.FACTORY,
             KazanTransitFactory,
             UmarshTransitFactory,
@@ -90,5 +92,5 @@ object ClassicCardFactoryRegistry {
             // This check must be LAST.
             //
             // This is for agencies who don't have identifying "magic" in their card.
-            FallbackFactory())
+            FallbackFactory)
 }
