@@ -29,6 +29,7 @@ import kotlinx.serialization.CompositeDecoder.Companion.READ_ALL
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 
 // TODO: Remove when https://github.com/Kotlin/kotlinx.serialization/issues/204 is fixed
 private fun InputStream.readToString(maxSize: Int = 64*1024) : String {
@@ -43,7 +44,7 @@ class JsonKotlinFormat : CardExporter, CardImporter {
     override fun writeCard(s: OutputStream, card: Card) {
         s.write(writeCard(card).toUtf8Bytes())
     }
-    fun writeCard(card: Card) = Json(indented = true, encodeDefaults = false).stringify(Card.serializer(), card)
+    fun writeCard(card: Card) = Json(JsonConfiguration(prettyPrint = true, encodeDefaults = false)).stringify(Card.serializer(), card)
 
     /**
      * Note: This currently reads 64 KiB of the file, and passes it to kotlinx.serialization.
