@@ -116,7 +116,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
 
         fun keysFromJSON(jsonRoot: JsonObject, allowMissingIdx: Boolean, defaultBundle: String):
                 Map<Int, List<ClassicSectorAlgoKey>> {
-            val keysJSON = jsonRoot[KEYS].jsonArray
+            val keysJSON = jsonRoot[KEYS]!!.jsonArray
             val keys = mutableMapOf<Int, MutableList<ClassicSectorAlgoKey>>()
             for ((i, jsonElement) in keysJSON.withIndex()) {
                 val json = jsonElement.jsonObject
@@ -150,7 +150,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
 
             return when (json.getPrimitiveOrNull(TRANSFORM_KEY)?.contentOrNull ?: "none") {
                 "none" -> {
-                    val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content)
+                    val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]!!.content)
 
                     // Check that the key is the correct length
                     if (keyData.size != KEY_LEN) {
@@ -162,7 +162,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
                             bundle = json.getPrimitiveOrNull(KEY_BUNDLE)?.contentOrNull ?: defaultBundle)
                 }
                 "touchngo" -> {
-                    TouchnGoKey(type = kt, key = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content))
+                    TouchnGoKey(type = kt, key = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]!!.content))
                 }		
                 else -> null
             }
