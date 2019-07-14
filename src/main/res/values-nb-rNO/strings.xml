@@ -842,4 +842,7 @@
     <string name="barnaul_ewallet">Elektronisk-lommebok</string>
     <string name="location_santiago_chile">Santiago de Chile, Chile</string>
     <string name="location_warsaw">Warszawa, Polen</string>
+    <string name="location_tbilisi">Tbilisi, Georgia</string>
+    <string name="emv_service_code">Tjenestekode</string>
+    <string name="card_name_kazan">Kazan-transportkort</string>
 </resources>
