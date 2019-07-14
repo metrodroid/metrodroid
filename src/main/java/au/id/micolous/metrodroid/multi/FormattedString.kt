@@ -27,6 +27,7 @@ import android.os.Parcel
 import android.text.*
 import android.text.style.*
 import au.id.micolous.metrodroid.ui.HiddenSpan
+import java.util.Locale
 
 actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     actual val unformatted: String
@@ -62,7 +63,7 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             return FormattedString(res)
         }
-        private fun localeString(input: String, lang: String?): FormattedString {
+        private fun localeString(input: String, lang: String?, debugColor: Int): FormattedString {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || !Preferences.localisePlaces) {
                 return FormattedString(input)
             }
@@ -71,6 +72,8 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
             val localeSpan = LocaleSpan(locale)
             val res = SpannableString(input)
             res.setSpan(localeSpan, 0, input.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (Preferences.debugSpans)
+                res.setSpan(ForegroundColorSpan(debugColor), 0, input.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             return FormattedString(res)
         }
         actual fun language(input: String, lang: String): FormattedString = localeString(input, lang, Color.BLUE)

@@ -160,6 +160,12 @@
                 android:key="pref_show_raw_ids"
                 android:defaultValue="false" />
 
+            <CheckBoxPreference
+                    android:title="@string/show_debug_spans"
+                    android:summary="@string/show_debug_spans_desc"
+                    android:key="pref_debug_spans"
+                    android:defaultValue="false" />
+
             <ListPreference
                     android:key="pref_raw_level"
                     android:title="@string/raw_level"

@@ -21,10 +21,12 @@ package au.id.micolous.metrodroid.multi
 
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.text.style.LocaleSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
@@ -60,6 +62,8 @@ actual object Localizer : LocalizerInterface {
         val spanned = SpannableString(appRes.getText(res))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Preferences.localisePlaces) {
             spanned.setSpan(LocaleSpan(Locale.getDefault()), 0, spanned.length, 0)
+            if (Preferences.debugSpans)
+                spanned.setSpan(ForegroundColorSpan(Color.GREEN), 0, spanned.length, 0)
         }
         return FormattedString(spanned).format(*v)
     }
