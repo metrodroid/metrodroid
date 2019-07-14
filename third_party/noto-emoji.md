@@ -6,6 +6,8 @@ Some vector glyphs used in Metrodroid are derived from [Noto Emoji][0]:
 
 * `bus`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f68c.svg
 
+* `car`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f697.svg
+
 * `cashier_yen`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f4b4.svg
 
 * `ferry`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u26f4.svg

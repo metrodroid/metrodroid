@@ -208,7 +208,8 @@ abstract class Trip : Parcelable {
         POS(7, R.string.mode_pos),
         OTHER(8, R.string.mode_unknown),
         BANNED(9, R.string.mode_banned),
-        TROLLEYBUS(10, R.string.mode_trolleybus)
+        TROLLEYBUS(10, R.string.mode_trolleybus),
+        TOLL_ROAD(11, R.string.mode_toll_road),
     }
 
     class Comparator : kotlin.Comparator<Trip> {
