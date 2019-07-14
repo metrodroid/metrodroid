@@ -1,0 +1,16 @@
+{
+  "tagId": "12345678",
+  "scannedAt": {
+    "timeInMillis": 1,
+    "tz": "Etc/UTC"
+  },
+  "mifareClassic": {
+    "isPartialRead": true,
+    "sectors": [
+      {
+        "blocks": [
+        ],
+      },
+    ]
+  }
+}
