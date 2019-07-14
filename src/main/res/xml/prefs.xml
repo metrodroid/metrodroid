@@ -87,9 +87,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/advanced_options">
-        <PreferenceScreen android:title="@string/nfc"
-                          android:key="pref_nfc_screen"
+        <PreferenceScreen
+            android:title="@string/nfc"
+            android:key="pref_nfc_screen"
             android:summary="@string/nfc_options_desc">
+            <PreferenceCategory android:title="@string/hardware">
+                <au.id.micolous.metrodroid.ui.NfcSettingsPreference
+                    android:key="pref_android_nfc"
+                    android:title="@string/android_nfc_settings" />
+            </PreferenceCategory>
+
             <PreferenceCategory android:title="@string/mifare_classic">
                 <au.id.micolous.metrodroid.ui.NumberPickerPreference
                     android:title="@string/auth_retries"

@@ -1908,4 +1908,6 @@
     <string name="raw_level">Raw level</string>
     <string name="raw_level_desc">How much raw info to show in passed data. Not all parsers support this option</string>
     <string name="raw_header">Raw fields</string>
+    <string name="hardware">Hardware</string>
+    <string name="android_nfc_settings">Android NFC settings</string>
 </resources>
