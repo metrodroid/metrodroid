@@ -23,18 +23,12 @@
 package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ClassicSectorRaw(
-        @Optional
         val blocks: List<ImmutableByteArray> = emptyList(),
-        @Optional
         val keyA: ImmutableByteArray? = null,
-        @Optional
         val keyB: ImmutableByteArray? = null,
-        @Optional
         val isUnauthorized: Boolean = false,
-        @Optional
         val error: String? = null)

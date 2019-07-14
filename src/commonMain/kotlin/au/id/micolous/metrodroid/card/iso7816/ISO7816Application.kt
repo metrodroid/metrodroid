@@ -28,20 +28,15 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.reflect.KClass
 
 @Serializable
 data class ISO7816ApplicationCapsule(
-        @Optional
         val files: Map<ISO7816Selector, ISO7816File> = emptyMap(),
-        @Optional
         val sfiFiles: Map<Int, ISO7816File> = emptyMap(),
-        @Optional
         val appFci: ImmutableByteArray? = null,
-        @Optional
         val appName: ImmutableByteArray? = null) {
     constructor(mc: ISO7816ApplicationMutableCapsule) : this(
             files = mc.files,

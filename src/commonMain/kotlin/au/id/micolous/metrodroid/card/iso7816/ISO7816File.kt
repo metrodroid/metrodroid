@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -38,12 +37,9 @@ import kotlinx.serialization.Transient
 @XMLIgnore("selector")
 data class ISO7816File internal constructor(
         @XMLId("data")
-        @Optional
         val binaryData: ImmutableByteArray? = null,
         @XMLListIdx("index")
-        @Optional
         private val records: Map<Int, ImmutableByteArray> = emptyMap(),
-        @Optional
         val fci: ImmutableByteArray? = null) {
     @Transient
     val recordList get() = records.entries.sortedBy { it.key }.map { it.value }.toList()

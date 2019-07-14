@@ -26,17 +26,13 @@ package au.id.micolous.metrodroid.card.desfire.files
 
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RawDesfireFile (
         val settings: ImmutableByteArray?,
         val data: ImmutableByteArray?,
-        @Optional
         val error: String? = null,
-        @Optional
         @XMLId("unauthorized")
         val isUnauthorized: Boolean = false,
-        @Optional
         val readCommand: Byte? = null)

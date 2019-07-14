@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
-import kotlinx.serialization.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -39,7 +38,6 @@ class ClassicCard constructor(
         @XMLListIdx("index")
         @SerialName("sectors")
         val sectorsRaw: List<ClassicSectorRaw>,
-        @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
     companion object {

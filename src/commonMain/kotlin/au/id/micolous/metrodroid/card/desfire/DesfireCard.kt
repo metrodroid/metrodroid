@@ -33,7 +33,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -44,9 +43,7 @@ data class DesfireCard constructor(
         val manufacturingData: ImmutableByteArray,
         @XMLListIdx("id")
         val applications: Map<Int, DesfireApplication>,
-        @Optional
         override val isPartialRead: Boolean = false,
-        @Optional
         val appListLocked: Boolean = false) : CardProtocol() {
 
     @Transient
