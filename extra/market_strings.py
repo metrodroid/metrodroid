@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# -*- mode: python; indent-tabs-mode: nil; tab-width: 2 -*-
+# -*- mode: python; indent-tabs-mode: nil; tab-width: 4 -*-
 """
 market_strings.py
 Gets the current strings for the Android Market / Google Play Store in a
 given language.
 
-Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,11 +23,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from __future__ import print_function
-from argparse import ArgumentParser
-from lxml import objectify
-from os import scandir, sep, altsep
+import argparse
+import re
+import os
 import os.path
-import sys
+from typing import Generator, Optional, Text, Tuple
+from xml.etree import ElementTree
 
 METRODROID_ROOT = os.path.join(os.path.dirname(__file__), '..')
 RESOURCES_DIR = os.path.join(METRODROID_ROOT, 'src/main/res')
@@ -37,163 +38,227 @@ RESC_FILE = 'market.xml'
 DEFAULT_MARKET = os.path.join(RESOURCES_DIR, DEFAULT_LANG, RESC_FILE)
 CHANGELOG = 'market_changelog_'
 CHANGELOG_GENERIC = CHANGELOG + 'generic'
-
-def get_languages():
-  with scandir(RESOURCES_DIR) as it:
-    for entry in it:
-      if not entry.is_dir():
-        continue
-
-      fullpath = os.path.join(entry.path, RESC_FILE)
-      if not os.path.exists(fullpath):
-        continue
-
-      if entry.name == DEFAULT_LANG:
-        yield ('default', fullpath)
-
-      if entry.name.startswith(OTHER_LANG):
-        l = entry.name[len(OTHER_LANG):]
-        yield (l, fullpath)
+DOUBLE_NEWLINE = re.compile(r'^(?:\\n)*(.*)(?:\\n)*$', re.U | re.M)
 
 
-def list_languages():
-  print('Available languages:')
-  for c, p in get_languages():
-    print('* %s: %s' % (c, p))
+def get_languages() -> Generator[Tuple[Text, Text]]:
+    """Gets a list of available Market language resources.
 
-def android_resource_unescape(d):
-  d = d.replace('\n', '').replace('\r', '')
-  d = d.replace('\\n', '\n').replace('\\\'', '\'')
-  return d
+    Generates:
+        (language code, full path)
+    """
+    for entry in os.scandir(RESOURCES_DIR):
+        if not entry.is_dir():
+            continue
 
-def show_language(lang):
-  if (sep in lang) or (altsep is not None and altsep in lang):
-    print('Path characters are not allowed in language codes.')
-    return
+        path = os.path.join(entry.path, RESC_FILE)
+        if not os.path.exists(path):
+            continue
 
-  market_path = DEFAULT_MARKET
-  if lang != 'default':
-    market_path = os.path.join(RESOURCES_DIR, OTHER_LANG + lang, RESC_FILE)
+        if entry.name == DEFAULT_LANG:
+            yield ('default', path)
 
-  if not os.path.exists(market_path):
-    print('No market resource found (%s)' % market_path)
-    return
-  
-  print('Translations for %s' % lang)
-  xml = objectify.parse(market_path)
-  title = None
-  short_desc = None
-  long_desc = None
-  
-  for t in xml.getroot().iterchildren():
-    if t.tag != 'string':
-      continue
-    if t.get('name') == 'market_title':
-      title = str(t)
-    if t.get('name') == 'market_short_desc':
-      short_desc = str(t)
-    if t.get('name') == 'market_long_desc':
-      long_desc = str(t)
-    
-    if title and short_desc and long_desc:
-      break
-  
-  print('')
-  print('Title:')
-  print(title)
-  
-  print('')
-  print('Short description:')
-  print(short_desc)
-
-  print('')
-  print('Full description:')
-  print(android_resource_unescape(long_desc))
+        if entry.name.startswith(OTHER_LANG):
+            lang_code = entry.name[len(OTHER_LANG):]
+            yield (lang_code, path)
 
 
-def show_changelog(version=None):
-  # Figure out what the changelog is in English -- this gives the latest
-  # version.
-  xml = objectify.parse(DEFAULT_MARKET)
+def list_languages() -> None:
+    """Prints a list of available languages."""
+    print('Available languages:')
+    for lang_code, path in get_languages():
+        print(f'* {lang_code}: {path}')
 
-  v = 0
-  d = None
 
-  for t in xml.getroot().iterchildren():
-    if t.tag != 'string':
-      continue
-    if version is not None:
-      if t.get('name') == CHANGELOG + str(version):
-        d = str(t)
-        v = version
-        break
-    elif t.get('name') == CHANGELOG_GENERIC:
-      continue
-    elif t.get('name').startswith(CHANGELOG):
-      tv = int(t.get('name')[len(CHANGELOG):])
-      if tv > v:
-        d = str(t)
-        v = tv
+def android_resource_unescape(value: Text) -> Text:
+    """Unescapes an Android resource string."""
+    value = '\n'.join(m.group(1) for m in DOUBLE_NEWLINE.finditer(value))
 
-  if d is None:
-    print('Could not find notes for version %d' % version)
-    return
+    return value.replace('\r', '')\
+        .replace('\\n', '\n')\
+        .replace('\\\'', '\'')
 
-  print('<en>')
-  print(android_resource_unescape(d))
-  print('</en>')
-  print('')
 
-  # Now we know the latest English changelog, search for it in other files.
-  v = CHANGELOG + str(v)
-  for c, p in get_languages():
-    if c == 'default':
-      continue
-    
-    f = False
-    generic = None
-    for t in objectify.parse(p).getroot().iterchildren():
-      if t.tag != 'string':
-        continue
-      if t.get('name') == v:
-        print('<%s>' % c)
-        print(android_resource_unescape(str(t)))
-        print('</%s>' % c)
-        print('')
-        f = True
-        break
-      if t.get('name') == CHANGELOG_GENERIC:
-        generic = android_resource_unescape(str(t))
-    
-    if not f:
-      if generic:
-        print('## Generic changelog for %s:' % c)
-        print('<%s>' % c)
-        print(generic)
-        print('</%s>' % c)
-      else:
-        print('## No changelog for %s' % c)
-      print('')
-      
+def show_language(lang: Optional[Text] = None) -> None:
+    """Shows Market strings for a given language.
 
-def main():
-  parser = ArgumentParser()
-  parser.add_argument('language', nargs='?',
-    help='Language to show Market resources for. If not specified, shows a list of options. If "default", shows the default resources (English). If "notes", show the latest release notes for all translated languages.')
+    Args:
+        lang: language code to display strings for, or None for the default
+              language.
+    Raises:
+        ValueError: on invalid input
+        IOError: when the market resource file cannot be loaded
+    """
+    market_path = DEFAULT_MARKET
 
-  parser.add_argument('-v', '--version', type=int,
-    help='If used with "latest", will show the changelog for a specific version, instead of the latest.')
+    if lang:
+        if (os.sep in lang) or (os.altsep is not None and os.altsep in lang):
+            raise ValueError('Path characters not allowed in language codes')
 
-  options = parser.parse_args()
+        market_path = os.path.join(RESOURCES_DIR, OTHER_LANG + lang, RESC_FILE)
 
-  if options.language:
-    if options.language == 'notes':
-      show_changelog(options.version)
+    if not os.path.exists(market_path):
+        raise IOError(f'No market resource found ({market_path})')
+
+    if lang:
+        print(f'Translations for {lang}')
     else:
-      show_language(options.language)
-  else:
-    list_languages()
+        print('Default market information')
+
+    tree = ElementTree.parse(market_path)
+    title = None
+    short_desc = None
+    long_desc = None
+
+    for tag in tree.iterfind('string'):
+        name = tag.get('name')
+        if name == 'market_title':
+            title = tag.text
+        elif name == 'market_short_desc':
+            short_desc = tag.text
+        elif name == 'market_long_desc':
+            long_desc = tag.text
+
+        if title and short_desc and long_desc:
+            break
+
+    print()
+    print('Title:')
+    print(title)
+
+    print()
+    print('Short description:')
+    print(short_desc)
+
+    print()
+    print('Full description:')
+    print(android_resource_unescape(long_desc))
+
+
+def get_changelog_for_version(
+        path: Text,
+        version: Optional[int] = None) -> Tuple[Optional[int], Optional[Text]]:
+    """Gets the changelog for a given version code.
+
+    Args:
+        path: path to market.xml file
+        version: the version to fetch, or None for the latest
+
+    Returns:
+        tuple of (version_code, notes).
+        If a generic changelog was returned, version_code = None.
+        If no notes are available, notes = None.
+    """
+
+    version_tag = None if version is None else (CHANGELOG + str(version))
+
+    notes = None
+    generic = None
+    for tag in ElementTree.parse(path).iterfind('string'):
+        name = tag.get('name')
+        if name == CHANGELOG_GENERIC:
+            generic = tag.text
+            continue
+
+        if version_tag:
+            # We have a specific target
+            if name == version_tag:
+                return version, android_resource_unescape(tag.text)
+        else:
+            if name.startswith(CHANGELOG):
+                this_version = int(name[len(CHANGELOG):])
+                if version is None or this_version > version:
+                    notes = tag.text
+                    version = this_version
+
+    if notes:
+        # Found notes, and this was the latest version.
+        return version, android_resource_unescape(notes)
+
+    if generic:
+        # Didn't find notes for the specific version, but a generic
+        # alternative is available.
+        return None, android_resource_unescape(generic)
+
+    # Nothing found at all
+    return None, None
+
+
+def show_changelog(version: Optional[int] = None) -> None:
+    """Shows the changelog for each language.
+
+    The default changelog will be shown if the latest version does not have
+    an available changelog.
+
+    Args:
+        version: the version to display, or None for the latest.
+
+    """
+    # Figure out what the changelog is in English -- this gives the latest
+    # version.
+
+    version, english_notes = get_changelog_for_version(DEFAULT_MARKET, version)
+
+    if version is None or english_notes is None:
+        raise KeyError(
+            'Could not find specific English notes for that version')
+
+    print(f'## Release notes for version {version}')
+
+    print('<en>')
+    print(english_notes)
+    print('</en>')
+    print()
+
+    # Now we know the latest English changelog, search for it in other files.
+    for lang_code, path in get_languages():
+        if lang_code == 'default':
+            continue
+
+        found_version, notes = get_changelog_for_version(path, version)
+
+        if notes:
+            if not found_version:
+                print(f'## Generic changelog for {lang_code}:')
+            print(f'<{lang_code}>')
+            print(notes)
+            print(f'</{lang_code}>')
+        else:
+            print(f'## No changelog for {lang_code}')
+
+        print()
+
+
+def main() -> None:
+    """Main method."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'language',
+        nargs='?',
+        help='Language to show Market resources for. If not specified, shows '
+             'a list of options. If "default", shows the default resources '
+             '(English). If "notes", show the latest release notes for all '
+             'translated languages.')
+
+    parser.add_argument(
+        '-v',
+        '--version',
+        type=int,
+        help='If used with "notes", will show the changelog for a specific '
+             'version, instead of the latest.')
+
+    options = parser.parse_args()
+
+    if options.language:
+        if options.language == 'notes':
+            show_changelog(options.version)
+        elif options.language == 'default':
+            show_language()
+        else:
+            show_language(options.language)
+    else:
+        list_languages()
+
 
 if __name__ == '__main__':
-  main()
-
+    main()
