@@ -55,7 +55,7 @@ class OpalTest {
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
         assertNotNull(i)
-        assertEquals(OpalTransitData.NAME, i.name)
+        assertEquals(OpalTransitData.CARD_INFO.name, i.name)
         assertEquals("3085 2200 1234 5670", i.serialNumber)
 
         // Test TransitData

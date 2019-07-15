@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Traditional Chinese -->
 <resources>
-    <!-- This empty resource file is needed to trigger localised station names for EasyCard. -->
+    <string name="clipper_ticket_type_senior">長者</string>
+    <string name="clipper_ticket_type_youth">青少年</string>
 </resources>

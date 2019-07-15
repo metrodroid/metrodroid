@@ -2,4 +2,6 @@
 <!-- Simplified Chinese -->
 <resources>
     <string name="manufacturer_fudan_microelectronics">复旦微电子集团</string>
+    <string name="card_name_tunion">交通联合</string>
+    <string name="card_name_opal">澳宝卡 (Opal Card)</string>
 </resources>

@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.multi.Parcelize
@@ -74,7 +75,7 @@ class OpalTransitData (
 ): TransitData() {
 
     override val cardName: String
-        get() = NAME
+        get() = Localizer.localizeString(NAME)
 
     public override val balance: TransitCurrency?
         get() = TransitCurrency.AUD(mBalance)
@@ -114,7 +115,7 @@ class OpalTransitData (
         get() = "https://m.opal.com.au/"
 
     companion object {
-        const val NAME = "Opal"
+        private val NAME = R.string.card_name_opal
         const val APP_ID = 0x314553
         const val FILE_ID = 0x7
 
@@ -143,7 +144,8 @@ class OpalTransitData (
             }
         }
 
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 imageId = R.drawable.opal_card,
                 name = NAME,
                 locationId = R.string.location_sydney_australia,

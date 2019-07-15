@@ -309,4 +309,5 @@
     <string name="felica_service_title_format">サービス: %1$s (%2$s)</string>
     <string name="record_title_format">レコード: %s</string>
     <string name="binary_title_format">バイナリデータ</string>
+    <string name="card_name_opal">Opal (オパール)</string>
 </resources>

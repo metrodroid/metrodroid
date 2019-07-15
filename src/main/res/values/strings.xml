@@ -1118,21 +1118,38 @@
     <string name="metroq_day_pass">Day pass</string>
 
     <!--
-        Opal (Sydney, AU).
-        These are deliberately separated strings in order to match the terminology of the agency.
+    Opal (Sydney, AU).
+    These are deliberately separated strings in order to match the terminology of the agency.
+
+    Multi-language support: https://transportnsw.info/tickets-opal/opal/multicultural-support
     -->
+    <!--
+    Translators: "Opal" is the name of Sydney's transit card. Transliterate only.
+
+    Chinese (澳宝卡): https://transportnsw.info/document/2100/opal-smarter-ticketing-brochure-simplified-chinese.pdf
+    Japanese (オパール): https://transportnsw.info/document/3709/contactless-payments-faq-japanese.pdf
+    Korean (does not transliterate): https://transportnsw.info/document/3710/contactless-payments-faqs-korean.pdf
+    -->
+    <string name="card_name_opal" translatable="false">Opal</string>
     <string name="opal_automatic_top_up">Automatic top up</string>
     <string name="opal_weekly_trips">Weekly trips</string>
     <string name="opal_vehicle_bus">Bus</string>
-    <string name="opal_vehicle_ferry_lr">Ferry or Light Rail</string>
+    <!-- Translators: Opal uses the same code for ferry and light rail trips.
+    Unlike Melbourne, TfNSW uses the term "light rail", not "tram". Sydney's
+    last tram service was on 1961-02-25. -->
+    <string name="opal_vehicle_ferry_lr">Ferry or light rail</string>
     <string name="opal_vehicle_rail">Rail</string>
+    <!-- This describes Opal's state machine -->
     <string name="opal_action_none">None (new, unused card)</string>
     <string name="opal_action_new_journey">New journey</string>
     <string name="opal_action_transfer_same_mode">Transfer (from same mode)</string>
     <string name="opal_action_transfer_diff_mode">Transfer (from different mode)</string>
-    <string name="opal_action_manly_new_journey">New journey (Manly Ferry)</string>
-    <string name="opal_action_manly_transfer_same_mode">Transfer (from other ferry to Manly Ferry)</string>
-    <string name="opal_action_manly_transfer_diff_mode">Transfer (from other mode to Manly Ferry)</string>
+    <!-- Translators: Manly is a suburb of Sydney, which has its own ferry line. -->
+    <string name="opal_action_manly_new_journey">New journey (Manly ferry)</string>
+    <!-- Translators: Manly is a suburb of Sydney, which has its own ferry line. -->
+    <string name="opal_action_manly_transfer_same_mode">Transfer (from other ferry to Manly ferry)</string>
+    <!-- Translators: Manly is a suburb of Sydney, which has its own ferry line. -->
+    <string name="opal_action_manly_transfer_diff_mode">Transfer (from other mode to Manly ferry)</string>
     <string name="opal_action_journey_completed_distance">Journey completed (distance fare)</string>
     <string name="opal_action_journey_completed_flat_rate">Journey completed (flat-rate fare)</string>
     <string name="opal_action_journey_completed_auto_off">Journey completed (failure to tap off)</string>
