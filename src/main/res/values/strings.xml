@@ -1206,7 +1206,7 @@
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
 
-    <string name="card_name_beijing">Beijing Municipal Administration & Communication Card</string>
+    <string name="card_name_beijing">Beijing Municipal Administration &amp; Communication Card</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <!--
     Translators: Name of an interoperable transit card system used in China. May be transliterated.
@@ -1744,14 +1744,14 @@
     Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
     encryption keys.
     -->
-    <string name="leap_locked_warning">This card was not unlocked. Please turn on \"Retrieval of Leap keys\" in the NFC Preferences screen.</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on \"Retrieve keys for Leap cards\" in the NFC preferences.</string>
     <!--
     Translators:
     - Shown in "supported cards" list.
     - keys = encryption keys
     - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
     -->
-    <string name="card_note_leap">Requires retrieving keys from TFI, which must be turned on in the NFC Preferences screen.</string>
+    <string name="card_note_leap">Requires retrieving keys from TFI, which must be turned on in the NFC preferences.</string>
 
     <!-- Oyster (London, UK) -->
     <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
@@ -1765,7 +1765,7 @@
     <string name="invalid_json">Invalid JSON</string>
     <string name="invalid_key_file">Invalid keyfile</string>
     <!-- Translators: "key file" is a file containing encryption keys. -->
-    <string name="key_file_empty">Empty keyfile"</string>
+    <string name="key_file_empty">Empty keyfile!</string>
 
     <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
     <string name="untitled_key_group">Untitled key group</string>
@@ -1884,13 +1884,13 @@
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_ok">OK, on</string>
+    <string name="rkf_status_ok">OK, working</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_action_pending">Action pending</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_temp_disabled">Temporarily off or suspended</string>
+    <string name="rkf_status_temp_disabled">Temporarily or permanently suspended</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_not_ok">Permanently off</string>
+    <string name="rkf_status_not_ok">Permanently suspended</string>
     <string name="location_tbilisi">Tbilisi, Georgia</string>
     <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
