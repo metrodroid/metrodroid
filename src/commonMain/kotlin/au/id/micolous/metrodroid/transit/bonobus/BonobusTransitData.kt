@@ -36,7 +36,7 @@ import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.math.absoluteValue
 
-private const val NAME = "Bonobus"
+private const val NAME = "Bonobús"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_cadiz,
