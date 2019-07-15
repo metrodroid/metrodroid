@@ -1,7 +1,8 @@
 /*
  * TransitIdentity.kt
  *
- * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,4 +20,40 @@
 
 package au.id.micolous.metrodroid.transit
 
-class TransitIdentity(val name: String, val serialNumber: String?)
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.StringResource
+
+class TransitIdentity private constructor(
+        private val nameString: String? = null,
+        private val nameResource: StringResource? = null,
+        /**
+         * Optional serial number for the card, if known.
+         */
+        val serialNumber: String? = null) {
+
+    /**
+     * @param name Name of the card, as a string. Prefer to use the [StringResource] version instead.
+     */
+    constructor(name: String, serialNumber: String? = null) :
+            this(nameString = name, serialNumber = serialNumber)
+
+    /**
+     * @param name Name of the card, as [StringResource].
+     */
+    constructor(name: StringResource, serialNumber: String? = null) :
+            this(nameResource = name, serialNumber = serialNumber)
+
+    /**
+     * Gets the name for the card, localizing if appropriate.
+     */
+    val name: String get() {
+        if (nameResource != null)
+            return Localizer.localizeString(nameResource)
+
+        if (nameString != null)
+            return nameString
+
+        // shouldn't happen
+        return ""
+    }
+}
