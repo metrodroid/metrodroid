@@ -114,7 +114,7 @@
     * Use "smart" quotation marks (eg: ’).
     * The full changelog is only in English.
     -->
-    <string name="market_changelog_43">• Adds support for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh and Santiago bip, and Warsaw card\n• Improvements and fixes for Intercode, Kartu Multi Trip, RicaricaMi, Touch 'n Go and Troika cards\n• Fixes some bugs that caused Metrodroid to crash, and some bugs with MIFARE Classic cards\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_43">• Adds support for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh and Santiago bip, and Warsaw card\n• Improvements and fixes for Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go and Troika cards\n• Fixes some bugs that caused Metrodroid to crash, and some bugs with MIFARE Classic cards\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 
     <!-- Changelog 42 is same as 41. -->
