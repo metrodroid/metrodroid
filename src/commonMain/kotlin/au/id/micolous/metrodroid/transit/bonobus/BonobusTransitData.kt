@@ -1,5 +1,5 @@
 /*
- * MetroMoneyTransitData.kt
+ * BonobusTransitData.kt
  *
  * Copyright 2018 Google
  *
