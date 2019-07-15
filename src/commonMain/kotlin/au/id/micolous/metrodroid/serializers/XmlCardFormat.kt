@@ -352,7 +352,6 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
 
 @Serializable
 class DesfireManufacturingDataXmlAdapter(
-        @Optional
         val raw: ImmutableByteArray? = null,
         @XMLId("batch-no")
         val batchno: Long,
@@ -419,23 +418,14 @@ class DesfireFileSettingsXmlAdapter(
         private val accessrights: ImmutableByteArray,
         private val filetype: Byte,
         // Old Farebot (before 2014-09-01) called this "commsetting" -- but never used this field.
-        @Optional
         private val commsettings: Byte = 0,
-        @Optional
         private val filesize: Int = 0,
-        @Optional
         private val recordsize: Int = 0,
-        @Optional
         private val maxrecords: Int = 0,
-        @Optional
         private val currecords: Int = 0,
-        @Optional
         private val min: Int = 0,
-        @Optional
         private val max: Int = 0,
-        @Optional
         private val limitcredit: Int = 0,
-        @Optional
         private val limitcreditenabled: Boolean = false
 ) {
     private fun encodeInt3(v: Int) = ImmutableByteArray.ofB(v,
@@ -460,14 +450,10 @@ class DesfireFileSettingsXmlAdapter(
 
 @Serializable
 class DesfireFileXmlAdapter(
-        @Optional
         val settings: DesfireFileSettingsXmlAdapter? = null,
         // Old Farebot (before 2014-09-01) was missing this tag when it couldn't read a file
-        @Optional
         val data: ImmutableByteArray? = null,
-        @Optional
         val error: String? = null,
-        @Optional
         val unauthorized: Boolean = false)
 
 @Serializable
@@ -478,19 +464,13 @@ class ClassicBlockRawXmlAdapter(
 @Serializable
 class ClassicSectorRawXmlAdapter(
         @XMLListIdx("index")
-        @Optional
         val blocks: List<ClassicBlockRawXmlAdapter> = emptyList(),
-        @Optional
         val key: ImmutableByteArray? = null,
-        @Optional
         @XMLId("keytype")
         val keyType: String? = null,
         @XMLId("unauthorized")
-        @Optional
         val isUnauthorized: Boolean = false,
-        @Optional
         val error: String? = null,
-        @Optional
         val invalid: Boolean = false)
 
 @Serializable
@@ -500,35 +480,26 @@ class ISO7816FileXMLAdapterSfi(val file: ISO7816File)
 @XMLIgnore("entry")
 class ISO7816ApplicationXmlAdapter(
         @XMLId("application-data")
-        @Optional
         val appFci: ImmutableByteArray? = null,
         @XMLId("application-name")
-        @Optional
         val appName: ImmutableByteArray? = null,
         val type: String,
         @XMLListIdx("name")
         val records: Map<ISO7816Selector, ISO7816File>,
         @XMLId("sfi-files")
         @XMLListIdx("sfi")
-        @Optional
         val sfiFiles: Map<Int, ISO7816FileXMLAdapterSfi> = emptyMap(),
         val tagid: String,
-        @Optional
         val balance: Int = 0,
-        @Optional
         @XMLId("extra-records")
         val extraRecords: List<ImmutableByteArray> = emptyList(),
-        @Optional
         @XMLListIdx("idx")
         @XMLHex
         val balances: Map<Int, String> = emptyMap(),
         @XMLListIdx("idx")
-        @Optional
         private val purses: Map<Int, ImmutableByteArray> = emptyMap(),
         @XMLListIdx("idx")
-        @Optional
         private val histories: Map<Int, ImmutableByteArray> = emptyMap(),
-        @Optional
         @XMLHex
         @XMLId("gpo-response")
         private val gpoResponse: ImmutableByteArray? = null

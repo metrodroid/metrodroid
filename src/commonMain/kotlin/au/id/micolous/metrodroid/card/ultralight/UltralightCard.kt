@@ -30,7 +30,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -46,11 +45,9 @@ data class UltralightCard constructor(
          *
          * @return Model of Ultralight card this is.
          */
-        @Optional
         val cardModel: String = "",
         @XMLListIdx("index")
         val pages: List<UltralightPage>,
-        @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
     @Transient
     override val rawData: List<ListItem>

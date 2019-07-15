@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.hexString
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
@@ -49,7 +48,6 @@ data class FelicaCard(
         val pMm: ImmutableByteArray?,
         @XMLListIdx("code")
         val systems: Map<Int, FelicaSystem>,
-        @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
     /**

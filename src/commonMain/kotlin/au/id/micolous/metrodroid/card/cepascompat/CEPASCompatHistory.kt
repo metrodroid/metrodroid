@@ -21,13 +21,11 @@
 package au.id.micolous.metrodroid.card.cepascompat
 
 import au.id.micolous.metrodroid.serializers.XMLInline
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 
 // This file is only for reading old dumps
 @Serializable
 data class CEPASCompatHistory(
-        @Optional
         val id: Int = 0,
         @XMLInline
         val transactions: List<CEPASCompatTransaction>)

@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.card.ultralight
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -33,9 +32,7 @@ import kotlinx.serialization.Transient
 @Serializable
 data class UltralightPage(
         @SerialName("data")
-        @Optional
         val dataRaw: ImmutableByteArray = ImmutableByteArray.empty(),
-        @Optional
         @XMLId("unauthorized")
         val isUnauthorized: Boolean = false) {
     @Transient

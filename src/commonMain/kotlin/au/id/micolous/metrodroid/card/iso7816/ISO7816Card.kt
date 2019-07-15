@@ -42,7 +42,6 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import kotlinx.serialization.Optional
 
 /**
  * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
@@ -70,7 +69,6 @@ object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
 @Serializable
 data class ISO7816Card (
         val applications: List<ISO7816Application>,
-        @Optional
         override val isPartialRead: Boolean = false) :
         CardProtocol() {
 

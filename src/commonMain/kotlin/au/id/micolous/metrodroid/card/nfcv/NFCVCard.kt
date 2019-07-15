@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -45,7 +44,6 @@ data class NFCVCard constructor(
         val sysInfo: ImmutableByteArray?,
         @XMLListIdx("index")
         val pages: List<NFCVPage>,
-        @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
     @Transient
     override val rawData: List<ListItem>

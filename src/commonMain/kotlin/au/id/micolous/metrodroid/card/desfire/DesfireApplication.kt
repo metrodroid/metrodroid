@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -36,9 +35,7 @@ data class DesfireApplication(
         @XMLListIdx("id")
         private val files: Map<Int, RawDesfireFile>,
         @XMLId("auth-log")
-        @Optional
         private val authLog: List<DesfireAuthLog> = emptyList(),
-        @Optional
         private val dirListLocked: Boolean = false) {
     @Transient
     val interpretedFiles: Map<Int, DesfireFile> = files.mapValues { (_, v) -> DesfireFile.create(v) }

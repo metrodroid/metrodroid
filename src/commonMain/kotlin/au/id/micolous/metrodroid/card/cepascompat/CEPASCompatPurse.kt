@@ -27,13 +27,11 @@ package au.id.micolous.metrodroid.card.cepascompat
 import au.id.micolous.metrodroid.serializers.XMLHex
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 
 // This file is only for reading old dumps
 @Serializable
 data class CEPASCompatPurse(
-        @Optional
         @XMLHex
         val can: ImmutableByteArray? = null,
         internal val id: Int = 0,

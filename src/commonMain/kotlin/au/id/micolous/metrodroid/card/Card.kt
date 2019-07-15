@@ -83,21 +83,13 @@ abstract class CardProtocol {
 class Card(
         val tagId: ImmutableByteArray,
         val scannedAt: TimestampFull,
-        @Optional
         val label: String? = null,
-        @Optional
         val mifareClassic: ClassicCard? = null,
-        @Optional
         val mifareDesfire: DesfireCard? = null,
-        @Optional
         val mifareUltralight: UltralightCard? = null,
-        @Optional
         val cepasCompat: CEPASCard? = null,
-        @Optional
         val felica: FelicaCard? = null,
-        @Optional
         val iso7816: ISO7816Card? = null,
-        @Optional
         val vicinity: NFCVCard? = null
 ) {
     @Transient
