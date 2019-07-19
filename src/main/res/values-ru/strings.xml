@@ -379,7 +379,7 @@
     <string name="locked_mfu_card">Заблокированная карта MIFARE Ultralight</string>
     <string name="locked_mfd_card">Заблокированная карта MIFARE DESFire</string>
     <string name="fully_locked_title">Полностью заблокированная карта.</string>
-    <string name="lawyercats">Мптродроид и его авторы не связаны с каким-либо агентством общественного транспорта.</string>
+    <string name="lawyercats">Метродроид и его авторы не связаны с каким-либо агентством общественного транспорта.</string>
     <string name="card_type">Тип карты</string>
     <string name="ez_first_use">Первое использование</string>
     <string name="ez_retail_purchase">Розничная покупка</string>
