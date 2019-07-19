@@ -216,7 +216,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
         }
 
         fun parseTransitIdentity(rawData: ImmutableByteArray): TransitIdentity {
-            return TransitIdentity(Localizer.localizeString(R.string.card_name_troika),
+            return TransitIdentity(R.string.card_name_troika,
                     formatSerial(getSerial(rawData)))
         }
 

@@ -53,7 +53,7 @@ class UnauthorizedUltralightTransitData : UnauthorizedTransitData() {
             override fun parseTransitData(card: UltralightCard) = UnauthorizedUltralightTransitData()
 
             override fun parseTransitIdentity(card: UltralightCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.locked_mfu_card), null)
+                    TransitIdentity(R.string.locked_mfu_card, null)
         }
     }
 }

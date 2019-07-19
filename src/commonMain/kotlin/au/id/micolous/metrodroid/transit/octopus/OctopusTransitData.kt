@@ -120,12 +120,12 @@ class OctopusTransitData private constructor(private val mOctopusBalance: Int?,
                 val hasSzt = card.getSystem(SYSTEMCODE_SZT) != null
                 return when {
                     hasSzt && hasOctopus -> // Dual-mode card.
-                        TransitIdentity(Localizer.localizeString(R.string.card_name_octopus_szt_dual), null)
+                        TransitIdentity(R.string.card_name_octopus_szt_dual, null)
                     hasSzt -> // SZT-only card.
-                        TransitIdentity(Localizer.localizeString(R.string.card_name_szt), null)
+                        TransitIdentity(R.string.card_name_szt, null)
                     else ->
                         // Octopus-only card.
-                        TransitIdentity(Localizer.localizeString(R.string.card_name_octopus), null)
+                        TransitIdentity(R.string.card_name_octopus, null)
                 }
             }
         }

@@ -206,8 +206,7 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
             }
 
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_podorozhnik),
-                        getSerial(card[0,0].data))
+                    TransitIdentity(R.string.card_name_podorozhnik, getSerial(card[0,0].data))
 
             override fun parseTransitData(card: ClassicCard) = PodorozhnikTransitData(card)
         }

@@ -82,7 +82,7 @@ class KievTransitData (private val mSerial: String,
                         "902a69a9d68afa1ddac7b61a512f7d4f") >= 0
 
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_kiev), formatSerial(getSerial(card)))
+                    TransitIdentity(R.string.card_name_kiev, formatSerial(getSerial(card)))
 
             override fun parseTransitData(card: ClassicCard) = KievTransitData(card)
         }

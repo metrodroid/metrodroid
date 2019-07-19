@@ -169,13 +169,14 @@ class OpalTransitData (
             override fun parseTransitData(card: DesfireCard) = parse(card)
 
             override fun parseTransitIdentity(card: DesfireCard): TransitIdentity {
-                val dataRaw = card.getApplication(APP_ID)?.getFile(FILE_ID)?.data
-                        ?: return TransitIdentity(NAME, null)
-                val data = dataRaw.sliceOffLen(0, 5).reverseBuffer()
+                val data = card.getApplication(APP_ID)?.getFile(FILE_ID)?.data
+                        ?.sliceOffLen(0, 5)?.reverseBuffer()
 
-                val lastDigit = data.getBitsFromBuffer(4, 4)
-                val serialNumber = data.getBitsFromBuffer(8, 32)
-                return TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit))
+                return TransitIdentity(NAME, data?.let {
+                    val lastDigit = data.getBitsFromBuffer(4, 4)
+                    val serialNumber = data.getBitsFromBuffer(8, 32)
+                    formatSerialNumber(serialNumber, lastDigit)
+                })
             }
         }
     }

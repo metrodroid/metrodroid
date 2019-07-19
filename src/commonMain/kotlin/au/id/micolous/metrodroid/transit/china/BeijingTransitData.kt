@@ -80,7 +80,7 @@ class BeijingTransitData (val validityStart: Int?,
                 get() = listOf(CARD_INFO)
 
             override fun parseTransitIdentity(card: ChinaCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_beijing), parseSerial(card))
+                    TransitIdentity(R.string.card_name_beijing, parseSerial(card))
 
             override fun parseTransitData(card: ChinaCard) = parse(card)
         }

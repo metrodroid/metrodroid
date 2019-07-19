@@ -49,7 +49,7 @@ class BlankNFCVTransitData : BlankTransitData() {
             override fun parseTransitData(card: NFCVCard) = BlankNFCVTransitData()
 
             override fun parseTransitIdentity(card: NFCVCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.blank_nfcv_card), null)
+                    TransitIdentity(R.string.blank_nfcv_card, null)
         }
     }
 }

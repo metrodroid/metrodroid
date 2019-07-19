@@ -96,7 +96,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
                 get() = listOf(CARD_INFO)
 
             override fun parseTransitIdentity(card: CalypsoApplication) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_ravkav), getSerial(card))
+                    TransitIdentity(R.string.card_name_ravkav, getSerial(card))
 
             override fun check(tenv: ImmutableByteArray) = try {
                 tenv.getBitsFromBuffer(3, 20) in listOf(RAVKAV_NETWORK_ID_A, RAVKAV_NETWORK_ID_B)

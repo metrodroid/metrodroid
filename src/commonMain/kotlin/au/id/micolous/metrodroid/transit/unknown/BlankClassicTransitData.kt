@@ -71,7 +71,7 @@ class BlankClassicTransitData : BlankTransitData() {
             }
 
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.blank_mfc_card), null)
+                    TransitIdentity(R.string.blank_mfc_card, null)
 
             override fun parseTransitData(card: ClassicCard) = BlankClassicTransitData()
         }

@@ -137,7 +137,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
                 if (PodorozhnikTransitData.FACTORY.check(card))
                     nameRes = R.string.card_name_troika_podorozhnik_hybrid
                 val block = mainBlocks.find { TroikaBlock.check(card.getSector(it).getBlock(0).data) }!!
-                return TransitIdentity(Localizer.localizeString(nameRes),
+                return TransitIdentity(nameRes,
                         TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(block).getBlock(0).data)))
             }
 

@@ -77,7 +77,7 @@ class TUnionTransitData (override val serialNumber: String?,
                 get() = listOf(CARD_INFO)
 
             override fun parseTransitIdentity(card: ChinaCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_tunion), parseSerial(card))
+                    TransitIdentity(R.string.card_name_tunion, parseSerial(card))
 
             override fun parseTransitData(card: ChinaCard) = parse(card)
         }

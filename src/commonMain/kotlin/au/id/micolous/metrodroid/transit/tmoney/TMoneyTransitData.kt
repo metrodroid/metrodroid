@@ -73,7 +73,7 @@ open class TMoneyTransitData internal constructor(
 
         val FACTORY: KSX6924CardTransitFactory = object : KSX6924CardTransitFactory {
             override fun parseTransitIdentity(card: KSX6924Application) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_tmoney), card.serial)
+                    TransitIdentity(R.string.card_name_tmoney, card.serial)
 
             override fun parseTransitData(card: KSX6924Application) =
                     TMoneyTransitData(card)

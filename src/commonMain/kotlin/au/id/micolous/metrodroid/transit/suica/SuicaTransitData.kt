@@ -220,9 +220,9 @@ class SuicaTransitData (override val trips: List<SuicaTrip>): TransitData() {
 
             override fun parseTransitData(card: FelicaCard) = parse(card)
 
-            override fun parseTransitIdentity(card: FelicaCard): TransitIdentity {
-                return TransitIdentity(Localizer.localizeString(R.string.card_name_suica), null) // FIXME: Could be ICOCA, etc.
-            }
+            override fun parseTransitIdentity(card: FelicaCard): TransitIdentity =
+                    // TODO: Handle PASMO, ICOCA, etc.
+                    TransitIdentity(R.string.card_name_suica, null)
         }
     }
 }

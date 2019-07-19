@@ -45,7 +45,7 @@ class BlankDesfireTransitData : BlankTransitData() {
             override fun check(card: DesfireCard): Boolean = !card.appListLocked && card.applications.isEmpty()
 
             override fun parseTransitIdentity(card: DesfireCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.blank_mfd_card), null)
+                    TransitIdentity(R.string.blank_mfd_card, null)
 
             override fun parseTransitData(card: DesfireCard) = BlankDesfireTransitData()
         }

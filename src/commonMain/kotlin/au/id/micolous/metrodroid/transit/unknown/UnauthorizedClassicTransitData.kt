@@ -54,7 +54,7 @@ class UnauthorizedClassicTransitData private constructor() : UnauthorizedTransit
             override fun check(card: ClassicCard) = card.sectors.all { it is UnauthorizedClassicSector }
 
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.locked_mfc_card), null)
+                    TransitIdentity(R.string.locked_mfc_card, null)
 
             override fun parseTransitData(card: ClassicCard) =
                     UnauthorizedClassicTransitData()

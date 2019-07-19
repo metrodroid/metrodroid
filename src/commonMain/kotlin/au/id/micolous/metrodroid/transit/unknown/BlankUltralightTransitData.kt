@@ -139,7 +139,7 @@ class BlankUltralightTransitData : BlankTransitData() {
             override fun parseTransitData(card: UltralightCard) = BlankUltralightTransitData()
 
             override fun parseTransitIdentity(card: UltralightCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.blank_mfu_card), null)
+                    TransitIdentity(R.string.blank_mfu_card, null)
         }
     }
 }
