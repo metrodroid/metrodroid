@@ -193,7 +193,7 @@ abstract class Trip : Parcelable {
         return startStation != null && startStation.hasLocation() || endStation != null && endStation.hasLocation()
     }
 
-    enum class Mode(val idx: Int, val description: StringResource) {
+    enum class Mode(val idx: Int, val contentDescription: StringResource) {
         BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains  */
         TRAIN(1, R.string.mode_train),
