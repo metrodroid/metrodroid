@@ -158,11 +158,13 @@ class StationTableReaderTest : BaseInstrumentedTest() {
 
         val txn = MockAdelaideTransaction(0x16f, TRANSPORT_BUS)
         assertEquals(listOf("0x16f"), txn.humanReadableLineIDs)
-        assertEquals(listOf(FormattedString.language("M44", "en-AU")), txn.routeNames)
+        assertEquals(1, txn.routeNames!!.size)
+        assertEquals("M44", txn.routeNames!![0].unformatted)
 
         val txnUnknown = MockAdelaideTransaction(0xffff, TRANSPORT_METRO)
         assertEquals(listOf("0xffff"), txnUnknown.humanReadableLineIDs)
-        assertEquals(listOf(FormattedString("Unknown (0xffff)")), txnUnknown.routeNames)
+        assertEquals(1, txnUnknown.routeNames!!.size)
+        assertEquals("Unknown (0xffff)", txnUnknown.routeNames!![0].unformatted)
 
         // Now check at a TransactionTrip level
         val trips = TransactionTrip.merge(txn)
