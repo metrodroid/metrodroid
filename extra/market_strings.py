@@ -27,7 +27,7 @@ import argparse
 import re
 import os
 import os.path
-from typing import Generator, Optional, Text, Tuple
+from typing import Iterator, Optional, Text, Tuple
 from xml.etree import ElementTree
 
 METRODROID_ROOT = os.path.join(os.path.dirname(__file__), '..')
@@ -41,7 +41,7 @@ CHANGELOG_GENERIC = CHANGELOG + 'generic'
 DOUBLE_NEWLINE = re.compile(r'^(?:\\n)*(.*)(?:\\n)*$', re.U | re.M)
 
 
-def get_languages() -> Generator[Tuple[Text, Text]]:
+def get_languages() -> Iterator[Tuple[Text, Text]]:
     """Gets a list of available Market language resources.
 
     Generates:
@@ -76,7 +76,7 @@ def android_resource_unescape(value: Text) -> Text:
 
     return value.replace('\r', '')\
         .replace('\\n', '\n')\
-        .replace('\\\'', '\'')
+        .replace('\\', '')
 
 
 def show_language(lang: Optional[Text] = None) -> None:
