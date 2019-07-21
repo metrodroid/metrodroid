@@ -44,7 +44,7 @@ import kotlin.test.assertTrue
 /**
  * Generic card tests
  */
-class CardTest {
+class CardTest : BaseInstrumentedTest() {
     @Test
     fun testJsonSerialiser() {
         val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
