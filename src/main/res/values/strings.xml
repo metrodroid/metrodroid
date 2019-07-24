@@ -734,7 +734,7 @@
     -->
     <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-    <string name="location_crimea">Crimea, Russia</string>
+    <string name="location_crimea">Crimea, Eastern Europe</string>
     <string name="location_dubai">Dubai, UAE</string>
     <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
     <string name="location_france">France</string>
@@ -795,7 +795,7 @@
     <string name="location_stockholm">Stockholm, Sweden</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
-    <string name="location_taipei">Taipei, Taiwan</string>
+    <string name="location_taipei">Taipei, East Asia</string>
     <string name="location_tampere">Tampere, Finland</string>
     <string name="location_tartu">Tartu, Estonia</string>
     <string name="location_the_netherlands">The Netherlands</string>
@@ -1058,8 +1058,8 @@
     <string name="felica_process_merchandise_admission">Merchandise/admission</string>
     <string name="felica_process_merchandise_purchase_cash">Merchandise (partially with cash)</string>
     <string name="felica_process_merchandise_admission_cash">Merchandise/admission (partially with cash)</string>
-    <string name="felica_process_payment_thirdparty">Payment (third-Party)</string>
-    <string name="felica_process_admission_thirdparty">Admission payment (third-Party)</string>
+    <string name="felica_process_payment_thirdparty">Payment (third-party)</string>
+    <string name="felica_process_admission_thirdparty">Admission payment (third-party)</string>
 
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Suica is a transit card in Japan. -->
@@ -1725,12 +1725,12 @@
     <string name="locked_leap">Locked Leap</string>
     <string name="leap_period_start">Period start</string>
     <string name="leap_accumulator_region">Region</string>
-    <string name="leap_accumulator_total">Total spent</string>
+    <string name="leap_accumulator_total">Total spend</string>
     <!--
     Translators: "%s" will be replaced with the name of a transit operator.
      eg: "Dublin Bus total spend"
     -->
-    <string name="leap_accumulator_agency">%s total expenditure</string>
+    <string name="leap_accumulator_agency">%s total spend</string>
     <string name="leap_daily_accumulators">Daily fare caps</string>
     <string name="leap_weekly_accumulators">Weekly fare caps</string>
 
@@ -1884,7 +1884,7 @@
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
-    <string name="rkf_status_ok">OK, working</string>
+    <string name="rkf_status_ok">OK, enabled</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_action_pending">Action pending</string>
     <!-- Translators: describes the status of a card or transaction -->
