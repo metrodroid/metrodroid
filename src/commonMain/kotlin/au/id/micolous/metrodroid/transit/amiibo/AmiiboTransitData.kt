@@ -83,7 +83,7 @@ data class AmiiboTransitData internal constructor(
 }
 
 object AmiiboTransitFactory : UltralightCardTransitFactory {
-    override fun check(card: UltralightCard) = card.cardModel == "NTAG215" &&
+    override fun check(card: UltralightCard) = (card.cardModel == "NTAG215" || card.pages.size == 136) &&
             // Amiibos are always locked and configured in the same way
             card.readPages(2,3).sliceOffLen(2, 7) == ImmutableByteArray.fromHex("0fe0f110ffeea5") &&
             card.getPage(0x16).data[3] == 2.toByte() &&
