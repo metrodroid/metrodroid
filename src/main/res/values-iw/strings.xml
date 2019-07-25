@@ -59,4 +59,5 @@
     <string name="scanned_cards">היסטוריה</string>
     <string name="no_scanned_cards">לא סרקת כל קלפים.</string>
     <string name="block_title_format">בלוק: %s</string>
-    </resources>
+    <string name="card_name_ravkav">רב-קו‎</string>
+</resources>
