@@ -5,12 +5,6 @@ source ./.travis/utils.sh
 SDK_CACHE_DIR="${HOME}/.cache/android-sdk"
 SDK_ZIP="${SDK_CACHE_DIR}/sdk-tools.zip"
 
-if [[ "${TARGET}" != "android" ]]
-then
-    echo "** Android SDK not required, skipping step."
-    exit 0
-fi
-
 function download_sdk {
     mkdir -p "${SDK_CACHE_DIR}"
 
