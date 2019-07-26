@@ -1,6 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 # Starts up the Android emulator, and waits for it to be ready.
 echo "** Starting emulator in background..."
+if [[ ${EMULATOR_ARCH} =~ "x86" ]]
+then
+    EMULATOR="${EMULATOR}-headless"
+    EMULATOR_ARGS="${EMULATOR_ARGS} -no-accel"
+fi
+
 ${EMULATOR} -avd "emu" \
     -no-skin \
     -no-window \

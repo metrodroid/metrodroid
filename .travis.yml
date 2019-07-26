@@ -1,5 +1,7 @@
+sudo: required
+dist: bionic
 language: java
-jdk: oraclejdk8
+jdk: openjdk10
 
 env:
   global:
@@ -25,6 +27,11 @@ env:
     # Pointless in CI.
     - QEMU_AUDIO_DRV=none
 
+    # Work around avdmanager and sdkmanager requiring Java EE components
+    # https://issuetracker.google.com/issues/67495440
+    - AVDMANAGER_OPTS="--add-modules java.se.ee"
+    - SDKMANAGER_OPTS="--add-modules java.se.ee"
+
 jobs:
   include:
     # This only runs "assemble", which compiles the code and runs non-Android unit tests. This is
@@ -46,14 +53,17 @@ jobs:
     - env: EMULATOR_API=18
     # Disabled due to https://issuetracker.google.com/issues/134845202
     # - env: EMULATOR_API=21
-    - env: EMULATOR_API=21 EMULATOR_FLAVOUR=google_apis
-    - env: EMULATOR_API=21 EMULATOR_ARCH=x86 EMULATOR_ARGS=-no-accel
+    - env: EMULATOR_API=21 EMULATOR_ARCH=x86
     - env: EMULATOR_API=24
-    - env: EMULATOR_API=24 EMULATOR_ARCH=arm64-v8a
-    - env: EMULATOR_API=24 EMULATOR_ARCH=x86 EMULATOR_ARGS=-no-accel
-    - env: EMULATOR_API=24 EMULATOR_ARCH=x86_64 EMULATOR_ARGS=-no-accel
-    - env: EMULATOR_API=28 EMULATOR_ARCH=x86 EMULATOR_ARGS=-no-accel
-    - env: EMULATOR_API=28 EMULATOR_ARCH=x86_64 EMULATOR_ARGS=-no-accel
+    - env: EMULATOR_API=24 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=24 EMULATOR_ARCH=x86_64
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86_64
+
+before_install:
+  - sudo apt-get update
+  # qemu-system-armel: libpulse0
+  - sudo apt-get install -y libpulse0
 
 install:
   - ./.travis/install_android_sdk.sh

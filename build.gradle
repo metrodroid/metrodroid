@@ -319,6 +319,11 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+
+    // Long timeouts needed for slow environments (like Travis CI)
+    adbOptions {
+        timeOutInMs 10 * 60 * 1000 // 10 minutes
+    }
 }
 
 kotlin.sourceSets.all {
