@@ -6,6 +6,12 @@ source ./.travis/utils.sh
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};${EMULATOR_FLAVOUR};${EMULATOR_ARCH}"
 EMULATOR_DIR="${ANDROID_SDK_ROOT}/system-images/android-${EMULATOR_API}/${EMULATOR_FLAVOUR}/${EMULATOR_ARCH}"
 
+if [[ -z "${EMULATOR_API}" ]]
+then
+    echo "** Emulator not required, skipping step."
+    exit 0
+fi
+
 android_install \
     "emulator" \
     "${EMULATOR_TARGET}"

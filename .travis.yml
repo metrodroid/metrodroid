@@ -40,11 +40,13 @@ jobs:
     #
     # This is run in parallel (debug + dev + release)
     - stage: assemble and unit test
-      install: ./.travis/install_android_sdk.sh
+      env: TARGET=jvm
+      script: ./gradlew :jvmcli:shadowJar jvmCliTest
+    - env: TARGET=android
       script: ./gradlew assembleDebug testDebugUnitTest
-    - install: ./.travis/install_android_sdk.sh
+    - env: TARGET=android
       script: ./gradlew assembleDev testDevUnitTest
-    - install: ./.travis/install_android_sdk.sh
+    - env: TARGET=android
       script: ./gradlew assembleRelease testReleaseUnitTest
 
     # This runs the full test suite, including using the Android emulator.

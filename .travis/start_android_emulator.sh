@@ -1,7 +1,13 @@
 #!/bin/bash
 # Starts up the Android emulator, and waits for it to be ready.
+if [[ -z "${EMULATOR_API}" ]]
+then
+    echo "** Emulator not required, skipping!"
+    exit 0
+fi
+
 echo "** Starting emulator in background..."
-if [[ ${EMULATOR_ARCH} =~ "x86" ]]
+if [[ "${EMULATOR_ARCH}" =~ "x86" ]]
 then
     EMULATOR="${EMULATOR}-headless"
     EMULATOR_ARGS="${EMULATOR_ARGS} -no-accel"
