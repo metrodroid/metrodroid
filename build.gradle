@@ -136,7 +136,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api 'org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version'
+                api "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
                 api "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$kotlinserial_version"
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
                 api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
@@ -148,9 +148,9 @@ kotlin {
 
         commonTest {
             dependencies {
-                api 'org.jetbrains.kotlin:kotlin-test-common:$kotlin_version'
-                api 'org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version'
-                api 'org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version'
+                api "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+                api "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+                api "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
                 api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
             }
         }
