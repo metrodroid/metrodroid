@@ -41,9 +41,9 @@ jobs:
     # This is run in parallel (debug + dev + release)
     - stage: assemble and unit test
       env: TARGET=jvm
-      script: ./gradlew :jvmcli:shadowJar jvmCliTest
+      script: ./gradlew :jvmcli:shadowJar jvmCliTest --info
     - env: TARGET=android
-      script: ./gradlew assembleDebug testDebugUnitTest
+      script: ./gradlew assembleDebug testDebugUnitTest --info
     - env: TARGET=android
       script: ./gradlew assembleDev testDevUnitTest
     - env: TARGET=android
