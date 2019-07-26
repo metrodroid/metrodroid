@@ -295,6 +295,11 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+
+    // Long timeouts needed for slow environments (like Travis CI)
+    adbOptions {
+        timeOutInMs 10 * 60 * 1000 // 10 minutes
+    }
 }
 
 kotlin.sourceSets.all {
@@ -314,4 +319,10 @@ repositories {
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath
+}
+
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Originally written by Ralf Kistner <ralf@embarkmobile.com>, but placed in the public domain
+source ./.travis/utils.sh
+check_exists "$ADB"
+
+bootanim=""
+failcounter=0
+timeout_in_sec=360
+
+# sys.boot_completed > init.svc.bootanim
+# For one, Activity and Package managers may not have started yet...
+while [ "`$ADB shell getprop sys.boot_completed | tr -d '\r' `" != "1" ] ; do
+  let "failcounter += 1"
+  echo "$0: Waiting for emulator to start ($failcounter)"
+  if [[ $failcounter -gt timeout_in_sec ]]; then
+    echo "$0: Timeout ($timeout_in_sec seconds) reached; failed to start emulator"
+    exit 1
+  fi
+  sleep 1
+done
+
+echo "$0: Emulator is ready!"
