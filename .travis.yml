@@ -3,7 +3,7 @@ dist: bionic
 language: java
 # Android pins asm-6.0 for desugar, which doesn't support Java 10
 # Travis' Bionic image doesn't support OpenJDK 8 (despite docs claiming so)
-jdk: openjdk9
+
 
 env:
   global:
@@ -68,6 +68,7 @@ before_install:
   - sudo apt-get update
   # qemu-system-armel: libpulse0
   - sudo apt-get install -y libpulse0
+  - jdk_switcher use openjdk8
 
 install:
   - ./.travis/install_android_sdk.sh
