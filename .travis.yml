@@ -1,7 +1,9 @@
 sudo: required
 dist: bionic
 language: java
-jdk: openjdk10
+# Android pins asm-6.0 for desugar, which doesn't support Java 10
+# Travis' Bionic image doesn't support OpenJDK 8 (despite docs claiming so)
+jdk: openjdk9
 
 env:
   global:
