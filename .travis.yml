@@ -54,17 +54,16 @@ jobs:
     # This runs the full test suite, including using the Android emulator.
     - stage: test
       env: EMULATOR_API=16
+    - env: EMULATOR_API=16 EMULATOR_ARCH=x86
     - env: EMULATOR_API=18
     # Disabled due to https://issuetracker.google.com/issues/134845202
     # - env: EMULATOR_API=21
     - env: EMULATOR_API=21 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=23 EMULATOR_ARCH=x86
     - env: EMULATOR_API=24
     - env: EMULATOR_API=24 EMULATOR_ARCH=x86
-    - env: EMULATOR_API=24 EMULATOR_ARCH=x86_64
     - env: EMULATOR_API=27 EMULATOR_ARCH=x86
-    # Hangs on Travis
-    # - env: EMULATOR_API=28 EMULATOR_ARCH=x86
-    - env: EMULATOR_API=28 EMULATOR_ARCH=x86_64
+    # Emulator 28 flakes on Travis
 
 before_install:
   - travis_retry sudo apt-get update
