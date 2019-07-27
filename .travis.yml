@@ -65,17 +65,17 @@ jobs:
     - env: EMULATOR_API=28 EMULATOR_ARCH=x86_64
 
 before_install:
-  - sudo apt-get update
+  - travis_retry sudo apt-get update
   # qemu-system-armel: libpulse0
-  - sudo apt-get install -y libpulse0
-  - jdk_switcher use openjdk8
+  - travis_retry sudo apt-get install -y libpulse0
 
 install:
-  - ./.travis/install_android_sdk.sh
-  - ./.travis/install_android_emulator.sh
+  - jdk_switcher use openjdk8
+  - travis_retry ./.travis/install_android_sdk.sh
+  - travis_retry ./.travis/install_android_emulator.sh
 
 script:
-  - ./gradlew :assembleAndroidTest
+  - travis_retry ./gradlew :assembleAndroidTest
   - ./.travis/start_android_emulator.sh || travis_terminate 1
   - ./gradlew :connectedAndroidTest
 
