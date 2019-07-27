@@ -78,6 +78,12 @@ script:
   - ./.travis/start_android_emulator.sh || travis_terminate 1
   - ./gradlew :connectedAndroidTest
 
+after_failure:
+  - uname -a || true
+  - lscpu || true
+  - free -m || true
+  - ps faux || true
+
 before_cache:
   - ./gradlew --stop
 
