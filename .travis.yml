@@ -15,8 +15,7 @@ env:
     - ANDROID_API=29
     - ANDROID_BUILD_TOOLS=29.0.0
 
-    # EMULATOR
-    - EMULATOR_ARCH=armeabi-v7a
+    # Emulator
     - EMULATOR_FLAVOUR=default
 
     # These are all constants -- you shouldn't need to update these.
@@ -53,17 +52,22 @@ jobs:
 
     # This runs the full test suite, including using the Android emulator.
     - stage: test
-      env: EMULATOR_API=16
+      env: EMULATOR_API=16 EMULATOR_ARCH=armeabi-v7a
     - env: EMULATOR_API=16 EMULATOR_ARCH=x86
-    - env: EMULATOR_API=18
+    - env: EMULATOR_API=18 EMULATOR_ARCH=armeabi-v7a
     # Disabled due to https://issuetracker.google.com/issues/134845202
     # - env: EMULATOR_API=21
     - env: EMULATOR_API=21 EMULATOR_ARCH=x86
     - env: EMULATOR_API=23 EMULATOR_ARCH=x86
-    - env: EMULATOR_API=24
+    - env: EMULATOR_API=24 EMULATOR_ARCH=armeabi-v7a
     - env: EMULATOR_API=24 EMULATOR_ARCH=x86
     - env: EMULATOR_API=27 EMULATOR_ARCH=x86
-    # Emulator 28 flakes on Travis
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86
+
+  allow_failures:
+    # These flake on Travis
+    - env: EMULATOR_API=27 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86
 
 before_install:
   - travis_retry sudo apt-get update
