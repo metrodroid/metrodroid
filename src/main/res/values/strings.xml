@@ -1114,6 +1114,40 @@
     <string name="hsl_pass_ticket">Season ticket</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
+    <string name="hsl_period">Validity period</string>
+    <plurals name="hsl_valid_days_24h">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d calendar day</item>
+        <item quantity="other">%d calendar days</item>
+    </plurals>
+    <plurals name="hsl_valid_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="hsl_valid_mins">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="hsl_zones">
+        <item quantity="one">zone %s</item>
+        <item quantity="other">zones %s</item>
+    </plurals>
+    <string name="hsl_zone_station">Zone %s</string>
+    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC". -->
+    <string name="hsl_arvo_format">eTicket for %s</string>
+    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC". -->
+    <string name="hsl_kausi_format">PeriodPass for %s</string>
+    <string name="hsl_language">Language</string>
+    <string name="hsl_finnish">Finnish</string>
+    <string name="hsl_swedish">Swedish</string>
+    <string name="hsl_english">English</string>
+    <string name="hsl_adult">Adult</string>
+    <string name="hsl_child">Child</string>
+    <string name="hsl_customer_profile">Customer profile</string>
+    <string name="hsl_extra_note">Both old (green) and new (blue) cards are supported. Both reloadable and single-use are supported.</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
