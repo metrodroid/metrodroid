@@ -734,7 +734,7 @@
     -->
     <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-    <string name="location_crimea">Crimea, Eastern Europe</string>
+    <string name="location_crimea">Crimea</string>
     <string name="location_dubai">Dubai, UAE</string>
     <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
     <string name="location_france">France</string>
@@ -795,7 +795,7 @@
     <string name="location_stockholm">Stockholm, Sweden</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
-    <string name="location_taipei">Taipei, East Asia</string>
+    <string name="location_taipei">Taipei</string>
     <string name="location_tampere">Tampere, Finland</string>
     <string name="location_tartu">Tartu, Estonia</string>
     <string name="location_the_netherlands">The Netherlands</string>
