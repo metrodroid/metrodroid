@@ -30,7 +30,7 @@
 
     <!-- General application strings -->
     <string name="license">Licenses</string>
-    <string name="title_activity_license">Libre software licenses</string>
+    <string name="title_activity_license">Open source licenses</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading card…</string>
     <string name="dont_move">Do not move card</string>
@@ -1388,7 +1388,7 @@
  May be transliterated. -->
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
-    <string name="ravkav_agency_topup_app">Rav-Kav HopOn app</string>
+    <string name="ravkav_agency_topup_app">Rav-Kav mobile top-up</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
