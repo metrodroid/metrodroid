@@ -845,4 +845,24 @@
     <string name="location_tbilisi">Tbilisi, Georgia</string>
     <string name="emv_service_code">Tjenestekode</string>
     <string name="card_name_kazan">Kazan-transportkort</string>
+    <string name="card_name_orenburg_school">Orenburg skolestudentkort</string>
+    <string name="card_name_orenburg_student">Orenburg studentkort</string>
+    <string name="card_name_siticard">SitiCard</string>
+    <string name="card_name_kirov">Kirov</string>
+    <string name="card_name_ekarta">Ekarta</string>
+    <string name="siticard_edinyj_16_trips">Edinyj 16 turer</string>
+    <string name="siticard_edinyj_30_trips">Edinyj 30 turer</string>
+    <string name="siticard_edinyj_3_days">Edinyj 3 dager</string>
+    <string name="card_name_crimea_parus_school">Parus-skolekort</string>
+    <string name="card_name_yoshkar_ola">Josjkar-Ola-transportkort</string>
+    <string name="amiibo_type_figure">Figur</string>
+    <string name="amiibo_type_yarn">Strikket</string>
+    <string name="amiibo_character">Tegn</string>
+    <string name="amiibo_character_variant">Tegnvariant</string>
+    <string name="card_name_umarsh">Umarsh</string>
+    <string name="touchngo_travel_pass">Kuala Lumpur-reisepass</string>
+    <string name="troika_druzhinnik_card">Druzhinnik-kort</string>
+    <string name="warsaw_90_days">90-dagers abonnement</string>
+    <string name="hardware">Maskinvare</string>
+    <string name="android_nfc_settings">Android-NFC-innstillinger</string>
 </resources>
