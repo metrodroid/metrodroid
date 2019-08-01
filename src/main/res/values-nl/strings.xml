@@ -3,11 +3,11 @@
     <string name="app_name">Metrodroid</string>
     <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
     <string name="license">Licenties</string>
-    <string name="title_activity_license">Open bron-licenties</string>
+    <string name="title_activity_license">Openbronlicenties</string>
     <string name="directions">Druk op een kaart.</string>
     <string name="reading_card">Bezig met uitlezen van kaart…</string>
     <string name="dont_move">Verplaats de kaart niet</string>
-    <string name="advanced_info">Geavanceerde informatie</string>
+    <string name="advanced_info">Uitgebreide informatie</string>
     <string name="delete_card">Kaart verwijderen</string>
     <string name="unknown_card">Onbekende kaart</string>
     <string name="hw_detail">Productie-informatie</string>
@@ -18,7 +18,7 @@
     <string name="history">Geschiedenis</string>
     <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
     <string name="import_xml">Importeren</string>
-    <string name="import_clipboard">Plakken uit klembord</string>
+    <string name="import_clipboard">Plakken vanaf klembord</string>
     <string name="import_file">Importeren uit bestand</string>
     <string name="export">Exporteren</string>
     <string name="export_filename">Bestandsnaam</string>
@@ -86,8 +86,8 @@
     <string name="card_format">Kaarttype</string>
     <string name="select_file">Bestand selecteren</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
-    <string name="saved_metrodroid_zip">Metrodroid-Export.xml weggeschreven naar USB-opslag.</string>
-    <string name="saved_xml_custom">XML weggeschreven naar USB-opslag.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.xml opgeslagen naar USB-opslag.</string>
+    <string name="saved_xml_custom">XML opgeslagen naar USB-opslag.</string>
     <string name="map_tiles_url">Kaarttegels-URL</string>
     <string name="map_tiles_url_summary">Gebruik een aangepaste tegelserver voor ingesloten kaarten m.b.v. Leaflet TileLayer-syntax.</string>
     <string name="map_tiles_subdomains">Kaarttegel-subdomeinen</string>
@@ -103,9 +103,9 @@
     <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd!</item>
+            <xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd.</item>
         <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd!</item>
+            <xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d blok</item>
@@ -136,7 +136,7 @@
     <string name="felica_terminal_turnstile">Tourniquet</string>
     <string name="felica_terminal_ticket_validator">Eenvoudige tourniquet</string>
     <string name="felica_terminal_ticket_booth">Balie</string>
-    <string name="felica_terminal_ticket_office_green">Balie (groen)</string>
+    <string name="felica_terminal_ticket_office_green">Balie (groen venster)</string>
     <string name="felica_terminal_ticket_gate_terminal">Tourniquet-terminal</string>
     <string name="felica_terminal_mobile_phone">Mobiele telefoon</string>
     <string name="felica_terminal_connection_adjustment">Verbindingaanpassingsautomaat</string>
@@ -162,7 +162,7 @@
     <string name="felica_process_purchase_special_ticket">Kaart (speciale bus/tram)</string>
     <string name="felica_process_merchandise_purchase">Handelswaar</string>
     <string name="felica_process_bonus_charge">Bonus bij opladen</string>
-    <string name="felica_process_register_deposit">Storting registreren</string>
+    <string name="felica_process_register_deposit">Storting vastleggen</string>
     <string name="felica_process_merchandise_cancel">Handelswaar annuleren</string>
     <string name="felica_process_merchandise_admission">Handelswaar/Toelating</string>
     <string name="felica_process_merchandise_purchase_cash">Handelswaar (deels met contant geld)</string>
@@ -249,8 +249,8 @@
         <item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
     </plurals>
     <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
-    <string name="enabled">Ingeschakeld</string>
-    <string name="disabled">Uitgeschakeld</string>
+    <string name="enabled">Aan</string>
+    <string name="disabled">Uit</string>
     <string name="unsupported_tag">Niet-ondersteunde NFC-kaartmedia</string>
     <string name="saving_card">Bezig met opslaan van kaart…</string>
     <string name="mfc_reading">Bezig met lezen van MIFARE Classic-kaart…</string>
@@ -323,7 +323,7 @@
 \nDit vereist toegankelijkheidssoftware die ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
     <string name="convert_timezones">Aanpassen aan tijdzones</string>
     <string name="record_title_format">Vermelding: %s</string>
-    <string name="iso7816_probing">Bezig met verbinding leggen met ISO7816-kaart…</string>
+    <string name="iso7816_probing">Bezig met verbinding leggen met ISO/IEC 7816-kaart…</string>
     <string name="calypso_reading">Bezig met uitlezen van Calypso-kaart…</string>
     <plurals name="record_count">
         <item quantity="one">%d vermelding</item>
@@ -371,7 +371,7 @@
     <string name="led_bus">Sint-Petersburg Bus</string>
     <string name="led_metro">Sint-Petersburg Metro</string>
     <string name="blank_mfu_card">Blanco MIFARE Ultralight-kaart</string>
-    <string name="fully_blank_desc">Deze kaart is, voor zover wij kunnen bepalen, volledig blanco. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een database, maar de kaart zelf bevat geen verdere gegevens.</string>
+    <string name="fully_blank_desc">Deze kaart lijkt blanco te zijn. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft alleen een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een databank.</string>
     <string name="fully_blank_title">Blanco kaart</string>
     <string name="pref_theme">Thema</string>
     <string name="pref_theme_desc">Stel het uiterlijk in</string>
@@ -403,8 +403,8 @@
     <string name="android_os">Android-versie: <xliff:g id="version" example="9.0">%1$s</xliff:g>
         <xliff:g id="build_id" example="PPR2.180905.006">(%2$s)</xliff:g>
     </string>
-    <string name="nfc_enabled">NFC: ingeschakeld</string>
-    <string name="nfc_disabled">NFC: uitgeschakeld</string>
+    <string name="nfc_enabled">NFC: aan</string>
+    <string name="nfc_disabled">NFC: uit</string>
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
@@ -415,7 +415,7 @@
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
-    <string name="pref_show_local_and_english_desc">Als dit wordt ingeschakeld, dan worden zowel de lokale als de Engelse naam getoond, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
+    <string name="pref_show_local_and_english_desc">Toont zowel de lokale als de Engelse naam, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
     <plurals name="trips_remaining">
         <item quantity="one">%d resterende reis</item>
         <item quantity="other">%d resterende reizen</item>
@@ -425,7 +425,7 @@
         <item quantity="other">%d ritten</item>
     </plurals>
     <string name="card_name_ravkav">Rav-Kav</string>
-    <string name="ravkav_agency_topup_app">RavKav oplaadapp</string>
+    <string name="ravkav_agency_topup_app">Rav-Kav-oplaadapp</string>
     <string name="location_israel">Israël</string>
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
@@ -624,7 +624,7 @@
     <string name="location_china_mainland">Continentaal China</string>
     <string name="location_kiev">Kiev, Oekraïne</string>
     <string name="location_wuhan">Wuhan, China</string>
-    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_beijing">Beijing Municipal Administration &amp; Communication Card</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_cityunion">City Union</string>
     <string name="card_name_tunion">T-Union</string>
@@ -640,7 +640,7 @@
     <string name="copy_card_number">Kaartnummer kopiëren</string>
     <string name="card_serial_number">Serienummer</string>
     <string name="serial_only_card_header">Kaart met alleen serienummer</string>
-    <string name="serial_only_card_description_not_stored">Deze kaart bevat, buiten het serienummer, geen gegevens. Het saldo en de reisgeschiedenis worden opgeslagen in een centrale databank.</string>
+    <string name="serial_only_card_description_not_stored">Deze kaart bevat alleen het serienummer. Het saldo en de reisgeschiedenis worden opgeslagen in een centrale databank.</string>
     <string name="serial_only_card_description_locked">Deze kaart is versleuteld; alleen het serienummer kan worden gelezen. Het saldo and de reisgeschiedenis zijn mogelijk op de kaart opgeslagen, maar onleesbaar.</string>
     <string name="serial_only_card_description_more_research">Ondersteuning voor deze kaart is experimenteel; momenteel kan alleen het serienummer worden uitgelezen.</string>
     <string name="full_serial_number">Volledig serienummer</string>
@@ -664,7 +664,7 @@
     <string name="rkf_card_status">Kaartstatus</string>
     <string name="rkf_status_ok">Oké; ingeschakeld</string>
     <string name="rkf_status_action_pending">Bezig met actie</string>
-    <string name="rkf_status_temp_disabled">Tijdelijk uitgeschakeld of geschorst</string>
+    <string name="rkf_status_temp_disabled">Tijdelijk of permanent uitgeschakeld</string>
     <string name="rkf_status_not_ok">Permanent uitgeschakeld</string>
     <string name="import_mct_file">Importeren uit MCT-bestand</string>
     <string name="requires_android_17">Vereist Android 4.2 of hoger.</string>
@@ -842,8 +842,8 @@
     <string name="kazan_blank">Leeg</string>
     <string name="location_shanghai">Shanghai, China</string>
     <string name="card_name_shanghai">Shanghai OV-kaart</string>
-    <string name="valid_origin_destination">Geldig tussen %1$s en %2$s</string>
-    <string name="valid_origin_destination_via">Geldig tussen %1$s en %2$s, via %3$s</string>
+    <string name="valid_origin_destination">Geldig van %1$s tot %2$s</string>
+    <string name="valid_origin_destination_via">Geldig van %1$s tot %2$s, via %3$s</string>
     <string name="pref_show_hidden_cards">Verborgen kaarten tonen</string>
     <string name="pref_show_hidden_cards_desc_off">Alleen reguliere kaarten en bijbehorende afbeeldingen worden getoond op de lijst met ondersteunde kaarten</string>
     <string name="pref_show_hidden_cards_desc_on">Alle kaartsoorten en bijbehorende afbeeldingen worden getoond op de lijst met ondersteunde kaarten</string>
@@ -866,7 +866,7 @@
     <string name="card_name_orenburg_student">Orenburg-studentenkaart</string>
     <string name="card_name_strizh">Strizh</string>
     <string name="card_name_penza">Penza</string>
-    <string name="card_name_siticard">Siticard</string>
+    <string name="card_name_siticard">SitiCard</string>
     <string name="card_name_kirov">Kirov</string>
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_aerial_tramway">Kabelbaan</string>
