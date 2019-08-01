@@ -18,8 +18,10 @@ but it'll be available soon!
 
 Card / Agency | Location | Notes
 ------------- | -------- | -----
+[Amiibo][amiibo] | :earth_asia: _worldwide_ | :new:
 [AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: :id:
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
+[bip!][bip] | :chile: Santiago de Chile, Chile | :new: :closed_lock_with_key: `MFC`
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
 [Carta Mobile][pisa] | :it: Pisa, Italy | :new:
@@ -27,10 +29,13 @@ Card / Agency | Location | Notes
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
 [Compass][compass] | :canada: Vancouver, BC, Canada | :new: :one:
+[Crimea Trolleybus][crimea] | Crimea | :new: :closed_lock_with_key: `MFC`
 [Cubic Nextfare][nextfare] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
-[EasyCard][easycard] | :taiwan: Taipei, Taiwan | :closed_lock_with_key: `MFC`
+[EasyCard][easycard] | Taipei | :closed_lock_with_key: `MFC`
 [Edy][edy] | :jp: Japan
-[EMV][emv] | :earth_africa: _many locations_ | :new:
+[Ekarta][ekarta] | :ru: Ekaterinburg, Russia | :new: :closed_lock_with_key: `MFC`
+[Electronic Barnaul][barnaul] | :ru: Barnaul, Russia | :new: :closed_lock_with_key: `MFC`
+[EMV][emv] | :earth_africa: _worldwide_ | :new:
 [Envibus][envibus] | :fr: Sophia Antipolis, France | :new:
 [ERG][erg] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][ezlink] | :singapore: Singapore |
@@ -42,7 +47,9 @@ City Union | :cn: Mainland China | :new:
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
+[Kazan transport card][kazan] | :russia: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+[Kirov transport card][kirov] | :russia: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 [Krasnodar ETK][krasnodar] | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
@@ -64,7 +71,8 @@ Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Orenburg EKG][orenburg] | :ru: Orenburg, Russia | :new: :closed_lock_with_key: `MFC`
 [OùRA][oura] | :fr: Grenoble, France | :new:
 [OV-chipkaart][ovc] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
-[Oyster][oyster] | :gb: London, United Kingdom | :closed_lock_with_key: `MFC`
+[Oyster][oyster] | :gb: London, United Kingdom | :new: :closed_lock_with_key: `MFC`
+Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [Podorozhnik][podoro] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][ravkav] | :israel: Israel | :new:
 [Rejsekort][rejse] | :denmark: Denmark | :new: :closed_lock_with_key: `MFC`
@@ -72,11 +80,13 @@ Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Samara ETK][samara] | :ru: Samara, Russia | :new: :closed_lock_with_key: `MFC`
 [Selecta][] | :fr: France | :new:
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new:
+[Siticard][siticard] | :ru: Nizhniy Novgorod, Russia | :new: :closed_lock_with_key: `MFC`
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
 [Smartride][smartride] | :new_zealand: Rotorua, New Zealand | :new: `MFC`
 [SmartRider][smartrider] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Snapper][snapper] | :new_zealand: Wellington, New Zealand | :new:
 [Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: :id: `MFC`
+[Strizh][strizh] | :ru: Izhevsk, Russia | :new: :clocked_lock_with_key: `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan
 [SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: :id: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new:
@@ -86,9 +96,12 @@ T-Union | :cn: Mainland China | :new:
 [TransGironde][gironde] | :fr: Gironde, France | :new:
 [Transit Access Pass][laxtap] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][troika] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
+[Umarsh][umarsh] | :ru: _multiple cities in Russia_ | :new :closed_lock_with_key: `MFC`
 [Ventra][ventra] | :us: Chicago, IL, USA | :new: :one:
+[Warszawska Karta Miejska][warsaw] | :poland: Warsaw, Poland | :new: :id: :closed_lock_with_key: `MFC`
 [Wuhan Tong][wuhan] | :cn: Wuhan, Hubei Province, China | :new:
 [Yaroslavl ETK][yaroslavl] | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
+[Yoshkar-Ola][yolatrans] | :ru: Yoshkar-Ola, Russia | :new: :closed_lock_with_key: `MFC`
 [Zolotaya Korona][zolotaya] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 
 Note                   | Meaning
@@ -97,7 +110,7 @@ Note                   | Meaning
 :closed_lock_with_key: | Encryption keys required to read this card.
 :unlock:               | Encryption keys are downloaded from the operator.
 :singapore:            | CEPAS cards (Singapore) are not compatible with all devices (ISO 14443-B).
-`MFC`                  | MIFARE Classic card; requires NXP NFC chipset in your phone.
+`MFC`                  | MIFARE Classic card; requires NXP NFC chipset in your device.
 :id:                   | Only the card number can be read.
 `KMT`                  | Only new FeliCa-based cards can be read.
 :one:                  | Only single-use tickets can be read.
@@ -138,16 +151,21 @@ interpreted locally, and _connectivity is disabled by default._
 [mfu]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
 
 [adl]: https://adelaidemetro.com.au/Tickets-fares/metroCARD
+[amiibo]: https://www.nintendo.com/amiibo/
 [athop]: https://at.govt.nz/bus-train-ferry/at-hop-card/
+[barnaul]: https://barnaul.org/
 [beijing]: https://en.wikipedia.org/wiki/Yikatong
+[bip]: http://www.tarjetabip.cl/
 [bu]: http://bilheteunico.sptrans.com.br/
 [busit]: https://www.busit.co.nz/
 [charlie]: https://www.mbta.com/fares/charliecard
 [chc]: http://www.metroinfo.co.nz/
 [clipper]: https://www.clippercard.com/
 [compass]: https://www.compasscard.ca/
+[crimea]: http://crimeatroll.ru/
 [easycard]: https://www.easycard.com.tw/en/
 [edy]: https://en.wikipedia.org/wiki/Edy
+[ekarta]: http://ekarta-ek.ru/
 [emv]: https://en.wikipedia.org/wiki/EMV
 [envibus]: http://www.envibus.fr/
 [erg]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
@@ -158,6 +176,8 @@ interpreted locally, and _connectivity is disabled by default._
 [hsl]: http://www.hsl.fi/EN/
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
+[kazan]: http://transkart.ru/
+[kirov]: http://www.mo-kirov.ru/gorozhanam/transport/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 [komuterlink]: http://www.ktmb.com.my/KomuterLink.html
 [krasnodar]: https://t-karta.ru/Cards/Krasnodar
@@ -193,11 +213,13 @@ interpreted locally, and _connectivity is disabled by default._
 [selecta]: https://www.selecta.com/
 [seqgo]: http://translink.com.au/tickets-and-fares/go-card
 [shenzhen]: http://www.shenzhentong.com/
+[siticard]: https://siticard.ru/
 [slaccess]: https://sl.se/en/eng-info/fares/sl-access/
 [smartride]: https://www.baybus.co.nz/faqs/smartride-card/
 [smartrider]: http://www.transperth.wa.gov.au/SmartRider/
 [snapper]: https://www.snapper.co.nz/
 [strelka]: https://strelkacard.ru/
+[strizh]: http://xn--c1aff6b0c.xn--p1ai/pages/karta-strizh/
 [suica]: https://en.wikipedia.org/wiki/Suica
 [suncard]: https://sunrail.com/tickets-suncards/suncards/
 [tam]: http://www.tam-voyages.com/
@@ -206,7 +228,8 @@ interpreted locally, and _connectivity is disabled by default._
 [tmoney]: https://www.t-money.co.kr/
 [troika]: http://troika.mos.ru/
 [ventra]: https://www.ventrachicago.com/
+[warsaw]: https://www.ztm.waw.pl/?c=557&l=1
 [wuhan]: http://www.whcst.com/
 [yaroslavl]: https://t-karta.ru/Cards/Yaroslavl
+[yolatrans]: http://yolatrans.ru/
 [zolotaya]: https://en.wikipedia.org/wiki/Zolotaya_Korona
-

@@ -86,7 +86,7 @@ City Union | :cn: Mainland China | :new:
 [Compass][compass] | :canada: Vancouver, BC, Canada | :new: :one:
 [Crimea Trolleybus][crimea] | Crimea | :new: :closed_lock_with_key: `MFC`
 [Cubic Nextfare][nextfare] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
-[EasyCard][easycard] | :taiwan: Taipei | :closed_lock_with_key: `MFC`
+[EasyCard][easycard] | Taipei | :closed_lock_with_key: `MFC`
 [Edy][edy] | :jp: Japan
 [Ekarta][ekarta] | :ru: Ekaterinburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Electronic Barnaul][barnaul] | :ru: Barnaul, Russia | :new: :closed_lock_with_key: `MFC`
