@@ -334,6 +334,32 @@ abstract class Subscription : Parcelable {
     open val cost: TransitCurrency?
         get() = null
 
+    fun formatRemainingTrips(): String? {
+        val remainingTrips = remainingTripCount
+        val totalTrips = totalTripCount
+
+        return when {
+            remainingTrips != null && totalTrips != null ->
+                Localizer.localizePlural(R.plurals.trips_remaining_total,
+                        remainingTrips, remainingTrips, totalTrips)
+            remainingTrips != null ->
+                Localizer.localizePlural(R.plurals.trips_remaining,
+                        remainingTrips, remainingTrips)
+            else -> null
+        }
+    }
+
+    fun formatValidity(): FormattedString? {
+        val validFrom = validFrom?.format()
+        val validTo = validTo?.format()
+        return when {
+            validFrom != null && validTo != null -> Localizer.localizeFormatted(R.string.valid_format, validFrom, validTo)
+            validTo != null -> Localizer.localizeFormatted(R.string.valid_to_format, validTo)
+            validFrom != null -> Localizer.localizeFormatted(R.string.valid_to_format, validFrom)
+            else -> null
+        }
+    }
+
     /**
      * Describes payment methods for a [Subscription].
      */
@@ -366,17 +392,6 @@ abstract class Subscription : Parcelable {
             if (rawLevel == TransitData.RawLevel.NONE)
                 return false
             return sub.getRawFields(rawLevel) != null
-        }
-
-        fun formatValidity(subscription: Subscription): FormattedString? {
-            val validFrom = subscription.validFrom?.format()
-            val validTo = subscription.validTo?.format()
-            return when {
-                validFrom != null && validTo != null -> Localizer.localizeFormatted(R.string.valid_format, validFrom, validTo)
-                validTo != null -> Localizer.localizeFormatted(R.string.valid_to_format, validTo)
-                subscription.validFrom != null -> Localizer.localizeFormatted(R.string.valid_to_format, validFrom)
-                else -> null
-            }
         }
     }
 }
