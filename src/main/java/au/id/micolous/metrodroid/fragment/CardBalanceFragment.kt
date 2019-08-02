@@ -163,7 +163,7 @@ class CardBalanceFragment : ListFragment() {
             if (subscription.subscriptionState === Subscription.SubscriptionState.UNKNOWN) {
                 usedView.visibility = View.GONE
             } else {
-                usedView.setText(subscription.subscriptionState.description)
+                usedView.setText(subscription.subscriptionState.descriptionRes)
                 usedView.visibility = View.VISIBLE
             }
 
