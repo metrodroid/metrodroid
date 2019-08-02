@@ -390,11 +390,15 @@
         <item>smartrider</item>
     </string-array>
 
-    <string-array name="raw_levels">
-        <item>None (disabled)</item>
-        <item>Only unknown fields</item>
-        <item>All fields</item>
+    <string-array name="raw_levels" translatable="false">
+        <item>@string/raw_level_none</item>
+        <item>@string/raw_level_unknown_only</item>
+        <item>@string/raw_level_all</item>
     </string-array>
+
+    <string name="raw_level_none">None (disabled)</string>
+    <string name="raw_level_unknown_only">Only unknown fields</string>
+    <string name="raw_level_all">All fields</string>
 
     <string-array name="raw_levels_values" translatable="false">
         <item>NONE</item>
