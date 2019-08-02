@@ -40,7 +40,7 @@ import kotlin.test.assertTrue
 /**
  * Tests relating to Cubic Nextfare reader.
  */
-class NextfareTest {
+class NextfareTest : BaseInstrumentedTest() {
     @Test
     fun testExpiryDate() {
         val r20250602 = ImmutableByteArray.fromHex("01030000c2320000010200000000bf0c")

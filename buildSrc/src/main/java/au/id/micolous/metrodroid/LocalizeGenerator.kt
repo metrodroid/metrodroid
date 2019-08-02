@@ -70,10 +70,15 @@ object LocalizeGenerator {
         if (keyword == "expect") {
             writer.write("\n")
             writer.write("\n" +
-                    "object R {\n" +
-                    "    val string = Rstring\n" +
-                    "    val plurals = Rplurals\n" +
-                    "    val drawable = Rdrawable\n" +
+                    "interface Rinterface {\n" +
+                    "    val string: Rstring\n" +
+                    "    val plurals: Rplurals\n" +
+                    "    val drawable: Rdrawable\n" +
+                    "}\n" +
+                    "val R get(): Rinterface = object: Rinterface {\n" +
+                    "    override val string get() = Rstring\n" +
+                    "    override val plurals get() = Rplurals\n" +
+                    "    override val drawable get() = Rdrawable\n" +
                     "}")
         }
 
@@ -140,7 +145,7 @@ object LocalizeGenerator {
 
         writeRfile(outputDir, "commonMain", "expect", drawables) {
             name, type -> "val $name: ${typeName(type)}" }
-        writeRfile(outputDir, "androidMain", "actual", drawables) { name, type -> "actual val $name = $androidR.$type.$name" }
+        writeRfile(outputDir, "androidMain", "actual", drawables) { name, type -> "actual val $name get() = $androidR.$type.$name" }
         writeFallbackRFile(outputDir, "chromeosMain", drawables)
         writeFallbackRFile(outputDir, "jvmCliMain", drawables)
     }
