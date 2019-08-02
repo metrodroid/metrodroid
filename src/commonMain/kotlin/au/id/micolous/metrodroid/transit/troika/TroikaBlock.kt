@@ -187,15 +187,21 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
         private val TROIKA_EPOCH_1992 = Epoch.local(1992, MetroTimeZone.MOSCOW)
         private val TROIKA_EPOCH_2016 = Epoch.local(2016, MetroTimeZone.MOSCOW)
 
-        fun convertDateTime1992(days: Int, mins: Int): TimestampFull {
+        fun convertDateTime1992(days: Int, mins: Int): TimestampFull? {
+            if (days == 0 && mins == 0)
+                return null
             return TROIKA_EPOCH_1992.dayMinute(days - 1, mins)
         }
 
-        fun convertDateTime1992(days: Int): Daystamp {
+        fun convertDateTime1992(days: Int): Daystamp? {
+            if (days == 0)
+                return null
             return TROIKA_EPOCH_1992.days(days - 1)
         }
 
-        fun convertDateTime2016(days: Int, mins: Int): TimestampFull {
+        fun convertDateTime2016(days: Int, mins: Int): TimestampFull? {
+            if (days == 0 && mins == 0)
+                return null
             return TROIKA_EPOCH_2016.dayMinute(days - 1, mins)
         }
 
