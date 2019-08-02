@@ -70,6 +70,12 @@ abstract class En1545Transaction : Transaction() {
             return if (id == 0) null else id.toString()
         }
 
+    override val machineID: String?
+        get() {
+            val id = parsed.getIntOrZero(EVENT_DEVICE_ID)
+            return if (id == 0) null else id.toString()
+        }
+
     private val eventCode: Int
         get() = parsed.getIntOrZero(EVENT_CODE)
 
