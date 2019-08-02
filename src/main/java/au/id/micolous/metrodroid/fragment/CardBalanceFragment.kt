@@ -147,8 +147,10 @@ class CardBalanceFragment : ListFragment() {
             if (agencyName != null) {
                 companyView.text = agencyName
                 companyView.visibility = View.VISIBLE
-            } else
+            } else {
+                companyView.text = ""
                 companyView.visibility = View.GONE
+            }
             val nameView = view.findViewById<TextView>(R.id.name)
             val name = subscription.subscriptionName
             if (name != null) {
@@ -180,6 +182,10 @@ class CardBalanceFragment : ListFragment() {
                         if (pax == 1) R.drawable.material_ic_person_24dp else R.drawable.material_ic_group_24dp))
 
                 paxLayout.visibility = View.VISIBLE
+                // company and pax have the same height dictated by company
+                // hence we need to show company if we want to show pax
+                // even if company is empty
+                companyView.visibility = View.VISIBLE
             } else {
                 // No information.
                 paxLayout.visibility = View.GONE
