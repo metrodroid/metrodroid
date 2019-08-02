@@ -21,6 +21,9 @@ package au.id.micolous.metrodroid.test
 
 import android.content.Context
 import au.id.micolous.metrodroid.MetrodroidApplication
+import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.LocalizerInterface
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.coroutines.runBlocking
 import java.io.DataInputStream
