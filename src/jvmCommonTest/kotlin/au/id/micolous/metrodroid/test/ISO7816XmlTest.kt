@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ISO7816Test : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
+class ISO7816XmlTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testIso7816Card() = runAsync {
         // Load up a Mobib card that is basically empty
