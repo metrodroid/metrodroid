@@ -1,2 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="license">Licenze</string>
+    <string name="title_activity_license">Licenze Open Source</string>
+    <string name="directions">Tocca una tessera.</string>
+    <string name="reading_card">Lettura della tessera..…</string>
+    <string name="dont_move">Non spostare la tessera</string>
+    <string name="advanced_info">Informazioni avanzate</string>
+    <string name="delete_card">Elimina la tessera</string>
+    <string name="unknown_card">Tessera sconosciuta</string>
+    <string name="locked_mfc_card">Tessera MIFARE Classic bloccata</string>
+    <string name="locked_mfu_card">Tessera MIFARE Ultralight bloccata</string>
+    <string name="locked_mfd_card">Tessera MIFARE DESFire bloccata</string>
+    <string name="hw_detail">Informazioni sulla produzione</string>
+    <string name="data">Dati grezzi</string>
+    <string name="copy_xml">Copia</string>
+    <string name="share_xml">Condividi</string>
+    <string name="save_xml">Salva su file</string>
+    <string name="history">Storia</string>
+    <string name="no_trip_data">Nessun viaggio trovato. Questa tessera è stata usata\?</string>
+    <string name="import_xml">Importa</string>
+    <string name="import_file">Importa da file</string>
+    <string name="export">Esporta</string>
+    <string name="export_all">Esporta tutto</string>
+    <string name="about">A proposito di</string>
+    <string name="preferences">Preferenze</string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
+    <string name="loading">Caricamento…</string>
+    <string name="supported_cards">Tessere supportate</string>
+    <string name="transaction_counter">Contatore delle transazioni</string>
+    <string name="fully_locked_desc">Nessuna parte di questa tessera è liberamente leggibile senza la chiave e attualmente questo formato non presenta vulnerabilità pratiche.
+\n
+\nLa sua scheda non è supportata da Metrodroid ed è improbabile che lo sarà mai, a meno che la chiave non sia decifrata.
+\n
+\nSi prega di fare pressione sull\'emittente della carta per consentire l\'accesso ai dati aperti sulle carte emesse. È sicuro consentire l\'accesso aperto e di sola lettura ai dati con la moderna tecnologia smart card. Alcune agenzie forniscono persino documentazione aperta sul formato dei dati!</string>
+    <string name="fully_locked_desc_unlockable">Nessuna parte di questa tessera è liberamente leggibile senza la chiave. Non ha installato delle chiavi valide per questo.
+\n 
+\nLa tessera funzionerà una volta installate le chiavi. Questi sono generalmente diversi per ogni carta. Ulteriori informazioni sull\'acquisizione e l\'installazione delle chiavi sono disponibili nella documentazione.
+\n 
+\nSi prega di fare pressione sull\'emittente della tessera per consentire l\'accesso ai dati aperti sulle carte emesse. È sicuro consentire l\'accesso aperto e di sola lettura ai dati con la moderna tecnologia smart card. Alcune agenzie forniscono persino documentazione aperta sul formato dei dati!</string>
+    <string name="fully_locked_title">Tessera completamente bloccata.</string>
+    <string name="nfc_off_error">NFC disattivato</string>
+    <string name="turn_on_nfc">Si prega di attivare NFC per leggere la tessera.</string>
+    <string name="nfc_settings">Impostazioni NFC</string>
+    <string name="machine_id_format">ID macchina %s</string>
+    <string name="machine_id">ID macchina</string>
+    <string name="unknown_card_header">Formato della tessera non supportato</string>
+    <string name="unknown_card_description">Questa tessera non è ancora supportata da Metrodroid. È possibile visualizzare solo i dati grezzi.</string>
+    <string name="unknown_more_info">Maggiori informazioni</string>
+    <string name="unknown_more_info_desc">Tocca per maggiori informazioni sul supporto Metrodroid per questa tessera.</string>
+    <string name="lawyercats">Metrodroid e i suoi autori non sono associati ad alcuna agenzia di trasporto pubblico.</string>
+    <string name="scanned_cards">Storia</string>
+    <string name="no_scanned_cards">Non ha scansionato nessuna tessera.</string>
+    <string name="block_title_format">Blocco: %s</string>
+    <string name="block_title_format_unauthorized">Blocco: %s (non autorizzato)</string>
+    <string name="application_title_format">Applicazione: %s</string>
+    <string name="file_title_format">File: %s</string>
+    <string name="unauthorized_file_title_format">File: %s (non autorizzato)</string>
+    <string name="invalid_file_title_format">File: %1$s (non valido: %2$s)</string>
+    <string name="page_title_format">Pagina: %s</string>
+    <string name="page_title_format_empty">Pagina: %s (vuoto)</string>
+    <string name="unauthorized_page_title_format">Pagina: %s (non autorizzato)</string>
+    <string name="nfcv_system_info">Informazioni sul sistema</string>
+    <string name="sector_title_format">Settore: %s</string>
+    <string name="unauthorized_sector_title_format">Settore: %s (non autorizzato)</string>
+    <string name="sector_title_format_empty">Settore: %s (vuoto)</string>
+    <string name="invalid_sector_title_format">Settore: %1$s (non valido: %2$s)</string>
+    <string name="felica_system_title_format">Sistema: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">Servizio: %1$s (%2$s)</string>
+    <string name="binary_title_format">Dati binari</string>
+    <string name="info">Informazioni</string>
+    <string name="valid_format">Valido da %1$s a %2$s</string>
+    <string name="valid_to_format">Valido fino a %1$s</string>
+    <string name="valid_from_format">Valido da %1$s</string>
+    <string name="valid_origin_destination">Valido da %1$s a %2$s</string>
+    <string name="valid_origin_destination_via">Valido da %1$s a %2$s tramite %3$s</string>
+    <string name="subscription_cost">Costo</string>
+    <string name="unknown_format">Sconosciuto (%s)</string>
+    <string name="unknown">sconosciuto</string>
+    <string name="keys_required">Le chiavi di crittografia sono necessarie per leggere questa tessera.</string>
+    <string name="keys_loaded">Le chiavi di crittografia per questa tessera sono caricate.</string>
+    <string name="load_keys">Carica chiavi</string>
+    <string name="card_keys_not_supported">Metrodroid non supporta le chiavi per questo tipo di tessera.</string>
+    <string name="add_key">Aggiungi chiave</string>
+    <string name="error">Errore</string>
+    <string name="keys">Chiavi</string>
+    <string name="delete">Elimina</string>
+    <string name="delete_key_confirm_title">Elimina davvero la chiave\?</string>
+    <string name="delete_key_confirm_message">Il file chiave <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (contenente <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) sarà sparito per sempre.</string>
+    <string name="cant_delete_with_obfuscation">L\'eliminazione delle chiavi non è al momento disponibile</string>
+    <string name="cant_delete_with_obfuscation_message">Per motivi di sicurezza, non è possibile eliminare le chiavi mentre l\'offuscamento del numero di carta è abilitato. Spegnere se si desidera eliminare le chiavi.</string>
+    <string name="no_keys">Nessuna chiave.</string>
+    <string name="nfc_unavailable">NFC non disponibile</string>
+    <string name="general">Generale</string>
+    <string name="launch_from_background">Avvio da sfondo</string>
+    <string name="checksum">Somma di controllo</string>
+    <string name="last_transaction">Ultima transazione</string>
+    <string name="date">Data</string>
+    <string name="time">Ora</string>
+    <string name="vehicle_type">Tipo di veicolo</string>
+    <string name="transaction_type">Tipo di transazione</string>
+    <string name="card_not_supported_on_device">Questa tessera non è supportata dal dispositivo.</string>
+    <string name="need_stations">Alcuni nomi di stazioni sono sconosciuti.</string>
+</resources>
