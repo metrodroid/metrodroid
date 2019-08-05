@@ -1,2 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="license">Lizenzen</string>
+    <string name="title_activity_license">Open Source Lizenzen</string>
+    <string name="reading_card">Karte wird gelesen…</string>
+    <string name="dont_move">Bewegen Sie die Karte nicht</string>
+    <string name="advanced_info">Erweiterte Informationen</string>
+    <string name="delete_card">Karte löschen</string>
+    <string name="unknown_card">Unbekannte Karte</string>
+    <string name="locked_mfc_card">Gesperrte MIFARE Classic Karte</string>
+    <string name="locked_mfu_card">Gesperrte MIFARE Ultralight Karte</string>
+    <string name="locked_mfd_card">Gesperrte MIFARE DESFire Karte</string>
+    <string name="hw_detail">Produktionsinformationen</string>
+    <string name="data">Rohdaten</string>
+    <string name="copy_xml">Kopieren</string>
+    <string name="share_xml">Teilen</string>
+    <string name="save_xml">In Datei speichern</string>
+    <string name="history">Geschichte</string>
+    <string name="no_trip_data">Keine Fahrten gefunden. Wurde diese Karte je verwendet\?</string>
+    <string name="import_xml">Importieren</string>
+    <string name="import_file">Aus Datei importieren</string>
+    <string name="export">Exportieren</string>
+    <string name="export_all">Alles exportieren</string>
+    <string name="about">Über</string>
+    <string name="preferences">Einstellungen</string>
+    <string name="balance_speech">Guthaben <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
+    <string name="loading">Wird geladen …</string>
+    <string name="scanned_at_format">Gescannt am %1$s um %2$s</string>
+    <string name="supported_cards">Unterstützte Karten</string>
+    <string name="transaction_counter">Transaktionszähler</string>
+    <string name="fully_locked_desc">Kein Teil dieser Karte ist frei lesbar ohne Schlüssel und derzeit hat dieses Format keine praktischen Schwachstellen.
+\n
+\nIhre Karte wird nicht von Metrodroid unterstützt und es ist unwahrscheinlich, dass es jemals sein wird, es sei denn, der Schlüssel dafür wird entschlüsselt.
+\n
+\nBitte wenden Sie sich an den Kartenaussteller, um offenen Datenzugriff auf ausgestellten Karten zu ermöglichen. Mit moderner Smartcard-Technologie ist ein offener, schreibgeschützter Zugriff auf Daten sicher. Einige Agenturen stellen sogar eine offene Dokumentation über das Datenformat zur Verfügung!</string>
+    <string name="fully_locked_desc_unlockable">Kein Teil dieser Karte ist ohne Schlüssel frei lesbar. Sie haben keine gültigen Schlüssel dafür installiert. 
+\n 
+\nDie Karte funktioniert, sobald die Schlüssel dafür installiert sind. Diese unterscheiden sich in der Regel für jede Karte. Weitere Informationen zum Erfassen und Installieren von Schlüsseln finden Sie in der Dokumentation. 
+\n 
+\nBitte wenden Sie sich an den Kartenaussteller, um offenen Datenzugriff auf ausgestellten Karten zu ermöglichen. Mit moderner Smartcard-Technologie ist ein offener, schreibgeschützter Zugriff auf Daten sicher. Einige Agenturen stellen sogar eine offene Dokumentation über das Datenformat zur Verfügung!</string>
+    <string name="fully_locked_title">Vollständig gesperrte Karte.</string>
+    <string name="nfc_off_error">NFC aus</string>
+    <string name="turn_on_nfc">Bitte aktivieren Sie NFC, um Karte zu lesen.</string>
+    <string name="nfc_settings">NFC-Einstellungen</string>
+    <string name="machine_id_format">Maschine-ID %s</string>
+    <string name="machine_id">Maschine-ID</string>
+    <string name="unknown_card_header">Nicht unterstütztes Kartenformat</string>
+    <string name="unknown_card_description">Diese Karte wird noch nicht von Metrodroid unterstützt. Es können nur Rohdaten angezeigt werden.</string>
+    <string name="unknown_more_info">Weitere Informationen</string>
+    <string name="lawyercats">Metrodroid und seine Autoren sind mit keiner öffentlichen Verkehrsagentur verbunden.</string>
+    <string name="scanned_cards">Geschichte</string>
+    <string name="no_scanned_cards">Sie haben keine Karten gescannt.</string>
+    <string name="block_title_format">Block: %s</string>
+    <string name="application_title_format">Anwendung: %s</string>
+    <string name="file_title_format">Datei: %s</string>
+    <string name="invalid_file_title_format">Datei: %1$s (ungültig: %2$s)</string>
+    <string name="page_title_format">Seite: %s</string>
+    <string name="page_title_format_empty">Seite: %s (leer)</string>
+    <string name="nfcv_system_info">Systeminformationen</string>
+    <string name="sector_title_format">Sektor: %s</string>
+    <string name="sector_title_format_empty">Sektor: %s (leer)</string>
+    <string name="invalid_sector_title_format">Sektor: %1$s (ungültig: %2$s)</string>
+    <string name="felica_system_title_format">System: %1$s (%2$s)</string>
+    <string name="info">Information</string>
+    <string name="valid_format">Gültig von %1$s bis %2$s</string>
+    <string name="valid_to_format">Gültig bis %1$s</string>
+    <string name="valid_from_format">Gültig ab %1$s</string>
+    <string name="valid_origin_destination">Gültig von %1$s bis %2$s</string>
+    <string name="valid_origin_destination_via">Gültig von %1$s bis %2$s über %3$s</string>
+    <string name="subscription_cost">Preis</string>
+    <string name="unknown_format">Unbekannt (%s)</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="keys_required">Zum Lesen dieser Karte sind Verschlüsselungsschlüssel erforderlich.</string>
+    <string name="keys_loaded">Verschlüsselungsschlüssel für diese Karte sind geladen.</string>
+    <string name="load_keys">Schlüssel laden</string>
+    <string name="card_keys_not_supported">Metrodroid unterstützt keine Schlüssel für diese Art von Karte.</string>
+    <string name="add_key">Schlüssel hinzufügen</string>
+    <string name="error">Fehler</string>
+    <string name="keys">Schlüssel</string>
+    <string name="delete">Löschen</string>
+    <string name="delete_key_confirm_title">Schlüssel wirklich löschen\?</string>
+    <string name="rejected">Abgelehnt</string>
+    <string name="delete_key_confirm_message">Die Schlüsseldatei <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (enthält <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) wird für immer verloren sein.</string>
+    <string name="cant_delete_with_obfuscation">Das Löschen von Schlüsseln ist derzeit nicht verfügbar</string>
+    <string name="cant_delete_with_obfuscation_message">Aus Sicherheitsgründen können Sie Schlüssel nicht löschen, wenn die Kartennummernverschleierung aktiviert ist. Schalten Sie es aus, falls Sie Schlüssel löschen möchten.</string>
+    <string name="no_keys">Keine Schlüssel.</string>
+    <string name="nfc_unavailable">NFC nicht verfügbar</string>
+    <string name="general">Allgemein</string>
+    <string name="launch_from_background">Aus dem Hintergrund starten</string>
+    <string name="checksum">Prüfsumme</string>
+    <string name="last_transaction">Letzte Transaktion</string>
+    <string name="date">Datum</string>
+    <string name="time">Uhrzeit</string>
+    <string name="vehicle_type">Fahrzeugtyp</string>
+    <string name="transaction_type">Transaktionsart</string>
+    <string name="card_not_supported_on_device">Diese Karte wird von Ihrem Gerät nicht unterstützt.</string>
+    <string name="need_stations">Einige Stationsnamen sind unbekannt.</string>
+    <string name="card_preview_reader">Beta-Version des Kartenlesers.</string>
+    <string name="visit_website">Website besuchen</string>
+    <string name="title_activity_about">Über</string>
+    <string name="card_format">Kartenformat</string>
+    <string name="select_file">Datei auswählen</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip auf USB-Speicher gespeichert.</string>
+    <string name="saved_xml_custom">XML auf USB-Speicher gespeichert.</string>
+    <string name="file_exported">Datei exportiert.</string>
+    <string name="about_card_format">Über dieses Kartenformat</string>
+    <string name="online_services">Online-Dienste</string>
+    <string name="auth_retries">Authentifizierungsversuche</string>
+    <string name="auth_retries_summary">Anzahl der Versuche, die Authentifizierung für jeden Sektor zu versuchen</string>
+    <string name="mfc_fallback">Fallback-Leser</string>
+    <string name="requires_android_17">Erfordert Android 4.2 oder höher.</string>
+    <string name="requires_android_21">Erfordert Android 5.0 oder höher.</string>
+    <string name="pref_show_hidden_cards">Versteckte Karten anzeigen</string>
+</resources>
