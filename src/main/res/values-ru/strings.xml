@@ -53,10 +53,14 @@
     <string name="disabled">Выключено</string>
     <string name="card_name_ravkav">Рав Кав</string>
     <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
-    <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
+    <string name="trip_description">(Из )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (в )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
+    </string>
     <string name="trip_description_unknown_start">До %s</string>
-    <string name="time_from_to">%1$s → %2$s</string>
-    <string name="time_from_unknown_to">\?:?? → %s</string>
+    <string name="time_from_to">
+        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    </string>
+    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    </string>
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
     <string name="location_san_francisco">Сан Франциско, Калифорния, США</string>
     <string name="location_singapore">Сингапур</string>
@@ -187,16 +191,16 @@
     <string name="card_reading_type">Считываем <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
     <string name="mfu_detect">Определям тип карты MIFARE Ultralight…</string>
     <string name="mfu_reading">Считываем карту MIFARE Ultralight…</string>
-    <string name="iso7816_probing">Сканируем карту ISO7816…</string>
+    <string name="iso7816_probing">Сканируем карту ISO/IEC7816…</string>
     <string name="calypso_reading">Считываем карту Calypso…</string>
     <string name="card_partial_read_title">Частично считанная карта!</string>
     <string name="show_partial_data">Показать неполные данные</string>
     <string name="pref_theme">Скин</string>
     <string name="pref_theme_desc">Выберите внешний вид приложения</string>
     <plurals name="cards_imported">
-        <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта!</item>
-        <item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты!</item>
-        <item quantity="many">Импортировано <xliff:g id="count" example="1">%d</xliff:g> карт!</item>
+        <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта.</item>
+        <item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты.</item>
+        <item quantity="many">Импортировано <xliff:g id="count" example="1">%d</xliff:g> карт.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d блок</item>
@@ -279,14 +283,17 @@
     <string name="localise_places_longdesc_button">О индикациях языка…</string>
     <string name="localise_places_longdesc_title">О индикациях языка</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">%s мс</item>
-        <item quantity="few">%s мс</item>
-        <item quantity="many">%s мс</item>
+        <item quantity="one">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> мс</item>
+        <item quantity="few">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="many">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
     </plurals>
     <plurals name="desfire_standard_format">
-        <item quantity="one">Тип: %1$s, Длина: %2$s байт</item>
-        <item quantity="few">Тип: %1$s, Длина: %2$s байта</item>
-        <item quantity="many">Тип: %1$s, Длина: %2$s байт</item>
+        <item quantity="one">Тип: %1$s, длина: %2$s байт</item>
+        <item quantity="few">Тип: %1$s, длина: %2$s байта</item>
+        <item quantity="many">Тип: %1$s, длина: %2$s байт</item>
     </plurals>
     <string name="hardware_information">Аппаратная информация</string>
     <string name="cepas_version">Версия CEPAS</string>
@@ -462,7 +469,7 @@
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_tunion">T-Union</string>
     <string name="city_union_city">Город</string>
-    <string name="card_note_kiev">Только карты выпущенные до 2016 года. Только журнал поездки можно прочитать</string>
+    <string name="card_note_kiev">Только карты выпущенные до 2016 года. Только журнал поездки можно прочитать.</string>
     <string name="transfer">Пересадка</string>
     <string name="card_note_adelaide">Только серийный номер, поездки и проездные могут быть прочитаны</string>
     <string name="purse_serial_number">Серийный номер кошелька</string>
@@ -490,7 +497,7 @@
     <string name="page_title_format_empty">Страница: %s (пустая)</string>
     <string name="edy_file_history">История Edy</string>
     <string name="edy_file_id">Идентификатор Edy</string>
-    <string name="edy_file_purse_balance">Edy баланс кошелька</string>
+    <string name="edy_file_purse_balance">Баланс кошелька Edy</string>
     <string name="suica_file_history">История Suica</string>
     <string name="maximum_balance">Максимальный баланс</string>
     <string name="card_name_snapper">Snapper</string>
@@ -621,7 +628,7 @@
     <string name="card_name_orenburg_student">Студенческая карта Оренбург</string>
     <string name="card_name_strizh">Стриж</string>
     <string name="card_name_penza">Транспортная карта Пензы</string>
-    <string name="card_name_siticard">Ситикард</string>
+    <string name="card_name_siticard">СитиКард</string>
     <string name="card_name_kirov">Кировская транспортная карта</string>
     <string name="card_name_ekarta">Екарта</string>
     <string name="siticard_aerial_tramway">Канатная дорога</string>
@@ -643,4 +650,59 @@
     <string name="amiibo_type_card">Карта</string>
     <string name="amiibo_character">Персонаж</string>
     <string name="amiibo_character_variant">Вариант персонажа</string>
+    <string name="title_activity_license">Лицензии с открытым исходным кодом</string>
+    <string name="fully_locked_desc">Ни одна часть этой карты не является свободно читаемой без ключа, и в настоящее время этот формат не имеет практических уязвимостей.
+\n
+\nВаша карта не поддерживается Metrodroid и вряд ли когда-либо будет поддерживаться, если только ключ для нее не будет расшифрован.
+\n
+\nПожалуйста, лоббируйте эмитента карты, чтобы обеспечить открытый доступ к данным на эмитированных картах. Современная технология смарт-карт позволяет безопасно предоставить открытый доступ к данным только для чтения. Некоторые агентства даже предоставляют открытую документацию о формате данных!</string>
+    <string name="map_tiles_url_summary">Использовать пользовательский сервер для карт, используя синтаксис Leaflet TileLayer.</string>
+    <string name="map_tiles_subdomains">Поддомены для карты</string>
+    <string name="map_tiles_help">Просмотр документации Leaflet TileLayer</string>
+    <string name="map_tiles_help_summary">"Информацию об использовании URL-адресов для карты см. в онлайн-документации к  Leaflet (доступна только на английском языке)."</string>
+    <string name="obfuscation_fares_desc">Изменить показанные тарифы на случайную сумму</string>
+    <string name="accessibility">Специальные возможности</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one">Включен <xliff:g id="count" example="1">%d</xliff:g> флаг обфускации</item>
+        <item quantity="few">Включены <xliff:g id="count" example="3">%d</xliff:g> флага обфускации</item>
+        <item quantity="many">Включены <xliff:g id="count" example="3">%d</xliff:g> флагов обфускации</item>
+    </plurals>
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains">123456</string>
+    <string name="cepas_other_purse_info">Другая информация о кошельке</string>
+    <string name="felica_response_time_read">Команда чтения (1 блок)</string>
+    <string name="felica_response_time_write">Команда записи (1 блок)</string>
+    <string name="mode_pos">Точка продажи</string>
+    <string name="ez_service_charge">Сервисный сбор</string>
+    <string name="felica_terminal_vehicle">Автомобильный терминал (в автобусе)</string>
+    <string name="felica_terminal_turnstile">Турникет</string>
+    <string name="felica_terminal_ticket_booth">Билетная касса</string>
+    <string name="felica_terminal_ticket_office_green">Билетная касса (Зеленое окно)</string>
+    <string name="felica_terminal_pos">Терминал точки продажи</string>
+    <string name="felica_process_fare_exit_gate">Выходной турникет</string>
+    <string name="felica_process_purchase_magnetic">Магнитный билет</string>
+    <string name="hsl_mins_format">%s мин</string>
+    <string name="troika_unknown_ticket">Неизвестный тип билета Тройки %s</string>
+    <string name="kmt_other_data">Другие данные</string>
+    <string name="metroq_day_pass">Дневной абонемент</string>
+    <string name="fully_locked_desc_unlockable">Ни одна часть этой карты не может быть прочитана без ключа. Необходимые ключи не установлены.
+\n 
+\nКарта будет работать, как только ключи для нее будут установлены. Как правило, они различаются для каждой карты. Дополнительную информацию о приобретении и установке ключей можно найти в документации.
+\n 
+\nПожалуйста, лоббируйте эмитента карты, чтобы обеспечить открытый доступ к данным на эмитированных картах. Современная технология смарт-карт позволяет безопасно предоставить открытый доступ к данным только для чтения. Некоторые агентства даже предоставляют открытую документацию о формате данных!</string>
+    <string name="kmt_file_history">История КМТ</string>
+    <string name="kmt_file_id">Идентификация КМТ</string>
+    <string name="kmt_file_purse_balance">Баланс кошелька КМТ</string>
+    <string name="cardtype_header">Условия оплаты картой</string>
+    <string name="cardtype_postpay">Постоплата</string>
+    <string name="cardtype_mobile_postpay">Мобильная постоплата</string>
+    <string name="tmoney_usercode_test">Тест</string>
+    <string name="emv_track_2_equiv">Эквивалентные данные дорожки 2</string>
+    <string name="emv_track_3_equiv">Эквивалентные данные дорожки 3</string>
+    <string name="location_barnaul">Барнаул, Россия</string>
+    <string name="card_holders_id">Идентификационный номер владельца карты</string>
+    <string name="location_santiago_chile">Сантьяго-де-Чили, Чили</string>
+    <string name="troika_druzhinnik_card">Карта Дружинника</string>
+    <string name="location_warsaw">Варшава, Польша</string>
+    <string name="mode_toll_road">Платная дорога</string>
 </resources>
