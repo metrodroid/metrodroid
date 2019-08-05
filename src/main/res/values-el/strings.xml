@@ -1,2 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="license">Άδειες</string>
+    <string name="directions">Αγγίξτε μια κάρτα.</string>
+    <string name="reading_card">Ανάγνωση κάρτας…</string>
+    <string name="dont_move">Μην μετακινείτε την κάρτα</string>
+    <string name="advanced_info">Προηγμένες πληροφορίες</string>
+    <string name="delete_card">Διαγράψτε την κάρτα</string>
+    <string name="unknown_card">Άγνωστη κάρτα</string>
+    <string name="locked_mfc_card">Κλειδωμένη κάρτα MIFARE Classic</string>
+    <string name="locked_mfu_card">Κλειδωμένη κάρτα MIFARE Ultralight</string>
+    <string name="locked_mfd_card">Κλειδωμένη κάρτα MIFARE DESFire</string>
+    <string name="hw_detail">Πληροφορίες κατασκευής</string>
+    <string name="copy_xml">Αντιγραφή</string>
+    <string name="share_xml">Μοιραστείτε</string>
+    <string name="save_xml">Αποθήκευση σε αρχείο</string>
+    <string name="history">Ιστορικό</string>
+    <string name="import_xml">Εισαγωγή</string>
+    <string name="import_clipboard">Επικόλληση από το πρόχειρο</string>
+    <string name="import_file">Εισαγωγή από αρχείο</string>
+    <string name="export">Εξαγωγή</string>
+    <string name="export_filename">Όνομα αρχείου εξαγωγής</string>
+    <string name="export_all">Εξαγωγή όλων</string>
+    <string name="about">Σχετικά</string>
+    <string name="preferences">Προτιμήσεις</string>
+    <string name="loading">Φόρτωση…</string>
+    <string name="supported_cards">Υποστηριζόμενες κάρτες</string>
+    <string name="transaction_counter">Μετρητής συναλλαγών</string>
+    <string name="fully_locked_title">Πλήρως κλειδωμένη κάρτα.</string>
+    <string name="nfc_settings">Ρυθμίσεις NFC</string>
+    <string name="unknown_card_header">Μη υποστηριζόμενη μορφή κάρτας</string>
+    <string name="mfc_key_a">κλειδί A</string>
+    <string name="location_taipei">Ταϊπέι</string>
+</resources>
