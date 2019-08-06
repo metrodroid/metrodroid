@@ -36,14 +36,11 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
 
     override val timeZone get() = TZ
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = when (contractTariff) {
-        TARIFF_SINGLE_URBAN -> "Urban ticket"
-        TARIFF_DAILY_URBAN -> "Urban daily ticket"
-        TARIFF_URBAN_2X6 -> "Urban weekly 2x6 ticket"
-        TARIFF_YEARLY_URBAN -> "Urban annual subscription"
-        TARIFF_MONTHLY_URBAN -> "Urban monthly subscription"
-        null -> null
-        else -> Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
+        if (contractTariff == null)
+            return null
+        val res = subs[contractTariff] ?: return Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
+        return Localizer.localizeString(res)
     }
 
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {
@@ -94,4 +91,12 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
     const val TARIFF_DAILY_URBAN = 0x100d
     const val TARIFF_YEARLY_URBAN = 45
     const val TARIFF_MONTHLY_URBAN = 46
+
+    private val subs = mapOf(
+            TARIFF_SINGLE_URBAN to R.string.ricaricami_single_urban,
+            TARIFF_DAILY_URBAN to R.string.ricaricami_daily_urban,
+            TARIFF_URBAN_2X6 to R.string.ricaricami_urban_2x6,
+            TARIFF_YEARLY_URBAN to R.string.ricaricami_yearly_urban,
+            TARIFF_MONTHLY_URBAN to R.string.ricaricami_monthly_urban
+    )
 }

@@ -2142,4 +2142,10 @@
     <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Airport</string>
 
     <string name="rkf_stockholm_30_days">Stockholm 30-day ticket</string>
+
+    <string name="ricaricami_single_urban">Urban ticket</string>
+    <string name="ricaricami_daily_urban">Urban daily ticket</string>
+    <string name="ricaricami_urban_2x6">Urban weekly 2x6 ticket</string>
+    <string name="ricaricami_yearly_urban">Urban annual subscription</string>
+    <string name="ricaricami_monthly_urban">Urban monthly subscription</string>
 </resources>
