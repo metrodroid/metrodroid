@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
@@ -49,7 +50,7 @@ data class EasyCardTransitData internal constructor(
 
     override val balance get() = TransitCurrency.TWD(rawBalance)
 
-    override val cardName get() = NAME
+    override val cardName get() = Localizer.localizeString(NAME)
 
     override val serialNumber get(): String? = null
 
@@ -58,7 +59,7 @@ data class EasyCardTransitData internal constructor(
     companion object {
         private val EPOCH = Epoch.utc(tz = MetroTimeZone.TAIPEI, year = 1970)
 
-        internal const val NAME = "EasyCard"
+        internal val NAME = R.string.card_name_easycard
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.tpe_easy_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
