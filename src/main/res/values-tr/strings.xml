@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">MetroDroid</string>
-
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">MetroDroid</string>
     <string name="license">Lisanslar</string>
-    <string name="title_activity_license">Açık Kaynak Lisanslar</string>
+    <string name="title_activity_license">Açık kaynak lisansları</string>
     <string name="directions">Kart okut.</string>
     <string name="reading_card">Kart okunuyor…</string>
     <string name="dont_move">Kartı oynatmayın</string>
-    <string name="advanced_info">Gelişmiş Bilgi</string>
+    <string name="advanced_info">Gelişmiş bilgi</string>
     <string name="delete_card">Kartı Sil</string>
-    <string name="unknown_card">Bilinmeyen Kart</string>
+    <string name="unknown_card">Bilinmeyen kart</string>
     <string name="locked_mfc_card">Kilitli MIFARE Classic kart</string>
     <string name="locked_mfu_card">Kilitli MIFARE Ultralight kart</string>
     <string name="locked_mfd_card">Kilitli MIFARE DESFire kart</string>
-    <string name="hw_detail">Üretici Bilgisi</string>
+    <string name="hw_detail">Üretim bilgisi</string>
     <string name="data">Ham Data</string>
     <string name="copy_xml">Kopyala</string>
     <string name="share_xml">Paylaş</string>
@@ -20,30 +20,26 @@
     <string name="history">Geçmiş</string>
     <string name="no_trip_data">Hiç yolculuk bulunamadı. Kart daha önce kullanıldı mı?</string>
     <string name="import_xml">İçeri Aktar</string>
-    <string name="import_clipboard">Hafızadan Yapıştır</string>
-    <string name="import_file">Dosyadan Aktar</string>
+    <string name="import_clipboard">Panodan yapıştır</string>
+    <string name="import_file">Dosyadan içe aktar</string>
     <string name="export">Dışa Aktar</string>
-    <string name="export_filename">Dosya Adını Dışa Aktar</string>
-    <string name="export_all">Tümünü Dışa Aktar</string>
+    <string name="export_filename">Dosya adını dışa aktar</string>
+    <string name="export_all">Tümünü dışa aktar</string>
     <string name="about">Hakkında</string>
     <string name="preferences">Tercihler</string>
-    <string name="balance_speech">Bakiye <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Denge <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">Yükleniyor…</string>
     <string name="scanned_at_format">%1$s Tarihinde %2$s Tarandı</string>
-    <string name="supported_cards">Desteklenen Kartlar</string>
+    <string name="supported_cards">Desteklenen kartlar</string>
     <string name="fully_locked_title">Tamamı kilitli kart.</string>
     <string name="nfc_off_error">NFC kapalı</string>
     <string name="turn_on_nfc">Lütfen kart bilgisini okumak için NFC\'yi etkinleştirin.</string>
-
     <string name="unknown_card_header">Desteklenmeyen kart biçimi</string>
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>
-
     <string name="unknown_more_info">Daha fazla bilgi</string>
     <string name="unknown_more_info_desc">Bu kartın Metrodroid desteği hakkında daha fazla bilgi için dokunun.</string>
-
     <string name="lawyercats">Metrodroid ve yaratıcılarının herhangi bir toplu taşıma kurumuyla ilişiği yoktur.</string>
-
-
     <string name="scanned_cards">Geçmiş</string>
     <string name="no_scanned_cards">Henüz herhangi bir kart okutmadınız.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -93,4 +89,9 @@
     <string name="map_tiles_url">Harita kaynağı URL</string>
     <string name="cepas_logfile_record_count">Günlük Dosyası Kayıt Sayısı</string>
     <string name="location_taipei">Taipei</string>
+    <string name="copyright">Telif Hakkı © 2015 - 2019 Michael Farrell</string>
+    <string name="machine_id">Makine Kimliği</string>
+    <string name="transaction_counter">İşlem sayacı</string>
+    <string name="machine_id_format">Makine Kimliği %s</string>
+    <string name="nfc_settings">NFC ayarları</string>
 </resources>
