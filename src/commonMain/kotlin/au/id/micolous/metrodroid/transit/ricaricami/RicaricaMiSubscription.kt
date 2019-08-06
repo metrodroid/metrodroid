@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.en1545.*
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -58,7 +59,7 @@ data class RicaricaMiSubscription(override val parsed: En1545Parsed, private val
 
     override val lookup get() = RicaricaMiLookup
 
-    override val info get() : List<ListItem> {
+    override fun getRawFields(level: TransitData.RawLevel) : List<ListItem> {
         val dyn = mutableListOf<ListItem>()
         if (parsed.getIntOrZero(CONTRACT_UNKNOWN_A) != 0)
             dyn += ListItem("A", NumberUtils.intToHex(parsed.getIntOrZero(CONTRACT_UNKNOWN_A)))
@@ -78,7 +79,7 @@ data class RicaricaMiSubscription(override val parsed: En1545Parsed, private val
             dyn += ListItem("F3", NumberUtils.intToHex(parsed.getIntOrZero(CONTRACT_UNKNOWN_F +"3")))
         if (parsed.getIntOrZero(CONTRACT_UNKNOWN_F +"4") != 1)
             dyn += ListItem("F4", NumberUtils.intToHex(parsed.getIntOrZero(CONTRACT_UNKNOWN_F +"4")))
-        return super.info.orEmpty() + dyn
+        return super.getRawFields(level).orEmpty() + dyn
     }
 
     companion object {
