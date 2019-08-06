@@ -47,7 +47,8 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
         return StationTableReader.getStation(MOBIB_STR, station or ((agency ?: 0) shl 22))
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = subs[contractTariff]
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = subs[contractTariff]?.let {
+        Localizer.localizeString(it) }
     ?: Localizer.localizeString(R.string.unknown_format, contractTariff?.toString())
 
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
@@ -62,9 +63,9 @@ object MobibLookup : En1545LookupSTR(MOBIB_STR) {
     const val TRAM = 0x16
 
     val subs = mapOf(
-            0x2801 to "Jump 1 trip",
-            0x2803 to "Jump 10 trips",
-            0x0805 to "Airport BUS",
-            0x303d to "Jump 24h + Bus Airport"
+            0x2801 to R.string.mobib_jump_1_trip,
+            0x2803 to R.string.mobib_jump_10_trips,
+            0x0805 to R.string.mobib_airport_bus,
+            0x303d to R.string.mobib_jump_24h_bus_airport
     )
 }

@@ -2131,4 +2131,13 @@
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
     <string name="gironde_line">Line number %d</string>
+
+    <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
+    <string name="mobib_jump_1_trip">Jump 1 trip</string>
+    <!-- Translators: French "JUMP 10 Voyages", Dutch "JUMP 10 ritten" -->
+    <string name="mobib_jump_10_trips">Jump 10 trips</string>
+    <!-- Translators: French "1 Voyages BUS Airport", Dutch "1 rit BUS Airport". -->
+    <string name="mobib_airport_bus">Single fare bus airport</string>
+    <!-- Translators: French "JUMP 24h + BUS Airport", Dutch "JUMP 24 - 48 - 72 uur + BUS Airport" -->
+    <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Airport</string>
 </resources>
