@@ -37,18 +37,18 @@ data class NolTransitData (private val mSerial: Int?, private val mType: Int?): 
 
     override val extraInfo: List<ListItem>?
         get() = super.extraInfo.orEmpty() + listOf(ListItem(R.string.card_type, when (mType) {
-            0x4d5 -> "Silver"
-            0x4d9 -> "Red"
+            0x4d5 -> Localizer.localizeString(R.string.nol_silver)
+            0x4d9 -> Localizer.localizeString(R.string.nol_red)
             else -> Localizer.localizeString(R.string.unknown_format, "${mType?.toString(16)}")
         }))
 
     override val serialNumber get() = formatSerial(mSerial)
 
-    override val cardName get() = NAME
+    override val cardName get() = Localizer.localizeString(NAME)
 
     companion object {
         private const val APP_ID_SERIAL = 0xffffff
-        private const val NAME = "Nol"
+        private val NAME = R.string.card_name_nol
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_dubai,

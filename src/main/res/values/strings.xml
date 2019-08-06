@@ -1954,4 +1954,11 @@
     <string name="card_name_tampere">Tampere Travelcard</string>
     <!--- Card name used in Abu Dhabi. Arrabic "حافلات" literally "busses" may be transliterated. -->
     <string name="card_name_hafilat">Hafilat</string>
+
+    <!-- Translators: Card name used in Dubai. Arabic "نول " literally "fare". May be transliterated. -->
+    <string name="card_name_nol">Nol</string>
+    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <string name="nol_red">Red</string>
+    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <string name="nol_silver">Silver</string>
 </resources>
