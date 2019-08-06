@@ -15,9 +15,9 @@ internal object IntercodeLookupOura : IntercodeLookupSTR("oura"), IntercodeLooku
                 cardType = CardType.ISO7816)
 
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? =
-            subs[Pair(agency, contractTariff)] ?: Localizer.localizeString(R.string.unknown_format, contractTariff)
+            subs[Pair(agency, contractTariff)]?.let { Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, contractTariff)
 
     private val subs = mapOf(
-            Pair(2, 0x6601) to "Billet Tarif Normal"
+            Pair(2, 0x6601) to R.string.oura_billet_tarif_normal
     )
 }

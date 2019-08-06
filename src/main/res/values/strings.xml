@@ -2118,4 +2118,17 @@
     <string name="show_debug_spans_desc">Highlight default language in green, english in yellow and local language in
         blue
     </string>
+
+    <!-- Translators:  first argument is sector name e.g. "Montparnasse", second one is station numeric ID. -->
+    <string name="navigo_sector_station_id">Sector ID %1$s, station ID %2$d</string>
+    <!-- Translators:  first argument is sector numeric ID, second one is station numeric ID. -->
+    <string name="navigo_sector_id_station_id">Sector ID %1$d, station ID %2$d</string>
+    <!-- Translators: ticket for the whole day. French "Forfait jour". -->
+    <string name="navigo_forfait_jour">Day ticket</string>
+    <!-- Translators: ticket for long period. French "Forfait". -->
+    <string name="navigo_forfait">Season ticket</string>
+    <!-- Translators: French "Billet Tarif Normal" -->
+    <string name="oura_billet_tarif_normal">Normal-price ticket</string>
+    <!-- Translators: French "Ligne %d" -->
+    <string name="gironde_line">Line number %d</string>
 </resources>
