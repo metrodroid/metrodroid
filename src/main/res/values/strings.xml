@@ -2163,4 +2163,13 @@
          Italian: Carnet Traghetto
     -->
     <string name="venezia_carnet_traghetto">Carnet Traghetto</string>
+
+    <!-- Translators: Italian "ABB ANN PERS PISA SBE" -->
+    <string name="pisa_abb_ann_pers_pisa_sbe">Yearly subscription Pisa</string>
+    <!-- Translators: Italian "ABB MENS PERS PISA SBE" -->
+    <string name="pisa_abb_mens_pers_pisa_sbe">Monthly subscription Pisa</string>
+    <!-- Translators: Italian "CARNET 10 BGL 70 MIN PISA" -->
+    <string name="pisa_carnet_10_bgl_70_min_pisa">Pack of 10 tickets for 70 minutes</string>
+    <!-- Translators: Italian "ABB. TRIM. PERS. PISA" -->
+    <string name="pisa_abb_trim_pers_pisa">Trimestrial subscription Pisa</string>
 </resources>
