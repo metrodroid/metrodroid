@@ -2148,4 +2148,19 @@
     <string name="ricaricami_urban_2x6">Urban weekly 2x6 ticket</string>
     <string name="ricaricami_yearly_urban">Urban annual subscription</string>
     <string name="ricaricami_monthly_urban">Urban monthly subscription</string>
+
+    <string name="venezia_ticket_24h">24-hour ticket</string>
+    <!-- Translators: "Rete Unica" litelrally "Unique Network" is
+         a ticket that allows travel on all transport. Agency calls it
+         "Rete Unica" even in English. Italian "Rete Unica 75'". -->
+    <string name="venezia_rete_unica_75min">75-minute Rete Unica 75</string>
+    <!-- Translators: Italian "Rete Unica 100'". -->
+    <string name="venezia_rete_unica_100min">100-minute Rete Unica</string>
+    <string name="venezia_bus_ticket_75min">75-minute bus ticket</string>
+    <string name="venezia_airport_bus_ticket">Airport bus ticket</string>
+    <!-- Translators: book of 10 single tickets for traghetti (
+         short boat trips which cross the canals of Venice).
+         Italian: Carnet Traghetto
+    -->
+    <string name="venezia_carnet_traghetto">Carnet Traghetto</string>
 </resources>
