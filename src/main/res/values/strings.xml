@@ -1946,4 +1946,7 @@
     <string name="russia_region_76_yaroslavl">Yaroslavl Oblast</string>
     <string name="russia_region_79_jewish_autonomous">Jewish Autonomous Oblast</string>
     <string name="umarsh_91_crimea">Crimea</string>
+
+    <!-- Translators: Transit card used in Tbilissi. In Georgian "მეტრომანის" AFAICT -->
+    <string name="card_name_metromoney">Metromoney</string>
 </resources>
