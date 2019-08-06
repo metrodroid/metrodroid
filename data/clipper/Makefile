@@ -1,8 +1,8 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
 MDROOT = ../..
 
-BART_URL = https://www.bart.gov/sites/default/files/docs/google_transit_20180526_v2.zip
-VTA_URL = http://www.vta.org/sfc/servlet.shepherd/document/download/069A0000001NUea
+BART_URL = https://www.bart.gov/dev/schedules/google_transit.zip
+VTA_URL = https://gtfs.vta.org/gtfs_vta.zip
 MUNI_URL = http://gtfs.sfmta.com/transitdata/google_transit.zip
 ZIP_FILES := bart_gtfs.zip vta_gtfs.zip muni_gtfs.zip
 
