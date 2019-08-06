@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.transit.zolotayakorona.RussiaTaxCodes
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.HashUtils
@@ -260,7 +261,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
         get() = listOfNotNull(header) + listOf(
                 ListItem(R.string.refill_counter, refillCounter.toString()),
                 ListItem(R.string.expiry_date, cardExpiry?.format()),
-                ListItem(R.string.zolotaya_korona_region, region.toString())
+                ListItem(R.string.zolotaya_korona_region, RussiaTaxCodes.codeToName(region))
         ) + if (denomination == UmarshDenomination.RUB)
             listOf(
                     ListItem(FormattedString("Last refill"), lastRefill?.format()),

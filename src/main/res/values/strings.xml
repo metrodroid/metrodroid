@@ -1910,4 +1910,33 @@
     <string name="raw_header">Raw fields</string>
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC settings</string>
+
+    <string name="russia_region_04_altai_republic">Altai Republic</string>
+    <string name="russia_region_11_komi">Komi Republic</string>
+    <string name="russia_region_12_mari_el">Mari El Republic</string>
+    <string name="russia_region_18_udmurt">Udmurt Republic</string>
+    <string name="russia_region_22_altai">Altai Krai</string>
+    <string name="russia_region_23_krasnodar">Krasnodar Krai</string>
+    <string name="russia_region_25_primorsky">Primorsky Krai</string>
+    <string name="russia_region_27_khabarovsk">Khabarovsk Krai</string>
+    <string name="russia_region_28_amur">Amur Oblast</string>
+    <string name="russia_region_29_arkhangelsk">Arkhangelsk Oblast</string>
+    <string name="russia_region_41_kamchatka">Kamchatka Krai</string>
+    <string name="russia_region_42_kemerovo">Kemerovo Oblast</string>
+    <string name="russia_region_43_kirov">Kirov Oblast</string>
+    <string name="russia_region_45_kurgan">Kurgan Oblast</string>
+    <string name="russia_region_52_nizhnij_novgorod">Nizhnij Novgorod Oblast</string>
+    <string name="russia_region_53_novgorod">Novgorod Oblast</string>
+    <string name="russia_region_54_novosibirsk">Novosibirsk Oblast</string>
+    <string name="russia_region_55_omsk">Omsk Oblast</string>
+    <string name="russia_region_56_orenburg">Orenburg Oblast</string>
+    <string name="russia_region_58_penza">Penza Oblast</string>
+    <string name="russia_region_60_pskov">Pskov Oblast</string>
+    <string name="russia_region_63_samara">Samara Oblast</string>
+    <string name="russia_region_65_sakhalin">Sakhalin Oblast</string>
+    <string name="russia_region_66_sverdlovsk">Sverdlovsk Oblast</string>
+    <string name="russia_region_74_chelyabinsk">Chelyabinsk Oblast</string>
+    <string name="russia_region_76_yaroslavl">Yaroslavl Oblast</string>
+    <string name="russia_region_79_jewish_autonomous">Jewish Autonomous Oblast</string>
+    <string name="umarsh_91_crimea">Crimea</string>
 </resources>

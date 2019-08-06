@@ -74,7 +74,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 if (regionRsrcIdx != null)
                     Localizer.localizeString(regionRsrcIdx)
                 else
-                    (REGIONS[regionNum]?.first ?: regionNum.toString(16))
+                    RussiaTaxCodes.BCDToName(regionNum)
                 )
         return listOf(
                 ListItem(R.string.zolotaya_korona_region, regionName),
@@ -87,55 +87,6 @@ data class ZolotayaKoronaTransitData internal constructor(
     override val trips get() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
 
     companion object {
-        private val REGIONS = mapOf(
-                // List of cities is taken from Zolotaya Korona website. Regions match
-                // license plate regions
-                //
-                // Probably doesn't make sense to i18n as
-                // the name is only used as fallback if the card is not known
-                // Gorno-Altaysk
-                0x04 to Pair("Altai Republic", MetroTimeZone.KRASNOYARSK),
-                // Syktyvkar and Ukhta
-                0x11 to Pair("Komi Republic", MetroTimeZone.KIROV),
-                // Biysk
-                0x22 to Pair("Altai Krai", MetroTimeZone.KRASNOYARSK),
-                // Krasnodar and Sochi
-                0x23 to Pair("Krasnodar Krai", MetroTimeZone.MOSCOW),
-                // Vladivostok
-                0x25 to Pair("Primorsky Krai", MetroTimeZone.VLADIVOSTOK),
-                // Khabarovsk
-                0x27 to Pair("Khabarovsk Krai", MetroTimeZone.VLADIVOSTOK),
-                // Blagoveshchensk
-                0x28 to Pair("Amur Oblast", MetroTimeZone.YAKUTSK),
-                // Arkhangelsk
-                0x29 to Pair("Arkhangelsk Oblast", MetroTimeZone.MOSCOW),
-                // Petropavlovsk-Kamchatsky
-                0x41 to Pair("Kamchatka Krai", MetroTimeZone.KAMCHATKA),
-                // Kemerovo and Novokuznetsk
-                0x42 to Pair("Kemerovo Oblast", MetroTimeZone.NOVOKUZNETSK),
-                // Kurgan
-                0x45 to Pair("Kurgan Oblast", MetroTimeZone.YEKATERINBURG),
-                // Veliky Novgorod
-                0x53 to Pair("Novgorod Oblast", MetroTimeZone.MOSCOW),
-                // Novosibirsk
-                0x54 to Pair("Novosibirsk Oblast", MetroTimeZone.NOVOSIBIRSK),
-                // Omsk
-                0x55 to Pair("Omsk Oblast", MetroTimeZone.OMSK),
-                // Orenburg
-                0x56 to Pair("Orenburg Oblast", MetroTimeZone.YEKATERINBURG),
-                // Pskov
-                0x60 to Pair("Pskov Oblast", MetroTimeZone.MOSCOW),
-                // Samara
-                0x63 to Pair("Samara Oblast", MetroTimeZone.SAMARA),
-                // Kholmsk
-                0x65 to Pair("Sakhalin Oblast", MetroTimeZone.SAKHALIN),
-                0x74 to Pair("Chelyabinsk Oblast", MetroTimeZone.YEKATERINBURG),
-                // Yaroslavl
-                0x76 to Pair("Yaroslavl Oblast", MetroTimeZone.MOSCOW),
-                // Birobidzhan
-                0x79 to Pair("Jewish Autonomous Oblast", MetroTimeZone.VLADIVOSTOK)
-        )
-
         private val CARDS = mapOf(
                 0x230100 to CardInfo(
                         name = R.string.card_name_krasnodar_etk,
@@ -226,7 +177,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         fun parseTime(time: Int, cardType: Int): Timestamp? {
             if (time == 0)
                 return null
-            val tz = REGIONS[cardType shr 16]?.second ?: MetroTimeZone.MOSCOW
+            val tz = RussiaTaxCodes.BCDToTimeZone(cardType shr 16)
             val epoch = Epoch.local(1970, tz)
             // This is pseudo unix time with local day alwayscoerced to 86400 seconds
             return epoch.daySecond(time / 86400, time % 86400)
