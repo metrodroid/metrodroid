@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><string name="app_name">Metrodroid</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Metrodroid</string>
     <string name="license">Licencias</string>
     <string name="title_activity_license">Licencias de código abierto</string>
     <string name="directions">Coloca una tarjeta.</string>
@@ -22,7 +23,7 @@
     <string name="import_clipboard">Pegar del portapapeles</string>
     <string name="import_file">Importar desde archivo</string>
     <string name="export">Exportar</string>
-    <string name="export_filename">Exportar nombre de archivo</string>
+    <string name="export_filename">Nombre de archivo de exportación</string>
     <string name="export_all">Exportar todos</string>
     <string name="about">Sobre</string>
     <string name="preferences">Preferencias</string>
@@ -85,7 +86,7 @@
     <string name="cant_delete_with_obfuscation_message">Por motivos de seguridad, no puedes borrar claves mientras el numero de tarjeta está activado. Apágalo si quieres borrar claves.</string>
     <string name="add_key_directions">Guardar un dump binario de las claves como un archivo .farebotkeys , mandalo en e-mail hacia ti, y entonces abrelo en este dispositivo.</string>
     <string name="no_keys">No hay claves.</string>
-    <string name="nfc_unavailable">NFC No disponible</string>
+    <string name="nfc_unavailable">NFC no disponible</string>
     <string name="general">General</string>
     <string name="launch_from_background">Lanzar en segundo plano</string>
     <string name="checksum">Checksum</string>
@@ -95,4 +96,24 @@
     <string name="vehicle_type">Tipo de vehículo</string>
     <string name="transaction_type">Tipo de transacción</string>
     <string name="card_not_supported_on_device">Esta tarjeta no es soportada por tu dispositivo.</string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
+    <string name="valid_format">Válido desde %1$s hasta %2$s</string>
+    <string name="need_stations">Algunos nombres de estaciones son desconocidos.</string>
+    <string name="card_preview_reader">Versión beta del lector de tarjetas.</string>
+    <string name="visit_website">Visitar sitio web</string>
+    <string name="title_activity_about">Acerca de</string>
+    <string name="card_format">Formato de tarjeta</string>
+    <string name="select_file">Seleccionar archivo</string>
+    <string name="copied_to_clipboard">Copiado al portapapeles</string>
+    <string name="saved_xml_custom">XML guardado en almacenamiento USB.</string>
+    <string name="file_exported">Archivo exportado.</string>
+    <string name="block_title_format_unauthorized">Bloque: %s (no autorizado)</string>
+    <string name="page_title_format_empty">Página: %s (vacío)</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip guardado en una memoria USB.</string>
+    <string name="nfcv_system_info">Información del sistema</string>
+    <string name="nfc_settings">Configuración NFC</string>
+    <string name="keys_loaded">Las claves de encriptación de esta tarjeta están cargadas.</string>
+    <string name="valid_origin_destination">Válido de %1$s a %2$s</string>
+    <string name="valid_origin_destination_via">Válido de %1$s a %2$s vía %3$s</string>
 </resources>
