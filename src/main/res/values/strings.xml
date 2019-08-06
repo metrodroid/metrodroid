@@ -1340,6 +1340,58 @@
     <string name="ovc_yes">Yes</string>
     <string name="ovc_no">No</string>
 
+    <!-- TODO: Translate into English and remove translatable=false. -->
+    <!-- NS -->
+    <!-- Translators: Dutch "OV-jaarkaart" -->
+    <string name="ovc_sub_ov_jaarkaart" translatable="false">OV-jaarkaart</string>
+    <!-- Translators: Dutch "OV-Bijkaart 1e klas" -->
+    <string name="ovc_sub_ov_bijkaart_1e_klas" translatable="false">OV-Bijkaart 1e klas</string>
+    <!-- Translators: Dutch "NS Businesscard" -->
+    <string name="ovc_sub_ns_businesscard" translatable="false">NS Businesscard</string>
+    <!-- Translators: Dutch "Voordeelurenabonnement (twee jaar)" -->
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar" translatable="false">Voordeelurenabonnement (twee jaar)</string>
+    <!-- Translators: Dutch "Studenten OV-chipkaart week (2009)" -->
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009" translatable="false">Studenten OV-chipkaart week (2009)</string>
+    <!-- Translators: Dutch "Studenten OV-chipkaart weekend (2009)" -->
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009" translatable="false">Studenten OV-chipkaart weekend (2009)</string>
+    <!-- Translators: Dutch "Studentenkaart korting week (2009)" -->
+    <string name="ovc_sub_studentenkaart_korting_week_2009" translatable="false">Studentenkaart korting week (2009)</string>
+    <!-- Translators: Dutch "Studentenkaart korting weekend (2009)" -->
+    <string name="ovc_sub_studentenkaart_korting_weekend_2009" translatable="false">Studentenkaart korting weekend (2009)</string>
+    <!-- Translators: Dutch "Reizen op saldo bij NS, 1e klasse" -->
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse" translatable="false">Reizen op saldo bij NS, 1e klasse</string>
+    <!-- Translators: Dutch "Reizen op saldo bij NS, 2de klasse" -->
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse" translatable="false">Reizen op saldo bij NS, 2de klasse</string>
+    <!-- Translators: Dutch "Voordeelurenabonnement reizen op saldo" -->
+    <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo" translatable="false">Voordeelurenabonnement reizen op saldo</string>
+    <!-- Translators: Dutch "Reizen op saldo (tijdelijk eerste klas)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas" translatable="false">Reizen op saldo (tijdelijk eerste klas)</string>
+    <!-- Translators: Dutch "Reizen op saldo (tijdelijk tweede klas)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas" translatable="false">Reizen op saldo (tijdelijk tweede klas)</string>
+    <!-- Translators: Dutch "Reizen op saldo (tijdelijk eerste klas korting)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting" translatable="false">Reizen op saldo (tijdelijk eerste klas korting)</string>
+    <!--  Arriva -->
+    <!-- Translators: Dutch "Dalkorting" -->
+    <string name="ovc_sub_dalkorting" translatable="false">Dalkorting</string>
+    <!-- Veolia -->
+    <!-- Translators: Dutch "DALU Dalkorting" -->
+    <string name="ovc_sub_dalu_dalkorting" translatable="false">DALU Dalkorting</string>
+    <!-- Connexxion -->
+    <!-- Translators: Dutch "Daluren Oost-Nederland" -->
+    <string name="ovc_sub_daluren_oost_nederland" translatable="false">Daluren Oost-Nederland</string>
+    <!--  DUO -->
+    <!-- Translators: Dutch "Student weekend-vrij" -->
+    <string name="ovc_sub_student_weekend_vrij" translatable="false">Student weekend-vrij</string>
+    <!-- Translators: Dutch "Student week-korting" -->
+    <string name="ovc_sub_student_week_korting" translatable="false">Student week-korting</string>
+    <!-- Translators: Dutch "Student week-vrij" -->
+    <string name="ovc_sub_student_week_vrij" translatable="false">Student week-vrij</string>
+    <!-- Translators: Dutch "Student weekend-korting" -->
+    <string name="ovc_sub_student_weekend_korting" translatable="false">Student weekend-korting</string>
+    <!-- GVB -->
+    <!-- Translators: Dutch "Fietssupplement" -->
+    <string name="ovc_sub_fietssupplement" translatable="false">Fietssupplement</string>
+
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit info</string>
     <string name="software_information">Software info</string>
