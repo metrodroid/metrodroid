@@ -5,24 +5,24 @@ reader_id,stop_id,stop_code,short_name,comment
 0x040004,GLEN,,,
 0x040005,24TH,,,
 0x040006,16TH,,,
-0x040007,CIVC,,Civic Center
+0x040007,CIVC,,Civic Center,
 0x040008,POWL,,,
 0x040009,MONT,,,
 0x04000a,EMBR,,,
 0x04000b,WOAK,,,
-0x04000c,12TH,,12th St. Oakland
+0x04000c,12TH,,12th St. Oakland,
 0x04000d,19TH,,,
 0x04000e,MCAR,,,
 0x04000f,ROCK,,,
 0x040010,ORIN,,,unconfirmed
 0x040011,LAFY,,,
 0x040012,WCRK,,,
-0x040013,PHIL,,Pleasant Hill
+0x040013,PHIL,,Pleasant Hill,
 0x040014,CONC,,,
 0x040015,NCON,,N. Concord/Martinez,
 0x040016,PITT,,,unconfirmed
 0x040017,ASHB,,,
-0x040018,DBRK,,Berkeley
+0x040018,DBRK,,Berkeley,
 0x040019,NBRK,,,
 0x04001a,PLZA,,,
 0x04001b,DELN,,,
