@@ -97,4 +97,24 @@
     <string name="umarsh_student">学生</string>
     <string name="location_santiago_chile">圣地亚哥，智利</string>
     <string name="location_warsaw">华沙，波兰</string>
+    <string name="history">历史</string>
+    <string name="scanned_cards">历史</string>
+    <string name="binary_title_format">二进制资料</string>
+    <string name="error">错误</string>
+    <string name="delete">删除</string>
+    <string name="checksum">校验和</string>
+    <string name="saving_card">正在保存卡…</string>
+    <plurals name="milliseconds_short">
+        <item quantity="other">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g>毫秒</item>
+    </plurals>
+    <string name="location_malaysia">马拉西亚</string>
+    <string name="location_singapore">新加坡</string>
+    <string name="card_name_tmoney">T-Money</string>
+    <string name="crypto_algo_header">加密演算法</string>
+    <string name="tmoney_issuer_seoul_bus">首尔巴士</string>
+    <string name="card_number">卡号码</string>
+    <string name="card_name_kiev">基辅地铁</string>
+    <string name="card_name_penza">奔萨</string>
+    <string name="card_name_kirov">基洛夫</string>
 </resources>
