@@ -2140,4 +2140,6 @@
     <string name="mobib_airport_bus">Single fare bus airport</string>
     <!-- Translators: French "JUMP 24h + BUS Airport", Dutch "JUMP 24 - 48 - 72 uur + BUS Airport" -->
     <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Airport</string>
+
+    <string name="rkf_stockholm_30_days">Stockholm 30-day ticket</string>
 </resources>
