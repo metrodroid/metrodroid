@@ -1544,6 +1544,9 @@
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">Rav-Kav mobile top-up</string>
+    <!-- Translators: this is a subscription ID used for generic single-ride and
+         multi-ride ticket.  -->
+    <string name="ravkav_generic_trips">Trips</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
