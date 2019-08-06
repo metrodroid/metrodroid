@@ -1949,4 +1949,7 @@
 
     <!-- Translators: Transit card used in Tbilissi. In Georgian "მეტრომანის" AFAICT -->
     <string name="card_name_metromoney">Metromoney</string>
+    <!-- Translators: Finnish "Tampereen matkakortti". It doesn't seem to have a more specific
+         brand name. Website in English reffers to it as Tampere Travelcard -->
+    <string name="card_name_tampere">Tampere Travelcard</string>
 </resources>

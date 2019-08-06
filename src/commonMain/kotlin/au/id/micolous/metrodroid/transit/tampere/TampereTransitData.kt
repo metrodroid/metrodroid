@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.*
@@ -102,7 +103,7 @@ class TampereTransitData (
         private val mIssueDate: Int?): TransitData() {
 
     override val cardName: String
-        get() = NAME
+        get() = Localizer.localizeString(NAME)
 
     public override val balance: TransitCurrency?
         get() = mBalance?.let { TransitCurrency.EUR(it) }
@@ -117,7 +118,7 @@ class TampereTransitData (
     companion object {
         // Finish for "Tampere travel card". It doesn't seem to have a more specific
         // brand name.
-        const val NAME = "Tampereen matkakortti"
+        val NAME = R.string.card_name_tampere
         const val APP_ID = 0x121ef
 
         private fun getSerialNumber(app: DesfireApplication?) = app?.getFile(0x07)?.data?.toHexString()?.substring(2, 20)
