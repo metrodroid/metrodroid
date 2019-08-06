@@ -41,25 +41,25 @@ reader_id,stop_id,stop_code,short_name,comment
 0x11002c,"5236",,Montague,unconfirmed
 0x11002d,"4821",,Mountain View Downtown,
 0x11002e,"4730",,Oakridge,
-0x11002f,"4733",,Ohlone-Chynoweth
-0x110030,"4810",,Old Ironsides
-0x110031,"4757",,Orchard
+0x11002f,"4733",,Ohlone-Chynoweth,
+0x110030,"4810",,Old Ironsides,
+0x110031,"4757",,Orchard,
 0x110032,"5240",,Penitencia Creek,unconfirmed
-0x110033,"5375",,Race
-0x110034,"4811",,Reamwood
-0x110035,"4758",,River Oaks
-0x110036,"5388",,San Fernando
-0x110037,"4747",,San Antonio North
-0x110038,"4774",,San Antonio South
-0x110039,"4748",,Santa Clara North
-0x11003a,"4773",,Santa Clara South
-0x11003b,"4749",,St James North
-0x11003c,"4772",,St James South
+0x110033,"5375",,Race,
+0x110034,"4811",,Reamwood,
+0x110035,"4758",,River Oaks,
+0x110036,"5388",,San Fernando,
+0x110037,"4747",,San Antonio North,
+0x110038,"4774",,San Antonio South,
+0x110039,"4748",,Santa Clara North,
+0x11003a,"4773",,Santa Clara South,
+0x11003b,"4749",,St James North,
+0x11003c,"4772",,St James South,
 0x11003d,"4736",,Santa Teresa,unconfirmed
 0x11003e,"4738",,Snell,
 0x11003f,"4743",,Tamien,unconfirmed
-0x110040,"4759",,Tasman
+0x110040,"4759",,Tasman,
 0x110041,"4812",,Vienna,unconfirmed
 0x110042,"4744",,Virginia,unconfirmed
-0x110043,"4819",,Whisman
-0x110044,"5380",,Winchester
+0x110043,"4819",,Whisman,
+0x110044,"5380",,Winchester,
