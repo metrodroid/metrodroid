@@ -1952,4 +1952,6 @@
     <!-- Translators: Finnish "Tampereen matkakortti". It doesn't seem to have a more specific
          brand name. Website in English reffers to it as Tampere Travelcard -->
     <string name="card_name_tampere">Tampere Travelcard</string>
+    <!--- Card name used in Abu Dhabi. Arrabic "حافلات" literally "busses" may be transliterated. -->
+    <string name="card_name_hafilat">Hafilat</string>
 </resources>

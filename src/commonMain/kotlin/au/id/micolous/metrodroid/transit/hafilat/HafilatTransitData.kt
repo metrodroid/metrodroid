@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
@@ -48,7 +49,7 @@ class HafilatTransitData (
         get() = formatSerial(serial)
 
     override val cardName: String
-        get() = NAME
+        get() = Localizer.localizeString(NAME)
 
     override val info: List<ListItem>?
         get() {
@@ -129,7 +130,7 @@ class HafilatTransitData (
         }
 
         private const val APP_ID = 0x107f2
-        private const val NAME = "Hafilat"
+        private val NAME = R.string.card_name_hafilat
 
         private val CARD_INFO = CardInfo(
                 name = NAME,
