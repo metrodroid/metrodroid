@@ -25,14 +25,13 @@ clipper.mdst: $(MAPPING_FILES) $(ZIP_FILES) mdst
 	    -o $@
 
 bart_gtfs.zip:
-	curl -o $@ -z $@ $(BART_URL)
+	curl -L -o $@ -z $@ $(BART_URL)
 
-# VTA's server doesn't handle timestamps correctly, so this always tries to overwrite.
 vta_gtfs.zip:
-	curl -o $@ -z $@ $(VTA_URL)
+	curl -L -o $@ -z $@ $(VTA_URL)
 
 muni_gtfs.zip:
-	curl -o $@ -z $@ $(MUNI_URL)
+	curl -L -o $@ -z $@ $(MUNI_URL)
 
 copy: clipper.copy
 
