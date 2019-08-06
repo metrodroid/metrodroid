@@ -3,7 +3,7 @@
     <string name="app_name">Metrodroid</string>
     <string name="copyright">Copyright 2015 – 2019 Michael Farrell</string>
     <string name="license">Licences</string>
-    <string name="title_activity_license">Licences Open Source</string>
+    <string name="title_activity_license">Licences open source</string>
     <string name="directions">Tapotez une carte.</string>
     <string name="reading_card">Lecture de la carte…</string>
     <string name="dont_move">Ne bougez pas la carte</string>
@@ -54,7 +54,7 @@
     <string name="unauthorized_sector_title_format">Secteur : %s (non autorisé)</string>
     <string name="invalid_sector_title_format">Secteur : %1$s (invalide : %2$s)</string>
     <string name="info">Info</string>
-    <string name="valid_format">Valide %1$s à %2$s</string>
+    <string name="valid_format">Valide de %1$s à %2$s</string>
     <string name="valid_to_format">Valide jusqu\'au %1$s</string>
     <string name="unknown_format">Inconnu (%s)</string>
     <string name="unknown">Inconnu</string>
@@ -103,9 +103,9 @@
     <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> carte importée !</item>
+            <xliff:g id="count" example="1">%d</xliff:g> carte importée.</item>
         <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> cartes importées !</item>
+            <xliff:g id="count" example="3">%d</xliff:g> cartes importées.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d bloc</item>
@@ -156,8 +156,8 @@
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Ré-édition</string>
     <string name="felica_process_payment_shinkansen">Paiement Shinkansen</string>
-    <string name="felica_process_entry_a_autocharge">Entrée A (Paiement auto)</string>
-    <string name="felica_process_exit_a_autocharge">Sortie A (Paiement auto)</string>
+    <string name="felica_process_entry_a_autocharge">Entrée A (paiement auto)</string>
+    <string name="felica_process_exit_a_autocharge">Sortie A (paiement auto)</string>
     <string name="felica_process_deposit_bus">Dépôt de bus</string>
     <string name="felica_process_purchase_special_ticket">Billet (spécial Bus/tramway)</string>
     <string name="felica_process_merchandise_purchase">Marchandise</string>
@@ -176,7 +176,7 @@
     <string name="opal_automatic_top_up">Recharge automatique</string>
     <string name="opal_weekly_trips">Déplacements hebdomadaires</string>
     <string name="opal_vehicle_bus">Bus</string>
-    <string name="opal_vehicle_ferry_lr">Ferry ou train léger sur Rail</string>
+    <string name="opal_vehicle_ferry_lr">Ferry ou tram</string>
     <string name="opal_vehicle_rail">Chemin de fer</string>
     <string name="opal_action_none">Aucun (carte neuve, non utilisée)</string>
     <string name="opal_action_new_journey">Nouveau voyage</string>
@@ -270,7 +270,7 @@
     <string name="mfu_detect">Détection du type de carte MIFARE Ultralight…</string>
     <string name="mfu_reading">Lecture de la carte MIFARE Ultralight…</string>
     <string name="mfd_unlocking">Déverrouillage de la carte <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
-    <string name="iso7816_probing">Validation de la carte ISO7816…</string>
+    <string name="iso7816_probing">Validation de la carte ISO/IEC7816…</string>
     <string name="calypso_reading">Lecture de la carte Calypso…</string>
     <string name="card_partial_read_title">Carte partiellement lue !</string>
     <string name="card_partial_read_desc">La carte s\'est retrouvée hors de portée pendant la lecture.
@@ -293,9 +293,9 @@
     <string name="key_data">Données de clé</string>
     <plurals name="obfuscation_mode_notice">
         <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> option masquée</item>
+            <xliff:g id="count" example="1">%d</xliff:g> option d\'obfuscation est activée</item>
         <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> options masquées</item>
+            <xliff:g id="count" example="3">%d</xliff:g>" options  dóbfuscation sont activées"</item>
     </plurals>
     <string name="pref_theme">Thème</string>
     <string name="pref_theme_desc">Choisissez l’apparence</string>
@@ -325,8 +325,8 @@
     <string name="desfire_keyex">Échange de clés</string>
     <string name="desfire_key_number">Clé %s</string>
     <plurals name="desfire_standard_format">
-        <item quantity="one">Type : 1$s, Longueur : %2$s octet</item>
-        <item quantity="other">Type : 1$s, Longueur : %2$s octets</item>
+        <item quantity="one">Type : 1$s, taille : %2$s octet</item>
+        <item quantity="other">Type : 1$s, taille : %2$s octets</item>
     </plurals>
     <plurals name="desfire_record_format">
         <item quantity="one">Type : 1$s, Enregistrement : %2$s (%3$s maximum), Taille de l\'enregistrement : %4$s</item>
@@ -366,7 +366,7 @@
     <string name="cepas_purse_balance">Solde Purse</string>
     <string name="cepas_purse_creation_date">Date de création de Purse</string>
     <string name="cepas_autoload_amount">Montant chargé automatiquement</string>
-    <string name="cepas_last_txn_info">Infos sur la dernière Transaction</string>
+    <string name="cepas_last_txn_info">Infos sur la dernière transaction</string>
     <string name="cepas_credit_header">En-tête de crédit</string>
     <string name="cepas_debit_options">Options de débit</string>
     <string name="cepas_other_purse_info">Autres informations de Purse</string>
@@ -485,7 +485,7 @@
     <string name="card_note_adelaide">Seuls les numéro de série, les voyages et les abonnements peuvent être lus</string>
     <string name="purse_serial_number">Numéro de série de Purse</string>
     <string name="suica_bus_area_line_stop">Zone %1$s Ligne %2$s Arrêt %3$s</string>
-    <string name="suica_area_line_station">Zone %1$s Ligne %2$s Station %3$s</string>
+    <string name="suica_area_line_station">Zone %1$s ligne %2$s station %3$s</string>
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
@@ -566,7 +566,7 @@
     <string name="card_type_personal">Personnel</string>
     <string name="postal_code">Code postal</string>
     <string name="card_name_ravkav">Rav-Kav</string>
-    <string name="ravkav_agency_topup_app">"Application de recharge RavKav "</string>
+    <string name="ravkav_agency_topup_app">Recharge de RavKav dans l\'application</string>
     <string name="card_note_russia">Les cartes bancaires ne sont pas prises en charge.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
@@ -645,8 +645,8 @@
     <string name="lisboaviva_unknown_period">Validité inconnue %x/%x</string>
     <string name="about_key_formats">À propos des formats de clé…</string>
     <string name="invalid_json">JSON non valide</string>
-    <string name="invalid_key_file">Fichier de clé non valide</string>
-    <string name="key_file_empty">Fichier de clé vide !</string>
+    <string name="invalid_key_file">Fichier de clés non valide</string>
+    <string name="key_file_empty">Fichier de clés est vide !</string>
     <string name="untitled_key_group">Groupe de clés sans titre</string>
     <plurals name="keytype_mfc">
         <item quantity="one">%d clé MIFARE Classic</item>
@@ -661,7 +661,7 @@
     <string name="card_id">ID de carte</string>
     <string name="tap_for_more_info">Tapez pour plus d\'informations…</string>
     <string name="maps">Cartes</string>
-    <string name="card_note_kiev">Uniquement les cartes antérieures à 2016. Seul le journal de bord peut être lu</string>
+    <string name="card_note_kiev">Uniquement les cartes antérieures à 2016. Seul le journal de bord peut être lu.</string>
     <string name="card_name_kiev">Métro de Kiev</string>
     <string name="transfer">Transfert</string>
     <string name="copy_card_number">Copier le numéro de carte</string>
