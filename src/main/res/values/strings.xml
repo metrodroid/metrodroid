@@ -1407,6 +1407,28 @@
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
     <string name="expiry_date">Expiry date</string>
+    <string name="compass_sub_daypass">DayPass</string>
+    <string name="compass_sub_one_zone">One Zone</string>
+    <string name="compass_sub_two_zone">Two Zone</string>
+    <string name="compass_sub_three_zone">Three Zone</string>
+    <!-- Translators: WCE is West Coast Express (https://www.translink.ca/Fares-and-Passes/West-Coast-Express-Fares.aspx) -->
+    <string name="compass_sub_four_zone_wce_one_way">Four Zone WCE (one way)</string>
+    <string name="compass_sub_free_sea_island">Sea Island free ticket</string>
+    <string name="compass_sub_exit">Exit</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_one_zone_with_yvr">One Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_two_zone_with_yvr">Two Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_three_zone_with_yvr">Three Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_daypass_with_yvr">DayPass with YVR</string>
+    <string name="compass_sub_bulk_daypass">Bulk DayPass</string>
+    <string name="compass_sub_bulk_one_zone">Bulk One Zone</string>
+    <string name="compass_sub_bulk_two_zone">Bulk Two Zone</string>
+    <string name="compass_sub_bulk_three_zone">Bulk Three Zone</string>
+    <!-- Translators: Free travel card for final-year high school students during summer: https://www.translink.ca/-/media/Documents/rider_guide/Buzzer-Vault/1990s/1994/Buzzer_1994_05_06.pdf. -->
+    <string name="compass_sub_gradpass">GradPass</string>
 
     <!--
     Translators: Some cards record the cardholder's gender, this is used to label the field.
