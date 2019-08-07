@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.opus
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -45,16 +46,9 @@ object OpusLookup : En1545LookupSTR(OPUS_STR) {
     // Opus doesn't store stations
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? = null
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        val resId = SUBSCRIPTIONS[contractTariff]
-        return if (resId != null) Localizer.localizeString(resId) else Localizer.localizeString(R.string.unknown_format, contractTariff)
-    }
-
     override fun parseCurrency(price: Int) = TransitCurrency.CAD(price)
 
-    private val SUBSCRIPTIONS = mapOf(
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
             0xb1 to R.string.monthly_subscription,
             0xb2 to R.string.weekly_subscription,
             0x1c7 to R.string.single_trips

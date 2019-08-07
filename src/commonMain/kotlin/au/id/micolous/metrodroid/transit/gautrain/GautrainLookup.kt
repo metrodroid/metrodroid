@@ -19,20 +19,14 @@
 
 package au.id.micolous.metrodroid.transit.gautrain
 
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
 object GautrainLookup: En1545LookupSTR("gautrain") {
     override val timeZone: MetroTimeZone
-        get() = MetroTimeZone.JOHANNESBURG
-
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        // FIXME: i18n
-        return "Unknown Subscription (0x" + contractTariff.toLong().toString(16) + ")"
-    }
+       get() = MetroTimeZone.JOHANNESBURG
 
     override fun parseCurrency(price: Int): TransitCurrency = TransitCurrency(price, "ZAR", 10)
 }

@@ -28,21 +28,13 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
 object VeneziaLookup : En1545LookupSTR("venezia") {
-
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        val res = subs[contractTariff] ?: return Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
-        return Localizer.localizeString(res)
-    }
-
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
     override val timeZone get() = MetroTimeZone.ROME
 
     override fun getMode(agency: Int?, route: Int?) = Trip.Mode.OTHER
 
-    private val subs = mapOf(
+    override val subscriptionMap = mapOf(
             11105 to R.string.venezia_ticket_24h,
             11209 to R.string.venezia_rete_unica_75min,
             11210 to R.string.venezia_rete_unica_100min,

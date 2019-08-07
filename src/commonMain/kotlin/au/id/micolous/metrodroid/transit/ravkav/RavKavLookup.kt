@@ -44,9 +44,6 @@ internal object RavKavLookup : En1545LookupSTR(RAVKAV_STR) {
         return FormattedString(routeNumber.toString())
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String?
-            = subs[contractTariff]?.let { Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, contractTariff?.toString())
-
     override fun parseCurrency(price: Int)= TransitCurrency.ILS(price)
 
     // Irrelevant as RavKAv has EventCode
@@ -54,8 +51,8 @@ internal object RavKavLookup : En1545LookupSTR(RAVKAV_STR) {
 
     private const val EGGED = 0x3
 
-    private val subs = mapOf(
-            641 to R.string.ravkav_generic_trips
+    override val subscriptionMap = mapOf(
+            641 to R.string.ravkav_generic_trips // generic trips
     )
 
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {

@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.adelaide
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
@@ -33,20 +34,12 @@ object AdelaideLookup : En1545LookupSTR("adelaide") {
 
     override fun parseCurrency(price: Int): TransitCurrency = TransitCurrency.AUD(price)
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        val tariff = TARIFFS[contractTariff] ?: return NumberUtils.intToHex(contractTariff)
-
-        return Localizer.localizeString(tariff)
-    }
-
     internal fun isPurseTariff(agency: Int?, contractTariff: Int?): Boolean {
         if (agency == null || agency != AGENCY_ADL_METRO || contractTariff == null) {
             return false
         }
 
-        return contractTariff in TARIFFS
+        return contractTariff in subscriptionMap
         // TODO: Exclude monthly tickets when implemented
     }
 
@@ -58,7 +51,7 @@ object AdelaideLookup : En1545LookupSTR("adelaide") {
 
     private const val AGENCY_ADL_METRO = 1
 
-    private val TARIFFS = mapOf(
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
             0x804 to R.string.adelaide_ticket_type_regular,
             0x808 to R.string.adelaide_ticket_type_concession
             // TODO: handle other tickets

@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.lisboaviva
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -76,15 +77,6 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         return if (agency == AGENCY_CP && routeNumber != ROUTE_CASCAIS_SADO) 4096 else routeNumber
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null || agency == null)
-           return null
-
-        return subscriptionMapByAgency[Pair(agency, contractTariff)]?.let {
-            Localizer.localizeString(it)
-        } ?: contractTariff.toString()
-    }
-
     override fun parseCurrency(price: Int): TransitCurrency {
         return TransitCurrency.EUR(price)
     }
@@ -94,7 +86,7 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
     const val AGENCY_CP = 3
     const val ROUTE_CASCAIS_SADO = 40960
 
-    private val subscriptionMapByAgency = mapOf(
+    override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> = mapOf(
         Pair(15, 73) to R.string.lisboaviva_sub_ass_pal_lis,
         Pair(15, 193) to R.string.lisboaviva_sub_ass_fog_lis,
         Pair(15, 217) to R.string.lisboaviva_sub_ass_pra_lis,

@@ -19,6 +19,9 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.NumberUtils
 
 import au.id.micolous.metrodroid.multi.FormattedString
@@ -65,4 +68,18 @@ abstract class En1545LookupSTR protected constructor(protected val mStr: String)
             return Trip.Mode.OTHER
         return StationTableReader.getOperatorDefaultMode(mStr, agency)
     }
+
+    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
+        if (contractTariff == null)
+            return null
+        val res = subscriptionMapByAgency[Pair(agency, contractTariff)] ?: subscriptionMap[contractTariff] ?:
+           return Localizer.localizeString(R.string.unknown_format, contractTariff.toString())
+        return Localizer.localizeString(res)
+    }
+
+    // TODO: move to MdST
+    open val subscriptionMap: Map<Int, StringResource>
+        get() = mapOf()
+    open val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource>
+        get() = mapOf()
 }

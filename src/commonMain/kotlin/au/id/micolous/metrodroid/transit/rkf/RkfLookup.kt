@@ -86,16 +86,12 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
 
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? =
-        subs[Pair(agency, contractTariff)]?.let { Localizer.localizeString(it) } ?:
-        contractTariff?.let { Localizer.localizeString(R.string.unknown_format,
-                NumberUtils.intToHex(it)) }
+    override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> = mapOf(
+        Pair(0x65, 0x3fe) to R.string.rkf_stockholm_30_days
+    )
 
     companion object {
         const val SLACCESS = 101
         const val REJSEKORT = 2000
-        private val subs = mapOf(
-                Pair(0x65, 0x3fe) to R.string.rkf_stockholm_30_days
-        )
     }
 }

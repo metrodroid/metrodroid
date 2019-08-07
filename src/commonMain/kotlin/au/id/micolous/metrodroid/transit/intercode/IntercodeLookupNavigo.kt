@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit.intercode
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
@@ -65,17 +66,11 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
                 ?: Station.unknown(fallBackName)
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        when (contractTariff) {
-            0 ->
-                // TODO: i18n
-                return Localizer.localizeString(R.string.navigo_forfait)
-            3 -> return Localizer.localizeString(R.string.navigo_forfait_jour)
-        }
-        return Localizer.localizeString(R.string.unknown_format, contractTariff)
-    }
+
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
+            0 to R.string.navigo_forfait,
+            3 to R.string.navigo_forfait_jour
+    )
 
     private val SECTOR_NAMES = mapOf(
             // TODO: Move this to MdSt

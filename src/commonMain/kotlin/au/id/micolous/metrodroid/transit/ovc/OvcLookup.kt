@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
@@ -15,15 +16,6 @@ object OvcLookup : En1545LookupSTR(OVCHIP_STR) {
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
     override val timeZone get() = MetroTimeZone.AMSTERDAM
-
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        if (SUBSCRIPTIONS.containsKey(contractTariff)) {
-            return Localizer.localizeString(SUBSCRIPTIONS[contractTariff]!!)
-        }
-        return Localizer.localizeString(R.string.unknown_format, "0x" + contractTariff.toLong().toString(16))
-    }
 
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {
         if (agency == null)
@@ -37,7 +29,7 @@ object OvcLookup : En1545LookupSTR(OVCHIP_STR) {
         return if (stationId <= 0) null else StationTableReader.getStation(OVCHIP_STR, stationId)
     }
 
-    private val SUBSCRIPTIONS = mapOf(
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
         /* It seems that all the IDs are unique, so why bother with the companies? */
         /* NS */
         0x0005 to R.string.ovc_sub_ov_jaarkaart,
