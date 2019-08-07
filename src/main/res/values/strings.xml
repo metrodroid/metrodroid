@@ -1236,7 +1236,10 @@
     <string name="ovc_autocharge_limit">Autocharge limit</string>
     <string name="ovc_autocharge_amount">Autocharge charge</string>
     <string name="ovc_autocharge">Autocharge</string>
-
+    <string name="ovc_banned">Banned</string>
+    <!-- Translators: this are yes/no strings for previous 2 strings -->
+    <string name="ovc_yes">Yes</string>
+    <string name="ovc_no">No</string>
 
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit info</string>

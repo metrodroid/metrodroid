@@ -63,11 +63,11 @@ data class OVChipTransitData(
     override val lookup get() = OvcLookup
 
     override val info get() = super.info.orEmpty() + listOf(
-            ListItem("Banned", if (mBanbits and 0xC0 == 0xC0) "Yes" else "No"),
+            ListItem(R.string.ovc_banned, if (mBanbits and 0xC0 == 0xC0) R.string.ovc_yes else R.string.ovc_no),
 
             HeaderListItem(R.string.credit_information),
             ListItem(R.string.ovc_autocharge,
-                    if (mTicketEnvParsed.getIntOrZero(AUTOCHARGE_ACTIVE) == 0x05) "Yes" else "No"),
+                    if (mTicketEnvParsed.getIntOrZero(AUTOCHARGE_ACTIVE) == 0x05) R.string.ovc_yes else R.string.ovc_no),
             ListItem(R.string.ovc_autocharge_limit,
                     TransitCurrency.EUR(mTicketEnvParsed.getIntOrZero(AUTOCHARGE_LIMIT))
                             .maybeObfuscateBalance().formatCurrencyString(true)),
