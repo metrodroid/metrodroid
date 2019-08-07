@@ -1936,6 +1936,32 @@
     <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
 
     <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
+
+    <!-- TODO: Translate into English and remove translatable=false. -->
+    <!-- Translators: Portuguese "Ass. PAL - LIS" -->
+    <string name="lisboaviva_sub_ass_pal_lis">Palmela to Lisbon</string>
+    <!-- Translators: Portuguese "Ass. FOG - LIS" -->
+    <string name="lisboaviva_sub_ass_fog_lis">Fogueteiro to Lisbon</string>
+    <!-- Translators: Portuguese "Ass. PRA - LIS" -->
+    <string name="lisboaviva_sub_ass_pra_lis">Pragal to Lisbon</string>
+    <!-- Translators: Portuguese "Passe MTS". MTS = Metro Transportes do Sul: http://www.mts.pt/tarifarios/ https://en.wikipedia.org/wiki/Metro_Transportes_do_Sul -->
+    <string name="lisboaviva_sub_passe_mts">MTS subscription (passe)</string>
+    <!-- Translators: Portuguese "Metro / RL 12" -->
+    <string name="lisboaviva_sub_metro_rl_12" translatable="false">Metro / RL 12</string>
+    <!-- Translators: Portuguese "Vermelho A1" -->
+    <string name="lisboaviva_sub_vermelho_a1">Red A1</string>
+    <!-- Translators: Portuguese "Metro/CP - R. Mouro/Meleças". Rio de Mouro and Meleças are stations on the CP Sinstra Urban Metro line. -->
+    <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Metro line CP - Rio de Mouro/Meleças</string>
+    <!-- Translators: Portuguese "Navegante urbano". Also appears in English as "Navegante urbano": https://www.metrolisboa.pt/en/wp-content/uploads/sites/3/2019/04/MetropolitanoDeLisboa_Fares_apr1st2019-1.pdf -->
+    <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
+    <!-- Translators: Portuguese "Navegante rede" -->
+    <string name="lisboaviva_sub_navegante_rede" translatable="false">Navegante rede</string>
+    <!-- Translators: Portuguese "Navegante SL TCB Barreiro" -->
+    <string name="lisboaviva_sub_navegante_sl_tcb_barreiro" translatable="false">Navegante SL TCB Barreiro</string>
+    <!-- Translators: Fertagus is a company: https://en.wikipedia.org/wiki/Fertagus. Portuguese "Fertagus PAL - LIS + ML" -->
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela to Lisbon + Metropolitan Area</string>
+    <string name="lisboaviva_sub_zapping" translatable="false">Zapping</string>
+
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
     written in English.
