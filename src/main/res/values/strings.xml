@@ -1148,6 +1148,46 @@
     <string name="hsl_child">Child</string>
     <string name="hsl_customer_profile">Customer profile</string>
     <string name="hsl_extra_note">Both old (green) and new (blue) cards are supported. Both reloadable and single-use are supported.</string>
+    <!-- Translators: Finnish "Helsinki" -->
+    <string name="hsl_region_helsinki">Helsinki</string>
+    <!-- Translators: Finnish "Espoo" -->
+    <string name="hsl_region_espoo">Espoo</string>
+    <!-- Translators: Finnish "Vantaa" -->
+    <string name="hsl_region_vantaa">Vantaa</string>
+    <!-- Translators: Finnish "Seutu (HEL+ESP-VAN)" -->
+    <string name="hsl_region_seutu">Seutu (HEL+ESP-VAN)</string>
+    <!-- Translators: Finnish "Kirkkonummi-Siuntio" -->
+    <string name="hsl_region_kirkkonummi_siuntio">Kirkkonummi-Siuntio</string>
+    <!-- Translators: Finnish "Vihti" -->
+    <string name="hsl_region_vihti">Vihti</string>
+    <!-- Translators: Finnish "Nurmijärvi" -->
+    <string name="hsl_region_nurmijarvi">Nurmijärvi</string>
+    <!-- Translators: Finnish "Kerava-Sipoo-Tuusula" -->
+    <string name="hsl_region_kerava_sipoo_tuusula">Kerava-Sipoo-Tuusula</string>
+    <!-- Translators: Finnish "Sipoo" -->
+    <string name="hsl_region_sipoo">Sipoo</string>
+    <!-- Translators: Finnish "Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)" -->
+    <string name="hsl_region_lahiseutu_2">Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)</string>
+    <!-- Translators: Finnish "Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)" -->
+    <string name="hsl_region_lahiseutu_3">Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
+    <!-- Translators: Finnish "Bussi" -->
+    <string name="hsl_transport_bussi">Bussi</string>
+    <!-- Translators: Finnish "Bussi 2" -->
+    <string name="hsl_transport_bussi_2">Bussi 2</string>
+    <!-- Translators: Finnish "Bussi 3" -->
+    <string name="hsl_transport_bussi_3">Bussi 3</string>
+    <!-- Translators: Finnish "Bussi 4" -->
+    <string name="hsl_transport_bussi_4">Bussi 4</string>
+    <!-- Translators: Finnish "Raitiovaunu" -->
+    <string name="hsl_transport_raitiovaunu">Raitiovaunu</string>
+    <!-- Translators: Finnish "Metro" -->
+    <string name="hsl_transport_metro">Metro</string>
+    <!-- Translators: Finnish "Juna" -->
+    <string name="hsl_transport_juna">Juna</string>
+    <!-- Translators: Finnish "Lautta" -->
+    <string name="hsl_transport_lautta">Lautta</string>
+    <!-- Translators: Finnish "U-linja" -->
+    <string name="hsl_transport_u_linja">U-linja</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
