@@ -1148,46 +1148,46 @@
     <string name="hsl_child">Child</string>
     <string name="hsl_customer_profile">Customer profile</string>
     <string name="hsl_extra_note">Both old (green) and new (blue) cards are supported. Both reloadable and single-use are supported.</string>
-    <!-- Translators: Finnish "Helsinki" -->
+    <!-- Translators: Finnish "Helsinki". Swedish "Helsingfors". -->
     <string name="hsl_region_helsinki">Helsinki</string>
-    <!-- Translators: Finnish "Espoo" -->
+    <!-- Translators: City near Helsinki. Finnish "Espoo". Swedish "Esbo". -->
     <string name="hsl_region_espoo">Espoo</string>
-    <!-- Translators: Finnish "Vantaa" -->
+    <!-- Translators: City near Helsinki where airport is located. Finnish "Vantaa". Swedish "Vanda". -->
     <string name="hsl_region_vantaa">Vantaa</string>
-    <!-- Translators: Finnish "Seutu (HEL+ESP-VAN)" -->
-    <string name="hsl_region_seutu">Seutu (HEL+ESP-VAN)</string>
-    <!-- Translators: Finnish "Kirkkonummi-Siuntio" -->
+    <!-- Translators: Finnish "Seutu (HEL+ESP-VAN)". -->
+    <string name="hsl_region_seutu">Region (Helsinki+Espoo-Vantaa)</string>
+    <!-- Translators: 2 towns near Helsinki. Finnish "Kirkkonummi-Siuntio". Swedish "Kyrkslätt-Sjundeå". -->
     <string name="hsl_region_kirkkonummi_siuntio">Kirkkonummi-Siuntio</string>
-    <!-- Translators: Finnish "Vihti" -->
+    <!-- Translators: Town near Helsinki. Finnish "Vihti". Swedish "Vichtis". -->
     <string name="hsl_region_vihti">Vihti</string>
-    <!-- Translators: Finnish "Nurmijärvi" -->
+    <!-- Translators: Town near Helsinki. Finnish "Nurmijärvi" -->
     <string name="hsl_region_nurmijarvi">Nurmijärvi</string>
-    <!-- Translators: Finnish "Kerava-Sipoo-Tuusula" -->
+    <!-- Translators: 3 towns near Helsinki. Finnish "Kerava-Sipoo-Tuusula". Swedish "Kervo-Sibbo-Tusby". -->
     <string name="hsl_region_kerava_sipoo_tuusula">Kerava-Sipoo-Tuusula</string>
-    <!-- Translators: Finnish "Sipoo" -->
+    <!-- Translators: Town near Helsinki. Finnish "Sipoo". Swedish "Sibbo". -->
     <string name="hsl_region_sipoo">Sipoo</string>
-    <!-- Translators: Finnish "Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)" -->
-    <string name="hsl_region_lahiseutu_2">Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)</string>
-    <!-- Translators: Finnish "Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)" -->
-    <string name="hsl_region_lahiseutu_3">Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
+    <!-- Translators: Finnish "Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)" (Espoo, Vantaa, Kirkkonummi, Kerava, Sipoo). -->
+    <string name="hsl_region_lahiseutu_2">Surrounding country 2 (ESP+VAN+KIR+KER+SIP)</string>
+    <!-- Translators: Finnish "Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)" (Helsinki, Espoo, Vantaa, Kirkkonummi, Kerava, Sipoo).   -->
+    <string name="hsl_region_lahiseutu_3">Surrounding country 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
     <!-- Translators: Finnish "Bussi" -->
-    <string name="hsl_transport_bussi">Bussi</string>
+    <string name="hsl_transport_bussi">Bus</string>
     <!-- Translators: Finnish "Bussi 2" -->
-    <string name="hsl_transport_bussi_2">Bussi 2</string>
+    <string name="hsl_transport_bussi_2">Bus 2</string>
     <!-- Translators: Finnish "Bussi 3" -->
-    <string name="hsl_transport_bussi_3">Bussi 3</string>
+    <string name="hsl_transport_bussi_3">Bus 3</string>
     <!-- Translators: Finnish "Bussi 4" -->
-    <string name="hsl_transport_bussi_4">Bussi 4</string>
+    <string name="hsl_transport_bussi_4">Bus 4</string>
     <!-- Translators: Finnish "Raitiovaunu" -->
-    <string name="hsl_transport_raitiovaunu">Raitiovaunu</string>
+    <string name="hsl_transport_raitiovaunu">Tram</string>
     <!-- Translators: Finnish "Metro" -->
     <string name="hsl_transport_metro">Metro</string>
     <!-- Translators: Finnish "Juna" -->
-    <string name="hsl_transport_juna">Juna</string>
+    <string name="hsl_transport_juna">Train</string>
     <!-- Translators: Finnish "Lautta" -->
-    <string name="hsl_transport_lautta">Lautta</string>
+    <string name="hsl_transport_lautta">Ferry</string>
     <!-- Translators: Finnish "U-linja" -->
-    <string name="hsl_transport_u_linja">U-linja</string>
+    <string name="hsl_transport_u_linja">U-line</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
