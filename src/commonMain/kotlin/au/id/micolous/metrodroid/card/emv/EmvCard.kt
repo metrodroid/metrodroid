@@ -133,8 +133,8 @@ class EmvFactory : ISO7816ApplicationFactory {
     override suspend fun dumpTag(protocol: ISO7816Protocol,
                                  capsule: ISO7816ApplicationMutableCapsule,
                                  feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
-        feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
-                "EMV"))
+        feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_emv))
+        feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
         feedbackInterface.updateProgressBar(0, 32)
         capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
 

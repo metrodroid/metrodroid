@@ -1598,6 +1598,8 @@
     <string name="charlie_2nd_card_number">Second number</string>
 
     <!-- EMV cards -->
+    <string name="card_name_emv_long">EMV (Credit and debit cards)</string>
+    <string name="card_reading_emv">Reading EMV (credit or debit card)…</string>
     <!-- Translators: The name of the card (first field). -->
     <string name="emv_name_1">Name 1</string>
     <!-- Translators: The name of the card (second field). -->
