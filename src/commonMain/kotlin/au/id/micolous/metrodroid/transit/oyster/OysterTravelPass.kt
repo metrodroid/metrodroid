@@ -19,8 +19,10 @@
 package au.id.micolous.metrodroid.transit.oyster
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -40,7 +42,7 @@ class OysterTravelPass(
 
     // TODO: Figure this out properly.
     override val subscriptionName: String?
-        get() = "Travelpass / Season Ticket"
+        get() = Localizer.localizeString(R.string.oyster_travelpass)
 
     companion object {
         internal fun parseAll(card: ClassicCard) = sequence {
