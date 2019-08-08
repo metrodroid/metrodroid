@@ -571,6 +571,13 @@
     <string name="cepas_issuer_data_length">Issuer data length</string>
     <string name="cepas_issuer_data">Issuer-specific data</string>
     <string name="cepas_purse_info">Purse info</string>
+    <string name="cepas_purse_num">CEPAS purse number %d</string>
+    <string name="cepas_purse_num_history">CEPAS purse number %d history</string>
+    <string name="cepas_can">Card Application Number (CAN)</string>
+    <string name="cepas_csn">Card Serial Number (CSN)</string>
+    <string name="cepas_trp">Transaction Pointer (TRP)</string>
+    <!-- Translators: "Credit" as in "adding money". -->
+    <string name="cepas_credit_trp">Credit Transaction Pointer (TRP)</string>
 
     <!--
     Felica hardware information

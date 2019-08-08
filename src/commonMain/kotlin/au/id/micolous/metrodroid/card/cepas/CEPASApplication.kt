@@ -49,10 +49,12 @@ data class CEPASApplication(
     @Transient
     override val rawData: List<ListItem>?
         get() = purses.map { (key, value) ->
-            ListItemRecursive.collapsedValue("CEPAS purse $key",
+            ListItemRecursive.collapsedValue(
+                Localizer.localizeString(R.string.cepas_purse_num, key),
                     value.toHexDump())
         } + histories.map { (key, value) ->
-            ListItemRecursive.collapsedValue("CEPAS history $key",
+            ListItemRecursive.collapsedValue(
+                Localizer.localizeString(R.string.cepas_purse_num_history, key),
                     value.toHexDump())
         }
 
@@ -76,12 +78,12 @@ data class CEPASApplication(
                     ListItem(R.string.expiry_date,
                             TimestampFormatter.longDateFormat(purse.purseExpiryDate)),
                     ListItem(R.string.cepas_autoload_amount, purse.autoLoadAmount.toString()),
-                    ListItem(FormattedString("CAN"), purse.can.toHexDump()),
-                    ListItem(FormattedString("CSN"), purse.csn.toHexDump()),
+                    ListItem(R.string.cepas_can, purse.can.toHexDump()),
+                    ListItem(R.string.cepas_csn, purse.csn.toHexDump()),
 
                     HeaderListItem(R.string.cepas_last_txn_info),
-                    ListItem("TRP", purse.lastTransactionTRP.toString()),
-                    ListItem("Credit TRP", purse.lastCreditTransactionTRP.toString()),
+                    ListItem(R.string.cepas_trp, purse.lastTransactionTRP.toString()),
+                    ListItem(R.string.cepas_credit_trp, purse.lastCreditTransactionTRP.toString()),
                     ListItem(R.string.cepas_credit_header, purse.lastCreditTransactionHeader.toHexDump()),
                     ListItem(R.string.cepas_debit_options, purse.lastTransactionDebitOptionsByte.toString()),
 
