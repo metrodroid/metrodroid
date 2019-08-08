@@ -24,8 +24,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 
 import au.id.micolous.metrodroid.card.*
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.*
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
@@ -92,36 +95,42 @@ object ExportHelper {
     fun makeFilename(card: Card): String = makeFilename(card.tagId.toHexString(),
                 card.scannedAt, "json", 0)
 
+    fun zipFileFromString(zo: ZipOutputStream, ts: TimestampFull, name: String, contents: String) {
+        ZipEntry(name).let { ze ->
+            ze.time = ts.timeInMillis
+            zo.putNextEntry(ze)
+        }
+        zo.write(ImmutableByteArray.fromUTF8(contents).dataCopy)
+        zo.closeEntry()
+    }
+
     fun exportCardsZip(os: OutputStream, context: Context) {
         val cursor = CardDBHelper.createCursor(context) ?: return
         val zo = ZipOutputStream(os)
         val used: MutableSet<String> = HashSet()
         val now = TimestampFull.now()
-        ZipEntry("README.txt").let { ze ->
-            ze.time = now.timeInMillis
-            zo.putNextEntry(ze)
-        }
-        val readme = "Exported by Metrodroid at ${now.isoDateTimeFormat()}\n" + Utils.deviceInfoString
-        zo.write(ImmutableByteArray.fromUTF8(readme).dataCopy)
-        zo.closeEntry()
+        zipFileFromString(zo, now,
+                Localizer.localizeString(R.string.readme_filename) + "." + Preferences.language + ".txt",
+                Localizer.localizeString(R.string.exported_at, now.isoDateTimeFormat()) + "\n" + Utils.deviceInfoString)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            zipFileFromString(zo, now,
+                    Localizer.englishString(R.string.readme_filename) + ".txt",
+                    Localizer.englishString(R.string.exported_at, now.format()) + "\n" + Utils.deviceInfoStringEnglish)
 
         while (cursor.moveToNext()) {
             val content = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim { it <= ' ' }
             val scannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
             val tagId = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
+            val scannedAtTs = TimestampFull(scannedAt, MetroTimeZone.LOCAL)
+            val ext = if (content[0] == '<') "xml" else "json"
             var name: String
             var gen = 0
             do
-                name = makeFilename(tagId, TimestampFull(scannedAt,
-                        MetroTimeZone.LOCAL),
-                        if (content[0] == '<') "xml" else "json", gen++)
+                name = makeFilename(tagId, scannedAtTs, ext, gen++)
             while (used.contains(name))
             used.add(name)
-            val ze = ZipEntry(name)
-            ze.time = scannedAt
-            zo.putNextEntry(ze)
-            zo.write(content.toByteArray(Charsets.UTF_8))
-            zo.closeEntry()
+            zipFileFromString(zo, scannedAtTs, name, content)
         }
         zo.close()
     }
