@@ -1612,7 +1612,12 @@
     <!-- Translators: Snapper Services Limited (Ltd.) is the company that operates the Snapper
     card system in Wellington, New Zealand. -->
     <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
+    <string name="tmoney_balance">T-Money balance</string>
+
     <string name="charlie_2nd_card_number">Second number</string>
+
+    <!-- Chinese PBOC cards. -->
+    <string name="china_balance">Balance number %d</string>
 
     <!-- EMV cards -->
     <!-- Translators: The name of the card (first field). -->

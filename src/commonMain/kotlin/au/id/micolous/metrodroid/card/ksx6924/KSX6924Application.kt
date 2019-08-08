@@ -59,7 +59,7 @@ data class KSX6924Application (
     override val rawData: List<ListItem>?
         get() {
             val sli = mutableListOf<ListItem>()
-            sli.add(ListItemRecursive.collapsedValue("T-Money Balance",
+            sli.add(ListItemRecursive.collapsedValue(R.string.tmoney_balance,
                     balance.toHexDump()))
 
             for (i in extraRecords.indices) {
