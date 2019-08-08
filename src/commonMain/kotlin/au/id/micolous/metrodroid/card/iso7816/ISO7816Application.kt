@@ -22,7 +22,9 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_PROPRIETARY_BER_TLV
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -190,7 +192,7 @@ abstract class ISO7816Application {
                 file.showRawData(selectorStr)
             } +
             sfiFiles.map { (sfi, value) ->
-                var selectorStr = "SFI " + sfi.toString(16)
+                var selectorStr = Localizer.localizeString(R.string.iso7816_sfi, sfi.toString(16))
                 val fileDesc = nameSfiFile(sfi)
                 if (fileDesc != null)
                     selectorStr = "$selectorStr ($fileDesc)"

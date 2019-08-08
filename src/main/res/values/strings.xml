@@ -1722,6 +1722,7 @@
     <string name="file_fci">File FCI</string>
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="app_fci">App FCI</string>
+    <string name="iso7816_sfi">Short File Identifier (SFI) %s</string>
     <string name="classic_key">MIFARE Classic key</string>
     <!--
     Translators: MIFARE Classic has two keys: key "A" and key "B".
