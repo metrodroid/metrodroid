@@ -110,12 +110,12 @@ object ExportHelper {
         val used: MutableSet<String> = HashSet()
         val now = TimestampFull.now()
         zipFileFromString(zo, now,
-                Localizer.localizeString(R.string.readme_filename) + "." + Preferences.language + ".txt",
+                "README.${Preferences.language}.txt",
                 Localizer.localizeString(R.string.exported_at, now.format()) + "\n" + Utils.deviceInfoString)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             zipFileFromString(zo, now,
-                    Localizer.englishString(R.string.readme_filename) + ".txt",
+                    "README.txt",
                     Localizer.englishString(R.string.exported_at, now.isoDateTimeFormat()) + "\n" + Utils.deviceInfoStringEnglish)
 
         while (cursor.moveToNext()) {
