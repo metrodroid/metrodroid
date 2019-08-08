@@ -1686,6 +1686,8 @@
     <string name="tlv_tags">TLV tags</string>
     <!-- Translators: Used for a list of unknown binary data tags -->
     <string name="unknown_tags">Unknown tags</string>
+    <string name="emv_gpo_response">Get Processing Options (GPO) response</string>
+    <string name="emv_data_response">Get Data response %s</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>

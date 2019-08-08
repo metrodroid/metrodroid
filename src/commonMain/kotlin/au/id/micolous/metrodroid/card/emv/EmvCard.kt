@@ -99,9 +99,8 @@ class EmvCardMain internal constructor(
 
     @Transient
     override val rawData get() = super.rawData.orEmpty() +
-            ListItem("GPO-response", "${gpoResponse?.toHexString()}") +
-            (dataResponse.map { (k, v) -> ListItem("Data $k", v.toHexString()) })
-
+            ListItem(R.string.emv_gpo_response, gpoResponse?.toHexString() ?: "null") +
+            (dataResponse.map { (k, v) -> ListItem(Localizer.localizeString(R.string.emv_data_response, k), v.toHexString()) })
 
     fun getAllTlv(): List<ImmutableByteArray> {
         val res = mutableListOf<ImmutableByteArray>()
