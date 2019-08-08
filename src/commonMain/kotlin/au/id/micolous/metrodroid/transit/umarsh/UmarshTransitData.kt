@@ -263,7 +263,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
                 ListItem(R.string.zolotaya_korona_region, region.toString())
         ) + if (denomination == UmarshDenomination.RUB)
             listOf(
-                    ListItem(FormattedString("Last refill"), lastRefill?.format()),
+                    ListItem(R.string.last_refill, lastRefill?.format()),
                     ListItem(R.string.machine_id, machineId.toString())
             )
         else

@@ -134,7 +134,7 @@ private data class TouchnGoStationId(
 ) : Parcelable {
     fun resolve(): Station = StationTableReader.getStation(TNG_STR, station,
             station.toString()).addAttribute(
-            "machine $machine"
+            Localizer.localizeString(R.string.touchngo_machine, machine)
     )
     companion object {
         fun parse(raw: ImmutableByteArray, off: Int) =

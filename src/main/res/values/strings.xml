@@ -83,6 +83,7 @@
     <string name="machine_id_format">Machine ID %s</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
     <string name="machine_id">Machine ID</string>
+    <string name="last_refill">Last refill</string>
 
     <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
@@ -1235,7 +1236,10 @@
     <string name="ovc_autocharge_limit">Autocharge limit</string>
     <string name="ovc_autocharge_amount">Autocharge charge</string>
     <string name="ovc_autocharge">Autocharge</string>
-
+    <string name="ovc_banned">Banned</string>
+    <!-- Translators: this are yes/no strings for previous 2 strings -->
+    <string name="ovc_yes">Yes</string>
+    <string name="ovc_no">No</string>
 
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit info</string>
@@ -1882,6 +1886,7 @@
     <string name="amiibo_series">Series</string>
 
     <string name="touchngo_travel_pass">Kuala Lumpur travel pass</string>
+    <string name="touchngo_machine">machine %d</string>
 
     <string name="warsaw_90_days">90-day subscription</string>
 
