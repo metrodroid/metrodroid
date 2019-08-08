@@ -44,6 +44,23 @@ object NumberUtils {
                 (if (l >= 9) { 9 } else { l })
     }
 
+    fun intToBCD(input: Int): Int {
+        var cur = input
+        var off = 0
+        var res = 0
+        while (cur > 0) {
+            val dig = cur % 10
+            res = res or (dig shl off)
+            off += 4
+            cur /= 10
+        }
+        return res
+    }
+
+    fun isValidBCD(data: Int): Boolean = (0..7).all {
+        ((data shr (4 * it)) and 0xf) in 0..9
+    }
+
     fun zeroPad(value: Int, minDigits: Int): String {
         val cand = value.toString()
         if (cand.length >= minDigits)
