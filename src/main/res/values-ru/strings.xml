@@ -381,7 +381,7 @@
     <string name="location_dubai">Дубай, ОАЭ</string>
     <string name="keys_loaded">Ключи шифрования для этой карты загружены.</string>
     <string name="mode_trolleybus">Троллейбус</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Авторские права © 2015 – 2019 Michael Farrell</string>
     <string name="locked_mfc_card">Заблокированная карта MIFARE Classic</string>
     <string name="locked_mfu_card">Заблокированная карта MIFARE Ultralight</string>
     <string name="locked_mfd_card">Заблокированная карта MIFARE DESFire</string>
@@ -416,7 +416,7 @@
     <string name="refill_counter">Счётчик пополнений</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Скачать ключи для карты Leap</string>
-    <string name="leap_retrieve_keys_longdesc">При этом данные вашей карты будут переданы в Transport for Ireland для того, чтобы разблокировать карту Leap. TFI сможет узнать, что вы использовали Metrodroid на этой карте. Карточка не считывается без этого ключа.</string>
+    <string name="leap_retrieve_keys_longdesc">При этом данные вашей карты будут переданы в Transport for Ireland для того, чтобы разблокировать карту Leap. TFI сможет узнать, что вы использовали Metrodroid на этой карте. Карточка не сможет быть прочитана без этого ключа.</string>
     <string name="leap_period_start">Начало периода</string>
     <string name="leap_accumulator_region">Регион</string>
     <string name="issue_date">Дата выпуска</string>
@@ -760,4 +760,8 @@
     <string name="warsaw_90_days">90-дневний проездной</string>
     <string name="hardware">Оборудование</string>
     <string name="android_nfc_settings">Настройки NFC Андроида</string>
+    <string name="map_tiles_url">URL листов карты</string>
+    <string name="mfc_fallback">Резервный парсер</string>
+    <string name="pref_hide_unsupported_ribbon">Скрыть ленту «не поддерживается»</string>
+    <string name="last_refill">Последнее пополнение</string>
 </resources>
