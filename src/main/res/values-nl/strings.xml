@@ -912,4 +912,6 @@
     <string name="mode_toll_road">Tolweg</string>
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC-instellingen</string>
+    <string name="exported_at">Door Metrodroid geëxporteerd naar %s</string>
+    <string name="readme_filename">LEESMIJ</string>
 </resources>
