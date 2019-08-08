@@ -65,7 +65,7 @@ object ExportHelper {
 
     fun findDuplicates(context: Context): Set<Long> {
         val cursor = CardDBHelper.createCursor(context) ?: return setOf()
-        val hashes = HashSet<String>()
+        val hashes: MutableSet<String> = HashSet()
         val res = HashSet<Long>()
 
         while (cursor.moveToNext()) {
@@ -95,7 +95,7 @@ object ExportHelper {
     fun exportCardsZip(os: OutputStream, context: Context) {
         val cursor = CardDBHelper.createCursor(context) ?: return
         val zo = ZipOutputStream(os)
-        val used = HashSet<String>()
+        val used: MutableSet<String> = HashSet()
         val now = TimestampFull.now()
         ZipEntry("README.txt").let { ze ->
             ze.time = now.timeInMillis

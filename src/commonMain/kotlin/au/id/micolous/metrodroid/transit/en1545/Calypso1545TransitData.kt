@@ -129,7 +129,7 @@ abstract class Calypso1545TransitData constructor (
             val subscriptions = mutableListOf<En1545Subscription>()
             val balances = mutableListOf<TransitBalance>()
 
-            val parsed = hashSetOf<Int>()
+            val parsed = mutableSetOf<Int>()
             val contractList: En1545Parsed?
 
             if (contractListFields != null) {

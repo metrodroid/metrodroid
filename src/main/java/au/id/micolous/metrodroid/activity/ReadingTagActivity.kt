@@ -127,8 +127,8 @@ class ReadingTagActivity : MetrodroidActivity(), TagReaderFeedbackInterface {
 
     private fun resolveIntent(intent: Intent) {
         try {
-            val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
-            val tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
+            val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)!!
+            val tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)!!
 
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
             val lastReadId = prefs.getString(Preferences.PREF_LAST_READ_ID, "")

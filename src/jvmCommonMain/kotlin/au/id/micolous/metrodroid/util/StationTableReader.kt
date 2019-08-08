@@ -228,7 +228,7 @@ private constructor(dbName: String) {
             return b.toImmutable().byteArrayToInt()
         }
 
-        private val mSTRs = HashMap<String, StationTableReader>()
+        private val mSTRs: MutableMap<String, StationTableReader> = HashMap()
 
         private fun getSTR(@NonNls name: String?): StationTableReader? {
             if (name == null) {

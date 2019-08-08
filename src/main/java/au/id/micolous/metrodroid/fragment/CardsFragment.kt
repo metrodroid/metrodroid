@@ -89,7 +89,7 @@ class CardsFragment : ExpandableListFragment() {
         }
 
         override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
-            val scans = HashMap<Pair<Int, String>, MutableList<Scan>>()
+            val scans: MutableMap<Pair<Int, String>, MutableList<Scan>> = HashMap()
             val cards = ArrayList<Pair<Int, String>>()
             cursor.moveToPosition(-1)
             while (cursor.moveToNext()) {
