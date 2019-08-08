@@ -1910,4 +1910,6 @@
     <string name="raw_header">Raw fields</string>
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC settings</string>
+    <string name="exported_at">Exported by Metrodroid at %s</string>
+    <string name="readme_filename">README</string>
 </resources>

@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
 
@@ -48,6 +49,10 @@ fun AlertDialog.Builder.safeShow() {
     }    
 }
 
+operator fun StringBuilder.plusAssign(other: String) {
+    this.append(other)
+}
+
 object Utils {
     private const val TAG = "Utils"
 
@@ -56,32 +61,37 @@ object Utils {
     // Manufacturer / brand:
     // OS:
     // NFC:
-    val deviceInfoString: String
-        get() {
-            val app = MetrodroidApplication.instance
-            val nfcAdapter = NfcAdapter.getDefaultAdapter(app)
-            val nfcAvailable = nfcAdapter != null
-            val nfcEnabled = nfcAdapter?.isEnabled ?: false
+    private fun deviceInfoStringReal(localize: (StringResource, Array<out Any?>) -> String): String {
+        val app = MetrodroidApplication.instance
+        val nfcAdapter: NfcAdapter? = NfcAdapter.getDefaultAdapter(app)
+        val nfcAvailable = nfcAdapter != null
+        val nfcEnabled = nfcAdapter?.isEnabled ?: false
 
-            var ret = ""
-            ret += Localizer.localizeString(R.string.app_version, versionString) + "\n"
-            ret += Localizer.localizeString(R.string.device_model, Build.MODEL, Build.DEVICE) + "\n"
-            ret += Localizer.localizeString(R.string.device_manufacturer, Build.MANUFACTURER, Build.BRAND) + "\n"
-            ret += Localizer.localizeString(R.string.android_os, Build.VERSION.RELEASE, Build.ID) + "\n"
-            ret += "\n"
-            ret += Localizer.localizeString(if (nfcAvailable)
-                if (nfcEnabled) R.string.nfc_enabled else R.string.nfc_disabled
-            else
-                R.string.nfc_not_available) + "\n"
-            ret += when (ClassicAndroidReader.mifareClassicSupport) {
-                true -> Localizer.localizeString(R.string.mfc_supported)
-                false -> Localizer.localizeString(R.string.mfc_not_supported)
-                null -> "Mifare Classic: Unknown" // Shouldn't happen, don't bother translating
-            }
-            ret += "\n\n"
-
-            return ret
+        val ret = StringBuilder()
+        ret += localize(R.string.app_version, arrayOf(versionString)) + "\n"
+        ret += localize(R.string.device_model, arrayOf(Build.MODEL, Build.DEVICE)) + "\n"
+        ret += localize(R.string.device_manufacturer, arrayOf(Build.MANUFACTURER, Build.BRAND)) + "\n"
+        ret += localize(R.string.android_os, arrayOf(Build.VERSION.RELEASE, Build.ID)) + "\n"
+        ret += "\n"
+        ret += localize(if (nfcAvailable)
+            if (nfcEnabled) R.string.nfc_enabled else R.string.nfc_disabled
+        else
+            R.string.nfc_not_available, arrayOf()) + "\n"
+        ret += when (ClassicAndroidReader.mifareClassicSupport) {
+            true -> localize(R.string.mfc_supported, arrayOf())
+            false -> localize(R.string.mfc_not_supported, arrayOf())
+            null -> "Mifare Classic: Unknown" // Shouldn't happen, don't bother translating
         }
+        ret += "\n\n"
+
+        return ret.toString()
+    }
+
+    val deviceInfoString: String
+        get() = deviceInfoStringReal(Localizer::localizeString)
+
+    val deviceInfoStringEnglish: String
+        get() = deviceInfoStringReal(Localizer::englishString)
 
     private val versionString: String
         get() {

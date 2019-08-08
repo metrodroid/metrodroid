@@ -19,8 +19,13 @@
 
 package au.id.micolous.metrodroid.multi
 
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
+import androidx.annotation.RequiresApi
 import au.id.micolous.metrodroid.MetrodroidApplication
 import androidx.annotation.VisibleForTesting
+import java.util.*
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int
@@ -56,4 +61,20 @@ actual object Localizer : LocalizerInterface {
             val appRes = MetrodroidApplication.instance.resources
             return appRes.getQuantityString(res, count, *v)
     }
+
+    private val englishResources: Resources by lazy {
+        val context = MetrodroidApplication.instance
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            var conf = context.resources.configuration
+            conf = Configuration(conf)
+            conf.setLocale(Locale.ENGLISH)
+            val localizedContext = context.createConfigurationContext(conf)
+            localizedContext.resources
+        } else {
+            // Whatever, keep it translated as fallback
+            context.resources
+        }
+    }
+
+    fun englishString(res: StringResource, vararg v: Any?): String = englishResources.getString(res, *v)
 }
