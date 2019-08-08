@@ -18,8 +18,11 @@
  */
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.util.ExportHelper
+import au.id.micolous.metrodroid.util.Preferences
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
@@ -37,10 +40,11 @@ class ExportHelperTest : BaseInstrumentedTest() {
 
         // Now load the ZIP up again
         val zis = ZipInputStream(ByteArrayInputStream(os.toByteArray()))
+        val readmeFilename = Localizer.localizeString(R.string.readme_filename) + "." + Preferences.language + ".txt"
 
         var hasReadme = false
         XmlOrJsonCardFormat.ZipIterator(zis).forEach {
-            if ("README.txt" == it.first.name) {
+            if (readmeFilename == it.first.name) {
                 hasReadme = true
 
                 // Read the file and see if there's a version code
@@ -50,7 +54,7 @@ class ExportHelperTest : BaseInstrumentedTest() {
             }
         }
 
-        assertTrue(hasReadme, "Needs README.txt")
+        assertTrue(hasReadme, "Needs $readmeFilename")
     }
 
     @Test
