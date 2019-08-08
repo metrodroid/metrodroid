@@ -400,7 +400,7 @@
     <string name="software_information">Информация о ПО</string>
     <string name="clipboard_error">Не удалось получить доступ к буферу обмена</string>
     <string name="card_note_russia">Банковские карты не поддерживаются.</string>
-    <string name="fully_blank_desc">Эта карта является полностью пустой, насколько мы можем сказать. Она отформатирована, но без каких-либо данных, написанных на неё. У неё по-прежнему есть серийный номер, по которому она может быть однозначно идентифицирована и связана с базой данных, но сама карта не содержит никаких данных.</string>
+    <string name="fully_blank_desc">Эта карта выглядит пустой. Она отформатирована, но без каких-либо данных, написанных на неё. У неё по-прежнему есть серийный номер, по которому она может быть однозначно идентифицирована и связана с базой данных, но сама карта не содержит никаких данных.</string>
     <string name="android_os">Версия Android: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
     <string name="card_name_tmoney">T-Money</string>
     <string name="blank_mfc_card">Пустая карта MIFARE Classic</string>
@@ -432,7 +432,7 @@
     <string name="no_static_key_assignment">Статические ключи не могут быть назначены одной карте.</string>
     <string name="card_id">Идентификатор карты</string>
     <string name="vehicle_number">Транспортное средство %s</string>
-    <string name="card_note_leap">Требуется получение ключей от TFI, которое должно быть включено на экране настроек NFC.</string>
+    <string name="card_note_leap">Требуется получение ключей от TFI, которое должно быть включено в настройках NFC.</string>
     <string name="expiry_date">Дата истечения срока действия</string>
     <string name="gender">Пол</string>
     <string name="gender_female">Женский</string>
@@ -705,4 +705,59 @@
     <string name="troika_druzhinnik_card">Карта Дружинника</string>
     <string name="location_warsaw">Варшава, Польша</string>
     <string name="mode_toll_road">Платная дорога</string>
+    <string name="ovc_autocharge_limit">Лимит автопополнения</string>
+    <string name="ovc_autocharge">Автопополнение</string>
+    <string name="file_fci">FCI файла</string>
+    <string name="app_fci">FCI приложения</string>
+    <string name="locked_leap">Заблокированная карта Leap</string>
+    <string name="leap_daily_accumulators">Предельные суточные тарифы</string>
+    <string name="leap_weekly_accumulators">Предельные недельные тарифы</string>
+    <string name="initialisation_date">Дата инициализации</string>
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d ключ MIFARE Classic</item>
+        <item quantity="few">%d ключа MIFARE Classic</item>
+        <item quantity="many">%d ключей MIFARE Classic</item>
+    </plurals>
+    <plurals name="keytype_mfc_static">
+        <item quantity="one">%d статический ключ MIFARE Classic</item>
+        <item quantity="few">%d статических ключа MIFARE Classic</item>
+        <item quantity="many">%d статических ключей MIFARE Classic</item>
+    </plurals>
+    <string name="opal_agency_tfnsw">Транспорт для Нового Южного Уэльса</string>
+    <string name="lisboaviva_unknown_period">Неизвестный срок действия %x/%x</string>
+    <string name="rkf_status_temp_disabled">Временно или окончательно приостановлено</string>
+    <string name="rkf_status_not_ok">Окончательно приостановлено</string>
+    <string name="branch_code">Код филиала</string>
+    <string name="one_time_transaction_limit">Лимит на одноразовую транзакцию</string>
+    <string name="tmoney_issuer_seoul_bus">Сеульская ассоциация автобусного транспорта</string>
+    <string name="tmoney_tcode_kt">Корея Телеком</string>
+    <string name="felica_system_common">Общая зона (сети FeliCa)</string>
+    <string name="venezia_profile_normal">Нормальный, вне региона</string>
+    <string name="raw_level">Количество необработанных данных</string>
+    <string name="raw_level_desc">Сколько показывать необработанной информации. Не все парсеры поддерживают эту опцию</string>
+    <string name="raw_header">Необработанные поля</string>
+    <string name="agency_card_serial_number">Серийный номер карты агентства</string>
+    <string name="emv_icc_public_key_modulus">Модуль открытого ключа чипа</string>
+    <string name="emv_icc_public_key_exponent">Экспонент открытого ключа чипа</string>
+    <string name="emv_pan_sequence_number">Порядковый номер номера карточки</string>
+    <string name="emv_application_priority_indicator">Индикатор приоритета приложения</string>
+    <string name="emv_ca_public_key_index">Индекс публичного ключа сертификационного центра</string>
+    <string name="emv_application_cryptogram">Криптограмма приложения</string>
+    <string name="emv_cryptogram_information_data">Данные о криптограммах</string>
+    <string name="emv_application_transaction_counter">Счетчик транзакций приложения</string>
+    <string name="emv_service_code">Код службы</string>
+    <string name="tlv_tags">Теги TLV</string>
+    <string name="siticard_adult_60min_xfer_purse">Кошелек с пересадкой 60 минут (взрослый)</string>
+    <string name="siticard_adult_90min_xfer_purse">Кошелек с пересадкой 90 минут (взрослый)</string>
+    <string name="amiibo_type_figure">Статуэтка</string>
+    <string name="amiibo_model_number">Номер модели</string>
+    <string name="amiibo_series">Серия</string>
+    <string name="card_name_barnaul">Электронный Барнаул</string>
+    <string name="barnaul_ewallet">Электронный кошелек</string>
+    <string name="card_name_umarsh">Умарш</string>
+    <string name="touchngo_travel_pass">Куала-Лумпурский проездной билет</string>
+    <string name="siticard_purse_sarov">Саровский электронный кошелек</string>
+    <string name="warsaw_90_days">90-дневний проездной</string>
+    <string name="hardware">Оборудование</string>
+    <string name="android_nfc_settings">Настройки NFC Андроида</string>
 </resources>
