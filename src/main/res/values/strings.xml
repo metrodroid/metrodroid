@@ -543,6 +543,16 @@
     <string name="desfire_value_format">Type: %1$s, range: %2$s - %3$s, limited credit: %4$s (%5$s)</string>
 
     <string name="hardware_information">Hardware info</string>
+    <string name="desfire_vendor_id">Vendor ID</string>
+    <string name="desfire_type">Type</string>
+    <string name="desfire_subtype">Subtype</string>
+    <string name="desfire_major_version">Major version</string>
+    <string name="desfire_minor_version">Minor version</string>
+    <string name="desfire_storage_size">Storage size</string>
+    <string name="desfire_protocol">Protocol</string>
+    <string name="desfire_general_info">General information</string>
+    <string name="desfire_batch_number">Batch number</string>
+
     <string name="enabled">On</string>
     <string name="disabled">Off</string>
 
