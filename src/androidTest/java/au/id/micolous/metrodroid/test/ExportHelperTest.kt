@@ -18,8 +18,6 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.util.ExportHelper
 import au.id.micolous.metrodroid.util.Preferences
@@ -40,7 +38,7 @@ class ExportHelperTest : BaseInstrumentedTest() {
 
         // Now load the ZIP up again
         val zis = ZipInputStream(ByteArrayInputStream(os.toByteArray()))
-        val readmeFilename = Localizer.localizeString(R.string.readme_filename) + "." + Preferences.language + ".txt"
+        val readmeFilename = "README." + Preferences.language + ".txt"
 
         var hasReadme = false
         XmlOrJsonCardFormat.ZipIterator(zis).forEach {
