@@ -75,7 +75,9 @@ object HSLLookup : En1545LookupUnknown() {
             val to = value and 7
             if (isValidity) {
                 val from = value shr 3
-                return Localizer.localizePlural(R.plurals.hsl_zones, to - from + 1, String((from..to).map { 'A' + it }.toCharArray()))
+                val num = to - from + 1
+                    val zones = String((from..to).map { 'A' + it }.toCharArray())
+                return Localizer.localizePlural(R.plurals.hsl_zones, num, zones, num)
             } else {
                 return Localizer.localizeString(R.string.hsl_zone_station, String(charArrayOf('A' + to)))
             }

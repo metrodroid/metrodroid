@@ -1131,14 +1131,17 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <!-- Translators: this is inserted into strings "eTicket for %s" and "PeriodPass for %s". First argument is a string of letters e.g. ABC.
+         At most 8 zones. Second (hidden) argument is the number of zones, feel free to add it if grammar of your language requires it.
+    -->
     <plurals name="hsl_zones">
         <item quantity="one">zone %s</item>
         <item quantity="other">zones %s</item>
     </plurals>
     <string name="hsl_zone_station">Zone %s</string>
-    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC". -->
+    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC" or "Helsinki". -->
     <string name="hsl_arvo_format">eTicket for %s</string>
-    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC". -->
+    <!-- TRANSLATORS: argument is validity area, e.g. "zones ABC" or "Helsinki". -->
     <string name="hsl_kausi_format">PeriodPass for %s</string>
     <string name="hsl_language">Language</string>
     <string name="hsl_finnish">Finnish</string>
