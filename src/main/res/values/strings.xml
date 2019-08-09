@@ -510,8 +510,8 @@
 
     <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
     <plurals name="desfire_record_format">
-        <item quantity="one">Type: %1$s, record: %2$s (%3$s maximum), record size: %4$s</item>
-        <item quantity="other">Type: %1$s, records: %2$s (%3$s maximum), record size: %4$s</item>
+        <item quantity="one">Type: %1$s, %2$d record (%3$d maximum), record size: %4$d</item>
+        <item quantity="other">Type: %1$s, %2$d records (%3$d maximum), record size: %4$d</item>
     </plurals>
 
     <plurals name="trips_remaining">
