@@ -60,7 +60,7 @@ class KievTrip (
         mCounter2 = data.getBitsFromBuffer(98, 16))
 
     override fun getAgencyName(isShort: Boolean): String? {
-        return if (mTransactionType == "84/04/40/53") Localizer.localizeString(R.string.mode_metro) else mTransactionType
+        return if (mTransactionType == "84/04/40/53") Localizer.localizeString(R.string.mode_metro) else mTransactionType?.let { Localizer.localizeString(R.string.unknown_format, it) }
     }
 
     companion object {
