@@ -1309,8 +1309,8 @@
         <item quantity="other">%d days remaining</item>
     </plurals>
     <plurals name="travel_zones">
-        <item quantity="one">Travel zone</item>
-        <item quantity="other">Travel zones</item>
+        <item quantity="one">%d travel zone</item>
+        <item quantity="other">%d travel zones</item>
     </plurals>
 
     <string name="en1545_network_id">Network ID</string>
