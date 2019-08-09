@@ -245,7 +245,7 @@ private data class TouchnGoTransitData(private val mBalance: Int, private val mS
             val partialCardNo = "6014640" + NumberUtils.zeroPad(mCardNo, 10)
             val cardNo = partialCardNo + NumberUtils.calculateLuhn(partialCardNo)
             return listOf(
-                    ListItem("CardNo", cardNo),
+                    ListItem(R.string.touchngo_cardno, cardNo),
                     ListItem(R.string.transaction_counter, mTxnCounter.toString())
             )
         }

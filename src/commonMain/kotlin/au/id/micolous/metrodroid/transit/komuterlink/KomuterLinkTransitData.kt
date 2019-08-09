@@ -94,7 +94,7 @@ data class KomuterLinkTransitData(private val mBalance: Int, private val mSerial
             val partialCardNo = "1" + NumberUtils.zeroPad(mCardNo, 10)
             val cardNo = partialCardNo + NumberUtils.calculateLuhn(partialCardNo)
             return listOf(
-                    ListItem("CardNo", cardNo),
+                    ListItem(R.string.touchngo_cardno, cardNo),
                     ListItem(R.string.issue_date, mIssueTimestamp.format()))
         }
 }
