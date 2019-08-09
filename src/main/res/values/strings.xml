@@ -522,6 +522,7 @@
         <item quantity="one">%d trip remaining out of %d</item>
         <item quantity="other">%d trips remaining out of %d</item>
     </plurals>
+    <!-- Translarors: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
@@ -1639,6 +1640,8 @@
     <!-- Translators: Exponent for the primary currency. This is 2 for the Euro and most dollars,
     0 for yen.  -->
     <string name="emv_application_currency_exponent">Application currency exponent</string>
+    <!-- Translators: This is used as a title for a table row, so feel free to replace with
+         "Number of remaining pin attempts" for all plurals. -->
     <plurals name="emv_pin_attempts_remaining">
         <item quantity="one">PIN attempt remaining</item>
         <item quantity="other">PIN attempts remaining</item>
