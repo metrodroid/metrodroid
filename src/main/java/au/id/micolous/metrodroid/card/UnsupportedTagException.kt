@@ -19,7 +19,22 @@
 
 package au.id.micolous.metrodroid.card
 
-class UnsupportedTagException(private val techList: List<String>, private val tagId: String) : Exception() {
-    override val message get(): String = "Identifier: $tagId\n\nTechnologies: \n" +
-            techList.joinToString ("\n  ") { it.replace("android.nfc.tech.", "") }
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+
+abstract class UnsupportedTagException: Exception() {
+    abstract val dialogMessage: String
+}
+
+class UnsupportedTagProtocolException(private val techList: List<String>, private val tagId: String) : UnsupportedTagException() {
+    private val techListText get() = techList.joinToString ("\n  ") { it.replace("android.nfc.tech.", "") }
+    override val message get(): String = "Identifier: $tagId\n\nTechnologies: \n$techListText"
+
+    override val dialogMessage get() = Localizer.localizeString(R.string.unsupported_tag_message, tagId, techListText)
+}
+
+class UnknownUltralightException : UnsupportedTagException() {
+    override val message get(): String = "Unknown Mifare Ultralight"
+
+    override val dialogMessage get() = Localizer.localizeString(R.string.unknown_ultralight_message)
 }
