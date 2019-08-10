@@ -19,4 +19,9 @@
 
 package au.id.micolous.metrodroid.transit
 
-class TransitIdentity(val name: String, val serialNumber: String?)
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.StringResource
+
+class TransitIdentity(val name: String, val serialNumber: String?) {
+    constructor(nameRes: StringResource, serialNumber: String?): this(Localizer.localizeString(nameRes), serialNumber)
+}

@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
@@ -33,7 +34,7 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.NumberUtils
 
-private const val NAME = "Metromoney"
+private val NAME = R.string.card_name_metromoney
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_tbilisi,
@@ -50,7 +51,7 @@ private fun getSerial(card: ClassicCard) = card[0,0].data.byteArrayToLongReverse
 data class MetroMoneyTransitData(private val mSerial: Long, private val mBalance: Int) : TransitData() {
     override val serialNumber get() = formatSerial(mSerial)
 
-    override val cardName get() = NAME
+    override val cardName get() = Localizer.localizeString(NAME)
 
     override val balance get() = TransitCurrency(mBalance, "GEL")
 }

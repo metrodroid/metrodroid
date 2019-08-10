@@ -1620,6 +1620,8 @@
     <string name="china_balance">Balance number %d</string>
 
     <!-- EMV cards -->
+    <string name="card_name_emv_long">EMV (Credit and debit cards)</string>
+    <string name="card_reading_emv">Reading EMV (credit or debit card)…</string>
     <!-- Translators: The name of the card (first field). -->
     <string name="emv_name_1">Name 1</string>
     <!-- Translators: The name of the card (second field). -->
@@ -1987,4 +1989,22 @@
     <string name="nfc_connection_failed">NFC connection to %s failed</string>
     <!-- Translators: label above trips where date isn't known. -->
     <string name="unknown_date_title">Unknown date</string>
+
+    <!-- Translators: Transit card used in Tbilissi. In Georgian "მეტრომანის" AFAICT -->
+    <string name="card_name_metromoney">Metromoney</string>
+    <!-- Translators: Finnish "Tampereen matkakortti". It doesn't seem to have a more specific
+         brand name. Website in English reffers to it as Tampere Travelcard -->
+    <string name="card_name_tampere">Tampere Travelcard</string>
+    <!--- Card name used in Abu Dhabi. Arrabic "حافلات" literally "busses" may be transliterated. -->
+    <string name="card_name_hafilat">Hafilat</string>
+
+    <!-- Translators: Card name used in Dubai. Arabic "نول " literally "fare". May be transliterated. -->
+    <string name="card_name_nol">Nol</string>
+    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <string name="nol_red">Red</string>
+    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <string name="nol_silver">Silver</string>
+
+    <!-- Translators: Card name used in Taipei. Chinese: "悠遊卡". -->
+    <string name="card_name_easycard">EasyCard</string>
 </resources>
