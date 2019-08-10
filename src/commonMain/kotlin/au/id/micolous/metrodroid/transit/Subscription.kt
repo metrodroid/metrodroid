@@ -282,7 +282,7 @@ abstract class Subscription : Parcelable {
 
     open fun getAgencyName(isShort: Boolean): String? =  null
 
-    enum class SubscriptionState(val description: StringResource) {
+    enum class SubscriptionState(val descriptionRes: StringResource) {
         /** No state is known, display no UI for the state.  */
         UNKNOWN(R.string.unknown),
 
