@@ -543,6 +543,16 @@
     <string name="desfire_value_format">Type: %1$s, range: %2$s - %3$s, limited credit: %4$s (%5$s)</string>
 
     <string name="hardware_information">Hardware info</string>
+    <string name="desfire_vendor_id">Vendor ID</string>
+    <string name="desfire_type">Type</string>
+    <string name="desfire_subtype">Subtype</string>
+    <string name="desfire_major_version">Major version</string>
+    <string name="desfire_minor_version">Minor version</string>
+    <string name="desfire_storage_size">Storage size</string>
+    <string name="desfire_protocol">Protocol</string>
+    <string name="desfire_general_info">General information</string>
+    <string name="desfire_batch_number">Batch number</string>
+
     <string name="enabled">On</string>
     <string name="disabled">Off</string>
 
@@ -561,6 +571,13 @@
     <string name="cepas_issuer_data_length">Issuer data length</string>
     <string name="cepas_issuer_data">Issuer-specific data</string>
     <string name="cepas_purse_info">Purse info</string>
+    <string name="cepas_purse_num">CEPAS purse number %d</string>
+    <string name="cepas_purse_num_history">CEPAS purse number %d history</string>
+    <string name="cepas_can">Card Application Number (CAN)</string>
+    <string name="cepas_csn">Card Serial Number (CSN)</string>
+    <string name="cepas_trp">Transaction Pointer (TRP)</string>
+    <!-- Translators: "Credit" as in "adding money". -->
+    <string name="cepas_credit_trp">Credit Transaction Pointer (TRP)</string>
 
     <!--
     Felica hardware information
@@ -1595,7 +1612,12 @@
     <!-- Translators: Snapper Services Limited (Ltd.) is the company that operates the Snapper
     card system in Wellington, New Zealand. -->
     <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
+    <string name="tmoney_balance">T-Money balance</string>
+
     <string name="charlie_2nd_card_number">Second number</string>
+
+    <!-- Chinese PBOC cards. -->
+    <string name="china_balance">Balance number %d</string>
 
     <!-- EMV cards -->
     <!-- Translators: The name of the card (first field). -->
@@ -1664,6 +1686,8 @@
     <string name="tlv_tags">TLV tags</string>
     <!-- Translators: Used for a list of unknown binary data tags -->
     <string name="unknown_tags">Unknown tags</string>
+    <string name="emv_gpo_response">Get Processing Options (GPO) response</string>
+    <string name="emv_data_response">Get Data response %s</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
@@ -1700,6 +1724,11 @@
     <string name="file_fci">File FCI</string>
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="app_fci">App FCI</string>
+    <string name="iso7816_sfi">Short File Identifier (SFI) %s</string>
+    <!-- Translators: used as titles for 2 subtrees show raw bytes and parsed TLV tags respectively. -->
+    <string name="iso7816_raw">Raw data</string>
+    <!-- Translators: used as titles for 2 subtrees show raw bytes and parsed TLV tags respectively. -->
+    <string name="iso7816_tlv">TLV tags</string>
     <string name="classic_key">MIFARE Classic key</string>
     <!--
     Translators: MIFARE Classic has two keys: key "A" and key "B".

@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -276,9 +277,9 @@ object ISO7816TLV {
     }
 
     fun infoWithRaw(buf: ImmutableByteArray) = listOfNotNull(
-            ListItemRecursive.collapsedValue("RAW", buf.toHexDump()),
+            ListItemRecursive.collapsedValue(R.string.iso7816_raw, buf.toHexDump()),
             try {
-                ListItemRecursive("TLV", null, infoBerTLV(buf))
+                ListItemRecursive(R.string.iso7816_tlv, null, infoBerTLV(buf))
             } catch (e: Exception) {
                 null
             })

@@ -50,7 +50,7 @@ class KROCAPTransitData(val pdata: ImmutableByteArray) : SerialOnlyTransitData()
         get() = ISO7816TLV.infoBerTLV(pdata, TAGMAP)
 
     companion object {
-        private const val NAME = "One Card All Pass"
+        const val NAME = "One Card All Pass"
 
         private fun getSerial(pdata: ImmutableByteArray) =
                 ISO7816TLV.findBERTLV(pdata, TAG_SERIAL_NUMBER, false)?.getHexString()

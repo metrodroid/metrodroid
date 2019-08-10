@@ -33,29 +33,29 @@ class DesfireManufacturingData(val data: ImmutableByteArray) {
         get() {
             val items = mutableListOf(
                     HeaderListItem(R.string.hardware_information),
-                    ListItem("Vendor ID", hwVendorID.toString()),
-                    ListItem("Type", hwType.toString()),
-                    ListItem("Subtype", hwSubType.toString()),
-                    ListItem("Major Version", hwMajorVersion.toString()),
-                    ListItem("Minor Version", hwMinorVersion.toString()),
-                    ListItem("Storage Size", hwStorageSize.toString()),
-                    ListItem("Protocol", hwProtocol.toString()),
+                    ListItem(R.string.desfire_vendor_id, hwVendorID.toString()),
+                    ListItem(R.string.desfire_type, hwType.toString()),
+                    ListItem(R.string.desfire_subtype, hwSubType.toString()),
+                    ListItem(R.string.desfire_major_version, hwMajorVersion.toString()),
+                    ListItem(R.string.desfire_minor_version, hwMinorVersion.toString()),
+                    ListItem(R.string.desfire_storage_size, hwStorageSize.toString()),
+                    ListItem(R.string.desfire_protocol, hwProtocol.toString()),
 
                     HeaderListItem(R.string.software_information),
-                    ListItem("Vendor ID", swVendorID.toString()),
-                    ListItem("Type", swType.toString()),
-                    ListItem("Subtype", swSubType.toString()),
-                    ListItem("Major Version", swMajorVersion.toString()),
-                    ListItem("Minor Version", swMinorVersion.toString()),
-                    ListItem("Storage Size", swStorageSize.toString()),
-                    ListItem("Protocol", swProtocol.toString()))
+                    ListItem(R.string.desfire_vendor_id, swVendorID.toString()),
+                    ListItem(R.string.desfire_type, swType.toString()),
+                    ListItem(R.string.desfire_subtype, swSubType.toString()),
+                    ListItem(R.string.desfire_major_version, swMajorVersion.toString()),
+                    ListItem(R.string.desfire_minor_version, swMinorVersion.toString()),
+                    ListItem(R.string.desfire_storage_size, swStorageSize.toString()),
+                    ListItem(R.string.desfire_protocol, swProtocol.toString()))
 
             if (!Preferences.hideCardNumbers) {
-                items.add(HeaderListItem("General Information"))
-                items.add(ListItem("Serial Number", uid.toHexString()))
-                items.add(ListItem("Batch Number", batchNo.toHexString()))
-                items.add(ListItem("Week of Production", weekProd.toString(16)))
-                items.add(ListItem("Year of Production", yearProd.toString(16)))
+                items.add(HeaderListItem(R.string.desfire_general_info))
+                items.add(ListItem(R.string.calypso_serial_number, uid.toHexString()))
+                items.add(ListItem(R.string.desfire_batch_number, batchNo.toHexString()))
+                items.add(ListItem(R.string.manufacture_week, weekProd.toString(16)))
+                items.add(ListItem(R.string.manufacture_year, yearProd.toString(16)))
             }
 
             return items

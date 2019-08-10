@@ -61,7 +61,6 @@ data class KROCAPConfigDFApplication (
 
     companion object {
         private val TAG = "KROCAPConfigDFApplication"
-        private val NAME = "One Card All Pass"
 
         val APP_NAME = listOf(ImmutableByteArray.fromHex("a0000004520001"))
 
@@ -79,7 +78,7 @@ data class KROCAPConfigDFApplication (
                                          capsule: ISO7816ApplicationMutableCapsule,
                                          feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
                 feedbackInterface.updateStatusText(
-                        Localizer.localizeString(R.string.card_reading_type, NAME))
+                        Localizer.localizeString(R.string.card_reading_type, KROCAPTransitData.NAME))
 
                 return listOf<ISO7816Application>(KROCAPConfigDFApplication(capsule.freeze()))
             }

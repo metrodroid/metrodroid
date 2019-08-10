@@ -40,8 +40,9 @@ data class ChinaCard(
 
     @Transient
     override val rawData: List<ListItem>?
-        get() = balances.map { (idx, data) -> ListItemRecursive.collapsedValue("Balance $idx",
-                        data.toHexDump()) }
+        get() = balances.map { (idx, data) -> ListItemRecursive.collapsedValue(
+            Localizer.localizeString(R.string.china_balance, idx),
+            data.toHexDump()) }
 
     private fun findFactory() = ChinaRegistry.allFactories.find { it.check(this) }
 
