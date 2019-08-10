@@ -86,16 +86,16 @@ object CardReader {
                         vicinity = u)
         }
 
-        throw UnsupportedTagException(techs.toList(), tagId.toHexString())
+        throw UnsupportedTagProtocolException(techs.toList(), tagId.toHexString())
     }
 
     fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard {
-        val tech = MifareUltralight.get(tag)?: throw UnsupportedTagException(listOf("Ultralight"), "Ultralight interface failed")
+        val tech = MifareUltralight.get(tag) ?: throw CardProtocolUnsupportedException("Mifare Ultralight")
 
         try {
             tech.connect()
             return UltralightCardReader.dumpTag(AndroidUltralightTransceiver(tech), feedbackInterface)
-                    ?: throw UnsupportedTagException(listOf("Ultralight"), "Unknown Ultralight type")
+                    ?: throw UnknownUltralightException()
         } finally {
             if (tech.isConnected) {
                 tech.close()

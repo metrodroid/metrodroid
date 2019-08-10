@@ -1974,4 +1974,17 @@
     <string name="russia_region_76_yaroslavl">Yaroslavl Oblast</string>
     <string name="russia_region_79_jewish_autonomous">Jewish Autonomous Oblast</string>
     <string name="umarsh_91_crimea">Crimea</string>
+
+    <!-- Translators:  this number isn't anywhere on the card but is
+         printed on the refill receipt as "CardNo". -->
+    <string name="touchngo_cardno">Alternative number ("CardNo")</string>
+    <string name="unsupported_tag_message">This tag is currently unsupported by Metrodroid.
+        Tag identifier: %1$s
+        Supported technologies:
+        %2$s
+    </string>
+    <string name="unknown_ultralight_message">Unknown Mifare Ultralight tag</string>
+    <string name="nfc_connection_failed">NFC connection to %s failed</string>
+    <!-- Translators: label above trips where date isn't known. -->
+    <string name="unknown_date_title">Unknown date</string>
 </resources>

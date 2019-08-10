@@ -100,7 +100,7 @@ internal class ReadingTagTask private constructor(
             }
             is UnsupportedTagException -> AlertDialog.Builder(readingTagActivity)
                     .setTitle(R.string.unsupported_tag)
-                    .setMessage(exception.message)
+                    .setMessage(exception.dialogMessage)
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok) { _, _ -> readingTagActivity.finish() }
                     .safeShow()

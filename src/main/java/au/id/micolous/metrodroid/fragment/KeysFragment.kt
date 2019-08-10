@@ -393,11 +393,8 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this
-                @NonNls var path = uri.path
-                if (path == null)
-                    path = "unspecified"
-                val k = ClassicStaticKeys.fromJSON(json.jsonObject, path)
-                if (k!!.isEmpty()) {
+                val k = ClassicStaticKeys.fromJSON(json.jsonObject, uri.path ?: "unspecified")
+                if (k?.isEmpty() != false) {
                     return R.string.key_file_empty
                 }
 

@@ -58,7 +58,7 @@ class AndroidFelicaTransceiver(private val tag: Tag) : FelicaTransceiver, Closea
     fun connect() {
         close()
 
-        val nfcF = NfcF.get(tag) ?: throw CardProtocolUnsupportedException("nfcF not supported by this card")
+        val nfcF = NfcF.get(tag) ?: throw CardProtocolUnsupportedException("FeliCa")
 
         nfcF.connect()
         this.nfcF = nfcF
@@ -93,7 +93,7 @@ class AndroidNfcVTransceiver(private val tag: Tag) : CardTransceiver, Closeable 
     fun connect() {
         close()
 
-        val nfcV = NfcV.get(tag) ?: throw CardProtocolUnsupportedException("nfcV not supported by this card")
+        val nfcV = NfcV.get(tag) ?: throw CardProtocolUnsupportedException("ISO15693")
 
         nfcV.connect()
         this.nfcV = nfcV
@@ -124,7 +124,7 @@ class AndroidIsoTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
     fun connect() {
         close()
 
-        val isoDep = IsoDep.get(tag) ?: throw CardProtocolUnsupportedException("iso14a not supported by this card")
+        val isoDep = IsoDep.get(tag) ?: throw CardProtocolUnsupportedException("ISO14443")
 
         isoDep.connect()
         this.isoDep = isoDep
@@ -163,7 +163,7 @@ class AndroidNfcATransceiver(private val tag: Tag) : CardTransceiver, Closeable 
     fun connect() {
         close()
 
-        val nfcA = NfcA.get(tag) ?: throw CardProtocolUnsupportedException("nfcA not supported by this card")
+        val nfcA = NfcA.get(tag) ?: throw CardProtocolUnsupportedException("ISO14443-A")
 
         nfcA.connect()
         this.sak = nfcA.sak

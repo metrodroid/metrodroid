@@ -135,7 +135,9 @@ class CardTripsFragment : ListFragment() {
             val listHeader = convertView.findViewById<View>(R.id.list_header)
             if (isFirstInSection(position)) {
                 listHeader.visibility = View.VISIBLE
-                val headerDate = if (date != null) TimestampFormatter.longDateFormat(date).spanned else null
+                val headerDate = if (date != null) {
+                    TimestampFormatter.longDateFormat(date).spanned
+                } else SpannableString(Localizer.localizeString(R.string.unknown_date_title))
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

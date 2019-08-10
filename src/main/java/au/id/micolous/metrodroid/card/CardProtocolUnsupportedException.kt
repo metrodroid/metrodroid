@@ -19,5 +19,11 @@
 
 package au.id.micolous.metrodroid.card
 
-class CardProtocolUnsupportedException (message: String):
-        Exception("Tag does not support this protocol: $message")
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+
+class CardProtocolUnsupportedException (val tech: String): UnsupportedTagException() {
+    override val message get(): String = "$tech interface failed"
+
+    override val dialogMessage get() = Localizer.localizeString(R.string.nfc_connection_failed, tech)
+}
