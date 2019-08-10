@@ -42,7 +42,7 @@ sfbf_gtfs.zip:
 copy: clipper.copy
 
 clean:
-	rm -f *.zip clipper.mdst clipper.csv
+	rm -f $(ZIP_FILES) clipper.mdst clipper.csv
 
 include ../Makefile.common
 
