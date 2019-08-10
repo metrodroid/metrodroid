@@ -40,6 +40,8 @@ class En1545ValueString(val v: String) : En1545Value()
 @Parcelize
 class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMapOf()) : Parcelable {
 
+    operator fun plus(other: En1545Parsed) = En1545Parsed((map + other.map).toMutableMap())
+
     fun insertInt(name: String, path: String, value: Int) {
         map[makeFullName(name, path)] = En1545ValueInt(value)
     }

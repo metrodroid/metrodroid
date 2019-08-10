@@ -3,6 +3,7 @@
  *
  * Copyright 2013 Lauri Andler <lauri.andler@gmail.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +26,36 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-class HSLRefill (override val startTimestamp: Timestamp?,
-                 private val mRefillAmount: Int): Trip() {
+class HSLRefill private constructor(override val parsed: En1545Parsed): En1545Transaction() {
+    override val lookup: En1545Lookup
+        get() = HSLLookup
     override val fare: TransitCurrency?
-        get() = TransitCurrency.EUR(-mRefillAmount)
+        get() = super.fare?.negate()
 
     override val mode: Trip.Mode
         get() = Trip.Mode.TICKET_MACHINE
 
-    constructor(data: ImmutableByteArray) : this(
-        startTimestamp = HSLTransitData.cardDateToCalendar(
-                data.getBitsFromBuffer(20, 14),
-                data.getBitsFromBuffer(34, 11)),
-        mRefillAmount = data.getBitsFromBuffer(45, 20))
-
     override fun getAgencyName(isShort: Boolean) = Localizer.localizeString(R.string.hsl_balance_refill)
+
+    companion object {
+        private val FIELDS_V1_V2 = En1545Container(
+                En1545FixedInteger("CurrentValue", 20),
+                En1545FixedInteger.date(EVENT),
+                En1545FixedInteger.timeLocal(EVENT),
+                En1545FixedInteger(EVENT_PRICE_AMOUNT, 20),
+                En1545FixedInteger("LoadingOrganisationID", 14),
+                En1545FixedInteger(EVENT_DEVICE_ID, 14)
+        )
+
+        fun parse(data: ImmutableByteArray): HSLRefill? {
+            val ret = En1545Parser.parse(data, FIELDS_V1_V2)
+            if (ret.getIntOrZero(En1545FixedInteger.dateName(EVENT)) == 0)
+                return null
+            return HSLRefill(ret)
+        }
+    }
 }

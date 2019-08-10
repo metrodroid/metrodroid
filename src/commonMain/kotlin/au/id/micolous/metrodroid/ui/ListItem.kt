@@ -59,4 +59,6 @@ open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
         result = 31 * result + (text2?.hashCode() ?: 0)
         return result
     }
+
+    override fun toString(): String = "$text1/$text2"
 }
