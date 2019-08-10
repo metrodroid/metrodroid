@@ -23,14 +23,17 @@ from google.protobuf.internal import encoder
 from stations_pb2 import StationDb, Operator, Line, Station, StationIndex, TransportType
 import struct
 import csv
+from operator import itemgetter
 
 SCHEMA_VER = 1
+
 
 def delimited_value(msg):
   # Emits a writeDelimited compatible Protobuf message
   o = msg.SerializeToString()
   d = encoder._VarintBytes(len(o))
   return d + o
+
 
 class MdstWriter(object):
   def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
@@ -59,7 +62,7 @@ class MdstWriter(object):
         sdb.local_languages.append(l)
 
     if operators:
-      for k, v in operators.items():
+      for k, v in sorted(operators.items(), key=itemgetter(0)):
         if isinstance(v, Operator):
           sdb.operators[k].name.english = v.name.english
           sdb.operators[k].name.english_short = v.name.english_short
@@ -73,7 +76,7 @@ class MdstWriter(object):
           sdb.operators[k].name.local = v[1]
 
     if lines:
-      for k, v in lines.items():
+      for k, v in sorted(lines.items(), key=itemgetter(0)):
         if isinstance(v, Line):
           sdb.lines[k].name.english = v.name.english
           sdb.lines[k].name.english_short = v.name.english_short
@@ -113,7 +116,7 @@ class MdstWriter(object):
     """
     self.index_off = self.fh.tell()
     sidx = StationIndex()
-    for station_id, offset in self.stations.items():
+    for station_id, offset in sorted(self.stations.items(), key=itemgetter(0)):
       sidx.station_map[station_id] = offset
     self.fh.write(delimited_value(sidx))
     
