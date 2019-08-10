@@ -245,8 +245,8 @@
         <item quantity="other">Soort: %1$s, Lengte: %2$s bytes</item>
     </plurals>
     <plurals name="desfire_record_format">
-        <item quantity="one">Soort: %1$s, Vermelding: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s byte</item>
-        <item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
+        <item quantity="one">Soort: %1$s, Vermelding: %2$d (maximaal %3$d), Vermeldingsgrootte: %4$d byte</item>
+        <item quantity="other">Soort: %1$s, Vermeldingen: %2$d (maximaal %3$d), Vermeldingsgrootte: %4$d bytes</item>
     </plurals>
     <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
     <string name="enabled">Aan</string>
@@ -947,4 +947,53 @@
     <string name="russia_region_76_yaroslavl">Oblast Jaroslavl</string>
     <string name="russia_region_79_jewish_autonomous">Joodse Autonome Oblast</string>
     <string name="umarsh_91_crimea">De Krim</string>
+    <string name="desfire_vendor_id">ID van uitgever</string>
+    <string name="desfire_type">Soort</string>
+    <string name="desfire_subtype">Subsoort</string>
+    <string name="desfire_major_version">Groot getal</string>
+    <string name="desfire_minor_version">Klein getal</string>
+    <string name="desfire_storage_size">Opslaggrootte</string>
+    <string name="desfire_protocol">Protocol</string>
+    <string name="desfire_general_info">Algemene informatie</string>
+    <string name="desfire_batch_number">Batchnummer</string>
+    <string name="cepas_purse_num">CEPAS-saldonummer %d</string>
+    <string name="cepas_purse_num_history">CEPAS-saldonummer %d - geschiedenis</string>
+    <string name="cepas_can">Kaartapplicatienummer (CAN)</string>
+    <string name="cepas_csn">Kaartserienummer (CSN)</string>
+    <string name="cepas_trp">Transactiepointer (TRP)</string>
+    <string name="cepas_credit_trp">Krediettransactiepointer (TRP)</string>
+    <string name="raw_level_none">Niet (uitgeschakeld)</string>
+    <string name="raw_level_unknown_only">Alleen onbekende velden</string>
+    <string name="raw_level_all">Alle velden</string>
+    <string name="hsl_period">Geldigheidsduur</string>
+    <plurals name="hsl_valid_days_24h">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d kalenderdag</item>
+        <item quantity="other">%d kalenderdagen</item>
+    </plurals>
+    <plurals name="hsl_valid_hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uur</item>
+    </plurals>
+    <plurals name="hsl_valid_mins">
+        <item quantity="one">%d minuut</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
+    <plurals name="hsl_zones">
+        <item quantity="one">zone %s</item>
+        <item quantity="other">zones %s</item>
+    </plurals>
+    <string name="hsl_zone_station">Zone %s</string>
+    <string name="hsl_arvo_format">eTicket voor %s</string>
+    <string name="hsl_kausi_format">PeriodPass voor %s</string>
+    <string name="hsl_language">Taal</string>
+    <string name="hsl_finnish">Fins</string>
+    <string name="hsl_swedish">Zweeds</string>
+    <string name="hsl_english">Engels</string>
+    <string name="hsl_adult">Volwassene</string>
+    <string name="hsl_child">Kind</string>
+    <string name="hsl_customer_profile">Klantprofiel</string>
 </resources>
