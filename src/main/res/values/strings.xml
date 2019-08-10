@@ -1957,4 +1957,6 @@
     </string>
     <string name="unknown_ultralight_message">Unknown Mifare Ultralight tag</string>
     <string name="nfc_connection_failed">NFC connection to %s failed</string>
+    <!-- Translators: label above trips where date isn't known. -->
+    <string name="unknown_date_title">Unknown date</string>
 </resources>
