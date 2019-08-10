@@ -1990,21 +1990,44 @@
     <!-- Translators: label above trips where date isn't known. -->
     <string name="unknown_date_title">Unknown date</string>
 
-    <!-- Translators: Transit card used in Tbilissi. In Georgian "მეტრომანის" AFAICT -->
+    <!--
+    Translators: Name of transit card used in Tbilissi.
+    Georgian: "მეტრომანი" (met'romani; written on cards) or "მეტრომანის" (met'romanis; written on website).
+    The card itself has "Metromoney" written in English (Latin script) on it, in addition to Georgian.
+    -->
     <string name="card_name_metromoney">Metromoney</string>
-    <!-- Translators: Finnish "Tampereen matkakortti". It doesn't seem to have a more specific
-         brand name. Website in English reffers to it as Tampere Travelcard -->
+    <!--
+    Translators: Name of a transit card used in Tampere, Finland. Finnish: "Tampereen matkakortti".
+    It doesn't seem to have a more specific brand name. Website in English refers to it as "Tampere Travelcard".
+    -->
     <string name="card_name_tampere">Tampere Travelcard</string>
-    <!--- Card name used in Abu Dhabi. Arrabic "حافلات" literally "busses" may be transliterated. -->
+    <!---
+    Translators: Name of a transit card used in Abu Dhabi, UAE. Arabic: "حافلات" (literally "buses").
+    May be transliterated.
+    -->
     <string name="card_name_hafilat">Hafilat</string>
 
-    <!-- Translators: Card name used in Dubai. Arabic "نول " literally "fare". May be transliterated. -->
+    <!--
+    Translators: Name of a transit card used in Dubai, UAE. Arabic: "نول " (literally "fare").
+    May be transliterated.
+    -->
     <string name="card_name_nol">Nol</string>
-    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <!--
+    Translators: Describes the colour of Dubai's Nol card.
+    There are two variants (red and silver) which differ in validity length.
+    Pictures: http://www.nol.ae/RtaPortal/Portal.portal%3F_nfpb%3Dtrue%26_pageLabel%3Dhome_get_range_range
+    -->
     <string name="nol_red">Red</string>
-    <!-- Translators: There are 2 variants of cards: red and silver that differ in color and validitiy length. -->
+    <!--
+    Translators: Describes the colour of Dubai's Nol card.
+    There are two variants (red and silver) which differ in validity length.
+    Pictures: http://www.nol.ae/RtaPortal/Portal.portal%3F_nfpb%3Dtrue%26_pageLabel%3Dhome_get_range_range
+    -->
     <string name="nol_silver">Silver</string>
 
-    <!-- Translators: Card name used in Taipei. Chinese: "悠遊卡". -->
+    <!--
+    Translators: Name of a transit card used in Taipei. Chinese: "悠遊卡".
+    The card is labelled in both Chinese and English.
+    -->
     <string name="card_name_easycard">EasyCard</string>
 </resources>
