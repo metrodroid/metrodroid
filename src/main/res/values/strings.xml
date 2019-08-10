@@ -510,8 +510,8 @@
 
     <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
     <plurals name="desfire_record_format">
-        <item quantity="one">Type: %1$s, record: %2$s (%3$s maximum), record size: %4$s</item>
-        <item quantity="other">Type: %1$s, records: %2$s (%3$s maximum), record size: %4$s</item>
+        <item quantity="one">Type: %1$s, %2$d record (%3$d maximum), record size: %4$d</item>
+        <item quantity="other">Type: %1$s, %2$d records (%3$d maximum), record size: %4$d</item>
     </plurals>
 
     <plurals name="trips_remaining">
@@ -522,6 +522,7 @@
         <item quantity="one">%d trip remaining out of %d</item>
         <item quantity="other">%d trips remaining out of %d</item>
     </plurals>
+    <!-- Translarors: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
@@ -1326,8 +1327,8 @@
         <item quantity="other">%d days remaining</item>
     </plurals>
     <plurals name="travel_zones">
-        <item quantity="one">Travel zone</item>
-        <item quantity="other">Travel zones</item>
+        <item quantity="one">%d travel zone</item>
+        <item quantity="other">%d travel zones</item>
     </plurals>
 
     <string name="en1545_network_id">Network ID</string>
@@ -1663,6 +1664,8 @@
     <!-- Translators: Exponent for the primary currency. This is 2 for the Euro and most dollars,
     0 for yen.  -->
     <string name="emv_application_currency_exponent">Application currency exponent</string>
+    <!-- Translators: This is used as a title for a table row, so feel free to replace with
+         "Number of remaining pin attempts" for all plurals. -->
     <plurals name="emv_pin_attempts_remaining">
         <item quantity="one">PIN attempt remaining</item>
         <item quantity="other">PIN attempts remaining</item>
