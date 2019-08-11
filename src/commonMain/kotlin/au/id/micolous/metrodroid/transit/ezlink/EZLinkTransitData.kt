@@ -69,12 +69,14 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
     private val EZ_LINK_CARD_INFO = CardInfo(
         imageId = R.drawable.ezlink_card,
         name = "EZ-Link",
+        iOSSupported = false,
         locationId = R.string.location_singapore,
         cardType = CardType.CEPAS)
 
     private val NETS_FLASHPAY_CARD_INFO = CardInfo(
         imageId = R.drawable.nets_card,
         name = "NETS FlashPay",
+        iOSSupported = false,
         locationId = R.string.location_singapore,
         cardType = CardType.CEPAS)
 

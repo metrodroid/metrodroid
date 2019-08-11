@@ -140,6 +140,7 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
                 locationId = R.string.location_ireland,
                 cardType = CardType.MifareDesfire,
                 imageId = R.drawable.leap_card,
+                iOSSupported = false,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 resourceExtraNote = R.string.card_note_leap,
                 preview = true)

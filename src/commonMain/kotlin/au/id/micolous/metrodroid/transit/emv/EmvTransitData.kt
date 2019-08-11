@@ -110,6 +110,7 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
     val CARD_INFO = CardInfo(
         name = R.string.card_name_emv_long,
         locationId = R.string.location_worldwide,
+        iOSSupported = false,
         imageId = R.drawable.ic_contactless,
         cardType = CardType.ISO7816)
 
