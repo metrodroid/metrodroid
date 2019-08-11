@@ -1,0 +1,891 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C095684230637BD007C6F79 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C095683230637BD007C6F79 /* MapKit.framework */; };
+		9C095686230639E4007C6F79 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C095685230639E4007C6F79 /* MapViewController.swift */; };
+		9C09678F22D7CA0D0064CC50 /* TripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C09678E22D7CA0D0064CC50 /* TripsViewController.swift */; };
+		9C09679122D7CA4C0064CC50 /* CardViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C09679022D7CA4C0064CC50 /* CardViewProtocol.swift */; };
+		9C0E5D6A22D6B72600026DDB /* BalanceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E5D6922D6B72600026DDB /* BalanceViewCell.swift */; };
+		9C16181E22E37D40008747F3 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */; };
+		9C1C982E22E53CD20073683A /* ErrorLabelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */; };
+		9C5352B422F2750D00674952 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */; };
+		9C553FF422D5E5BB00665891 /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF322D5E5BB00665891 /* NFCReader.swift */; };
+		9C553FF622D5F0D700665891 /* CardPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF522D5F0D700665891 /* CardPersister.swift */; };
+		9C553FF822D61DB300665891 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF722D61DB300665891 /* HistoryViewController.swift */; };
+		9C8AC0C522D88C60005681DB /* SubscriptionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8AC0C422D88C60005681DB /* SubscriptionViewCell.swift */; };
+		9CA5821D22E52A1C004D579D /* ErrorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA5821C22E52A1C004D579D /* ErrorViewCell.swift */; };
+		9CC5F83722D825AC006E9856 /* TripCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC5F83622D825AC006E9856 /* TripCell.swift */; };
+		9CC7BA2822F6582700F45148 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9CC7BA2722F6582700F45148 /* ZIPFoundation */; };
+		9CC7BA3322F7CD7A00F45148 /* Logos-NOTICE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */; };
+		9CC7BA3522F7CD8600F45148 /* Metrodroid-NOTICE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */; };
+		9CCEE1ED22E3D181007BF742 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CCEE1EB22E3D181007BF742 /* InfoPlist.strings */; };
+		9CDF295022D6588E00B6B902 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF294F22D6588E00B6B902 /* CardViewController.swift */; };
+		9CDF295222D6678200B6B902 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF295122D6678200B6B902 /* TicketsViewController.swift */; };
+		9CEA951922DD14120072C513 /* mdst in Resources */ = {isa = PBXBuildFile; fileRef = 9CEA951822DD14120072C513 /* mdst */; };
+		9CFE481522E0F9FE0020A500 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE481422E0F9FE0020A500 /* InfoViewController.swift */; };
+		9CFE481722E0FA880020A500 /* ListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE481622E0FA880020A500 /* ListViewDataSource.swift */; };
+		9CFE481922E1068E0020A500 /* AdvancedCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE481822E1068E0020A500 /* AdvancedCardViewController.swift */; };
+		9CFE481B22E1073B0020A500 /* HwInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE481A22E1073B0020A500 /* HwInfoViewController.swift */; };
+		9CFE481F22E10DAA0020A500 /* RawInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE481E22E10DAA0020A500 /* RawInfoViewController.swift */; };
+		E7B1DFC422CCCE680061481F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1DFC322CCCE680061481F /* AppDelegate.swift */; };
+		E7B1DFC622CCCE680061481F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1DFC522CCCE680061481F /* ViewController.swift */; };
+		E7B1DFC922CCCE680061481F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B1DFC722CCCE680061481F /* Main.storyboard */; };
+		E7B1DFCB22CCCE6B0061481F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7B1DFCA22CCCE6B0061481F /* Assets.xcassets */; };
+		E7B1DFD922CCCE6B0061481F /* metrodroidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1DFD822CCCE6B0061481F /* metrodroidTests.swift */; };
+		E7B1DFE422CCCE6B0061481F /* metrodroidUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1DFE322CCCE6B0061481F /* metrodroidUITests.swift */; };
+		E7BE9C8222CD24E600E6496B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7BE9C8122CD24E600E6496B /* Settings.bundle */; };
+		E7BE9C8422CD376F00E6496B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE9C8322CD376F00E6496B /* AboutViewController.swift */; };
+		E7BE9C8622CD38EA00E6496B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE9C8522CD38EA00E6496B /* Utils.swift */; };
+		E7BE9C8822CD4AF300E6496B /* SupportedCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE9C8722CD4AF300E6496B /* SupportedCardsViewController.swift */; };
+		E7BE9C8A22CD60A500E6496B /* LicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE9C8922CD60A500E6496B /* LicenseViewController.swift */; };
+		E7BE9C9022CD6DEE00E6496B /* NOTICE.protobuf.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7BE9C8D22CD6DED00E6496B /* NOTICE.protobuf.txt */; };
+		E7BE9C9122CD6DEE00E6496B /* NOTICE.noto-emoji.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7BE9C8E22CD6DED00E6496B /* NOTICE.noto-emoji.txt */; };
+		E7BE9C9222CD6DEE00E6496B /* NOTICE.AOSP.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7BE9C8F22CD6DEE00E6496B /* NOTICE.AOSP.txt */; };
+		E7BE9C9422CD868800E6496B /* SupportedCardsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE9C9322CD868800E6496B /* SupportedCardsViewCell.swift */; };
+		E7C4D74A22CF04B000E89028 /* metrolib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C4D74922CF04B000E89028 /* metrolib.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		E7C4D74D22CF0ACB00E89028 /* metrolib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E7C4D74922CF04B000E89028 /* metrolib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E7B1DFD522CCCE6B0061481F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B1DFB822CCCE680061481F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E7B1DFBF22CCCE680061481F;
+			remoteInfo = metrodroid;
+		};
+		E7B1DFE022CCCE6B0061481F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B1DFB822CCCE680061481F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E7B1DFBF22CCCE680061481F;
+			remoteInfo = metrodroid;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E7C4D74E22CF0ACB00E89028 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E7C4D74D22CF0ACB00E89028 /* metrolib.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9C095683230637BD007C6F79 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		9C095685230639E4007C6F79 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		9C09678E22D7CA0D0064CC50 /* TripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsViewController.swift; sourceTree = "<group>"; };
+		9C09679022D7CA4C0064CC50 /* CardViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewProtocol.swift; sourceTree = "<group>"; };
+		9C0E5D6922D6B72600026DDB /* BalanceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewCell.swift; sourceTree = "<group>"; };
+		9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
+		9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLabelProtocol.swift; sourceTree = "<group>"; };
+		9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
+		9C553FF322D5E5BB00665891 /* NFCReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCReader.swift; sourceTree = "<group>"; };
+		9C553FF522D5F0D700665891 /* CardPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPersister.swift; sourceTree = "<group>"; };
+		9C553FF722D61DB300665891 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		9C7101B322E3D36F00457BA7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = metrodroid/nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101B422E3D37500457BA7 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = metrodroid/fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101B522E3D37800457BA7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = metrodroid/fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101B622E3D37B00457BA7 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = metrodroid/he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101B822E3D38200457BA7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = metrodroid/id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101B922E3D38500457BA7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = metrodroid/ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101BA22E3D38800457BA7 /* kab */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kab; path = metrodroid/kab.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101BB22E3D38B00457BA7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = metrodroid/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7101BC22E3D38F00457BA7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = metrodroid/tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C75569E22F8CB29001FFF3B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		9C75569F22F8CB2E001FFF3B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = metrodroid/de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7556A022F8CB40001FFF3B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		9C7556A122F8CB45001FFF3B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = metrodroid/it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7556A222F8CB5B001FFF3B /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Main.strings; sourceTree = "<group>"; };
+		9C7556A322F8CCE5001FFF3B /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = metrodroid/el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C7556A422F8CCF5001FFF3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = metrodroid/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9C8AC0C422D88C60005681DB /* SubscriptionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewCell.swift; sourceTree = "<group>"; };
+		9CA5821C22E52A1C004D579D /* ErrorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewCell.swift; sourceTree = "<group>"; };
+		9CC5F83622D825AC006E9856 /* TripCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCell.swift; sourceTree = "<group>"; };
+		9CC7BA2B22F6960600F45148 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Main.strings; sourceTree = "<group>"; };
+		9CC7BA2C22F6960B00F45148 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = metrodroid/nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9CC7BA2D22F7189500F45148 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		9CC7BA2E22F7189900F45148 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "metrodroid/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Logos-NOTICE.txt"; path = "../../src/main/assets/Logos-NOTICE.txt"; sourceTree = "<group>"; };
+		9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Metrodroid-NOTICE.txt"; path = "../../src/main/assets/Metrodroid-NOTICE.txt"; sourceTree = "<group>"; };
+		9CCEE1EC22E3D181007BF742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = metrodroid/Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9CCEE1EE22E3D1D9007BF742 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = metrodroid/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9CD6DFEA22D33F7B003A5CEA /* metrodroid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = metrodroid.entitlements; sourceTree = "<group>"; };
+		9CDF294F22D6588E00B6B902 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		9CDF295122D6678200B6B902 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
+		9CEA951822DD14120072C513 /* mdst */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mdst; path = ../../mdst; sourceTree = "<group>"; };
+		9CEA951D22DE834E0072C513 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480522DF7FE80020A500 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480822DFA5320020A500 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480A22DFA5570020A500 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480B22DFA5710020A500 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480C22DFA5840020A500 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480D22DFA5B70020A500 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480E22DFA5D60020A500 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE480F22DFA60C0020A500 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE481022DFA6210020A500 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE481122DFA77E0020A500 /* kab */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kab; path = kab.lproj/Main.strings; sourceTree = "<group>"; };
+		9CFE481422E0F9FE0020A500 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		9CFE481622E0FA880020A500 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; };
+		9CFE481822E1068E0020A500 /* AdvancedCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCardViewController.swift; sourceTree = "<group>"; };
+		9CFE481A22E1073B0020A500 /* HwInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HwInfoViewController.swift; sourceTree = "<group>"; };
+		9CFE481E22E10DAA0020A500 /* RawInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawInfoViewController.swift; sourceTree = "<group>"; };
+		E7B1DFC022CCCE680061481F /* metrodroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = metrodroid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B1DFC322CCCE680061481F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E7B1DFC522CCCE680061481F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E7B1DFC822CCCE680061481F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E7B1DFCA22CCCE6B0061481F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E7B1DFCF22CCCE6B0061481F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7B1DFD422CCCE6B0061481F /* metrodroidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = metrodroidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B1DFD822CCCE6B0061481F /* metrodroidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metrodroidTests.swift; sourceTree = "<group>"; };
+		E7B1DFDA22CCCE6B0061481F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7B1DFDF22CCCE6B0061481F /* metrodroidUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = metrodroidUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B1DFE322CCCE6B0061481F /* metrodroidUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metrodroidUITests.swift; sourceTree = "<group>"; };
+		E7B1DFE522CCCE6B0061481F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7BE9C8122CD24E600E6496B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		E7BE9C8322CD376F00E6496B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		E7BE9C8522CD38EA00E6496B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		E7BE9C8722CD4AF300E6496B /* SupportedCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCardsViewController.swift; sourceTree = "<group>"; };
+		E7BE9C8922CD60A500E6496B /* LicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseViewController.swift; sourceTree = "<group>"; };
+		E7BE9C8D22CD6DED00E6496B /* NOTICE.protobuf.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NOTICE.protobuf.txt; path = ../../third_party/NOTICE.protobuf.txt; sourceTree = "<group>"; };
+		E7BE9C8E22CD6DED00E6496B /* NOTICE.noto-emoji.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "NOTICE.noto-emoji.txt"; path = "../../third_party/NOTICE.noto-emoji.txt"; sourceTree = "<group>"; };
+		E7BE9C8F22CD6DEE00E6496B /* NOTICE.AOSP.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NOTICE.AOSP.txt; path = ../../third_party/NOTICE.AOSP.txt; sourceTree = "<group>"; };
+		E7BE9C9322CD868800E6496B /* SupportedCardsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCardsViewCell.swift; sourceTree = "<group>"; };
+		E7C4D74922CF04B000E89028 /* metrolib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = metrolib.framework; path = "../../build/xcode-frameworks/metrolib.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E7B1DFBD22CCCE680061481F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7C4D74A22CF04B000E89028 /* metrolib.framework in Frameworks */,
+				9C095684230637BD007C6F79 /* MapKit.framework in Frameworks */,
+				9CC7BA2822F6582700F45148 /* ZIPFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFD122CCCE6B0061481F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFDC22CCCE6B0061481F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E7B1DFB722CCCE680061481F = {
+			isa = PBXGroup;
+			children = (
+				9CEA951822DD14120072C513 /* mdst */,
+				E7BE9C8F22CD6DEE00E6496B /* NOTICE.AOSP.txt */,
+				E7BE9C8E22CD6DED00E6496B /* NOTICE.noto-emoji.txt */,
+				9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */,
+				9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */,
+				E7BE9C8D22CD6DED00E6496B /* NOTICE.protobuf.txt */,
+				E7BE9C8122CD24E600E6496B /* Settings.bundle */,
+				E7B1DFC222CCCE680061481F /* metrodroid */,
+				E7B1DFD722CCCE6B0061481F /* metrodroidTests */,
+				E7B1DFE222CCCE6B0061481F /* metrodroidUITests */,
+				E7B1DFC122CCCE680061481F /* Products */,
+				E7C4D74822CF04AF00E89028 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E7B1DFC122CCCE680061481F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E7B1DFC022CCCE680061481F /* metrodroid.app */,
+				E7B1DFD422CCCE6B0061481F /* metrodroidTests.xctest */,
+				E7B1DFDF22CCCE6B0061481F /* metrodroidUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E7B1DFC222CCCE680061481F /* metrodroid */ = {
+			isa = PBXGroup;
+			children = (
+				E7BE9C8322CD376F00E6496B /* AboutViewController.swift */,
+				9CFE481822E1068E0020A500 /* AdvancedCardViewController.swift */,
+				E7B1DFC322CCCE680061481F /* AppDelegate.swift */,
+				E7B1DFCA22CCCE6B0061481F /* Assets.xcassets */,
+				9C0E5D6922D6B72600026DDB /* BalanceViewCell.swift */,
+				9C553FF522D5F0D700665891 /* CardPersister.swift */,
+				9CDF294F22D6588E00B6B902 /* CardViewController.swift */,
+				9C09679022D7CA4C0064CC50 /* CardViewProtocol.swift */,
+				9C553FF722D61DB300665891 /* HistoryViewController.swift */,
+				9CFE481A22E1073B0020A500 /* HwInfoViewController.swift */,
+				E7B1DFCF22CCCE6B0061481F /* Info.plist */,
+				9CCEE1EB22E3D181007BF742 /* InfoPlist.strings */,
+				9CFE481422E0F9FE0020A500 /* InfoViewController.swift */,
+				E7BE9C8922CD60A500E6496B /* LicenseViewController.swift */,
+				9CFE481622E0FA880020A500 /* ListViewDataSource.swift */,
+				E7B1DFC722CCCE680061481F /* Main.storyboard */,
+				9CD6DFEA22D33F7B003A5CEA /* metrodroid.entitlements */,
+				9C553FF322D5E5BB00665891 /* NFCReader.swift */,
+				9CFE481E22E10DAA0020A500 /* RawInfoViewController.swift */,
+				9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */,
+				9C8AC0C422D88C60005681DB /* SubscriptionViewCell.swift */,
+				E7BE9C9322CD868800E6496B /* SupportedCardsViewCell.swift */,
+				E7BE9C8722CD4AF300E6496B /* SupportedCardsViewController.swift */,
+				9CDF295122D6678200B6B902 /* TicketsViewController.swift */,
+				9CC5F83622D825AC006E9856 /* TripCell.swift */,
+				9C09678E22D7CA0D0064CC50 /* TripsViewController.swift */,
+				E7BE9C8522CD38EA00E6496B /* Utils.swift */,
+				E7B1DFC522CCCE680061481F /* ViewController.swift */,
+				9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */,
+				9CA5821C22E52A1C004D579D /* ErrorViewCell.swift */,
+				9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */,
+				9C095685230639E4007C6F79 /* MapViewController.swift */,
+			);
+			path = metrodroid;
+			sourceTree = "<group>";
+		};
+		E7B1DFD722CCCE6B0061481F /* metrodroidTests */ = {
+			isa = PBXGroup;
+			children = (
+				E7B1DFD822CCCE6B0061481F /* metrodroidTests.swift */,
+				E7B1DFDA22CCCE6B0061481F /* Info.plist */,
+			);
+			path = metrodroidTests;
+			sourceTree = "<group>";
+		};
+		E7B1DFE222CCCE6B0061481F /* metrodroidUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E7B1DFE322CCCE6B0061481F /* metrodroidUITests.swift */,
+				E7B1DFE522CCCE6B0061481F /* Info.plist */,
+			);
+			path = metrodroidUITests;
+			sourceTree = "<group>";
+		};
+		E7C4D74822CF04AF00E89028 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C095683230637BD007C6F79 /* MapKit.framework */,
+				E7C4D74922CF04B000E89028 /* metrolib.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E7B1DFBF22CCCE680061481F /* metrodroid */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B1DFE822CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroid" */;
+			buildPhases = (
+				E7C4D74B22CF055A00E89028 /* ShellScript */,
+				E7B1DFBC22CCCE680061481F /* Sources */,
+				E7B1DFBD22CCCE680061481F /* Frameworks */,
+				E7B1DFBE22CCCE680061481F /* Resources */,
+				E7C4D74E22CF0ACB00E89028 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = metrodroid;
+			packageProductDependencies = (
+				9CC7BA2722F6582700F45148 /* ZIPFoundation */,
+			);
+			productName = metrodroid;
+			productReference = E7B1DFC022CCCE680061481F /* metrodroid.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E7B1DFD322CCCE6B0061481F /* metrodroidTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B1DFEB22CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroidTests" */;
+			buildPhases = (
+				E7B1DFD022CCCE6B0061481F /* Sources */,
+				E7B1DFD122CCCE6B0061481F /* Frameworks */,
+				E7B1DFD222CCCE6B0061481F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E7B1DFD622CCCE6B0061481F /* PBXTargetDependency */,
+			);
+			name = metrodroidTests;
+			productName = metrodroidTests;
+			productReference = E7B1DFD422CCCE6B0061481F /* metrodroidTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E7B1DFDE22CCCE6B0061481F /* metrodroidUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B1DFEE22CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroidUITests" */;
+			buildPhases = (
+				E7B1DFDB22CCCE6B0061481F /* Sources */,
+				E7B1DFDC22CCCE6B0061481F /* Frameworks */,
+				E7B1DFDD22CCCE6B0061481F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E7B1DFE122CCCE6B0061481F /* PBXTargetDependency */,
+			);
+			name = metrodroidUITests;
+			productName = metrodroidUITests;
+			productReference = E7B1DFDF22CCCE6B0061481F /* metrodroidUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E7B1DFB822CCCE680061481F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				KnownAssetTags = (
+					cellHistory,
+				);
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = Vladimir;
+				TargetAttributes = {
+					E7B1DFBF22CCCE680061481F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					E7B1DFD322CCCE6B0061481F = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = E7B1DFBF22CCCE680061481F;
+					};
+					E7B1DFDE22CCCE6B0061481F = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = E7B1DFBF22CCCE680061481F;
+					};
+				};
+			};
+			buildConfigurationList = E7B1DFBB22CCCE680061481F /* Build configuration list for PBXProject "metrodroid" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ru,
+				es,
+				fr,
+				fi,
+				he,
+				id,
+				ja,
+				nl,
+				tr,
+				kab,
+				nb,
+				"zh-Hans",
+				de,
+				it,
+				el,
+			);
+			mainGroup = E7B1DFB722CCCE680061481F;
+			packageReferences = (
+				9CC7BA2622F6582700F45148 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
+			productRefGroup = E7B1DFC122CCCE680061481F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E7B1DFBF22CCCE680061481F /* metrodroid */,
+				E7B1DFD322CCCE6B0061481F /* metrodroidTests */,
+				E7B1DFDE22CCCE6B0061481F /* metrodroidUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E7B1DFBE22CCCE680061481F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7BE9C9222CD6DEE00E6496B /* NOTICE.AOSP.txt in Resources */,
+				9C5352B422F2750D00674952 /* iOSDeviceModelMapping.plist in Resources */,
+				E7BE9C8222CD24E600E6496B /* Settings.bundle in Resources */,
+				9CC7BA3322F7CD7A00F45148 /* Logos-NOTICE.txt in Resources */,
+				E7BE9C9022CD6DEE00E6496B /* NOTICE.protobuf.txt in Resources */,
+				9CEA951922DD14120072C513 /* mdst in Resources */,
+				E7B1DFCB22CCCE6B0061481F /* Assets.xcassets in Resources */,
+				E7B1DFC922CCCE680061481F /* Main.storyboard in Resources */,
+				9CCEE1ED22E3D181007BF742 /* InfoPlist.strings in Resources */,
+				E7BE9C9122CD6DEE00E6496B /* NOTICE.noto-emoji.txt in Resources */,
+				9CC7BA3522F7CD8600F45148 /* Metrodroid-NOTICE.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFD222CCCE6B0061481F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFDD22CCCE6B0061481F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E7C4D74B22CF055A00E89028 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/../../build/xcode-frameworks/\"\n./gradlew :proto:mainSharedLibrary\n./gradlew :proto:mainStaticLibrary\n./gradlew :generateLocalize :iOSLanguages :iOSMappedLanguages\n./gradlew :packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E7B1DFBC22CCCE680061481F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7BE9C8822CD4AF300E6496B /* SupportedCardsViewController.swift in Sources */,
+				9CFE481F22E10DAA0020A500 /* RawInfoViewController.swift in Sources */,
+				E7BE9C9422CD868800E6496B /* SupportedCardsViewCell.swift in Sources */,
+				E7BE9C8422CD376F00E6496B /* AboutViewController.swift in Sources */,
+				9C0E5D6A22D6B72600026DDB /* BalanceViewCell.swift in Sources */,
+				9CFE481922E1068E0020A500 /* AdvancedCardViewController.swift in Sources */,
+				9CFE481522E0F9FE0020A500 /* InfoViewController.swift in Sources */,
+				9C16181E22E37D40008747F3 /* SelfSizedTableView.swift in Sources */,
+				9C553FF822D61DB300665891 /* HistoryViewController.swift in Sources */,
+				9C8AC0C522D88C60005681DB /* SubscriptionViewCell.swift in Sources */,
+				9CDF295222D6678200B6B902 /* TicketsViewController.swift in Sources */,
+				9CA5821D22E52A1C004D579D /* ErrorViewCell.swift in Sources */,
+				9CFE481B22E1073B0020A500 /* HwInfoViewController.swift in Sources */,
+				E7B1DFC622CCCE680061481F /* ViewController.swift in Sources */,
+				9CFE481722E0FA880020A500 /* ListViewDataSource.swift in Sources */,
+				9C09678F22D7CA0D0064CC50 /* TripsViewController.swift in Sources */,
+				9CC5F83722D825AC006E9856 /* TripCell.swift in Sources */,
+				9C553FF422D5E5BB00665891 /* NFCReader.swift in Sources */,
+				9C1C982E22E53CD20073683A /* ErrorLabelProtocol.swift in Sources */,
+				9C095686230639E4007C6F79 /* MapViewController.swift in Sources */,
+				E7B1DFC422CCCE680061481F /* AppDelegate.swift in Sources */,
+				9C09679122D7CA4C0064CC50 /* CardViewProtocol.swift in Sources */,
+				E7BE9C8A22CD60A500E6496B /* LicenseViewController.swift in Sources */,
+				9CDF295022D6588E00B6B902 /* CardViewController.swift in Sources */,
+				E7BE9C8622CD38EA00E6496B /* Utils.swift in Sources */,
+				9C553FF622D5F0D700665891 /* CardPersister.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFD022CCCE6B0061481F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B1DFD922CCCE6B0061481F /* metrodroidTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B1DFDB22CCCE6B0061481F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B1DFE422CCCE6B0061481F /* metrodroidUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E7B1DFD622CCCE6B0061481F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E7B1DFBF22CCCE680061481F /* metrodroid */;
+			targetProxy = E7B1DFD522CCCE6B0061481F /* PBXContainerItemProxy */;
+		};
+		E7B1DFE122CCCE6B0061481F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E7B1DFBF22CCCE680061481F /* metrodroid */;
+			targetProxy = E7B1DFE022CCCE6B0061481F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9CCEE1EB22E3D181007BF742 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CCEE1EC22E3D181007BF742 /* Base */,
+				9CCEE1EE22E3D1D9007BF742 /* ru */,
+				9C7101B322E3D36F00457BA7 /* nl */,
+				9C7101B422E3D37500457BA7 /* fi */,
+				9C7101B522E3D37800457BA7 /* fr */,
+				9C7101B622E3D37B00457BA7 /* he */,
+				9C7101B822E3D38200457BA7 /* id */,
+				9C7101B922E3D38500457BA7 /* ja */,
+				9C7101BA22E3D38800457BA7 /* kab */,
+				9C7101BB22E3D38B00457BA7 /* es */,
+				9C7101BC22E3D38F00457BA7 /* tr */,
+				9CC7BA2C22F6960B00F45148 /* nb */,
+				9CC7BA2E22F7189900F45148 /* zh-Hans */,
+				9C75569F22F8CB2E001FFF3B /* de */,
+				9C7556A122F8CB45001FFF3B /* it */,
+				9C7556A322F8CCE5001FFF3B /* el */,
+				9C7556A422F8CCF5001FFF3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E7B1DFC722CCCE680061481F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7B1DFC822CCCE680061481F /* Base */,
+				9CEA951D22DE834E0072C513 /* en */,
+				9CFE480522DF7FE80020A500 /* ru */,
+				9CFE480822DFA5320020A500 /* es */,
+				9CFE480A22DFA5570020A500 /* fr */,
+				9CFE480B22DFA5710020A500 /* fi */,
+				9CFE480C22DFA5840020A500 /* he */,
+				9CFE480D22DFA5B70020A500 /* id */,
+				9CFE480E22DFA5D60020A500 /* ja */,
+				9CFE480F22DFA60C0020A500 /* nl */,
+				9CFE481022DFA6210020A500 /* tr */,
+				9CFE481122DFA77E0020A500 /* kab */,
+				9CC7BA2B22F6960600F45148 /* nb */,
+				9CC7BA2D22F7189500F45148 /* zh-Hans */,
+				9C75569E22F8CB29001FFF3B /* de */,
+				9C7556A022F8CB40001FFF3B /* it */,
+				9C7556A222F8CB5B001FFF3B /* el */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E7B1DFE622CCCE6B0061481F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../build/xcode-frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E7B1DFE722CCCE6B0061481F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../build/xcode-frameworks";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E7B1DFE922CCCE6B0061481F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = metrodroid/metrodroid.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A377NM2Z6V;
+				INFOPLIST_FILE = metrodroid/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroid.phcoder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E7B1DFEA22CCCE6B0061481F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = metrodroid/metrodroid.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A377NM2Z6V;
+				INFOPLIST_FILE = metrodroid/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroid.phcoder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E7B1DFEC22CCCE6B0061481F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = metrodroidTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroidTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/metrodroid.app/metrodroid";
+			};
+			name = Debug;
+		};
+		E7B1DFED22CCCE6B0061481F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = metrodroidTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroidTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/metrodroid.app/metrodroid";
+			};
+			name = Release;
+		};
+		E7B1DFEF22CCCE6B0061481F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = metrodroidUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroidUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = metrodroid;
+			};
+			name = Debug;
+		};
+		E7B1DFF022CCCE6B0061481F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = metrodroidUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.id.micolous.metrodroidUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = metrodroid;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E7B1DFBB22CCCE680061481F /* Build configuration list for PBXProject "metrodroid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B1DFE622CCCE6B0061481F /* Debug */,
+				E7B1DFE722CCCE6B0061481F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7B1DFE822CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B1DFE922CCCE6B0061481F /* Debug */,
+				E7B1DFEA22CCCE6B0061481F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7B1DFEB22CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroidTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B1DFEC22CCCE6B0061481F /* Debug */,
+				E7B1DFED22CCCE6B0061481F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7B1DFEE22CCCE6B0061481F /* Build configuration list for PBXNativeTarget "metrodroidUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B1DFEF22CCCE6B0061481F /* Debug */,
+				E7B1DFF022CCCE6B0061481F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9CC7BA2622F6582700F45148 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9CC7BA2722F6582700F45148 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CC7BA2622F6582700F45148 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E7B1DFB822CCCE680061481F /* Project object */;
+}

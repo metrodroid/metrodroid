@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "string.app_name";
+"CFBundleName" = "string.app_name";
+"NFCReaderUsageDescription" = "string.ios_nfc_usage";
