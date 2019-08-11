@@ -93,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="76dp"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="5"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:singleLine="false"
