@@ -129,6 +129,8 @@ class EmvFactory : ISO7816ApplicationFactory {
             ImmutableByteArray.fromASCII("2PAY.SYS.DDF01")
     )
 
+    override val fixedAppIds get() = false    
+
     override suspend fun dumpTag(protocol: ISO7816Protocol,
                                  capsule: ISO7816ApplicationMutableCapsule,
                                  feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {

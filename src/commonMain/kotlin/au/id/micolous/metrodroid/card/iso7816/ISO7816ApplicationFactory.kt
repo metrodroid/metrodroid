@@ -40,4 +40,7 @@ interface ISO7816ApplicationFactory {
                         feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>?
 
     val typeMap: Map<String, KSerializer<out ISO7816Application>>
+
+    val fixedAppIds: Boolean
+       get() = true
 }
