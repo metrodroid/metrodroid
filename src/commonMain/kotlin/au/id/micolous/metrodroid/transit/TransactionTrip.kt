@@ -31,6 +31,19 @@ class TransactionTripCapsule(var start: Transaction? = null,
 
 @Parcelize
 class TransactionTrip(override val capsule: TransactionTripCapsule): TransactionTripAbstract() {
+    override val fare: TransitCurrency?
+        get() {
+            // No fare applies to the trip, as the tap-on was reversed.
+            if (end?.isCancel == true) {
+                return null
+            }
+
+            return start?.fare?.let {
+                // These is a start fare, add the end fare to it, if present
+                return it + end?.fare
+            } ?: end?.fare // Otherwise use the end fare.
+        }
+
     companion object {
         fun merge(transactionsIn: List<Transaction>) =
                 TransactionTripAbstract.merge(transactionsIn) { TransactionTrip(makeCapsule(it)) }
@@ -106,18 +119,7 @@ abstract class TransactionTripAbstract: Trip() {
     override val mode: Trip.Mode
         get() = any?.mode ?: Trip.Mode.OTHER
 
-    override val fare: TransitCurrency?
-        get() {
-            // No fare applies to the trip, as the tap-on was reversed.
-            if (end?.isCancel == true) {
-                return null
-            }
-
-            return start?.fare?.let {
-                // These is a start fare, add the end fare to it, if present
-                return it + end?.fare
-            } ?: end?.fare // Otherwise use the end fare.
-        }
+    abstract override val fare: TransitCurrency?
 
     override val isTransfer: Boolean
         get() = any?.isTransfer ?: false
