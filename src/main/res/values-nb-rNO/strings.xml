@@ -865,4 +865,38 @@
     <string name="warsaw_90_days">90-dagers abonnement</string>
     <string name="hardware">Maskinvare</string>
     <string name="android_nfc_settings">Android-NFC-innstillinger</string>
+    <string name="ovc_yes">Ja</string>
+    <string name="ovc_no">Nei</string>
+    <string name="desfire_storage_size">Lagringsstørrelse</string>
+    <string name="desfire_protocol">Protokoll</string>
+    <string name="iso7816_raw">Rådata</string>
+    <string name="unknown_date_title">Ukjent dato</string>
+    <string name="nol_red">Rødt</string>
+    <string name="nol_silver">Sølv</string>
+    <plurals name="hsl_valid_days_24h">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dager</item>
+    </plurals>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d kalenderdag</item>
+        <item quantity="other">%d kalenderdager</item>
+    </plurals>
+    <plurals name="hsl_valid_hours">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
+    <plurals name="hsl_valid_mins">
+        <item quantity="one">%d minutt</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
+    <string name="hsl_language">Språk</string>
+    <string name="hsl_finnish">Finsk</string>
+    <string name="hsl_swedish">Svensk</string>
+    <string name="hsl_english">Engelsk</string>
+    <string name="hsl_adult">Voksen</string>
+    <string name="hsl_child">Barn</string>
+    <string name="hsl_transport_bussi">Buss</string>
+    <string name="hsl_transport_bussi_2">Buss 2</string>
+    <string name="hsl_transport_bussi_3">Buss 3</string>
+    <string name="hsl_transport_bussi_4">Buss 4</string>
 </resources>
