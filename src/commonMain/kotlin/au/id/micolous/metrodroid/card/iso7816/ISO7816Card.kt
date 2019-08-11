@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.MultiTypeSerializer
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.china.BeijingTransitData
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 
@@ -143,7 +144,8 @@ data class ISO7816Card (
          * @throws Exception On communication errors.
          */
         suspend fun dumpTag(tech: CardTransceiver,
-                            feedbackInterface: TagReaderFeedbackInterface): ISO7816Card {
+                            feedbackInterface: TagReaderFeedbackInterface,
+                            coreNFC: Boolean = false): ISO7816Card {
             var partialRead = false
             val apps = mutableListOf<ISO7816Application>()
 
@@ -164,14 +166,23 @@ data class ISO7816Card (
                 // so try selecting its main file
                 // So this needs to be before selecting any real application as selecting APP by AID
                 // may deselect default app
-                val cepas = CEPASApplication.dumpTag(iso7816Tag, ISO7816ApplicationMutableCapsule(
+                if (!coreNFC) {
+                    val cepas = CEPASApplication.dumpTag(iso7816Tag,
+                    ISO7816ApplicationMutableCapsule(
                         appName = null, appFci = null),
                         feedbackInterface)
-                if (cepas != null)
-                    apps.add(cepas)
+                     if (cepas != null)
+                        apps.add(cepas)
+                }
 
                 for (factory in factories) {
+                    // CoreNFC has some bug which prevents
+                    // entitlement for Beijing cards to work
+                    if (coreNFC && !factory.fixedAppIds)
+                        continue
                     for (appId in factory.applicationNames) {
+                        if (coreNFC && appId in BeijingTransitData.FACTORY.appNames)
+                          continue
                         val appFci = iso7816Tag.selectByNameOrNull(appId) ?: continue
 
                         val app = factory.dumpTag(
