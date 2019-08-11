@@ -117,7 +117,7 @@ actual object Preferences {
         get() = getBooleanPref(PREF_SHOW_HIDDEN_CARDS, false)
     val hideUnsupportedRibbon
         get() = getBooleanPref(PREF_HIDE_UNSUPPORTED_RIBBON, false)
-    val localisePlaces
+    actual val localisePlaces
       get() = getBooleanPref(PREF_LOCALISE_PLACES, false)
 
     val speakBalance
@@ -129,7 +129,7 @@ actual object Preferences {
     actual val retrieveLeapKeys
         get() = getBooleanPref(PREF_RETRIEVE_LEAP_KEYS, false)
 
-    val debugSpans
+    actual val debugSpans
         get() = getBooleanPref(PREF_DEBUG_SPANS, false)
 
     val mapTileUrl: String
