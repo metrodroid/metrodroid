@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.transit.TransitBalance
@@ -16,7 +17,7 @@ import java.io.File
 
 class Cli: CliktCommand() {
     init {
-        subcommands(Identify(), Parse(), Unrecognized(), Supported())
+        subcommands(Identify(), Parse(), Unrecognized(), Supported(), MakeJson())
     }
 
     override fun run() = Unit
@@ -37,6 +38,21 @@ class Identify: CliktCommand(
             }
             println("   name = ${ti?.name}")
             println("   serial = ${ti?.serialNumber}")
+        }
+    }
+}
+
+class MakeJson: CliktCommand(
+        help="Converts Metrodroid XML/JSON into latest version of JSON") {
+    val fname by argument()
+    val output by argument()
+
+    override fun run() {
+        for (card in loadCards(fname) ?: return) {
+            val json = CardSerializer.toJson(card)
+            val by = File(output).outputStream()
+            by.write(json.toByteArray(charset = Charsets.UTF_8))
+            by.close()
         }
     }
 }
