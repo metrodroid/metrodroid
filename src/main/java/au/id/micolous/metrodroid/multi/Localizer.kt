@@ -23,6 +23,8 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
+import android.text.SpannableString
+import android.text.Spanned
 import au.id.micolous.metrodroid.MetrodroidApplication
 import androidx.annotation.VisibleForTesting
 import java.util.*
@@ -46,6 +48,12 @@ actual object Localizer : LocalizerInterface {
         mock?.let { return it.localizeString(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
         return appRes.getString(res, *v)
+    }
+
+    override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString {
+        mock?.let { return it.localizeFormatted(res, *v) }
+        val appRes = MetrodroidApplication.instance.resources
+        return FormattedString(appRes.getText(res).let { if (it is Spanned) it else SpannableString(it)}).format(*v)
     }
     /**
      * Given a plural resource (R.plurals), localize the string according to the language preferences

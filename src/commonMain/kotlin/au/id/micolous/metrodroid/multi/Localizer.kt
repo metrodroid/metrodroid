@@ -25,6 +25,7 @@ expect class DrawableResource
 
 interface LocalizerInterface {
     fun localizeString(res: StringResource, vararg v: Any?): String
+    fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString = FormattedString(localizeString(res, *v))
     fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String
 }
 
