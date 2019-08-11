@@ -52,7 +52,8 @@ class CardInfo(
          * This is useful for cities where we have artwork for each ticket type.  It can be
          * re-enabled in developer options.
          */
-        val hidden: Boolean = false) {
+        val hidden: Boolean = false,
+        val iOSSupported: Boolean? = null) {
 
     // TODO: Make this the primary constructor
     constructor(
@@ -65,7 +66,8 @@ class CardInfo(
             resourceExtraNote: StringResource? = null,
             imageId: DrawableResource? = null,
             imageAlphaId: DrawableResource? = null,
-            hidden: Boolean = false
+            hidden: Boolean = false,
+            iOSSupported: Boolean? = null
     ) : this(
             name = Localizer.localizeString(name),
             cardType = cardType,
@@ -76,7 +78,8 @@ class CardInfo(
             resourceExtraNote = resourceExtraNote,
             imageId = imageId,
             imageAlphaId = imageAlphaId,
-            hidden = hidden)
+            hidden = hidden,
+            iOSSupported = iOSSupported)
 
     val hasBitmap get() = imageId != null
 }
