@@ -54,7 +54,6 @@ actual object Localizer : LocalizerInterface {
     }
 
     override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString {
-        mock?.let { return it.localizeFormatted(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
         val spanned = SpannableString(appRes.getText(res))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Preferences.localisePlaces) {
