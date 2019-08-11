@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
@@ -164,6 +165,7 @@ abstract class TransitData : Parcelable {
     // In Swift properties can't throw. Obfuscated trips never throw as they
     // copy all fields. So if safe is true, always pass trips through
     // obfuscation even if no real data changes
+    @NativeThrows
     fun prepareTrips(safe: Boolean = false): List<Trip>? {
         val maybeObfuscatedTrips: List<Trip>
         if (Preferences.obfuscateTripDates ||
