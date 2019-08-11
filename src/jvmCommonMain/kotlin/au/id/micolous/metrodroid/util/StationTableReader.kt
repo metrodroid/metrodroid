@@ -19,6 +19,7 @@
  */
 package au.id.micolous.metrodroid.util
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
@@ -117,7 +118,7 @@ private constructor(dbName: String) {
         return !mStationDb.localLanguagesList.contains(locale)
     }
 
-    fun selectBestName(name: Stations.Names, isShort: Boolean): String? {
+    fun selectBestName(name: Stations.Names, isShort: Boolean): FormattedString? {
         val englishFull = name.english
         val englishShort = name.englishShort
         val english: String?
@@ -147,19 +148,19 @@ private constructor(dbName: String) {
         if (showBoth() && english != null && !english.isEmpty()
                 && local != null && !local.isEmpty()) {
             if (english == local)
-                return local
-            return if (useEnglishName()) "$english ($local)" else "$local ($english)"
+                return FormattedString.language(local, mStationDb.ttsHintLanguage)
+            return if (useEnglishName()) FormattedString.english(english) + " (" + FormattedString.language(local, mStationDb.ttsHintLanguage) + ")" else FormattedString.language(local, mStationDb.ttsHintLanguage) + " (" + FormattedString.english(english) + ")"
         }
         if (useEnglishName() && english != null && !english.isEmpty()) {
-            return english
+            return FormattedString.english(english)
         }
 
         return if (local != null && !local.isEmpty()) {
             // Local preferred, or English not available
-            local
+            FormattedString.language(local, mStationDb.ttsHintLanguage)
         } else {
             // Local unavailable, use English
-            english
+            FormattedString.english(english)
         }
     }
 
@@ -179,7 +180,7 @@ private constructor(dbName: String) {
         try {
             offset = mStationIndex?.getStationMapOrThrow(id) ?: return null
         } catch (e: IllegalArgumentException) {
-            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id))
+            Log.d(TAG, "Unknown station $id")
             return null
         }
 
@@ -212,8 +213,7 @@ private constructor(dbName: String) {
 
         return fromProto(humanReadableID, ps,
                 mStationDb.getOperatorsOrDefault(ps.operatorId, null),
-                lines,
-                mStationDb.ttsHintLanguage, this)
+                lines, this)
     }
 
     actual companion object {
@@ -268,13 +268,11 @@ private constructor(dbName: String) {
             return s
         }
 
-        private fun fallbackName(id: Int): String {
-            return Localizer.localizeString(R.string.unknown_format, NumberUtils.intToHex(id))
-        }
+        private fun fallbackName(id: Int): FormattedString =
+            Localizer.localizeFormatted(R.string.unknown_format, NumberUtils.intToHex(id))
 
-        private fun fallbackName(humanReadableId: String): String {
-            return Localizer.localizeString(R.string.unknown_format, humanReadableId)
-        }
+        private fun fallbackName(humanReadableId: String): FormattedString =
+            Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
 
         actual fun getOperatorDefaultMode(reader: String?, id: Int): Trip.Mode {
             if (reader == null)
@@ -285,7 +283,7 @@ private constructor(dbName: String) {
         }
 
         @JvmOverloads
-        actual fun getLineName(reader: String?, id: Int, humanReadableId: String): String? {
+        actual fun getLineName(reader: String?, id: Int, humanReadableId: String): FormattedString? {
             if (reader == null)
                 return fallbackName(humanReadableId)
 
@@ -300,7 +298,7 @@ private constructor(dbName: String) {
             return if (pl.transport == Stations.TransportType.UNKNOWN) null else Trip.Mode.valueOf(pl.transport.toString())
         }
 
-        actual fun getOperatorName(reader: String?, id: Int, isShort: Boolean, humanReadableId: String): String? {
+        actual fun getOperatorName(reader: String?, id: Int, isShort: Boolean, humanReadableId: String): FormattedString? {
             val str = StationTableReader.getSTR(reader) ?: return fallbackName(humanReadableId)
             val po = str.mStationDb.getOperatorsOrDefault(id, null) ?: return fallbackName(humanReadableId)
             return str.selectBestName(po.name, isShort)
@@ -308,10 +306,10 @@ private constructor(dbName: String) {
 
         private fun fromProto(humanReadableID: String, ps: Stations.Station,
                               po: Stations.Operator?, pl: Map<Int, Stations.Line>?,
-                              ttsHintLanguage: String, str: StationTableReader): Station {
+                              str: StationTableReader): Station {
             val hasLocation = ps.latitude != 0f && ps.longitude != 0f
 
-            var lines: MutableList<String>? = null
+            var lines: MutableList<FormattedString>? = null
             var lineIds: MutableList<String>? = null
 
             if (pl != null) {
@@ -331,7 +329,7 @@ private constructor(dbName: String) {
                     str.selectBestName(ps.name, true),
                     if (hasLocation) ps.latitude else null,
                     if (hasLocation) ps.longitude else null,
-                    ttsHintLanguage, false, lineIds.orEmpty())
+                    false, lineIds.orEmpty())
         }
 
         /**

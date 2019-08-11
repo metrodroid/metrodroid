@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -29,7 +30,7 @@ import au.id.micolous.metrodroid.transit.Trip
 interface En1545Lookup {
 
     val timeZone: MetroTimeZone
-    fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String?
+    fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString?
 
     fun getHumanReadableRouteId(routeNumber: Int?,
                                      routeVariant: Int?,
@@ -44,7 +45,7 @@ interface En1545Lookup {
         return routeReadable
     }
 
-    fun getAgencyName(agency: Int?, isShort: Boolean): String?
+    fun getAgencyName(agency: Int?, isShort: Boolean): FormattedString?
 
     fun getStation(station: Int, agency: Int?, transport: Int?): Station?
 

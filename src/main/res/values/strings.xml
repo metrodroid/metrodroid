@@ -2114,4 +2114,8 @@
     The card is labelled in both Chinese and English.
     -->
     <string name="card_name_easycard">EasyCard</string>
+    <string name="show_debug_spans">Show debug color for locale spans</string>
+    <string name="show_debug_spans_desc">Highlight default language in green, english in yellow and local language in
+        blue
+    </string>
 </resources>

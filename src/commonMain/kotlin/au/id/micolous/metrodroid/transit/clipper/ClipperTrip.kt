@@ -52,7 +52,7 @@ class ClipperTrip (private val mTimestamp: Long,
         get() = ClipperTransitData.clipperTimestampToCalendar(mExitTimestamp)
 
     // Bus doesn't record line
-    override val routeName: String?
+    override val routeName
         get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
             ClipperData.GG_FERRY_ROUTES[mRoute]
         } else {
@@ -102,7 +102,5 @@ class ClipperTrip (private val mTimestamp: Long,
         mTransportCode = useData.byteArrayToInt(0x1e, 2)
     )
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return ClipperData.getAgencyName(mAgency, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) = ClipperData.getAgencyName(mAgency, isShort)
 }

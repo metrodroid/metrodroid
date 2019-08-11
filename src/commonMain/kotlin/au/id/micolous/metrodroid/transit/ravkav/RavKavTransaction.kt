@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.ravkav
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -33,9 +34,9 @@ internal class RavKavTransaction (override val parsed: En1545Parsed): En1545Tran
 
     constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, tripFields))
 
-    override fun getAgencyName(isShort: Boolean): String? {
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
         if (eventType == En1545Transaction.EVENT_TYPE_TOPUP && 0x19 == agency)
-            return Localizer.localizeString(R.string.ravkav_agency_topup_app)
+            return Localizer.localizeFormatted(R.string.ravkav_agency_topup_app)
         return super.getAgencyName(isShort)
     }
 

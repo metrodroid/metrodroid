@@ -74,7 +74,9 @@ internal class ClipperUltralightSubscription (private val mProduct: Int,
     override val purchaseTimestamp: Timestamp?
         get() = ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L)
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return if (mProduct shr 4 == 0x21) ClipperData.getAgencyName(ClipperData.AGENCY_MUNI, isShort) else ClipperData.getAgencyName(mProduct shr 4, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        if (mProduct shr 4 == 0x21)
+            ClipperData.getAgencyName(ClipperData.AGENCY_MUNI, isShort)
+        else
+            ClipperData.getAgencyName(mProduct shr 4, isShort)
 }

@@ -39,7 +39,7 @@ class HSLRefill private constructor(override val parsed: En1545Parsed): En1545Tr
     override val mode: Trip.Mode
         get() = Trip.Mode.TICKET_MACHINE
 
-    override fun getAgencyName(isShort: Boolean) = Localizer.localizeString(R.string.hsl_balance_refill)
+    override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(R.string.hsl_balance_refill)
 
     companion object {
         private val FIELDS_V1_V2 = En1545Container(

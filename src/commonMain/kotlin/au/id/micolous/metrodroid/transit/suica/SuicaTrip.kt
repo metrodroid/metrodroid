@@ -22,12 +22,15 @@
 package au.id.micolous.metrodroid.transit.suica
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.NumberUtils
+
+import kotlin.text.Regex
 
 @Parcelize
 class SuicaTrip (val balance: Int,
@@ -41,22 +44,27 @@ class SuicaTrip (val balance: Int,
                  val startStationId: Int,
                  val endStationId: Int,
                  val dateRaw: Int): Trip() {
-    override val routeName: String?
-        get() = if (startStation != null)
-            super.routeName
-        else
-            "$consoleType $processType"
+    override val routeName: FormattedString?
+        get() {
+            if (startStation == null)
+                return FormattedString("$consoleType $processType")
+            val routeName = super.routeName ?: return null
+            // SUICA HACK:
+            // If there's something that looks like "#2" at the start, then mark
+            // that as the default language.
+            val m = LINE_NUMBER.matchEntire(routeName.unformatted)?.groups ?: return routeName
+            // There is a line number
+            //Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
+            val sep = m[1]?.value?.length ?: return routeName
+            return FormattedString.defaultLanguage(routeName.unformatted.substring(0, sep)) +
+                routeName.substring(sep)
+        }
 
     override val humanReadableRouteID: String?
         get() = if (startStation != null)
             super.humanReadableRouteID
         else
             NumberUtils.intToHex(consoleTypeInt) + " " + NumberUtils.intToHex(mProcessType)
-
-    override// Non-Japanese TTS speaking Japanese Romaji is pretty horrible.
-    // If there is a known line name, then mark up as Japanese so we get a Japanese TTS instead.
-    val routeLanguage: String?
-        get() = if (startStation != null) "ja-JP" else null
 
     override val fare: TransitCurrency?
         get() = TransitCurrency.JPY(fareRaw)
@@ -82,9 +90,7 @@ class SuicaTrip (val balance: Int,
     private val isTVM: Boolean
         get() = isTVM(consoleTypeInt)
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return startStation?.companyName
-    }
+    override fun getAgencyName(isShort: Boolean) = startStation?.companyName
 
     /*
     public boolean isBus() {
@@ -119,6 +125,17 @@ class SuicaTrip (val balance: Int,
     companion object {
         private const val CONSOLE_BUS = 0x05
         private const val CONSOLE_CHARGE = 0x02
+        
+        /**
+        * Used when localisePlaces=true to ensure route and line numbers are still read out in the
+        * user's language.
+        *
+        * eg:
+        * - "#7 Eastern Line" -> (local)#7 (foreign)Eastern Line
+        * - "300 West" -> (local)300 (foreign)West
+        * - "North Ferry" -> (foreign)North Ferry
+        */
+        private val LINE_NUMBER = Regex("(#?\\d+)?(\\D.+)")
 
         private fun isTVM(consoleTypeInt: Int): Boolean {
             val consoleType = consoleTypeInt and 0xFF

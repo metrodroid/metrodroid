@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.transit.*
 
 abstract class En1545Transaction : Transaction() {
@@ -31,7 +32,7 @@ abstract class En1545Transaction : Transaction() {
         get() = parsed.getInt(EVENT_ROUTE_VARIANT)
 
     // Get the line name from the station.
-    override val routeNames: List<String>?
+    override val routeNames: List<FormattedString>?
         get() {
             val route = lookup.getRouteName(
                     routeNumber,
@@ -134,9 +135,7 @@ abstract class En1545Transaction : Transaction() {
     override val isRejected: Boolean
         get() = parsed.getIntOrZero(EVENT_RESULT) != 0
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return lookup.getAgencyName(agency, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) = lookup.getAgencyName(agency, isShort)
 
     open fun getStation(station: Int?): Station? {
         return if (station == null) null else lookup.getStation(station, agency, transport)

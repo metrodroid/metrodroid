@@ -29,15 +29,24 @@ fun FormattedString.equals(other: Any?): Boolean {
     }
 }
 
-expect class FormattedString {
+expect class FormattedString: Parcelable {
     val unformatted: String
 
     override fun toString(): String
 
     constructor(input: String)
 
+    operator fun plus(b: String): FormattedString
+    operator fun plus(b: FormattedString): FormattedString
+
+    fun substring(start: Int): FormattedString
+    fun substring(start: Int, end: Int): FormattedString
+
     companion object {
         fun monospace(input: String): FormattedString
+        fun defaultLanguage(input: String): FormattedString
+        fun english(input: String): FormattedString
+        fun language(input: String, lang: String): FormattedString
     }
 }
 
@@ -64,6 +73,9 @@ class FormattedStringFallback (private val input: String): Parcelable {
 
     companion object {
         fun monospace(input: String) = FormattedStringFallback(input)
+        fun defaultLanguage(input: String) = FormattedStringFallback(input)
+        fun english(input: String) = FormattedStringFallback(input)
+        fun language(input: String, lang: String) = FormattedStringFallback(input)
     }
 }
 
@@ -76,11 +88,11 @@ class FormattedStringBuilderFallback {
         sb.append(value)
         return this
     }
-    fun append(value: FormattedString): FormattedStringBuilderFallback {
+    fun append(value: FormattedStringFallback): FormattedStringBuilderFallback {
         sb.append(value.unformatted)
         return this
     }
-    fun append(value: FormattedString, start: Int, end: Int): FormattedStringBuilderFallback {
+    fun append(value: FormattedStringFallback, start: Int, end: Int): FormattedStringBuilderFallback {
         sb.append(value.unformatted, start, end)
         return this
     }

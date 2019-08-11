@@ -24,32 +24,31 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 
 @Parcelize
-class Station (val humanReadableId: String, val companyName: String? = null,
-               val lineNames: List<String>? = emptyList(),
-               private val stationNameRaw: String?,
-               private val shortStationNameRaw: String? = null,
+class Station (val humanReadableId: String, val companyName: FormattedString? = null,
+               val lineNames: List<FormattedString>? = emptyList(),
+               private val stationNameRaw: FormattedString?,
+               private val shortStationNameRaw: FormattedString? = null,
                val latitude: Float? = null,
                val longitude: Float? = null,
-               val language: String? = null,
                val isUnknown: Boolean = false,
                val humanReadableLineIds: List<String> = emptyList(),
                private val attributes: MutableList<String> = mutableListOf()): Parcelable {
 
-    fun getStationName(isShort: Boolean): String {
-        var ret: String
+    fun getStationName(isShort: Boolean): FormattedString {
+        var ret: FormattedString
         if (isShort)
-            ret = shortStationNameRaw ?: stationNameRaw ?: Localizer.localizeString(R.string.unknown_format, humanReadableId)
+            ret = shortStationNameRaw ?: stationNameRaw ?: Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
         else
-            ret = stationNameRaw ?: shortStationNameRaw ?: Localizer.localizeString(R.string.unknown_format, humanReadableId)
-        if (showRawId() && stationNameRaw != null && stationNameRaw != humanReadableId)
-            ret = "$ret [$humanReadableId]"
+            ret = stationNameRaw ?: shortStationNameRaw ?: Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
+        if (showRawId() && stationNameRaw != null && stationNameRaw.unformatted != humanReadableId)
+            ret += " [$humanReadableId]"
         for (attribute in attributes)
-            ret = "$ret, $attribute"
+            ret += ", $attribute"
         return ret
     }
 
-    val stationName: String? get() = getStationName(false)
-    val shortStationName: String? get() = getStationName(true)
+    val stationName: FormattedString? get() = getStationName(false)
+    val shortStationName: FormattedString? get() = getStationName(true)
 
     fun hasLocation(): Boolean = (latitude != null && longitude != null)
 
@@ -67,6 +66,6 @@ class Station (val humanReadableId: String, val companyName: String? = null,
 
         fun unknown(id: Int) = unknown(NumberUtils.intToHex(id))
 
-        fun nameOnly(name: String) = Station(stationNameRaw = name, humanReadableId = name)
+        fun nameOnly(name: String) = Station(stationNameRaw = FormattedString(name), humanReadableId = name)
     }
 }

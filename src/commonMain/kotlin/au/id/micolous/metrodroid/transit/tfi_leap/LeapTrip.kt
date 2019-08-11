@@ -71,9 +71,8 @@ class LeapTrip internal constructor(private val mAgency: Int,
         return timestamp.compareTo(other.timestamp ?: return +1)
     }
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return StationTableReader.getOperatorName(LeapTransitData.LEAP_STR, mAgency, isShort)
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        StationTableReader.getOperatorName(LeapTransitData.LEAP_STR, mAgency, isShort)
 
     private fun isMergeable(leapTrip: LeapTrip): Boolean =
             (mAgency == leapTrip.mAgency) &&

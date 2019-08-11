@@ -23,6 +23,6 @@ internal class TroikaSubscription(private val mExpiryDate: Timestamp?, override 
     override val subscriptionName: String?
         get() = TroikaBlock.getHeader(mTicketType)
 
-    override fun getAgencyName(isShort: Boolean): String? =
-            Localizer.localizeString(R.string.card_name_troika)
+    override fun getAgencyName(isShort: Boolean) =
+            Localizer.localizeFormatted(R.string.card_name_troika)
 }

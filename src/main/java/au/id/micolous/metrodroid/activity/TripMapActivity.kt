@@ -82,10 +82,11 @@ class TripMapActivity : MetrodroidActivity() {
             actionBar.title = TripFormatter.formatStationNames(trip)
             val agencyName = trip.getAgencyName(false)
             val routeName = Trip.getRouteDisplayName(trip)
-            actionBar.subtitle = if (routeName == null)
-                agencyName
-            else
-                "$agencyName $routeName"
+            actionBar.subtitle = when {
+                routeName == null -> agencyName?.spanned
+                agencyName == null -> routeName.spanned
+                else -> (agencyName + " " + routeName).spanned
+            }
         }
 
         //int startMarkerId = R.drawable.marker_start;

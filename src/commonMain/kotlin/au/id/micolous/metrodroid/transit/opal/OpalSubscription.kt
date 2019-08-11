@@ -53,9 +53,7 @@ internal class OpalSubscription private constructor() : Subscription() {
     override val paymentMethod: Subscription.PaymentMethod
         get() = Subscription.PaymentMethod.CREDIT_CARD
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return Localizer.localizeString(R.string.opal_agency_tfnsw)
-    }
+    override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(R.string.opal_agency_tfnsw)
 
     companion object {
         val instance = OpalSubscription()

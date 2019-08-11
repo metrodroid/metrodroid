@@ -62,8 +62,8 @@ class Marker(private val mStation: Station,
     val html: String
         @JavascriptInterface
         get() {
-            val station = TextUtils.htmlEncode(this.mStation.stationName ?: "")
-            val company = TextUtils.htmlEncode(this.mStation.companyName ?: "")
+            val station = TextUtils.htmlEncode(this.mStation.stationName?.unformatted ?: "")
+            val company = TextUtils.htmlEncode(this.mStation.companyName?.unformatted ?: "")
 
             return "<b>$station</b><br>$company"
         }

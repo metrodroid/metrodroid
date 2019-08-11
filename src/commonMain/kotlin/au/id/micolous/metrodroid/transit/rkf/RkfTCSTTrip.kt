@@ -52,7 +52,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
     val mode: Trip.Mode
         get() = mLookup.getMode(mParsed.getIntOrZero(START_AID), 0)
 
-    fun getAgencyName(isShort: Boolean): String? = mLookup.getAgencyName(mParsed.getIntOrZero(RkfTransitData.COMPANY), isShort)
+    fun getAgencyName(isShort: Boolean) = mLookup.getAgencyName(mParsed.getIntOrZero(RkfTransitData.COMPANY), isShort)
 
     private val startStation: Station?
         get() = mLookup.getStation(mParsed.getIntOrZero(START_PLACE), mParsed.getIntOrZero(START_AID), null)

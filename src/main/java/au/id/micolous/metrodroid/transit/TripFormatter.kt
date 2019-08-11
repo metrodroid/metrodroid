@@ -2,11 +2,13 @@ package au.id.micolous.metrodroid.transit
 
 import android.os.Build
 import android.text.Spannable
+import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.LocaleSpan
 import android.text.style.TtsSpan
 import android.util.Log
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.ui.HiddenSpan
 import au.id.micolous.metrodroid.util.Preferences
@@ -26,32 +28,16 @@ object TripFormatter {
         val localisePlaces = Preferences.localisePlaces
 
         val startStationName = trip.startStation?.getStationName(true)
-        val startLanguage = trip.startStation?.language
 
-        val endStationName: String?
-        val endLanguage: String?
+        val endStationName: FormattedString?
         if (trip.endStation?.getStationName(false) == trip.startStation?.getStationName(false)) {
             endStationName = null
-            endLanguage = null
         } else {
             endStationName = trip.endStation?.getStationName(true)
-            endLanguage = trip.endStation?.language
         }
 
-        // No information is available.
-        if (startStationName == null && endStationName == null) {
-            return null
-        }
-
-        // If only the start station is available, just return that.
-        if (startStationName != null && endStationName == null) {
-            val b = SpannableStringBuilder(startStationName)
-
-            if (localisePlaces && startLanguage != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                b.setSpan(LocaleSpan(Locale.forLanguageTag(startLanguage)), 0, b.length, 0)
-            }
-
-            return b
+        if (endStationName == null) {
+            return startStationName?.spannableString
         }
 
         // Both the start and end station are known.
@@ -110,7 +96,6 @@ object TripFormatter {
 
             x = end
         }
-        var localeSpanUsed: Boolean
 
         if (startStationName != null) {
             // Finally, insert the actual station names back in the data.
@@ -119,25 +104,7 @@ object TripFormatter {
                 Log.w(TAG, "couldn't find start station placeholder to put back")
                 return null
             }
-            b.replace(x, x + startPlaceholder.length, startStationName)
-
-            localeSpanUsed = false
-            // Annotate the start station name with the appropriate Locale data.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val startStation = trip.startStation
-                if (localisePlaces && startStation != null && startStation.language != null) {
-                    b.setSpan(LocaleSpan(Locale.forLanguageTag(startStation.language)), x, x + startStationName.length, 0)
-
-                    // Set the start of the string to the default language, so that the localised
-                    // TTS for the station name doesn't take over everything.
-                    b.setSpan(LocaleSpan(Locale.getDefault()), 0, x, 0)
-
-                    localeSpanUsed = true
-                }
-            }
-        } else {
-            localeSpanUsed = true
-            x = 0
+            b.replace(x, x + startPlaceholder.length, startStationName.spanned)
         }
 
         val y = b.toString().indexOf(endPlaceholder)
@@ -145,33 +112,7 @@ object TripFormatter {
             Log.w(TAG, "couldn't find end station placeholder to put back")
             return null
         }
-        b.replace(y, y + endPlaceholder.length, endStationName)
-
-        // Annotate the end station name with the appropriate Locale data.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val endStation = trip.endStation
-            if (localisePlaces) {
-                if (endStation?.language != null && endStationName != null) {
-                    b.setSpan(LocaleSpan(Locale.forLanguageTag(endStation.language)), y, y + endStationName.length, 0)
-
-                    if (localeSpanUsed && startStationName != null) {
-                        // Set the locale of the string between the start and end station names.
-                        b.setSpan(LocaleSpan(Locale.getDefault()), x + startStationName.length, y, 0)
-                    } else {
-                        // Set the locale of the string from the start of the string to the end station
-                        // name.
-                        b.setSpan(LocaleSpan(Locale.getDefault()), 0, y, 0)
-                    }
-
-                    // Set the segment from the end of the end station name to the end of the string
-                    b.setSpan(LocaleSpan(Locale.getDefault()), y + endStationName.length, b.length, 0)
-                } else if (startStationName != null) {
-                    // No custom language information for end station
-                    // Set default locale from the end of the start station to the end of the string.
-                    b.setSpan(LocaleSpan(Locale.getDefault()), x + startStationName.length, b.length, 0)
-                }
-            }
-        }
+        b.replace(y, y + endPlaceholder.length, endStationName.spanned)
 
         return b
     }

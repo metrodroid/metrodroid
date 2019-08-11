@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.seq_go
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
@@ -29,16 +30,13 @@ import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.INTERNATIONAL_AIRPORT
  */
 @Parcelize
 class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
-    override val routeLanguage: String?
-        get() = "en-AU"
-
     override val currency
         get() = SeqGoTransitData.CURRENCY
 
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
 
-    override fun getAgencyName(isShort: Boolean) =
+    override fun getAgencyName(isShort: Boolean) = FormattedString.language(
             when (capsule.mModeInt) {
                 SeqGoData.VEHICLE_FERRY -> "Transdev Brisbane Ferries"
                 SeqGoData.VEHICLE_RAIL -> if (
@@ -51,5 +49,5 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
                     "Queensland Rail"
                 }
                 else -> "TransLink"
-        }
+        }, "en-AU")
 }

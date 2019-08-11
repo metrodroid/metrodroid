@@ -27,13 +27,34 @@ import android.os.Parcel
 import android.text.*
 import android.text.style.*
 import au.id.micolous.metrodroid.ui.HiddenSpan
+import java.util.Locale
 
-actual class FormattedString (val spanned: android.text.Spanned) {
+actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     actual val unformatted: String
         get() = spanned.toString()
     actual constructor(input: String): this(SpannableString(input))
-
+    constructor(input: CharSequence): this(input as? SpannableString ?: SpannableString(input))
     actual override fun toString(): String = unformatted
+
+    actual operator fun plus(b: String): FormattedString = FormattedString(TextUtils.concat(spanned, b))
+
+    actual operator fun plus(b: FormattedString): FormattedString = FormattedString(TextUtils.concat(spanned, b.spanned))
+
+    actual fun substring(start: Int): FormattedString = FormattedString(spanned.subSequence(start, spanned.length))
+    actual fun substring(start: Int, end: Int): FormattedString = FormattedString(spanned.subSequence(start, end))
+
+    override fun equals(other: Any?) = (other is FormattedString) && (spanned == other.spanned)
+
+    val spannableString: SpannableString
+       get() = SpannableString(spanned)
+
+    constructor(parcel: Parcel) : this(TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel) as CharSequence)
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        TextUtils.writeToParcel(spanned, parcel, flags);
+    }
+
+    override fun describeContents() = 0
 
     actual companion object {
         actual fun monospace(input: String): FormattedString {
@@ -41,6 +62,29 @@ actual class FormattedString (val spanned: android.text.Spanned) {
             res.setSpan(TypefaceSpan("monospace"), 0, input.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             return FormattedString(res)
+        }
+        private fun localeString(input: String, lang: String?, debugColor: Int): FormattedString {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || !Preferences.localisePlaces) {
+                return FormattedString(input)
+            }
+
+            val locale = if (lang != null) Locale.forLanguageTag(lang) else Locale.getDefault()
+            val localeSpan = LocaleSpan(locale)
+            val res = SpannableString(input)
+            res.setSpan(localeSpan, 0, input.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (Preferences.debugSpans)
+                res.setSpan(ForegroundColorSpan(debugColor), 0, input.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            return FormattedString(res)
+        }
+        actual fun language(input: String, lang: String): FormattedString = localeString(input, lang, Color.BLUE)
+        actual fun english(input: String) = localeString(input, "en", Color.YELLOW)
+        actual fun defaultLanguage(input: String) = localeString(input, null, Color.GREEN)
+
+        @JvmField
+        val CREATOR: android.os.Parcelable.Creator<FormattedString> = object: android.os.Parcelable.Creator<FormattedString> {
+            override fun createFromParcel(parcel: Parcel) = FormattedString(parcel)
+
+            override fun newArray(size: Int): Array<FormattedString?> = arrayOfNulls(size)
         }
     }
 }

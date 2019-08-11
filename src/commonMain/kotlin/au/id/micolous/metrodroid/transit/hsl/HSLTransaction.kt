@@ -43,16 +43,16 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
     private val expireTimestamp
         get() = parsed.getTimeStamp(TRANSFER_END, lookup.timeZone)
 
-    override fun getAgencyName(isShort: Boolean): String? {
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
         if (isArvo != true) {
             // isArvo is set to 0 also on Arvo transfers, so 0 doesn't imply anything
             return null
         }
         val end = (this.expireTimestamp as? TimestampFull)?.timeInMillis
         val start = (this.timestamp as? TimestampFull)?.timeInMillis
-        val mins = if (start != null && end != null) Localizer.localizeString(R.string.hsl_mins_format,
+        val mins = if (start != null && end != null) Localizer.localizeFormatted(R.string.hsl_mins_format,
                 ((end - start) / 60000L).toString()) else null
-        val type = Localizer.localizeString(R.string.hsl_balance_ticket)
+        val type = Localizer.localizeFormatted(R.string.hsl_balance_ticket)
         return (if (mins != null) type + ", " + mins else type)
     }
 
@@ -75,8 +75,8 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
     override val routeNumber: Int?
         get() = parsed.getInt(LOCATION_NUMBER)
 
-    override val routeNames: List<String>?
-        get() = listOfNotNull(parsed.getInt(LOCATION_NUMBER)?.let { (it % 1000).toString() })
+    override val routeNames: List<FormattedString>?
+        get() = listOfNotNull(parsed.getInt(LOCATION_NUMBER)?.let { FormattedString((it % 1000).toString()) })
 
     companion object {
         private const val AREA_PREFIX = "EventBoarding"

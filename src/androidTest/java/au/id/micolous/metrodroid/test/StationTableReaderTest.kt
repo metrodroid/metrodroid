@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 
@@ -25,12 +26,12 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         showRawStationIds(false)
 
         var s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
-        assertEquals("Domestic Airport", s.getStationName(false))
+        assertEquals("Domestic Airport", s.getStationName(false).unformatted)
 
         // Try when Raw Station IDs are enabled.
         showRawStationIds(true)
         s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
-        assertEquals("Domestic Airport [0x9]", s.getStationName(false))
+        assertEquals("Domestic Airport [0x9]", s.getStationName(false).unformatted)
 
         // Reset back to default
         showRawStationIds(false)
@@ -53,45 +54,45 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         // Test a station in English
         var s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("JR East", s.companyName)
-        assertEquals("Shinjuku", s.getStationName(false))
+        assertEquals("JR East", s.companyName?.unformatted)
+        assertEquals("Shinjuku", s.getStationName(false)?.unformatted)
         assertEquals(1, s.lineNames!!.size)
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
-        assertFalse(s.lineNames!![0].equals("山手", ignoreCase = true))
+        assertFalse(s.lineNames!![0]?.unformatted.equals("山手", ignoreCase = true))
 
         // Test in Japanese
         setLocale("ja-JP")
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("東日本旅客鉄道", s.companyName)
-        assertEquals("新宿", s.getStationName(false))
+        assertEquals("東日本旅客鉄道", s.companyName?.unformatted)
+        assertEquals("新宿", s.getStationName(false)?.unformatted)
         assertEquals(1, s.lineNames!!.size)
-        assertEquals("山手", s.lineNames!![0])
+        assertEquals("山手", s.lineNames!![0].unformatted)
 
         // Test in another supported language. We should fall back to English here.
         setLocale("fr-FR")
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("JR East", s.companyName)
-        assertEquals("Shinjuku", s.getStationName(false))
+        assertEquals("JR East", s.companyName?.unformatted)
+        assertEquals("Shinjuku", s.getStationName(false)?.unformatted)
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
         assertEquals(1, s.lineNames!!.size)
-        assertFalse(s.lineNames!![0].equals("山手", ignoreCase = true))
+        assertFalse(s.lineNames!![0]?.unformatted.equals("山手", ignoreCase = true))
 
         // Test showing both English and Japanese strings
         setLocale("en-US")
         showLocalAndEnglish(true)
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("Shinjuku (新宿)", s.getStationName(false))
+        assertEquals("Shinjuku (新宿)", s.getStationName(false)?.unformatted)
 
         // Test showing both Japanese and English strings.
         setLocale("ja-JP")
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("新宿 (Shinjuku)", s.getStationName(false))
+        assertEquals("新宿 (Shinjuku)", s.getStationName(false)?.unformatted)
     }
 
     private fun createEasyCardTrip(startStation: Int, endStation: Int): Trip {
@@ -124,19 +125,19 @@ class StationTableReaderTest : BaseInstrumentedTest() {
 
         var trip: Trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19)
 
-        assertEquals("Brown", trip.routeName)
+        assertEquals("Brown", trip.routeName?.unformatted)
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL23_BR24)
-        assertEquals("Brown", trip.routeName)
+        assertEquals("Brown", trip.routeName?.unformatted)
 
         trip = createEasyCardTrip(EASYCARD_BL23_BR24, EASYCARD_BR19)
-        assertEquals("Brown", trip.routeName)
+        assertEquals("Brown", trip.routeName?.unformatted)
 
         trip = createEasyCardTrip(EASYCARD_BL23_BR24, EASYCARD_BL12_R10)
-        assertEquals("Blue", trip.routeName)
+        assertEquals("Blue", trip.routeName?.unformatted)
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL12_R10)
-        assertEquals("Brown", trip.routeName)
+        assertEquals("Brown", trip.routeName?.unformatted)
     }
 
     @Parcelize
@@ -157,11 +158,13 @@ class StationTableReaderTest : BaseInstrumentedTest() {
 
         val txn = MockAdelaideTransaction(0x16f, TRANSPORT_BUS)
         assertEquals(listOf("0x16f"), txn.humanReadableLineIDs)
-        assertEquals(listOf("M44"), txn.routeNames)
+        assertEquals(1, txn.routeNames!!.size)
+        assertEquals("M44", txn.routeNames!![0].unformatted)
 
         val txnUnknown = MockAdelaideTransaction(0xffff, TRANSPORT_METRO)
         assertEquals(listOf("0xffff"), txnUnknown.humanReadableLineIDs)
-        assertEquals(listOf("Unknown (0xffff)"), txnUnknown.routeNames)
+        assertEquals(1, txnUnknown.routeNames!!.size)
+        assertEquals("Unknown (0xffff)", txnUnknown.routeNames!![0].unformatted)
 
         // Now check at a TransactionTrip level
         val trips = TransactionTrip.merge(txn)
@@ -170,29 +173,29 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         assertEquals(1, tripsUnknown.size)
 
         val trip = trips[0]
-        assertEquals("M44", Trip.getRouteDisplayName(trip))
-        assertEquals("M44", trip.routeName)
+        assertEquals("M44", Trip.getRouteDisplayName(trip)?.unformatted)
+        assertEquals("M44", trip.routeName?.unformatted)
         assertEquals("0x16f", trip.humanReadableRouteID)
 
         val tripUnknown = tripsUnknown[0]
-        assertEquals("Unknown (0xffff)", Trip.getRouteDisplayName(tripUnknown))
-        assertEquals("Unknown (0xffff)", tripUnknown.routeName)
+        assertEquals("Unknown (0xffff)", Trip.getRouteDisplayName(tripUnknown)?.unformatted)
+        assertEquals("Unknown (0xffff)", tripUnknown.routeName?.unformatted)
         assertEquals("0xffff", tripUnknown.humanReadableRouteID)
 
         // Now test with the settings changed.
         showRawStationIds(true)
 
         // Display name should change
-        assertTrue(Trip.getRouteDisplayName(trip)!!.contains("M44"))
-        assertTrue(Trip.getRouteDisplayName(trip)!!.contains("0x16f"))
+        assertTrue(Trip.getRouteDisplayName(trip)?.unformatted!!.contains("M44"))
+        assertTrue(Trip.getRouteDisplayName(trip)?.unformatted!!.contains("0x16f"))
 
         // Other names should not.
-        assertEquals("M44", trip.routeName)
+        assertEquals("M44", trip.routeName?.unformatted)
         assertEquals("0x16f", trip.humanReadableRouteID)
 
         // Unknown names should stay the same.
-        assertEquals("Unknown (0xffff)", Trip.getRouteDisplayName(tripUnknown))
-        assertEquals("Unknown (0xffff)", tripUnknown.routeName)
+        assertEquals("Unknown (0xffff)", Trip.getRouteDisplayName(tripUnknown)?.unformatted)
+        assertEquals("Unknown (0xffff)", tripUnknown.routeName?.unformatted)
         assertEquals("0xffff", tripUnknown.humanReadableRouteID)
     }
 

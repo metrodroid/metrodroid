@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
@@ -38,11 +39,11 @@ internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde"), Intercod
             preview = true)
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?,
-                              agency: Int?, transport: Int?): String? {
+                              agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null)
             return null
         if (agency == TRANSGIRONDE)
-            return "Ligne $routeNumber"
+            return FormattedString.language("Ligne $routeNumber", "fr-FR")
         return super.getRouteName(routeNumber, routeNumber, agency, transport)
     }
 

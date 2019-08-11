@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.adelaide
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -49,7 +50,7 @@ object AdelaideLookup : En1545LookupSTR("adelaide") {
         // TODO: Exclude monthly tickets when implemented
     }
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == 0)
             return null
         return super.getRouteName(routeNumber, routeVariant, agency, transport)

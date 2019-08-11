@@ -21,13 +21,14 @@ package au.id.micolous.metrodroid.transit.en1545
 
 import au.id.micolous.metrodroid.util.NumberUtils
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 
 abstract class En1545LookupSTR protected constructor(protected val mStr: String) : En1545Lookup {
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null)
             return null
         val routeId = routeNumber or ((agency ?: 0) shl 16) or ((transport ?: 0) shl 24)
@@ -35,7 +36,7 @@ abstract class En1545LookupSTR protected constructor(protected val mStr: String)
         return StationTableReader.getLineName(mStr, routeId, routeReadable!!)
     }
 
-    override fun getAgencyName(agency: Int?, isShort: Boolean): String? {
+    override fun getAgencyName(agency: Int?, isShort: Boolean): FormattedString? {
         if (agency == null || agency == 0)
             return null
         return StationTableReader.getOperatorName(mStr, agency, isShort)

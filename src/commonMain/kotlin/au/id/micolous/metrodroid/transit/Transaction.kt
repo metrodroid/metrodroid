@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Timestamp
@@ -35,11 +36,8 @@ abstract class Transaction : Parcelable, Comparable<Transaction> {
      *
      * By default, this gets candidate route names from the Station.
      */
-    open val routeNames: List<String>?
+    open val routeNames: List<FormattedString>?
         get() = station?.lineNames ?: emptyList()
-
-    open val routeLanguage: String?
-        get() = null
 
     /**
      * This method may be overridden to provide candidate line names associated with the
@@ -85,7 +83,7 @@ abstract class Transaction : Parcelable, Comparable<Transaction> {
     open val isTransparent: Boolean
         get() = mode in listOf(Trip.Mode.TICKET_MACHINE, Trip.Mode.VENDING_MACHINE)
 
-    open fun getAgencyName(isShort: Boolean) : String? = null
+    open fun getAgencyName(isShort: Boolean) : FormattedString? = null
 
     open fun shouldBeMerged(other: Transaction): Boolean {
         return isTapOn && (other.isTapOff || other.isCancel) && isSameTrip(other)

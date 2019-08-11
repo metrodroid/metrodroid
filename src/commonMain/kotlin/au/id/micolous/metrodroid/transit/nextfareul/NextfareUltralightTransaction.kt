@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.nextfareul
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
@@ -38,8 +39,8 @@ abstract class NextfareUltralightTransaction : Transaction {
     val balance: Int
     val expiry: Int
 
-    override val routeNames: List<String>
-        get() = listOf(mRoute.toString(16))
+    override val routeNames: List<FormattedString>
+        get() = listOf(FormattedString(mRoute.toString(16)))
 
     override val station: Station?
         get() = if (mLocation == 0) {
@@ -94,5 +95,5 @@ abstract class NextfareUltralightTransaction : Transaction {
                 && !isBus && !other.isBus
                 && mRoute == other.mRoute)
 
-    override fun getAgencyName(isShort: Boolean): String? = null
+    override fun getAgencyName(isShort: Boolean) = null
 }

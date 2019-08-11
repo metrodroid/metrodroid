@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.smartrider
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelize
 
@@ -36,7 +37,7 @@ import au.id.micolous.metrodroid.util.toImmutable
 @Parcelize
 class SmartRiderTagRecord (private val mTimestamp: Long,
                            public override val isTapOn: Boolean,
-                           private val mRoute: String,
+                           private val mRoute: FormattedString,
                            val cost: Int,
                            private val mCardType: SmartRiderTransitData.CardType) : Transaction() {
 
@@ -52,11 +53,8 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
     override val fare: TransitCurrency?
         get() = TransitCurrency.AUD(cost)
 
-    override val routeNames: List<String>
+    override val routeNames: List<FormattedString>
         get() = listOf(mRoute)
-
-    override val routeLanguage: String?
-        get() = "en-AU"
 
     // TODO: verify this
     // There is also a bus with route number 300, but it is a free service.
@@ -65,8 +63,8 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
             SmartRiderTransitData.CardType.MYWAY -> Trip.Mode.BUS
 
             SmartRiderTransitData.CardType.SMARTRIDER -> when {
-                "RAIL".equals(mRoute, ignoreCase = true) -> Trip.Mode.TRAIN
-                "300" == mRoute -> Trip.Mode.FERRY
+                "RAIL".equals(mRoute.unformatted, ignoreCase = true) -> Trip.Mode.TRAIN
+                "300" == mRoute.unformatted -> Trip.Mode.FERRY
                 else -> Trip.Mode.BUS
             }
 
@@ -90,14 +88,14 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
                     && super.shouldBeMerged(other))
 
 
-    override fun getAgencyName(isShort: Boolean): String? =
+    override fun getAgencyName(isShort: Boolean) = FormattedString(
             when (mCardType) {
                 SmartRiderTransitData.CardType.MYWAY -> "ACTION"
 
                 SmartRiderTransitData.CardType.SMARTRIDER -> "TransPerth"
 
                 else -> ""
-            }
+            })
 
     override fun isSameTrip(other: Transaction): Boolean =
         // SmartRider only ever records route names.
@@ -106,15 +104,15 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
     companion object {
         private const val TAG = "SmartRiderTagRecord"
 
-        private fun routeName(input: ImmutableByteArray): String {
+        private fun routeName(input: ImmutableByteArray): FormattedString {
             val cleaned = input.dataCopy.filter { it != 0.toByte() }.toByteArray().toImmutable()
             try {
                 if (cleaned.isASCII())
-                    return cleaned.readASCII()
+                    return FormattedString(cleaned.readASCII())
             } catch (e: Exception) {
 
             }
-            return cleaned.toHexString()
+            return FormattedString(cleaned.toHexString())
         }
 
         fun parse(cardType: SmartRiderTransitData.CardType, record: ImmutableByteArray): SmartRiderTagRecord {

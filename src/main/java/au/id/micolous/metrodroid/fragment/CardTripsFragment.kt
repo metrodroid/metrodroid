@@ -228,39 +228,14 @@ class CardTripsFragment : ListFragment() {
 
             val agencyName = trip.getAgencyName(true)
             if (agencyName != null) {
-                routeText.append(agencyName)
+                routeText.append(agencyName.spanned)
                         .append(" ")
-                        .setSpan(StyleSpan(Typeface.BOLD), 0, agencyName.length, 0)
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    routeText.setSpan(LocaleSpan(Locale.getDefault()), 0, routeText.length, 0)
-                }
+                        .setSpan(StyleSpan(Typeface.BOLD), 0, agencyName.spanned.length, 0)
             }
 
             val routeName = Trip.getRouteDisplayName(trip)
             if (routeName != null) {
-                val oldLength = routeText.length
-                routeText.append(routeName)
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val routeLang = trip.routeLanguage
-                    if (!Preferences.showRawStationIds && routeLang != null) {
-                        // SUICA HACK:
-                        // If there's something that looks like "#2" at the start, then mark
-                        // that as the default language.
-                        val m = LINE_NUMBER.matcher(routeName)
-                        if (!m.find() || m.group(1) == null) {
-                            // No line number
-                            //Log.d(TAG, "no line number");
-                            routeText.setSpan(LocaleSpan(Locale.forLanguageTag(routeLang)), oldLength, routeText.length, 0)
-                        } else {
-                            // There is a line number
-                            //Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
-                            routeText.setSpan(LocaleSpan(Locale.getDefault()), oldLength, oldLength + m.end(1), 0)
-                            routeText.setSpan(LocaleSpan(Locale.forLanguageTag(routeLang)), oldLength + m.start(2), routeText.length, 0)
-                        }
-                    } else {
-                        routeText.setSpan(LocaleSpan(Locale.getDefault()), 0, routeText.length, 0)
-                    }
-                }
+                routeText.append(routeName.spanned)
             }
 
             if (Preferences.rawLevel != TransitData.RawLevel.NONE) {
@@ -357,19 +332,6 @@ class CardTripsFragment : ListFragment() {
             if (date1 == null && date2 != null) return true
             return if (date1 == null || date2 == null) false else !date1.isSameDay(date2)
 
-        }
-
-        companion object {
-            /**
-             * Used when localisePlaces=true to ensure route and line numbers are still read out in the
-             * user's language.
-             *
-             * eg:
-             * - "#7 Eastern Line" -> (local)#7 (foreign)Eastern Line
-             * - "300 West" -> (local)300 (foreign)West
-             * - "North Ferry" -> (foreign)North Ferry
-             */
-            private val LINE_NUMBER = Pattern.compile("(#?\\d+)?(\\D.+)")
         }
     }
 

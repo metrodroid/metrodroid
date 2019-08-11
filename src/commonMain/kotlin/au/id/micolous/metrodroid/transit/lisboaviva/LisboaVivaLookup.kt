@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.lisboaviva
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -32,12 +33,12 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.LISBON
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): FormattedString? {
         if (routeNumber == null || routeNumber == 0)
             return null
 
         if (agency == null || agency == 1)
-            return routeNumber.toString()
+            return FormattedString(routeNumber.toString())
         val mungedRouteNumber = mungeRouteNumber(agency, routeNumber)
         return StationTableReader.getLineName(LISBOA_VIVA_STR, agency shl 16 or mungedRouteNumber,
                 mungedRouteNumber.toString())

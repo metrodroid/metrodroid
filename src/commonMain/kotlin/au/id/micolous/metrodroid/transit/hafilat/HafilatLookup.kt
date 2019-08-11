@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.hafilat
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
@@ -43,7 +44,7 @@ object HafilatLookup : En1545LookupSTR("hafilat") {
 
     internal fun isPurseTariff(agency: Int?, contractTariff: Int?): Boolean = agency == 1 && contractTariff in listOf(0x2710)
 
-    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? = "$routeNumber"
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?) = FormattedString(routeNumber.toString())
 
     private val TARIFFS = mapOf(
             0x2710 to R.string.adelaide_ticket_type_regular

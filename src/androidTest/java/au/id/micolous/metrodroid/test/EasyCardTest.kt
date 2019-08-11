@@ -61,11 +61,11 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         assertEquals(TransitCurrency.TWD(15), trainTrip.fare)
         assertEquals(Trip.Mode.METRO, trainTrip.mode)
         assertNotNull(trainTrip.startStation)
-        assertEquals("Taipei Main Station", trainTrip.startStation!!.getStationName(false))
+        assertEquals("Taipei Main Station", trainTrip.startStation!!.getStationName(false)?.unformatted)
         assertNotNull(trainTrip.endStation)
-        assertEquals("NTU Hospital", trainTrip.endStation!!.getStationName(false))
-        assertNotNull(trainTrip.routeName)
-        assertEquals("Red", trainTrip.routeName)
+        assertEquals("NTU Hospital", trainTrip.endStation!!.getStationName(false)?.unformatted)
+        assertNotNull(trainTrip.routeName?.unformatted)
+        assertEquals("Red", trainTrip.routeName?.unformatted)
         assertEquals("0xccbbaa", trainTrip.machineID)
 
         val refill = c.trips[2]
@@ -74,7 +74,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         assertEquals(TransitCurrency.TWD(-100), refill.fare)
         assertEquals(Trip.Mode.TICKET_MACHINE, refill.mode)
         assertNotNull(refill.startStation)
-        assertEquals("Yongan Market", refill.startStation!!.getStationName(false))
+        assertEquals("Yongan Market", refill.startStation!!.getStationName(false)?.unformatted)
         assertNull(refill.routeName)
         assertEquals("0x31c046", refill.machineID)
     }
@@ -88,7 +88,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         val refill = c.trips.last()
         // Yongan Market
-        assertEquals("永安市場", refill.startStation!!.getStationName(false))
-        assertNull(refill.routeName)
+        assertEquals("永安市場", refill.startStation!!.getStationName(false)?.unformatted)
+        assertNull(refill.routeName?.unformatted)
     }
 }

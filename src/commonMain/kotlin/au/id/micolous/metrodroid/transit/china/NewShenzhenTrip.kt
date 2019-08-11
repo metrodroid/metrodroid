@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.china
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -52,7 +53,7 @@ class NewShenzhenTrip (override val capsule: ChinaTripCapsule): ChinaTripAbstrac
             }
         }
 
-    override val routeName: String?
+    override val routeName: FormattedString?
         get() = when (transport) {
                 SZT_BUS -> StationTableReader.getLineName(SHENZHEN_STR, mStation.toInt(),
                         "" + mStation)
@@ -73,10 +74,10 @@ class NewShenzhenTrip (override val capsule: ChinaTripCapsule): ChinaTripAbstrac
 
     constructor(data: ImmutableByteArray) : this(ChinaTripCapsule(data))
 
-    override fun getAgencyName(isShort: Boolean): String? = when (transport) {
-            SZT_METRO -> Localizer.localizeString(R.string.szt_metro)
-            SZT_BUS -> Localizer.localizeString(R.string.szt_bus)
-            else -> Localizer.localizeString(R.string.unknown_format, transport)
+    override fun getAgencyName(isShort: Boolean) = when (transport) {
+            SZT_METRO -> Localizer.localizeFormatted(R.string.szt_metro)
+            SZT_BUS -> Localizer.localizeFormatted(R.string.szt_bus)
+            else -> Localizer.localizeFormatted(R.string.unknown_format, transport)
         }
 
     companion object {

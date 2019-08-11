@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.util
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.time.Timestamp
@@ -32,7 +33,7 @@ import au.id.micolous.metrodroid.transit.Trip
 internal class ObfuscatedTrip (
         override val startTimestamp: Timestamp?,
         override val endTimestamp: Timestamp?,
-        override val routeName: String?,
+        override val routeName: FormattedString?,
         override val startStation: Station?,
         override val mode: Trip.Mode,
         override val endStation: Station?,
@@ -40,8 +41,8 @@ internal class ObfuscatedTrip (
         override val humanReadableRouteID: String?,
         override val vehicleID: String?,
         override val passengerCount: Int,
-        private val mAgencyName: String?,
-        private val mShortAgencyName: String?
+        private val mAgencyName: FormattedString?,
+        private val mShortAgencyName: FormattedString?
 ): Trip() {
 
     constructor(realTrip: Trip, timeDelta: Long, obfuscateFares: Boolean) : this (
@@ -64,7 +65,6 @@ internal class ObfuscatedTrip (
             endTimestamp = realTrip.endTimestamp?.obfuscateDelta(timeDelta)
     )
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return if (isShort) mShortAgencyName else mAgencyName
-    }
+    override fun getAgencyName(isShort: Boolean) =
+        if (isShort) mShortAgencyName else mAgencyName
 }

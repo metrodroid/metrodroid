@@ -32,10 +32,9 @@ class ChcMetrocardTransaction(
     override val currency get() = ChcMetrocardTransitData.CURRENCY
     override val timezone get() = ChcMetrocardTransitData.TIME_ZONE
 
-    override fun getAgencyName(isShort: Boolean): String? {
-        return StationTableReader.getOperatorName(
+    override fun getAgencyName(isShort: Boolean) =
+        StationTableReader.getOperatorName(
                 ChcMetrocardTransitData.CHC_METROCARD_STR, purse.agency, isShort)
-    }
 
     override val mode get(): Trip.Mode {
         val m = StationTableReader.getOperatorDefaultMode(

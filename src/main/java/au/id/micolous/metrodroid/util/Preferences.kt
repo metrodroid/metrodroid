@@ -44,6 +44,7 @@ actual object Preferences {
     private const val PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance"
     private const val PREF_SHOW_HIDDEN_CARDS = "pref_show_hidden_cards"
     private const val PREF_HIDE_UNSUPPORTED_RIBBON = "pref_hide_unsupported_ribbon"
+    private const val PREF_DEBUG_SPANS = "pref_debug_spans"
 
     private const val PREF_LOCALISE_PLACES = "pref_localise_places"
     private const val PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help"
@@ -127,6 +128,9 @@ actual object Preferences {
 
     actual val retrieveLeapKeys
         get() = getBooleanPref(PREF_RETRIEVE_LEAP_KEYS, false)
+
+    val debugSpans
+        get() = getBooleanPref(PREF_DEBUG_SPANS, false)
 
     val mapTileUrl: String
         get () {

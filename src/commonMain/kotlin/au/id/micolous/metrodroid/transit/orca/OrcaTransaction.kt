@@ -24,6 +24,7 @@
 
 package au.id.micolous.metrodroid.transit.orca
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -58,17 +59,17 @@ class OrcaTransaction (private val mTimestamp: Long,
         get() = !mIsTopup && mTransType == TRANS_TYPE_CANCEL_TRIP
 
     // FIXME: Need to find bus route #s
-    override val routeNames: List<String>
+    override val routeNames: List<FormattedString>
         get() = when {
-            mIsTopup -> listOf(Localizer.localizeString(R.string.orca_topup))
-            isLink -> listOf("Link Light Rail")
-            isSounder -> listOf("Sounder Train")
-            mAgency == OrcaTransitData.AGENCY_ST -> listOf("Express Bus")
+            mIsTopup -> listOf(Localizer.localizeFormatted(R.string.orca_topup))
+            isLink -> listOf(FormattedString.english("Link Light Rail"))
+            isSounder -> listOf(FormattedString.english("Sounder Train"))
+            mAgency == OrcaTransitData.AGENCY_ST -> listOf(FormattedString.english("Express Bus"))
             mAgency == OrcaTransitData.AGENCY_KCM -> {
                 when (mFtpType) {
-                    FTP_TYPE_BUS -> listOf("Bus")
-                    FTP_TYPE_WATER_TAXI -> listOf("Water Taxi")
-                    FTP_TYPE_BRT -> listOf("BRT")
+                    FTP_TYPE_BUS -> listOf(FormattedString.english("Bus"))
+                    FTP_TYPE_WATER_TAXI -> listOf(FormattedString.english("Water Taxi"))
+                    FTP_TYPE_BRT -> listOf(FormattedString.english("BRT"))
                     else -> emptyList()
                 }
             }
@@ -143,10 +144,10 @@ class OrcaTransaction (private val mTimestamp: Long,
         mTransType = useData.getBitsFromBuffer(136, 8),
         mNewBalance = useData.getBitsFromBuffer(272, 16))
 
-    override fun getAgencyName(isShort: Boolean): String? {
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
         if (mAgency == OrcaTransitData.AGENCY_KCM && mFtpType == FTP_TYPE_WATER_TAXI) {
             // The King County Water Taxi is now a separate agency but uses KCM's agency ID
-            return "KCWT"
+            return FormattedString.language("KCWT", "en-US")
         }
         return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort)
     }

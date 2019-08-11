@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Daystamp
@@ -70,7 +71,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
 
     override val mode get() = Mode.POS
 
-    override val routeName get() = values.entries.filter {
+    override val routeName get() = FormattedString(values.entries.filter {
         !HANDLED_TAGS.contains(it.key)
     }.joinToString {
         when (val tag = TAGMAP[it.key]) {
@@ -91,7 +92,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
                 }
             }
         }
-    }
+    })
 
     companion object {
         private val HANDLED_TAGS = listOf(

@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.lisboaviva
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.transit.Station
@@ -40,14 +41,14 @@ internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): E
             return transition == 4
         }
 
-    override val routeNames: List<String>?
+    override val routeNames: List<FormattedString>?
         get() {
             val routeNumber = parsed.getInt(En1545Transaction.EVENT_ROUTE_NUMBER) ?: return emptyList()
             return if (agency == LisboaVivaLookup.AGENCY_CP && routeNumber == LisboaVivaLookup.ROUTE_CASCAIS_SADO) {
                 if ((stationId ?: 0) <= 54)
-                    listOf("Cascais")
+                    listOf(FormattedString.language("Cascais", "pt-PT"))
                 else
-                    listOf("Sado")
+                    listOf(FormattedString.language("Sado", "pt-PT"))
             } else super.routeNames
 
         }

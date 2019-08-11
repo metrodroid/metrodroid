@@ -41,7 +41,7 @@ data class RkfPurse(private val mStatic: En1545Parsed,
             val balance = mLookup.parseCurrency(mDynamic.getIntOrZero(VALUE))
             val name = mLookup.getAgencyName(mStatic.getIntOrZero(RkfTransitData.COMPANY), true)
 
-            return TransitBalanceStored(balance, name, mStatic.getTimeStamp(START, mLookup.timeZone),
+            return TransitBalanceStored(balance, name?.unformatted, mStatic.getTimeStamp(START, mLookup.timeZone),
                     mDynamic.getTimeStamp(END, mLookup.timeZone))
         }
 
