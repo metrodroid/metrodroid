@@ -375,6 +375,31 @@ abstract class Subscription : Parcelable {
         FREE(R.string.payment_method_free)
     }
 
+    data class Formatted (
+        val shortAgencyLabel: FormattedString?,
+        val subscriptionName: String?,
+        val validity: FormattedString?,
+        val remainingTrips: String?,
+        val info: List<ListItem>?,
+        val subscriptionState: SubscriptionState,
+        val remainingDayCount: Int?,
+        val passengerCount: Int
+    )
+
+    // Nullable Throwable is a pain for kotlin-swift interop, hence have
+    // this wrapper to format all values at the same time
+    @NativeThrows
+    fun format(): Formatted = Formatted(
+        shortAgencyLabel = getAgencyName(true),
+        subscriptionName = subscriptionName,
+        validity = formatValidity(),
+        remainingTrips = formatRemainingTrips(),
+        info = Subscription.mergeInfo(this),
+        subscriptionState = subscriptionState,
+        remainingDayCount = remainingDayCount,
+        passengerCount = passengerCount
+    )
+
     companion object {
         fun mergeInfo(sub: Subscription): List<ListItem>? {
             val rawLevel = Preferences.rawLevel
