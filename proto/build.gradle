@@ -19,7 +19,7 @@ buildscript {
 
 apply plugin: 'java-library'
 apply plugin: 'com.google.protobuf'
-
+apply plugin: 'objective-c'
 
 dependencies {
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
@@ -45,7 +45,67 @@ protobuf {
             }
             task.plugins {
                 javalite { }
+                objc {}
             }
+        }
+    }
+}
+
+final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? "ios_arm64" : "ios_x86_64"
+
+model {
+    toolChains {
+        clang(Clang) {
+            target("ios_arm64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'arm64'
+                }
+            }
+            target("ios_x86_64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'x86_64'
+                    args << '-m64'
+                }
+            }
+        }
+    }
+    platforms {
+        ios_arm64 {
+            architecture "arm64"
+        }
+        ios_x86_64 {
+            architecture "x86_64"
+        }
+    }
+    components {
+        main(NativeLibrarySpec) {
+            targetPlatform iOSTarget
+            sources {
+                objc {
+                    source {
+                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        include "GPBProtocolBuffers.m", "Stations.pbobjc.m"
+                    }
+                    exportedHeaders {
+                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                    }
+                }
+            }
+        }
+    }
+    binaries {
+        withType(SharedLibraryBinarySpec) {
+            objcCompiler.args '-fno-objc-arc'
+            linker.args '-fno-objc-arc', '-framework', 'CoreServices', '-framework', 'Foundation'
+        }
+        withType(StaticLibraryBinarySpec) {
+            objcCompiler.args '-fno-objc-arc'
+            linker.args '-fno-objc-arc', '-framework', 'CoreServices', '-framework', 'Foundation'
         }
     }
 }
