@@ -200,6 +200,46 @@ kotlin {
     }
 }
 
+def commonLanguageList = [
+                // Update this whenever new language translations become available in Weblate.
+                // Languages we support
+                // Also add the language in XCode
+                'en',
+                'de',
+                'el',
+                'es',
+                'fi',
+                'fr',
+                'he',
+                'id',
+                'it',
+                'ja',
+                'kab',
+                'nb-rNO',
+                'nl',
+                'ru',
+                'tr',
+                'zh-rCN'
+                ] 
+
+def iOSLanguageList = commonLanguageList
+
+def androidLanguageList = iOSLanguageList + [
+                // Regions for English. We currently omit those on iOS
+                'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
+                // We omit languages without real translations on iOS
+                'ga',
+                'mi',
+                'ms',
+                'zh-rHK',
+                'zh-rSG',
+                'zh-rTW',
+
+                // obsolete identifier
+                'iw',
+                'in'
+                ]
+
 android {
     compileSdkVersion android_sdk_version
     buildToolsVersion build_version
@@ -211,38 +251,7 @@ android {
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
-        resConfigs ([
-                // Update this whenever new language translations become available in Weblate.
-                // Languages we support
-                'en', 'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
-                'de',
-                'el',
-                'es',
-                'fi',
-                'fr',
-                'ga',
-                // Hebrew
-                'he', 'iw',
-                // Indonesian
-                'id', 'in',
-                'it',
-                'ja',
-                'kab',
-                'mi',
-                'ms',
-                'nb-rNO',
-                'nl',
-                'ru',
-                'tr',
-                'zh-rCN',
-                'zh-rHK',
-                'zh-rSG',
-                'zh-rTW',
-
-                // UI mode
-
-
-        ])
+        resConfigs (androidLanguageList)
         vectorDrawables {
             useSupportLibrary = true
             generatedDensities 'ldpi', 'mdpi', 'hdpi'
