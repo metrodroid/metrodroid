@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.card.nfcv.NFCVCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
+import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitData
 
@@ -63,7 +64,8 @@ abstract class CardProtocol {
     /**
      * This is where a card is actually parsed into TransitData compatible data.
      * @return
-     */
+    */
+    @NativeThrows
     abstract fun parseTransitData(): TransitData?
 
     /**
@@ -71,6 +73,7 @@ abstract class CardProtocol {
      * and the card's serial number (according to the operator).
      * @return
      */
+    @NativeThrows
     abstract fun parseTransitIdentity(): TransitIdentity?
 
     open fun postCreate(card: Card) {
