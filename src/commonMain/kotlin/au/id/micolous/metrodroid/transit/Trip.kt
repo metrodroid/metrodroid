@@ -21,11 +21,13 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.Preferences
 
@@ -336,6 +338,50 @@ abstract class Trip : Parcelable {
                 // Known route
                 routeName + " [$routeID]"
             }
+        }
+
+        fun formatTimes(trip: Trip): FormattedString? {
+            val start = trip.startTimestamp
+            val end = trip.endTimestamp
+            return when {
+                start is TimestampFull && end is TimestampFull ->
+                    Localizer.localizeFormatted(R.string.time_from_to,
+                            TimestampFormatter.timeFormat(start),
+                            TimestampFormatter.timeFormat(end))
+                start is TimestampFull -> 
+                    TimestampFormatter.timeFormat(start)
+                end is TimestampFull ->
+                    Localizer.localizeFormatted(R.string.time_from_unknown_to,
+                            TimestampFormatter.timeFormat(end))
+                else -> null
+            }
+        }
+
+        /**
+        * Formats a trip description into a localised label, with appropriate language annotations.
+        *
+        * @param trip The trip to describe.
+        * @return null if both the start and end stations are unknown.
+        */
+        fun formatStationNames(trip: Trip): FormattedString? {
+            val startStationName = trip.startStation?.getStationName(true)
+
+            val endStationName: FormattedString?
+            if (trip.endStation?.getStationName(false) == trip.startStation?.getStationName(false)) {
+                endStationName = null
+            } else {
+                endStationName = trip.endStation?.getStationName(true)
+            }
+
+            if (endStationName == null) {
+                return startStationName
+            }
+
+            if (startStationName == null) {
+                return Localizer.localizeTts(R.string.trip_description_unknown_start, endStationName)
+            }
+
+            return Localizer.localizeTts(R.string.trip_description, startStationName, endStationName)
         }
     }
 }

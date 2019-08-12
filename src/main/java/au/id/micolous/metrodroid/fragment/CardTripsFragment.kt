@@ -61,7 +61,6 @@ import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.TripFormatter
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
 
@@ -77,21 +76,10 @@ class CardTripsFragment : ListFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_card_trips, null)
 
-        val trips = mTransitData?.trips.orEmpty()
+        val trips = mTransitData?.prepareTrips().orEmpty()
 
         if (trips.isNotEmpty()) {
-            val maybeObfuscatedTrips: List<Trip>
-            if (Preferences.obfuscateTripDates ||
-                    Preferences.obfuscateTripTimes ||
-                    Preferences.obfuscateTripFares) {
-                maybeObfuscatedTrips = TripObfuscator.obfuscateTrips(trips,
-                        Preferences.obfuscateTripDates,
-                        Preferences.obfuscateTripTimes,
-                        Preferences.obfuscateTripFares)
-            } else
-                maybeObfuscatedTrips = trips
-            // Explicitly sort these events
-            listAdapter = UseLogListAdapter(activity!!, maybeObfuscatedTrips.sortedWith(Trip.Comparator()).toTypedArray())
+            listAdapter = UseLogListAdapter(activity!!, trips.toTypedArray())
         } else {
             view.findViewById<View>(android.R.id.list).visibility = View.GONE
             view.findViewById<View>(R.id.error_text).visibility = View.VISIBLE
@@ -128,9 +116,7 @@ class CardTripsFragment : ListFragment() {
 
             val trip = getItem(position)!!
 
-            val start = trip.startTimestamp
-            val end = trip.endTimestamp
-            val date = start ?: end
+            val date = trip.startTimestamp ?: trip.endTimestamp
 
             val listHeader = convertView.findViewById<View>(R.id.list_header)
             if (isFirstInSection(position)) {
@@ -140,7 +126,7 @@ class CardTripsFragment : ListFragment() {
                 } else SpannableString(Localizer.localizeString(R.string.unknown_date_title))
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && headerDate != null) {
                     val ss = SpannableString(headerDate)
                     ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
                     headerText.text = ss
@@ -205,24 +191,12 @@ class CardTripsFragment : ListFragment() {
                 iconImageView.contentDescription = s
             }
 
-            when {
-                start is TimestampFull && end is TimestampFull -> {
-                    timeTextView.text = Localizer.localizeString(R.string.time_from_to,
-                            TimestampFormatter.timeFormat(start).spanned,
-                            TimestampFormatter.timeFormat(end).spanned)
-                    timeTextView.visibility = View.VISIBLE
-                }
-                start is TimestampFull -> {
-                    timeTextView.text = TimestampFormatter.timeFormat(start).spanned
-                    timeTextView.visibility = View.VISIBLE
-                }
-                end is TimestampFull -> {
-                    timeTextView.text = Localizer.localizeString(R.string.time_from_unknown_to,
-                            TimestampFormatter.timeFormat(end).spanned)
-                    timeTextView.visibility = View.VISIBLE
-                }
-                else -> timeTextView.visibility = View.INVISIBLE
-            }
+            val time = Trip.formatTimes(trip)
+            if (time != null) {
+                timeTextView.text = time.spanned
+                timeTextView.visibility = View.VISIBLE
+            } else
+                timeTextView.visibility = View.INVISIBLE
 
             val routeText = SpannableStringBuilder()
 
@@ -264,7 +238,7 @@ class CardTripsFragment : ListFragment() {
                     fareTextView.visibility = View.GONE
             }
 
-            val stationText = TripFormatter.formatStationNames(trip)
+            val stationText = Trip.formatStationNames(trip)?.spanned
             if (stationText != null) {
                 stationTextView.text = stationText
                 stationTextView.visibility = View.VISIBLE

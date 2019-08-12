@@ -36,7 +36,6 @@ import android.webkit.WebView
 import android.webkit.WebViewFragment
 
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.TripFormatter
 import au.id.micolous.metrodroid.util.Marker
 import au.id.micolous.metrodroid.util.Preferences
 
@@ -79,7 +78,7 @@ class TripMapActivity : MetrodroidActivity() {
 
         val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.title = TripFormatter.formatStationNames(trip)
+            actionBar.title = Trip.formatStationNames(trip)?.spanned
             val agencyName = trip.getAgencyName(false)
             val routeName = Trip.getRouteDisplayName(trip)
             actionBar.subtitle = when {

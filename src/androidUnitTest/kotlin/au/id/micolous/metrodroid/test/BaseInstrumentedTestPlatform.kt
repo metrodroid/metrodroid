@@ -21,17 +21,17 @@ package au.id.micolous.metrodroid.test
 
 import android.content.Context
 import au.id.micolous.metrodroid.MetrodroidApplication
+import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.LocalizerInterface
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.coroutines.runBlocking
-import java.io.DataInputStream
-import java.io.InputStream
-import java.io.File
-import java.util.*
-import kotlin.test.BeforeTest
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import java.io.File
+import java.io.InputStream
+import kotlin.test.BeforeTest
 
 actual fun <T> runAsync(block: suspend () -> T) {
     runBlocking { block() }
@@ -45,6 +45,14 @@ actual abstract class BaseInstrumentedTestPlatform {
 
     actual fun setLocale(languageTag: String) {
         LocaleTools.setLocale(languageTag, context.resources)
+
+    @BeforeTest
+    fun setUp() {
+        Localizer.mock = object: LocalizerInterface {
+            override fun localizeString(res: Int, vararg v: Any?): String = "{$res}"
+            override fun localizePlural(res: Int, count: Int, vararg v: Any?): String = "{$res}"
+            override fun localizeTts(res: Int, vararg v: Any?): FormattedString = FormattedString("{$res}")
+        }
     }
 
     /**
