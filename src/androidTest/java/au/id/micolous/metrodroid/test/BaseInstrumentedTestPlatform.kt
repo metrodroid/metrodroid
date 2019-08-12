@@ -55,9 +55,7 @@ actual abstract class BaseInstrumentedTestPlatform {
      * @param languageTag ITEF BCP-47 language tag string
      */
     actual fun setLocale(languageTag: String) {
-        val l = compatLocaleForLanguageTag(languageTag)
-        Locale.setDefault(l)
-        setResourcesLocale(l, context.resources)
+        LocaleTools.setLocale(languageTag, context.resources)
     }
 
     /**
@@ -69,18 +67,8 @@ actual abstract class BaseInstrumentedTestPlatform {
      * @param languageTag ITEF BCP-47 language tag string
      */
     fun setAndroidLanguage(languageTag: String?) {
-        val l = languageTag?.let { compatLocaleForLanguageTag(it) }
-        setResourcesLocale(l, MetrodroidApplication.instance.resources)
-    }
-
-    private fun setResourcesLocale(l: Locale?, r: Resources) {
-        val c = r.configuration
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            c.setLocale(l)
-        } else {
-            c.locale = l
-        }
-        r.updateConfiguration(c, r.displayMetrics)
+        val l = languageTag?.let { LocaleTools.compatLocaleForLanguageTag(it) }
+        LocaleTools.setResourcesLocale(l, MetrodroidApplication.instance.resources)
     }
 
     /**
@@ -137,32 +125,5 @@ actual abstract class BaseInstrumentedTestPlatform {
         val bundle = ttsSpans[0].args
         assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY))
         assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART))
-    }
-
-    companion object {
-        private val LOCALES = mapOf(
-                "en" to Locale.ENGLISH,
-                "en-AU" to Locale("en", "AU"),
-                "en-CA" to Locale.CANADA,
-                "en-GB" to Locale.UK,
-                "en-US" to Locale.US,
-                "fr" to Locale.FRENCH,
-                "fr-CA" to Locale.CANADA_FRENCH,
-                "fr-FR" to Locale.FRANCE,
-                "ja" to Locale.JAPANESE,
-                "ja-JP" to Locale.JAPAN,
-                "ru" to Locale("ru"),
-                "ru-RU" to Locale("ru", "RU"),
-                "zh-CN" to Locale.SIMPLIFIED_CHINESE,
-                "zh-TW" to Locale.TRADITIONAL_CHINESE)
-
-        private fun compatLocaleForLanguageTag(languageTag: String): Locale {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Locale.forLanguageTag(languageTag)
-            } else {
-                LOCALES[languageTag]
-                        ?: throw IllegalArgumentException("For API < 21, add entry to LOCALES for: $languageTag")
-            }
-        }
     }
 }

@@ -28,13 +28,9 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import kotlin.test.*
 
-@RunWith(JUnit4::class)
-class OctopusTest {
+class OctopusTest : BaseInstrumentedTest() {
     private fun octopusCardFromHex(s: String, scannedAt: TimestampFull): FelicaCard {
         val data = ImmutableByteArray.fromHex(s)
 
@@ -62,16 +58,16 @@ class OctopusTest {
     private fun checkCard(c: FelicaCard, expectedBalance: TransitCurrency) {
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
-        Assert.assertEquals(OctopusTransitData.CARD_INFO.name, i!!.name)
+        assertEquals(expected=OctopusTransitData.CARD_INFO.name, actual=i!!.name)
 
         // Test TransitData
         val d = c.parseTransitData()
-        Assert.assertTrue("TransitData must be instance of OctopusTransitData",
-                d is OctopusTransitData)
+        assertTrue(message="TransitData must be instance of OctopusTransitData",
+                actual=d is OctopusTransitData)
 
         val o = d as OctopusTransitData
-        Assert.assertEquals(1, o.balances!!.size)
-        Assert.assertEquals(expectedBalance, o.balances!![0].balance)
+        assertEquals(expected=1, actual=o.balances!!.size)
+        assertEquals(expected=expectedBalance, actual=o.balances!![0].balance)
     }
 
     @Test

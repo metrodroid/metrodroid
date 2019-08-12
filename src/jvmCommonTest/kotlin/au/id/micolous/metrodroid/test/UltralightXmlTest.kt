@@ -19,13 +19,13 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import kotlin.test.Test
 
-class UltralightTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat()) {
+class UltralightXmlTest: CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testOldFile() {
-        val card = loadCard<UltralightCard>("mfu/blank_old.json")
+        val card = loadCard<UltralightCard>("mfu/blank_old.xml")
         // FIXME: Make sure this emits BlankUltralightTransitData in tests
     }
 }

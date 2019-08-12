@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.io.InputStream
 import java.io.File
 import kotlin.test.assertNotNull
+import java.util.Locale
 
 actual fun <T> runAsync(block: suspend () -> T) {
     runBlocking { block() }
@@ -12,7 +13,8 @@ actual fun <T> runAsync(block: suspend () -> T) {
 
 actual abstract class BaseInstrumentedTestPlatform actual constructor() {
     actual fun setLocale(languageTag: String) {
-        Preferences.languageActual = languageTag
+        Preferences.languageActual = languageTag.substringBefore("-")
+        Locale.setDefault(Locale.forLanguageTag(languageTag))
     }
 
     actual fun showRawStationIds(state: Boolean) {

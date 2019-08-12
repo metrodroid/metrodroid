@@ -40,8 +40,6 @@ actual typealias DrawableResource = Int
 actual typealias PluralsResource = Int
 
 actual object Localizer : LocalizerInterface {
-    @set:VisibleForTesting
-    var mock: LocalizerInterface? = null
     /**
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
@@ -51,13 +49,11 @@ actual object Localizer : LocalizerInterface {
      * @return Localized string
      */
     override fun localizeString(res: StringResource, vararg v: Any?): String {
-        mock?.let { return it.localizeString(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
         return appRes.getString(res, *v)
     }
 
     override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString {
-        mock?.let { return it.localizeFormatted(res, *v) }
         val appRes = MetrodroidApplication.instance.resources
         val spanned = SpannableString(appRes.getText(res))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Preferences.localisePlaces) {
@@ -77,7 +73,6 @@ actual object Localizer : LocalizerInterface {
      * @return Localized string
      */
     override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {
-            mock?.let { return it.localizePlural(res, count, *v) }
             val appRes = MetrodroidApplication.instance.resources
             return appRes.getQuantityString(res, count, *v)
     }

@@ -92,6 +92,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation "org.hamcrest:hamcrest-core:$hamcrest_version"
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
+    testImplementation 'org.robolectric:robolectric:4.3'
 
     lintChecks project(':lintchecks')
 }
@@ -318,6 +319,12 @@ android {
     lintOptions {
         abortOnError false
         disable 'MissingTranslation'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
     // Long timeouts needed for slow environments (like Travis CI)

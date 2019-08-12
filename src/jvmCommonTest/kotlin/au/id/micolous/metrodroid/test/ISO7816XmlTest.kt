@@ -18,17 +18,18 @@
  */
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
-import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ISO7816Test : CardReaderWithAssetDumpsTest(JsonKotlinFormat()) {
+class ISO7816XmlTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testIso7816Card() = runAsync {
         // Load up a Mobib card that is basically empty
-        val card = loadCard<ISO7816Card>("iso7816/mobib_blank.json")
+        val card = loadCard<ISO7816Card>("iso7816/mobib_blank.xml")
         val cardIso7816 = card.iso7816!!
 
         // Environment check

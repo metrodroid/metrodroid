@@ -19,8 +19,8 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.LocalizerInterface
+import android.content.Context
+import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.coroutines.runBlocking
 import java.io.DataInputStream
@@ -28,26 +28,44 @@ import java.io.InputStream
 import java.io.File
 import java.util.*
 import kotlin.test.BeforeTest
-import android.content.res.Resources
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricTestRunner
 
 actual fun <T> runAsync(block: suspend () -> T) {
     runBlocking { block() }
 }
 
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = intArrayOf(28))
 actual abstract class BaseInstrumentedTestPlatform {
-    @BeforeTest
-    fun setUp() {
-        Localizer.mock = object: LocalizerInterface {
-            override fun localizeString(res: Int, vararg v: Any?): String = "{$res}"
-            override fun localizePlural(res: Int, count: Int, vararg v: Any?): String = "{$res}"
-        }
+    val context : Context
+        get() = MetrodroidApplication.instance
+
+    actual fun setLocale(languageTag: String) {
+        LocaleTools.setLocale(languageTag, context.resources)
     }
 
-    actual fun setLocale(languageTag: String) {}
+    /**
+     * Sets a boolean preference.
+     * @param preference Key to the preference
+     * @param value Desired state of the preference.
+     */
+    private fun setBooleanPref(preference: String, value: Boolean) {
+        val prefs = Preferences.getSharedPreferences()
+        prefs.edit()
+                .putBoolean(preference, value)
+                .apply()
+    }
 
-    actual fun showRawStationIds(state: Boolean) {}
+    actual fun showRawStationIds(state: Boolean) {
+        setBooleanPref(Preferences.PREF_SHOW_RAW_IDS, state)
+    }
 
-    actual fun showLocalAndEnglish(state: Boolean) {}
+    actual fun showLocalAndEnglish(state: Boolean) {
+        setBooleanPref(Preferences.PREF_SHOW_LOCAL_AND_ENGLISH, state)
+    }
 
     actual fun loadAssetSafe(path: String) : InputStream? {
         val uri = BaseInstrumentedTest::class.java.getResource("/$path")?.toURI() ?: return null

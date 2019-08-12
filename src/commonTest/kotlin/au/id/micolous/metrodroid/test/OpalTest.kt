@@ -31,7 +31,7 @@ import kotlin.test.*
 /**
  * Tests for Opal card
  */
-class OpalTest {
+class OpalTest : BaseInstrumentedTest() {
     private fun constructOpalCardFromHexString(s: String): DesfireCard {
         val demoData = ImmutableByteArray.fromHex(s)
 

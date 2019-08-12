@@ -19,13 +19,13 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
+import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class ClassicCardTest: CardReaderWithAssetDumpsTest(XmlOrJsonCardFormat()) {
+class ClassicCardTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat()) {
     @Test
     fun testIncomplete() {
         val incompleteFiles = arrayOf(

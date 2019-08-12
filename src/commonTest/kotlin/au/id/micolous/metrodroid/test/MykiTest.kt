@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 
-class MykiTest {
+class MykiTest : BaseInstrumentedTest() {
     private fun constructMykiCardFromHexString(s: String): DesfireCard {
         val demoData = ImmutableByteArray.fromHex(s)
 
