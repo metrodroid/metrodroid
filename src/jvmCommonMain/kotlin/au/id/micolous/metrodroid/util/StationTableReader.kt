@@ -35,8 +35,11 @@ import java.util.Locale
 import au.id.micolous.metrodroid.proto.Stations
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.TransitName
 
 expect fun openMdstFile(dbName: String): InputStream?
+actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+    StationTableReaderImpl.getSTR(name)
 
 /**
  * Metrodroid Station Table (MdST) file reader.
@@ -44,15 +47,14 @@ expect fun openMdstFile(dbName: String): InputStream?
  * For more information about the file format, see extras/mdst/README.md in the Metrodroid source
  * repository.
  */
-actual class StationTableReader
+class StationTableReaderImpl
 /**
  * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
  * @param dbName MdST filename
  * @throws IOException On read errors
  * @throws InvalidHeaderException If the file is not a MdST file.
  */
-@Throws(IOException::class, StationTableReader.InvalidHeaderException::class)
-private constructor(dbName: String) {
+private constructor(dbName: String) : StationTableReader {
 
     private val mStationDb: Stations.StationDb
     private val mStationIndex: Stations.StationIndex? by lazy {
@@ -73,15 +75,8 @@ private constructor(dbName: String) {
     private val mTable: InputStream
     private val mStationsLength: Int
 
-    val notice: String?
-        get() {
-            if (mStationDb.licenseNotice.isEmpty()) {
-                Log.d(TAG, "Notice does not exist")
-                return null
-            }
-
-            return mStationDb.licenseNotice
-        }
+    override val notice: String?
+        get() =  mStationDb.licenseNotice.ifEmpty { null }
 
     class InvalidHeaderException : Exception()
     init {
@@ -113,61 +108,6 @@ private constructor(dbName: String) {
         mTable.mark(0)
     }
 
-    private fun useEnglishName(): Boolean {
-        val locale = Locale.getDefault().language
-        return !mStationDb.localLanguagesList.contains(locale)
-    }
-
-    fun selectBestName(name: Stations.Names, isShort: Boolean): FormattedString? {
-        val englishFull = name.english
-        val englishShort = name.englishShort
-        val english: String?
-        val hasEnglishFull = englishFull != null && !englishFull.isEmpty()
-        val hasEnglishShort = englishShort != null && !englishShort.isEmpty()
-
-        if (hasEnglishFull && !hasEnglishShort)
-            english = englishFull
-        else if (!hasEnglishFull && hasEnglishShort)
-            english = englishShort
-        else
-            english = if (isShort) englishShort else englishFull
-
-        val localFull = name.local
-        val localShort = name.localShort
-        val local: String?
-        val hasLocalFull = localFull != null && !localFull.isEmpty()
-        val hasLocalShort = localShort != null && !localShort.isEmpty()
-
-        if (hasLocalFull && !hasLocalShort)
-            local = localFull
-        else if (!hasLocalFull && hasLocalShort)
-            local = localShort
-        else
-            local = if (isShort) localShort else localFull
-
-        if (showBoth() && english != null && !english.isEmpty()
-                && local != null && !local.isEmpty()) {
-            if (english == local)
-                return FormattedString.language(local, mStationDb.ttsHintLanguage)
-            return if (useEnglishName()) FormattedString.english(english) + " (" + FormattedString.language(local, mStationDb.ttsHintLanguage) + ")" else FormattedString.language(local, mStationDb.ttsHintLanguage) + " (" + FormattedString.english(english) + ")"
-        }
-        if (useEnglishName() && english != null && !english.isEmpty()) {
-            return FormattedString.english(english)
-        }
-
-        return if (local != null && !local.isEmpty()) {
-            // Local preferred, or English not available
-            FormattedString.language(local, mStationDb.ttsHintLanguage)
-        } else {
-            // Local unavailable, use English
-            FormattedString.english(english)
-        }
-    }
-
-    private fun showBoth(): Boolean {
-        return Preferences.showBothLocalAndEnglish
-    }
-
     /**
      * Gets a Station object, according to the MdST Protobuf definition.
      * @param id Stop ID
@@ -189,9 +129,24 @@ private constructor(dbName: String) {
         return Stations.Station.parseDelimitedFrom(mTable)
     }
 
-    private fun getOperatorDefaultMode(oper: Int): Trip.Mode? {
+    override fun getOperatorDefaultMode(oper: Int): Trip.Mode? {
         val po = mStationDb.getOperatorsOrDefault(oper, null) ?: return null
         return if (po.defaultTransport == Stations.TransportType.UNKNOWN) null else Trip.Mode.valueOf(po.defaultTransport.toString())
+    }
+
+    override fun getOperatorName(oper: Int): TransitName? {
+        val po = mStationDb.getOperatorsOrDefault(oper, null) ?: return null
+        return makeTransitName(po.name ?: return null)
+    }
+
+    override fun getLineName(id: Int): TransitName? {
+        val pl = mStationDb.getLinesOrDefault(id, null) ?: return null
+        return makeTransitName(pl.name)
+    }
+
+    override fun getLineMode(id: Int): Trip.Mode? {
+        val pl = mStationDb.getLinesOrDefault(id, null) ?: return null
+        return if (pl.transport == Stations.TransportType.UNKNOWN) null else Trip.Mode.valueOf(pl.transport.toString())
     }
 
     /**
@@ -200,23 +155,21 @@ private constructor(dbName: String) {
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    @Throws(IOException::class)
-    private fun getStationById(id: Int, humanReadableID: String): Station? {
+    override fun getStationById(id: Int, humanReadableID: String): ProtoStation? {
         val ps = getProtoStationById(id) ?: return null
-        val lines = mutableMapOf<Int, Stations.Line>()
-        for (lineId in ps.lineIdList) {
-            val l = mStationDb.getLinesOrDefault(lineId, null)
-            if (l != null) {
-                lines[lineId] = l
-            }
-        }
-
-        return fromProto(humanReadableID, ps,
-                mStationDb.getOperatorsOrDefault(ps.operatorId, null),
-                lines, this)
+        return ProtoStation(name = makeTransitName(ps.name), latitude = ps.latitude, longitude = ps.longitude,
+                            lineIdList = ps.lineIdList, operatorId = ps.operatorId)
     }
 
-    actual companion object {
+    private fun makeTransitName(name: Stations.Names) =
+        TransitName(englishFull = name.english,
+                    englishShort = name.englishShort,
+                    localFull = name.local,
+                    localShort = name.localShort,
+                    localLanguagesList = mStationDb.localLanguagesList,
+                    ttsHintLanguage = mStationDb.ttsHintLanguage)
+
+    companion object {
         private val MAGIC = byteArrayOf(0x4d, 0x64, 0x53, 0x54)
         private const val VERSION = 1
         private const val TAG = "StationTableReader"
@@ -230,7 +183,7 @@ private constructor(dbName: String) {
 
         private val mSTRs: MutableMap<String, StationTableReader> = HashMap()
 
-        private fun getSTR(@NonNls name: String?): StationTableReader? {
+        internal fun getSTR(@NonNls name: String?): StationTableReader? {
             if (name == null) {
                 return null
             }
@@ -241,7 +194,7 @@ private constructor(dbName: String) {
             }
 
             try {
-                val str = StationTableReader(name)
+                val str = StationTableReaderImpl(name)
                 synchronized(mSTRs) {
                     mSTRs.put(name, str)
                 }
@@ -251,92 +204,5 @@ private constructor(dbName: String) {
                 return null
             }
         }
-
-        @JvmOverloads
-        actual fun getStationNoFallback(reader: String?, id: Int, humanReadableId: String): Station? {
-            val str = StationTableReader.getSTR(reader) ?: return null
-            try {
-                return str.getStationById(id, humanReadableId)
-            } catch (e: IOException) {
-                return null
-            }
-        }
-
-        @JvmOverloads
-        actual fun getStation(reader: String?, id: Int, humanReadableId: String): Station {
-            val s = getStationNoFallback(reader, id, humanReadableId) ?: return Station.unknown(humanReadableId)
-            return s
-        }
-
-        private fun fallbackName(id: Int): FormattedString =
-            Localizer.localizeFormatted(R.string.unknown_format, NumberUtils.intToHex(id))
-
-        private fun fallbackName(humanReadableId: String): FormattedString =
-            Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
-
-        actual fun getOperatorDefaultMode(reader: String?, id: Int): Trip.Mode {
-            if (reader == null)
-                return Trip.Mode.OTHER
-            val str = StationTableReader.getSTR(reader) ?: return Trip.Mode.OTHER
-            val m = str.getOperatorDefaultMode(id) ?: return Trip.Mode.OTHER
-            return m
-        }
-
-        @JvmOverloads
-        actual fun getLineName(reader: String?, id: Int, humanReadableId: String): FormattedString? {
-            if (reader == null)
-                return fallbackName(humanReadableId)
-
-            val str = getSTR(reader) ?: return fallbackName(humanReadableId)
-            val pl = str.mStationDb.getLinesOrDefault(id, null) ?: return fallbackName(humanReadableId)
-            return str.selectBestName(pl.name, false)
-        }
-
-        actual fun getLineMode(reader: String?, id: Int): Trip.Mode? {
-            val str = getSTR(reader) ?: return null
-            val pl = str.mStationDb.getLinesOrDefault(id, null) ?: return null
-            return if (pl.transport == Stations.TransportType.UNKNOWN) null else Trip.Mode.valueOf(pl.transport.toString())
-        }
-
-        actual fun getOperatorName(reader: String?, id: Int, isShort: Boolean, humanReadableId: String): FormattedString? {
-            val str = StationTableReader.getSTR(reader) ?: return fallbackName(humanReadableId)
-            val po = str.mStationDb.getOperatorsOrDefault(id, null) ?: return fallbackName(humanReadableId)
-            return str.selectBestName(po.name, isShort)
-        }
-
-        private fun fromProto(humanReadableID: String, ps: Stations.Station,
-                              po: Stations.Operator?, pl: Map<Int, Stations.Line>?,
-                              str: StationTableReader): Station {
-            val hasLocation = ps.latitude != 0f && ps.longitude != 0f
-
-            var lines: MutableList<FormattedString>? = null
-            var lineIds: MutableList<String>? = null
-
-            if (pl != null) {
-                lines = ArrayList()
-                lineIds = ArrayList()
-                for ((first, second) in pl) {
-                    lines.addAll(listOfNotNull(str.selectBestName(second.getName(), true)))
-                    lineIds.add(NumberUtils.intToHex(first))
-                }
-            }
-
-            return Station(
-                    humanReadableID,
-                    if (po == null) null else str.selectBestName(po.name, true),
-                    lines,
-                    str.selectBestName(ps.name, false),
-                    str.selectBestName(ps.name, true),
-                    if (hasLocation) ps.latitude else null,
-                    if (hasLocation) ps.longitude else null,
-                    false, lineIds.orEmpty())
-        }
-
-        /**
-         * Gets a licensing notice that applies to a particular MdST file.
-         * @param reader Station database to read from.
-         * @return String containing license notice, or null if not available.
-         */
-        actual fun getNotice(reader: String?): String? = StationTableReader.getSTR(reader)?.notice
     }
 }
