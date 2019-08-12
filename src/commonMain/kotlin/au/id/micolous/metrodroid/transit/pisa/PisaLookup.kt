@@ -19,15 +19,14 @@
 
 package au.id.micolous.metrodroid.transit.pisa
 
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
 object PisaLookup : En1545LookupSTR("pisa") {
-	override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = subs[contractTariff]?.second ?: contractTariff.toString()
-
-	fun subscriptionUsesCounter(agency: Int?, contractTariff: Int?) = subs[contractTariff]?.first ?: true
+	fun subscriptionUsesCounter(agency: Int?, contractTariff: Int?) = contractTariff !in listOf(316, 317, 385)
 
 	override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
 
@@ -35,10 +34,10 @@ object PisaLookup : En1545LookupSTR("pisa") {
 
 	override fun getMode(agency: Int?, route: Int?) = Trip.Mode.OTHER
 
-	private val subs = mapOf(
-		316 to Pair(false, "ABB ANN PERS PISA SBE"),
-		317 to Pair(false, "ABB MENS PERS PISA SBE"),
-		322 to Pair(true, "CARNET 10 BGL 70 MIN PISA"),
-		385 to Pair(false, "ABB. TRIM. PERS. PISA")
+	override val subscriptionMap = mapOf(
+			316 to R.string.pisa_abb_ann_pers_pisa_sbe,
+			317 to R.string.pisa_abb_mens_pers_pisa_sbe,
+			322 to R.string.pisa_carnet_10_bgl_70_min_pisa,
+			385 to R.string.pisa_abb_trim_pers_pisa
 	)
 }

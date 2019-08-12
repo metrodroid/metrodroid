@@ -1340,6 +1340,58 @@
     <string name="ovc_yes">Yes</string>
     <string name="ovc_no">No</string>
 
+    <!-- NS -->
+    <!-- Translators: Dutch "Netabonnement Particulier Jaar" -->
+    <string name="ovc_sub_ov_jaarkaart">Personal Net Pass Annual</string>
+    <!-- Translators: Dutch "Bijabonnement 1e klas" -->
+    <string name="ovc_sub_ov_bijkaart_1e_klas">Optional Additional Season Ticket, First Class</string>
+    <!-- Translators: Dutch "NS-Business Card" -->
+    <string name="ovc_sub_ns_businesscard">NS-Business Card</string>
+    <!-- Translators: Dutch "Dal Voordeel" -->
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel</string>
+    <!-- Translators: Dutch "Reizen op saldo bij NS, 1e klasse" -->
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Travel on Credit, First Class</string>
+    <!-- Translators: Dutch "Reizen op saldo bij NS, 2de klasse" -->
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Travel on Credit, Second Class</string>
+    <!-- Translators: Dutch "Dal Voordeel reizen op saldo" -->
+    <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, Travel on Credit</string>
+    <!-- Translators: Dutch "Reizen op saldo (2-1 Dag)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Travel on Credit (2-1 Day)</string>
+    <!-- Translators: Dutch "Reizen op saldo (1-2 Dag)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Travel on Credit (1-2 Day)</string>
+    <!-- Translators: Dutch "Reizen op saldo (2-1 Dag met korting)" -->
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Travel on Credit (2-1 Discount)</string>
+    <!--  Arriva -->
+    <!-- Translators: Dutch "Dal Korting" -->
+    <string name="ovc_sub_dalkorting">Dal Korting</string>
+    <!-- Connexxion -->
+    <!-- Translators: Dutch "Dal Voordeel Oost" -->
+    <string name="ovc_sub_daluren_oost_nederland">Off-peak Discount East</string>
+    <!--  DUO -->
+    <!-- Translators: Dutch "Student weekend-vrij" -->
+    <string name="ovc_sub_student_weekend_vrij">Student Weekend Vrij</string>
+    <!-- Translators: Dutch "Student week-korting" -->
+    <string name="ovc_sub_student_week_korting">Student Weekdays Discount</string>
+    <!-- Translators: Dutch "Student week-vrij" -->
+    <string name="ovc_sub_student_week_vrij">Student Weekdays Vrij</string>
+    <!-- Translators: Dutch "Student weekend-korting" -->
+    <string name="ovc_sub_student_weekend_korting">Student Weekend Discount</string>
+    <!-- GVB -->
+    <!-- Translators: Dutch "OV-fietsabonnement" -->
+    <string name="ovc_sub_fietssupplement">OV-fiets Season Ticket</string>
+    <!-- Defunct cards. They are no longer used but may still show up on old cards -->
+    <!-- Translators: Dutch "DALU Dalkorting" -->
+    <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
+    <!-- Translators: Dutch "Studenten OV-chipkaart week (2009)" -->
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
+    <!-- Translators: Dutch "Studenten OV-chipkaart weekend (2009)" -->
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-chipkaart weekend (2009)</string>
+    <!-- Translators: Dutch "Studentenkaart korting week (2009)" -->
+    <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkaart korting week (2009)</string>
+    <!-- Translators: Dutch "Studentenkaart korting weekend (2009)" -->
+    <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkaart korting weekend (2009)</string>
+
+
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit info</string>
     <string name="software_information">Software info</string>
@@ -1355,6 +1407,28 @@
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
     <string name="expiry_date">Expiry date</string>
+    <string name="compass_sub_daypass">DayPass</string>
+    <string name="compass_sub_one_zone">One Zone</string>
+    <string name="compass_sub_two_zone">Two Zone</string>
+    <string name="compass_sub_three_zone">Three Zone</string>
+    <!-- Translators: WCE is West Coast Express (https://www.translink.ca/Fares-and-Passes/West-Coast-Express-Fares.aspx) -->
+    <string name="compass_sub_four_zone_wce_one_way">Four Zone WCE (one way)</string>
+    <string name="compass_sub_free_sea_island">Sea Island free ticket</string>
+    <string name="compass_sub_exit">Exit</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_one_zone_with_yvr">One Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_two_zone_with_yvr">Two Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_three_zone_with_yvr">Three Zone with YVR</string>
+    <!-- YVR is the main airport for Vancouver and it attracts additional surcharge. https://www.translink.ca/Fares-and-Passes/Canada-Line-YVR-AddFare.aspx -->
+    <string name="compass_sub_daypass_with_yvr">DayPass with YVR</string>
+    <string name="compass_sub_bulk_daypass">Bulk DayPass</string>
+    <string name="compass_sub_bulk_one_zone">Bulk One Zone</string>
+    <string name="compass_sub_bulk_two_zone">Bulk Two Zone</string>
+    <string name="compass_sub_bulk_three_zone">Bulk Three Zone</string>
+    <!-- Translators: Free travel card for final-year high school students during summer: https://www.translink.ca/-/media/Documents/rider_guide/Buzzer-Vault/1990s/1994/Buzzer_1994_05_06.pdf. -->
+    <string name="compass_sub_gradpass">GradPass</string>
 
     <!--
     Translators: Some cards record the cardholder's gender, this is used to label the field.
@@ -1492,6 +1566,9 @@
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">Rav-Kav mobile top-up</string>
+    <!-- Translators: this is a subscription ID used for generic single-ride and
+         multi-ride ticket.  -->
+    <string name="ravkav_generic_trips">Trips</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
@@ -1879,8 +1956,35 @@
 
     <!-- Oyster (London, UK) -->
     <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
+    <string name="oyster_travelpass">Travelpass / Season Ticket</string>
 
     <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
+
+    <!-- TODO: Translate into English and remove translatable=false. -->
+    <!-- Translators: Portuguese "Ass. PAL - LIS" -->
+    <string name="lisboaviva_sub_ass_pal_lis">Palmela to Lisbon</string>
+    <!-- Translators: Portuguese "Ass. FOG - LIS" -->
+    <string name="lisboaviva_sub_ass_fog_lis">Fogueteiro to Lisbon</string>
+    <!-- Translators: Portuguese "Ass. PRA - LIS" -->
+    <string name="lisboaviva_sub_ass_pra_lis">Pragal to Lisbon</string>
+    <!-- Translators: Portuguese "Passe MTS". MTS = Metro Transportes do Sul: http://www.mts.pt/tarifarios/ https://en.wikipedia.org/wiki/Metro_Transportes_do_Sul -->
+    <string name="lisboaviva_sub_passe_mts">MTS subscription (passe)</string>
+    <!-- Translators: Portuguese "Metro / RL 12" -->
+    <string name="lisboaviva_sub_metro_rl_12" translatable="false">Metro / RL 12</string>
+    <!-- Translators: Portuguese "Vermelho A1" -->
+    <string name="lisboaviva_sub_vermelho_a1">Red A1</string>
+    <!-- Translators: Portuguese "Metro/CP - R. Mouro/Meleças". Rio de Mouro and Meleças are stations on the CP Sinstra Urban Metro line. -->
+    <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Metro line CP - Rio de Mouro/Meleças</string>
+    <!-- Translators: Portuguese "Navegante urbano". Also appears in English as "Navegante urbano": https://www.metrolisboa.pt/en/wp-content/uploads/sites/3/2019/04/MetropolitanoDeLisboa_Fares_apr1st2019-1.pdf -->
+    <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
+    <!-- Translators: Portuguese "Navegante rede" -->
+    <string name="lisboaviva_sub_navegante_rede" translatable="false">Navegante rede</string>
+    <!-- Translators: Portuguese "Navegante SL TCB Barreiro" -->
+    <string name="lisboaviva_sub_navegante_sl_tcb_barreiro" translatable="false">Navegante SL TCB Barreiro</string>
+    <!-- Translators: Fertagus is a company: https://en.wikipedia.org/wiki/Fertagus. Portuguese "Fertagus PAL - LIS + ML" -->
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela to Lisbon + Metropolitan Area</string>
+    <string name="lisboaviva_sub_zapping" translatable="false">Zapping</string>
+
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
     written in English.
@@ -2118,4 +2222,58 @@
     <string name="show_debug_spans_desc">Highlight default language in green, english in yellow and local language in
         blue
     </string>
+
+    <!-- Translators:  first argument is sector name e.g. "Montparnasse", second one is station numeric ID. -->
+    <string name="navigo_sector_station_id">Sector ID %1$s, station ID %2$d</string>
+    <!-- Translators:  first argument is sector numeric ID, second one is station numeric ID. -->
+    <string name="navigo_sector_id_station_id">Sector ID %1$d, station ID %2$d</string>
+    <!-- Translators: ticket for the whole day. French "Forfait jour". -->
+    <string name="navigo_forfait_jour">Day ticket</string>
+    <!-- Translators: ticket for long period. French "Forfait". -->
+    <string name="navigo_forfait">Season ticket</string>
+    <!-- Translators: French "Billet Tarif Normal" -->
+    <string name="oura_billet_tarif_normal">Normal-price ticket</string>
+    <!-- Translators: French "Ligne %d" -->
+    <string name="gironde_line">Line number %d</string>
+
+    <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
+    <string name="mobib_jump_1_trip">Jump 1 trip</string>
+    <!-- Translators: French "JUMP 10 Voyages", Dutch "JUMP 10 ritten" -->
+    <string name="mobib_jump_10_trips">Jump 10 trips</string>
+    <!-- Translators: French "1 Voyages BUS Airport", Dutch "1 rit BUS Airport". -->
+    <string name="mobib_airport_bus">Single fare bus airport</string>
+    <!-- Translators: French "JUMP 24h + BUS Airport", Dutch "JUMP 24 - 48 - 72 uur + BUS Airport" -->
+    <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Airport</string>
+
+    <string name="rkf_stockholm_30_days">Stockholm 30-day ticket</string>
+
+    <string name="ricaricami_single_urban">Urban ticket</string>
+    <string name="ricaricami_daily_urban">Urban daily ticket</string>
+    <string name="ricaricami_urban_2x6">Urban weekly 2x6 ticket</string>
+    <string name="ricaricami_yearly_urban">Urban annual subscription</string>
+    <string name="ricaricami_monthly_urban">Urban monthly subscription</string>
+
+    <string name="venezia_ticket_24h">24-hour ticket</string>
+    <!-- Translators: "Rete Unica" litelrally "Unique Network" is
+         a ticket that allows travel on all transport. Agency calls it
+         "Rete Unica" even in English. Italian "Rete Unica 75'". -->
+    <string name="venezia_rete_unica_75min">75-minute Rete Unica 75</string>
+    <!-- Translators: Italian "Rete Unica 100'". -->
+    <string name="venezia_rete_unica_100min">100-minute Rete Unica</string>
+    <string name="venezia_bus_ticket_75min">75-minute bus ticket</string>
+    <string name="venezia_airport_bus_ticket">Airport bus ticket</string>
+    <!-- Translators: book of 10 single tickets for traghetti (
+         short boat trips which cross the canals of Venice).
+         Italian: Carnet Traghetto
+    -->
+    <string name="venezia_carnet_traghetto">Carnet Traghetto</string>
+
+    <!-- Translators: Italian "ABB ANN PERS PISA SBE" -->
+    <string name="pisa_abb_ann_pers_pisa_sbe">Yearly subscription Pisa</string>
+    <!-- Translators: Italian "ABB MENS PERS PISA SBE" -->
+    <string name="pisa_abb_mens_pers_pisa_sbe">Monthly subscription Pisa</string>
+    <!-- Translators: Italian "CARNET 10 BGL 70 MIN PISA" -->
+    <string name="pisa_carnet_10_bgl_70_min_pisa">Pack of 10 tickets for 70 minutes</string>
+    <!-- Translators: Italian "ABB. TRIM. PERS. PISA" -->
+    <string name="pisa_abb_trim_pers_pisa">Trimestrial subscription Pisa</string>
 </resources>

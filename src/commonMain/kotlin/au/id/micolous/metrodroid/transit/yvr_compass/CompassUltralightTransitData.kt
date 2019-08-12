@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.yvr_compass
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -44,7 +45,7 @@ class CompassUltralightTransitData (override val capsule: NextfareUltralightTran
     private constructor(card: UltralightCard) : this(NextfareUltralightTransitData.parse(card) {
         raw, baseDate -> CompassUltralightTransaction(raw, baseDate) })
 
-    override fun getProductName(productCode: Int): String? = productCodes[productCode]
+    override fun getProductName(productCode: Int): String? = productCodes[productCode]?.let { Localizer.localizeString(it) }
 
     companion object {
         private const val NAME = "Compass"
@@ -81,26 +82,25 @@ class CompassUltralightTransitData (override val capsule: NextfareUltralightTran
         }
 
         private val productCodes = mapOf(
-            // TODO: i18n
-            0x01 to "DayPass",
-            0x02 to "One Zone",
-            0x03 to "Two Zone",
-            0x04 to "Three Zone",
-            0x0f to "Four Zone WCE (one way)",
-            0x11 to "Free Sea Island",
-            0x16 to "Exit",
-            0x1e to "One Zone with YVR",
-            0x1f to "Two Zone with YVR",
-            0x20 to "Three Zone with YVR",
-            0x21 to "DayPass with YVR",
-            0x22 to "Bulk DayPass",
-            0x23 to "Bulk One Zone",
-            0x24 to "Bulk Two Zone",
-            0x25 to "Bulk Three Zone",
-            0x26 to "Bulk One Zone",
-            0x27 to "Bulk Two Zone",
-            0x28 to "Bulk Three Zone",
-            0x29 to "GradPass"
+            0x01 to R.string.compass_sub_daypass,
+            0x02 to R.string.compass_sub_one_zone,
+            0x03 to R.string.compass_sub_two_zone,
+            0x04 to R.string.compass_sub_three_zone,
+            0x0f to R.string.compass_sub_four_zone_wce_one_way,
+            0x11 to R.string.compass_sub_free_sea_island,
+            0x16 to R.string.compass_sub_exit,
+            0x1e to R.string.compass_sub_one_zone_with_yvr,
+            0x1f to R.string.compass_sub_two_zone_with_yvr,
+            0x20 to R.string.compass_sub_three_zone_with_yvr,
+            0x21 to R.string.compass_sub_daypass_with_yvr,
+            0x22 to R.string.compass_sub_bulk_daypass,
+            0x23 to R.string.compass_sub_bulk_one_zone,
+            0x24 to R.string.compass_sub_bulk_two_zone,
+            0x25 to R.string.compass_sub_bulk_three_zone,
+            0x26 to R.string.compass_sub_bulk_one_zone,
+            0x27 to R.string.compass_sub_bulk_two_zone,
+            0x28 to R.string.compass_sub_bulk_three_zone,
+            0x29 to R.string.compass_sub_gradpass
         )
     }
 }

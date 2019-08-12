@@ -43,7 +43,7 @@ internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde"), Intercod
         if (routeNumber == null)
             return null
         if (agency == TRANSGIRONDE)
-            return FormattedString.language("Ligne $routeNumber", "fr-FR")
+            return Localizer.localizeFormatted(R.string.gironde_line, routeNumber)
         return super.getRouteName(routeNumber, routeNumber, agency, transport)
     }
 

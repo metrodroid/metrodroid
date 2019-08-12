@@ -24,7 +24,4 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
 internal abstract class IntercodeLookupSTR(str: String) : En1545LookupSTR(str), IntercodeLookup {
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        return if (contractTariff == null) null else Localizer.localizeString(R.string.unknown_format, contractTariff)
-    }
 }

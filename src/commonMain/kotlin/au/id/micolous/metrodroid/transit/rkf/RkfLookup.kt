@@ -19,9 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -88,15 +86,12 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
 
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String =
-        subs[Pair(agency, contractTariff)] ?: if (contractTariff != null)
-                "0x${contractTariff.toString(16)}" else "none"
+    override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> = mapOf(
+        Pair(0x65, 0x3fe) to R.string.rkf_stockholm_30_days
+    )
 
     companion object {
         const val SLACCESS = 101
         const val REJSEKORT = 2000
-        private val subs = mapOf(
-                Pair(0x65, 0x3fe) to "Stockholm 30-day"
-        )
     }
 }

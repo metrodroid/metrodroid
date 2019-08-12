@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit.intercode
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
@@ -52,29 +53,24 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
         }
         if ((agency == RATP || agency == SNCF) && (transport == En1545Transaction.TRANSPORT_METRO || transport == En1545Transaction.TRANSPORT_TRAM)) {
             mdstStationId = mdstStationId and 0x0000fff0 or 0x3020000
-            // TODO: i18n
             fallBackName = if (SECTOR_NAMES[sector_id] != null)
-                "sector " + SECTOR_NAMES[sector_id] + " station " + station_id
+                Localizer.localizeString(R.string.navigo_sector_station_id,
+                        SECTOR_NAMES[sector_id], station_id)
             else
-                "sector $sector_id station $station_id"
-            humanReadableId = sector_id.toString() + "/" + station_id
+                Localizer.localizeString(R.string.navigo_sector_id_station_id,
+                        sector_id, station_id)
+            humanReadableId = "$sector_id/$station_id"
         }
 
         return StationTableReader.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId)
                 ?: Station.unknown(fallBackName)
     }
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        when (contractTariff) {
-            0 ->
-                // TODO: i18n
-                return "Forfait"
-            3 -> return "Forfait jour"
-        }
-        return Localizer.localizeString(R.string.unknown_format, contractTariff)
-    }
+
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
+            0 to R.string.navigo_forfait,
+            3 to R.string.navigo_forfait_jour
+    )
 
     private val SECTOR_NAMES = mapOf(
             // TODO: Move this to MdSt

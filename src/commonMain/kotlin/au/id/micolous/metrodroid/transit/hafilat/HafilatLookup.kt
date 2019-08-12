@@ -34,19 +34,11 @@ object HafilatLookup : En1545LookupSTR("hafilat") {
 
     override fun parseCurrency(price: Int): TransitCurrency = TransitCurrency(price, "AED")
 
-    override fun getSubscriptionName(agency: Int?, contractTariff: Int?): String? {
-        if (contractTariff == null)
-            return null
-        val tariff = TARIFFS[contractTariff] ?: return NumberUtils.intToHex(contractTariff)
-
-        return Localizer.localizeString(tariff)
-    }
-
     internal fun isPurseTariff(agency: Int?, contractTariff: Int?): Boolean = agency == 1 && contractTariff in listOf(0x2710)
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?) = FormattedString(routeNumber.toString())
 
-    private val TARIFFS = mapOf(
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
             0x2710 to R.string.adelaide_ticket_type_regular
             // TODO: handle other tickets
     )
