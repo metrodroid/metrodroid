@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   strings.xml
 
@@ -19,8 +19,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-<resources>
+  --><resources>
     <string name="directions">Napauta korttia.</string>
     <string name="reading_card">Luetaan korttia</string>
     <string name="dont_move">Älä liikuta korttia</string>
@@ -44,17 +43,104 @@
     <string name="accessibility">Helppokäyttöisyys</string>
     <string name="speak_balance">Sano saldo</string>
     <string name="speak_balance_summary"/>
-    <string name="balance_speech">Saldo <xliff:g xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Saldo <xliff:g xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">Lataa…</string>
     <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
     <string name="supported_cards">Tuetut kortit</string>
-
-
     <string name="nfc_off_error">NFC on pois päältä</string>
     <string name="turn_on_nfc">Salli NFC:n käyttö jotta voin lukea kortin tiedot.</string>
     <string name="unknown_card_description">Metrodroid ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
-
     <string name="hsl_balance_refill">Arvon lataus</string>
     <string name="hsl_balance_ticket">Arvolippu</string>
     <string name="hsl_pass_ticket">Kausilippu</string>
+    <string name="license">Lisenssit</string>
+    <string name="location_singapore">Singapore</string>
+    <string name="location_tokyo">Tokio, Japani</string>
+    <string name="location_kansai">Kansai, Japani</string>
+    <string name="location_the_netherlands">Alankomaat</string>
+    <string name="location_sao_paulo">São Paulo, Brasilia</string>
+    <string name="location_helsinki_finland">Helsinki, Suomi</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_shenzhen">Shenzhen, Kiina</string>
+    <string name="location_christchurch_nz">Christchurch, Uusi-Seelanti</string>
+    <string name="mode_bus">Bussi</string>
+    <string name="mode_train">Juna</string>
+    <string name="mode_tram">Raitiovaunu</string>
+    <string name="mode_metro">Metro</string>
+    <string name="mode_ferry">Lautta</string>
+    <string name="location_moscow">Moskova, Venäjä</string>
+    <string name="location_saint_petersburg">Pietari, Venäjä</string>
+    <string name="location_israel">Israel</string>
+    <string name="location_vancouver">Vancouver, BC, Kanada</string>
+    <string name="location_quebec">Québec, Kanada</string>
+    <string name="location_istanbul">Istanbul, Turkki</string>
+    <string name="location_ireland">Irlanti</string>
+    <string name="location_brussels">Bryssel, Belgia</string>
+    <string name="location_gironde">Gironde, Ranska</string>
+    <string name="location_grenoble">Grenoble, Ranska</string>
+    <string name="location_lisbon">Lissabon, Portugali</string>
+    <string name="location_milan">Milano, Italia</string>
+    <string name="location_paris">Pariisi, Ranska</string>
+    <string name="location_sophia_antipolis">Sophia Antipolis, Ranska</string>
+    <string name="location_montpellier">Montpellier, Ranska</string>
+    <string name="location_toulouse">Toulouse, Ranska</string>
+    <string name="location_beijing">Peking, Kiina</string>
+    <string name="location_wuhan">Wuhan, Kiina</string>
+    <string name="location_kiev">Kiova, Ukraina</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="location_taipei">Taipei</string>
+    <string name="location_france">Ranska</string>
+    <string name="location_russia">Venäjä</string>
+    <string name="location_krasnodar">Krasnodar, Venäjä</string>
+    <string name="location_denmark">Tanska</string>
+    <string name="location_stockholm">Tukholma, Ruotsi</string>
+    <string name="location_auckland">Auckland, Uusi-Seelanti</string>
+    <string name="location_waikato">Waikato, Uusi-Seelanti</string>
+    <string name="location_wellington_nz">Wellington, Uusi-Seelanti</string>
+    <string name="location_otago">Otago, Uusi-Seelanti</string>
+    <string name="location_rotorua">Rotorua, Uusi-Seelanti</string>
+    <string name="location_malaysia">Malesia</string>
+    <string name="location_samara">Samara, Venäjä</string>
+    <string name="location_venezia">Venetsia, Italia</string>
+    <string name="location_cadiz">Cádiz, Espanja</string>
+    <string name="location_tampere">Tampere, Suomi</string>
+    <string name="location_germany">Saksa</string>
+    <string name="location_germany_and_switzerland">Saksa ja Sveitsi</string>
+    <string name="location_pisa">Pisa, Italia</string>
+    <string name="location_kazan">Kazan, Venäjä</string>
+    <string name="location_shanghai">Shanghai, Kiina</string>
+    <string name="location_ekaterinburg">Jekaterinburg, Venäjä</string>
+    <string name="location_kirov">Kirov, Venäjä</string>
+    <string name="location_orenburg">Orenburg, Venäjä</string>
+    <string name="location_penza">Penza, Venäjä</string>
+    <string name="location_yoshkar_ola">Yoshkar-Ola, Venäjä</string>
+    <string name="location_barnaul">Barnaul, Venäjä</string>
+    <string name="location_warsaw">Varsova, Puola</string>
+    <string name="hsl_language">Kieli</string>
+    <string name="hsl_finnish">Suomi</string>
+    <string name="hsl_swedish">Ruotsi</string>
+    <string name="hsl_english">Englanti</string>
+    <string name="hsl_region_helsinki">Helsinki</string>
+    <string name="hsl_region_espoo">Espoo</string>
+    <string name="hsl_region_vantaa">Vantaa</string>
+    <string name="hsl_region_seutu">Seutu (HEL+ESP-VAN)</string>
+    <string name="hsl_region_kirkkonummi_siuntio">Kirkkonummi-Siuntio</string>
+    <string name="hsl_region_vihti">Vihti</string>
+    <string name="hsl_region_nurmijarvi">Nurmijärvi</string>
+    <string name="hsl_region_kerava_sipoo_tuusula">Kerava-Sipoo-Tuusula</string>
+    <string name="hsl_region_sipoo">Sipoo</string>
+    <string name="hsl_region_lahiseutu_2">Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)</string>
+    <string name="hsl_region_lahiseutu_3">Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
+    <string name="hsl_transport_bussi">Bussi</string>
+    <string name="hsl_transport_bussi_2">Bussi 2</string>
+    <string name="hsl_transport_bussi_3">Bussi 3</string>
+    <string name="hsl_transport_bussi_4">Bussi 4</string>
+    <string name="hsl_transport_raitiovaunu">Raitiovaunu</string>
+    <string name="hsl_transport_metro">Metro</string>
+    <string name="hsl_transport_juna">Juna</string>
+    <string name="hsl_transport_lautta">Lautta</string>
+    <string name="hsl_transport_u_linja">U-linja</string>
 </resources>
