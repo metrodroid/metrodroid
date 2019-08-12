@@ -42,6 +42,7 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
 
         fun dateName(base: String) = "${base}Date"
         fun datePackedName(base: String) = "${base}DatePacked"
+        fun dateBCDName(base: String) = "${base}DateBCD"
 
         fun timeName(base: String) = "${base}Time"
 
@@ -102,7 +103,7 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
             return if (sec == 0) null else getEpoch(tz).daySecond(sec / 86400, sec % 86400)
         }
 
-        fun parseBCDDate(date: Int): Timestamp {
+        fun parseDateBCD(date: Int): Timestamp {
             return Daystamp(NumberUtils.convertBCDtoInteger(date shr 16),
                     NumberUtils.convertBCDtoInteger((date shr 8) and 0xff) - 1,
                     NumberUtils.convertBCDtoInteger(date and 0xff))
@@ -110,10 +111,10 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
 
         fun date(name: String) = En1545FixedInteger(dateName(name), 14)
         fun datePacked(name: String) = En1545FixedInteger(datePackedName(name), 14)
+        fun dateBCD(name: String) = En1545FixedInteger(dateBCDName(name), 32)
         fun time(name: String) = En1545FixedInteger(timeName(name), 11)
         fun timePacked16(name: String) = En1545FixedInteger(timePacked16Name(name), 16)
         fun timePacked11Local(name: String) = En1545FixedInteger(timePacked11LocalName(name), 11)
-        fun BCDdate(name: String) = En1545FixedInteger(name, 32)
         fun dateTime(name: String) = En1545FixedInteger(dateTimeName(name), 30)
         fun dateTimeLocal(name: String) = En1545FixedInteger(dateTimeLocalName(name), 30)
         fun timeLocal(name: String) = En1545FixedInteger(timeLocalName(name), 11)

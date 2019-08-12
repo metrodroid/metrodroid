@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.time.TimestampFormatter
 
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.Preferences
 
 abstract class En1545TransitData : TransitData {
 
@@ -36,25 +37,34 @@ abstract class En1545TransitData : TransitData {
             if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
                 li.add(ListItem(R.string.en1545_network_id,
                         mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID).toString(16)))
-            mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_VALIDITY_END, tz)?.let {
-                li.add(ListItem(R.string.expiry_date, it))
+
+            mTicketEnvParsed.getTimeStamp(ENV_APPLICATION_VALIDITY_END, tz)?.let {
+                li.add(ListItem(R.string.expiry_date, TimestampFormatter.longDateFormat(it)))
             }
-            if (mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE) != 0)
-                li.add(ListItem(R.string.date_of_birth,
-                        TimestampFormatter.longDateFormat(En1545FixedInteger.parseBCDDate(
-                                mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE)))))
+
+            if (!Preferences.hideCardNumbers && !Preferences.obfuscateTripDates)
+                mTicketEnvParsed.getTimeStamp(HOLDER_BIRTH_DATE, tz)?.let {
+                    li.add(ListItem(R.string.date_of_birth, TimestampFormatter.longDateFormat(it)))
+                }
+
             if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID) != 0)
                 li.add(ListItem(R.string.card_issuer,
                         lookup.getAgencyName(mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID), false)))
-            if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE)) != 0)
-                li.add(ListItem(R.string.issue_date, mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_ISSUE, tz)))
 
-            mTicketEnvParsed.getTimeStampString(HOLDER_PROFILE, tz)?.let {
-                li.add(ListItem(R.string.en1545_card_expiry_date_profile, it)) }
+            mTicketEnvParsed.getTimeStamp(ENV_APPLICATION_ISSUE, tz)?.let {
+                li.add(ListItem(R.string.issue_date, TimestampFormatter.longDateFormat(it)))
+            }
 
-            if (mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE) != 0)
-                li.add(ListItem(R.string.postal_code,
-                        mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE).toString()))
+            mTicketEnvParsed.getTimeStamp(HOLDER_PROFILE, tz)?.let {
+                li.add(ListItem(R.string.en1545_card_expiry_date_profile, TimestampFormatter.longDateFormat(it)))
+            }
+
+            if (!Preferences.hideCardNumbers && !Preferences.obfuscateTripDates)
+                // Only Mobib sets this, and Belgium has numeric postal codes.
+                mTicketEnvParsed.getInt(HOLDER_INT_POSTAL_CODE)?.let {
+                    if (it != 0)
+                        li.add(ListItem(R.string.postal_code, it.toString()))
+                }
 
             mTicketEnvParsed.getInt(HOLDER_CARD_TYPE).let {
                 li.add(ListItem(R.string.card_type, when (it) {
@@ -85,14 +95,14 @@ abstract class En1545TransitData : TransitData {
                                 ENV_NETWORK_ID,
                                 En1545FixedInteger.datePackedName(ENV_APPLICATION_VALIDITY_END),
                                 En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END),
-                                HOLDER_BIRTH_DATE,
+                                En1545FixedInteger.dateBCDName(HOLDER_BIRTH_DATE),
                                 ENV_APPLICATION_ISSUER_ID,
                                 HOLDER_CARD_TYPE,
                                 En1545FixedInteger.datePackedName(ENV_APPLICATION_ISSUE),
                                 En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
                                 En1545FixedInteger.datePackedName(HOLDER_PROFILE),
                                 En1545FixedInteger.dateName(HOLDER_PROFILE),
-                                HOLDER_POSTAL_CODE,
+                                HOLDER_INT_POSTAL_CODE,
                                 ENV_CARD_SERIAL,
                                 ENV_AUTHENTICATOR
                         )
@@ -102,12 +112,12 @@ abstract class En1545TransitData : TransitData {
     companion object {
         const val ENV_NETWORK_ID = "EnvNetworkId"
         const val ENV_VERSION_NUMBER = "EnvVersionNumber"
-        const val HOLDER_BIRTH_DATE = "HolderBirthDate"
+        const val HOLDER_BIRTH_DATE = "HolderBirth"
         const val ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd"
         const val ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId"
         const val ENV_APPLICATION_ISSUE = "EnvApplicationIssue"
         const val HOLDER_PROFILE = "HolderProfile"
-        const val HOLDER_POSTAL_CODE = "HolderPostalCode"
+        const val HOLDER_INT_POSTAL_CODE = "HolderIntPostalCode"
         const val HOLDER_CARD_TYPE = "HolderDataCardStatus"
         const val ENV_AUTHENTICATOR = "EnvAuthenticator"
         const val ENV_UNKNOWN_A = "EnvUnknownA"

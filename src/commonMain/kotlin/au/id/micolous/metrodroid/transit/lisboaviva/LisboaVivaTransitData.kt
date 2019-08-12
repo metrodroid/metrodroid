@@ -79,7 +79,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                 En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_ISSUE),
                 En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
                 En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 15),
-                En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
+                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                 En1545FixedHex(En1545TransitData.ENV_UNKNOWN_D, 95)
         )
 

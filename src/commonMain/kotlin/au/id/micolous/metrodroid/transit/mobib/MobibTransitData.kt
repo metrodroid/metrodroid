@@ -111,10 +111,10 @@ class MobibTransitData(
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_B, 9),
                         En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 6),
-                        En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
+                        En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                         En1545FixedHex(En1545TransitData.ENV_CARD_SERIAL, 76),
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_D, 5),
-                        En1545FixedInteger(En1545TransitData.HOLDER_POSTAL_CODE, 14),
+                        En1545FixedInteger(En1545TransitData.HOLDER_INT_POSTAL_CODE, 14),
                         En1545FixedHex(En1545TransitData.ENV_UNKNOWN_E, 34)
                 )
                 else -> En1545Container(
@@ -124,10 +124,10 @@ class MobibTransitData(
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_B, 5),
                         En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 10),
-                        En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
+                        En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                         En1545FixedHex(En1545TransitData.ENV_CARD_SERIAL, 76),
                         En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_D, 5),
-                        En1545FixedInteger(En1545TransitData.HOLDER_POSTAL_CODE, 14),
+                        En1545FixedInteger(En1545TransitData.HOLDER_INT_POSTAL_CODE, 14),
                         En1545FixedHex(En1545TransitData.ENV_UNKNOWN_E, 34)
                 )
         }

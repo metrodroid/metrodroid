@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.intercode
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
@@ -46,8 +45,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                         En1545FixedInteger.dateName(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
                         En1545TransitData.ENV_AUTHENTICATOR,
                         En1545FixedInteger.dateName(En1545TransitData.HOLDER_PROFILE),
-                        En1545TransitData.HOLDER_BIRTH_DATE,
-                        En1545TransitData.HOLDER_POSTAL_CODE,
+                        En1545FixedInteger.dateBCDName(En1545TransitData.HOLDER_BIRTH_DATE),
                         HOLDER_CARD_TYPE))
 
     override val lookup get() = getLookup(networkId)
@@ -94,7 +92,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                                 En1545FixedString("HolderForename", 85)
                         ),
                         En1545Bitmap(
-                                En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
+                                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                                 En1545FixedString("HolderBirthPlace", 115)
                         ),
                         En1545FixedString("HolderBirthName", 85),
