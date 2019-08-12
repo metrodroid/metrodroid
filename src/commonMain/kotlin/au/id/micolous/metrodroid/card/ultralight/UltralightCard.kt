@@ -55,12 +55,12 @@ data class UltralightCard constructor(
             val pageIndexString = idx.hexString
 
             if (sector.isUnauthorized) {
-                ListItemRecursive.collapsedValue(Localizer.localizeString(
+                ListItem(Localizer.localizeFormatted(
                         R.string.unauthorized_page_title_format, pageIndexString),
-                        null, null)
+                        null)
             } else {
-                ListItemRecursive.collapsedValue(Localizer.localizeString(
-                        R.string.page_title_format, pageIndexString), null, sector.data.toHexDump())
+                ListItem(Localizer.localizeFormatted(
+                        R.string.page_title_format, pageIndexString), sector.data.toHexDump())
             }
         }
 
