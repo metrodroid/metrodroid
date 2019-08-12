@@ -899,4 +899,15 @@
     <string name="hsl_transport_bussi_2">Buss 2</string>
     <string name="hsl_transport_bussi_3">Buss 3</string>
     <string name="hsl_transport_bussi_4">Buss 4</string>
+    <string name="desfire_type">Type</string>
+    <string name="desfire_subtype">Undertype</string>
+    <string name="desfire_general_info">Generell info</string>
+    <string name="raw_level_unknown_only">Kun ukjente felter</string>
+    <string name="raw_level_all">Alle felter</string>
+    <plurals name="hsl_zones">
+        <item quantity="one">sone %s</item>
+        <item quantity="other">soner 3</item>
+    </plurals>
+    <string name="hsl_zone_station">Sone %s</string>
+    <string name="hsl_customer_profile">Kundeprofil</string>
 </resources>
