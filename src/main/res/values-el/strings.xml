@@ -100,4 +100,26 @@
     <string name="location_barnaul">Μπαρναούλ, Ρωσία</string>
     <string name="location_santiago_chile">Σαντιάγο της Χιλής, Χιλή</string>
     <string name="location_warsaw">Βαρσοβία, Πολωνία</string>
+    <string name="keys">Κλειδιά</string>
+    <string name="felica_card_identification_number">Αριθμός αναγνώρισης κάρτας</string>
+    <string name="felica_rom_type">Τύπος ROM</string>
+    <string name="mode_trolleybus">Τρόλεϊ</string>
+    <string name="mode_unknown">Άγνωστο</string>
+    <string name="clipper_zone_number">Ζώνη #%s</string>
+    <string name="clipper_ticket_type_adult">Ενήλικος</string>
+    <string name="clipper_ticket_type_youth">Νεολαία</string>
+    <string name="ez_topup">Συμπλήρωση</string>
+    <string name="ez_first_use">Πρώτη χρήση</string>
+    <string name="city_union_city">Πόλη</string>
+    <string name="classic_key_b">Κλειδί Β</string>
+    <string name="classic_key_format_a">Κλειδί (Α): %s</string>
+    <string name="classic_key_format_b">Κλειδί (B): %s</string>
+    <string name="classic_key_format">Κλειδί: %s</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_felica_lite">FeliCa Lite</string>
+    <string name="card_format_ndef">NDEF</string>
+    <string name="unknown_date_title">Άγνωστη ημερομηνία</string>
+    <string name="nol_red">Κόκκινο</string>
+    <string name="mobib_jump_1_trip">Jump 1 ταξίδι</string>
+    <string name="mobib_jump_10_trips">Jump 10 ταξίδια</string>
 </resources>
