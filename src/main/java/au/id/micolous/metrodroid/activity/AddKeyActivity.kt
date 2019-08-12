@@ -114,8 +114,8 @@ class AddKeyActivity : MetrodroidActivity() {
                 intent.action == Intent.ACTION_VIEW &&
                 intent.data != null) {
             val keyData: ByteArray
-            val keyPath: String? = try {
-                intent.data!!.path
+            val keyPath: String = try {
+                intent.data?.path
             } catch (e: Exception) {
                 null
             } ?: "unspecified"
@@ -148,7 +148,7 @@ class AddKeyActivity : MetrodroidActivity() {
                     }
 
                     try {
-                        mKeyData = ClassicCardKeys.fromJSON(o, keyPath!!)
+                        mKeyData = ClassicCardKeys.fromJSON(o, keyPath)
                     } catch (e: Exception) {
                         // Invalid JSON, grumble.
                         Utils.showErrorAndFinish(this, e)
