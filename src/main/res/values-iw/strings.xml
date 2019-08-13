@@ -1,8 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">מטרו-דרואיד</string>
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">מטרו-דרואיד</string>
     <string name="copyright">כל הזכויות שמורות 2015 - 2019 מייקל פארל</string>
-
     <string name="license">רישיונות</string>
     <string name="title_activity_license">רישיונות קוד פתוח</string>
     <string name="directions">שים כרטיס.</string>
@@ -48,16 +47,48 @@
     <string name="nfc_off_error">NFC כבוי</string>
     <string name="turn_on_nfc">אנא אפשר NFC לקרוא את פרטי כרטיס.</string>
     <string name="balance_speech">כמות
-<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+<xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="unknown_card_header">פורמט כרטיס לא ידוע</string>
     <string name="unknown_card_description">כרטיס זה עדיין אינו נתמך על ידי מטרו-דרואיד. ניתן להציג נתונים גולמיים בלבד.</string>
-
     <string name="unknown_more_info">מידע נוסף</string>
     <string name="unknown_more_info_desc">גע כאן לקבלת מידע נוסף על התמיכה של מטרו-דרואיד של הכרטיס הזה.</string>
-
     <string name="lawyercats">מטרו-דרואיד ומחבריו אינם קשורים עם כל סוכנות תחבורה ציבורית.</string>
     <string name="scanned_cards">היסטוריה</string>
     <string name="no_scanned_cards">לא סרקת כל קלפים.</string>
     <string name="block_title_format">בלוק: %s</string>
     <string name="card_name_ravkav">רב-קו‎</string>
+    <string name="location_singapore">סינגפור</string>
+    <string name="location_tokyo">טוקיו, יפן</string>
+    <string name="location_kansai">קנסאי, יפן</string>
+    <string name="location_the_netherlands">הולנד</string>
+    <string name="location_helsinki_finland">הלסינקי, פינלנד</string>
+    <string name="location_sydney_australia">סידני, אוסטרליה</string>
+    <string name="location_hong_kong">הונג קונג</string>
+    <string name="location_shenzhen">שנזן, סין</string>
+    <string name="location_christchurch_nz">קרייסטצ\'רץ \', ניו זילנד</string>
+    <string name="location_moscow">מוסקבה, רוסיה</string>
+    <string name="location_saint_petersburg">סנט פטרסבורג, רוסיה</string>
+    <string name="trip_description_unknown_start">ל-%s</string>
+    <string name="location_israel">ישראל</string>
+    <string name="location_jakarta">ג\'קרטה, אינדונזיה</string>
+    <string name="location_istanbul">איסטנבול, טורקיה</string>
+    <string name="location_ireland">אירלנד</string>
+    <string name="location_brussels">בריסל, בלגיה</string>
+    <string name="location_lisbon">ליסבון, פורטוגל</string>
+    <string name="location_milan">מילאנו, איטליה</string>
+    <string name="location_paris">פריז, צרפת</string>
+    <string name="location_kiev">קייב, אוקראינה</string>
+    <string name="location_adelaide">אדלייד, אוסטרליה</string>
+    <string name="location_france">צרפת</string>
+    <string name="location_russia">רוסיה</string>
+    <string name="location_denmark">דנמרק</string>
+    <string name="location_auckland">אוקלנד, ניו זילנד</string>
+    <string name="location_otago">אוטאגו, ניו זילנד</string>
+    <string name="location_malaysia">מלזיה</string>
+    <string name="location_germany">גרמניה</string>
+    <string name="location_germany_and_switzerland">גרמניה ושוויץ</string>
+    <string name="location_pisa">פיזה, איטליה</string>
+    <string name="location_shanghai">שנגחאי, סין</string>
+    <string name="location_crimea">קרים</string>
 </resources>
