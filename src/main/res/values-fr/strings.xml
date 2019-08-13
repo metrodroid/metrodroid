@@ -711,7 +711,6 @@
     <string name="location_shanghai">Shanghai, Chine</string>
     <string name="valid_origin_destination">Valide de %1$s à %2$s</string>
     <string name="valid_origin_destination_via">Valable de %1$s à %2$s via %3$s</string>
-    <string name="pref_show_hidden_cards">Afficher les cartes cachées</string>
     <string name="location_crimea">Crimée</string>
     <string name="location_ekaterinburg">Ekaterinbourg, Russie</string>
     <string name="location_izhevsk">Ijevsk, Russie</string>

@@ -131,13 +131,6 @@
         android:summary="@string/developer_options_desc">
         <PreferenceCategory android:title="@string/supported_cards">
             <CheckBoxPreference
-                android:title="@string/pref_show_hidden_cards"
-                android:summaryOff="@string/pref_show_hidden_cards_desc_off"
-                android:summaryOn="@string/pref_show_hidden_cards_desc_on"
-                android:key="pref_show_hidden_cards"
-                android:defaultValue="false" />
-
-            <CheckBoxPreference
                 android:title="@string/pref_hide_unsupported_ribbon"
                 android:summaryOff="@string/pref_hide_unsupported_ribbon_desc_off"
                 android:summaryOn="@string/pref_hide_unsupported_ribbon_desc_on"

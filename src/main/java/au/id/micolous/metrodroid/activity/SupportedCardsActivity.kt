@@ -75,8 +75,7 @@ class SupportedCardsActivity : MetrodroidActivity() {
         private val mLayoutInflater: LayoutInflater
 
         init {
-            val hideCards = !Preferences.showHiddenCards
-            addAll(CardInfoRegistry.allCardsAlphabetical.filterNot { hideCards && it.hidden })
+            addAll(CardInfoRegistry.allCardsAlphabetical)
             mLayoutInflater = context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }

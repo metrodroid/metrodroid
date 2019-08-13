@@ -42,7 +42,6 @@ actual object Preferences {
     private const val PREF_OBFUSCATE_TRIP_TIMES = "pref_obfuscate_trip_times"
     private const val PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares"
     private const val PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance"
-    private const val PREF_SHOW_HIDDEN_CARDS = "pref_show_hidden_cards"
     private const val PREF_HIDE_UNSUPPORTED_RIBBON = "pref_hide_unsupported_ribbon"
     private const val PREF_DEBUG_SPANS = "pref_debug_spans"
 
@@ -113,8 +112,6 @@ actual object Preferences {
     actual val obfuscateTripTimes
         get() = getBooleanPref(PREF_OBFUSCATE_TRIP_TIMES, false)
 
-    val showHiddenCards
-        get() = getBooleanPref(PREF_SHOW_HIDDEN_CARDS, false)
     val hideUnsupportedRibbon
         get() = getBooleanPref(PREF_HIDE_UNSUPPORTED_RIBBON, false)
     actual val localisePlaces

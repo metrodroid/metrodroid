@@ -87,7 +87,7 @@ data class ZolotayaKoronaTransitData internal constructor(
     override val trips get() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
 
     companion object {
-        private val CARDS = mapOf(
+        private val INFO_CARDS = mapOf(
                 0x230100 to CardInfo(
                         name = R.string.card_name_krasnodar_etk,
                         locationId = R.string.location_krasnodar,
@@ -104,54 +104,14 @@ data class ZolotayaKoronaTransitData internal constructor(
                         cardType = CardType.MifareClassic,
                         keysRequired = true, keyBundle = "zolotayakoronaorenburg",
                         preview = true),
-                0x562300 to CardInfo(
-                        name = R.string.card_name_orenburg_school,
-                        locationId = R.string.location_orenburg,
-                        imageId = R.drawable.orenburg_school,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronaorenburg",
-                        preview = true, hidden = true),
-                0x562400 to CardInfo(
-                        name = R.string.card_name_orenburg_student,
-                        locationId = R.string.location_orenburg,
-                        imageId = R.drawable.orenburg_student,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronaorenburg",
-                        preview = true, hidden = true),
-                0x631500 to CardInfo(
-                        name = R.string.card_name_samara_school,
-                        locationId = R.string.location_samara,
-                        imageId = R.drawable.samara_school,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronasamara",
-                        preview = true, hidden = true),
                 0x632600 to CardInfo(
-                        name = R.string.card_name_samara_etk,
-                        locationId = R.string.location_samara,
-                        imageId = R.drawable.samara_etk,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronasamara",
-                        preview = true),
-                0x632700 to CardInfo(
-                        name = R.string.card_name_samara_student,
-                        locationId = R.string.location_samara,
-                        imageId = R.drawable.samara_student,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronasamara",
-                        preview = true, hidden = true),
-                0x633500 to CardInfo(
-                        name = R.string.card_name_samara_garden_dacha,
-                        locationId = R.string.location_samara,
-                        imageId = R.drawable.samara_garden_dacha,
-                        imageAlphaId = R.drawable.iso7810_id1_alpha,
-                        cardType = CardType.MifareClassic,
-                        keysRequired = true, keyBundle = "zolotayakoronasamara",
-                        preview = true, hidden = true),
+                         name = R.string.card_name_samara_etk,
+                         locationId = R.string.location_samara,
+                         imageId = R.drawable.samara_etk,
+                         imageAlphaId = R.drawable.iso7810_id1_alpha,
+                         cardType = CardType.MifareClassic,
+                         keysRequired = true, keyBundle = "zolotayakoronasamara",
+                         preview = true),
                 0x760500 to CardInfo(
                         name = R.string.card_name_yaroslavl_etk,
                         locationId = R.string.location_yaroslavl,
@@ -161,6 +121,49 @@ data class ZolotayaKoronaTransitData internal constructor(
                         keysRequired = true, keyBundle = "zolotayakoronayaroslavl",
                         preview = true)
         )
+        private val EXTRA_CARDS = mapOf(
+                0x562300 to CardInfo(
+                        name = R.string.card_name_orenburg_school,
+                        locationId = R.string.location_orenburg,
+                        imageId = R.drawable.orenburg_ekg,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronaorenburg",
+                        preview = true),
+                0x562400 to CardInfo(
+                        name = R.string.card_name_orenburg_student,
+                        locationId = R.string.location_orenburg,
+                        imageId = R.drawable.orenburg_ekg,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronaorenburg",
+                        preview = true),
+                0x631500 to CardInfo(
+                        name = R.string.card_name_samara_school,
+                        locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronasamara",
+                        preview = true),
+                0x632700 to CardInfo(
+                        name = R.string.card_name_samara_student,
+                        locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronasamara",
+                        preview = true),
+                0x633500 to CardInfo(
+                        name = R.string.card_name_samara_garden_dacha,
+                        locationId = R.string.location_samara,
+                        imageId = R.drawable.samara_etk,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true, keyBundle = "zolotayakoronasamara",
+                        preview = true)
+        )
+        private val CARDS = INFO_CARDS + EXTRA_CARDS
 
         private fun nameCard(type: Int) = CARDS[type]?.name
                 ?: (Localizer.localizeString(R.string.card_name_zolotaya_korona)
@@ -192,7 +195,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         private fun formatSerial(serial: String) = NumberUtils.groupString(serial, " ", 4, 5, 5)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
-            override val allCards get() = listOf(FALLBACK_CARD_INFO) + CARDS.values
+            override val allCards get() = listOf(FALLBACK_CARD_INFO) + INFO_CARDS.values
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(
                     nameCard(getCardType(card)),
