@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="trip_description">From <xliff:g id="start_station" example="Tokyo">%1$s</xliff:g>\nTo <xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <string name="time_from_to">&#8207;<xliff:g id="start_time" example="12:35">%1$s</xliff:g> ← <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">&#8207;\??:?? ← <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
+</resources>

@@ -91,4 +91,8 @@
     <string name="location_pisa">פיזה, איטליה</string>
     <string name="location_shanghai">שנגחאי, סין</string>
     <string name="location_crimea">קרים</string>
+
+    <string name="trip_description">מ <xliff:g id="start_station" example="Tokyo">%1$s</xliff:g>\nל <xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <string name="time_from_to">&#8207;<xliff:g id="start_time" example="12:35">%1$s</xliff:g> ← <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">&#8207;\??:?? ← <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 </resources>

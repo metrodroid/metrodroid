@@ -66,6 +66,9 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             else {
                 text1.text = mText1
                 text1.visibility = View.VISIBLE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    text1.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+                }
             }
             if (text2Empty)
                 text2.visibility = View.GONE
@@ -73,6 +76,9 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
                 text2.text = mText2
                 text2.visibility = View.VISIBLE
                 text2.setTextIsSelectable(true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    text2.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+                }
             }
             if (text1Empty != text2Empty) {
                 val remaining = if (text1Empty) text2 else text1

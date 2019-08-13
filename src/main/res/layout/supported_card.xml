@@ -49,17 +49,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/card_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    tools:text="Card Name"/>
+                        android:id="@+id/card_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textAlignment="viewStart"
+                        android:gravity="start"
+                        tools:text="Card Name"/>
                 <TextView
                     android:id="@+id/card_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
                     tools:text="Location"/>
             </LinearLayout>
             <ImageView

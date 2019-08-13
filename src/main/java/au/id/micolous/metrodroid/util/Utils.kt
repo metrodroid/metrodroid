@@ -29,6 +29,7 @@ import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -200,5 +201,14 @@ object Utils {
         }
         clipboard.setPrimaryClip(data)
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
+    }
+
+    fun weakLTR(input: String): String {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
+            return input
+        val config = MetrodroidApplication.instance.resources.configuration
+        if (config.layoutDirection != View.LAYOUT_DIRECTION_RTL)
+            return input
+        return "\u200E$input\u200E"
     }
 }

@@ -139,10 +139,7 @@ class CardInfoActivity : MetrodroidActivity() {
                 try {
                     mShowCopyCardNumber = !Preferences.hideCardNumbers
                     if (mShowCopyCardNumber) {
-                        mCardSerial = if (mTransitData!!.serialNumber != null)
-                            mTransitData!!.serialNumber
-                        else
-                            mCard!!.tagId.toHexString()
+                        mCardSerial = Utils.weakLTR(mTransitData?.serialNumber ?: mCard?.tagId?.toHexString() ?: "")
                     } else {
                         mCardSerial = ""
                     }

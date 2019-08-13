@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -45,12 +46,17 @@ class ListItemAdapter(context: Context, items: List<ListItem>) : ArrayAdapter<Li
                 parent, false)
 
         val item = getItem(position)
+        val text1: TextView? = convertView.findViewById<TextView>(android.R.id.text1)
+        val text2: TextView? = convertView.findViewById<TextView>(android.R.id.text2)
 
-        if (item is HeaderListItem) {
-            (convertView.findViewById<TextView>(android.R.id.text1)).text = item.text1?.spanned
-        } else {
-            (convertView.findViewById<TextView>(android.R.id.text1)).text = item?.text1?.spanned
-            (convertView.findViewById<TextView>(android.R.id.text2)).text = item?.text2?.spanned
+        text1?.text = item?.text1?.spanned
+        if (item !is HeaderListItem) {
+            text2?.text = item?.text2?.spanned
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            text1?.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+            text2?.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         }
 
         return convertView
