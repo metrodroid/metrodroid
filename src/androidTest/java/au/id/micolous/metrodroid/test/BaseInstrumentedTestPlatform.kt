@@ -31,8 +31,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.Matcher
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.InputStream
