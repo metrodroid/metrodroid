@@ -6,8 +6,9 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.NumberUtils
 
-import com.neovisionaries.i18n.CountryCode
 import com.neovisionaries.i18n.CurrencyCode
+
+import java.util.Locale
 
 actual fun getCurrencyDescriptorByCode(currencyCode: Int)
         : TransitCurrency.TransitCurrencyDesc {
@@ -23,14 +24,22 @@ actual fun getCurrencyDescriptorByCode(currencyCode: Int)
     )
 }
 
+private val specialLocales = mapOf(
+    "CA" to Locale.CANADA,
+    "CN" to Locale.CHINA,
+    "DE" to Locale.GERMANY,
+    "FR" to Locale.FRANCE,
+    "GB" to Locale.UK,
+    "IT" to Locale.ITALY,
+    "JP" to Locale.JAPAN,
+    "KR" to Locale.KOREA,
+    "TW" to Locale.TAIWAN,
+    "UK" to Locale.UK,
+    "US" to Locale.US
+)
+
 actual fun countryCodeToName(countryCode: Int): String {
-    val cc = if (countryCode > 0) {
-        CountryCode.getByCode(countryCode)
-    } else
-        null
-    if (cc != null) {
-        return cc.toLocale().displayCountry
-    } else {
-        return Localizer.localizeString(R.string.unknown_format, countryCode)
-    }
+    val alpha = ISO3166.mapNumericToAlpha2(countryCode) ?: Localizer.localizeString(R.string.unknown_format, countryCode)
+    val locale = specialLocales[alpha] ?: Locale("", alpha)
+    return locale.displayCountry
 }
