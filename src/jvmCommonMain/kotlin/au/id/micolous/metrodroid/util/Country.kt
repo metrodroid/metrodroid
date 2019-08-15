@@ -1,32 +1,15 @@
 @file:JvmName("CountryKtActual")
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.util.NumberUtils
 
-import com.neovisionaries.i18n.CurrencyCode
 import java.util.*
 
 actual fun currencyNameByCode(code: Int): String? {
-    val symbol = getCurrencyDescriptorByCode(code).currencyCode
-    if (symbol == "XXX" && code != 999)
-        return null
+    val symbol = ISO4217.getInfoByCode(code)?.symbol ?: return null
     val currency = Currency.getInstance(symbol) ?: return null
     return currency.displayName
-}
-
-actual fun getCurrencyDescriptorByCode(currencyCode: Int)
-        : TransitCurrency.TransitCurrencyDesc {
-    val currency = CurrencyCode.getByCode(currencyCode) ?: return TransitCurrency.TransitCurrencyDesc(
-            currencyCode = "XXX",
-            defaultDivisor = 100
-    )
-    return TransitCurrency.TransitCurrencyDesc(
-            currency.currency.currencyCode,
-            NumberUtils.pow(10, currency.currency.defaultFractionDigits).toInt()
-    )
 }
 
 private val specialLocales = mapOf(
