@@ -7,20 +7,25 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.NumberUtils
 
 import com.neovisionaries.i18n.CurrencyCode
+import java.util.*
 
-import java.util.Locale
+actual fun currencyNameByCode(code: Int): String? {
+    val symbol = getCurrencyDescriptorByCode(code).currencyCode
+    if (symbol == "XXX" && code != 999)
+        return null
+    val currency = Currency.getInstance(symbol) ?: return null
+    return currency.displayName
+}
 
 actual fun getCurrencyDescriptorByCode(currencyCode: Int)
         : TransitCurrency.TransitCurrencyDesc {
     val currency = CurrencyCode.getByCode(currencyCode) ?: return TransitCurrency.TransitCurrencyDesc(
             currencyCode = "XXX",
-            defaultDivisor = 100,
-            name = null
+            defaultDivisor = 100
     )
     return TransitCurrency.TransitCurrencyDesc(
             currency.currency.currencyCode,
-            NumberUtils.pow(10, currency.currency.defaultFractionDigits).toInt(),
-            name = currency.name
+            NumberUtils.pow(10, currency.currency.defaultFractionDigits).toInt()
     )
 }
 

@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
+import au.id.micolous.metrodroid.util.currencyNameByCode
 import au.id.micolous.metrodroid.util.getCurrencyDescriptorByCode
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,7 +16,7 @@ import kotlin.test.assertTrue
  *
  * This depends on the availability of [getCurrencyDescriptorByCode] providing some look-up data.
  */
-class TransitCurrencyCommonTest {
+class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     @Test
     fun testNumericLookup() {
         var c = TransitCurrency(1234, 36, 100)
@@ -76,5 +77,19 @@ class TransitCurrencyCommonTest {
 
     private fun assertExactlyEquals(expected: TransitCurrency, actual: TransitCurrency) {
         assertTrue(expected.exactlyEquals(actual), "$expected is not exactlyEqual to $actual")
+    }
+
+    @Test
+    fun testEnglishCurrencyName() {
+        setLocale("en-US")
+        assertEquals(actual=currencyNameByCode(840), expected="US Dollar")
+        assertEquals(actual=currencyNameByCode(643), expected="Russian Ruble")
+    }
+
+    @Test
+    fun testRussianCurrencyName() {
+        setLocale("ru-RU")
+        assertEquals(actual=currencyNameByCode(840)?.toLowerCase(), expected="доллар сша")
+        assertEquals(actual=currencyNameByCode(643)?.toLowerCase(), expected="российский рубль")
     }
 }
