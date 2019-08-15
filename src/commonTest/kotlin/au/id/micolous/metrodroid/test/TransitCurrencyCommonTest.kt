@@ -5,7 +5,6 @@ import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.util.currencyNameByCode
-import au.id.micolous.metrodroid.util.getCurrencyDescriptorByCode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -14,7 +13,6 @@ import kotlin.test.assertTrue
 /**
  * Testing [TransitCurrency], but not the (platform-specific) text formatters.
  *
- * This depends on the availability of [getCurrencyDescriptorByCode] providing some look-up data.
  */
 class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     @Test
