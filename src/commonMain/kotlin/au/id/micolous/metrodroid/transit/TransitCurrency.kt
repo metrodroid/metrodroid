@@ -52,8 +52,7 @@ open class TransitCurrency (
         get() = this
 
     class TransitCurrencyDesc(val currencyCode: String,
-                              val defaultDivisor: Int,
-                              val name: String?)
+                              val defaultDivisor: Int)
 
     /**
      * Builds a new [TransitCurrency], used to represent a monetary value on a transit card.

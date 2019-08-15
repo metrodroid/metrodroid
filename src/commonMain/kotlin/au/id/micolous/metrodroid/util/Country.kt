@@ -2,7 +2,7 @@ package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.transit.TransitCurrency
 
-fun currencyNameByCode(code: Int): String? = getCurrencyDescriptorByCode(code).name
+expect fun currencyNameByCode(code: Int): String?
 
 expect fun getCurrencyDescriptorByCode(currencyCode: Int)
         : TransitCurrency.TransitCurrencyDesc
