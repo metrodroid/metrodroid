@@ -77,7 +77,6 @@ dependencies {
     implementation "androidx.annotation:annotation:1.0.0"
     implementation "androidx.preference:preference:1.0.0"
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
-    implementation 'com.neovisionaries:nv-i18n:1.23'
     implementation project(':leaflet')
     implementation project(':material-design-icons')
     implementation project(':proto')
@@ -184,7 +183,6 @@ kotlin {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinserial_version"
-                implementation 'com.neovisionaries:nv-i18n:1.23'
                 implementation 'commons-io:commons-io:2.5'
                 implementation 'org.apache.commons:commons-lang3:3.5'
                 implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
