@@ -177,14 +177,14 @@ data class RkfTransitData internal constructor(
                     }
                 val tickets = records.filterIsInstance<RkfTctoRecord>().map { RkfTicket.parse(it, lookup) }
                 transactions.sortBy { it.timestamp?.timeInMillis }
-                unfilteredTrips.sortBy { it.startTimestamp.timeInMillis }
+                unfilteredTrips.sortBy { it.startTimestamp?.timeInMillis }
                 val trips = mutableListOf<RkfTCSTTrip>()
                 // Check if unfinished trip is superseeded by finished one
                 for ((idx, trip) in unfilteredTrips.withIndex()) {
-                    if (idx > 0 && unfilteredTrips[idx - 1].startTimestamp.timeInMillis == trip.startTimestamp.timeInMillis
+                    if (idx > 0 && unfilteredTrips[idx - 1].startTimestamp?.timeInMillis == trip.startTimestamp?.timeInMillis
                             && unfilteredTrips[idx - 1].checkoutCompleted && !trip.checkoutCompleted)
                         continue
-                    if (idx < unfilteredTrips.size - 1 && unfilteredTrips[idx + 1].startTimestamp.timeInMillis == trip.startTimestamp.timeInMillis
+                    if (idx < unfilteredTrips.size - 1 && unfilteredTrips[idx + 1].startTimestamp?.timeInMillis == trip.startTimestamp?.timeInMillis
                             && unfilteredTrips[idx + 1].checkoutCompleted && !trip.checkoutCompleted)
                         continue
                     trips.add(trip)
@@ -196,11 +196,11 @@ data class RkfTransitData internal constructor(
                 for (trip in trips)
                     while (i < tripTransactions.size) {
                         val transaction = tripTransactions[i]
-                        val transactionTimestamp = clearSeconds(transaction.timestamp!!.timeInMillis)
-                        if (transactionTimestamp > clearSeconds(trip.endTimestamp.timeInMillis))
+                        val transactionTimestamp = clearSeconds(transaction.timestamp?.timeInMillis ?: 0)
+                        if (transactionTimestamp > clearSeconds(trip.endTimestamp?.timeInMillis ?: 0))
                             break
                         i++
-                        if (transactionTimestamp < clearSeconds(trip.startTimestamp.timeInMillis)) {
+                        if (transactionTimestamp < clearSeconds(trip.startTimestamp?.timeInMillis ?: 0)) {
                             remainingTransactions.add(transaction)
                             continue
                         }
