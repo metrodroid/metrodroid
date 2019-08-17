@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.NativeThrows
 import kotlinx.io.InputStream
 
 object CardSerializer {
@@ -25,6 +26,7 @@ object CardSerializer {
         }
     }
 
+    @NativeThrows
     fun toJson(card: Card): String {
         try {
             return jsonKotlinFormat.writeCard(card)
@@ -34,6 +36,9 @@ object CardSerializer {
         }
     }
 
+    @NativeThrows
     fun fromPersist(input: String): Card = fromJson(input)
+
+    @NativeThrows
     fun toPersist(card: Card): String = toJson(card)
 }

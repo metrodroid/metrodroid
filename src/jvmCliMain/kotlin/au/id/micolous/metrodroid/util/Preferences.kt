@@ -13,6 +13,8 @@ actual object Preferences {
     actual val mfcAuthRetry: Int = 5
     actual val retrieveLeapKeys: Boolean = false
     actual val obfuscateTripTimes: Boolean = false
+    actual val debugSpans: Boolean = false
+    actual val localisePlaces: Boolean = false
 
     @VisibleForTesting
     var showRawStationIdsActual = true

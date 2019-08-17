@@ -9,10 +9,12 @@ import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
+import kotlinx.io.ByteArrayInputStream
 import kotlinx.io.IOException
 import kotlinx.io.InputStream
 
 class MfcCardImporter : CardImporter {
+    fun readCard(bin: ByteArray): Card = readCard(stream=ByteArrayInputStream(bin))
     override fun readCard(stream: InputStream): Card {
         // Read the blocks of the card.
         val sectors = mutableListOf<ClassicSector>()

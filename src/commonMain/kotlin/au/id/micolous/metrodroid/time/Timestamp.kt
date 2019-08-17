@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlinx.serialization.*
+import kotlin.native.concurrent.SharedImmutable
 
 @Parcelize
 @Serializable(with = MetroTimeZone.Companion::class)
@@ -169,6 +170,7 @@ fun yearToDays(year: Int): Int {
     return days - 719162
 }
 
+@SharedImmutable
 private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
         212, 243, 273, 304, 334)
 

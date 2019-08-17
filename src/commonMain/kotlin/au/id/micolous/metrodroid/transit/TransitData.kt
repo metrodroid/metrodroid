@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
@@ -196,6 +197,7 @@ abstract class TransitData : Parcelable {
      *
      * @see [trips], [TripObfuscator.obfuscateTrips]
      */
+    @NativeThrows
     fun prepareTrips(safe: Boolean = false): List<Trip>? {
         val trips = this.trips ?: return null
 

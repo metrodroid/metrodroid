@@ -19,8 +19,4 @@
 
 package au.id.micolous.metrodroid.multi
 
-expect annotation class VisibleForTesting()
-expect annotation class Parcelize()
-expect interface Parcelable
-@Target(AnnotationTarget.FUNCTION)
-expect annotation class NativeThrows (vararg val exceptionClasses: kotlin.reflect.KClass<out kotlin.Throwable>)
+actual annotation class NativeThrows actual constructor (actual vararg val exceptionClasses: kotlin.reflect.KClass<out kotlin.Throwable>)
