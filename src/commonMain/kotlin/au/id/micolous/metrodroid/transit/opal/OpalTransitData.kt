@@ -90,9 +90,6 @@ class OpalTransitData (
         get() = listOfNotNull(
                 HeaderListItem(R.string.general),
                 ListItem(R.string.opal_weekly_trips, weeklyTrips.toString()),
-                if (!Preferences.hideCardNumbers) {
-                    ListItem(R.string.checksum, mChecksum.toString())
-                } else null,
 
                 HeaderListItem(R.string.last_transaction),
                 if (!Preferences.hideCardNumbers) {
@@ -103,6 +100,13 @@ class OpalTransitData (
                 ListItem(R.string.vehicle_type, OpalData.getLocalisedMode(lastTransactionMode)),
                 ListItem(R.string.transaction_type, OpalData.getLocalisedAction(lastTransaction)))
 
+    override fun getRawFields(level: RawLevel): List<ListItem>? {
+        if (level == RawLevel.NONE) return null
+
+        return listOf(
+                ListItem(R.string.checksum, mChecksum.toString())
+        )
+    }
 
     // Opal has no concept of "subscriptions" (travel pass), only automatic top up.
     override val subscriptions: List<Subscription>?
