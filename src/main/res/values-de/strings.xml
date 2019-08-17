@@ -401,4 +401,39 @@
     <string name="lisboaviva_sub_passe_mts">MTS-Abo (passe)</string>
     <string name="lisboaviva_sub_vermelho_a1">Rot A1</string>
     <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">U-Bahn-Linie CP - Rio de Mouro/Meleças</string>
+    <string name="trip_description">(Von )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (nach )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
+    </string>
+    <string name="trip_description_unknown_start">nach %s</string>
+    <string name="time_from_to">
+        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    </string>
+    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    </string>
+    <string name="location_worldwide">Weltweit</string>
+    <string name="location_abu_dhabi">Abu Dhabi, VAE</string>
+    <string name="location_adelaide">Adelaide, Australien</string>
+    <string name="location_auckland">Auckland, Neuseeland</string>
+    <string name="location_barnaul">Barnaul, Russland</string>
+    <string name="location_china_mainland">Festlandchina</string>
+    <string name="mode_trolleybus">Obus</string>
+    <string name="card_note_clipper">Unterstützt sowohl Plastikkarten (wiederaufladbar) als auch Papierkarten (Einwegkarten von Golden Gate Ferry und Muni).</string>
+    <string name="ez_first_use">Erste Benutzung</string>
+    <string name="card_name_suica">Suica</string>
+    <string name="card_name_icoca">ICOCA</string>
+    <string name="card_name_pasmo">PASMO</string>
+    <string name="crypto_algo_3des">3DES</string>
+    <string name="classic_key">MIFARE Classic Schlüssel</string>
+    <string name="classic_key_a">Schlüssel A</string>
+    <string name="classic_key_b">Schlüssel B</string>
+    <string name="classic_key_format_a">Schlüssel (A): %s</string>
+    <string name="classic_key_format_b">Schlüssel (B): %s</string>
+    <string name="classic_key_format">Schlüssel: %s</string>
+    <string name="trip_counter">Fahrtenzähler</string>
+    <string name="refill_counter">Nachfüllzähler</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_felica_lite">FeliCa Lite</string>
+    <string name="raw_header">Rohfelder</string>
+    <string name="android_nfc_settings">Android NFC-Einstellungen</string>
+    <string name="exported_at">Exportiert von Metrodroid um %s</string>
+    <string name="iso7816_raw">Rohdaten</string>
 </resources>
