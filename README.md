@@ -217,6 +217,8 @@ This software and it's authors are not associated with any public transit agency
    
    [If you get an error from Gradle about `:material-design-icons` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
 
+   ZIP source code downloads from GitHub's web interface **will not work**!
+
 2. Import the directory into Android Studio.
 
    Android Studio will prompt you to install the appropriate SDK version, build tools, and Gradle.
