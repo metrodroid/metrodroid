@@ -14,8 +14,7 @@ local.properties
 projectFilesBackup/
 project.properties
 
-native/metrodroid/metrodroid.xcodeproj/xcuserdata
-native/metrodroid/metrodroid.xcodeproj/project.xcworkspace/xcuserdata
+xcuserdata/
 
 .gradle
 

@@ -350,13 +350,6 @@ task packForXCode(type: Sync) {
 
     from generatedLanguagesDir
     into new File (frameworkDir, "metrolib.framework")
-
-    doLast {
-        new File(frameworkDir, 'gradlew').with {
-            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
-            setExecutable(true)
-        }
-    }
 }
 
 tasks.build.dependsOn packForXCode
