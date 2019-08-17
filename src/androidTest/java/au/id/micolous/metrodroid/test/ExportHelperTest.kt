@@ -41,12 +41,13 @@ class ExportHelperTest : BaseInstrumentedTest() {
         val readmeFilename = "README." + Preferences.language + ".txt"
 
         var hasReadme = false
-        XmlOrJsonCardFormat.ZipIterator(zis).forEach {
-            if (readmeFilename == it.first.name) {
+        while(true) {
+            val ze = zis.nextEntry ?: break
+            if (readmeFilename == ze.name) {
                 hasReadme = true
 
                 // Read the file and see if there's a version code
-                val b = it.second.readBytes()
+                val b = zis.readBytes()
                 val content = b.toString(Charsets.UTF_8)
                 assertTrue(check(content), "Content check failed, got: \"$content\"")
             }
