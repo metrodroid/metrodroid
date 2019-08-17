@@ -43,6 +43,7 @@ jobs:
     - stage: assemble and unit test
       env: TARGET=jvm
       script: ./gradlew :jvmcli:shadowJar jvmCliTest --stacktrace
+      jdk: openjdk11
     - env: TARGET=android
       script: ./gradlew assembleDebug testDebugUnitTest --stacktrace
     - env: TARGET=android
