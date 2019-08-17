@@ -1,3 +1,4 @@
+@file:JvmName("LocalizerKtActual")
 /*
  * Localizer.kt
  *
@@ -25,11 +26,14 @@ import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.LocaleSpan
+import android.text.style.TtsSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.ui.HiddenSpan
 import androidx.annotation.VisibleForTesting
 import java.util.*
 
@@ -92,4 +96,56 @@ actual object Localizer : LocalizerInterface {
     }
 
     fun englishString(res: StringResource, vararg v: Any?): String = englishResources.getString(res, *v)
+
+    override fun localizeTts(res: StringResource, vararg v: Any?): FormattedString {
+        val appRes = MetrodroidApplication.instance.resources
+        val b = SpannableStringBuilder(appRes.getText(res))
+
+        // Find the TTS-exclusive bits
+        // They are wrapped in parentheses: ( )
+        var x = 0
+        while (x < b.toString().length) {
+            val start = b.toString().indexOf("(", x)
+            if (start == -1) break
+            var end = b.toString().indexOf(")", start)
+            if (end == -1) break
+
+            // Delete those characters
+            b.delete(end, end + 1)
+            b.delete(start, start + 1)
+
+            // We have a range, create a span for it
+            b.setSpan(HiddenSpan(), start, --end, 0)
+
+            x = end
+        }
+
+        // Find the display-exclusive bits.
+        // They are wrapped in square brackets: [ ]
+        x = 0
+        while (x < b.toString().length) {
+            val start = b.toString().indexOf("[", x)
+            if (start == -1) break
+            var end = b.toString().indexOf("]", start)
+            if (end == -1) break
+
+            // Delete those characters
+            b.delete(end, end + 1)
+            b.delete(start, start + 1)
+            end--
+
+            // We have a range, create a span for it
+            // This only works properly on Lollipop. It's a pretty reasonable target for
+            // compatibility, and most TTS software will not speak out Unicode arrows anyway.
+            //
+            // This works fine with Talkback, but *doesn't* work with Select to Speak.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                b.setSpan(TtsSpan.TextBuilder().setText(" ").build(), start, end, 0)
+            }
+
+            x = end
+        }
+
+        return FormattedString(b).format(*v)
+    }
 }

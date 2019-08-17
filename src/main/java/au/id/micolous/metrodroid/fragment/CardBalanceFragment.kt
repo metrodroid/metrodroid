@@ -99,7 +99,7 @@ class CardBalanceFragment : ListFragment() {
             }
 
             val validView = view.findViewById<TextView>(R.id.valid)
-            val validity = Subscription.formatValidity(subscription)
+            val validity = subscription.formatValidity()
             if (validity != null) {
                 validView.text = validity.spanned
                 validView.visibility = View.VISIBLE
@@ -108,16 +108,10 @@ class CardBalanceFragment : ListFragment() {
 
             val tripsView = view.findViewById<TextView>(R.id.trips)
             val daysView = view.findViewById<TextView>(R.id.days)
-            val remainingTrips = subscription.remainingTripCount
-            val totalTrips = subscription.totalTripCount
+            val remainingTrips = subscription.formatRemainingTrips()
 
-            if (remainingTrips != null && totalTrips != null) {
-                tripsView.text = Localizer.localizePlural(R.plurals.trips_remaining_total,
-                        remainingTrips, remainingTrips, totalTrips)
-                tripsView.visibility = View.VISIBLE
-            } else if (remainingTrips != null) {
-                tripsView.text = Localizer.localizePlural(R.plurals.trips_remaining,
-                        remainingTrips, remainingTrips)
+            if (remainingTrips != null) {
+                tripsView.text = remainingTrips
                 tripsView.visibility = View.VISIBLE
             } else {
                 tripsView.visibility = View.GONE

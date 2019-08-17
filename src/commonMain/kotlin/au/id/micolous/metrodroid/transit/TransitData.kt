@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.TripObfuscator
 
 abstract class TransitData : Parcelable {
 
@@ -158,6 +159,24 @@ abstract class TransitData : Parcelable {
         companion object {
             fun fromString(v: String): RawLevel? = values().find { it.toString() == v }
         }
+    }
+
+    // In Swift properties can't throw. Obfuscated trips never throw as they
+    // copy all fields. So if safe is true, always pass trips through
+    // obfuscation even if no real data changes
+    fun prepareTrips(safe: Boolean = false): List<Trip>? {
+        val maybeObfuscatedTrips: List<Trip>
+        if (Preferences.obfuscateTripDates ||
+            Preferences.obfuscateTripTimes ||
+            Preferences.obfuscateTripFares || safe) {
+            maybeObfuscatedTrips = TripObfuscator.obfuscateTrips(trips ?: return null,
+                Preferences.obfuscateTripDates,
+                Preferences.obfuscateTripTimes,
+                Preferences.obfuscateTripFares)
+        } else
+            maybeObfuscatedTrips = trips ?: return null
+        // Explicitly sort these events
+        return maybeObfuscatedTrips.sortedWith(Trip.Comparator())
     }
 
     open fun getRawFields(level: RawLevel): List<ListItem>? = null

@@ -23,9 +23,48 @@ expect class StringResource
 expect class PluralsResource
 expect class DrawableResource
 
+internal fun stripTts(input: String): String {
+    val a = input
+    val b = StringBuilder()
+
+    // Find the TTS-exclusive bits
+    // They are wrapped in parentheses: ( )
+    var x = 0
+    while (x < a.length) {
+        val start = a.indexOf("(", x)
+        if (start == -1) break
+        var end = a.indexOf(")", start)
+        if (end == -1) break
+
+        // Delete those characters
+        b.append(a, x, start)
+        x = end + 1
+    }
+    if (x < a.length)
+        b.append(a, x, a.length)
+
+    val c = StringBuilder()
+    // Find the display-exclusive bits.
+    // They are wrapped in square brackets: [ ]
+    x = 0
+    while (x < b.length) {
+        val start = b.indexOf("[", x)
+        if (start == -1) break
+        var end = b.indexOf("]", start)
+        if (end == -1) break
+        c.append(b, x, start).append(b, start + 1, end)
+        x = end + 1
+    }
+    if (x < b.length)
+        c.append(b, x, b.length)
+
+    return c.toString()
+}
+
 interface LocalizerInterface {
     fun localizeString(res: StringResource, vararg v: Any?): String
     fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString = FormattedString(localizeString(res, *v))
+    fun localizeTts(res: StringResource, vararg v: Any?): FormattedString
     fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String
 }
 
