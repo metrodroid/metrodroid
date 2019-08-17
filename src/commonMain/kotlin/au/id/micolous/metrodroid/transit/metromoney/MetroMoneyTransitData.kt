@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.HashUtils
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
 private val NAME = R.string.card_name_metromoney
@@ -43,17 +44,30 @@ private val CARD_INFO = CardInfo(
         cardType = CardType.MifareClassic,
         keysRequired = true, keyBundle = "metromoney")
 
+private fun strDate(raw: ImmutableByteArray, off: Int): String
+        = "${raw.getBitsFromBuffer(off, 6)+2000}.${raw.getBitsFromBuffer(off+6, 4)}.${raw.getBitsFromBuffer(off+10, 5)} " +
+        "${raw.getBitsFromBuffer(off+15, 5)}:${raw.getBitsFromBuffer(off+20, 6)}:${raw.getBitsFromBuffer(off+26, 6)}"
+
 private fun formatSerial(serial: Long) = NumberUtils.zeroPad(serial, 10)
 
 private fun getSerial(card: ClassicCard) = card[0,0].data.byteArrayToLongReversed(0, 4)
 
 @Parcelize
-data class MetroMoneyTransitData(private val mSerial: Long, private val mBalance: Int) : TransitData() {
+data class MetroMoneyTransitData(private val mSerial: Long, private val mBalance: Int,
+                                 private val mDate1: String, private val mDate2: String,
+                                 private val mDate3: String, private val mDate4: String) : TransitData() {
     override val serialNumber get() = formatSerial(mSerial)
 
     override val cardName get() = Localizer.localizeString(NAME)
 
     override val balance get() = TransitCurrency(mBalance, "GEL")
+
+    override fun getRawFields(level: RawLevel): List<ListItem> = listOf(
+            ListItem("Date1", mDate1),
+            ListItem("Date2", mDate2),
+            ListItem("Date3", mDate3),
+            ListItem("Date4", mDate4)
+    )
 }
 
 object MetroMoneyTransitFactory : ClassicCardTransitFactory {
@@ -65,7 +79,12 @@ object MetroMoneyTransitFactory : ClassicCardTransitFactory {
     override fun parseTransitData(card: ClassicCard): MetroMoneyTransitData {
         return MetroMoneyTransitData(
                 mSerial = getSerial(card),
-                mBalance = card[1,1].data.byteArrayToIntReversed(0, 4))
+                mBalance = card[1,1].data.byteArrayToIntReversed(0, 4),
+                mDate1 = strDate(card[0,1].data, 48),
+                mDate2 = strDate(card[1,2].data, 32),
+            mDate3 = strDate(card[1,2].data, 96),
+            mDate4 = strDate(card[2,2].data, 32)
+        )
     }
 
     override fun earlyCheck(sectors: List<ClassicSector>) =
