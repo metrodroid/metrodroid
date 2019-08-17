@@ -39,12 +39,12 @@ abstract class En1545TransitData : TransitData {
                         mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID).toString(16)))
 
             mTicketEnvParsed.getTimeStamp(ENV_APPLICATION_VALIDITY_END, tz)?.let {
-                li.add(ListItem(R.string.expiry_date, TimestampFormatter.longDateFormat(it)))
+                li.add(ListItem(R.string.expiry_date, it.format()))
             }
 
             if (!Preferences.hideCardNumbers && !Preferences.obfuscateTripDates)
                 mTicketEnvParsed.getTimeStamp(HOLDER_BIRTH_DATE, tz)?.let {
-                    li.add(ListItem(R.string.date_of_birth, TimestampFormatter.longDateFormat(it)))
+                    li.add(ListItem(R.string.date_of_birth, it.format()))
                 }
 
             if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID) != 0)
@@ -52,11 +52,11 @@ abstract class En1545TransitData : TransitData {
                         lookup.getAgencyName(mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID), false)))
 
             mTicketEnvParsed.getTimeStamp(ENV_APPLICATION_ISSUE, tz)?.let {
-                li.add(ListItem(R.string.issue_date, TimestampFormatter.longDateFormat(it)))
+                li.add(ListItem(R.string.issue_date, it.format()))
             }
 
             mTicketEnvParsed.getTimeStamp(HOLDER_PROFILE, tz)?.let {
-                li.add(ListItem(R.string.en1545_card_expiry_date_profile, TimestampFormatter.longDateFormat(it)))
+                li.add(ListItem(R.string.en1545_card_expiry_date_profile, it.format()))
             }
 
             if (!Preferences.hideCardNumbers && !Preferences.obfuscateTripDates)
