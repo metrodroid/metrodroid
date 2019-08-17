@@ -2,7 +2,7 @@
  * TransitData.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences
@@ -32,37 +33,35 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 abstract class TransitData : Parcelable {
 
     /**
-     * Balance of the card's "purse".
+     * The (currency) balance of the card's _purse_. Most cards have only one purse.
      *
-     * Cards with a single "purse" balance should implement this method, and
-     * [TransitData.balances] will convert single-purse cards.  Most transit cards have
-     * only one purse so should use this.
+     * By default, this returns `null`, so no balance information will be displayed (and it is presumed unknown).
      *
-     * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
-     * multiple transit cards) must implement [TransitData.balances] instead.
+     * If a card **only** stores season passes or a number of credited rides (instead of currency), return `null`.
      *
-     * If the balance is not known, this does not need to be implemented.
+     * Cards with more than one purse must implement [balances] instead.
      *
-     * UI code must call [TransitData.balances] to get the balances of purses in the
-     * card, even in the case there is only one purse.
+     * Cards with a single purse _should_ implement this method, and [TransitData.balance] will automatically handle
+     * the conversion.
      *
-     * @see TransitData.balances
-     * @return The balance of the card, or null if it is not known.
+     * Note: This method is protected -- callers must use [balances], even in the case there is only one purse.
+     *
+     * @see balances
+     * @return The balance of the card, or `null` if it is not known.
      */
     protected open val balance: TransitBalance?
         get() = null
 
     /**
-     * Balances of the card's "purses".
+     * The (currency) balances of all of the card's _purses_.
      *
-     * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
-     * multiple transit cards) must implement this method, and must not implement
-     * [TransitData.balance].
+     * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as multiple transit cards)
+     * must implement this method, and must not implement [balance].
      *
-     * Cards with a single "purse" balance should implement [TransitData.balance]
-     * instead.
+     * Cards with a single "purse" balance should implement [balance] instead -- the default implementation in
+     * [TransitData] will automatically up-convert it.
      *
-     * @return The balance of the card, or null if it is not known.
+     * @return The purse balance(s) of the card, or `null` if it is not known.
      */
     open val balances: List<TransitBalance>?
         get() {
@@ -70,12 +69,27 @@ abstract class TransitData : Parcelable {
             return listOf(b)
         }
 
+    /**
+     * The serial number of the card. Generally printed on the card itself, or shown on receipts from ticket vending
+     * machines.
+     *
+     * If a card has more than one serial number, then show the second serial number in [info].
+     */
     abstract val serialNumber: String?
 
     /**
-     * Lists all trips on the card.  May return null if the trip information cannot be read.
+     * Lists all trips on the card.
      *
-     * @return List of Trip[], or null if not supported.
+     * If the transit card does not store trip information, or the [TransitData] implementation does not support
+     * reading trips yet, return `null`.
+     *
+     * If the [TransitData] implementation supports reading trip data, but no trips have been taken on the card, return
+     * an [emptyList].
+     *
+     * Note: UI elements must use [prepareTrips] instead, which implements obfuscation.
+     *
+     * @return A [List] of [Trip]s, or `null` if not supported.
+     * @see [prepareTrips]
      */
     open val trips: List<Trip>?
         get() = null
@@ -84,25 +98,18 @@ abstract class TransitData : Parcelable {
         get() = null
 
     /**
-     * Allows [TransitData] implementors to show extra information that doesn't fit within the
-     * standard bounds of the interface.  By default, this returns null, so the "Info" tab will not
-     * be displayed.
+     * Allows [TransitData] implementors to show extra information that doesn't fit within the standard bounds of the
+     * interface. By default, this returns `null`, which hides the "Info" tab.
      *
+     * Implementors **must** implement obfuscation through this method:
      *
-     * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
-     * also need to use some other functionality:
+     * * Check for [Preferences.hideCardNumbers] whenever you show a card number, or other mark (such as name, height,
+     *   weight, birthday or gender) that could be used to identify this card or its holder.
      *
-     *  * Check for [au.id.micolous.metrodroid.util.Preferences.hideCardNumbers] whenever you show a card
-     * number, or other mark (such as a name) that could be used to identify this card or its
-     * holder.
+     * * Pass dates and times ([Timestamp] and [Daystamp]) through [TripObfuscator.maybeObfuscateTS].
      *
-     *  * Pass [au.id.micolous.metrodroid.time.Timestamp] objects (timestamps) through
-     * [au.id.micolous.metrodroid.util.TripObfuscator.maybeObfuscateTS].  This also
-     * works on epoch timestamps (expressed as seconds since UTC).
-     *
-     *  * Pass all currency amounts through
-     * [TransitCurrency.formatCurrencyString] and
-     * [TransitCurrency.maybeObfuscateBalance].
+     * * Pass all currency amounts through [TransitCurrency.formatCurrencyString] and
+     *   [TransitCurrency.maybeObfuscateBalance].
      *
      */
     open val info: List<ListItem>?
@@ -123,7 +130,9 @@ abstract class TransitData : Parcelable {
     /**
      * You may optionally link to a page which allows you to view the online services for the card.
      *
-     * @return Uri pointing to online services page, or null if no page is to be supplied.
+     * By default, this returns `null`, which causes the menu item to be removed.
+     *
+     * @return Uri to card's online services page.
      */
     open val onlineServicesPage: String?
         get() = null
@@ -141,9 +150,11 @@ abstract class TransitData : Parcelable {
         get() = false
 
     /**
-     * Finds the timestamp of the latest trip taken on the card.
-     * @return Latest timestamp of a trip, or null if there are no trips or no trips with
-     * timestamps.
+     * Finds the [Daystamp] of the latest [Trip] taken on the card. This value is **not** obfuscated.
+     *
+     * This is helpful for cards that define their [balance] validity period as "_n_ years since last use".
+     *
+     * @return Latest timestamp of a trip, or `null` if there are no trips or no trips with timestamps.
      */
     fun getLastUseDaystamp(): Daystamp? {
         // Find the last trip taken on the card.
@@ -151,9 +162,15 @@ abstract class TransitData : Parcelable {
                 ?.maxBy { it.daysSinceEpoch }
     }
 
+    /**
+     * Declares levels of raw information to display, useful for development and debugging.
+     */
     enum class RawLevel {
+        /** Display no extra information (default). */
         NONE,
+        /** Display only unknown fields, or fields that are not displayed in other contexts. */
         UNKNOWN_ONLY,
+        /** Display all fields, even ones that are decoded in other contexts. */
         ALL;
 
         companion object {
@@ -161,24 +178,54 @@ abstract class TransitData : Parcelable {
         }
     }
 
-    // In Swift properties can't throw. Obfuscated trips never throw as they
-    // copy all fields. So if safe is true, always pass trips through
-    // obfuscation even if no real data changes
+    /**
+     * Prepares a list of trips for display in the UI.
+     *
+     * This will obfuscate trip details if the user has enabled one of the trip obfuscation [Preferences].
+     *
+     * @param safe When `false` (default), the exact [trips] will be returned verbatim if no obfuscation [Preferences]
+     * have been enabled.
+     *
+     * When `true`, [trips] is passed through [TripObfuscator] regardless of whether the user has enabled one
+     * of the trip obfuscation [Preferences]. If no obfuscation flags are enabled, [TripObfuscator] will simply copy
+     * all fields verbatim.
+     *
+     * This is required for Swift interop, as properties can't throw exceptions in Swift.
+     *
+     * @return A list of trips for display purposes. If [trips] is null, this also returns null.
+     *
+     * @see [trips], [TripObfuscator.obfuscateTrips]
+     */
     fun prepareTrips(safe: Boolean = false): List<Trip>? {
-        val maybeObfuscatedTrips: List<Trip>
-        if (Preferences.obfuscateTripDates ||
-            Preferences.obfuscateTripTimes ||
-            Preferences.obfuscateTripFares || safe) {
-            maybeObfuscatedTrips = TripObfuscator.obfuscateTrips(trips ?: return null,
-                Preferences.obfuscateTripDates,
-                Preferences.obfuscateTripTimes,
-                Preferences.obfuscateTripFares)
-        } else
-            maybeObfuscatedTrips = trips ?: return null
+        val trips = this.trips ?: return null
+
+        val maybeObfuscatedTrips = if (safe ||
+                Preferences.obfuscateTripDates ||
+                Preferences.obfuscateTripTimes ||
+                Preferences.obfuscateTripFares) {
+            TripObfuscator.obfuscateTrips(trips,
+                    Preferences.obfuscateTripDates,
+                    Preferences.obfuscateTripTimes,
+                    Preferences.obfuscateTripFares)
+        } else {
+            trips
+        }
+
         // Explicitly sort these events
         return maybeObfuscatedTrips.sortedWith(Trip.Comparator())
     }
 
+    /**
+     * Raw field information from the card, which is only useful for development and debugging. By default, this
+     * returns `null`.
+     *
+     * This has the same semantics as [info], except obfuscation is never used on these fields.
+     *
+     * This is only called when [Preferences.rawLevel] is not [RawLevel.NONE].
+     *
+     * @param level Level of detail requested.
+     * @see [info]
+     */
     open fun getRawFields(level: RawLevel): List<ListItem>? = null
 
     companion object {
