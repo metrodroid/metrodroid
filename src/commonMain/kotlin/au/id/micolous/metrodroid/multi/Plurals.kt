@@ -1,5 +1,7 @@
-// Based on CLDR commit 13cd95684a52cd18c1238574ca519c335758e503
-// Covers all the languages available for metrodroid except Maori (mi)
+// Based on CLDR data:
+// https://github.com/unicode-org/cldr/blob/13cd95684a52cd18c1238574ca519c335758e503/common/supplemental/ordinals.xml
+//
+// Covers all the languages available for Metrodroid except Maori (mi)
 
 package au.id.micolous.metrodroid.multi
 
