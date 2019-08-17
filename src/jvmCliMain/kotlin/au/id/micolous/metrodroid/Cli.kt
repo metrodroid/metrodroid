@@ -90,6 +90,16 @@ class Parse: CliktCommand(
                 for (info in infos) {
                     println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
                 }
+
+                
+                val raw = sub.getRawFields(TransitData.RawLevel.ALL).orEmpty()
+                if (raw.isNotEmpty()) {
+                    println("      raw")
+                }
+
+                for (info in raw) {
+                    println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+                }
             }
             for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
                 println("   trip $idx")
