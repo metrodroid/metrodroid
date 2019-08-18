@@ -361,4 +361,5 @@
     <string name="hsl_transport_lautta">Transbordador</string>
     <string name="hsl_transport_u_linja">U-línea</string>
     <string name="ravkav_generic_trips">Viajes</string>
+    <string name="cepas_csn">Número de serie de la tarjeta (CSN)</string>
 </resources>
