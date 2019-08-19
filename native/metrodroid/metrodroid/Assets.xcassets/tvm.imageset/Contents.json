@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "tvm_black.png",
+      "filename" : "tvm_black_1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "tvm_black.png",
+      "filename" : "tvm_black_1x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -18,7 +18,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "tvm.png",
+      "filename" : "tvm_1x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -29,11 +29,13 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "tvm_black_2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
+      "filename" : "tvm_black_2x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -44,6 +46,7 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
+      "filename" : "tvm_2x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -53,11 +56,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "tvm_black_3x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
+      "filename" : "tvm_black_3x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -68,6 +73,7 @@
     {
       "idiom" : "universal",
       "scale" : "3x",
+      "filename" : "tvm_3x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
