@@ -1333,7 +1333,7 @@
     -->
     <!-- Translators: Transit card in Shenzhen. Chinese: 深圳通. -->
     <string name="card_name_szt">Shenzhen Tong</string>
-    <!-- Translators: Transit card in ong Kong. Chinese: 八達通. -->
+    <!-- Translators: Transit card in Hong Kong. Chinese: 八達通. -->
     <string name="card_name_octopus">Octopus</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
     <string name="szt_metro">Shenzhen Metro</string>
@@ -2134,11 +2134,11 @@
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_aerial_tramway">Aerial tramway</string>
     <!-- Translators: this is balance usable for travelling in Nizhny Novgorod
-         and after the fare is deduced once, all transfers within 60 minutes
+         and after the fare is deducted once, all transfers within 60 minutes
          are free. -->
     <string name="siticard_adult_60min_xfer_purse">60-minute transfer purse (adult)</string>
     <!-- Translators: this is balance usable for travelling in Nizhny Novgorod
-         and after the fare is deduced once, all transfers within 90 minutes
+         and after the fare is deducted once, all transfers within 90 minutes
          are free. -->
     <string name="siticard_adult_90min_xfer_purse">90-minute transfer purse (adult)</string>
     <!-- Translators: Sarov is a city in Russia. This is balance usable
