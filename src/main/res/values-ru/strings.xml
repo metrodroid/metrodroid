@@ -667,8 +667,6 @@
         <item quantity="few">Включены <xliff:g id="count" example="3">%d</xliff:g> флага обфускации</item>
         <item quantity="many">Включены <xliff:g id="count" example="3">%d</xliff:g> флагов обфускации</item>
     </plurals>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <string name="cepas_other_purse_info">Другая информация о кошельке</string>
     <string name="felica_response_time_read">Команда чтения (1 блок)</string>
     <string name="felica_response_time_write">Команда записи (1 блок)</string>

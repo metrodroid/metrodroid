@@ -445,8 +445,8 @@
     You may wish to replace this in other translations with a localised tile server in place of
     this one.
     -->
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
+    <string name="default_map_tile_url" translatable="false">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains" translatable="false">123456</string>
 
     <string name="pref_show_local_and_english_title">Show both local and English station names</string>
     <string name="pref_show_local_and_english_desc">Shows both local and English names regardless of locale, using the most appropriate variant when off.</string>

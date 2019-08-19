@@ -99,8 +99,6 @@
     <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
     <string name="mfc_fallback_desc">Certaines agences n\'ont pas de système d\'identification sur leur carte. Pour les lire, vous devez sélectionner explicitement une agence.</string>
     <string name="mfc_fallback">Lecteur de secours</string>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
             <xliff:g id="count" example="1">%d</xliff:g> carte importée.</item>
