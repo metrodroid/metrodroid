@@ -155,10 +155,6 @@ class AndroidNfcATransceiver(private val tag: Tag) : CardTransceiver, Closeable 
         private set
 
     private var nfcA: NfcA? = null
-    var sak: Short? = null
-        private set
-    var atqa: ImmutableByteArray? = null
-        private set
 
     fun connect() {
         close()
@@ -166,8 +162,6 @@ class AndroidNfcATransceiver(private val tag: Tag) : CardTransceiver, Closeable 
         val nfcA = NfcA.get(tag) ?: throw CardProtocolUnsupportedException("ISO14443-A")
 
         nfcA.connect()
-        this.sak = nfcA.sak
-        this.atqa = nfcA.atqa.toImmutable()
         this.nfcA = nfcA
 
         uid = tag.id.toImmutable()

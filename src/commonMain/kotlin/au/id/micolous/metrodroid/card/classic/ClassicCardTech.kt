@@ -26,10 +26,12 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 interface ClassicCardTech {
-    fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean
+    suspend fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean
     val sectorCount: Int
     val tagId: ImmutableByteArray
-    fun readBlock(block: Int): ImmutableByteArray
+    suspend fun readBlock(block: Int): ImmutableByteArray
     fun getBlockCountInSector(sectorIndex: Int): Int
     fun sectorToBlock(sectorIndex: Int): Int
+    val subType: ClassicCard.SubType
+        get() = ClassicCard.SubType.CLASSIC
 }

@@ -112,7 +112,11 @@ abstract class ClassicKeysImpl : ClassicKeys {
                 wellKnown("ffffffffffff", "well-known-ff"),
                 wellKnown("000000000000", "well-known-zero"),
                 wellKnown("a0a1a2a3a4a5", "well-known-mad"),
-                wellKnown("d3f7d3f7d3f7", "well-known-ndef"))
+                wellKnown("d3f7d3f7d3f7", "well-known-ndef"),
+                wellKnown("ffffffffffffffffffffffffffffffff", "well-known-ff-aes"),
+                wellKnown("00000000000000000000000000000000", "well-known-zero-aes"),
+                wellKnown("a0a1a2a3a4a5a6a7a0a1a2a3a4a5a6a7", "well-known-mad-aes"),
+                wellKnown("d3f7d3f7d3f7d3f7d3f7d3f7d3f7d3f7", "well-known-ndef-aes"))
 
         fun keysFromJSON(jsonRoot: JsonObject, allowMissingIdx: Boolean, defaultBundle: String):
                 Map<Int, List<ClassicSectorAlgoKey>> {

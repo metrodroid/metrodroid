@@ -29,15 +29,14 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 /**
  * Handle MIFARE Classic with no open sectors
  */
-@Suppress("PLUGIN_WARNING")
 @Parcelize
-class UnauthorizedClassicTransitData private constructor() : UnauthorizedTransitData() {
+class UnauthorizedClassicTransitData private constructor(val subtype: ClassicCard.SubType) : UnauthorizedTransitData() {
 
     override val cardName: String
         get() = Localizer.localizeString(R.string.locked_mfc_card)
 
     override val isUnlockable: Boolean
-        get() = true
+        get() = subtype == ClassicCard.SubType.CLASSIC
 
     companion object {
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
@@ -57,7 +56,7 @@ class UnauthorizedClassicTransitData private constructor() : UnauthorizedTransit
                     TransitIdentity(Localizer.localizeString(R.string.locked_mfc_card), null)
 
             override fun parseTransitData(card: ClassicCard) =
-                    UnauthorizedClassicTransitData()
+                    UnauthorizedClassicTransitData(subtype = card.subType)
         }
     }
 }
