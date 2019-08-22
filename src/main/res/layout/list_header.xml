@@ -27,8 +27,5 @@
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="2dip"
-    android:paddingBottom="2dip"
     android:paddingLeft="5dip"
-    android:textColor="?attr/ListHeaderTextColor"
     style="?android:attr/listSeparatorTextViewStyle" />
