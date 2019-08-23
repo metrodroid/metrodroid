@@ -25,9 +25,11 @@ import metrolib
 class SupportedCardsViewController: UICollectionViewController {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
+    // Classic is not supported currently
+    static let supportedProtocols: [CardType] = [
+        .felica, .iso7816, .mifaredesfire, .mifareultralight, .mifareplus, .vicinity]
     class func isSupported(cardInfo: CardInfo) -> Bool {
-        // Classic and vicinity are not supported currently
-        return cardInfo.iOSSupported as? Bool ?? (cardInfo.cardType == CardType.iso7816 || cardInfo.cardType == CardType.mifaredesfire || cardInfo.cardType == CardType.felica || cardInfo.cardType == CardType.mifareultralight || cardInfo.cardType == CardType.vicinity)
+        return cardInfo.iOSSupported as? Bool ?? supportedProtocols.contains(cardInfo.cardType)
     }
     var items = CardInfoRegistry.init().allCardsAlphabetical.filter {
         isSupported(cardInfo: $0) }
