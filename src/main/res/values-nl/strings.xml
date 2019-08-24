@@ -99,8 +99,6 @@
     <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
     <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
     <string name="mfc_fallback">Terugvallezer</string>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
             <xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd.</item>

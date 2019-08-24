@@ -199,8 +199,6 @@
     <string name="mode_metro">Metro</string>
     <string name="last_refill">Ultima ricarica</string>
     <string name="pref_theme_desc">Scegli l\'aspetto grafico</string>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
             <xliff:g id="count" example="1">%d</xliff:g> carta importata.</item>

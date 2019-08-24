@@ -51,6 +51,8 @@
     <string name="import_clipboard">Paste from clipboard</string>
     <string name="import_file">Import from file</string>
     <string name="export">Export</string>
+    <!-- Translators: Filename used for the current export, export is
+         an adjective, not a verb. -->
     <string name="export_filename">Export filename</string>
     <string name="export_all">Export all</string>
     <string name="about">About</string>
@@ -150,7 +152,8 @@
     <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
     describing a "well known" service code. eg: "Service: 0x90f (Suica History)" -->
     <string name="felica_service_title_format">Service: %1$s (%2$s)</string>
-    <!-- Translators: the first parameter is a hexadecimal number. -->
+    <!-- Translators: the first parameter is a hexadecimal number.
+         This is synonym of "entry".  -->
     <string name="record_title_format">Record: %s</string>
     <string name="binary_title_format">Binary data</string>
     <string name="info">Info</string>
@@ -204,6 +207,8 @@
     <string name="card_epoch">Card Epoch</string>
     <string name="card_not_supported_on_device">This card is not supported by your device.</string>
     <string name="need_stations">Some station names are unknown.</string>
+    <!-- Translators: "Report" is a verb. This a title of a button to submit
+         (report) unknown stations. -->
     <string name="need_stations_submit">Report</string>
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
@@ -326,8 +331,11 @@
     <string name="mfc_reading_blocks">Reading sector %d…</string>
     <string name="mfc_rwid">Read: %s, write: %s, increment: %s, decrement: %s</string>
     <string name="mfc_key_never">never</string>
+    <!-- Translators: it's access key for Mifare Classic. Every sector can
+         have up to 2 keys: key A and key B. -->
     <string name="mfc_key_a">key A</string>
     <string name="mfc_key_b">key B</string>
+    <!-- Translators: key A or key B. -->
     <string name="mfc_key_ab">key A|B</string>
 
     <string name="iso14a_detect">Detecting ISO 14443 card type…</string>
@@ -437,8 +445,8 @@
     You may wish to replace this in other translations with a localised tile server in place of
     this one.
     -->
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
+    <string name="default_map_tile_url" translatable="false">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains" translatable="false">123456</string>
 
     <string name="pref_show_local_and_english_title">Show both local and English station names</string>
     <string name="pref_show_local_and_english_desc">Shows both local and English names regardless of locale, using the most appropriate variant when off.</string>
@@ -576,7 +584,10 @@
     <string name="cepas_issuer_data_length">Issuer data length</string>
     <string name="cepas_issuer_data">Issuer-specific data</string>
     <string name="cepas_purse_info">Purse info</string>
+    <!-- Translators: %d is the index on the card. So we have purse 0,
+         purse 1,... on a single card. It's not a serial number of purse -->
     <string name="cepas_purse_num">CEPAS purse number %d</string>
+    <!-- Translators: this is a history of CEPAS purse with index %d. -->
     <string name="cepas_purse_num_history">CEPAS purse number %d history</string>
     <string name="cepas_can">Card Application Number (CAN)</string>
     <string name="cepas_csn">Card Serial Number (CSN)</string>
@@ -958,7 +969,15 @@
     <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
 
     <string name="ez_bus_number">Bus #%s</string>
+    <!-- Translators: when users gets into bus the maximum amount is charged
+         but when the user gets off the bus the fare is partially refunded
+         depending on distance travelled. -->
     <string name="ez_bus_refund">Bus refund</string>
+    <!-- Translators: Short for "Mass Rapid Transit". This is a
+         transit company in Singapore. Local names:
+         Sistem Pengangkutan Gerak Cepat  (Malay)
+         新加坡地铁系统 (Chinese)
+         சிங்கப்பூர் துரிதக் கடவு ரயில் (Tamil). -->
     <string name="ez_mrt">MRT</string>
     <string name="ez_topup">Top-up</string>
     <string name="ez_first_use">First use</string>
@@ -998,10 +1017,11 @@
     <string name="felica_terminal_portable">Portable terminal</string>
     <string name="felica_terminal_vehicle">Vehicle terminal (on bus)</string>
     <string name="felica_terminal_ticket">Ticket machine</string>
-    <string name="felica_terminal_deposit_quick_charge">Quick charge machine</string>
+    <string name="felica_terminal_deposit_quick_charge">Quick refill machine</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail ticket machine</string>
     <string name="felica_terminal_tvm_etc">Ticket machine, etc.</string>
-    <!-- Translators: Japanese ビューアルッテ（VIEW ALTTE) -->
+    <!-- Translators: Japanese ビューアルッテ（VIEW ALTTE). It's a kind of
+         ATM. -->
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
     <!--
         Translators:
@@ -1056,12 +1076,14 @@
     <string name="felica_terminal_vending">Vending machine</string>
 
     <string name="felica_process_fare_exit_gate">Exit turnstile</string>
-    <string name="felica_process_charge">Charge</string>
+    <string name="felica_process_charge">Refill</string>
     <string name="felica_process_purchase_magnetic">Magnetic ticket</string>
     <string name="felica_process_fare_adjustment">Fare adjustment</string>
     <string name="felica_process_admission_payment">Admission payment</string>
+    <!-- TODO: what is this? -->
     <string name="felica_process_booth_exit">Station Master booth exit</string>
     <string name="felica_process_issue_new">New issue</string>
+    <!-- TODO: what is this? -->
     <string name="felica_process_booth_deduction">Booth deduction</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
@@ -1073,16 +1095,21 @@
         Japan's largest cities.
     -->
     <string name="felica_process_payment_shinkansen">Shinkansen payment</string>
-    <string name="felica_process_entry_a_autocharge">Entry A (autocharge)</string>
-    <string name="felica_process_exit_a_autocharge">Exit A (autocharge)</string>
+    <!-- TODO: what is this? -->
+    <string name="felica_process_entry_a_autocharge">Entry A (autorefill)</string>
+    <!-- TODO: what is this? -->
+    <string name="felica_process_exit_a_autocharge">Exit A (autorefill)</string>
+    <!-- TODO: what is this? -->
     <string name="felica_process_deposit_bus">Bus deposit</string>
-    <string name="felica_process_purchase_special_ticket">Ticket (special Bus/streetcar)</string>
-    <string name="felica_process_merchandise_purchase">Merchandise</string>
-    <string name="felica_process_bonus_charge">Bonus Charge</string>
+    <!-- TODO: what is this? -->
+    <string name="felica_process_purchase_special_ticket">Ticket (special bus/streetcar)</string>
+    <string name="felica_process_merchandise_purchase">Merchandise purchase</string>
+    <string name="felica_process_bonus_charge">Bonus refill</string>
+    <!-- TODO: what is this? -->
     <string name="felica_process_register_deposit">Register deposit</string>
     <string name="felica_process_merchandise_cancel">Cancel merchandise</string>
     <string name="felica_process_merchandise_admission">Merchandise/admission</string>
-    <string name="felica_process_merchandise_purchase_cash">Merchandise (partially with cash)</string>
+    <string name="felica_process_merchandise_purchase_cash">Merchandise purchase (partially with cash)</string>
     <string name="felica_process_merchandise_admission_cash">Merchandise/admission (partially with cash)</string>
     <string name="felica_process_payment_thirdparty">Payment (third-party)</string>
     <string name="felica_process_admission_thirdparty">Admission payment (third-party)</string>
@@ -1137,10 +1164,12 @@
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
     <string name="hsl_period">Validity period</string>
+    <!-- Translators: it's a day lasting exactly 24h starting at any point. -->
     <plurals name="hsl_valid_days_24h">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
+    <!-- Translators: it's a day from mindight to next midnight. -->
     <plurals name="hsl_valid_days_calendar">
         <item quantity="one">%d calendar day</item>
         <item quantity="other">%d calendar days</item>
@@ -1302,7 +1331,9 @@
     <!--
         Octopus / Shenzhen Tong
     -->
+    <!-- Translators: Transit card in Shenzhen. Chinese: 深圳通. -->
     <string name="card_name_szt">Shenzhen Tong</string>
+    <!-- Translators: Transit card in Hong Kong. Chinese: 八達通. -->
     <string name="card_name_octopus">Octopus</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
     <string name="szt_metro">Shenzhen Metro</string>
@@ -1332,9 +1363,14 @@
     <string name="erg_agency_id">Agency ID</string>
 
     <!-- OVC -->
+    <string name="ovc_autocharge_information">Autocharge info</string>
     <string name="ovc_autocharge_limit">Autocharge limit</string>
     <string name="ovc_autocharge_amount">Autocharge charge</string>
+    <!-- Translators: Used as row header with value yes/no. -->
     <string name="ovc_autocharge">Autocharge</string>
+    <!-- Translators: Used as row header with value yes/no whether
+         card is banned or not.
+    -->
     <string name="ovc_banned">Banned</string>
     <!-- Translators: this are yes/no strings for previous 2 strings -->
     <string name="ovc_yes">Yes</string>
@@ -1393,7 +1429,6 @@
 
 
     <string name="date_of_birth">Date of birth</string>
-    <string name="credit_information">Credit info</string>
     <string name="software_information">Software info</string>
     <string name="clipboard_error">Could not access the clipboard</string>
     <string name="convert_timezones">Convert time zones</string>
@@ -1407,6 +1442,7 @@
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
     <string name="expiry_date">Expiry date</string>
+    <!-- Translators: day ticket for all 3 zones. -->
     <string name="compass_sub_daypass">DayPass</string>
     <string name="compass_sub_one_zone">One Zone</string>
     <string name="compass_sub_two_zone">Two Zone</string>
@@ -1472,10 +1508,14 @@
     <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
     <string name="remaining_trip_count">Trips remaining</string>
 
+    <!-- Translators: some cards allow only limited number of trips
+         per day. First argument is number of remaining trips and second
+         argument is the date to which limit applies. -->
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d trip remains on %2$s</item>
         <item quantity="other">%1$d trips remaining on %2$s</item>
     </plurals>
+    <!-- Translators: some cards limit the number of travel days. -->
     <plurals name="remaining_day_count">
         <item quantity="zero">No days remain</item>
         <item quantity="one">1 day remains</item>
@@ -1661,6 +1701,9 @@
     <!-- Translators: Application Dedicated File (ADF) Application ID (AID). This is a reference
     to the name of a ISO7816 dedicated file used for the primary card application. -->
     <string name="adf_aid" translatable="false">ADF AID</string>
+    <!-- Translators: For Korea One-Card All-Pass the information
+         structure has a catalog of links to exact files called
+         "Additional file references".  -->
     <string name="additional_file_references">Additional file references</string>
     <!-- Translators: Additional serial number used by the transit agency -->
     <string name="agency_card_serial_number">Agency card serial number</string>
@@ -1738,7 +1781,7 @@
     <!-- Translators: Korean telecom carrier: https://en.wikipedia.org/wiki/KT_Corporation -->
     <string name="tmoney_tcode_kt">Korea Telecom</string>
     <!-- Translators: Korean mobile carrier: https://en.wikipedia.org/wiki/LG_Uplus -->
-    <string name="tmoney_tcode_lg">LG Uplus</string>
+    <string name="tmoney_tcode_lg">LG U+</string>
 
     <!-- Translators: Can be used to describe a bank or credit card name -->
     <string name="financial_institution_name">Financial institution name</string>
@@ -1776,6 +1819,8 @@
     <string name="charlie_2nd_card_number">Second number</string>
 
     <!-- Chinese PBOC cards. -->
+    <!-- Translators: Chinese cards may have several balances. %d is index.
+         E.g. "Balance number 0", ... -->
     <string name="china_balance">Balance number %d</string>
 
     <!-- EMV cards -->
@@ -1834,6 +1879,7 @@
     <string name="emv_application_priority_indicator">Application priority indicator</string>
     <string name="emv_ca_public_key_index">Certification authority public key index</string>
     <string name="emv_signed_static_application_data">Signed static application data</string>
+    <!-- https://www.emvlab.org/emvtags/show/t94/ -->
     <string name="emv_application_file_locator">Application file locator</string>
     <!-- https://www.emvlab.org/emvtags/show/t9F10/ -->
     <string name="emv_issuer_application_data">Issuer application data</string>
@@ -1850,7 +1896,8 @@
     <!-- Translators: Used for a list of unknown binary data tags -->
     <string name="unknown_tags">Unknown tags</string>
     <string name="emv_gpo_response">Get Processing Options (GPO) response</string>
-    <string name="emv_data_response">Get Data response %s</string>
+    <!-- Translators: argument is the tag ID sent in Get Data query. -->
+    <string name="emv_data_response">Get Data %s response</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
@@ -1918,6 +1965,8 @@
     <string name="felica_lite_read_write">Re-writable data</string>
     <!-- Translators: NDEF = NFC Data Exchange Format -->
     <string name="card_format_ndef">NDEF</string>
+    <!-- Translators: area of card storage shared by Suica and Edy,
+         possibly othewr systems as well. -->
     <string name="felica_system_common">Common Area (FeliCa Networks)</string>
 
     <!-- TFI Leap -->
@@ -2027,6 +2076,8 @@
     <string name="transfer">Transfer</string>
     <string name="copy_card_number">Copy card number</string>
     <string name="card_serial_number">Serial number</string>
+    <!-- Translators: we use it as a header when only serial can be read.
+         Feel free to omit "card". -->
     <string name="serial_only_card_header">Serial-only card</string>
     <string name="serial_only_card_description_not_stored">This card only contains a serial number. Its balance and history are only stored in a central database.</string>
     <string name="serial_only_card_description_locked">This card is locked, and only the serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
@@ -2077,21 +2128,36 @@
     <string name="card_name_barnaul">Electronic Barnaul</string>
     <!-- Translators: Original in Russian is Электронный кошелек (lit. Electronic Wallet). -->
     <string name="barnaul_ewallet">E-wallet</string>
-    <string name="card_name_penza">Penza</string>
+    <string name="card_name_penza">Penza transport card</string>
     <string name="card_name_siticard">SitiCard</string>
-    <string name="card_name_kirov">Kirov</string>
+    <string name="card_name_kirov">Kirov transport card</string>
+    <!-- Translators: card name used in Ekaterinburg, Russia. -->
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_aerial_tramway">Aerial tramway</string>
+    <!-- Translators: this is balance usable for travelling in Nizhny Novgorod
+         and after the fare is deducted once, all transfers within 60 minutes
+         are free. -->
     <string name="siticard_adult_60min_xfer_purse">60-minute transfer purse (adult)</string>
+    <!-- Translators: this is balance usable for travelling in Nizhny Novgorod
+         and after the fare is deducted once, all transfers within 90 minutes
+         are free. -->
     <string name="siticard_adult_90min_xfer_purse">90-minute transfer purse (adult)</string>
+    <!-- Translators: Sarov is a city in Russia. This is balance usable
+         for travelling in Sarov. -->
     <string name="siticard_purse_sarov">Sarov e-wallet</string>
     <string name="siticard_edinyj_16_trips">Edinyj 16 trips</string>
     <string name="siticard_edinyj_30_trips">Edinyj 30 trips</string>
     <string name="siticard_edinyj_3_days">Edinyj 3 days</string>
-    <string name="card_name_crimea_trolleybus">Crimea Trolleybus</string>
-    <string name="card_name_crimea_parus_school">Parus school card</string>
+    <!-- Translators: transit card for intercity trolleybus operating in
+         Crimea. -->
+    <string name="card_name_crimea_trolleybus">Crimea Trolleybus Card</string>
+    <!-- Translators: "Parus" is the name of the card and it's issued
+         to school children in Crimea. There is also Parus for students
+         but we don't have samples of it. -->
+    <string name="card_name_crimea_parus_school">\"Parus\" school card</string>
     <string name="card_name_yoshkar_ola">Yoshkar-Ola transport card</string>
     <string name="card_name_umarsh">Umarsh</string>
+    <!-- Translators: card used by young people going to mandatory school. -->
     <string name="umarsh_school">School student</string>
     <string name="umarsh_student">Student</string>
     <string name="umarsh_adult">Adult</string>
@@ -2116,7 +2182,8 @@
     <string name="venezia_profile_normal">Normal, out of region</string>
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
-    <!-- Translators: describes the status of a card or transaction -->
+    <!-- Translators: describes the status of a card or transaction.
+         This one is basically "normal function". -->
     <string name="rkf_status_ok">OK, enabled</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_action_pending">Action pending</string>
@@ -2130,8 +2197,11 @@
     <string name="subscription_id">Subscription ID</string>
     <string name="card_note_chc_metrocard">Only pre-2016 (MIFARE Classic) cards can be read. Newer fully locked DESFire cards are unsupportable.</string>
     <string name="import_mfc_file">Import from MFC file</string>
+    <!-- Translators: In Metrodroid you can make it show raw fields by
+         changing this preference in addition to normal data, for the ease of
+         debugging. -->
     <string name="raw_level">Raw level</string>
-    <string name="raw_level_desc">How much raw info to show in passed data. Not all parsers support this option</string>
+    <string name="raw_level_desc">How much raw info to show in parsed data. Not all parsers support this option</string>
     <string name="raw_header">Raw fields</string>
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC settings</string>
@@ -2199,10 +2269,10 @@
 
     <!-- Translators:  this number isn't anywhere on the card but is
          printed on the refill receipt as "CardNo". -->
-    <string name="touchngo_cardno">Alternative number ("CardNo")</string>
-    <string name="unsupported_tag_message">This tag is currently unsupported by Metrodroid.
-        Tag identifier: %1$s
-        Supported technologies:
+    <string name="touchngo_cardno">Alternative number (\"CardNo\")</string>
+    <string name="unsupported_tag_message">This tag is currently unsupported by Metrodroid.\n
+        Tag identifier: %1$s\n
+        Supported technologies:\n
         %2$s
     </string>
     <string name="unknown_ultralight_message">Unknown Mifare Ultralight tag</string>
@@ -2256,7 +2326,7 @@
     </string>
 
     <!-- Translators:  first argument is sector name e.g. "Montparnasse", second one is station numeric ID. -->
-    <string name="navigo_sector_station_id">Sector ID %1$s, station ID %2$d</string>
+    <string name="navigo_sector_station_id">Sector %1$s, station ID %2$d</string>
     <!-- Translators:  first argument is sector numeric ID, second one is station numeric ID. -->
     <string name="navigo_sector_id_station_id">Sector ID %1$d, station ID %2$d</string>
     <!-- Translators: ticket for the whole day. French "Forfait jour". -->
@@ -2281,6 +2351,8 @@
 
     <string name="ricaricami_single_urban">Urban ticket</string>
     <string name="ricaricami_daily_urban">Urban daily ticket</string>
+    <!-- Translators: a ticket allowing to travel on any 6 out of 7
+         days of the week but only 2 rides per day. -->
     <string name="ricaricami_urban_2x6">Urban weekly 2x6 ticket</string>
     <string name="ricaricami_yearly_urban">Urban annual subscription</string>
     <string name="ricaricami_monthly_urban">Urban monthly subscription</string>
@@ -2289,7 +2361,7 @@
     <!-- Translators: "Rete Unica" litelrally "Unique Network" is
          a ticket that allows travel on all transport. Agency calls it
          "Rete Unica" even in English. Italian "Rete Unica 75'". -->
-    <string name="venezia_rete_unica_75min">75-minute Rete Unica 75</string>
+    <string name="venezia_rete_unica_75min">75-minute Rete Unica</string>
     <!-- Translators: Italian "Rete Unica 100'". -->
     <string name="venezia_rete_unica_100min">100-minute Rete Unica</string>
     <string name="venezia_bus_ticket_75min">75-minute bus ticket</string>

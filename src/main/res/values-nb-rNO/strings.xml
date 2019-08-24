@@ -75,7 +75,6 @@
     <string name="saved_metrodroid_zip">Skrev Metrodroid-Export.zip til USB-lagring.</string>
     <string name="saved_xml_custom">Skrev XML til USB-lagring.</string>
     <string name="online_services">Nettbaserte tjenester</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <plurals name="cards_imported">
         <item quantity="one">
             <xliff:g id="count" example="1">%d</xliff:g> kort importert!</item>
@@ -195,7 +194,6 @@
     <string name="obfuscation_dates_desc">Vis tur, abonnement, utløp- og skanningsdatoer som forskjellige, tilfeldige dager</string>
     <string name="obfuscation_times">Tilslør tider</string>
     <string name="obfuscation_times_desc">Tilfeldiggjør og senk punktligheten for turer, abonnementer og skanninger</string>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="desfire_standard_file">Forvalgt fil</string>
     <string name="desfire_backup_file">Sikkerhetskopifil</string>
     <string name="desfire_value_file">Verdifil</string>
