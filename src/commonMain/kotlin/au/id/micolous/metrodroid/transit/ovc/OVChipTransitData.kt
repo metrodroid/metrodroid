@@ -108,7 +108,7 @@ data class OVChipTransitData(
                             En1545Bitmap(
                                     En1545FixedHex("NeverSeen1", 8),
                                     En1545Container(
-                                            En1545FixedInteger(En1545TransitData.HOLDER_BIRTH_DATE, 32),
+                                            En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                                             En1545FixedHex("EnvUnknown3", 32),
                                             En1545FixedInteger(AUTOCHARGE_ACTIVE, 3),
                                             En1545FixedInteger(AUTOCHARGE_LIMIT, 16),

@@ -80,7 +80,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
                 En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
                 En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
                 En1545FixedInteger("PayMethod", 3),
-                En1545FixedInteger(HOLDER_BIRTH_DATE, 32),
+                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
                 En1545FixedHex(ENV_UNKNOWN_B, 44),
                 En1545FixedInteger(HOLDER_ID_NUMBER, 30)
         )

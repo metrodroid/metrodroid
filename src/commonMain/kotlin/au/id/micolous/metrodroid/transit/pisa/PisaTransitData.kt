@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -64,7 +63,7 @@ data class PisaTransitData(val calypso: Calypso1545TransitDataCapsule) : Calypso
                 En1545FixedHex(ENV_UNKNOWN_A, 44),
                 En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
                 En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
-                En1545FixedInteger(HOLDER_BIRTH_DATE, 32)
+                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE)
                 // Remainder: zero-filled
         )
 

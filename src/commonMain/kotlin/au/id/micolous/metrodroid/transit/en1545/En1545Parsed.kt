@@ -127,18 +127,11 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
         if (contains(En1545FixedInteger.datePackedName(name)))
             return En1545FixedInteger.parseDatePacked(
                     getIntOrZero(En1545FixedInteger.datePackedName(name)))
+        if (contains(En1545FixedInteger.dateBCDName(name)))
+            return En1545FixedInteger.parseDateBCD(
+                    getIntOrZero(En1545FixedInteger.dateBCDName(name)))
         return null
         // TODO: any need to support time-only cases?
-    }
-
-    fun getTimeStampString(name: String, tz: MetroTimeZone): String? {
-        val timeFlag = getTimeStamp(name, tz)
-        if (timeFlag == null) {
-            val value = getInt(En1545FixedInteger.timeName(name)) ?: getInt(En1545FixedInteger.timeLocalName(name))
-            ?: return null
-            return dig2(value / 60) + ":" + dig2(value % 60)
-        }
-        return timeFlag.format().toString()
     }
 
     fun contains(name: String, path: String = ""): Boolean {

@@ -72,7 +72,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
                 En1545Bitmap(
                         En1545Container(
                                 En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_A, 3),
-                                En1545FixedInteger.BCDdate(En1545TransitData.HOLDER_BIRTH_DATE),
+                                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
                                 En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_B, 13),
                                 En1545FixedInteger.date(En1545TransitData.HOLDER_PROFILE),
                                 En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_C, 8)
