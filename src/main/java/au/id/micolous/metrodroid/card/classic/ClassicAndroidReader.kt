@@ -114,18 +114,12 @@ object ClassicAndroidReader {
         }
     }
 
-
     suspend fun dumpPlus(tag: CardTransceiver, feedbackInterface: TagReaderFeedbackInterface,
                          atqa: Int, sak: Short): ClassicCard? {
-        if (sak != 0x20.toShort() || atqa !in listOf(0x0002, 0x0004, 0x0042, 0x0044))
-            return null
-        val techWrapper = MifarePlusWrapper.wrap(tag) ?: return null
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
         feedbackInterface.showCardType(null)
 
         val keyRetriever = getKeyRetriever(MetrodroidApplication.instance)
-
-        return ClassicReader.readCard(
-            keyRetriever, techWrapper, feedbackInterface)
+        return ClassicReader.readPlusCard(keyRetriever, tag, feedbackInterface, atqa, sak)
     }
 }

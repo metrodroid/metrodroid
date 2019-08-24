@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.key.CardKeysRetriever
 import au.id.micolous.metrodroid.key.ClassicSectorKey
@@ -68,7 +69,7 @@ object ClassicReader {
             ClassicCard.SubType.CLASSIC -> ClassicCardFactoryRegistry.classicFactories
             ClassicCard.SubType.PLUS -> ClassicCardFactoryRegistry.plusFactories
         }
-        ClassicCardFactoryRegistry.allFactories.filter { factory -> factory.earlySectors == secnum }
+        factories.filter { factory -> factory.earlySectors == secnum }
                 .forEach lambda@{ factory ->
                     val ci = try {
                         if (!factory.earlyCheck(sectors))
@@ -153,5 +154,17 @@ object ClassicReader {
         }
 
         return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = false, subType = tech.subType)
+    }
+
+    suspend fun readPlusCard(retriever: CardKeysRetriever, tag: CardTransceiver,
+                             feedbackInterface: TagReaderFeedbackInterface,
+                             atqa: Int, sak: Short): ClassicCard? {
+        // MIFARE Type Identification Procedure
+        // ref: https://www.nxp.com/docs/en/application-note/AN10833.pdf
+        if (sak != 0x20.toShort() || atqa !in listOf(0x0002, 0x0004, 0x0042, 0x0044))
+            return null
+
+        val protocol = PlusProtocol.connect(tag) ?: return null
+        return readCard(retriever, protocol, feedbackInterface)
     }
 }

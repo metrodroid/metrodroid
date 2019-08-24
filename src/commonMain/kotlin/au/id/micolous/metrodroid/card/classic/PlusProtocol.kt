@@ -1,5 +1,5 @@
 /*
- * MifarePlusWrapper.kt
+ * PlusProtocol.kt
  *
  * Copyright 2018 Merlok
  * Copyright 2018 drHatson
@@ -28,8 +28,15 @@ import au.id.micolous.metrodroid.util.Cmac
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.card.CardTransceiver
 
-class MifarePlusWrapper private constructor(private val tag: CardTransceiver,
-                                            override val sectorCount: Int) : ClassicCardTech {
+/**
+ * Protocol implementation for MIFARE Plus in SL0 / SL3 mode.
+ *
+ * This is adapted from the implementation in Proxmark3.
+ *
+ * NOTE: This module is insecure, but it is enough to read cards.
+ */
+class PlusProtocol private constructor(private val tag: CardTransceiver,
+                                       override val sectorCount: Int) : ClassicCardTech {
     var kmac: ImmutableByteArray? = null
     var ti: ImmutableByteArray? = null
     var rctr: Int = 0
@@ -50,7 +57,7 @@ class MifarePlusWrapper private constructor(private val tag: CardTransceiver,
     private fun rotate(input: ImmutableByteArray) = input.sliceOffLen(1, input.size - 1) + input.sliceOffLen(0,1)
 
     override suspend fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
-        if (key.key.size != 16) {
+        if (key.key.size != ClassicSectorKey.AES_KEY_LEN) {
             return false
         }
         val keyNum = 2 * sectorIndex + (if (key.type == ClassicSectorKey.KeyType.B) 1 else 0) + 0x4000
@@ -108,7 +115,7 @@ class MifarePlusWrapper private constructor(private val tag: CardTransceiver,
         get() = ClassicCard.SubType.PLUS
 
     companion object {
-        private const val TAG = "MifarePlusWrapper"
+        private const val TAG = "PlusProtocol"
 
         private suspend fun checkSectorPresence(tag: CardTransceiver, sectorIndex: Int): Boolean {
             val keyNum = 2 * sectorIndex + 0x4000
@@ -118,13 +125,13 @@ class MifarePlusWrapper private constructor(private val tag: CardTransceiver,
             return (reply.size == 17 && reply[0] == 0x90.toByte())
         }
 
-        suspend fun wrap(tag: CardTransceiver): MifarePlusWrapper? {
+        suspend fun connect(tag: CardTransceiver): PlusProtocol? {
             try {
                 if (!checkSectorPresence(tag, 0)) {
                     return null
                 }
                 val capacity = if (checkSectorPresence(tag, 32)) 40 else 32
-                return MifarePlusWrapper(tag = tag, sectorCount = capacity)
+                return PlusProtocol(tag = tag, sectorCount = capacity)
             } catch (e: Exception) {
                 return null
             }
