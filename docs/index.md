@@ -86,7 +86,7 @@ Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [SmartRider][smartrider] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Snapper][snapper] | :new_zealand: Wellington, New Zealand | :new:
 [Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: :id: `MFC`
-[Strizh][strizh] | :ru: Izhevsk, Russia | :new: :clocked_lock_with_key: `MFC`
+[Strizh][strizh] | :ru: Izhevsk, Russia | :new: :closed_lock_with_key: `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan
 [SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: :id: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new:
