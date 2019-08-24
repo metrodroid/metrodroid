@@ -554,10 +554,10 @@ class CardsFragment : ExpandableListFragment() {
                 } else {
                     // User wants to show card numbers (default).
                     if (identity.serialNumber != null) {
-                        textView2.text = identity.serialNumber
+                        textView2.text = Utils.weakLTR(identity.serialNumber)
                     } else {
                         // Fall back to showing the serial number of the NFC chip.
-                        textView2.text = serial
+                        textView2.text = Utils.weakLTR(serial)
                     }
                 }
             } else {

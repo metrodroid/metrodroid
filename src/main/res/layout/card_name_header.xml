@@ -29,6 +29,8 @@
         android:layout_marginTop="8dp"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textAlignment="viewStart"
+        android:gravity="start"
         android:textAppearance="?android:attr/textAppearanceListItem" />
 
     <TextView android:id="@android:id/text2"
@@ -36,5 +38,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textAlignment="viewStart"
+        android:gravity="start"
         android:textColor="?attr/CardIdTextColor" />
 </LinearLayout>

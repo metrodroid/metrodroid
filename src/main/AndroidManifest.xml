@@ -40,7 +40,8 @@
         android:label="@string/app_name"
         android:name="au.id.micolous.metrodroid.MetrodroidApplication"
         android:theme="@style/Metrodroid.Dark"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:supportsRtl="true">
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
