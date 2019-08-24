@@ -257,7 +257,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                     }
                 })
                 break
-            case NFCMiFareFamily.plus:
+            case .plus:
                 statusConnecting(cardType: .mifareplus)
                 session.connect(to: tag, completionHandler: {
                     err in
