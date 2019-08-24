@@ -43,7 +43,7 @@ This statement only applies to [Metrodroid distributed via the Google Play Store
 
 If in doubt, on Android 6.0 and later, you can selectively revoke permissions.
 
-[Return to the Metrodroid home page.](https://micolous.github.io/metrodroid/)
+[Return to the Metrodroid home page.]({{ '/' | relative_url }})
 
 [crauth]: https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication
 [gps]: https://play.google.com/store/apps/details?id=au.id.micolous.farebot

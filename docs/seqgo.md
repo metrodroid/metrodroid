@@ -68,4 +68,4 @@ There are a number of caveats with Go card support:
 
   This is fixed in Metrodroid 2.9.32.
 
-[Return to the Metrodroid home page.](https://micolous.github.io/metrodroid/)
+[Return to the Metrodroid home page.]({{ '/' | relative_url }})

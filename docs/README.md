@@ -1,3 +1,3 @@
 # Metrodroid website
 
-This directory is published at https://micolous.github.io/metrodroid/
+This directory is published at https://metrodroid.github.io/metrodroid/

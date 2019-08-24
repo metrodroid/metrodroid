@@ -33,4 +33,4 @@ Android Gradle plugin -> new Gradle).
 [fdsrc]: https://f-droid.org/en/docs/FAQ_-_App_Developers/#will-my-app-be-built-from-source
 [gw]: https://docs.gradle.org/current/userguide/gradle_wrapper.html
 [agradle]: https://developer.android.com/studio/releases/gradle-plugin
-[changelog]: https://github.com/micolous/metrodroid/wiki/Changelog
+[changelog]: {{ site.github.repository_url }}/wiki/Changelog

@@ -9,7 +9,7 @@ permalink: /screenshots
 * [Norwegian Bokmål](#norwegian-bokmål)
 * [Nederlands](#nederlands) (Dutch)
 
-[Return to the Metrodroid home page.](https://micolous.github.io/metrodroid/)
+[Return to the Metrodroid home page.]({{ '/' | relative_url }})
 
 ## English
 

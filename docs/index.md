@@ -8,7 +8,7 @@ layout: home
 
 {% include screenshots.html screenshots=site.data.index %}
 
-[More screenshots...](https://micolous.github.io/metrodroid/screenshots)
+[More screenshots...]({{ '/screenshots' | relative_url }})
 
 ## Supported cards / agencies
 
@@ -136,11 +136,11 @@ interpreted locally, and _connectivity is disabled by default._
 * [MIFARE DESFire][mfd]
 * [MIFARE Ultralight][mfu] (Not compatible with all devices)
 
-[repo]: https://github.com/micolous/metrodroid
-[release]: https://github.com/micolous/metrodroid/releases
+[repo]: {{ site.github.repository_url }}
+[release]: {{ site.github.repository_url }}/releases/latest
 
-[mykinote]: https://micolous.github.io/metrodroid/myki
-[seqgonote]: https://micolous.github.io/metrodroid/seqgo
+[mykinote]: {{ '/myki' | relative_url }}
+[seqgonote]: {{ '/seqgo' | relative_url }}
 
 [calypso]: http://www.calypsotechnology.net/
 [cepas]: https://en.wikipedia.org/wiki/CEPAS

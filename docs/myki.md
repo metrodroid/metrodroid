@@ -66,7 +66,7 @@ If you are a Myki user and want this sort of access to your Myki card, you
 should [contact Public Transport Victoria][ptvmail] or the [Victorian Minister
 for Public Transport][victrans].
 
-[Return to the Metrodroid home page.](https://micolous.github.io/metrodroid/)
+[Return to the Metrodroid home page.]({{ '/' | relative_url }})
 
 [hsl]: http://dev.hsl.fi/#travel-card
 [ptv]: https://ptv.vic.gov.au/

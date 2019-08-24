@@ -1,12 +1,12 @@
-# ![logo](https://github.com/micolous/metrodroid/raw/master/src/main/res/mipmap-hdpi/ic_launcher.png) [Metrodroid](https://github.com/micolous/metrodroid)
+# ![logo](https://github.com/metrodroid/metrodroid/raw/master/src/main/res/mipmap-hdpi/ic_launcher.png) [Metrodroid](https://github.com/metrodroid/metrodroid)
 
-[![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][weblate] [![Build Status](https://travis-ci.org/micolous/metrodroid.svg?branch=master)][travis]
+[![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][weblate] [![Build Status](https://travis-ci.org/metrodroid/metrodroid.svg?branch=master)][travis]
 
-<a href="https://micolous.github.io/metrodroid/fdroid" target="_blank">
+<a href="https://metrodroid.github.io/metrodroid/fdroid" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
 <a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
-<a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
+<a href="https://github.com/metrodroid/metrodroid/releases/latest">Direct APK download</a>
 
 Version: 2.9.43
 
@@ -212,10 +212,11 @@ This software and it's authors are not associated with any public transit agency
 1. Clone the repository including submodules:
 
    ```
-   $ git clone --recursive https://github.com/micolous/metrodroid.git
+   $ git clone --recursive https://github.com/metrodroid/metrodroid.git
    ```
    
-   [If you get an error from Gradle about `:material-design-icons` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
+   [If you get an error from Gradle about `:material-design-icons` not being available, then your
+   clone doesn't have the submodules.](https://github.com/metrodroid/metrodroid/issues/32)
 
 2. Import the directory into Android Studio.
 
@@ -228,7 +229,7 @@ This software and it's authors are not associated with any public transit agency
 [14]: http://www014.upp.so-net.ne.jp/SFCardFan/
 [15]: https://www.thenounproject.com/
 [weblate]: https://hosted.weblate.org/engage/metrodroid/
-[travis]: https://travis-ci.org/micolous/metrodroid
+[travis]: https://travis-ci.org/metrodroid/metrodroid
 
 [calypso]: http://www.calypsotechnology.net/
 [cepas]: https://en.wikipedia.org/wiki/CEPAS
@@ -256,7 +257,7 @@ This software and it's authors are not associated with any public transit agency
 [ekarta]: http://ekarta-ek.ru/
 [emv]: https://en.wikipedia.org/wiki/EMV
 [envibus]: http://www.envibus.fr/
-[erg]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
+[erg]: https://github.com/metrodroid/metrodroid/wiki/ERG-MFC
 [ezlink]: http://www.ezlink.com.sg/
 [gironde]: https://www.transgironde.fr/
 [hafilat]: https://dot.abudhabi.ae/en/mediainfo/hafilat_smart_card
@@ -281,7 +282,7 @@ This software and it's authors are not associated with any public transit agency
 [myway]: https://www.transport.act.gov.au/myway-and-fares
 [navigo]: http://www.navigo.fr/
 [nets]: http://www.netsflashpay.com.sg/
-[nextfare]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
+[nextfare]: https://github.com/metrodroid/metrodroid/wiki/Cubic-Nextfare-MFC
 [nol]: https://www.nol.ae/
 [octopus]: http://www.octopus.com.hk/home/en/index.html
 [opal]: http://www.opal.com.au/
