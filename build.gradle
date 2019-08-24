@@ -44,6 +44,7 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
+def generatedLanguagesDir = new File(buildDir, "generated/res/localize/iOS")
 def drawableDir = new File(projectDir, "src/main/res/drawable")
 def drawableHdpiDir = new File(projectDir, "src/main/res/drawable-hdpi")
 def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
@@ -112,6 +113,33 @@ kotlin {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
             }
         }
+
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            binaries {
+                framework("metrolib") {
+                    linkTask.dependsOn += 'generateLocalize'
+                    linkTask.dependsOn += 'iOSLanguages'
+                }
+            }
+            binaries.all {
+                linkerOpts new File(project('proto').buildDir, 'libs/main/static/libmain.a').path
+            }
+
+            compilations.all {
+                tasks[compileKotlinTaskName].dependsOn += 'generateLocalize'
+                tasks[compileKotlinTaskName].dependsOn += 'iOSLanguages'
+                cinterops {
+                          stations {
+                                   defFile project.file("src/iOSMain/cinterop/stations.def")
+                                   includeDirs(new File(project('proto').buildDir, 'generated/source/proto/main/objc'))
+                                   compilerOpts '-I' + projectDir + '/third_party/protobuf/objectivec'
+                          }
+                }
+            }
+        }
     }
 
     sourceSets {
@@ -146,6 +174,30 @@ kotlin {
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'androidMain/kotlin')
             kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+        }
+
+        iOSMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-io-native:$kotlinio_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$kotlinserial_version"
+                implementation project(':proto')
+            }
+
+            kotlin.srcDirs += new File(generatedLocalizeDir, 'iOSMain/kotlin')
+        }
+
+        iOSTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-io-native:$kotlinio_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$kotlinserial_version"
+                implementation project(':proto')
+            } 
         }
 
         androidTest {
@@ -239,6 +291,82 @@ def androidLanguageList = iOSLanguageList + [
                 'iw',
                 'in'
                 ]
+
+def mapAndroidLanguageToIOS(String alang) {
+    if (alang == "nb-rNO")
+        return "nb"
+    if (alang == "zh-rCN")
+        return "zh-Hans"
+    return alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang-$region" }
+}
+
+task iOSLanguages {
+    inputs.file stringsXmlFile
+    outputs.dir generatedLanguagesDir
+    doLast {
+        for (lang in iOSLanguageList) {
+            LocalizeGenerator.INSTANCE.generateAppleStringsFile(
+              new File(generatedLanguagesDir, mapAndroidLanguageToIOS(lang) + '.lproj/Metrolib.strings'),
+              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              lang
+            )
+        }
+    }
+}
+
+task iOSMappedLanguages {
+    doLast {
+        for (lang in iOSLanguageList) {
+            LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
+              new File(projectDir, 'native/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/Main.strings'),
+              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              new File(projectDir, 'native/metrodroid/metrodroid/MainMap.txt')
+            )
+            LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
+              new File(projectDir, 'native/metrodroid/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/InfoPlist.strings'),
+              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              new File(projectDir, 'native/metrodroid/metrodroid/InfoPlistMap.txt')
+            )
+            LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
+              new File(projectDir, 'native/metrodroid/Settings.bundle/' + mapAndroidLanguageToIOS(lang) + '.lproj/Root.strings'),
+              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              new File(projectDir, 'native/metrodroid/SettingsMap.txt')
+            )
+        }
+    }
+}
+
+task packForXCode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+    final def framework = kotlin.targets.iOS.binaries.getFramework("metrolib", mode)
+
+    inputs.property "mode", mode
+    dependsOn framework.linkTask
+    dependsOn iOSLanguages
+
+    from framework.outputFile
+    into new File (frameworkDir, "metrolib.framework")
+
+    from generatedLanguagesDir
+    into new File (frameworkDir, "metrolib.framework")
+}
+
+tasks.build.dependsOn packForXCode
+
+task iOSTest {
+    def device = project.findProperty("iosDevice")?.toString() ?: "iPhone 8"
+    dependsOn 'linkDebugTestIOS'
+    group = JavaBasePlugin.VERIFICATION_GROUP
+    description = "Runs tests for target 'ios' on an iOS simulator"
+
+    doLast {
+        def binary = kotlin.targets.iOS.binaries.getTest('DEBUG').outputFile
+        exec {
+            commandLine 'xcrun', 'simctl', 'spawn', device, binary.absolutePath
+        }
+    }
+}
 
 android {
     compileSdkVersion android_sdk_version

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>x86_64</key>
+    <string>Simulator</string>
+    <key>i386</key>
+    <string>Simulator</string>
+    <key>iPod1,1</key>
+    <string>iPod Touch 1st Gen</string>
+    <key>iPod2,1</key>
+    <string>iPod Touch 2nd Gen</string>
+    <key>iPod3,1</key>
+    <string>iPod Touch 3rd Gen</string>
+    <key>iPod4,1</key>
+    <string>iPod Touch 4th Gen</string>
+    <key>iPod5,1</key>
+    <string>iPod Touch 5th Gen</string>
+    <key>iPod7,1</key>
+    <string>iPod Touch 6th Gen</string>
+    <key>iPhone1,1</key>
+    <string>iPhone</string>
+    <key>iPhone1,2</key>
+    <string>iPhone 3G</string>
+    <key>iPhone2,1</key>
+    <string>iPhone 3GS</string>
+    <key>iPhone3,1</key>
+    <string>iPhone 4</string>
+    <key>iPhone3,2</key>
+    <string>iPhone 4</string>
+    <key>iPhone3,3</key>
+    <string>iPhone 4</string>
+    <key>iPhone4,1</key>
+    <string>iPhone 4S</string>
+    <key>iPhone5,1</key>
+    <string>iPhone 5 model A1428</string>
+    <key>iPhone5,2</key>
+    <string>iPhone 5 model A1429</string>
+    <key>iPhone5,3</key>
+    <string>iPhone 5C</string>
+    <key>iPhone5,4</key>
+    <string>iPhone 5C</string>
+    <key>iPhone6,1</key>
+    <string>iPhone 5S</string>
+    <key>iPhone6,2</key>
+    <string>iPhone 5S</string>
+    <key>iPhone7,2</key>
+    <string>iPhone 6</string>
+    <key>iPhone7,1</key>
+    <string>iPhone 6 Plus</string>
+    <key>iPhone8,1</key>
+    <string>iPhone 6S</string>
+    <key>iPhone8,2</key>
+    <string>iPhone 6S Plus</string>
+    <key>iPhone8,4</key>
+    <string>iPhone SE</string>
+    <key>iPhone9,1</key>
+    <string>iPhone 7</string>
+    <key>iPhone9,2</key>
+    <string>iPhone 7 Plus</string>
+    <key>iPhone9,3</key>
+    <string>iPhone 7</string>
+    <key>iPhone9,4</key>
+    <string>iPhone 7 Plus</string>
+    <key>iPhone10,1</key>
+    <string>iPhone 8</string>
+    <key>iPhone10,4</key>
+    <string>iPhone 8</string>
+    <key>iPhone10,2</key>
+    <string>iPhone 8 Plus</string>
+    <key>iPhone10,5</key>
+    <string>iPhone 8 Plus</string>
+    <key>iPhone10,3</key>
+    <string>iPhone X</string>
+    <key>iPhone10,6</key>
+    <string>iPhone X</string>
+    <key>iPhone11,2</key>
+    <string>iPhone XS</string>
+    <key>iPhone11,4</key>
+    <string>iPhone XS Max</string>
+    <key>iPhone11,6</key>
+    <string>iPhone XS Max</string>
+    <key>iPhone11,8</key>
+    <string>iPhone XR</string>
+    <key>iPad1,1</key>
+    <string>iPad</string>
+    <key>iPad2,1</key>
+    <string>iPad 2</string>
+    <key>iPad2,2</key>
+    <string>iPad 2</string>
+    <key>iPad2,3</key>
+    <string>iPad 2</string>
+    <key>iPad2,4</key>
+    <string>iPad 2</string>
+    <key>iPad3,1</key>
+    <string>iPad 3rd Gen</string>
+    <key>iPad3,2</key>
+    <string>iPad 3rd Gen</string>
+    <key>iPad3,3</key>
+    <string>iPad 3rd Gen</string>
+    <key>iPad3,4</key>
+    <string>iPad 4th Gen</string>
+    <key>iPad3,5</key>
+    <string>iPad 4th Gen</string>
+    <key>iPad3,6</key>
+    <string>iPad 4th Gen</string>
+    <key>iPad4,1</key>
+    <string>iPad Air</string>
+    <key>iPad4,2</key>
+    <string>iPad Air</string>
+    <key>iPad4,3</key>
+    <string>iPad Air</string>
+    <key>iPad2,5</key>
+    <string>iPad Mini 1st Gen</string>
+    <key>iPad2,6</key>
+    <string>iPad Mini 1st Gen</string>
+    <key>iPad2,7</key>
+    <string>iPad Mini 1st Gen</string>
+    <key>iPad4,4</key>
+    <string>iPad Mini 2nd Gen</string>
+    <key>iPad4,5</key>
+    <string>iPad Mini 2nd Gen</string>
+    <key>iPad4,6</key>
+    <string>iPad Mini 2nd Gen</string>
+    <key>iPad4,7</key>
+    <string>iPad Mini 3rd Gen</string>
+    <key>iPad4,8</key>
+    <string>iPad Mini 3rd Gen</string>
+    <key>iPad4,9</key>
+    <string>iPad Mini 3rd Gen</string>
+    <key>iPad5,1</key>
+    <string>iPad Mini 4</string>
+    <key>iPad5,2</key>
+    <string>iPad Mini 4</string>
+    <key>iPad5,3</key>
+    <string>iPad Air 2</string>
+    <key>iPad5,4</key>
+    <string>iPad Air 2</string>
+    <key>iPad6,3</key>
+    <string>iPad Pro 9.7 inch</string>
+    <key>iPad6,4</key>
+    <string>iPad Pro 9.7 inch</string>
+    <key>iPad6,7</key>
+    <string>iPad Pro 12.9 inch</string>
+    <key>iPad6,8</key>
+    <string>iPad Pro 12.9 inch</string>
+    <key>iPad7,1</key>
+    <string>iPad Pro 12.9 inch 2nd Gen</string>
+    <key>iPad7,2</key>
+    <string>iPad Pro 12.9 inch 2nd Gen</string>
+    <key>iPad7,3</key>
+    <string>iPad Pro 10.5 inch</string>
+    <key>iPad7,4</key>
+    <string>iPad Pro 10.5 inch</string>
+    <key>iPad8,1</key>
+    <string>iPad Pro 11 inch</string>
+    <key>iPad8,2</key>
+    <string>iPad Pro 11 inch</string>
+    <key>iPad8,3</key>
+    <string>iPad Pro 11 inch</string>
+    <key>iPad8,4</key>
+    <string>iPad Pro 11 inch</string>
+    <key>iPad8,5</key>
+    <string>iPad Pro 12.9 inch 3rd Gen</string>
+    <key>iPad8,6</key>
+    <string>iPad Pro 12.9 inch 3rd Gen</string>
+    <key>iPad8,7</key>
+    <string>iPad Pro 12.9 inch 3rd Gen</string>
+    <key>iPad8,8</key>
+    <string>iPad Pro 12.9 inch 3rd Gen</string>
+</dict>
+</plist>

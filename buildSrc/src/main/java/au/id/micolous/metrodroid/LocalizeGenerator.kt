@@ -184,12 +184,25 @@ object LocalizeGenerator {
         return res
     }
 
-    private fun escape(input: String): String = input.fold("") { acc, c ->
-        when(c) {
-            '\n' -> "$acc\\n"
-            '\\', '"', '\'', '$' -> "$acc\\$c"
-            else -> "$acc$c"
+    private fun escape(input: String): String {
+        val sb = StringBuilder()
+        var isEscape = false
+        for (c in input) {
+            if (isEscape) {
+                when (c) {
+                    'n', '\\', '"', '\'' -> { sb.append('\\').append(c) }
+                    '?' -> { sb.append ("?") }
+                    else -> throw Exception("Unknown escape <$c> in <$input>")
+                }
+                isEscape = false
+            } else when(c) {
+                '\n' -> {}
+                '\\' -> isEscape = true
+                '"', '\'', '$' -> sb.append('\\').append(c)
+                else -> sb.append(c)
+            }
         }
+        return sb.toString()
     }
 
     fun generateLocalize(outputDir: File, stringsFile: File, drawablesDirs: List<File>) {

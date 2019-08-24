@@ -1862,6 +1862,7 @@
     <string name="nfc_not_available">NFC: Not available</string>
     <string name="mfc_supported">MIFARE Classic: Supported</string>
     <string name="mfc_not_supported">MIFARE Classic: Not supported</string>
+    <string name="ios_version">iOS version: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
     <string name="balances_and_subscriptions">Tickets</string>
     <string name="card_number">Card number</string>
     <string name="pref_show_raw_station_ids">Show raw station &amp; route IDs</string>
@@ -2134,6 +2135,37 @@
     <string name="raw_header">Raw fields</string>
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC settings</string>
+
+    <!-- Translators: iOS instead of "Back" typically shows the name of previous screen.
+         In most cases name and title of the screens match but main screen is titled "Metrodroid", hence this is
+         main screen name for back button -->
+    <string name="ios_main_screen_back">Main</string>
+    <!-- Translators: on iOS scanning is possible only on special system dialog. This is a title to open that dialog
+         and scan the card -->
+    <string name="ios_scan_card">Scan card</string>
+    <!-- Translators: on iOS we need to shortly explain to the user why we use NFC -->
+    <string name="ios_nfc_usage">App to show balance on transit cards</string>
+    <!-- Translators: label for menu button on iOS. Android simply shows 3 dots. -->
+    <string name="ios_menu_button">More</string>
+    <!-- Translators: top label on ios above the menu. -->
+    <string name="ios_menu_title">Menu</string>
+    <!-- Translators: label for menu item to close the menu. On Android user would simply tap outside the menu. -->
+    <string name="ios_menu_cancel">Cancel</string>
+    <!-- Translators: shown on error dialog -->
+    <string name="ios_error_ok">OK</string>
+    <string name="ios_nfcreader_connection_error">Connection error: %s</string>
+    <!-- Translators: E.g. Connecting to Mifare DESFire. -->
+    <string name="ios_nfcreader_connecting">Connecting to %s</string>
+    <!-- Translators: E.g. Reading Mifare DESFire. -->
+    <string name="ios_nfcreader_reading">Reading %s</string>
+    <!-- Translators: message in scanning dialog on iOS. -->
+    <string name="ios_nfcreader_tap">Tap your card</string>
+    <string name="ios_nfcreader_exception">Got exception: %s</string>
+    <!-- Currectly only on iOS but to be backported to Android. -->
+    <string name="mifare_plus_not_supported">Mifare Plus is not suppored</string>
+    <string name="ios_unknown_mifare">Unknown Mifare: %s</string>
+    <string name="ios_unknown_tag">Unknown tag type: %s</string>
+
     <string name="exported_at">Exported by Metrodroid at %s</string>
 
     <string name="russia_region_04_altai_republic">Altai Republic</string>

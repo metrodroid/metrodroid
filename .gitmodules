@@ -14,3 +14,7 @@
 	path = third_party/RejsekortReader
 	url = https://github.com/mchro/RejsekortReader.git
 	shallow = true
+[submodule "third_party/protobuf"]
+	path = third_party/protobuf
+	url = https://github.com/protocolbuffers/protobuf.git
+	shallow = true
