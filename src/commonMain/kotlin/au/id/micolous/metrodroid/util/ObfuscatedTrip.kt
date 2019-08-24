@@ -40,6 +40,7 @@ internal class ObfuscatedTrip (
         override val fare: TransitCurrency?,
         override val humanReadableRouteID: String?,
         override val vehicleID: String?,
+        override val machineID: String?,
         override val passengerCount: Int,
         private val mAgencyName: FormattedString?,
         private val mShortAgencyName: FormattedString?
@@ -54,6 +55,7 @@ internal class ObfuscatedTrip (
             mode = realTrip.mode,
             passengerCount = realTrip.passengerCount,
             vehicleID = realTrip.vehicleID,
+            machineID = realTrip.machineID,
             humanReadableRouteID = realTrip.humanReadableRouteID,
             fare = realTrip.fare?.let {
                 if (obfuscateFares)
