@@ -427,6 +427,7 @@ android {
                 'third_party/RejsekortReader/dumps/'
         ]
         main.assets.srcDirs += ['build/assets', 'mdst']
+        main.res.srcDirs += ['cardimages/android']
         test.kotlin.srcDirs += ['src/androidUnitTest/kotlin']
         test.resources.srcDirs += [
                     'src/commonTest/assets',
