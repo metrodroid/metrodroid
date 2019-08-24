@@ -136,6 +136,16 @@ class CardPersister {
         }
     }
     
+    class Group : NSObject {
+        let uid : String
+        var entries : [Entry]
+        
+        init(entry : Entry) {
+            uid = entry.uid
+            entries = [entry]
+        }
+    }
+    
     class func loadJsonAtUrl(url: URL) -> String? {
         guard let jsonRaw = FileManager.default.contents(atPath: url.path) else {
             return nil
@@ -147,6 +157,22 @@ class CardPersister {
         return try FileManager.default.contentsOfDirectory(atPath: cardsDirectory().path).compactMap { Entry (fname: $0) }.sorted(by: {
             a,b in a.date > b.date
         })
+    }
+    
+    class func listGroupedCards() throws -> [Group] {
+        let cards = try listCards()
+        var groups : [Group] = []
+        var mapUid: Dictionary<String, Int> = [:]
+        for card in cards {
+            if let idx = mapUid[card.uid] {
+                groups[idx].entries.append(card)
+            } else {
+                let idx = groups.count
+                groups.append(Group(entry: card))
+                mapUid[card.uid] = idx
+            }
+        }
+        return groups
     }
     
     class func makeTempFile() throws -> URL {
