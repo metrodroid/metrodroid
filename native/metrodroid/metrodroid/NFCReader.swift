@@ -257,8 +257,30 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                     }
                 })
                 break
-            case .plus:
-                session.invalidate(errorMessage: Utils.localizeString(RKt.R.string.mifare_plus_not_supported))
+            case NFCMiFareFamily.plus:
+                statusConnecting(cardType: .mifareplus)
+                session.connect(to: tag, completionHandler: {
+                    err in
+                    if (err != nil) {
+                        NFCReader.connectionError(session: session, err: err)
+                        return
+                    }
+                    
+                    self.statusReading(cardType: .mifaredesfire)
+                    DispatchQueue.global().async {
+                        print("swift async")
+                        do {
+                            let card = try PlusCardReaderIOS.init().dump(wrapper: UltralightWrapper(tag: mifare), feedback: self)
+                            if (!card.isPartialRead) {
+                                self.updateProgressBar(progress: 1, max: 1)
+                            }
+                            session.invalidate()
+                            self.postDump(card: card)
+                        } catch {
+                            session.invalidate(errorMessage: error.localizedDescription)
+                        }
+                    }
+                })
                 break
             default:
                 session.invalidate(errorMessage: Utils.localizeString(RKt.R.string.ios_unknown_mifare, "\(mifare)"))

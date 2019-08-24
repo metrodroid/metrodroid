@@ -156,6 +156,12 @@ object ClassicReader {
         return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = false, subType = tech.subType)
     }
 
+    suspend fun readPlusCardNoSak(retriever: CardKeysRetriever, tag: CardTransceiver,
+                                  feedbackInterface: TagReaderFeedbackInterface): ClassicCard? {
+        val protocol = PlusProtocol.connect(tag) ?: return null
+        return readCard(retriever, protocol, feedbackInterface)
+    }
+
     suspend fun readPlusCard(retriever: CardKeysRetriever, tag: CardTransceiver,
                              feedbackInterface: TagReaderFeedbackInterface,
                              atqa: Int, sak: Short): ClassicCard? {
@@ -164,7 +170,6 @@ object ClassicReader {
         if (sak != 0x20.toShort() || atqa !in listOf(0x0002, 0x0004, 0x0042, 0x0044))
             return null
 
-        val protocol = PlusProtocol.connect(tag) ?: return null
-        return readCard(retriever, protocol, feedbackInterface)
+        return readPlusCardNoSak(retriever, tag, feedbackInterface)
     }
 }
