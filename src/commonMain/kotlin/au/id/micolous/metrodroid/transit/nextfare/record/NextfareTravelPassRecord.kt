@@ -1,7 +1,7 @@
 /*
  * NextfareTravelPassRecord.kt
  *
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 
-class NextfareTravelPassRecord private constructor(private val mVersion: Int, val timestamp: Timestamp, val checksum: Int) : NextfareRecord(), Comparable<NextfareTravelPassRecord> {
+class NextfareTravelPassRecord private constructor(
+    private val mVersion: Int,
+    val timestamp: Timestamp,
+    val checksum: Int) : NextfareRecord, Comparable<NextfareTravelPassRecord> {
     override fun compareTo(other: NextfareTravelPassRecord) =
         // So sorting works, we reverse the order so highest number is first.
         other.mVersion.compareTo(this.mVersion)
@@ -45,7 +48,7 @@ class NextfareTravelPassRecord private constructor(private val mVersion: Int, va
 
             val record = NextfareTravelPassRecord(
                     input.byteArrayToInt(13, 1),
-                    unpackDate(input, 2, timeZone),
+                    NextfareRecord.unpackDate(input, 2, timeZone),
                     input.byteArrayToIntReversed(14, 2))
 
 

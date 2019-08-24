@@ -1,7 +1,7 @@
 /*
  * NextfareBalanceRecord.kt
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class NextfareBalanceRecord private constructor(
         val version: Int,
         val balance: Int,
-        val hasTravelPassAvailable: Boolean) : NextfareRecord(), Comparable<NextfareBalanceRecord> {
+        val hasTravelPassAvailable: Boolean) : NextfareRecord, Comparable<NextfareBalanceRecord> {
 
     override fun compareTo(other: NextfareBalanceRecord) =
         // So sorting works, we reverse the order so highest number is first.

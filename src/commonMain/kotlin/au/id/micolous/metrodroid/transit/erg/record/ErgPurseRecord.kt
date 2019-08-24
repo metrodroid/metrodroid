@@ -36,7 +36,7 @@ class ErgPurseRecord(val agency: Int,
                      val minute: Int,
                      val isCredit: Boolean,
                      val transactionValue: Int,
-                     val isTrip: Boolean) : ErgRecord(), Parcelable {
+                     val isTrip: Boolean) : ErgRecord, Parcelable {
     override fun toString(): String {
         return "[ErgPurseRecord: agencyID=0x${agency.toString(16)}, day=$day, minute=$minute, isCredit=$isCredit, isTransfer=$isTrip, txnValue=$transactionValue]"
     }

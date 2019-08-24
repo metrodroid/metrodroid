@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 class ErgMetadataRecord private constructor(val cardSerial: ImmutableByteArray,
                                             val epochDate: Int,
-                                            val agencyID: Int) : ErgRecord(), Parcelable {
+                                            val agencyID: Int) : ErgRecord, Parcelable {
     override fun toString() = "[ErgMetadataRecord: agencyID=$agencyID, serial=$cardSerial, epoch=$epochDate]"
 
     companion object {

@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.nextfare.record
 
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -30,7 +31,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
  * This fans out parsing to subclasses.
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
-open class NextfareRecord protected constructor() {
+interface NextfareRecord {
     companion object {
         private const val TAG = "NextfareRecord"
         fun recordFromBytes(input: ImmutableByteArray, sectorIndex: Int, blockIndex: Int, timeZone: MetroTimeZone): NextfareRecord? {

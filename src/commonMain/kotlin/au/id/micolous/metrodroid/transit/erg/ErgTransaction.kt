@@ -68,7 +68,7 @@ abstract class ErgTransaction : Transaction() {
         return true
     }
 
-    public override val isTransfer get(): Boolean {
+    override val isTransfer get(): Boolean {
         // TODO
         return false
     }

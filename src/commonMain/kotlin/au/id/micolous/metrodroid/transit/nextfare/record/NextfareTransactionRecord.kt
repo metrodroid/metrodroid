@@ -1,7 +1,7 @@
 /*
  * NextfareTapRecord.kt
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 package au.id.micolous.metrodroid.transit.nextfare.record
 
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -29,10 +31,12 @@ import au.id.micolous.metrodroid.util.hexString
  * Tap record type
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
+@Parcelize
 class NextfareTransactionRecord private constructor(
         val type: Type, val timestamp: TimestampFull, val mode: Int, val journey: Int,
         val station: Int, val value: Int, val checksum: Int,
-        val isContinuation: Boolean) : NextfareRecord(), Comparable<NextfareTransactionRecord> {
+        val isContinuation: Boolean
+) : NextfareRecord, Comparable<NextfareTransactionRecord>, Parcelable {
 
     override fun compareTo(other: NextfareTransactionRecord): Int {
         // Group by journey, then by timestamp.
@@ -97,7 +101,7 @@ class NextfareTransactionRecord private constructor(
 
             val mode = input.byteArrayToInt(1, 1)
 
-            val timestamp = unpackDate(input, 2, timeZone)
+            val timestamp = NextfareRecord.unpackDate(input, 2, timeZone)
             val journey = input.byteArrayToIntReversed(5, 2) shr 5
 
             val continuation = input.byteArrayToIntReversed(5, 2) and 0x10 > 1

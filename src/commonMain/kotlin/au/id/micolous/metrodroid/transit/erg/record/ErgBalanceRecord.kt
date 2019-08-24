@@ -35,7 +35,7 @@ class ErgBalanceRecord private constructor(
          */
         val balance: Int,
         val version: Int,
-        private val mAgency: Int) : ErgRecord(), Comparable<ErgBalanceRecord> {
+        private val mAgency: Int) : ErgRecord, Comparable<ErgBalanceRecord> {
 
     override fun compareTo(other: ErgBalanceRecord): Int {
         // So sorting works, we reverse the order so highest number is first.

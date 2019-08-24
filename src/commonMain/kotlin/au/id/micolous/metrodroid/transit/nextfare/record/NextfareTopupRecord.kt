@@ -1,7 +1,7 @@
 /*
  * NextfareTopupRecord.kt
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class NextfareTopupRecord (
         val station: Int,
         val checksum: Int,
         val isAutomatic: Boolean
-): NextfareRecord(), Parcelable {
+): NextfareRecord, Parcelable {
     companion object {
         private const val TAG = "NextfareTopupRecord"
 
@@ -52,7 +52,7 @@ class NextfareTopupRecord (
             }
 
             val record = NextfareTopupRecord(
-                    timestamp = unpackDate(input, 2, timeZone),
+                    timestamp = NextfareRecord.unpackDate(input, 2, timeZone),
                     credit = input.byteArrayToIntReversed(6, 2) and 0x7FFF,
                     station = input.byteArrayToIntReversed(12, 2),
                     checksum = input.byteArrayToIntReversed(14, 2),

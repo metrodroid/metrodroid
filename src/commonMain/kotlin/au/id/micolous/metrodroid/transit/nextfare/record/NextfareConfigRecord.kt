@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.util.hexString
 
 @Parcelize
 class NextfareConfigRecord (val ticketType: Int,
-                            val expiry: Timestamp): NextfareRecord(), Parcelable {
+                            val expiry: Timestamp): NextfareRecord, Parcelable {
 
     companion object {
         private const val TAG = "NextfareConfigRecord"
@@ -44,7 +44,7 @@ class NextfareConfigRecord (val ticketType: Int,
 
             // Expiry date
             val record = NextfareConfigRecord(
-                    expiry = unpackDate(input, 4, timeZone),
+                    expiry = NextfareRecord.unpackDate(input, 4, timeZone),
 
                     // Treat ticket type as little-endian
                     ticketType = input.byteArrayToIntReversed(8, 2)

@@ -24,4 +24,4 @@ package au.id.micolous.metrodroid.transit.erg.record
  *
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
-open class ErgRecord internal constructor()
+interface ErgRecord
