@@ -45,13 +45,25 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
         assertSpannedEquals("$12.34", aud)
-        assertTtsMarkers("AUD", "12.34", aud)
+        assertTtsMarkers("AUD", "12", "34", aud)
+
+        val aud00 = TransitCurrency.AUD(1200).formatCurrencyString(true).spanned
+        assertSpannedEquals("$12.00", aud00)
+        assertTtsMarkers("AUD", "12", "00", aud00)
+
+        val aud02 = TransitCurrency.AUD(1202).formatCurrencyString(true).spanned
+        assertSpannedEquals("$12.02", aud02)
+        assertTtsMarkers("AUD", "12", "02", aud02)
+
+        val audMinus = TransitCurrency.AUD(-1202).formatCurrencyString(true).spanned
+        assertSpannedEquals("-$12.02", audMinus)
+        assertTtsMarkers("AUD", "-12", "02", audMinus)
 
         // May be "USD12.34", "U$12.34" or "US$12.34".
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(usd, Matchers.startsWith("U"))
         assertSpannedThat(usd, Matchers.endsWith("12.34"))
-        assertTtsMarkers("USD", "12.34", usd)
+        assertTtsMarkers("USD", "12", "34", usd)
     }
 
     /**
@@ -66,22 +78,22 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
         // May be "$12.34", "U$12.34" or "US$12.34".
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(usd, Matchers.endsWith("$12.34"))
-        assertTtsMarkers("USD", "12.34", usd)
+        assertTtsMarkers("USD", "12", "34", usd)
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(aud, Matchers.startsWith("A"))
         assertSpannedThat(aud, Matchers.endsWith("$12.34"))
-        assertTtsMarkers("AUD", "12.34", aud)
+        assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
         assertSpannedEquals("£12.34", gbp)
-        assertTtsMarkers("GBP", "12.34", gbp)
+        assertTtsMarkers("GBP", "12", "34", gbp)
 
         // May be "¥1,234" or "JP¥1,234".
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
         assertSpannedThat(jpy, Matchers.endsWith("¥1,234"))
-        assertTtsMarkers("JPY", "1234", jpy)
+        assertTtsMarkers("JPY", "1234", null, jpy)
     }
 
     /**
@@ -94,22 +106,22 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
         assertSpannedEquals("$12.34", usd)
-        assertTtsMarkers("USD", "12.34", usd)
+        assertTtsMarkers("USD", "12", "34", usd)
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(aud, Matchers.startsWith("A"))
         assertSpannedThat(aud, Matchers.endsWith("$12.34"))
-        assertTtsMarkers("AUD", "12.34", aud)
+        assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
         assertSpannedEquals("£12.34", gbp)
-        assertTtsMarkers("GBP", "12.34", gbp)
+        assertTtsMarkers("GBP", "12", "34", gbp)
 
         // May be "¥1,234" or "JP¥1,234".
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
         assertSpannedThat(jpy, Matchers.endsWith("¥1,234"))
-        assertTtsMarkers("JPY", "1234", jpy)
+        assertTtsMarkers("JPY", "1234", null, jpy)
     }
 
     /**
@@ -125,23 +137,23 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
         // May be "$12.34", "U$12.34" or "US$12.34".
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(usd, Matchers.endsWith("$12.34"))
-        assertTtsMarkers("USD", "12.34", usd)
+        assertTtsMarkers("USD", "12", "34", usd)
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
         assertSpannedThat(aud, Matchers.startsWith("A"))
         assertSpannedThat(aud, Matchers.endsWith("$12.34"))
-        assertTtsMarkers("AUD", "12.34", aud)
+        assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
         assertSpannedEquals("£12.34", gbp)
-        assertTtsMarkers("GBP", "12.34", gbp)
+        assertTtsMarkers("GBP", "12", "34", gbp)
 
 
         // Note: this is the full-width yen character
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
         assertSpannedEquals("￥1,234", jpy)
-        assertTtsMarkers("JPY", "1234", jpy)
+        assertTtsMarkers("JPY", "1234", null, jpy)
     }
 
     /**
@@ -154,16 +166,16 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
         assertSpannedEquals("12,34 \$US", usd)
-        assertTtsMarkers("USD", "12.34", usd)
+        assertTtsMarkers("USD", "12", "34", usd)
 
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
         assertSpannedEquals("12,34 \$AU", aud)
-        assertTtsMarkers("AUD", "12.34", aud)
+        assertTtsMarkers("AUD", "12", "34", aud)
 
         // Allow not qualifying the country code.
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
         assertSpannedThat(gbp, Matchers.startsWith("12,34 £"))
-        assertTtsMarkers("GBP", "12.34", gbp)
+        assertTtsMarkers("GBP", "12", "34", gbp)
 
         // This may not have a proper symbol
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
@@ -172,6 +184,6 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         val eur = TransitCurrency(1234, "EUR").formatCurrencyString(true).spanned
         assertSpannedEquals("12,34 €", eur)
-        assertTtsMarkers("EUR", "12.34", eur)
+        assertTtsMarkers("EUR", "12", "34", eur)
     }
 }
