@@ -152,12 +152,7 @@ data class ClassicSectorKey internal constructor(
                 throw IllegalArgumentException("Key data must be $CLASSIC_KEY_LEN or $AES_KEY_LEN bytes, got ${b.size}")
             }
 
-            return ClassicSectorKey(key = b,
-                    type = type, bundle = bundle)
+            return ClassicSectorKey(key = b, type = type, bundle = bundle)
         }
-
-        fun fromDump(b: ImmutableByteArray, offset: Int, type: KeyType, bundle: String) =
-                fromDump(b.sliceOffLen(offset, ClassicSectorKey.CLASSIC_KEY_LEN),
-                        type, bundle)
     }
 }

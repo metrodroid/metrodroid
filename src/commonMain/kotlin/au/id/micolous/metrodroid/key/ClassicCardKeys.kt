@@ -92,9 +92,8 @@ class ClassicCardKeys(override var uid: String?,
             val numSectors = keyData.size / ClassicSectorKey.CLASSIC_KEY_LEN
             for (i in 0 until numSectors) {
                 val start = i * ClassicSectorKey.CLASSIC_KEY_LEN
-                val k = ClassicSectorKey.fromDump(keyData, start, keyType,
-                        "from-dump")
-                keys[i] = listOf(k)
+                val key = keyData.sliceOffLen(start, ClassicSectorKey.CLASSIC_KEY_LEN)
+                keys[i] = listOf(ClassicSectorKey.fromDump(key, keyType, "from-dump"))
             }
 
             return ClassicCardKeys(uid = null, keys = keys, sourceDataLength = keyData.size)
