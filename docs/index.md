@@ -47,9 +47,9 @@ City Union | :cn: Mainland China | :new:
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
-[Kazan transport card][kazan] | :russia: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
-Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
-[Kirov transport card][kirov] | :russia: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
+[Kazan transport card][kazan] | :ru: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
+[Kiev Metro][kievm] | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+[Kirov transport card][kirov] | :ru: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 [Krasnodar ETK][krasnodar] | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
@@ -173,10 +173,11 @@ interpreted locally, and _connectivity is disabled by default._
 [gironde]: https://www.transgironde.fr/
 [hafilat]: https://dot.abudhabi.ae/en/mediainfo/hafilat_smart_card
 [hfp]: https://myhopcard.com/
-[hsl]: http://www.hsl.fi/EN/
+[hsl]: https://www.hsl.fi/EN/
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
 [kazan]: http://transkart.ru/
+[kievm]: http://www.metro.kyiv.ua/
 [kirov]: http://www.mo-kirov.ru/gorozhanam/transport/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 [komuterlink]: http://www.ktmb.com.my/KomuterLink.html

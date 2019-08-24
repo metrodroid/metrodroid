@@ -32,7 +32,7 @@ linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.b
 * [Lauri Andler](https://github.com/landler/) (HSL)
 * [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay, MIFARE Ultralight, ERG, Christchurch Metrocard)
 * [Steven Steiner](https://github.com/steets250) (LAX TAP)
-* [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
+* [Rob O'Regan](https://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 * [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejsekort)
 * [Toomas Losin](http://www.lenrek.net) (Compass)
@@ -102,9 +102,9 @@ City Union | :cn: Mainland China | :new:
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
-[Kazan transport card][kazan] | :russia: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
-Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
-[Kirov transport card][kirov] | :russia: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
+[Kazan transport card][kazan] | :ru: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
+[Kiev Metro][kievm] | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+[Kirov transport card][kirov] | :ru: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 [Krasnodar ETK][krasnodar] | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
@@ -186,9 +186,9 @@ Some devices do not support MIFARE Classic. MIFARE Classic is not an NFC-complia
 
 ## License and copyright
 
-Copyright 2015 – 2019 Michael Farrell
+Copyright © 2015–2019 Michael Farrell
 
-Copyright 2011 – 2013 Eric Butler
+Copyright © 2011–2013 Eric Butler
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -197,7 +197,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -205,7 +205,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 This program contains Leaflet, a JavaScript mapping library, licensed under the BSD license.
 
-This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.
+This software and it's authors are not associated with any public transit agency. Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.
 
 ## Building / hacking on this software
 
@@ -226,7 +226,7 @@ This software and it's authors are not associated with any public transit agency
 [5]: https://twitter.com/codebutler
 [13]: https://github.com/Kazzz/nfc-felica
 [14]: http://www014.upp.so-net.ne.jp/SFCardFan/
-[15]: http://www.thenounproject.com/
+[15]: https://www.thenounproject.com/
 [weblate]: https://hosted.weblate.org/engage/metrodroid/
 [travis]: https://travis-ci.org/micolous/metrodroid
 
@@ -261,10 +261,11 @@ This software and it's authors are not associated with any public transit agency
 [gironde]: https://www.transgironde.fr/
 [hafilat]: https://dot.abudhabi.ae/en/mediainfo/hafilat_smart_card
 [hfp]: https://myhopcard.com/
-[hsl]: http://www.hsl.fi/EN/
+[hsl]: https://www.hsl.fi/EN/
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
 [kazan]: http://transkart.ru/
+[kievm]: http://www.metro.kyiv.ua/
 [kirov]: http://www.mo-kirov.ru/gorozhanam/transport/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 [komuterlink]: http://www.ktmb.com.my/KomuterLink.html
