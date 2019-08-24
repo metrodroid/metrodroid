@@ -102,10 +102,6 @@ to rely on your screen reader being smart enough.
 
 * Locales without real translations are omitted: Irish, Maori, Malay and
   Traditional Chinese.
-
-* Numeric country/currency lookup is missing. This mainly affects RKF and EMV
-  cards that are unreadable on iOS in any case. However this also omits
-  country indication on Calypso hardware information.
   
 * Currently the library tests don't run due to a compiler problem.
 

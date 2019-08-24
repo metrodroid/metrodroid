@@ -23,8 +23,9 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.VisibleForTesting
+import au.id.micolous.metrodroid.util.ISO4217
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.getCurrencyDescriptorByCode
 import kotlin.random.Random
 
 internal expect fun formatCurrency(value: Int, divisor: Int, currencyCode: String, isBalance: Boolean): FormattedString
@@ -50,10 +51,6 @@ open class TransitCurrency (
 
     override val balance: TransitCurrency
         get() = this
-
-    class TransitCurrencyDesc(val currencyCode: String,
-                              val defaultDivisor: Int,
-                              val name: String?)
 
     /**
      * Builds a new [TransitCurrency], used to represent a monetary value on a transit card.
@@ -84,23 +81,24 @@ open class TransitCurrency (
      *
      * @param currencyCode An ISO 4217 numeric currency code
      */
-    constructor(currency: Int, currencyCode: Int) : this(currency, getCurrencyDescriptorByCode(currencyCode))
+    constructor(currency: Int, currencyCode: Int) : this(currency, ISO4217.getInfoByCode(currencyCode))
 
     /**
      * @inheritDoc
      *
      * @param currencyCode An ISO 4217 numeric currency code
      */
-    constructor(currency: Int, currencyCode: Int, divisor: Int) : this(currency, getCurrencyDescriptorByCode(currencyCode), divisor)
+    constructor(currency: Int, currencyCode: Int, divisor: Int) : this(currency, ISO4217.getInfoByCode(currencyCode), divisor)
 
     /**
      * @inheritDoc
      *
-     * @param currencyDesc A [TransitCurrencyDesc] instance for the currency.
+     * @param currencyDesc A [ISO4217.CurrencyInfo] instance for the currency.
      */
-    private constructor(currency: Int, currencyDesc: TransitCurrencyDesc?,
-                        divisor: Int = currencyDesc?.defaultDivisor ?: DEFAULT_DIVISOR) : this(currency,
-            currencyDesc?.currencyCode ?: UNKNOWN_CURRENCY_CODE,
+    private constructor(currency: Int, currencyDesc: ISO4217.CurrencyInfo?,
+                        divisor: Int = currencyDesc?.decimalDigits?.let { NumberUtils.pow(10, it).toInt() } ?:
+                        DEFAULT_DIVISOR) : this(currency,
+            currencyDesc?.symbol ?: UNKNOWN_CURRENCY_CODE,
             divisor)
 
     /**
