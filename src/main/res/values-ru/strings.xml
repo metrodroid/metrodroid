@@ -610,9 +610,6 @@
     <string name="card_name_shanghai">Шанхайская карта общественного транспорта</string>
     <string name="valid_origin_destination">Действительно на пути от %1$s до %2$s</string>
     <string name="valid_origin_destination_via">Действителен с %1$s по %2$s через %3$s</string>
-    <string name="pref_show_hidden_cards">Показать скрытые карты</string>
-    <string name="pref_show_hidden_cards_desc_off">В списке \"Поддерживаемые карты\" отображаются только обычные карты</string>
-    <string name="pref_show_hidden_cards_desc_on">Все карты и иллюстрации будут отображаться в списке \"поддерживаемых карточек\"</string>
     <string name="location_crimea">Крым</string>
     <string name="location_ekaterinburg">Екатеринбург, Россия</string>
     <string name="location_izhevsk">Ижевск, Россия</string>

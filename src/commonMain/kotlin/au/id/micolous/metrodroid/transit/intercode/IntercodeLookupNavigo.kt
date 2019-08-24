@@ -122,6 +122,5 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             imageId = R.drawable.navigo,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
-            cardType = CardType.ISO7816,
-            hidden = true)
+            cardType = CardType.ISO7816)
 }

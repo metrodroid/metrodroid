@@ -797,7 +797,6 @@
         <item quantity="other">%d byte</item>
     </plurals>
     <string name="mfc_uid_mode">UID-lengde</string>
-    <string name="pref_show_hidden_cards">Vis skjulte kort</string>
     <string name="keys_loaded">Krypteringsnøkler for dette kortet er innlastet.</string>
     <string name="manufacture_week">Tilvirkningsuke</string>
     <string name="manufacture_year">Tilvirkningsår</string>
@@ -826,7 +825,6 @@
     <string name="card_name_shanghai">Shanghai offentlig transportkort</string>
     <string name="valid_origin_destination">Gyldig fra %1$s til %2$s</string>
     <string name="valid_origin_destination_via">Gyldig fra %1$s til %2$s via %3$s</string>
-    <string name="pref_show_hidden_cards_desc_off">Kun vanlige kortformer og bilder vil vises i \"Støttede kort\"-listen</string>
     <string name="location_ekaterinburg">Jekaterinburg, Russland</string>
     <string name="location_izhevsk">Izjevsk, Russland</string>
     <string name="location_kirov">Kirov, Russland</string>
