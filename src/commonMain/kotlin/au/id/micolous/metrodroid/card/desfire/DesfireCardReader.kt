@@ -127,19 +127,17 @@ object DesfireCardReader {
                         } catch (ex: UnauthorizedException) {
                             settingsRaw = null
                         }
-                        val (data, readCommand) = if (settingsRaw == null) {
-                            tryAllCommands(desfireTag, fileId)
+                        if (settingsRaw == null) {
+                            files[fileId] = tryAllCommands(desfireTag, fileId)
                         } else {
-                            when (DesfireFileSettings.create(settingsRaw)) {
+                            files[fileId] = when (DesfireFileSettings.create(settingsRaw)) {
                                 is StandardDesfireFileSettings ->
-                                    Pair(desfireTag.readFile(fileId), DesfireProtocol.READ_DATA)
+                                    RawDesfireFile(settingsRaw, desfireTag.readFile(fileId), readCommand=DesfireProtocol.READ_DATA)
                                 is ValueDesfireFileSettings ->
-                                    Pair(desfireTag.getValue(fileId), DesfireProtocol.GET_VALUE)
-                                else -> Pair(desfireTag.readRecord(fileId), DesfireProtocol.READ_RECORD)
+                                    RawDesfireFile(settingsRaw, desfireTag.getValue(fileId), readCommand=DesfireProtocol.GET_VALUE)
+                                else -> RawDesfireFile(settingsRaw, desfireTag.readRecord(fileId), readCommand=DesfireProtocol.READ_RECORD)
                             }
                         }
-                        files[fileId] = RawDesfireFile(settingsRaw, data, null, false,
-                                readCommand = readCommand)
                     } catch (e: NotFoundException) {
                         continue
                     } catch (ex: UnauthorizedException) {
@@ -161,22 +159,26 @@ object DesfireCardReader {
         return DesfireCard(manufData, apps, isPartialRead = false, appListLocked = appListLocked)
     }
 
-    suspend fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): Pair<ImmutableByteArray?, Byte?> {
+    suspend private fun wrap(cmd: Byte, f: suspend () -> ImmutableByteArray): RawDesfireFile? {
         try {
+            return RawDesfireFile(null, f(), readCommand=cmd)
+        } catch (e: DesfireProtocol.PermissionDeniedException) {
+            return null
+        } catch (ex: UnauthorizedException) {
+            return RawDesfireFile(null, null, error=ex.message, isUnauthorized=true)
+        }
+    }
+
+    suspend fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): RawDesfireFile {
+        wrap (DesfireProtocol.READ_DATA) {
             desfireTag.readFile(fileId)
-        } catch (e: DesfireProtocol.PermissionDeniedException) {
-            null
-        }?.let { return Pair(it, DesfireProtocol.READ_DATA) }
-        try {
+        }?.let { return it }
+        wrap (DesfireProtocol.GET_VALUE) {
             desfireTag.getValue(fileId)
-        } catch (e: DesfireProtocol.PermissionDeniedException) {
-            null
-        }?.let { return Pair(it, DesfireProtocol.GET_VALUE) }
-        try {
+        }?.let { return it }
+        wrap (DesfireProtocol.READ_RECORD) {
             desfireTag.readRecord(fileId)
-        } catch (e: DesfireProtocol.PermissionDeniedException) {
-            null
-        }?.let { return Pair(it, DesfireProtocol.READ_RECORD) }
-        return Pair(null, null)
+        } ?.let { return it }
+        return RawDesfireFile(null, null, error="No command worked")
     }
 }
