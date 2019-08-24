@@ -31,8 +31,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.Matcher
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.InputStream
@@ -101,30 +99,5 @@ actual abstract class BaseInstrumentedTestPlatform {
 
     actual fun listAsset(path: String) : List <String>? = context.assets.list(path)?.toList()
 
-    fun assertSpannedEquals(expected: String, actual: Spanned) {
-        // nbsp -> sp
-        val actualString = actual.toString().replace(' ', ' ')
-        assertEquals(expected, actualString)
-    }
-
-    fun assertSpannedThat(actual: Spanned, matcher: Matcher<in String>) {
-        // nbsp -> sp
-        val actualString = actual.toString().replace(' ', ' ')
-        assertThat<String>(actualString, matcher)
-    }
-
-    fun assertTtsMarkers(currencyCode: String, value: String, fraction: String?, span: Spanned) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return
-        }
-
-        val ttsSpans = span.getSpans(0, span.length, TtsSpan::class.java)
-        assertEquals(1, ttsSpans.size)
-
-        assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].type)
-        val bundle = ttsSpans[0].args
-        assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY))
-        assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART))
-        assertEquals(fraction, bundle.getString(TtsSpan.ARG_FRACTIONAL_PART))
-    }
+    val isUnitTest get() = false
 }
