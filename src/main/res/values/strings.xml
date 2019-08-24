@@ -2342,6 +2342,8 @@
     <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Airport</string>
 
     <string name="rkf_stockholm_30_days">Stockholm 30-day ticket</string>
+    <string name="rkf_stockholm_7_days">Stockholm 7-day ticket</string>
+    <string name="rkf_stockholm_72_hours">Stockholm 72-hours ticket</string>
 
     <string name="ricaricami_single_urban">Urban ticket</string>
     <string name="ricaricami_daily_urban">Urban daily ticket</string>

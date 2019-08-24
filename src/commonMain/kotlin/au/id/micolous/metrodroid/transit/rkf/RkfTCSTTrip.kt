@@ -81,7 +81,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 val previous: RkfTransaction? = if (index == 0) null else mTransactions[index - 1]
                 // Case 3: transfer without checkin transaction. Happens if checkin went out of the log.
                 if (previous == null) {
-                    legs.add(RkfTripLeg(startTimestamp = startTimestamp, endTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(startTimestamp = startTimestamp ?: continue, endTimestamp = transaction.timestamp,
                             startStation = startStation, endStation = transaction.station,
                             fare = fare, passengerCount = passengerCount, mode = mode,
                             isTransfer = false,
@@ -90,7 +90,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 }
                 // Case 4: pair of checkin and transfer
                 if (index == 1 && isCheckin(previous)) {
-                    legs.add(RkfTripLeg(startTimestamp = startTimestamp, endTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(startTimestamp = startTimestamp ?: continue, endTimestamp = transaction.timestamp,
                             startStation = startStation, endStation = transaction.station,
                             fare = fare, passengerCount = passengerCount, mode = previous.mode,
                             isTransfer = false,
@@ -98,7 +98,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                     continue
                 }
                 // Case 5: pair of transfer and transfer
-                legs.add(RkfTripLeg(startTimestamp = previous.timestamp!!, endTimestamp = transaction.timestamp,
+                legs.add(RkfTripLeg(startTimestamp = previous.timestamp ?: continue, endTimestamp = transaction.timestamp,
                         startStation = previous.station, endStation = transaction.station,
                         fare = null, passengerCount = passengerCount, mode = previous.mode,
                         isTransfer = true,
@@ -108,14 +108,14 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             val previous = if (previousIdx >= 0) mTransactions[previousIdx] else null
             // Case 6: pair of transfer and checkout or checkout missing
             if (previous != null && !isCheckin(previous)) {
-                legs.add(RkfTripLeg(startTimestamp = previous.timestamp!!, endTimestamp = if (checkoutCompleted) endTimestamp else null,
+                legs.add(RkfTripLeg(startTimestamp = previous.timestamp ?: return legs, endTimestamp = if (checkoutCompleted) endTimestamp else null,
                         startStation = previous.station, endStation = endStation,
                         fare = null, passengerCount = passengerCount, mode = previous.mode,
                         isTransfer = true,
                         mShortAgencyName = previous.getAgencyName(true), mAgencyName = previous.getAgencyName(false)))
             } else {
                 // No usable data in TCEL. Happens e.g. on SLAccess which has no TCEL or if there were no transfers
-                legs.add(RkfTripLeg(startTimestamp = startTimestamp, endTimestamp = if (checkoutCompleted) endTimestamp else null,
+                legs.add(RkfTripLeg(startTimestamp = startTimestamp ?: return legs, endTimestamp = if (checkoutCompleted) endTimestamp else null,
                         startStation = startStation, endStation = endStation,
                         fare = fare, passengerCount = passengerCount, mode = mode,
                         isTransfer = false,
@@ -126,13 +126,13 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
 
     private fun isCheckOut(transaction: RkfTransaction) = (
             transaction.isTapOff && checkoutCompleted
-                    && RkfTransitData.clearSeconds(transaction.timestamp!!.timeInMillis) == RkfTransitData.clearSeconds(endTimestamp.timeInMillis))
+                    && RkfTransitData.clearSeconds(transaction.timestamp?.timeInMillis ?: 0) == RkfTransitData.clearSeconds(endTimestamp?.timeInMillis ?: 0))
 
     private fun isCheckin(transaction: RkfTransaction) = (transaction.isTapOn
-            && RkfTransitData.clearSeconds(transaction.timestamp!!.timeInMillis) == RkfTransitData.clearSeconds(startTimestamp.timeInMillis))
+            && RkfTransitData.clearSeconds(transaction.timestamp?.timeInMillis ?: 0) == RkfTransitData.clearSeconds(startTimestamp?.timeInMillis ?: 0))
 
     companion object {
-        private fun parseDateTime(value: Int, timeZone: MetroTimeZone) = Epoch.utc(2000, timeZone).mins(value)
+        private fun parseDateTime(value: Int, timeZone: MetroTimeZone) = if (value != 0) Epoch.utc(2000, timeZone).mins(value) else null
 
         private const val PRICE = "Price"
         private const val START_TIME = "JourneyOriginDateTime"
