@@ -44,9 +44,12 @@ apply plugin: 'com.getkeepsafe.dexcount'
 
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
 def generatedLanguagesDir = new File(buildDir, "generated/res/localize/iOS")
-def drawableDir = new File(projectDir, "src/main/res/drawable")
-def drawableHdpiDir = new File(projectDir, "src/main/res/drawable-hdpi")
+def svgDir = new File(projectDir, "cardimages/svg")
+def drawableDir = new File(projectDir, "cardimages/android/drawable")
+def relativeDrawableHdpiDir = "cardimages/android/drawable-hdpi"
+def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
 def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
+def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
 
 task generateLocalize {
     inputs.file stringsXmlFile
@@ -55,6 +58,144 @@ task generateLocalize {
     outputs.dir generatedLocalizeDir
     doLast {
         LocalizeGenerator.INSTANCE.generateLocalize(generatedLocalizeDir, stringsXmlFile, [drawableDir, drawableHdpiDir])
+    }
+}
+
+def iOSUnsupportedImages = [
+        'barnaul',
+        'beijing',
+        'bilheteunicosp_card',
+        'busitcard',
+        'cadizcard',
+        'charlie_card',
+        'chc_metrocard',
+        'crimea_trolley',
+        'ekarta',
+        'ezlink_card',
+        'gautrain',
+        'kazan',
+        'kiev',
+        'kirov',
+        'komuterlink',
+        'krasnodar_etk',
+        'laxtap_card',
+        'leap_card',
+        'manly_fast_ferry_card',
+        'metromoney',
+        'metroq',
+        'msp_goto_card',
+        'myway_card',
+        'nets_card',
+        'omka',
+        'orenburg_ekg',
+        'ovchip_card',
+        'oyster_card',
+        'parus_school',
+        'penza',
+        'podorozhnik_card',
+        'rejsekort',
+        'ricaricami',
+        'rotorua',
+        'samara_etk',
+        'selecta',
+        'seqgo_card',
+        'siticard',
+        'smartrider_card',
+        'strelka_card',
+        'strizh',
+        'suncard',
+        'tartu',
+        'tpe_easy_card',
+        'troika_card',
+        'warsaw_card',
+        'yaroslavl_etk',
+        'yoshkar_ola',
+        'zolotayakorona'
+]
+
+task iOSImages {
+    inputs.dir drawableHdpiDir
+    inputs.dir svgDir
+    outputs.dir cardAssetsDir
+    doLast {
+        fileTree(drawableHdpiDir).visit { FileVisitDetails details -> 
+           def name = details.file.name
+           def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
+           if (basename in iOSUnsupportedImages) {
+               return
+           }
+           
+           def imageset = new File(cardAssetsDir, basename + ".imageset")
+
+           mkdir(imageset)
+
+           new File(imageset, "Contents.json").text = """{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "$name",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
+"""
+           def link = new File(imageset, name)
+           delete link
+           ant.symlink(resource: "../../../../../" + relativeDrawableHdpiDir + "/" + name, link: link)
+        }
+
+        // To keep the size of app low we only generate 1x scale for
+        // cards
+        fileTree(svgDir).visit { FileVisitDetails details -> 
+           def name = details.file.name
+           def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
+           if (basename in iOSUnsupportedImages) {
+               return
+           }
+           
+           def imageset = new File(cardAssetsDir, basename + ".imageset")
+
+           mkdir(imageset)
+
+           new File(imageset, "Contents.json").text = """{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "${basename}.png",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
+"""
+           def render = new File(imageset, basename + ".png")
+           exec {
+              commandLine "inkscape", "-z", "-e", render, "-w", "380", details.file.path
+           }
+        }
     }
 }
 
