@@ -771,6 +771,7 @@
     <string name="location_crimea">Crimea</string>
     <string name="location_dubai">Dubai, UAE</string>
     <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
+    <string name="location_finland">Finland</string>
     <string name="location_france">France</string>
     <string name="location_denmark">Denmark</string>
     <string name="location_gauteng">Gauteng, South Africa</string>
@@ -1242,6 +1243,10 @@
     <string name="hsl_transport_lautta">Ferry</string>
     <!-- Translators: Finnish "U-linja" -->
     <string name="hsl_transport_u_linja">U-line</string>
+
+    <!-- Waltti -->
+    <string name="waltti_city_zone">%s, zone %s</string>
+    <string name="waltti_city_zones">%s, zones %s</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>

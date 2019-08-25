@@ -30,7 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-data class HSLTransaction internal constructor(override val parsed: En1545Parsed): En1545Transaction() {
+data class HSLTransaction internal constructor(override val parsed: En1545Parsed, private val walttiRegion: Int?): En1545Transaction() {
     private val isArvo: Boolean?
         get() = parsed.getInt(IS_ARVO).let {
             when (it) {
@@ -60,7 +60,7 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
         get() = HSLLookup
 
     override val station: Station?
-        get() = HSLLookup.getArea(parsed, AREA_PREFIX, isValidity = false)?.let { Station.nameOnly(it) }
+        get() = HSLLookup.getArea(parsed, AREA_PREFIX, isValidity = false, walttiRegion=walttiRegion)?.let { Station.nameOnly(it) }
 
     override val mode: Trip.Mode
         get() = when (parsed.getInt(LOCATION_NUMBER)) {
@@ -82,6 +82,22 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
         private const val AREA_PREFIX = "EventBoarding"
         private const val LOCATION_TYPE = "BoardingLocationNumberType"
         private const val LOCATION_NUMBER = "BoardingLocationNumber"
+        private val EMBED_FIELDS_WALTTI_ARVO = En1545Container(
+            En1545FixedInteger.date(EVENT),
+            En1545FixedInteger.timeLocal(EVENT),
+            En1545FixedInteger(EVENT_VEHICLE_ID, 14),
+            En1545FixedInteger("BoardingDirection", 1),
+            En1545FixedInteger(HSLLookup.contractWalttiZoneName(AREA_PREFIX), 4)
+        )
+        private val EMBED_FIELDS_WALTTI_KAUSI = En1545Container(
+            En1545FixedInteger.date(EVENT),
+            En1545FixedInteger.timeLocal(EVENT),
+            En1545FixedInteger(EVENT_VEHICLE_ID, 14),
+            En1545FixedInteger(HSLLookup.contractWalttiRegionName(AREA_PREFIX), 8),
+            En1545FixedInteger("BoardingDirection", 1),
+            En1545FixedInteger(HSLLookup.contractWalttiZoneName(AREA_PREFIX), 4)
+        )
+
         private val EMBED_FIELDS_V1 = En1545Container(
             En1545FixedInteger.date(EVENT),
             En1545FixedInteger.timeLocal(EVENT),
@@ -131,23 +147,29 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
                 En1545FixedInteger("RemainingValue", 20)
         )
 
-        fun parseEmbed(raw: ImmutableByteArray, offset: Int, version: Int): HSLTransaction? {
-            val parsed = if (version == 2)
-                En1545Parser.parse(raw, offset, EMBED_FIELDS_V2)
-            else
-                En1545Parser.parse(raw, offset, EMBED_FIELDS_V1)
+        fun parseEmbed(raw: ImmutableByteArray, offset: Int, version: HSLTransitData.Variant, walttiArvoRegion: Int? = null): HSLTransaction? {
+            val fields = when(version) {
+                HSLTransitData.Variant.HSL_V2 -> EMBED_FIELDS_V2
+                HSLTransitData.Variant.HSL_V1 -> EMBED_FIELDS_V1
+                HSLTransitData.Variant.WALTTI -> if (walttiArvoRegion == null) EMBED_FIELDS_WALTTI_KAUSI else EMBED_FIELDS_WALTTI_ARVO
+            }
+            val parsed = En1545Parser.parse(raw, offset, fields)
             if (parsed.getTimeStamp(EVENT, HSLLookup.timeZone) == null)
                 return null
-            return HSLTransaction(parsed)
+            return HSLTransaction(parsed, walttiRegion=walttiArvoRegion)
         }
         
-        fun parseLog(raw: ImmutableByteArray, version: Int): HSLTransaction? {
+        fun parseLog(raw: ImmutableByteArray, version: HSLTransitData.Variant): HSLTransaction? {
             if (raw.isAllZero())
                 return null
-            return HSLTransaction(En1545Parser.parse(raw, if (version == 2) LOG_FIELDS_V2 else LOG_FIELDS_V1))
+            val fields = when (version) {
+                HSLTransitData.Variant.HSL_V2 -> LOG_FIELDS_V2
+                HSLTransitData.Variant.HSL_V1, HSLTransitData.Variant.WALTTI -> LOG_FIELDS_V1
+            }
+            return HSLTransaction(En1545Parser.parse(raw, fields), walttiRegion=null)
         }
         
         fun merge(a: HSLTransaction, b: HSLTransaction): HSLTransaction =
-                HSLTransaction(a.parsed + b.parsed)
+                HSLTransaction(a.parsed + b.parsed, walttiRegion=a.walttiRegion ?: b.walttiRegion)
     }
 }

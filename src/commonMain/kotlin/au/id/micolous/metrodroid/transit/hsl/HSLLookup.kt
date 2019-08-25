@@ -25,11 +25,16 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupUnknown
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
+import au.id.micolous.metrodroid.util.StationTableReader
 
 object HSLLookup : En1545LookupUnknown() {
     override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)
     override val timeZone: MetroTimeZone
         get() = MetroTimeZone.HELSINKI
+
+    fun contractWalttiZoneName(prefix: String) = "${prefix}WalttiZone"
+
+    fun contractWalttiRegionName(prefix: String) = "${prefix}WalttiRegion"
 
     fun contractAreaTypeName(prefix: String) = "${prefix}AreaType"
 
@@ -65,7 +70,44 @@ object HSLLookup : En1545LookupUnknown() {
         Pair(1, 9) to R.string.hsl_transport_u_linja
     )
 
-    fun getArea(parsed: En1545Parsed, prefix: String, isValidity: Boolean): String? {
+    val walttiValiditySplit = listOf(Pair(0, 0)) + (1..10).map { Pair(it, it) } + (1..10).flatMap { start -> ((start+1)..10).map { Pair(start, it) } }
+
+    const val WALTTI_OULU = 229
+    const val WALTTI_LAHTI = 223
+
+    private val lahtiZones = listOf(
+        "A", "B", "C", "D", "E", "F1", "F2", "G", "H", "I"
+    )
+    private val ouluZones = listOf(
+        "City A", "A", "B", "C", "D", "E", "F", "G", "H", "I"
+    )
+
+    private fun mapWalttiZone(region: Int, id: Int): String {
+        when (region) {
+            WALTTI_OULU -> return lahtiZones[id - 1]
+            WALTTI_LAHTI -> return ouluZones[id - 1]
+            else -> return String(charArrayOf('A' + id - 1))
+        }
+    }
+
+    private fun walttiNameRegion(id: Int): String? = StationTableReader.getOperatorName("waltti_region", id, true)?.unformatted
+
+    fun getArea(parsed: En1545Parsed, prefix: String, isValidity: Boolean, walttiRegion: Int? = null): String? {
+        if (parsed.getInt(contractAreaName(prefix)) == null && parsed.getInt(contractWalttiZoneName(prefix)) != null) {
+            val region = walttiRegion ?: parsed.getIntOrZero(contractWalttiRegionName(prefix))
+            val regionName = walttiNameRegion(region) ?: region.toString()
+            val zone = parsed.getIntOrZero(contractWalttiZoneName(prefix))
+            if (zone == 0) {
+                return null
+            }
+            if (!isValidity && zone in 1..10) {
+                return Localizer.localizeString(R.string.waltti_city_zone, regionName,
+                    mapWalttiZone(region, zone))
+            }
+            val (start, end) = walttiValiditySplit[zone]
+            return Localizer.localizeString(R.string.waltti_city_zones, regionName,
+               mapWalttiZone(region, start) + " - " + mapWalttiZone(region, end))
+        }
         val type = parsed.getIntOrZero(contractAreaTypeName(prefix))
         val value = parsed.getIntOrZero(contractAreaName(prefix))
         if (type in 0..1 && value == 0) {
