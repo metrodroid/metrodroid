@@ -89,7 +89,7 @@
     <string name="nfc_unavailable">NFC no disponible</string>
     <string name="general">General</string>
     <string name="launch_from_background">Lanzar en segundo plano</string>
-    <string name="checksum">Checksum</string>
+    <string name="checksum">suma de verificación</string>
     <string name="last_transaction">Última transacción</string>
     <string name="date">Fecha</string>
     <string name="time">Hora</string>
@@ -101,18 +101,18 @@
     <string name="valid_format">Válido desde %1$s hasta %2$s</string>
     <string name="need_stations">Algunos nombres de estaciones son desconocidos.</string>
     <string name="card_preview_reader">Versión beta del lector de tarjetas.</string>
-    <string name="visit_website">Visitar sitio web</string>
+    <string name="visit_website">Visita la página web</string>
     <string name="title_activity_about">Acerca de</string>
     <string name="card_format">Formato de tarjeta</string>
-    <string name="select_file">Seleccionar archivo</string>
+    <string name="select_file">Selecciona un archivo</string>
     <string name="copied_to_clipboard">Copiado al portapapeles</string>
     <string name="saved_xml_custom">XML guardado en almacenamiento USB.</string>
     <string name="file_exported">Archivo exportado.</string>
     <string name="block_title_format_unauthorized">Bloque: %s (no autorizado)</string>
-    <string name="page_title_format_empty">Página: %s (vacío)</string>
+    <string name="page_title_format_empty">Página: %s (vacía)</string>
     <string name="saved_metrodroid_zip">Metrodroid-Export.zip guardado en una memoria USB.</string>
     <string name="nfcv_system_info">Información del sistema</string>
-    <string name="nfc_settings">Configuración NFC</string>
+    <string name="nfc_settings">Ajustes NFC</string>
     <string name="keys_loaded">Las claves de encriptación de esta tarjeta están cargadas.</string>
     <string name="valid_origin_destination">Válido de %1$s a %2$s</string>
     <string name="valid_origin_destination_via">Válido de %1$s a %2$s vía %3$s</string>
@@ -128,27 +128,27 @@
     <string name="requires_android_21">Requiere Android 5.0 o posterior.</string>
     <string name="obfuscation_title">Ofuscación</string>
     <string name="obfuscation_card_numbers">Ocultar números de tarjeta</string>
-    <string name="obfuscation_card_numbers_desc">No mostrar los números de las tarjetas en ningún sitio</string>
-    <string name="obfuscation_balance">Ofuscar el saldo</string>
+    <string name="obfuscation_card_numbers_desc">No mostrar los números de las tarjetas</string>
+    <string name="obfuscation_balance">Ocultar el saldo</string>
     <string name="obfuscation_balance_desc">Cambiar el saldo mostrado por una cantidad aleatoria</string>
-    <string name="obfuscation_dates">Ofuscar fechas</string>
-    <string name="obfuscation_dates_desc">Muestra las fechas de viaje, suscripción, cafucidad y escaneo como días diferentes y aleatorios</string>
-    <string name="obfuscation_times">Obfuscar tiempos</string>
-    <string name="obfuscation_times_desc">Difumine y reduzca la resolución de marcas de tiempo en viajes, suscripciones y escaneos</string>
-    <string name="obfuscation_fares">Ofuscar las tarifas</string>
+    <string name="obfuscation_dates">Ocultar fechas</string>
+    <string name="obfuscation_dates_desc">Mostrar las fechas de viaje, suscripción, caducidad y escaneado como días diferentes y aleatorios</string>
+    <string name="obfuscation_times">Ocultar horarios</string>
+    <string name="obfuscation_times_desc">Reducir la calidad de marcas de viajes, inscripciones y escaneos de manera aleatoria</string>
+    <string name="obfuscation_fares">Ocultar tarifas</string>
     <string name="obfuscation_fares_desc">Cambiar las tarifas mostradas por una cantidad aleatoria</string>
     <string name="accessibility">Accesibilidad</string>
     <string name="localise_places_longdesc_button">Sobre sugerencias de lenguaje …</string>
     <string name="localise_places_longdesc_title">Sobre sugerencias de lenguaje</string>
     <string name="unsupported_tag">Medio de tarjeta NFC no compatible</string>
-    <string name="mfc_reading">Lectura de la tarjeta MIFARE Classic.…</string>
-    <string name="mfc_reading_blocks">Lectura de sector %d …</string>
+    <string name="mfc_reading">Leyendo tarjeta MIFARE Classic.…</string>
+    <string name="mfc_reading_blocks">Leyendo sector %d …</string>
     <string name="iso14a_detect">Detección de tipo de tarjeta ISO 14443…</string>
     <string name="mfd_reading">Lectura de la tarjeta MIFARE DESFire.…</string>
     <string name="card_reading_type">Lectura de <xliff:g id="card_name" example="Opal">%s</xliff:g>.…</string>
     <string name="mfu_detect">Detección del tipo de tarjeta MIFARE Ultralight.…</string>
-    <string name="mfu_reading">Lectura de la tarjeta MIFARE Ultralight.…</string>
-    <string name="calypso_reading">Lectura de la tarjeta Calypso.…</string>
+    <string name="mfu_reading">Leyendo la tarjeta MIFARE Ultralight…</string>
+    <string name="calypso_reading">Leyendo la tarjeta Calypso.…</string>
     <string name="felica_manufacturer_code">Código del fabricante</string>
     <string name="felica_card_identification_number">Número de identificación de la tarjeta</string>
     <string name="location_boston">Boston, MA, EE. UU.</string>
@@ -294,7 +294,7 @@
     <string name="location_shanghai">Shanghai, China</string>
     <string name="pref_show_hidden_cards">Mostrar cartas ocultas</string>
     <string name="pref_hide_unsupported_ribbon">Ocultar la cinta \"no compatible\"</string>
-    <string name="pref_hide_unsupported_ribbon_desc_off">Las tarjetas que no pueden ser leídas por este dispositivo tendrán una advertencia roja \"no compatible\" que se mostrará sobre su diseño</string>
+    <string name="pref_hide_unsupported_ribbon_desc_off">Las tarjetas que no puedan ser leídas tendrán la advertencia \"no compatible\" en rojo sobre su diseño</string>
     <string name="pref_hide_unsupported_ribbon_desc_on">Las tarjetas no compatibles no tendrán nada que cubra su diseño</string>
     <string name="location_crimea">Crimea</string>
     <string name="location_ekaterinburg">Ekaterimburgo, Rusia</string>
@@ -303,7 +303,7 @@
     <string name="location_penza">Penza, Rusia</string>
     <string name="location_yoshkar_ola">Yoshkar-Ola, Rusia</string>
     <string name="card_type_declarative">Declarativa</string>
-    <string name="mfc_rwid">Leer: %s, escribir: %s, incrementar: %s, decrementar: %s</string>
+    <string name="mfc_rwid">Leer: %s, escribir: %s, incrementar: %s, reducir: %s</string>
     <string name="mfc_key_never">nunca</string>
     <string name="mfc_key_a">clave A</string>
     <string name="mfc_key_b">clave B</string>
@@ -362,4 +362,142 @@
     <string name="hsl_transport_u_linja">U-línea</string>
     <string name="ravkav_generic_trips">Viajes</string>
     <string name="cepas_csn">Número de serie de la tarjeta (CSN)</string>
+    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="card_epoch">Tarjeta Epoch</string>
+    <string name="map_tiles_url">Mapa web en mosaico</string>
+    <string name="map_tiles_url_summary">Usar un servidor personalizado para mapas incrustados utilizando la sintaxis de Leaflet TileLayer.</string>
+    <string name="map_tiles_subdomains">Subdominio del mapa</string>
+    <string name="map_tiles_subdomains_summary">Si utiliza {s} en las URL de los mapas o una lista de subdominios separados por comas o una lista de subdominios de un solo carácter.</string>
+    <string name="map_tiles_help">Ver la documentación del Leaflet TileLayer</string>
+    <string name="map_tiles_help_summary">Para obtener ayuda sobre el uso de las URL de los mapas, consulte la documentación en línea del folleto (sólo disponible en inglés).</string>
+    <string name="mfc_fallback_desc">Algunas agencias no tienen identificación magnética en su tarjeta. Para que sean leídos, debe seleccionar una explícitamente una agencia .</string>
+    <string name="mfc_fallback">Lector de respaldo</string>
+    <string name="speak_balance">Dime el saldo</string>
+    <string name="speak_balance_summary">Cuando escanee una tarjeta, el saldo se leerá automáticamente en voz alta. Esto funciona incluso cuando no se esté usando un lector de pantalla.</string>
+    <string name="localise_places">Agregar sugerencias de idioma a las ciudades</string>
+    <string name="localise_places_desc">Agregar sugerencia de LocaleSpan a los nombres de lugares como, estaciones, paradas y recorridos e itinerarios.</string>
+    <string name="localise_places_longdesc">Las voces de los lectores de texto normalmente sólo funcionan bien en un idioma.
+\n
+\nLas sugerencias de LocaleSpan se utilizan para indicar que el texto está en un idioma diferente. Si se lo aplica a una estación, parada, línea o nombre de ruta, un lector de pantalla compatible pronunciará el nombre utilizando voces sintetizadas del idioma nativo en lugar del idioma que haya configurado para usar en Android.
+\n
+\nEsto normalmente no cambia la visualización en pantalla de los topónimos, pero algunos dispositivos pueden utilizar una fuente diferente.
+\n
+\nEsto requiere un software de accesibilidad compatible con la API de LocaleSpan (como Google TalkBack), y que tenga las voces adecuadas instaladas.</string>
+    <string name="saving_card">Guardar datos de la tarjeta…</string>
+    <string name="mfc_have_key">Probando la clave suministrada por el usuario para el sector %d..…</string>
+    <string name="mfc_other_key">Probando claves alternativas suministradas por el usuario para el sector %d.…</string>
+    <string name="mfc_default_key">Probando claves validadas para el sector %d.…</string>
+    <string name="mfd_unlocking">"Desbloqueando la tarjeta  "<xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
+    <string name="iso7816_probing">Comprobando la tarjeta ISO/IEC 7816…</string>
+    <string name="card_partial_read_title">Tarjeta parcialmente leída</string>
+    <string name="card_partial_read_desc">La tarjeta está fuera del alcance de lectura.
+\n
+\n Se leyeron algunos datos, pero puede que no sean suficientes.
+\n
+\nLas cajas gruesas y el metal pueden interferir con el funcionamiento del NFC. El fallo podría indicar que la tarjeta o la antena NFC de su dispositivo están dañadas.</string>
+    <string name="show_partial_data">Mostrar datos incompletos</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">Única
+\n<xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other">Plural
+\n<xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+    </plurals>
+    <string name="hidden_card_number">Número de tarjeta oculto</string>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Datos clave ocultos (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="other">Datos clave ocultos (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
+    </plurals>
+    <string name="key_data">Datos de la clave</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_theme_desc">Elija la apariencia y el estilo</string>
+    <string name="default_map_tile_subdomains">123456</string>
+    <string name="pref_show_local_and_english_title">Mostrar los nombres de las estaciones locales y las inglesas</string>
+    <string name="pref_show_local_and_english_desc">Mostrar los nombres locales y los ingleses independientemente de la localización. Utilizar la variante más apropiada cuando esté desactivada.</string>
+    <plurals name="cards_imported">
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> tarjeta importada.</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> tarjetas importadas.</item>
+    </plurals>
+    <plurals name="block_count">
+        <item quantity="one">%d bloque</item>
+        <item quantity="other">%d bloques</item>
+    </plurals>
+    <plurals name="record_count">
+        <item quantity="one">%d documento</item>
+        <item quantity="other">%d documentos</item>
+    </plurals>
+    <plurals name="felica_service_count">
+        <item quantity="one">%d servicio</item>
+        <item quantity="other">%d servicios</item>
+    </plurals>
+    <plurals name="passengers">
+        <item quantity="one">pasajero</item>
+        <item quantity="other">pasajeros</item>
+    </plurals>
+    <string name="desfire_standard_file">Archivo estándar</string>
+    <string name="desfire_backup_file">Copia de seguridad</string>
+    <string name="desfire_value_file">Archivo de datos</string>
+    <string name="desfire_unknown_file">Tipo de archivo desconocido</string>
+    <string name="desfire_challenge">Pregunta secreta</string>
+    <string name="desfire_response">Respuesta</string>
+    <string name="desfire_confirmation">Validación</string>
+    <string name="desfire_keyex">Intercambio de claves</string>
+    <string name="desfire_key_number">Clave %s</string>
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Tipo: %1$s, tamaño: %2$s byte</item>
+        <item quantity="other">Tipo: %1$s, tamaño: %2$s bytes</item>
+    </plurals>
+    <plurals name="trips_remaining">
+        <item quantity="one">%d viaje restante</item>
+        <item quantity="other">%d viajes restantes</item>
+    </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">"Le queda %d viaje de  %d"</item>
+        <item quantity="other">"Le quedan %d viajes de  %d"</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Válido por %d día</item>
+        <item quantity="other">Válido por %d días</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="one">Válido para %d mes</item>
+        <item quantity="other">Válido por %d meses</item>
+    </plurals>
+    <string name="hardware_information">Información del equipo</string>
+    <string name="cepas_version">Versión del CEPAS</string>
+    <string name="cepas_purse_id">ID del monedero</string>
+    <string name="cepas_purse_status">Estado de su monedero</string>
+    <string name="cepas_purse_balance">Saldo de su monedero</string>
+    <string name="cepas_purse_creation_date">Fecha de creación de su monedero</string>
+    <string name="cepas_last_txn_info">Información sobre la última transacción</string>
+    <string name="cepas_debit_options">Opciones de débito</string>
+    <string name="cepas_other_purse_info">Más información de su monedero</string>
+    <string name="cepas_logfile_record_count">Recuento de archivos de registro</string>
+    <string name="cepas_purse_info">Información de su monedero</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="vicinity_reading">Leyendo la tarjeta Vicinity…</string>
+    <string name="manufacture_week">Semana de elaboración</string>
+    <string name="manufacture_year">Año de fabricación</string>
+    <string name="select_acknowledge">SAK (Seleccionar Confirmar)</string>
+    <string name="answer_to_request">ATQA (Respuesta a la solicitud)</string>
+    <plurals name="bytes">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d bytes</item>
+    </plurals>
+    <string name="mfc_uid_mode">Longitud de la UID</string>
+    <string name="pref_show_hidden_cards_desc_off">En la lista de \'tarjetas compatibles\' sólo se mostrarán las formas de tarjetas normales y las ilustraciones</string>
+    <string name="pref_show_hidden_cards_desc_on">Todas los tipos de tarjetas y las ilustraciones se mostrarán en la lista \'tarjetas compatibles\'</string>
+    <string name="umarsh_school">Alumno</string>
+    <string name="desfire_vendor_id">Identificación del proveedor</string>
+    <string name="desfire_type">Tipo</string>
+    <string name="desfire_storage_size">Capacidad de almacenamiento</string>
+    <string name="desfire_protocol">Protocolo</string>
+    <string name="desfire_general_info">Información general</string>
+    <string name="desfire_batch_number">Número de serie</string>
+    <string name="cepas_purse_num">Número de monedero CEPAS %d</string>
+    <string name="cepas_purse_num_history">Historial del número de monedero CEPAS %d</string>
+    <string name="raw_level_none">desactivado</string>
+    <string name="raw_level_unknown_only">Mostrar solo campos desconocidos</string>
+    <string name="raw_level_all">Todos los campos</string>
 </resources>
