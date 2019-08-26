@@ -105,9 +105,8 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
             En1545FixedInteger(LOCATION_TYPE, 2),
             En1545FixedInteger(LOCATION_NUMBER, 14),
             En1545FixedInteger("BoardingDirection", 1),
-            En1545FixedInteger(HSLLookup.contractAreaName(AREA_PREFIX), 4)
-            //En1545FixedInteger("reserved", 4)  // only on reloadable, as it doesn't contain any useful data
-            // pretend it never exists
+            En1545FixedInteger(HSLLookup.contractAreaName(AREA_PREFIX), 4),
+            En1545FixedInteger("reserved", 4)
         )
 
         private val EMBED_FIELDS_V2 = En1545Container(
@@ -119,8 +118,6 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
                 En1545FixedInteger("BoardingDirection", 1),
                 En1545FixedInteger(HSLLookup.contractAreaTypeName(AREA_PREFIX), 2),
                 En1545FixedInteger(HSLLookup.contractAreaName(AREA_PREFIX), 6)
-                //En1545FixedInteger("reserved", 10) // only on reloadable, as it doesn't contain any useful data
-                // pretend it never exists
         )
 
         private const val IS_ARVO = "IsArvo"

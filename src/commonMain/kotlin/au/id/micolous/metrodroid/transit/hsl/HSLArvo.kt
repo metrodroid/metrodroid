@@ -245,7 +245,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
                                 offset = 264))
             return HSLArvo(En1545Parser.parse(raw, FIELDS_V1_UL),
                     HSLTransaction.parseEmbed(raw = raw, version = HSLTransitData.Variant.HSL_V1,
-                            offset = 192))
+                            offset = 264))
         }
 
         fun formatHour(hour: Int?): FormattedString? {
