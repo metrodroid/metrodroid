@@ -34,7 +34,7 @@ class EZLinkCompatTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testCardInfo() {
         val c = loadCard<CEPASCard>("cepas/legacy.xml")
-        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat().writeCard(c))
+        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat.writeCard(c))
         val p = parseCard<EZLinkCompatTransitData>(c)
         assertEquals(TransitCurrency.SGD(897), p.balance)
     }

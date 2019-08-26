@@ -25,7 +25,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class FelicaJsonImportTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat())  {
+class FelicaJsonImportTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat)  {
     /**
      * Test reading a FeliCa JSON dump with IDm tag (like <= v2.9.37)
      */

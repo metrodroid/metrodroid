@@ -20,40 +20,23 @@
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.multi.VisibleForTesting
+import au.id.micolous.metrodroid.util.readToString
 import kotlinx.io.InputStream
 import kotlinx.io.OutputStream
-import kotlinx.io.charsets.Charsets
 import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_ALL
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.json.JsonElement
 
-// TODO: Remove when https://github.com/Kotlin/kotlinx.serialization/issues/204 is fixed
-private fun InputStream.readToString(maxSize: Int = 64*1024) : String {
-    val buf = ByteArray(maxSize) { 0 }
-    val actualLen = this.read(buf, 0, buf.size)
-    return kotlinx.io.core.String(
-            bytes = buf.sliceArray(0 until actualLen),
-            charset = Charsets.UTF_8)
-}
-
-class JsonKotlinFormat : CardExporter, CardImporter {
+object JsonKotlinFormat : CardExporter, CardImporter {
     override fun writeCard(s: OutputStream, card: Card) {
         s.write(writeCard(card).toUtf8Bytes())
     }
     fun writeCard(card: Card) = Json(JsonConfiguration(prettyPrint = true, encodeDefaults = false)).stringify(Card.serializer(), card)
 
-    /**
-     * Note: This currently reads 64 KiB of the file, and passes it to kotlinx.serialization.
-     * This is only really suitable for tests, so it is marked [VisibleForTesting].
-     *
-     * Once https://github.com/Kotlin/kotlinx.serialization/issues/204 is fixed, this can be
-     * implemented properly.
-     */
-    @VisibleForTesting
     override fun readCard(stream: InputStream) =
             readCard(stream.readToString())
 

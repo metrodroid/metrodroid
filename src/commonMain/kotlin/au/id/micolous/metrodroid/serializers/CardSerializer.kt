@@ -7,8 +7,6 @@ import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.io.InputStream
 
 object CardSerializer {
-    private val jsonKotlinFormat = JsonKotlinFormat()
-
     fun load(importer: CardImporter, stream: InputStream): Card? {
         try {
             return importer.readCard(stream)
@@ -19,12 +17,12 @@ object CardSerializer {
     }
 
     private fun fromJson(xml: String): Card = logAndSwiftWrap ("Card", "Failed to deserialize") {
-        jsonKotlinFormat.readCard(xml)
+        JsonKotlinFormat.readCard(xml)
     }
 
     @NativeThrows
     fun toJson(card: Card): String = logAndSwiftWrap ("Card", "Failed to serialize") {
-        jsonKotlinFormat.writeCard(card)
+        JsonKotlinFormat.writeCard(card)
     }
 
     @NativeThrows
