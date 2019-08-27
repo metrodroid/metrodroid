@@ -263,4 +263,5 @@
         <item quantity="one">Valido por %d mês</item>
         <item quantity="other">Valido por %d meses</item>
     </plurals>
+    <string name="desfire_value_format">Tipo: %1$s, distancia: %2$s - %3$s, crédito limitado: %4$s (%5$s)</string>
 </resources>
