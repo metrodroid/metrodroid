@@ -9,7 +9,7 @@ import au.id.micolous.metrodroid.card.ksx6924.KSX6924Registry
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransitRegistry
 import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
-import au.id.micolous.metrodroid.util.Collator
+import au.id.micolous.metrodroid.util.collatedBy
 
 object CardInfoRegistry {
     val allFactories = ClassicCardFactoryRegistry.allFactories +
@@ -25,10 +25,5 @@ object CardInfoRegistry {
     val allCards = allFactories.flatMap { it.allCards }
 
     val allCardsAlphabetical: List<CardInfo>
-        get () {
-            val collator = Collator.collator
-            return allCards.sortedWith(Comparator { a, b ->
-                collator.compare(a.name, b.name)
-            })
-        }
+        get () = allCards.collatedBy { it.name }
 }
