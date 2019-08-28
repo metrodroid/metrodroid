@@ -1,16 +1,10 @@
 @file:JvmName("CountryKtActual")
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.R
-
 import java.util.*
 
-actual fun currencyNameByCode(code: Int): String? {
-    val symbol = ISO4217.getInfoByCode(code)?.symbol ?: return null
-    val currency = Currency.getInstance(symbol) ?: return null
-    return currency.displayName
-}
+actual fun currencyNameBySymbol(symbol: String): String? =
+    Currency.getInstance(symbol)?.displayName
 
 private val specialLocales = mapOf(
     "CA" to Locale.CANADA,
@@ -26,8 +20,7 @@ private val specialLocales = mapOf(
     "US" to Locale.US
 )
 
-actual fun countryCodeToName(countryCode: Int): String {
-    val alpha = ISO3166.mapNumericToAlpha2(countryCode) ?: Localizer.localizeString(R.string.unknown_format, countryCode)
-    val locale = specialLocales[alpha] ?: Locale("", alpha)
+actual fun iso3166AlphaToName(isoAlpha: String): String? {
+    val locale = specialLocales[isoAlpha] ?: Locale("", isoAlpha)
     return locale.displayCountry
 }
