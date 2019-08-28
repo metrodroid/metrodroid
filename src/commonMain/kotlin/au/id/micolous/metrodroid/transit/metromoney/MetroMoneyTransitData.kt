@@ -42,6 +42,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.metromoney,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
+        region = TransitRegion.GEORGIA,
         keysRequired = true, keyBundle = "metromoney")
 
 private fun strDate(raw: ImmutableByteArray, off: Int): String

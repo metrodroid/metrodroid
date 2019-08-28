@@ -142,6 +142,7 @@ data class WarsawTransitData (private val mSerial: Pair<Int, Int>,
                 keysRequired = true, keyBundle = "warsaw",
                 imageId = R.drawable.warsaw_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.POLAND,
                 preview = true)
 
         private fun formatSerial(serial: Pair<Int, Int>) =

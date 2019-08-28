@@ -37,6 +37,7 @@ private val CARD_INFO = CardInfo(
         locationId = R.string.location_otago,
         imageId = R.drawable.otago_gocard,
         cardType = CardType.MifareClassic,
+        region = TransitRegion.NEW_ZEALAND,
         keysRequired = true, keyBundle = "otago_go")
 
 private fun formatSerial(serial: Long) = serial.toString(16)

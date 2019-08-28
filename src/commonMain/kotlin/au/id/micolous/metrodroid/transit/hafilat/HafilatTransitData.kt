@@ -139,6 +139,7 @@ class HafilatTransitData (
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareDesfire,
                 resourceExtraNote = R.string.card_note_adelaide,
+                region = TransitRegion.UAE,
                 preview = true)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {

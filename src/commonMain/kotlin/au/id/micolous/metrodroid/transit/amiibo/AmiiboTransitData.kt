@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
@@ -37,7 +38,8 @@ private val CARD_INFO = CardInfo(
         name = NAME,
         cardType = CardType.MifareUltralight,
         locationId = R.string.location_worldwide,
-        imageId = R.drawable.amiibo
+        imageId = R.drawable.amiibo,
+        region = TransitRegion.WORLDWIDE
 )
 
 /**

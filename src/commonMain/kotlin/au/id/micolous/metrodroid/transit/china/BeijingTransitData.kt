@@ -68,6 +68,7 @@ class BeijingTransitData (val validityStart: Int?,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
                 iOSSupported = false,
+                region = TransitRegion.CHINA,
                 preview = true)
 
         val FACTORY: ChinaCardTransitFactory = object : ChinaCardTransitFactory {

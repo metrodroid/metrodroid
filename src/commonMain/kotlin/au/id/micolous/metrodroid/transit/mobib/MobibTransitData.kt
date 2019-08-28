@@ -99,6 +99,7 @@ class MobibTransitData(
                 cardType = CardType.ISO7816,
                 imageId = R.drawable.mobib_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.BELGIUM,
                 locationId = R.string.location_brussels)
 
         val TZ = MetroTimeZone.BRUXELLES

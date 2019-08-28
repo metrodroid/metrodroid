@@ -190,18 +190,21 @@ class SuicaTransitData (override val trips: List<SuicaTrip>): TransitData() {
                 imageId = R.drawable.icoca_card,
                 name = R.string.card_name_icoca,
                 locationId = R.string.location_kansai,
+                region = TransitRegion.JAPAN,
                 cardType = CardType.FeliCa)
 
         private val SUICA_CARD_INFO = CardInfo(
                 imageId = R.drawable.suica_card,
                 name = R.string.card_name_suica,
                 locationId = R.string.location_tokyo,
+                region = TransitRegion.JAPAN,
                 cardType = CardType.FeliCa)
 
         private val PASMO_CARD_INFO = CardInfo(
                 imageId = R.drawable.pasmo_card,
                 name = R.string.card_name_pasmo,
                 locationId = R.string.location_tokyo,
+                region = TransitRegion.JAPAN,
                 cardType = CardType.FeliCa)
 
         const val SYSTEMCODE_SUICA = 0x0003

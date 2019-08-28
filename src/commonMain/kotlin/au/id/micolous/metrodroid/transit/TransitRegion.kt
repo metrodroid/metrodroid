@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.iso3166AlphaToName
 
@@ -36,5 +37,43 @@ sealed class TransitRegion {
 
     companion object {
         val XX = Iso("XX")
+        val AUSTRALIA = Iso("AU")
+        val BELGIUM = Iso("BE")
+        val BRAZIL = Iso("BR")
+        val CANADA = Iso("CA")
+        val CHILE = Iso("CL")
+        val CHINA = Iso("CN")
+        val CRIMEA = Custom(R.string.location_crimea)
+        val DENMARK = Iso("DK")
+        val ESTONIA = Iso("EE")
+        val FINLAND = Iso("FI")
+        val FRANCE = Iso("FR")
+        val GEORGIA = Iso("GE")
+        val GERMANY = Iso("DE")
+        val HONG_KONG = Iso("HK")
+        val INDONESIA = Iso("ID")
+        val IRELAND = Iso("IE")
+        val ISRAEL = Iso("IL")
+        val ITALY = Iso("IT")
+        val JAPAN = Iso("JP")
+        val MALAYSIA = Iso("MY")
+        val NETHERLANDS = Iso("NL")
+        val NEW_ZEALAND = Iso("NZ")
+        val POLAND = Iso("PL")
+        val PORTUGAL = Iso("PT")
+        val RUSSIA = Iso("RU")
+        val SINGAPORE = Iso("SG")
+        val SOUTH_AFRICA = Iso("ZA")
+        val SOUTH_KOREA = Iso("KR")
+        val SPAIN = Iso("ES")
+        val SWEDEN = Iso("SE")
+        val SWITZERLAND = Iso("CH")
+        val TAIPEI = Iso("TW")
+        val TURKEY = Iso("TR")
+        val UAE = Iso("AE")
+        val UK = Iso("GB")
+        val UKRAINE = Iso("UA")
+        val USA = Iso("US")
+        val WORLDWIDE = Custom(R.string.location_worldwide)
     }
 }

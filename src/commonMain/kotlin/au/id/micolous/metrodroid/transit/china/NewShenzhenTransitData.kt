@@ -71,6 +71,7 @@ class NewShenzhenTransitData (val validityStart: Int?,
                 name = R.string.card_name_szt,
                 locationId = R.string.location_shenzhen,
                 cardType = CardType.FeliCa,
+                region = TransitRegion.CHINA,
                 preview = true)
 
         val FACTORY: ChinaCardTransitFactory = object : ChinaCardTransitFactory {

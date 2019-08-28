@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -72,6 +73,7 @@ class VeneziaTransitData (val calypso: Calypso1545TransitDataCapsule) : Calypso1
                 imageId = R.drawable.veneziaunica,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.ITALY,
                 preview = true)
 
         private val TICKETING_ENV_FIELDS = En1545Container(

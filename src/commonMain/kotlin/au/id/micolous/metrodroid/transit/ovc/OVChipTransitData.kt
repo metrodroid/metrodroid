@@ -87,6 +87,7 @@ data class OVChipTransitData(
                 name = NAME,
                 locationId = R.string.location_the_netherlands,
                 cardType = CardType.MifareClassic,
+                region = TransitRegion.NETHERLANDS,
                 keysRequired = true)
 
         private val OVC_HEADER = ImmutableByteArray.fromHex("840000000603a00013aee4")

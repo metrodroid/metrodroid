@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -52,6 +53,7 @@ object TartuTransitFactory : ClassicCardTransitFactory {
             imageId = R.drawable.tartu,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_tartu,
+            region = TransitRegion.ESTONIA,
             resourceExtraNote = R.string.card_note_card_number_only)
 
     override fun earlyCheck(sectors: List<ClassicSector>): Boolean {

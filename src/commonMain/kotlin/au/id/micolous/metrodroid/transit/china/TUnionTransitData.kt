@@ -55,6 +55,7 @@ class TUnionTransitData (override val serialNumber: String?,
                 imageId = R.drawable.tunion,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.CHINA,
                 preview = true)
 
         private fun parse(card: ChinaCard) : TUnionTransitData? {

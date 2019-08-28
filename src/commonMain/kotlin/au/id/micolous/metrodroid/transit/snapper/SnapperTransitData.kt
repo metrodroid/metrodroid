@@ -55,7 +55,8 @@ class SnapperTransitData : TMoneyTransitData {
                 imageId = R.drawable.snapperplus,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.ISO7816,
-                preview = true
+                preview = true,
+                region = TransitRegion.NEW_ZEALAND
         )
 
         val FACTORY: KSX6924CardTransitFactory = object : KSX6924CardTransitFactory {

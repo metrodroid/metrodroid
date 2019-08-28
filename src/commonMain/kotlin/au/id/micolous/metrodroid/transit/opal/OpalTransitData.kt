@@ -151,6 +151,7 @@ class OpalTransitData (
                 imageId = R.drawable.opal_card,
                 name = NAME,
                 locationId = R.string.location_sydney_australia,
+                region = TransitRegion.AUSTRALIA,
                 cardType = CardType.MifareDesfire,
                 resourceExtraNote = R.string.card_note_opal)
 

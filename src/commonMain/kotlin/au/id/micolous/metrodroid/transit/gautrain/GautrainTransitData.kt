@@ -43,6 +43,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.gautrain,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
+        region = TransitRegion.SOUTH_AFRICA,
         keysRequired = true)
 
 private fun formatSerial(serial: Long) = NumberUtils.zeroPad(serial, 10)

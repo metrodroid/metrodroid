@@ -5,6 +5,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitRegion
 
 internal object IntercodeLookupOura : IntercodeLookupSTR("oura"), IntercodeLookupSingle {
     override val cardInfo: CardInfo
@@ -13,6 +14,7 @@ internal object IntercodeLookupOura : IntercodeLookupSTR("oura"), IntercodeLooku
                 locationId = R.string.location_grenoble,
                 imageId = R.drawable.oura,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.FRANCE,
                 cardType = CardType.ISO7816)
 
     override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> = mapOf(

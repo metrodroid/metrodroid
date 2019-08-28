@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransactionTripAbstract
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -59,6 +60,7 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 keysRequired = true, keyBundle = "ricaricami",
+                region = TransitRegion.ITALY,
                 preview = true)
 
         private val CONTRACT_LIST_FIELDS = En1545Container(

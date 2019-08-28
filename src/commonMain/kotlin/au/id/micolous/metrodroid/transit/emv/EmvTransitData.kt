@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.emv.EmvData.LOG_ENTRY
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRACK2_EQUIV
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
@@ -112,6 +113,7 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
         locationId = R.string.location_worldwide,
         iOSSupported = false,
         imageId = R.drawable.ic_contactless,
+        region = TransitRegion.WORLDWIDE,
         cardType = CardType.ISO7816)
 
     override val allCards: List<CardInfo>

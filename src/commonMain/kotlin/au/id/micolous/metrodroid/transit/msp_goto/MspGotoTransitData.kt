@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
@@ -64,6 +65,7 @@ class MspGotoTransitData (override val capsule: NextfareTransitDataCapsule): Nex
                 imageId = R.drawable.msp_goto_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 keysRequired = true,
+                region = TransitRegion.USA,
                 preview = true)
 
         private val TIME_ZONE = MetroTimeZone.CHICAGO

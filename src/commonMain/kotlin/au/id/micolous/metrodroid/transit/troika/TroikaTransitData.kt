@@ -70,6 +70,7 @@ class TroikaTransitData(private val mBlocks: List<TroikaBlock>) : Parcelable {
                 locationId = R.string.location_moscow,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_russia,
+                region = TransitRegion.RUSSIA,
                 keysRequired = true, preview = true, keyBundle = "troika")
 
         private const val TAG = "TroikaTransitData"

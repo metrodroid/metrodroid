@@ -125,6 +125,7 @@ data class RkfTransitData internal constructor(
                         cardType = CardType.MifareClassic,
                         imageId = R.drawable.slaccess,
                         keysRequired = true, keyBundle = "slaccess",
+                        region = TransitRegion.SWEDEN,
                         preview = true),
                 RkfLookup.REJSEKORT to CardInfo(
                         name = "Rejsekort",
@@ -132,6 +133,7 @@ data class RkfTransitData internal constructor(
                         imageId = R.drawable.rejsekort,
                         cardType = CardType.MifareClassic,
                         keysRequired = true, keyBundle = "rejsekort",
+                        region = TransitRegion.DENMARK,
                         preview = true)
         )
 

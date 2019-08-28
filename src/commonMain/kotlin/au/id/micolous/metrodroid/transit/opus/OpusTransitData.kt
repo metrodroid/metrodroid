@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -65,6 +66,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
                 name = OpusTransitData.NAME,
                 locationId = R.string.location_quebec,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.CANADA,
                 preview = true)
 
         private val ticketEnvFields = En1545Container(

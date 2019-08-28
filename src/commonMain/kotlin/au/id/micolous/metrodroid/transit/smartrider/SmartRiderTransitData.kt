@@ -62,6 +62,7 @@ class SmartRiderTransitData (override val serialNumber: String?,
                 locationId = R.string.location_wa_australia,
                 cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
                 keysRequired = true,
+                region = TransitRegion.AUSTRALIA,
                 preview = true) // We don't know about ferries.
 
         private val MYWAY_CARD_INFO = CardInfo(
@@ -69,6 +70,7 @@ class SmartRiderTransitData (override val serialNumber: String?,
                 name = MYWAY_NAME,
                 locationId = R.string.location_act_australia,
                 cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
+                region = TransitRegion.AUSTRALIA,
                 keysRequired = true)
 
         private fun parse(card: ClassicCard): SmartRiderTransitData {

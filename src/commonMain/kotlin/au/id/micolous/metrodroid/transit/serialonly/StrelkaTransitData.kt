@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -57,6 +58,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
                 resourceExtraNote = R.string.card_note_card_number_only,
                 imageId = R.drawable.strelka_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.RUSSIA,
                 keysRequired = true,
                 preview = true)
 

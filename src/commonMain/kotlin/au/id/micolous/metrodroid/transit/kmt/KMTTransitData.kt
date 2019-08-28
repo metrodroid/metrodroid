@@ -111,6 +111,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
                 name = KMTTransitData.NAME,
                 locationId = R.string.location_jakarta,
                 cardType = CardType.FeliCa,
+                region = TransitRegion.INDONESIA,
                 resourceExtraNote = R.string.kmt_extra_note)
 
         private fun getSerial(card: FelicaCard): String? {

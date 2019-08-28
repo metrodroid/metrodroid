@@ -44,6 +44,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.kazan,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         keyBundle = "kazan",
+        region = TransitRegion.RUSSIA,
         preview = true)
 
 private fun formatSerial(serial: Long) = NumberUtils.zeroPad(serial, 10)

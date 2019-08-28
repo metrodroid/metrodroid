@@ -143,6 +143,7 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
                 iOSSupported = false,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 resourceExtraNote = R.string.card_note_leap,
+                region = TransitRegion.IRELAND,
                 preview = true)
 
         private const val BLOCK_SIZE = 0x180

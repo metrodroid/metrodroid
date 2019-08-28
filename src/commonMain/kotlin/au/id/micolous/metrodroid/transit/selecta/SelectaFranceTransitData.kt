@@ -50,6 +50,7 @@ data class SelectaFranceTransitData(private val mBalance: Int,
                 locationId = R.string.location_france,
                 imageId = R.drawable.selecta,
                 cardType = CardType.MifareClassic,
+                region = TransitRegion.FRANCE,
                 preview = true)
 
         private fun getSerial(card: ClassicCard): Int = card[1, 0].data.byteArrayToInt(13, 3)

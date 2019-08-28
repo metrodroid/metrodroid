@@ -58,6 +58,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
                 imageId = R.drawable.orca_card,
                 name = "ORCA",
                 locationId = R.string.location_seattle,
+                region = TransitRegion.USA,
                 cardType = CardType.MifareDesfire)
 
         private fun parseTrips(card: DesfireCard, fileId: Int, isTopup: Boolean): List<TransactionTripAbstract> {
