@@ -92,7 +92,7 @@ class SupportedCardsFragment : ExpandableListFragment() {
             = ((parent.toLong() shl 12) + child + 0x10000000)
 
         override fun getGroupView(group: Int, isExpanded: Boolean, convertViewReuse: View?, parent: ViewGroup): View {
-            val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.card_name_header,
+            val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.supported_region_header,
                         parent, false)
             val textView1 = convertView!!.findViewById<TextView>(android.R.id.text1)
             textView1.text = cards[group].first.translatedName
