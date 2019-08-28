@@ -29,15 +29,37 @@ class SupportedCardsViewController: UICollectionViewController {
         // Classic and vicinity are not supported currently
         return cardInfo.iOSSupported as? Bool ?? (cardInfo.cardType == CardType.iso7816 || cardInfo.cardType == CardType.mifaredesfire || cardInfo.cardType == CardType.felica || cardInfo.cardType == CardType.mifareultralight || cardInfo.cardType == CardType.vicinity)
     }
-    var items = CardInfoRegistry.init().allCardsAlphabetical.filter {
-        isSupported(cardInfo: $0) }
+    
+    class Section {
+        let region: TransitRegion
+        let cards: [CardInfo]
+        var expanded: Bool
+        init(region: TransitRegion, filtering: [CardInfo]) {
+            self.region = region
+            self.cards = filtering.filter {
+                isSupported(cardInfo: $0) }
+            expanded = false
+        }
+        
+        var isEmpty: Bool {
+            get {
+                return cards.isEmpty
+            }
+        }
+    }
+    var items = CardInfoRegistry.init().allCardsByRegion.map { Section(
+        region: $0.first as! TransitRegion,
+        filtering: $0.second as! [CardInfo]) }.filter { !$0.isEmpty }
     
     // MARK: - UICollectionViewDataSource protocol
     
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.items.count
+    }
+    
     // tell the collection view how many cells to make
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("count: \(self.items.count)")
-        return self.items.count
+        return items[section].expanded ? self.items[section].cards.count : 0
     }
     
     // make a cell for each cell index path
@@ -48,9 +70,26 @@ class SupportedCardsViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! SupportedCardsViewCell
         
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
-        cell.setCardInfo(self.items[indexPath.item])
+        cell.setCardInfo(self.items[indexPath.section].cards[indexPath.item])
         
         return cell
+    }
+    
+    func toggleSection(sectionNumber: Int) -> Bool {
+        print ("Toggle \(sectionNumber)")
+        let expanded = !items[sectionNumber].expanded
+        items[sectionNumber].expanded = expanded
+        collectionView.reloadSections(NSIndexSet(index: sectionNumber) as IndexSet)
+        return expanded
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SupportedCardsHeader", for: indexPath) as? SupportedCardsHeader {
+            sectionHeader.setState(title: self.items[indexPath.section].region.translatedName,
+                                   delegate: self, section: indexPath.section, expanded: items[indexPath.section].expanded)
+            return sectionHeader
+        }
+        return UICollectionReusableView()
     }
 }
 
