@@ -46,7 +46,8 @@ class CardInfo(
         val imageId: DrawableResource? = null,
         val imageAlphaId: DrawableResource? = null,
 
-        val iOSSupported: Boolean? = null) {
+        val iOSSupported: Boolean? = null,
+        val region: TransitRegion = TransitRegion.XX) {
 
     // TODO: Make this the primary constructor
     constructor(
@@ -59,7 +60,8 @@ class CardInfo(
             resourceExtraNote: StringResource? = null,
             imageId: DrawableResource? = null,
             imageAlphaId: DrawableResource? = null,
-            iOSSupported: Boolean? = null
+            iOSSupported: Boolean? = null,
+            region: TransitRegion = TransitRegion.XX
     ) : this(
             name = Localizer.localizeString(name),
             cardType = cardType,
@@ -70,7 +72,8 @@ class CardInfo(
             resourceExtraNote = resourceExtraNote,
             imageId = imageId,
             imageAlphaId = imageAlphaId,
-            iOSSupported = iOSSupported)
+            iOSSupported = iOSSupported,
+            region = region)
 
     val hasBitmap get() = imageId != null
 }
