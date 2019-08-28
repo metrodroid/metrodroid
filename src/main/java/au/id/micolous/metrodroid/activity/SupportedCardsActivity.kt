@@ -49,7 +49,6 @@ import au.id.micolous.metrodroid.util.Preferences
  * @author Eric Butler, Michael Farrell
  */
 class SupportedCardsActivity : MetrodroidActivity() {
-    var keyBundles: Set<String>? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_supported_cards)
@@ -57,8 +56,6 @@ class SupportedCardsActivity : MetrodroidActivity() {
         setDisplayHomeAsUpEnabled(true)
 
         findViewById<ListView>(R.id.gallery).adapter = CardsAdapter(this)
-
-        keyBundles = ClassicAndroidReader.getKeyRetriever(this).forClassicStatic()?.allBundles
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,14 +68,14 @@ class SupportedCardsActivity : MetrodroidActivity() {
         return false
     }
 
-    private inner class CardsAdapter internal constructor(context: Context) : ArrayAdapter<CardInfo>(context, 0, ArrayList()) {
-        private val mLayoutInflater: LayoutInflater
+    private class CardsAdapter internal constructor(context: Context) : ArrayAdapter<CardInfo>(context, 0, ArrayList()) {
+        val keyBundles: Set<String>? = ClassicAndroidReader.getKeyRetriever(context).forClassicStatic()?.allBundles
 
         init {
             addAll(CardInfoRegistry.allCardsAlphabetical)
-            mLayoutInflater = context.getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
+        private val mLayoutInflater: LayoutInflater = context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         override fun getView(position: Int, convertViewReuse: View?, group: ViewGroup): View {
             val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.supported_card, null)
@@ -92,7 +89,7 @@ class SupportedCardsActivity : MetrodroidActivity() {
             convertView.findViewById<TextView>(R.id.card_name).text = info.name
             val locationTextView = convertView.findViewById<TextView>(R.id.card_location)
             if (info.locationId != null) {
-                locationTextView.text = getString(info.locationId)
+                locationTextView.text = context.getString(info.locationId)
                 locationTextView.visibility = View.VISIBLE
             } else
                 locationTextView.visibility = View.GONE
