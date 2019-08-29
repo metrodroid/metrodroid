@@ -22,9 +22,13 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.iso3166AlphaToName
+import au.id.micolous.metrodroid.util.Collator
 
 sealed class TransitRegion {
     abstract val translatedName: String
+    open val sortingKey: Pair<Int, String>
+        get() = Pair(0, translatedName)
+
     data class Iso (val code: String): TransitRegion () {
         override val translatedName: String
             get() = iso3166AlphaToName(code) ?: code
@@ -35,8 +39,28 @@ sealed class TransitRegion {
             get() = Localizer.localizeString(res)
     }
 
+    object RegionComparator : Comparator<TransitRegion> {
+        val collator = Collator.collator
+        override fun compare(a: TransitRegion, b: TransitRegion): Int {
+            val ak = a.sortingKey
+            val bk = b.sortingKey
+            if (ak.first != bk.first) {
+                return ak.first.compareTo(bk.first)
+            }
+            return collator.compare(ak.second, bk.second)
+        }
+    }
+
+    data class SectionItem(val res: StringResource,
+                           val section: Int): TransitRegion () {
+        override val translatedName: String
+            get() = Localizer.localizeString(res)
+        override val sortingKey
+            get() = Pair(section, translatedName)
+    }
+
     companion object {
-        val XX = Iso("XX")
+        val XX = SectionItem(R.string.unknown, -2)
         val AUSTRALIA = Iso("AU")
         val BELGIUM = Iso("BE")
         val BRAZIL = Iso("BR")
@@ -74,6 +98,6 @@ sealed class TransitRegion {
         val UK = Iso("GB")
         val UKRAINE = Iso("UA")
         val USA = Iso("US")
-        val WORLDWIDE = Custom(R.string.location_worldwide)
+        val WORLDWIDE = SectionItem(R.string.location_worldwide, -1)
     }
 }

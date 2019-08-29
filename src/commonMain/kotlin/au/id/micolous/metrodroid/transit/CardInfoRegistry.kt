@@ -31,7 +31,7 @@ object CardInfoRegistry {
         get() {
             val cards = allCards
             val regions = cards.map { it.region }.distinct()
-                    .collatedBy { it.translatedName }
+                    .sortedWith(TransitRegion.RegionComparator)
             return regions.map { region -> Pair(region,
                 cards.filter { it.region == region }.collatedBy { it.name }) }
         }
