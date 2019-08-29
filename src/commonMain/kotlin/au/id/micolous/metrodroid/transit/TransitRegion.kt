@@ -23,20 +23,37 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.iso3166AlphaToName
 import au.id.micolous.metrodroid.util.Collator
+import au.id.micolous.metrodroid.util.Preferences
 
 sealed class TransitRegion {
     abstract val translatedName: String
     open val sortingKey: Pair<Int, String>
-        get() = Pair(0, translatedName)
+        get() = Pair(SECTION_MAIN, translatedName)
 
     data class Iso (val code: String): TransitRegion () {
         override val translatedName: String
             get() = iso3166AlphaToName(code) ?: code
+        override val sortingKey: Pair<Int, String>
+            get() = Pair(
+                if (code == deviceRegion) SECTION_NEARBY else SECTION_MAIN,
+                translatedName)
     }
 
-    data class Custom(val res: StringResource): TransitRegion () {
+    object Crimea : TransitRegion () {
+        override val translatedName: String
+            get() = Localizer.localizeString(R.string.location_crimea)
+        override val sortingKey
+            get() = Pair(
+                 if (deviceRegion in listOf("RU", "UA")) SECTION_NEARBY else SECTION_MAIN,
+                 translatedName)
+    }
+
+    data class SectionItem(val res: StringResource,
+                           val section: Int): TransitRegion () {
         override val translatedName: String
             get() = Localizer.localizeString(res)
+        override val sortingKey
+            get() = Pair(section, translatedName)
     }
 
     object RegionComparator : Comparator<TransitRegion> {
@@ -51,23 +68,25 @@ sealed class TransitRegion {
         }
     }
 
-    data class SectionItem(val res: StringResource,
-                           val section: Int): TransitRegion () {
-        override val translatedName: String
-            get() = Localizer.localizeString(res)
-        override val sortingKey
-            get() = Pair(section, translatedName)
-    }
-
     companion object {
-        val XX = SectionItem(R.string.unknown, -2)
+        // On very top put anomalies that we can't handle properly yet.
+        // It shouldn't appear in releases
+        const val SECTION_UNKNOWN = -3
+        // Then cards tha are most likely to be relevant to the user
+        const val SECTION_NEARBY = -2
+        // Then put "Woldwide" cards like EMV and Amiibo
+        const val SECTION_WORLDWIDE = -1
+        // Then goes the rest
+        const val SECTION_MAIN = 0
+        private val deviceRegion = Preferences.region
+        val XX = SectionItem(R.string.unknown, SECTION_UNKNOWN)
         val AUSTRALIA = Iso("AU")
         val BELGIUM = Iso("BE")
         val BRAZIL = Iso("BR")
         val CANADA = Iso("CA")
         val CHILE = Iso("CL")
         val CHINA = Iso("CN")
-        val CRIMEA = Custom(R.string.location_crimea)
+        val CRIMEA = Crimea
         val DENMARK = Iso("DK")
         val ESTONIA = Iso("EE")
         val FINLAND = Iso("FI")
@@ -98,6 +117,7 @@ sealed class TransitRegion {
         val UK = Iso("GB")
         val UKRAINE = Iso("UA")
         val USA = Iso("US")
-        val WORLDWIDE = SectionItem(R.string.location_worldwide, -1)
+        val WORLDWIDE = SectionItem(R.string.location_worldwide,
+                                    SECTION_WORLDWIDE)
     }
 }

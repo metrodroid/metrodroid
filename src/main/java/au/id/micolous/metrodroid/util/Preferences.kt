@@ -149,6 +149,8 @@ actual object Preferences {
 
     actual val language: String get() = Locale.getDefault().language
 
+    actual val region: String? get() = Locale.getDefault().country
+
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
 }

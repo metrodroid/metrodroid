@@ -42,6 +42,8 @@ actual object Preferences {
         get() = readBool("pref_show_raw_ids")
     actual val language: String
         get() = NSLocale.preferredLanguages[0] as String
+    actual val region: String?
+        get() = NSLocale.currentLocale.countryCode
     actual val showBothLocalAndEnglish: Boolean
         get() = readBool("pref_show_local_and_english")
     actual val rawLevel: TransitData.RawLevel
