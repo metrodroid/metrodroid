@@ -2243,8 +2243,6 @@
     <!-- Translators: message in scanning dialog on iOS. -->
     <string name="ios_nfcreader_tap">Tap your card</string>
     <string name="ios_nfcreader_exception">Got exception: %s</string>
-    <!-- Currectly only on iOS but to be backported to Android. -->
-    <string name="mifare_plus_not_supported">Mifare Plus is not suppored</string>
     <string name="ios_unknown_mifare">Unknown Mifare: %s</string>
     <string name="ios_unknown_tag">Unknown tag type: %s</string>
 
