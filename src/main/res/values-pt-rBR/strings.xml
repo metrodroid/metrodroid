@@ -1,2 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="copyright">Direitos Reservados © 2015 – 2019 Michael Farrell</string>
+    <string name="license">Licenças</string>
+    <string name="title_activity_license">Licenças de código aberto</string>
+    <string name="directions">Encoste um cartão.</string>
+    <string name="reading_card">Lendo cartão…</string>
+    <string name="dont_move">Não mova o cartão</string>
+    <string name="advanced_info">Informação avançada</string>
+    <string name="delete_card">Excluir cartão</string>
+    <string name="unknown_card">Cartão desconhecido</string>
+    <string name="locked_mfc_card">Cartão MIFARE Classic protegido</string>
+    <string name="locked_mfu_card">Cartão MIFARE Ultralight protegido</string>
+    <string name="locked_mfd_card">Cartão MIFARE DESFire protegido</string>
+    <string name="hw_detail">Informações de fabricação</string>
+    <string name="data">Dados Brutos</string>
+    <string name="copy_xml">Copiar</string>
+    <string name="share_xml">Compartilhar</string>
+    <string name="save_xml">Salvar como arquivo</string>
+    <string name="history">Histórico</string>
+    <string name="no_trip_data">Sem viagens. Esse cartão foi utilizado\?</string>
+    <string name="import_xml">Importar</string>
+    <string name="import_clipboard">Colar da área de transferência</string>
+    <string name="import_file">Importar de arquivo</string>
+    <string name="export">Exportar</string>
+    <string name="export_filename">Nome de arquivo para exportar</string>
+    <string name="export_all">Exportar todos</string>
+    <string name="about">Sobre</string>
+    <string name="preferences">Preferências</string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="R$13.37">%s</xliff:g>
+    </string>
+    <string name="loading">Carregando…</string>
+    <string name="scanned_at_format">Escaneado no %1$s em %2$s</string>
+    <string name="supported_cards">Cartões suportados</string>
+    <string name="transaction_counter">Contador de transações</string>
+    <string name="fully_locked_desc">Nenhuma parte deste cartão é legível livremente sem uma chave e atualmente este formato não pratica vulnerabilidades.
+\n
+\nSeu cartão não é suportado pelo Metrodroid e é improvável que seja, a menos que a chave seja decifrada.
+\n
+\nPor favor, peça ao emissor do cartão para permitir o acesso a dados abertos nos cartões emitidos. É seguro permitir acesso aberto, e somente leitura a dados com a tecnologia moderna de um cartão inteligente. Algumas agências até fornecem documentação aberta sobre o formato dos dados!</string>
+    <string name="fully_locked_desc_unlockable">Nenhuma parte deste cartão pode ser lida livremente sem uma chave. Você não possui chaves válidas instaladas para ele.
+\n 
+\nO cartão funcionará assim que as chaves estiverem instaladas. Geralmente são diferentes para cada cartão. Mais informações sobre como adquirir e instalar chaves podem ser encontradas na documentação. 
+\n 
+\nPor favor, peça ao emissor do cartão para permitir o acesso a dados abertos nos cartões emitidos. É seguro permitir acesso aberto, e somente leitura a dados com a tecnologia moderna de um cartão inteligente. Algumas agências até fornecem documentação aberta sobre o formato dos dados!</string>
+    <string name="fully_locked_title">Cartão totalmente protegido.</string>
+    <string name="nfc_off_error">NFC desligado</string>
+    <string name="turn_on_nfc">Por favor, ative o NFC para ler este cartão.</string>
+    <string name="nfc_settings">Configurações do NFC</string>
+    <string name="last_refill">Última recarga</string>
+    <string name="unknown_card_header">Formato de cartão não suportado</string>
+    <string name="unknown_card_description">Este cartão ainda não é suportado pelo Metrodroid. Somente dados brutos podem ser exibidos.</string>
+    <string name="unknown_more_info">Mais informações</string>
+    <string name="unknown_more_info_desc">Toque para mais informações do suporte deste cartão no Metrodroid.</string>
+    <string name="lawyercats">Metrodroid e seus autores não estão associados a nenhuma agência de transporte público.</string>
+    <string name="scanned_cards">Histórico</string>
+    <string name="no_scanned_cards">Você não escaneou nenhum cartão.</string>
+    <string name="block_title_format">Bloco: %s</string>
+    <string name="block_title_format_unauthorized">Bloco: %s (não autorizado)</string>
+    <string name="application_title_format">Aplicação: %s</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="file_title_format">Arquivo: %s</string>
+    <string name="unauthorized_file_title_format">Arquivo: %s (não autorizado)</string>
+    <string name="invalid_file_title_format">Arquivo: %1$s (invalido: %2$s)</string>
+    <string name="page_title_format">Página: %s</string>
+    <string name="page_title_format_empty">Página: %s (vazio)</string>
+    <string name="unauthorized_page_title_format">Página: %s (não autorizado)</string>
+    <string name="nfcv_system_info">Informação do sistema</string>
+    <string name="sector_title_format">Setor: %s</string>
+    <string name="unauthorized_sector_title_format">Setor: %s (não autorizado)</string>
+    <string name="sector_title_format_empty">Setor: %s (vazio)</string>
+    <string name="invalid_sector_title_format">Setor: %1$s (invalido: %2$s)</string>
+    <string name="felica_system_title_format">Sistema: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">Serviço: %1$s (%2$s)</string>
+    <string name="record_title_format">Registro: %s</string>
+    <string name="binary_title_format">Dados binários</string>
+    <string name="info">Informação</string>
+    <string name="valid_format">Válido de %1$s até %2$s</string>
+    <string name="valid_to_format">Válido até %1$s</string>
+    <string name="valid_from_format">Válido de %1$s</string>
+    <string name="valid_origin_destination">Válido de %1$s até %2$s</string>
+    <string name="valid_origin_destination_via">Válido de %1$s até %2$s através de %3$s</string>
+    <string name="subscription_cost">Custo</string>
+    <string name="unknown_format">Desconhecido (%s)</string>
+    <string name="unknown">Desconhecido</string>
+    <string name="keys_required">Chaves de criptografia são necessárias para ler este cartão.</string>
+    <string name="keys_loaded">As chaves de criptografia deste cartão foram carregadas.</string>
+    <string name="load_keys">Carregar Chaves</string>
+    <string name="card_keys_not_supported">Metrodroid não suporta chaves para este tipo de cartão.</string>
+    <string name="add_key">Adicionar Chave</string>
+    <string name="error">Erro</string>
+    <string name="keys">Chaves</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_key_confirm_title">Excluir realmente a chave\?</string>
+    <string name="rejected">Rejeitado</string>
+    <string name="cant_delete_with_obfuscation">A exclusão de chaves está indisponível no momento</string>
+    <string name="cant_delete_with_obfuscation_message">Por motivos de segurança, não é possível excluir as chaves enquanto a ofuscação do número do cartão está ativada. Desative-a se desejar excluir as chaves.</string>
+    <string name="add_key_directions">Salve um dump binário de suas chaves como um arquivo de extensão .farebotkeys, envie-o por email como anexo e abra-o neste dispositivo.</string>
+    <string name="no_keys">Sem chaves.</string>
+    <string name="nfc_unavailable">NFC indisponível</string>
+    <string name="general">Geral</string>
+    <string name="launch_from_background">Iniciar a partir do plano de fundo</string>
+    <string name="last_transaction">Última transação</string>
+    <string name="date">Data</string>
+    <string name="time">Tempo</string>
+    <string name="vehicle_type">Tipo de Veículo</string>
+    <string name="transaction_type">Tipo da transação</string>
+    <string name="card_epoch">Época do cartão</string>
+    <string name="card_not_supported_on_device">Este cartão não é suportado pelo seu dispositivo.</string>
+    <string name="need_stations">Alguns nomes de estações são desconhecidos.</string>
+    <string name="need_stations_submit">Reportar</string>
+    <string name="card_preview_reader">Versão beta do leitor de cartão.</string>
+    <string name="visit_website">Visite o site</string>
+    <string name="title_activity_about">Sobre</string>
+    <string name="card_format">Formato do cartão</string>
+    <string name="select_file">Selecione o arquivo</string>
+    <string name="copied_to_clipboard">Copiado para a área de transferência</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip salvo no armazenamento USB.</string>
+    <string name="saved_xml_custom">XML salvo no armazenamento USB.</string>
+    <string name="file_exported">Arquivo exportado.</string>
+    <string name="about_card_format">Sobre este formato de cartão</string>
+    <string name="online_services">Serviços online</string>
+    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="auth_retries">Tentativas de autenticação</string>
+    <string name="auth_retries_summary">Número de vezes para tentar autenticação para cada setor</string>
+    <string name="requires_android_17">Requer o Android 4.2 ou posterior.</string>
+    <string name="requires_android_21">Requer Android 5.0 ou posterior.</string>
+    <string name="pref_show_hidden_cards">Mostrar cartões ocultos</string>
+    <string name="obfuscation_title">Ofuscação</string>
+    <string name="obfuscation_card_numbers">Ocultar números do cartão</string>
+    <string name="obfuscation_card_numbers_desc">Não mostrar os números dos cartões em nenhum lugar</string>
+    <string name="obfuscation_balance">Ofuscar saldo</string>
+    <string name="obfuscation_balance_desc">Alterar o saldo mostrando uma quantia aleatória</string>
+    <string name="obfuscation_dates">Ofuscar datas</string>
+    <string name="obfuscation_dates_desc">Mostrar viagem, assinatura, validade e datas de verificação como diferente, dias aleatórios</string>
+    <string name="obfuscation_times">Ofuscar tempos</string>
+    <string name="obfuscation_times_desc">Randomizar e reduzir a resolução das datas e horas em viagens, assinaturas e verificações</string>
+    <string name="obfuscation_fares">Ofuscar tarifas</string>
+    <string name="obfuscation_fares_desc">Alterar tarifas mostrando uma quantia aleatória</string>
+    <string name="accessibility">Acessibilidade</string>
+    <string name="speak_balance">Falar saldo em voz alta</string>
+    <string name="speak_balance_summary">Quando você escanear um cartão, o saldo será lido automaticamente em voz alta. Isso funciona mesmo quando um leitor de tela não está em execução.</string>
+    <string name="localise_places">Adicione dicas de pronuncia para nomes de lugares</string>
+    <string name="localise_places_desc">Adicione dicas de pronuncia (LocaleSpan) para nomes de lugares , como nomes de estação, parada, linhas e rotas. Isso altera a pronúncia usada pelos leitores de tela e outros softwares de acessibilidade.</string>
+    <string name="localise_places_longdesc_button">Sobre pronuncias…</string>
+    <string name="localise_places_longdesc_title">Sobre pronuncias</string>
+    <string name="unsupported_tag">Mídia de cartão NFC não suportada</string>
+    <string name="saving_card">Salvando cartão…</string>
+    <string name="mfc_reading">Lendo cartão MIFARE Classic…</string>
+    <string name="mfc_have_key">Tentando chave fornecida pelo usuário para o setor %d…</string>
+    <string name="mfc_other_key">Tentando chave alternativa fornecida pelo usuário para o setor %d…</string>
+    <string name="mfc_default_key">Tentando chaves conhecidas para o setor %d…</string>
+    <string name="mfc_reading_blocks">Lendo setor %d…</string>
+    <string name="mfc_rwid">Leitura: %s, gravação: %s, incremento: %s, decremento: %s</string>
+    <string name="mfc_key_never">nunca</string>
+    <string name="mfc_key_a">chave A</string>
+    <string name="mfc_key_b">chave B</string>
+    <string name="mfc_key_ab">chave A|B</string>
+    <string name="iso14a_detect">Detectando o tipo de cartão ISO 14443…</string>
+    <string name="mfd_reading">Lendo cartão MIFARE DESFire…</string>
+    <string name="card_reading_type">Lendo <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+    <string name="mfu_detect">Detectando o tipo de cartão MIFARE Ultralight…</string>
+    <string name="mfu_reading">Lendo cartão MIFARE Ultralight…</string>
+    <string name="vicinity_reading">Lendo o cartão Vicinity…</string>
+    <string name="mfd_unlocking">Desbloqueando o cartão <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
+    <string name="iso7816_probing">Examinando cartão ISO/IEC 7816…</string>
+    <string name="calypso_reading">Lendo cartão Calypso…</string>
+    <string name="card_partial_read_title">Cartão parcialmente lido!</string>
+    <string name="show_partial_data">Mostrar dados incompletos</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+    </plurals>
+    <string name="hidden_card_number">Número do cartão oculto</string>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Dados da chave oculta (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="other">Dados da chave oculta (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
+    </plurals>
+    <string name="key_data">Dados da chave</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> bandeira de ofuscação</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> bandeiras de ofuscação</item>
+    </plurals>
+    <string name="raw_level_none">Nenhum (desativado)</string>
+    <string name="raw_level_unknown_only">Apenas campos desconhecidos</string>
+    <string name="raw_level_all">Todos campos</string>
+    <string name="pref_theme">Tema</string>
+    <string name="pref_theme_desc">Escolha a aparência</string>
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains">123456</string>
+    <string name="pref_show_local_and_english_title">Mostrar nomes das estações locais e inglesas</string>
+    <plurals name="cards_imported">
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> cartão importado.</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> cartões improtados.</item>
+    </plurals>
+    <plurals name="block_count">
+        <item quantity="one">%d bloco</item>
+        <item quantity="other">%d blocos</item>
+    </plurals>
+    <plurals name="record_count">
+        <item quantity="one">%d registro</item>
+        <item quantity="other">%d registros</item>
+    </plurals>
+    <plurals name="felica_service_count">
+        <item quantity="one">%d serviço</item>
+        <item quantity="other">%d serviços</item>
+    </plurals>
+    <plurals name="passengers">
+        <item quantity="one">passageiro</item>
+        <item quantity="other">passageiros</item>
+    </plurals>
+    <string name="manufacture_week">Semana de fabricação</string>
+    <string name="manufacture_year">Ano de fabricação</string>
+    <plurals name="bytes">
+        <item quantity="one">%d byte</item>
+        <item quantity="other">%d bytes</item>
+    </plurals>
+    <string name="desfire_standard_file">Arquivo padrão</string>
+    <string name="desfire_backup_file">Arquivo de backup</string>
+    <string name="desfire_value_file">Arquivo de valor</string>
+    <string name="desfire_linear_record">Registro linear</string>
+    <string name="desfire_cyclic_record">Registro cíclico</string>
+    <string name="desfire_unknown_file">Tipo de arquivo desconhecido</string>
+    <string name="desfire_challenge">Desafio</string>
+    <string name="desfire_response">Resposta</string>
+    <string name="desfire_confirmation">Confirmação</string>
+    <string name="desfire_key_number">Chave %s</string>
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Tipo: %1$s, tamanho: %2$s byte</item>
+        <item quantity="other">Tipo: %1$s, tamanho: %2$s bytes</item>
+    </plurals>
+    <plurals name="desfire_record_format">
+        <item quantity="one">Tipo: %1$s, %2$d registro (%3$d máximo), tamanho do registro: %4$d</item>
+        <item quantity="other">Tipo: %1$s, %2$d registros (%3$d máximo), tamanho do registro: %4$d</item>
+    </plurals>
+    <plurals name="trips_remaining">
+        <item quantity="one">%d viagem restante</item>
+        <item quantity="other">%d viagens restantes</item>
+    </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d viagem restante de %d</item>
+        <item quantity="other">%d viagens restantes de %d</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="one">passeio único</item>
+        <item quantity="other">%d passeios</item>
+    </plurals>
+    <plurals name="cards_deduped">
+        <item quantity="one">%d cartão deduplicado</item>
+        <item quantity="other">%d cartões deduplicados</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Valido por %d dia</item>
+        <item quantity="other">Valido por %d dias</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="one">Valido por %d mês</item>
+        <item quantity="other">Valido por %d meses</item>
+    </plurals>
+    <string name="desfire_value_format">Tipo: %1$s, distancia: %2$s - %3$s, crédito limitado: %4$s (%5$s)</string>
+    <string name="machine_id_format">ID da Máquina %s</string>
+    <string name="machine_id">ID da Máquina</string>
+    <string name="delete_key_confirm_message">O arquivo da chave <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (contendo <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) será deletado permanentemente.</string>
+    <string name="checksum">Soma de verificação</string>
+    <string name="hardware_information">Informações do hardware</string>
+    <string name="desfire_vendor_id">ID do fornecedor</string>
+    <string name="desfire_type">Tipo</string>
+    <string name="desfire_subtype">Subtipo</string>
+    <string name="desfire_major_version">Versão principal</string>
+    <string name="desfire_minor_version">Versão anterior</string>
+    <string name="desfire_storage_size">Tamanho de armazenamento</string>
+    <string name="desfire_protocol">Protocolo</string>
+    <string name="desfire_general_info">Informação geral</string>
+    <string name="desfire_batch_number">Número do lote</string>
+    <string name="enabled">On</string>
+    <string name="disabled">Off</string>
+    <string name="cepas_version">Versão do CEPAS</string>
+    <string name="cepas_autoload_amount">Autocarregar quantia</string>
+    <string name="cepas_last_txn_info">Informação da última transação</string>
+    <string name="cepas_debit_options">Opções de débito</string>
+    <string name="felica_idm">ID de fabricação (IDm)</string>
+    <string name="felica_manufacturer_code">Código do fabricante</string>
+    <string name="felica_card_identification_number">Número de identificação do cartão</string>
+    <string name="felica_pmm">Parâmetro de fabricação (PMm)</string>
+    <string name="felica_rom_type">Tipo ROM</string>
+    <string name="felica_ic_type">Tipo IC</string>
+    <string name="felica_maximum_response_time">Tempo máximo de respostas</string>
+    <string name="location_taipei">Taipei</string>
+    <string name="software_information">Informação de software</string>
+    <string name="clipboard_error">Não foi possível acessar a área de transferência</string>
+    <string name="convert_timezones">Converter fusos horários</string>
+    <string name="convert_timezones_summary_on">Os tempos da viagem serão convertidos para o seu fuso horário atual.</string>
+    <string name="compass_product_type">Tipo de produto</string>
+    <string name="ticket_type">Tipo de bilhete</string>
+    <string name="compass_ticket_type_regular">Normal</string>
+    <string name="compass_note">Bilhetes de apenas um passeio</string>
+    <string name="expiry_date">Data de validade</string>
+    <string name="compass_sub_daypass">Passe diário (DayPass)</string>
+    <string name="compass_sub_one_zone">Uma Zona</string>
+    <string name="compass_sub_two_zone">Duas Zonas</string>
+    <string name="compass_sub_three_zone">Três Zonas</string>
+    <string name="compass_sub_four_zone_wce_one_way">Quatro Zonas WCE (uma direção)</string>
+    <string name="compass_sub_free_sea_island">Bilhete grátis para Sea Island</string>
+    <string name="compass_sub_exit">Sair</string>
+    <string name="compass_sub_one_zone_with_yvr">Uma Zona com YVR (aeroporto)</string>
+    <string name="compass_sub_two_zone_with_yvr">Duas Zonas com YVR (aeroporto)</string>
+    <string name="compass_sub_three_zone_with_yvr">Três Zonas com YVR (aeroporto)</string>
+    <string name="compass_sub_daypass_with_yvr">Passe diário com YVR (aeroporto)</string>
+    <string name="gender">Gênero</string>
+    <string name="gender_female">Feminino</string>
+    <string name="gender_male">Masculino</string>
+    <string name="adelaide_ticket_type_regular">Normal</string>
+    <string name="adelaide_ticket_type_seniors">Idosos</string>
+    <string name="adelaide_ticket_type_student">Estudante</string>
+    <string name="passenger_class">Classe</string>
+    <string name="without_receipt">Sem recibo</string>
+    <string name="with_receipt">Com recibo</string>
+    <string name="seller_agency">Agência vendedora</string>
+    <string name="remaining_trip_count">Viagens restantes</string>
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d viagem restante em %2$s</item>
+        <item quantity="other">%1$d viagens restantes em %2$s</item>
+    </plurals>
+    <plurals name="remaining_day_count">
+        <item quantity="one">Sem dias restantes</item>
+        <item quantity="other">%d dias restantes</item>
+    </plurals>
+    <plurals name="travel_zones">
+        <item quantity="one">%d zona de viagem</item>
+        <item quantity="other">%d zonas de viagem</item>
+    </plurals>
+    <string name="en1545_network_id">ID de rede</string>
+    <string name="card_issuer">Emissor</string>
+    <string name="purchase_date">Data da compra</string>
+    <string name="single_trips">Viagens individuais</string>
+    <string name="monthly_subscription">Assinatura mensal</string>
+    <string name="weekly_subscription">Assinatura semanal</string>
+    <string name="en1545_card_expiry_date_profile">Data de validade do perfil</string>
+    <string name="daily_subscription">Assinatura diária</string>
+    <string name="subscription_inactive">Inativa</string>
+    <string name="subscription_unused">Não utilizada</string>
+    <string name="subscription_started">Iniciada</string>
+    <string name="subscription_used">Usada</string>
+    <string name="subscription_expired">Expirado</string>
+    <string name="last_used_on">Último uso</string>
+    <string name="payment_method">Método de pagamento</string>
+    <string name="payment_method_cash">Dinheiro</string>
+    <string name="payment_method_credit_card">Cartão de crédito</string>
+    <string name="payment_method_debit_card">Cartão de débito</string>
+    <string name="payment_method_transit_card">Cartão de trânsito</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <string name="payment_method_free">Grátis</string>
+    <string name="card_holders_name">Nome do titular</string>
+    <string name="card_holders_id">ID do titular do cartão</string>
+    <string name="card_type">Tipo do cartão</string>
+    <string name="card_type_anonymous">Anonimo</string>
+    <string name="card_type_declarative">Declarativo</string>
+    <string name="card_type_personal">Pessoal</string>
+    <string name="card_type_provider_specific">Específico do fornecedor</string>
+    <string name="postal_code">Código postal</string>
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <string name="ravkav_generic_trips">Viagens</string>
+    <string name="card_note_russia">Cartões emitidos por bancos não são suportados.</string>
+    <string name="card_name_troika">Troika</string>
+    <string name="card_name_podorozhnik">Podorozhnik</string>
+    <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
+    <string name="troika_fare_single">Passeio único</string>
+    <string name="troika_fare_90mins">90 minutos</string>
+    <string name="felica_system_common">Área Comum (FeliCa Networks)</string>
+    <string name="umarsh_school">Estudante</string>
+</resources>

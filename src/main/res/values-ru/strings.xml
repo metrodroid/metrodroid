@@ -1017,7 +1017,7 @@
         <item quantity="many">зон %s</item>
     </plurals>
     <string name="hsl_zone_station">Зона %s</string>
-    <string name="hsl_arvo_format">Е-билет для</string>
+    <string name="hsl_arvo_format">Е-билет для %s</string>
     <string name="hsl_kausi_format">Проездной для %s</string>
     <string name="hsl_language">Язык</string>
     <string name="hsl_finnish">Финский</string>

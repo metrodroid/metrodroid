@@ -1109,4 +1109,21 @@
     <string name="pisa_abb_mens_pers_pisa_sbe">Pisa-maandkaart</string>
     <string name="pisa_carnet_10_bgl_70_min_pisa">70-minutenkaart (10x)</string>
     <string name="pisa_abb_trim_pers_pisa">Trimestrial-abonnement Pisa</string>
+    <string name="ios_version">iOS-versie: <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    </string>
+    <string name="ios_main_screen_back">Overzicht</string>
+    <string name="ios_scan_card">Scan kaart</string>
+    <string name="ios_nfc_usage">App die het saldo van je OV-kaarten toont</string>
+    <string name="ios_menu_button">Meer</string>
+    <string name="ios_menu_title">Menu</string>
+    <string name="ios_menu_cancel">Annuleer</string>
+    <string name="ios_error_ok">Oké</string>
+    <string name="ios_nfcreader_connection_error">Verbindingsfout: %s</string>
+    <string name="ios_nfcreader_connecting">Bezig met verbinden met %s</string>
+    <string name="ios_nfcreader_reading">Bezig met uitlezen van %s</string>
+    <string name="ios_nfcreader_tap">Scan je kaart</string>
+    <string name="ios_nfcreader_exception">Uitzondering: %s</string>
+    <string name="mifare_plus_not_supported">Mifare Plus wordt niet ondersteund</string>
+    <string name="ios_unknown_mifare">Onbekende Mifare: %s</string>
+    <string name="ios_unknown_tag">Onbekend label: %s</string>
 </resources>
