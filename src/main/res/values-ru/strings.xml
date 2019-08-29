@@ -632,8 +632,8 @@
     <string name="siticard_edinyj_16_trips">Единый - 16 поездок</string>
     <string name="siticard_edinyj_30_trips">Единый - 30 поездок</string>
     <string name="siticard_edinyj_3_days">Единый - 3 дня</string>
-    <string name="card_name_crimea_trolleybus">Крымский троллейбус</string>
-    <string name="card_name_crimea_parus_school">Карта школьника Парус</string>
+    <string name="card_name_crimea_trolleybus">Карта крымского троллейбуса</string>
+    <string name="card_name_crimea_parus_school">Карта школьника «Парус»</string>
     <string name="card_name_yoshkar_ola">Транспортная карта Йошкар-Олы</string>
     <string name="umarsh_school">Школьник</string>
     <string name="umarsh_student">Студент</string>
@@ -973,8 +973,10 @@
     <string name="iso7816_sfi">Короткий идентификатор файла (SFI) %s</string>
     <string name="iso7816_raw">Необработанные данные</string>
     <string name="iso7816_tlv">Теги TLV</string>
-    <string name="touchngo_cardno">Альтернативный номер (CardNo)</string>
-    <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid. Идентификатор тега:%1$s Поддерживаемые технологии:%2$s</string>
+    <string name="touchngo_cardno">Альтернативный номер («CardNo»)</string>
+    <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid. 
+\nИдентификатор тега:%1$s
+\nПоддерживаемые технологии:%2$s</string>
     <string name="unknown_ultralight_message">Неизвестный тег Mifare Ultralight</string>
     <string name="nfc_connection_failed">NFC подключение к %s не удалось</string>
     <string name="unknown_date_title">Неизвестная дата</string>
@@ -1068,7 +1070,7 @@
     <string name="lisboaviva_sub_passe_mts">Проездной MTS</string>
     <string name="lisboaviva_sub_vermelho_a1">Красный A1</string>
     <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Линия метро CP - Рио-де-Муро/Меленьяс</string>
-    <string name="navigo_sector_station_id">Сектор %1$s, ID станции %2$d</string>
+    <string name="navigo_sector_station_id">ID сектора %1$s, ID станции %2$d</string>
     <string name="navigo_sector_id_station_id">ID сектора %1$d, ID станции %2$d</string>
     <string name="navigo_forfait_jour">Дневной проездной</string>
     <string name="navigo_forfait">Проездной</string>
@@ -1092,4 +1094,15 @@
     <string name="pisa_abb_ann_pers_pisa_sbe">Годовой поздновато для Пизы</string>
     <string name="pisa_abb_mens_pers_pisa_sbe">Месячный проездной для Пизы</string>
     <string name="lisboaviva_sub_ass_pal_lis">Пальмела - Лиссабон</string>
+    <string name="ios_main_screen_back">Главный</string>
+    <string name="ios_scan_card">Прочитать карту</string>
+    <string name="ios_nfc_usage">Приложение для отображения баланса на транспортных картах</string>
+    <string name="ios_menu_button">Более</string>
+    <string name="ios_menu_title">Меню</string>
+    <string name="ios_menu_cancel">Отмена</string>
+    <string name="ios_nfcreader_connection_error">Ошибка подключения: %s</string>
+    <string name="ios_nfcreader_connecting">Подключение к %s</string>
+    <string name="ios_nfcreader_reading">Читаем карту %s</string>
+    <string name="ios_nfcreader_tap">Приложите карту</string>
+    <string name="mifare_plus_not_supported">Mifare Plus не поддерживается</string>
 </resources>
