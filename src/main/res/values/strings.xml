@@ -1020,9 +1020,15 @@
     <string name="felica_terminal_deposit_quick_charge">Quick refill machine</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail ticket machine</string>
     <string name="felica_terminal_tvm_etc">Ticket machine, etc.</string>
-    <!-- Translators: Japanese ビューアルッテ（VIEW ALTTE). It's a kind of
-         ATM. -->
-    <string name="felica_terminal_view_altte">VIEW ALTTE</string>
+    <!--
+        Translators:
+        Japanese: ビューアルッテ（VIEW ALTTE)
+        https://matsunosuke.jp/wp-content/uploads/2016/06/91ddfc045bc601340d53a8dc6cd5b1e4.jpg
+        https://www.jreast.co.jp/card/guide/atm/ (Japanese)
+        "VIEW" is JR East's credit card, which also operates as a Suica (transit) card.
+        "VIEW ALTTE" is the name of VIEW's ATMs (cash machines).
+    -->
+    <string name="felica_terminal_view_altte" translatable="false">VIEW ALTTE</string>
     <!--
         Translators:
         Japanese: 改札機
