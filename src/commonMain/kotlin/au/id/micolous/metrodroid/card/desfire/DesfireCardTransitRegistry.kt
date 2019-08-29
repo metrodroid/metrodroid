@@ -32,6 +32,7 @@ object DesfireCardTransitRegistry {
             TampereTransitData.FACTORY,
             MagnaCartaTransitData.FACTORY,
             IntercardTransitData.FACTORY,
+            TPFCardTransitData.Factory,
             BlankDesfireTransitData.FACTORY,
             UnauthorizedDesfireTransitData.FACTORY)
 }
