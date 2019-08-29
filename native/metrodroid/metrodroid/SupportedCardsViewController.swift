@@ -27,7 +27,7 @@ class SupportedCardsViewController: UICollectionViewController {
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     class func isSupported(cardInfo: CardInfo) -> Bool {
         // Classic and vicinity are not supported currently
-        return cardInfo.iOSSupported as? Bool ?? (cardInfo.cardType == CardType.iso7816 || cardInfo.cardType == CardType.mifaredesfire || cardInfo.cardType == CardType.felica || cardInfo.cardType == CardType.mifareultralight)
+        return cardInfo.iOSSupported as? Bool ?? (cardInfo.cardType == CardType.iso7816 || cardInfo.cardType == CardType.mifaredesfire || cardInfo.cardType == CardType.felica || cardInfo.cardType == CardType.mifareultralight || cardInfo.cardType == CardType.vicinity)
     }
     var items = CardInfoRegistry.init().allCardsAlphabetical.filter {
         isSupported(cardInfo: $0) }
