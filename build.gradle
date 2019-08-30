@@ -264,6 +264,7 @@ def commonLanguageList = [
                 'kab',
                 'nb-rNO',
                 'nl',
+                'pt-rBR',
                 'ru',
                 'tr',
                 'zh-rCN'
