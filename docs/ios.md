@@ -94,12 +94,6 @@ to rely on your screen reader being smart enough.
 
 * XML importing is not supported
 
-* English regions are omitted:
-  
-  1. The places in regional places are not shortened. E.g. Australian
-     localization shows "Sydney, Australia" rather than "Sydney" as on Android.
-  2. "Cheque" is always spelled as "cheque" rather than "check" in some reqions
-
 * Locales without real translations are omitted: Irish, Maori, Malay and
   Traditional Chinese.
   

@@ -252,6 +252,7 @@ def commonLanguageList = [
                 // Languages we support
                 // Also add the language in XCode
                 'en',
+                'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
                 'de',
                 'el',
                 'es',
@@ -272,8 +273,6 @@ def commonLanguageList = [
 def iOSLanguageList = commonLanguageList
 
 def androidLanguageList = iOSLanguageList + [
-                // Regions for English. We currently omit those on iOS
-                'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
                 // We omit languages without real translations on iOS
                 'ga',
                 'mi',
@@ -295,6 +294,14 @@ def mapAndroidLanguageToIOS(String alang) {
     return alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang-$region" }
 }
 
+def langSources(String alang) {
+    def baseLang = alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang" }
+    if (baseLang == "en")
+        return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml"),
+                new File(projectDir, "src/main/res/values-" + baseLang + "/strings.xml")]
+    return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml")]
+}
+
 task iOSLanguages {
     inputs.file stringsXmlFile
     outputs.dir generatedLanguagesDir
@@ -302,7 +309,7 @@ task iOSLanguages {
         for (lang in iOSLanguageList) {
             LocalizeGenerator.INSTANCE.generateAppleStringsFile(
               new File(generatedLanguagesDir, mapAndroidLanguageToIOS(lang) + '.lproj/Metrolib.strings'),
-              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              langSources(lang),
               lang
             )
         }
@@ -314,17 +321,17 @@ task iOSMappedLanguages {
         for (lang in iOSLanguageList) {
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
               new File(projectDir, 'native/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/Main.strings'),
-              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              langSources(lang),
               new File(projectDir, 'native/metrodroid/metrodroid/MainMap.txt')
             )
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
               new File(projectDir, 'native/metrodroid/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/InfoPlist.strings'),
-              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              langSources(lang),
               new File(projectDir, 'native/metrodroid/metrodroid/InfoPlistMap.txt')
             )
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
               new File(projectDir, 'native/metrodroid/Settings.bundle/' + mapAndroidLanguageToIOS(lang) + '.lproj/Root.strings'),
-              new File(projectDir, "src/main/res/values-" + lang + "/strings.xml"),
+              langSources(lang),
               new File(projectDir, 'native/metrodroid/SettingsMap.txt')
             )
         }
