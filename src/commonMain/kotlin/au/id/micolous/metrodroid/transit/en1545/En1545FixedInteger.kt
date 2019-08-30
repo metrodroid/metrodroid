@@ -103,8 +103,9 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
             return if (sec == 0) null else getEpoch(tz).daySecond(sec / 86400, sec % 86400)
         }
 
-        fun parseDateBCD(date: Int): Timestamp {
-            return Daystamp(NumberUtils.convertBCDtoInteger(date shr 16),
+        fun parseDateBCD(date: Int): Timestamp? {
+            return if (date == 0) null else
+                Daystamp(NumberUtils.convertBCDtoInteger(date shr 16),
                     NumberUtils.convertBCDtoInteger((date shr 8) and 0xff) - 1,
                     NumberUtils.convertBCDtoInteger(date and 0xff))
         }
