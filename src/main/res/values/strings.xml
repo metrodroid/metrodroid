@@ -2165,7 +2165,7 @@
     <!-- Translators: "Parus" is the name of the card and it's issued
          to school children in Crimea. There is also Parus for students
          but we don't have samples of it. -->
-    <string name="card_name_crimea_parus_school">\"Parus\" school card</string>
+    <string name="card_name_crimea_parus_school">Parus school card</string>
     <string name="card_name_yoshkar_ola">Yoshkar-Ola transport card</string>
     <string name="card_name_umarsh">Umarsh</string>
     <!-- Translators: card used by young people going to mandatory school. -->
