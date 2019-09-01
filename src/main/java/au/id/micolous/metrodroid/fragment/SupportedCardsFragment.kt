@@ -96,6 +96,9 @@ class SupportedCardsFragment : ExpandableListFragment() {
                         parent, false)
             val textView1 = convertView!!.findViewById<TextView>(android.R.id.text1)
             textView1.text = cards[group].first.translatedName
+            val textView2 = convertView!!.findViewById<TextView>(android.R.id.text2)
+            val cnt = cards[group].second.size
+            textView2.text = Localizer.localizePlural(R.plurals.supported_cards, cnt, cnt)
             return convertView
         }
 

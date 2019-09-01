@@ -2393,4 +2393,9 @@
     <string name="pisa_carnet_10_bgl_70_min_pisa">Pack of 10 tickets for 70 minutes</string>
     <!-- Translators: Italian "ABB. TRIM. PERS. PISA" -->
     <string name="pisa_abb_trim_pers_pisa">Trimestrial subscription Pisa</string>
+
+    <plurals name="supported_cards">
+        <item quantity="one">%d card</item>
+        <item quantity="other">%d cards</item>
+    </plurals>
 </resources>

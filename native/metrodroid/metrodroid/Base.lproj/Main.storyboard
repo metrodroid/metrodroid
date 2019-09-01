@@ -121,7 +121,6 @@
             <objects>
                 <navigationController id="7qP-5K-rcT" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e1B-Yx-bvk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -286,7 +285,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pY4-Xb-fvQ">
-                                    <rect key="frame" x="13" y="13" width="42" height="24"/>
+                                    <rect key="frame" x="13" y="15" width="42" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -294,19 +293,32 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="expanded_header" translatesAutoresizingMaskIntoConstraints="NO" id="gGj-gD-5UP">
                                     <rect key="frame" x="334" y="5" width="36" height="40"/>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 cards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mD-Hw-d6O">
+                                    <rect key="frame" x="264" y="15" width="65" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="opaqueSeparatorColor"/>
                             <constraints>
-                                <constraint firstItem="pY4-Xb-fvQ" firstAttribute="top" secondItem="AzM-my-afI" secondAttribute="topMargin" constant="5" id="3f5-c6-Xts"/>
+                                <constraint firstItem="pY4-Xb-fvQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AzM-my-afI" secondAttribute="topMargin" constant="5" id="3f5-c6-Xts"/>
+                                <constraint firstItem="9mD-Hw-d6O" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AzM-my-afI" secondAttribute="topMargin" constant="5" id="9hB-x2-o4W"/>
+                                <constraint firstItem="9mD-Hw-d6O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pY4-Xb-fvQ" secondAttribute="trailing" constant="5" id="DHY-Zg-qIU"/>
                                 <constraint firstItem="pY4-Xb-fvQ" firstAttribute="leading" secondItem="AzM-my-afI" secondAttribute="leadingMargin" constant="5" id="QGH-Kf-rTB"/>
-                                <constraint firstAttribute="bottomMargin" secondItem="pY4-Xb-fvQ" secondAttribute="bottom" constant="5" id="VIc-h8-mx0"/>
+                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="pY4-Xb-fvQ" secondAttribute="bottom" constant="5" id="VIc-h8-mx0"/>
+                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="9mD-Hw-d6O" secondAttribute="bottom" constant="5" id="aCi-fF-IAq"/>
                                 <constraint firstItem="gGj-gD-5UP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pY4-Xb-fvQ" secondAttribute="trailing" constant="5" id="bZS-9N-aYp"/>
+                                <constraint firstItem="9mD-Hw-d6O" firstAttribute="centerY" secondItem="AzM-my-afI" secondAttribute="centerY" id="cr4-Ao-G2I"/>
                                 <constraint firstAttribute="bottom" secondItem="gGj-gD-5UP" secondAttribute="bottom" constant="5" id="hla-Eq-aHg"/>
+                                <constraint firstItem="pY4-Xb-fvQ" firstAttribute="centerY" secondItem="AzM-my-afI" secondAttribute="centerY" id="juZ-qt-ult"/>
                                 <constraint firstItem="gGj-gD-5UP" firstAttribute="top" secondItem="AzM-my-afI" secondAttribute="top" constant="5" id="q12-DO-PBq"/>
                                 <constraint firstAttribute="trailing" secondItem="gGj-gD-5UP" secondAttribute="trailing" constant="5" id="rWy-2A-A1i"/>
+                                <constraint firstItem="gGj-gD-5UP" firstAttribute="leading" secondItem="9mD-Hw-d6O" secondAttribute="trailing" constant="5" id="xUM-t4-BiY"/>
                             </constraints>
                             <connections>
                                 <outlet property="arrow" destination="gGj-gD-5UP" id="3va-hE-Xjq"/>
+                                <outlet property="cardCount" destination="9mD-Hw-d6O" id="5DA-cs-NX1"/>
                                 <outlet property="label" destination="pY4-Xb-fvQ" id="r9x-sR-fYq"/>
                             </connections>
                         </collectionReusableView>
@@ -760,28 +772,28 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGO-LJ-atn">
-                                            <rect key="frame" x="323" y="3" width="47" height="23"/>
+                                            <rect key="frame" x="323" y="3" width="47" height="47"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 -&gt; 12:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxy-ew-lL2">
-                                            <rect key="frame" x="257" y="34" width="113" height="20.5"/>
+                                            <rect key="frame" x="257" y="58" width="113" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" image="ic_transfer_within_a_station" translatesAutoresizingMaskIntoConstraints="NO" id="6gm-id-dvK">
-                                            <rect key="frame" x="294" y="5" width="24" height="24"/>
+                                            <rect key="frame" x="270" y="5" width="48" height="48"/>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" image="ic_error" translatesAutoresizingMaskIntoConstraints="NO" id="uqT-32-gUr">
-                                            <rect key="frame" x="267" y="5" width="24" height="24"/>
+                                            <rect key="frame" x="219" y="5" width="48" height="48"/>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_group" translatesAutoresizingMaskIntoConstraints="NO" id="ebY-M0-yAk">
-                                            <rect key="frame" x="346" y="59.5" width="24" height="24"/>
+                                            <rect key="frame" x="322" y="83.5" width="48" height="48"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1P-jK-7i9">
-                                            <rect key="frame" x="332" y="61" width="11" height="21"/>
+                                            <rect key="frame" x="308" y="97" width="11" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

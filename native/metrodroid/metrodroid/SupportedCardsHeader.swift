@@ -20,10 +20,12 @@
 
 import Foundation
 import UIKit
+import metrolib
 
 class SupportedCardsHeader : UICollectionReusableView {
     @IBOutlet private weak var label: UILabel!
     @IBOutlet private weak var arrow: UIImageView!
+    @IBOutlet weak var cardCount: UILabel!
     private var delegate: SupportedCardsViewController? = nil
     private var section: Int = 0
     
@@ -50,9 +52,11 @@ class SupportedCardsHeader : UICollectionReusableView {
         setExpansion(expanded: delegate?.toggleSection(sectionNumber: section) ?? false)
     }
     
-    func setState(title: String, delegate: SupportedCardsViewController, section: Int,
+    func setState(title: String, count: Int, delegate: SupportedCardsViewController, section: Int,
                   expanded: Bool) {
         self.label.text = title
+        self.cardCount.text = Utils.localizePlural(
+            RKt.R.plurals.supported_cards, count, count)
         self.delegate = delegate
         self.section = section
         setExpansion(expanded: expanded)

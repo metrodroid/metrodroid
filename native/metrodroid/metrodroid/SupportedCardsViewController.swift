@@ -85,8 +85,12 @@ class SupportedCardsViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SupportedCardsHeader", for: indexPath) as? SupportedCardsHeader {
-            sectionHeader.setState(title: self.items[indexPath.section].region.translatedName,
-                                   delegate: self, section: indexPath.section, expanded: items[indexPath.section].expanded)
+            sectionHeader.setState(
+                title: self.items[indexPath.section].region.translatedName,
+                count:self.items[indexPath.section].cards.count,
+                delegate: self,
+                section: indexPath.section,
+                expanded: items[indexPath.section].expanded)
             return sectionHeader
         }
         return UICollectionReusableView()

@@ -13,19 +13,32 @@
      limitations under the License.
 -->
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@android:id/text1"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:textAlignment="viewStart"
-          android:gravity="center_vertical"
-          android:textAppearance="?android:attr/textAppearanceListItem"
-          android:paddingStart="35dp"
-          android:paddingEnd="0dp"
-          android:paddingLeft="35dp"
-          android:paddingRight="0dp"
-          android:minHeight="?android:attr/listPreferredItemHeight"
-          />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:minHeight="?android:attr/listPreferredItemHeight"
+              android:paddingStart="35dp"
+              android:paddingEnd="0dp"
+              android:paddingLeft="35dp"
+              android:paddingRight="0dp">
+
+    <TextView android:id="@android:id/text1"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:textAlignment="viewStart"
+              android:gravity="start"
+              android:textAppearance="?android:attr/textAppearanceListItem" />
+
+    <TextView android:id="@android:id/text2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="16sp"
+              android:textAppearance="?android:attr/textAppearanceListItem"
+              android:textAlignment="viewStart"
+              android:gravity="start"
+              android:textColor="?attr/CardIdTextColor" />
+</LinearLayout>
