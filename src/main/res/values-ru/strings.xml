@@ -838,7 +838,6 @@
     <string name="opal_action_tap_on_rejected">Неудачная валидация на входе</string>
     <string name="suica_bus_area_line_stop">Автобус: Зона %1$s, маршрут %2$s, остановка %3$s</string>
     <string name="ovc_autocharge_amount">Сумма автопополнения</string>
-    <string name="credit_information">Информация о автопополнении</string>
     <string name="troika_layout">Вид структуры Тройки</string>
     <string name="nfc_options_desc">Резервный парсер для MIFARE Classic, настройки интефейса NFC…</string>
     <string name="kmt_agency">Kereta Commuter Indonesia</string>

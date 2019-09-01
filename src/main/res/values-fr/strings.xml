@@ -500,7 +500,6 @@
     <string name="ovc_autocharge_amount">Frais de recharge automatique</string>
     <string name="ovc_autocharge">Recharge automatique</string>
     <string name="date_of_birth">Date de naissance</string>
-    <string name="credit_information">Informations bancaires</string>
     <string name="software_information">Informations sur le logiciel</string>
     <string name="clipboard_error">Impossible d’accéder au presse-papiers</string>
     <string name="convert_timezones">Convertir des fuseaux horaires</string>

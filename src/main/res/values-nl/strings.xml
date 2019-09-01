@@ -294,7 +294,6 @@
     <string name="ovc_autocharge_amount">Automatisch opladen-bedrag</string>
     <string name="ovc_autocharge">Automatisch opladen</string>
     <string name="date_of_birth">Geboortedatum</string>
-    <string name="credit_information">Kredietinformatie</string>
     <string name="software_information">Software-informatie</string>
     <string name="clipboard_error">Geen toegang tot het klembord</string>
     <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
@@ -908,7 +907,6 @@
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC-instellingen</string>
     <string name="exported_at">Door Metrodroid geëxporteerd naar %s</string>
-    <string name="readme_filename">LEESMIJ</string>
     <string name="last_refill">Laatste keer opgeladen</string>
     <string name="ovc_banned">Geblokkeerd</string>
     <string name="ovc_yes">Ja</string>
