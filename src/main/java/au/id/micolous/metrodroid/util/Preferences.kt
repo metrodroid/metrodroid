@@ -21,9 +21,11 @@
 
 package au.id.micolous.metrodroid.util
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
+import android.telephony.TelephonyManager
 import androidx.preference.PreferenceManager
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
@@ -149,7 +151,23 @@ actual object Preferences {
 
     actual val language: String get() = Locale.getDefault().language
 
-    actual val region: String? get() = Locale.getDefault().country
+    actual val region: String? get() {
+        val tm = MetrodroidApplication.instance.getSystemService(Context.TELEPHONY_SERVICE)
+        if (tm is TelephonyManager && (
+                tm.phoneType == TelephonyManager.PHONE_TYPE_GSM ||
+                tm.phoneType == TelephonyManager.PHONE_TYPE_CDMA)) {
+            val netCountry = tm.networkCountryIso
+            if (netCountry != null && netCountry.length == 2)
+                return netCountry.toUpperCase(Locale.US)
+
+            val simCountry = tm.simCountryIso
+            if (simCountry != null && simCountry.length == 2)
+                return simCountry.toUpperCase(Locale.US)
+        }
+
+        // Fall back to using the Locale settings
+        return Locale.getDefault().country.toUpperCase(Locale.US)
+    }
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
