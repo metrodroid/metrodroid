@@ -27,17 +27,23 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.DialogFragment
 import androidx.preference.*
+import au.id.micolous.farebot.BuildConfig
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.activity.BackgroundTagActivity
 import au.id.micolous.metrodroid.activity.MainActivity
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.ui.AlertDialogPreference
 import au.id.micolous.metrodroid.ui.NumberPickerPreference
+import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.collatedBy
+import java.util.*
 
 class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
     private var mPreferenceLaunchFromBackground: CheckBoxPreference? = null
     private var mPreferenceTheme: ListPreference? = null
+    private var mPreferenceLang: ListPreference? = null
 
     private var isLaunchFromBgEnabled: Boolean
         get() {
@@ -53,6 +59,12 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
             packageManager.setComponentEnabledSetting(componentName, newState, PackageManager.DONT_KILL_APP)
         }
 
+    private fun nameLanguage(id: String): String {
+        val locale = Utils.languageToLocale(id)
+        if (id.contains('-'))
+            return "${locale.displayLanguage} (${locale.displayCountry})"
+        return locale.displayLanguage
+    }
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         setPreferencesFromResource(R.xml.prefs, s)
 
@@ -61,6 +73,12 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
         mPreferenceLaunchFromBackground?.onPreferenceChangeListener = this
         mPreferenceTheme = preferenceManager.findPreference(Preferences.PREF_THEME) as? ListPreference
         mPreferenceTheme?.onPreferenceChangeListener = this
+        mPreferenceLang = preferenceManager.findPreference(Preferences.PREF_LANG_OVERRIDE) as? ListPreference
+        mPreferenceTheme?.onPreferenceChangeListener = this
+        val translations = BuildConfig.AVAILABLE_TRANSLATIONS.filter { it !in listOf("in", "iw") }.map { Pair(it, nameLanguage(it)) }.collatedBy { it.second }
+        mPreferenceLang?.entryValues = arrayOf("") + translations.map { it.first }
+        mPreferenceLang?.entries = arrayOf(Localizer.localizeString(R.string.lang_default)) + translations.map { it.second }
+        mPreferenceLang?.setDefaultValue("")
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             for (prefKey in Preferences.PREFS_ANDROID_17) {

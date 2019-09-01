@@ -24,12 +24,21 @@ import android.os.Bundle
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.Utils
+import android.content.Context
 
 abstract class MetrodroidActivity : AppCompatActivity() {
     private var mAppliedTheme: Int = 0
+    private var mAppliedLang: String = ""
 
     protected open val themeVariant: Int?
         get() = null
+
+    override fun attachBaseContext(base: Context) {
+        val locale = Utils.effectiveLocale()
+        mAppliedLang = locale
+        super.attachBaseContext(Utils.languageContext(base, locale))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val variant = themeVariant
@@ -46,6 +55,8 @@ abstract class MetrodroidActivity : AppCompatActivity() {
         } else
             theme = baseTheme
         setTheme(theme)
+        if (mAppliedLang != "")
+            Utils.resetActivityTitle(this)
         super.onCreate(savedInstanceState)
     }
 
@@ -60,7 +71,7 @@ abstract class MetrodroidActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (chooseTheme() != mAppliedTheme)
+        if (chooseTheme() != mAppliedTheme || Utils.effectiveLocale() != mAppliedLang)
             recreate()
     }
 

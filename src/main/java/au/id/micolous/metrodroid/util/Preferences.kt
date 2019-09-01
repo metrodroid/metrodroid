@@ -50,6 +50,7 @@ actual object Preferences {
     private const val PREF_CONVERT_TIMEZONES = "pref_convert_timezones"
     private const val PREF_RAW_LEVEL = "pref_raw_level"
     const val PREF_THEME = "pref_theme"
+    const val PREF_LANG_OVERRIDE = "pref_lang_override"
     @VisibleForTesting
     const val PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english"
     @VisibleForTesting
@@ -59,7 +60,8 @@ actual object Preferences {
     private const val PREF_MAP_TILE_SUBDOMAINS = "pref_map_tile_subdomains"
     private const val PREF_MAP_TILELAYER_DOCS = "pref_map_tilelayer_docs"
 
-    val PREFS_ANDROID_17 = arrayOf(PREF_MAP_TILE_SUBDOMAINS, PREF_MAP_TILE_URL, PREF_MAP_TILELAYER_DOCS)
+    val PREFS_ANDROID_17 = arrayOf(PREF_MAP_TILE_SUBDOMAINS, PREF_MAP_TILE_URL,
+            PREF_MAP_TILELAYER_DOCS, PREF_LANG_OVERRIDE)
 
     val PREFS_ANDROID_21 = arrayOf(PREF_LOCALISE_PLACES, PREF_LOCALISE_PLACES_HELP)
 
@@ -151,4 +153,6 @@ actual object Preferences {
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
+
+    val overrideLang get() = getStringPreference(PREF_LANG_OVERRIDE, "")
 }

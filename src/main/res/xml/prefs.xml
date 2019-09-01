@@ -167,6 +167,12 @@
                     android:entries="@array/raw_levels"
                     android:entryValues="@array/raw_levels_values"
             />
+
+            <ListPreference
+                    android:key="pref_lang_override"
+                    android:title="@string/lang_override"
+                    android:summary="@string/lang_override_desc"
+            />
         </PreferenceCategory>
 
         <PreferenceCategory android:title="@string/obfuscation_title">

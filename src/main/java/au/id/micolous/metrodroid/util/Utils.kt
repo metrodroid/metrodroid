@@ -25,6 +25,7 @@ import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
@@ -33,6 +34,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
+import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
@@ -41,6 +43,8 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
+import java.util.*
+import android.content.pm.PackageManager.GET_META_DATA
 
 fun AlertDialog.Builder.safeShow() {
     try {
@@ -210,5 +214,44 @@ object Utils {
         if (config.layoutDirection != View.LAYOUT_DIRECTION_RTL)
             return input
         return "\u200E$input\u200E"
+    }
+
+    fun validateLocale(id: String): Boolean = id in BuildConfig.AVAILABLE_TRANSLATIONS
+
+    fun effectiveLocale(chosen: String = Preferences.overrideLang) = if (validateLocale(chosen)) chosen else ""
+
+    fun localeContext(base: Context, locale: Locale): Context {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            // Whatever, on such old devices we don't do language changes
+            return base
+        }
+
+        var conf = base.resources.configuration
+        conf = Configuration(conf)
+        conf.setLocale(locale)
+        return base.createConfigurationContext(conf)
+    }
+
+    fun languageToLocale(id: String): Locale {
+        val lang = id.substringBefore('-')
+        val region = id.substringAfter('-', "").removePrefix("r")
+        return Locale(lang, region)
+    }
+
+    fun languageContext(base: Context, lang: String): Context {
+        if (lang == "" || !validateLocale(lang))
+            return base
+        return localeContext(base, languageToLocale(lang))
+    }
+
+    fun resetActivityTitle(a: Activity) {
+        try {
+            val info = a.packageManager.getActivityInfo(a.componentName, GET_META_DATA)
+            if (info.labelRes != 0) {
+                a.setTitle(info.labelRes)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
