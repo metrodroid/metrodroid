@@ -108,10 +108,15 @@ actual class FormattedStringBuilder {
     }
 
     private fun duplicateSpan(span: Any): Any {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            when (span) {
+                is TypefaceSpan -> return TypefaceSpan(span.typeface ?: return span)
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             when (span) {
                 is LocaleSpan -> return LocaleSpan(span.locales)
-                is TypefaceSpan -> return TypefaceSpan(span.typeface ?: return span)
             }
         }
 
@@ -130,7 +135,7 @@ actual class FormattedStringBuilder {
         }
     }
 
-    // Android interface dosn't allow the same object to be spanned
+    // Android interface doesn't allow the same object to be spanned
     // several times in the same string. So if we copy 2 different parts of
     // same input string only first copy preserves any common spans.
     // To overcome this we duplicate the spans before passing
