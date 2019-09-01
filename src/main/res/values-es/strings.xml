@@ -302,7 +302,7 @@
     <string name="location_penza">Penza, Rusia</string>
     <string name="location_yoshkar_ola">Yoshkar-Ola, Rusia</string>
     <string name="card_type_declarative">Declarativa</string>
-    <string name="mfc_rwid">Leer: %s, escribir: %s, incrementar: %s, reducir: %s</string>
+    <string name="mfc_rwid">Leer: %1$s, escribir: %2$s, incrementar: %3$s, reducir: %4$s</string>
     <string name="mfc_key_never">nunca</string>
     <string name="mfc_key_a">clave A</string>
     <string name="mfc_key_b">clave B</string>

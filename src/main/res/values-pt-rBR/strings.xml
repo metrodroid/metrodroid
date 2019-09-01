@@ -150,7 +150,7 @@
     <string name="mfc_other_key">Tentando chave alternativa fornecida pelo usuário para o setor %d…</string>
     <string name="mfc_default_key">Tentando chaves conhecidas para o setor %d…</string>
     <string name="mfc_reading_blocks">Lendo setor %d…</string>
-    <string name="mfc_rwid">Leitura: %s, gravação: %s, incremento: %s, decremento: %s</string>
+    <string name="mfc_rwid">Leitura: %1$s, gravação: %2$s, incremento: %3$s, decremento: %4$s</string>
     <string name="mfc_key_never">nunca</string>
     <string name="mfc_key_a">chave A</string>
     <string name="mfc_key_b">chave B</string>

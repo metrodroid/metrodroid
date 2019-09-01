@@ -354,7 +354,7 @@
     <string name="leap_locked_warning">Questa scheda non è stata sbloccata. Si prega attivare \"Recuperare le chiavi per le carte Leap\" nelle preferenze NFC.</string>
     <string name="card_note_leap">Richiede il recupero di chiavi da TFI, che deve essere attivato nelle preferenze NFC.</string>
     <string name="card_note_oyster">Sono supportate solo le tessere di prima generazione (MIFARE Classic). Le tessere della generazione attuale (che hanno una D stampata nell\'angolo in basso a sinistra) sono carte DESFire completamente bloccate e quindi non supportate.</string>
-    <string name="lisboaviva_unknown_period">Validità sconosciuta %x/%x</string>
+    <string name="lisboaviva_unknown_period">Validità sconosciuta %1$x/%2$x</string>
     <string name="serial_only_card_description_more_research">Il supporto per questa carta è in fase di sviluppo e attualmente è possibile leggere solo il numero di serie.</string>
     <string name="full_serial_number">Numero di serie completo</string>
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
