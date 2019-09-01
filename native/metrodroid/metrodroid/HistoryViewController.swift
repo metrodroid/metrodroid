@@ -23,19 +23,32 @@ import UIKit
 import metrolib
 
 class HistoryViewController : UITableViewController {
-    var cardHistory: [CardPersister.Entry] = []
+    class Section {
+        let group: CardPersister.Group
+        var expanded: Bool
+        init(group: CardPersister.Group) {
+            self.group = group
+            expanded = false
+        }
+        var entries: [CardPersister.Entry] {
+            get {
+                return group.entries
+            }
+        }
+    }
+    var cardHistory: [Section] = []
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         do {
-            try cardHistory = CardPersister.listCards()
+            try cardHistory = CardPersister.listGroupedCards().map { Section(group: $0) }
         } catch {
         }
     }
     
     func reload() {
         do {
-            try cardHistory = CardPersister.listCards()
+            try cardHistory = CardPersister.listGroupedCards().map { Section(group: $0) }
         } catch {
         }
         tableView.reloadData()
@@ -145,51 +158,57 @@ class HistoryViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(RKt.R.string.ios_menu_button), style: .plain, target: self, action: #selector(menuAction))
+        tableView.register(UINib(nibName: "HistoryHeaderCell", bundle: Bundle.main), forHeaderFooterViewReuseIdentifier: "HistoryHeaderCell")
     }
     
     // Return the number of rows for the table.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (cardHistory[section].expanded) ? cardHistory[section].entries.count : 0
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return cardHistory.count
     }
     
-    // Provide a cell object for each row.
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Fetch a cell of the appropriate type.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
-        
-        // Configure the cell’s contents.
-        let el = cardHistory[indexPath.item]
+    func header(section: Int) -> String {
+        let el = cardHistory[section].entries.first
         var hiddenSerial: String? = nil
         if (Preferences.init().hideCardNumbers) {
             hiddenSerial =  Utils.localizeString(RKt.R.string.hidden_card_number)
         }
         let unknownCard = Utils.localizeString(RKt.R.string.unknown_card)
-        let fallback = "\(unknownCard) \(Utils.directedDash) \(hiddenSerial ?? Utils.weakLTR(el.uid))"
+        let fallback = "\(unknownCard) \(Utils.directedDash) \(hiddenSerial ?? Utils.weakLTR(el?.uid ?? unknownCard))"
         var card: Card?
         do {
-            card = try el.load()
+            card = try el?.load()
             let ti = card?.parseTransitIdentity()
             if (ti != nil) {
-                cell.textLabel!.text =
-                "\(ti?.name ?? unknownCard) \(Utils.directedDash) \(card?.label ?? hiddenSerial ?? Utils.weakLTR(ti?.serialNumber ?? el.uid))"
+                return "\(ti?.name ?? unknownCard) \(Utils.directedDash) \(card?.label ?? hiddenSerial ?? Utils.weakLTR(ti?.serialNumber ?? el?.uid ?? unknownCard))"
             } else {
-                cell.textLabel!.text = fallback
+                return fallback
             }
         } catch {
-            cell.textLabel!.text = fallback
+            return fallback
         }
-        if let scanTime = card?.scannedAt {
-            cell.detailTextLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
-                                                                           TimestampFormatter.init().timeFormat(ts: scanTime),
-                                                                           TimestampFormatter.init().dateFormat(ts: scanTime)).attributed
-        } else {
-            cell.detailTextLabel!.attributedText = nil
-        }
+    }
+    
+    // Provide a cell object for each row.
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Fetch a cell of the appropriate type.
+        print ("Cell \(indexPath)")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
+        
+        // Configure the cell’s contents.
+        let el = cardHistory[indexPath.section].entries[indexPath.item]
+        let scanTime = TimestampKt_.date2Timestamp(date: el.date)
+        cell.textLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
+                                                                TimestampFormatter.init().timeFormat(ts: scanTime),
+                                                                TimestampFormatter.init().dateFormat(ts: scanTime)).attributed
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let el = cardHistory[indexPath.item]
+        let el = cardHistory[indexPath.section].entries[indexPath.item]
         do {
             guard let json = try el.loadJson() else {
                 return
@@ -203,17 +222,45 @@ class HistoryViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = indexPath.item
-            let el = cardHistory[item]
+            let el = cardHistory[indexPath.section].entries[indexPath.item]
             do {
-                print ("Deleting \(item): \(el.fname)")
+                print ("Deleting \(indexPath): \(el.fname)")
                 try el.delete()
-                cardHistory.remove(at: indexPath.item)
+                cardHistory[indexPath.section].group.entries.remove(at: indexPath.item)
+                if (cardHistory[indexPath.section].entries.isEmpty) {
+                    cardHistory.remove(at: indexPath.section)
+                }
             
                 tableView.deleteRows(at: [indexPath], with: .fade)
             } catch {
                 print ("Error deleting")
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44.0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print ("Header \(section)")
+        let cell = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: "HistoryHeaderCell") as! HistoryHeaderCell
+        cell.setState(title: header(section: section),
+                      delegate: self, section: section,
+                      expanded: cardHistory[section].expanded)
+        return cell
+    }
+    
+    func toggleSection(sectionNumber: Int) -> Bool {
+        print ("Toggle \(sectionNumber)")
+        let expanded = !cardHistory[sectionNumber].expanded
+        cardHistory[sectionNumber].expanded = expanded
+        tableView.reloadSections(NSIndexSet(index: sectionNumber) as IndexSet, with: .automatic)
+        return expanded
     }
 }

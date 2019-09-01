@@ -20,7 +20,7 @@ object HashUtils {
 
     private val CRC16_IBM_TABLE = getCRCTableReversed(0xa001)
 
-    fun calculateCRC16IBM(data: ImmutableByteArray, crc: Int) =
+    fun calculateCRC16IBM(data: ImmutableByteArray, crc: Int = 0) =
             calculateCRCReversed(data, crc, CRC16_IBM_TABLE)
 
     /**

@@ -74,8 +74,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
                 ListItem(R.string.hsl_period, formatPeriod()), // FIXME: put above separator
                 ListItem(R.string.hsl_language, language),
                 profile?.let { ListItem(R.string.hsl_customer_profile, it) },
-                purchaseTimestamp?.let { ListItem(R.string.purchase_date, it.format().unformatted + (formatHour(parsed.getInt(CONTRACT_SALE_HOUR)) ?: "")) }
-
+                purchaseTimestamp?.let { ListItem(R.string.purchase_date, it.format() + (formatHour(parsed.getInt(CONTRACT_SALE_HOUR)) ?: FormattedString(""))) }
         )
 
     override val subscriptionName: String?
@@ -91,6 +90,31 @@ data class HSLArvo(override val parsed: En1545Parsed,
         private const val CHILD = "Child"
         private const val CUSTOMER_PROFILE = "CustomerProfile"
         private const val CONTRACT_SALE_HOUR = "ContractSaleHour"
+        private val FIELDS_WALTTI = En1545Container(
+                En1545FixedInteger(HSLLookup.contractWalttiRegionName(CONTRACT_PREFIX), 8),
+                En1545FixedInteger("ProductCode", 14),
+                En1545FixedInteger(CUSTOMER_PROFILE, 5),
+                En1545FixedInteger("CustomerProfileGroup", 5),
+                En1545FixedInteger(LANGUAGE_CODE, 2),
+                En1545FixedInteger(CONTRACT_PERIOD_UNITS, 2),
+                En1545FixedInteger(CONTRACT_PERIOD, 8),
+                En1545FixedInteger(HSLLookup.contractWalttiZoneName(CONTRACT_PREFIX), 6),
+                En1545FixedInteger.date(CONTRACT_SALE),
+                En1545FixedInteger(CONTRACT_SALE_HOUR, 5),
+                En1545FixedInteger("SaleDeviceType", 3), // Unconfirmed
+                En1545FixedInteger(CONTRACT_SALE_DEVICE, 14),  // Unconfirmed
+                En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 14),
+                En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 6),
+                En1545FixedInteger("SaleStatus", 1),
+                En1545FixedInteger(CONTRACT_UNKNOWN_A, 5),
+                En1545FixedInteger.date(CONTRACT_START),
+                En1545FixedInteger.timeLocal(CONTRACT_START),
+                En1545FixedInteger.date(CONTRACT_END),
+                En1545FixedInteger.timeLocal(CONTRACT_END),
+                En1545FixedInteger("reservedA", 5),
+                En1545FixedInteger("ValidityStatus", 1)
+        )
+
         private val FIELDS_V1 = En1545Container(
                 En1545FixedInteger("ProductCode", 14),
                 En1545FixedInteger(CHILD, 1),
@@ -199,29 +223,35 @@ data class HSLArvo(override val parsed: En1545Parsed,
                 // RFU 14 bits and seal2 64 bits
         )
 
-        fun parse(raw: ImmutableByteArray, version: Int): HSLArvo?  {
+        fun parse(raw: ImmutableByteArray, version: HSLTransitData.Variant): HSLArvo?  {
             if (raw.isAllZero())
                 return null
-            if (version == 2)
-                return HSLArvo(En1545Parser.parse(raw, FIELDS_V2),
-                        HSLTransaction.parseEmbed(raw=raw, version=2, offset=286))
-            return HSLArvo(En1545Parser.parse(raw, FIELDS_V1),
-                    HSLTransaction.parseEmbed(raw=raw, version=1, offset=144))
+            val (fields, offset) = when (version) {
+                HSLTransitData.Variant.HSL_V1 -> Pair(FIELDS_V1, 144)
+                HSLTransitData.Variant.HSL_V2 -> Pair(FIELDS_V2, 286)
+                HSLTransitData.Variant.WALTTI -> Pair(FIELDS_WALTTI, 168)
+            }
+            val parsed = En1545Parser.parse(raw, fields)
+            return HSLArvo(parsed,
+                HSLTransaction.parseEmbed(raw = raw, version = version, offset = offset,
+                                          walttiArvoRegion = parsed.getInt(HSLLookup.contractWalttiRegionName(CONTRACT_PREFIX))))
         }
         fun parseUL(raw: ImmutableByteArray, version: Int): HSLArvo?  {
             if (raw.isAllZero())
                 return null
             if (version == 2)
                 return HSLArvo(En1545Parser.parse(raw, FIELDS_V2_UL),
-                        HSLTransaction.parseEmbed(raw=raw, version=2, offset=264))
+                        HSLTransaction.parseEmbed(raw = raw, version = HSLTransitData.Variant.HSL_V2,
+                                offset = 264))
             return HSLArvo(En1545Parser.parse(raw, FIELDS_V1_UL),
-                    HSLTransaction.parseEmbed(raw=raw, version=1, offset=192))
+                    HSLTransaction.parseEmbed(raw = raw, version = HSLTransitData.Variant.HSL_V1,
+                            offset = 264))
         }
 
-        fun formatHour(hour: Int?): String? {
+        fun formatHour(hour: Int?): FormattedString? {
             hour ?: return null
             val obfHour = if (!Preferences.obfuscateTripTimes) hour else ((hour + 21 + Random.nextInt(6)) % 24)
-            return " ${NumberUtils.zeroPad(obfHour,2)}:XX"
+            return FormattedString(" ${NumberUtils.zeroPad(obfHour,2)}:XX")
         }
     }
 }
