@@ -52,6 +52,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
 * Norwegian Bokmål: [Allan Nordhøy](https://github.com/comradekingu), [Petter Reinholdtsen](https://github.com/petterreinholdtsen)
+* Portuguese (Brazil): [Marlon Colhado](https://github.com/MarlonColhado)
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
 * Spanish: [NokisDemox](https://github.com/NokisDemox)
 * Turkish: [omersiar](https://github.com/omersiar)
