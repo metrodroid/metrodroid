@@ -69,17 +69,13 @@ sealed class TransitRegion {
     }
 
     companion object {
-        // On very top put anomalies that we can't handle properly yet.
-        // It shouldn't appear in releases
-        const val SECTION_UNKNOWN = -3
-        // Then cards tha are most likely to be relevant to the user
+        // On very top put cards tha are most likely to be relevant to the user
         const val SECTION_NEARBY = -2
         // Then put "Woldwide" cards like EMV and Amiibo
         const val SECTION_WORLDWIDE = -1
         // Then goes the rest
         const val SECTION_MAIN = 0
         private val deviceRegion = Preferences.region
-        val XX = SectionItem(R.string.unknown, SECTION_UNKNOWN)
         val AUSTRALIA = Iso("AU")
         val BELGIUM = Iso("BE")
         val BRAZIL = Iso("BR")

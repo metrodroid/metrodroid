@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.multi.StringResource
 class CardInfo(
         val name: String,
         val cardType: CardType,
+        val region: TransitRegion,
         val locationId: StringResource? = null,
         val keysRequired: Boolean = false,
         val keyBundle: String? = null,
@@ -46,13 +47,13 @@ class CardInfo(
         val imageId: DrawableResource? = null,
         val imageAlphaId: DrawableResource? = null,
 
-        val iOSSupported: Boolean? = null,
-        val region: TransitRegion = TransitRegion.XX) {
+        val iOSSupported: Boolean? = null) {
 
     // TODO: Make this the primary constructor
     constructor(
             name: StringResource,
             cardType: CardType,
+            region: TransitRegion,
             locationId: StringResource? = null,
             keysRequired: Boolean = false,
             keyBundle: String? = null,
@@ -60,8 +61,7 @@ class CardInfo(
             resourceExtraNote: StringResource? = null,
             imageId: DrawableResource? = null,
             imageAlphaId: DrawableResource? = null,
-            iOSSupported: Boolean? = null,
-            region: TransitRegion = TransitRegion.XX
+            iOSSupported: Boolean? = null
     ) : this(
             name = Localizer.localizeString(name),
             cardType = cardType,
