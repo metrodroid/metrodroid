@@ -40,8 +40,6 @@ iOS supports omits support for several cards for various reasons
   
 * Leap unlocking is not implemented yet.
 
-* NFCV is not implemented yet.
-
 ## UX differences
 
 * On Android when on main screen you can just tap the card. CoreNFC API doesn't
@@ -76,9 +74,8 @@ iOS supports omits support for several cards for various reasons
   
 * Collapsed elements are not implented yet. This has following implications:
 
-  1. Card scans are chronologically sorted and not grouped by card.
-  2. In subscription view the details are always shown
-  3. In raw view subtrees are not collapsible
+  1. In subscription view the details are always shown
+  2. In raw view subtrees are not collapsible
 
 ## Accessibility
 

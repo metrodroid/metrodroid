@@ -65,5 +65,6 @@ class SubscriptionViewCell : UICollectionViewCell {
         } else {
             daysLabel?.text = nil
         }
+        layer.cornerRadius = 8.0
     }
 }

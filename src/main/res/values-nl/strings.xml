@@ -143,7 +143,7 @@
     <string name="felica_terminal_pos">Verkoopbalie</string>
     <string name="felica_terminal_vending">Automaat</string>
     <string name="felica_process_fare_exit_gate">Draaihek bij uitgang</string>
-    <string name="felica_process_charge">Kosten</string>
+    <string name="felica_process_charge">Opladen</string>
     <string name="felica_process_purchase_magnetic">Magnetische kaart</string>
     <string name="felica_process_fare_adjustment">Tariefaanpassing</string>
     <string name="felica_process_admission_payment">Toelatingsbetaling</string>
@@ -158,12 +158,12 @@
     <string name="felica_process_exit_a_autocharge">Uitgang A (automatisch opladen)</string>
     <string name="felica_process_deposit_bus">Busstorting</string>
     <string name="felica_process_purchase_special_ticket">Kaart (speciale bus/tram)</string>
-    <string name="felica_process_merchandise_purchase">Handelswaar</string>
+    <string name="felica_process_merchandise_purchase">Handelswaar-aankoop</string>
     <string name="felica_process_bonus_charge">Bonus bij opladen</string>
     <string name="felica_process_register_deposit">Storting vastleggen</string>
     <string name="felica_process_merchandise_cancel">Handelswaar annuleren</string>
     <string name="felica_process_merchandise_admission">Handelswaar/Toelating</string>
-    <string name="felica_process_merchandise_purchase_cash">Handelswaar (deels met contant geld)</string>
+    <string name="felica_process_merchandise_purchase_cash">Handelswaar-aankoop (deels met contant geld)</string>
     <string name="felica_process_merchandise_admission_cash">Handelswaar/Toelating (deels met contant geld)</string>
     <string name="felica_process_payment_thirdparty">Betaling (derde partij)</string>
     <string name="felica_process_admission_thirdparty">Toelatingsbetaling (derde partij)</string>
@@ -733,7 +733,7 @@
     <string name="mobile_carrier">Mobiele provider</string>
     <string name="tmoney_tcode_sk">SK Telecom</string>
     <string name="tmoney_tcode_kt">Korea Telecom</string>
-    <string name="tmoney_tcode_lg">LG Uplus</string>
+    <string name="tmoney_tcode_lg">LG U+</string>
     <string name="financial_institution_name">Naam van financiële instelling</string>
     <string name="tmoney_ccode_kb">KB Kookmin Bank</string>
     <string name="tmoney_ccode_nonghyup">Nonghyup Bank</string>
@@ -860,9 +860,9 @@
     <string name="card_name_orenburg_school">Orenburg-scholierenkaart</string>
     <string name="card_name_orenburg_student">Orenburg-studentenkaart</string>
     <string name="card_name_strizh">Strizh</string>
-    <string name="card_name_penza">Penza</string>
+    <string name="card_name_penza">Penza-vervoerskaart</string>
     <string name="card_name_siticard">SitiCard</string>
-    <string name="card_name_kirov">Kirov</string>
+    <string name="card_name_kirov">Kirov-vervoerskaart</string>
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_aerial_tramway">Kabelbaan</string>
     <string name="siticard_adult_60min_xfer_purse">Overstapkaart - 60 minuten (volwassene)</string>
@@ -870,8 +870,8 @@
     <string name="siticard_edinyj_16_trips">Edinyj - 16 ritten</string>
     <string name="siticard_edinyj_30_trips">Edinyj - 30 ritten</string>
     <string name="siticard_edinyj_3_days">Edinyj - 3 dagen</string>
-    <string name="card_name_crimea_trolleybus">Krim-trolleybus</string>
-    <string name="card_name_crimea_parus_school">Parus-scholierenkaart</string>
+    <string name="card_name_crimea_trolleybus">Krim-trolleybuskaart</string>
+    <string name="card_name_crimea_parus_school">\'Parus\'-scholierenkaart</string>
     <string name="card_name_yoshkar_ola">Josjkar-Ola-vervoerskaart</string>
     <string name="umarsh_school">Scholier</string>
     <string name="umarsh_student">Student</string>
@@ -998,8 +998,11 @@
     <string name="iso7816_sfi">Short File Identifier (SFI) %s</string>
     <string name="iso7816_raw">Platte tekst</string>
     <string name="iso7816_tlv">TLV-labels</string>
-    <string name="touchngo_cardno">Alternatief getal (CardNo)</string>
-    <string name="unsupported_tag_message">Dit label wordt momenteel niet ondersteund door Metrodroid. Labelidentificatie: %1$s Ondersteund: %2$s</string>
+    <string name="touchngo_cardno">Alternatief getal (\'CardNo\')</string>
+    <string name="unsupported_tag_message">Dit label wordt momenteel niet ondersteund door Metrodroid.
+\n Labelidentificatie: %1$s
+\n Ondersteund:
+\n %2$s</string>
     <string name="unknown_ultralight_message">Onbekend Mifare Ultralight-label</string>
     <string name="nfc_connection_failed">De NFC-verbinding met \'%s\' is mislukt</string>
     <string name="unknown_date_title">Onbekende datum</string>
@@ -1083,7 +1086,7 @@
     <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Metrolijn CP - Rio de Mouro/Meleças</string>
     <string name="lisboaviva_sub_navegante_urbano">Stadskaart</string>
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela naar Lissabon + stedelijk gebied</string>
-    <string name="navigo_sector_station_id">Sector-id %1$s, stations-id %2$d</string>
+    <string name="navigo_sector_station_id">Sector %1$s, stations-id %2$d</string>
     <string name="navigo_sector_id_station_id">Sector-id %1$d, stations-id %2$d</string>
     <string name="navigo_forfait_jour">Dagkaart</string>
     <string name="navigo_forfait">Seizoenskaart</string>
@@ -1100,7 +1103,7 @@
     <string name="ricaricami_yearly_urban">Stadsjaarkaart</string>
     <string name="ricaricami_monthly_urban">Stadsmaandkaart</string>
     <string name="venezia_ticket_24h">24-uurskaart</string>
-    <string name="venezia_rete_unica_75min">75-minuten Rete Unica 75</string>
+    <string name="venezia_rete_unica_75min">75-minuten Rete Unica</string>
     <string name="venezia_rete_unica_100min">100-minuten Rete Unica</string>
     <string name="venezia_bus_ticket_75min">Buskaart 75 minuten</string>
     <string name="venezia_airport_bus_ticket">Vliegveldbuskaart</string>
@@ -1126,4 +1129,7 @@
     <string name="mifare_plus_not_supported">Mifare Plus wordt niet ondersteund</string>
     <string name="ios_unknown_mifare">Onbekende Mifare: %s</string>
     <string name="ios_unknown_tag">Onbekend label: %s</string>
+    <string name="ovc_autocharge_information">Informatie over automatisch opladen</string>
+    <string name="rkf_stockholm_7_days">Stockholm 7-dagenkaart</string>
+    <string name="rkf_stockholm_72_hours">Stockholm 72-uurskaart</string>
 </resources>

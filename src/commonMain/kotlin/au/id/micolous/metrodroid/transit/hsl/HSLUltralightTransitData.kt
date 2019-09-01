@@ -47,7 +47,7 @@ data class HSLUltralightTransitData(override val trips: List<Trip>,
 }
 
 private fun getSerial(card: UltralightCard): String {
-    val num = card.tagId.byteArrayToInt(1, 3) xor card.tagId.byteArrayToInt(4, 3)
+    val num = (card.tagId.byteArrayToInt(1, 3) xor card.tagId.byteArrayToInt(4, 3)) and 0x7fffff
     return card.readPages(4, 2).getHexString(1, 5) +
             zeroPad(num, 7) + card.pages[5].data.getBitsFromBuffer(16, 4)
 }

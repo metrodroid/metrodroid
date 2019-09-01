@@ -165,6 +165,37 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
             session.invalidate(errorMessage:
                 Utils.localizeString(RKt.R.string.ios_nfcreader_connection_error, " \(String(describing: err))"))
     }
+    
+    func vicinityRead(tag: NFCISO15693Tag) -> Card {
+        let dg = DispatchGroup()
+        var sectors: [Data] = []
+        var partialRead: Bool = false
+        for sectorIdx in 0...255 {
+            dg.enter()
+            var reachedEnd: Bool = false
+            tag.readSingleBlock(requestFlags: RequestFlag(rawValue: 0x22), blockNumber: UInt8(sectorIdx), completionHandler: {
+                data, errorIn in
+                print ("Read \(sectorIdx) -> \(data), \(String(describing: errorIn))")
+                if (errorIn != nil && (errorIn! as NSError).code == 102) {
+                    reachedEnd = true
+                } else if (errorIn != nil && (errorIn! as NSError).code == 100) {
+                    partialRead = true
+                } else {
+                    sectors.append(data)
+                }
+                dg.leave()
+            })
+            dg.wait()
+            if (reachedEnd || partialRead) {
+                break
+            }
+        }
+        let nfcv = NFCVCard(sysInfo: nil,
+                            pages: sectors.map { NFCVPage(dataRaw: UtilsKt.toImmutable($0 as Data),
+                                                          isUnauthorized: $0.isEmpty) }, isPartialRead: partialRead)
+        return Card(tagId: UtilsKt.toImmutable(tag.identifier).reverseBuffer(), scannedAt: TimestampFull.Companion.init().now(),
+                    label: nil, mifareClassic: nil, mifareDesfire: nil, mifareUltralight: nil, cepasCompat: nil, felica: nil, iso7816: nil, vicinity: nfcv)
+    }
 
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         if (tags.count < 1) {
@@ -285,6 +316,27 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                 }
             })
             
+        case .iso15693(let vicinity):
+            statusConnecting(cardType: .vicinity)
+            session.connect(to: tag, completionHandler: {
+                err in
+                if (err != nil) {
+                    NFCReader.connectionError(session: session, err: err)
+                    return
+                }
+                
+                self.statusReading(cardType: .vicinity)
+                DispatchQueue.global().async {
+                    print("swift async")
+                    let card = self.vicinityRead(tag: vicinity)
+                    if (!card.isPartialRead) {
+                        self.updateProgressBar(progress: 1, max: 1)
+                    }
+                    session.invalidate()
+                    self.postDump(card: card)
+                }
+            })
+
         default:
             session.invalidate(errorMessage:
                 Utils.localizeString(RKt.R.string.ios_unknown_tag, "\(tag)"))
@@ -294,7 +346,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
     func start(navigationController: UINavigationController?) {
         print ("Reading available: \(NFCTagReaderSession.readingAvailable)")
         session = NFCTagReaderSession(pollingOption: [
-            .iso14443, .iso18092],
+            .iso14443, .iso18092, .iso15693],
                                          delegate: self)
         session!.alertMessage = Utils.localizeString(RKt.R.string.ios_nfcreader_tap)
         session!.begin()

@@ -34,6 +34,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
+apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
@@ -43,11 +44,8 @@ dependencies {
     compile group: 'net.sf.kxml', name: 'kxml2', version: '2.3.0'
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'au.id.micolous.metrodroid.CliKt'
-    }
-}
+mainClassName = 'au.id.micolous.metrodroid.CliKt'
+applicationName = 'metrodroid-cli'
 
 repositories {
     mavenCentral()
@@ -63,4 +61,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath
+}
+
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }

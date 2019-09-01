@@ -14,6 +14,7 @@
 		9C0E5D6A22D6B72600026DDB /* BalanceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0E5D6922D6B72600026DDB /* BalanceViewCell.swift */; };
 		9C16181E22E37D40008747F3 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */; };
 		9C1C982E22E53CD20073683A /* ErrorLabelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */; };
+		9C371DA6230CCCBD00B90D3E /* HistoryHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */; };
 		9C5352B422F2750D00674952 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */; };
 		9C553FF422D5E5BB00665891 /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF322D5E5BB00665891 /* NFCReader.swift */; };
 		9C553FF622D5F0D700665891 /* CardPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF522D5F0D700665891 /* CardPersister.swift */; };
@@ -25,6 +26,7 @@
 		9CC7BA3322F7CD7A00F45148 /* Logos-NOTICE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */; };
 		9CC7BA3522F7CD8600F45148 /* Metrodroid-NOTICE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */; };
 		9CCEE1ED22E3D181007BF742 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CCEE1EB22E3D181007BF742 /* InfoPlist.strings */; };
+		9CDB1854230DAF560092622E /* HistoryHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDB1853230DAF560092622E /* HistoryHeaderCell.xib */; };
 		9CDF295022D6588E00B6B902 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF294F22D6588E00B6B902 /* CardViewController.swift */; };
 		9CDF295222D6678200B6B902 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF295122D6678200B6B902 /* TicketsViewController.swift */; };
 		9CEA951922DD14120072C513 /* mdst in Resources */ = {isa = PBXBuildFile; fileRef = 9CEA951822DD14120072C513 /* mdst */; };
@@ -91,6 +93,9 @@
 		9C0E5D6922D6B72600026DDB /* BalanceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewCell.swift; sourceTree = "<group>"; };
 		9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLabelProtocol.swift; sourceTree = "<group>"; };
+		9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderCell.swift; sourceTree = "<group>"; };
+		9C412C102319A39E005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C112319A3C2005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "metrodroid/pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C412C132319CF95005AB9C5 /* en-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IN"; path = "en-IN.lproj/Main.strings"; sourceTree = "<group>"; };
 		9C412C142319CFF2005AB9C5 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main.strings"; sourceTree = "<group>"; };
 		9C412C152319CFFC005AB9C5 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "metrodroid/en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -138,6 +143,7 @@
 		9CCEE1EC22E3D181007BF742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = metrodroid/Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CCEE1EE22E3D1D9007BF742 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = metrodroid/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CD6DFEA22D33F7B003A5CEA /* metrodroid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = metrodroid.entitlements; sourceTree = "<group>"; };
+		9CDB1853230DAF560092622E /* HistoryHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryHeaderCell.xib; sourceTree = "<group>"; };
 		9CDF294F22D6588E00B6B902 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		9CDF295122D6678200B6B902 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
 		9CEA951822DD14120072C513 /* mdst */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mdst; path = ../../mdst; sourceTree = "<group>"; };
@@ -256,6 +262,7 @@
 				E7BE9C8922CD60A500E6496B /* LicenseViewController.swift */,
 				9CFE481622E0FA880020A500 /* ListViewDataSource.swift */,
 				E7B1DFC722CCCE680061481F /* Main.storyboard */,
+				9CDB1853230DAF560092622E /* HistoryHeaderCell.xib */,
 				9CD6DFEA22D33F7B003A5CEA /* metrodroid.entitlements */,
 				9C553FF322D5E5BB00665891 /* NFCReader.swift */,
 				9CFE481E22E10DAA0020A500 /* RawInfoViewController.swift */,
@@ -272,6 +279,7 @@
 				9CA5821C22E52A1C004D579D /* ErrorViewCell.swift */,
 				9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */,
 				9C095685230639E4007C6F79 /* MapViewController.swift */,
+				9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */,
 			);
 			path = metrodroid;
 			sourceTree = "<group>";
@@ -419,6 +427,7 @@
 				"en-IE",
 				"en-NZ",
 				"en-US",
+				"pt-BR",
 			);
 			mainGroup = E7B1DFB722CCCE680061481F;
 			packageReferences = (
@@ -444,9 +453,11 @@
 				9C5352B422F2750D00674952 /* iOSDeviceModelMapping.plist in Resources */,
 				E7BE9C8222CD24E600E6496B /* Settings.bundle in Resources */,
 				9CC7BA3322F7CD7A00F45148 /* Logos-NOTICE.txt in Resources */,
+				9CDB1854230DAF560092622E /* HistoryHeaderCell.xib in Resources */,
 				E7BE9C9022CD6DEE00E6496B /* NOTICE.protobuf.txt in Resources */,
 				9CEA951922DD14120072C513 /* mdst in Resources */,
 				E7B1DFCB22CCCE6B0061481F /* Assets.xcassets in Resources */,
+				9C371DA4230B53CE00B90D3E /* Cards.xcassets in Resources */,
 				E7B1DFC922CCCE680061481F /* Main.storyboard in Resources */,
 				9CCEE1ED22E3D181007BF742 /* InfoPlist.strings in Resources */,
 				E7BE9C9122CD6DEE00E6496B /* NOTICE.noto-emoji.txt in Resources */,
@@ -486,7 +497,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../../build/xcode-frameworks/\"\n./gradlew :proto:mainSharedLibrary\n./gradlew :proto:mainStaticLibrary\n./gradlew :generateLocalize :iOSLanguages :iOSMappedLanguages\n./gradlew :packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew :proto:mainSharedLibrary\n./gradlew :proto:mainStaticLibrary\n./gradlew :generateLocalize :iOSLanguages :iOSMappedLanguages\n./gradlew :packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -517,6 +528,7 @@
 				9C095686230639E4007C6F79 /* MapViewController.swift in Sources */,
 				E7B1DFC422CCCE680061481F /* AppDelegate.swift in Sources */,
 				9C09679122D7CA4C0064CC50 /* CardViewProtocol.swift in Sources */,
+				9C371DA6230CCCBD00B90D3E /* HistoryHeaderCell.swift in Sources */,
 				E7BE9C8A22CD60A500E6496B /* LicenseViewController.swift in Sources */,
 				9CDF295022D6588E00B6B902 /* CardViewController.swift in Sources */,
 				E7BE9C8622CD38EA00E6496B /* Utils.swift in Sources */,
@@ -576,6 +588,7 @@
 				9C7556A122F8CB45001FFF3B /* it */,
 				9C7556A322F8CCE5001FFF3B /* el */,
 				9C7556A422F8CCF5001FFF3B /* en */,
+				9C412C112319A3C2005AB9C5 /* pt-BR */,
 				9C412C152319CFFC005AB9C5 /* en-GB */,
 				9C412C172319D029005AB9C5 /* en-CA */,
 				9C412C192319D053005AB9C5 /* en-IE */,
@@ -607,6 +620,7 @@
 				9C75569E22F8CB29001FFF3B /* de */,
 				9C7556A022F8CB40001FFF3B /* it */,
 				9C7556A222F8CB5B001FFF3B /* el */,
+				9C412C102319A39E005AB9C5 /* pt-BR */,
 				9C412C132319CF95005AB9C5 /* en-IN */,
 				9C412C142319CFF2005AB9C5 /* en-GB */,
 				9C412C162319D01F005AB9C5 /* en-CA */,

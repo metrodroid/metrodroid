@@ -24,11 +24,13 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
 import kotlin.native.concurrent.SharedImmutable
 
-internal actual fun makeNow(): TimestampFull {
-    val t = (NSDate().timeIntervalSince1970 * 1000).toLong()
+fun date2Timestamp(date: NSDate): TimestampFull {
+    val t = (date.timeIntervalSince1970 * 1000).toLong()
     val tz = NSTimeZone.defaultTimeZone.name
     return TimestampFull(timeInMillis = t, tz = MetroTimeZone(tz))
 }
+
+internal actual fun makeNow(): TimestampFull = date2Timestamp(NSDate())
 
 /** Reference to UTC timezone.  */
 @SharedImmutable

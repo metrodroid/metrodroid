@@ -49,6 +49,8 @@ abstract class DesfireFile {
     companion object {
         fun create(raw: RawDesfireFile): DesfireFile {
             if (raw.settings == null) {
+                if (raw.isUnauthorized)
+                    return UnauthorizedDesfireFile(fileSettings = null, raw = raw)
                 return when (raw.readCommand) {
                     DesfireProtocol.READ_DATA -> StandardDesfireFile(null, raw)
                     DesfireProtocol.GET_VALUE -> ValueDesfireFile(null, raw)
