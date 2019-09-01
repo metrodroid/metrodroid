@@ -461,7 +461,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
 
     companion object {
         const val TAG = "FelicaProtocol"
-        const val ENABLE_TRACING = true
+        const val ENABLE_TRACING = false
 
         /**
          * Calculates the IDm for a given system number.
