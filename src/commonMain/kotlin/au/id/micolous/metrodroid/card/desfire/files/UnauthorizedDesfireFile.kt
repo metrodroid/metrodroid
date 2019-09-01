@@ -32,7 +32,7 @@ import kotlinx.serialization.Transient
  * Represents a DESFire file which could not be read due to
  * access control limits.
  */
-class UnauthorizedDesfireFile(override val fileSettings: DesfireFileSettings,
+class UnauthorizedDesfireFile(override val fileSettings: DesfireFileSettings?,
                               override val raw: RawDesfireFile) : DesfireFile() {
     private val errorMessage: String
         get () = raw.error ?: "Unauthorized"
@@ -44,7 +44,7 @@ class UnauthorizedDesfireFile(override val fileSettings: DesfireFileSettings,
     override fun getRawData(id: Int): ListItem {
         val title = Localizer.localizeString(R.string.unauthorized_file_title_format,
                 id.hexString)
-        val subtitle = fileSettings.subtitle
+        val subtitle = fileSettings?.subtitle
 
         return ListItemRecursive(title, subtitle, null)
     }
