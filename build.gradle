@@ -193,7 +193,7 @@ task iOSImages {
 """
            def render = new File(imageset, basename + ".png")
            exec {
-              commandLine "inkscape", "-z", "-e", render, "-w", "380", details.file.path
+                commandLine System.getenv('INKSCAPE') ?: "inkscape", "-z", "-e", render, "-w", "380", details.file.path
            }
         }
     }
