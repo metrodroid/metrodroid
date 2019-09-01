@@ -137,7 +137,7 @@
     <string name="saving_card">Karte wird gespeichert …</string>
     <string name="mfc_reading">MIFARE Classic Karte wird gelesen…</string>
     <string name="mfc_reading_blocks">Sektor %d wird gelesen…</string>
-    <string name="mfc_rwid">Lesen: %s, schreiben: %s, Inkrement: %s, Dekrement: %s</string>
+    <string name="mfc_rwid">Lesen: %1$s, schreiben: %2$s, Inkrement: %3$s, Dekrement: %4$s</string>
     <string name="mfc_key_never">nie</string>
     <string name="mfc_key_a">Schlüssel A</string>
     <string name="mfc_key_b">Schlüssel B</string>

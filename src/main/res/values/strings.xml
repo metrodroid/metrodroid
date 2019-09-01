@@ -323,7 +323,7 @@
     <string name="mfc_other_key">Trying alternate user-supplied keys for sector %d…</string>
     <string name="mfc_default_key">Trying well-known keys for sector %d…</string>
     <string name="mfc_reading_blocks">Reading sector %d…</string>
-    <string name="mfc_rwid">Read: %s, write: %s, increment: %s, decrement: %s</string>
+    <string name="mfc_rwid">Read: %1$s, write: %2$s, increment: %3$s, decrement: %4$s</string>
     <string name="mfc_key_never">never</string>
     <!-- Translators: it's access key for Mifare Classic. Every sector can
          have up to 2 keys: key A and key B. -->
@@ -1251,8 +1251,8 @@
     <string name="hsl_transport_u_linja">U-line</string>
 
     <!-- Waltti -->
-    <string name="waltti_city_zone">%s, zone %s</string>
-    <string name="waltti_city_zones">%s, zones %s</string>
+    <string name="waltti_city_zone">%1$s, zone %2$s</string>
+    <string name="waltti_city_zones">%1$s, zones %2$s</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
@@ -2019,7 +2019,7 @@
     <string name="card_note_oyster">Only first generation (MIFARE Classic) cards are supported. Current generation cards (which have a "D" printed on the bottom left corner) are fully locked DESFire cards, and thus unsupportable.</string>
     <string name="oyster_travelpass">Travelpass / Season Ticket</string>
 
-    <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
+    <string name="lisboaviva_unknown_period">Unknown validity %1$x/%2$x</string>
 
     <!-- TODO: Translate into English and remove translatable=false. -->
     <!-- Translators: Portuguese "Ass. PAL - LIS" -->
