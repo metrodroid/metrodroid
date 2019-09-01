@@ -104,7 +104,7 @@ class En1545FixedInteger(private val mName: String, private val mLen: Int) : En1
         }
 
         fun parseDateBCD(date: Int): Timestamp? {
-            return if (date == 0) null else
+            return if (date <= 0) null else
                 Daystamp(NumberUtils.convertBCDtoInteger(date shr 16),
                     NumberUtils.convertBCDtoInteger((date shr 8) and 0xff) - 1,
                     NumberUtils.convertBCDtoInteger(date and 0xff))
