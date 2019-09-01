@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
@@ -52,7 +53,8 @@ class HSLTransitData(override val serialNumber: String?,
                      val applicationVersion: Int?,
                      val applicationKeyVersion: Int?,
                      val platformType: Int?,
-                     val securityLevel: Int?) : TransitData() {
+                     val securityLevel: Int?,
+                     val version: Variant) : TransitData() {
 
     override fun getRawFields(level: RawLevel): List<ListItem> = super.getRawFields(level).orEmpty() + listOf(
             ListItem("Application version", applicationVersion.toString()),
@@ -62,13 +64,19 @@ class HSLTransitData(override val serialNumber: String?,
     )
 
     override val cardName: String
-        get() = "HSL"
+        get() = if (version == Variant.WALTTI) CARD_NAME_WALTTI else CARD_NAME_HSL
 
     public override val balance: TransitCurrency?
         get() = TransitCurrency.EUR(mBalance)
 
+    enum class Variant {
+        HSL_V1,
+        HSL_V2,
+        WALTTI;
+    }
+
     companion object {
-        private fun parseTrips(app: DesfireApplication, version: Int): List<HSLTransaction> {
+        private fun parseTrips(app: DesfireApplication, version: Variant): List<HSLTransaction> {
             val recordFile = app.getFile(0x04) as? RecordDesfireFile ?: return listOf()
             return recordFile.records.mapNotNull { HSLTransaction.parseLog(it, version) }
         }
@@ -84,7 +92,7 @@ class HSLTransitData(override val serialNumber: String?,
             }
         }
 
-        private fun parse(app: DesfireApplication, version: Int): HSLTransitData {
+        private fun parse(app: DesfireApplication, version: Variant): HSLTransitData {
             val appInfo = app.getFile(0x08)?.data
             val serialNumber = appInfo?.toHexString()?.substring(2, 20)?.let { formatSerial(it) }
 
@@ -110,35 +118,57 @@ class HSLTransitData(override val serialNumber: String?,
                     applicationKeyVersion = appInfo?.getBitsFromBuffer(4, 4),
                     platformType = appInfo?.getBitsFromBuffer(80, 3),
                     securityLevel = appInfo?.getBitsFromBuffer(83, 1),
-                    trips = TransactionTrip.merge(trips + listOfNotNull(mLastRefill)))
+                    trips = TransactionTrip.merge(trips + listOfNotNull(mLastRefill)),
+                    version = version)
         }
 
-        private val CARD_INFO = CardInfo(
+        private const val CARD_NAME_HSL = "HSL"
+        private const val CARD_NAME_WALTTI = "Waltti"
+        private val HSL_CARD_INFO = CardInfo(
                 imageId = R.drawable.hsl_card,
-                name = "HSL",
+                name = CARD_NAME_HSL,
                 locationId = R.string.location_helsinki_finland,
                 resourceExtraNote = R.string.hsl_extra_note,
                 cardType = CardType.MifareDesfire)
+        private val WALTTI_CARD_INFO = CardInfo(
+                imageId = R.drawable.waltti_logo,
+                name = CARD_NAME_WALTTI,
+                locationId = R.string.location_finland,
+                cardType = CardType.MifareDesfire)
 
-        const val APP_ID_V1 = 0x1120ef
+        private const val APP_ID_V1 = 0x1120ef
+        @VisibleForTesting
         const val APP_ID_V2 = 0x1420ef
+        private const val APP_ID_WALTTI = 0x10ab
+        private val HSL_IDS = listOf(APP_ID_V1, APP_ID_V2)
+        private val ALL_IDS = HSL_IDS + listOf(APP_ID_WALTTI)
 
         fun formatSerial(input: String) = input.let { NumberUtils.groupString(it, " ", 6, 4, 4) }
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
             override val allCards: List<CardInfo>
-                get() = listOf(CARD_INFO)
+                get() = listOf(HSL_CARD_INFO, WALTTI_CARD_INFO)
 
-            override fun earlyCheck(appIds: IntArray) = APP_ID_V1 in appIds || APP_ID_V2 in appIds
+            override fun getCardInfo(appIds: IntArray): CardInfo? =
+                    if (HSL_IDS.any { it in appIds }) HSL_CARD_INFO else WALTTI_CARD_INFO
 
-            override fun parseTransitData(card: DesfireCard) = card.getApplication(APP_ID_V1)?.let { parse(it, 1) } ?:
-            card.getApplication(APP_ID_V2)?.let { parse(it, 2) }
+            override fun earlyCheck(appIds: IntArray) = ALL_IDS.any { it in appIds }
+
+            override fun parseTransitData(card: DesfireCard) =
+                    card.getApplication(APP_ID_V1)?.let { parse(it, Variant.HSL_V1) } ?:
+                    card.getApplication(APP_ID_V2)?.let { parse(it, Variant.HSL_V2) } ?:
+                    card.getApplication(APP_ID_WALTTI)?.let { parse(it, Variant.WALTTI) }
 
             override fun parseTransitIdentity(card: DesfireCard): TransitIdentity {
-                val data = card.getApplication(APP_ID_V1)?.getFile(0x08)?.data
+                val dataHSL = card.getApplication(APP_ID_V1)?.getFile(0x08)?.data
                         ?: card.getApplication(APP_ID_V2)?.getFile(0x08)?.data
-                return TransitIdentity("HSL", data?.toHexString()?.substring(2, 20)?.let { formatSerial(it) })
+                if (dataHSL != null)
+                    return TransitIdentity(CARD_NAME_HSL, formatSerial(dataHSL.toHexString().substring(2, 20)))
+                val dataWaltti = card.getApplication(APP_ID_WALTTI)?.getFile(0x08)?.data
+                if (dataWaltti != null)
+                    return TransitIdentity(CARD_NAME_WALTTI, formatSerial(dataWaltti.toHexString().substring(2, 20)))
+                return TransitIdentity(CARD_NAME_HSL, null)
             }
         }
     }
