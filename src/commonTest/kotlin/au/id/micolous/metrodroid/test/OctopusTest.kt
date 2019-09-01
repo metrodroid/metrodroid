@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 
 class OctopusTest : BaseInstrumentedTest() {
-    private fun octopusCardFromHex(s: String, scannedAt: TimestampFull): FelicaCard {
+    private fun octopusCardFromHex(s: String, scannedAt: TimestampFull): Card {
         val data = ImmutableByteArray.fromHex(s)
 
         val blockBalance = FelicaBlock(data)
@@ -50,12 +50,10 @@ class OctopusTest : BaseInstrumentedTest() {
         val f = FelicaCard(
                 pMm = ImmutableByteArray.empty(8),
                 systems = mapOf(OctopusTransitData.SYSTEMCODE_OCTOPUS to system))
-        Card(felica = f, scannedAt = scannedAt, tagId = ImmutableByteArray.empty(8))
-
-        return f
+        return Card(felica = f, scannedAt = scannedAt, tagId = ImmutableByteArray.empty(8))
     }
 
-    private fun checkCard(c: FelicaCard, expectedBalance: TransitCurrency) {
+    private fun checkCard(c: Card, expectedBalance: TransitCurrency) {
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
         assertEquals(expected=OctopusTransitData.CARD_INFO.name, actual=i!!.name)
