@@ -500,4 +500,16 @@
     <string name="raw_level_none">desactivado</string>
     <string name="raw_level_unknown_only">Mostrar solo campos desconocidos</string>
     <string name="raw_level_all">Todos los campos</string>
+    <string name="desfire_linear_record">Registro lineal de datos</string>
+    <string name="desfire_cyclic_record">Registro de datos cíclico</string>
+    <plurals name="desfire_record_format">
+        <item quantity="one">Tipo: %1$s, %2$d registro (%3$d máximo), tamaño del registro: %4$d</item>
+        <item quantity="other">Tipos: %1$s, %2$d registros (%3$d máximo), tamaño de los registros: %4$d</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="one">Billete para %d viaje</item>
+        <item quantity="other">Billete para %d viajes</item>
+    </plurals>
+    <string name="cepas_autoload_amount">importe de recarga</string>
+    <string name="desfire_subtype">Subtipo</string>
 </resources>
