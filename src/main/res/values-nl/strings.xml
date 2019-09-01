@@ -1132,4 +1132,7 @@
     <string name="ovc_autocharge_information">Informatie over automatisch opladen</string>
     <string name="rkf_stockholm_7_days">Stockholm 7-dagenkaart</string>
     <string name="rkf_stockholm_72_hours">Stockholm 72-uurskaart</string>
+    <string name="location_finland">Finland</string>
+    <string name="waltti_city_zone">%s, zone %s</string>
+    <string name="waltti_city_zones">%s, zones %s</string>
 </resources>
