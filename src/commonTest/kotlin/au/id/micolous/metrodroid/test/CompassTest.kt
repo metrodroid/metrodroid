@@ -36,7 +36,7 @@ import kotlin.test.assertTrue
  *
  * Adapted from information on http://www.lenrek.net/experiments/compass-tickets/
  */
-class CompassTest {
+class CompassTest : BaseInstrumentedTest() {
 
     private fun createUltralightFromString(cardData: Array<String>): Card {
         val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
