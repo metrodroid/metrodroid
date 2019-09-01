@@ -472,7 +472,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../../build/xcode-frameworks/\"\n./gradlew :proto:mainSharedLibrary\n./gradlew :proto:mainStaticLibrary\n./gradlew :generateLocalize :iOSLanguages :iOSMappedLanguages\n./gradlew :packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew :proto:mainSharedLibrary\n./gradlew :proto:mainStaticLibrary\n./gradlew :generateLocalize :iOSLanguages :iOSMappedLanguages\n./gradlew :packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
