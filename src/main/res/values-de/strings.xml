@@ -111,7 +111,6 @@
     <string name="mfc_fallback">Fallback-Leser</string>
     <string name="requires_android_17">Erfordert Android 4.2 oder höher.</string>
     <string name="requires_android_21">Erfordert Android 5.0 oder höher.</string>
-    <string name="pref_show_hidden_cards">Versteckte Karten anzeigen</string>
     <string name="directions">Halten Sie die Karte am Telefon.</string>
     <string name="import_clipboard">Aus der Zwischenablage einfügen</string>
     <string name="export_filename">Dateiname für den Export</string>
