@@ -42,7 +42,9 @@ jobs:
     # This is run in parallel (debug + dev + release)
     - stage: assemble and unit test
       env: TARGET=jvm
-      script: ./gradlew :jvmcli:shadowJar jvmCliTest --stacktrace
+      script:
+        - ./gradlew :jvmcli:installShadowDist jvmCliTest --stacktrace
+        - ./.travis/jvmcli_test.sh
     - env: TARGET=android
       script: ./gradlew assembleDebug testDebugUnitTest --stacktrace
     - env: TARGET=android

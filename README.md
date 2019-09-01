@@ -52,6 +52,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
 * Norwegian Bokmål: [Allan Nordhøy](https://github.com/comradekingu), [Petter Reinholdtsen](https://github.com/petterreinholdtsen)
+* Portuguese (Brazil): [Marlon Colhado](https://github.com/MarlonColhado)
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
 * Spanish: [NokisDemox](https://github.com/NokisDemox)
 * Turkish: [omersiar](https://github.com/omersiar)
@@ -217,6 +218,8 @@ This software and it's authors are not associated with any public transit agency
    
    [If you get an error from Gradle about `:material-design-icons` not being available, then your
    clone doesn't have the submodules.](https://github.com/metrodroid/metrodroid/issues/32)
+
+   ZIP source code downloads from GitHub's web interface **will not work**!
 
 2. Import the directory into Android Studio.
 
