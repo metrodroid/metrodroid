@@ -26,7 +26,7 @@ import android.nfc.tech.NfcF
 import android.nfc.tech.NfcV
 import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.getErrorMessage
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.io.core.Closeable
 import java.io.IOException
@@ -35,9 +35,9 @@ fun <T>wrapAndroidExceptions(f: () -> T): T {
     try {
         return f()
     } catch (e: TagLostException) {
-        throw CardLostException(Utils.getErrorMessage(e), e)
+        throw CardLostException(getErrorMessage(e), e)
     } catch (e: IOException) {
-        throw CardTransceiveException(Utils.getErrorMessage(e), e)
+        throw CardTransceiveException(getErrorMessage(e), e)
     }
 }
 

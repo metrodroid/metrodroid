@@ -77,7 +77,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                 }
                 else -> {
                     findViewById<View>(R.id.error).visibility = View.VISIBLE
-                    findViewById<TextView>(R.id.error_text).text = Utils.getErrorMessage(error)
+                    findViewById<TextView>(R.id.error_text).text = getErrorMessage(error)
                 }
             }
         }

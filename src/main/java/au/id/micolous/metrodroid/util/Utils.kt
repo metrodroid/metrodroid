@@ -50,10 +50,6 @@ fun AlertDialog.Builder.safeShow() {
     }    
 }
 
-operator fun StringBuilder.plusAssign(other: String) {
-    this.append(other)
-}
-
 object Utils {
     private const val TAG = "Utils"
 
@@ -167,14 +163,6 @@ object Utils {
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok) { _, _ -> activity.finish() }
                 .safeShow()
-    }
-
-    fun getErrorMessage(ex: Throwable?): String {
-        if (ex == null)
-            return "unknown error"
-        val ex = ex.cause ?: ex
-        val errorMessage = ex.localizedMessage?.ifEmpty { null } ?: ex.message?.ifEmpty { null } ?: ex.toString()
-        return ex.javaClass.simpleName + ": " + errorMessage
     }
 
     fun detectKeyFormat(ctx: Context, uri: Uri): KeyFormat {
