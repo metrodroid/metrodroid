@@ -219,6 +219,7 @@ class CardInfoActivity : MetrodroidActivity() {
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
         bundle.putInt(KEY_SELECTED_TAB, (findViewById<View>(R.id.pager) as ViewPager).currentItem)
     }
 
