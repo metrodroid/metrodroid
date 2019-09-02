@@ -116,7 +116,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
 
         // Try to get a nonce for 3DES authentication with Ultralight C.
         try {
-            val b2 = auth1() ?: throw CardTransceiveException("auth1 returned null")
+            val b2 = auth1()
             Log.d(TAG, "auth1 said = $b2")
         } catch (e: CardTransceiveException) {
             // Non-C cards will disconnect here.

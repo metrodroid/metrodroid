@@ -142,7 +142,7 @@ class CardTripsFragment : ListFragment() {
             val paxTextView = convertView.findViewById<TextView>(R.id.pax_text_view)
             val machineIdTextView = convertView.findViewById<TextView>(R.id.machine_id_text_view)
 
-            @StringRes val modeContentDescriptionRes = trip.mode.contentDescription.toInt()
+            @StringRes val modeContentDescriptionRes = trip.mode.contentDescription
 
             val a = context.obtainStyledAttributes(intArrayOf(R.attr.TransportIcons))
             val iconArrayRes = a?.getResourceId(0, -1) ?: -1

@@ -60,7 +60,7 @@ data class FelicaCard(
      */
     @Transient
     private val manufacturerCode: Int
-        get() = tagId?.byteArrayToInt(0, 2) ?: 0
+        get() = tagId.byteArrayToInt(0, 2)
 
     /**
      * Gets the Card Identification Number of the card (part of IDm).
@@ -70,7 +70,7 @@ data class FelicaCard(
      */
     @Transient
     private val cardIdentificationNumber: Long
-        get() = tagId?.byteArrayToLong(2, 6) ?: 0
+        get() = tagId.byteArrayToLong(2, 6)
 
     /**
      * Gets the ROM type of the card (part of PMm).

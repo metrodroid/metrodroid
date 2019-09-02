@@ -51,7 +51,7 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     constructor(parcel: Parcel) : this(TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel) as CharSequence)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        TextUtils.writeToParcel(spanned, parcel, flags);
+        TextUtils.writeToParcel(spanned, parcel, flags)
     }
 
     override fun describeContents() = 0
