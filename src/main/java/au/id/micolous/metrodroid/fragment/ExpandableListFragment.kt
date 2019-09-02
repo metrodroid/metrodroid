@@ -353,6 +353,6 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
 
     companion object {
 
-        private val INTERNAL_EMPTY_ID = 0x00ff0001
+        private const val INTERNAL_EMPTY_ID = 0x00ff0001
     }
 }

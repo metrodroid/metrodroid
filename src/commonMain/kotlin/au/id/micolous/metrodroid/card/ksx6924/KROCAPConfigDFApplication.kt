@@ -60,7 +60,7 @@ data class KROCAPConfigDFApplication (
 
 
     companion object {
-        private val TAG = "KROCAPConfigDFApplication"
+        private const val TAG = "KROCAPConfigDFApplication"
 
         val APP_NAME = listOf(ImmutableByteArray.fromHex("a0000004520001"))
 
