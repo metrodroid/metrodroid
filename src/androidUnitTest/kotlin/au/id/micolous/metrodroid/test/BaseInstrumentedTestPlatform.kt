@@ -34,7 +34,7 @@ actual fun <T> runAsync(block: suspend () -> T) {
 }
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = intArrayOf(28))
+@Config(sdk = [28])
 actual abstract class BaseInstrumentedTestPlatform {
     val context : Context
         get() = MetrodroidApplication.instance
