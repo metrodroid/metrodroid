@@ -55,6 +55,9 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     }
 
     override fun describeContents() = 0
+    override fun hashCode(): Int {
+        return spanned.hashCode()
+    }
 
     actual companion object {
         actual fun monospace(input: String): FormattedString {
