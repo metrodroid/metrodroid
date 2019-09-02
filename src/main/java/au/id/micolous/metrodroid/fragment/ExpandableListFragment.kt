@@ -309,7 +309,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.
-            setListShown(false, false)
+            setListShown(shown = false, animate = false)
         }
         mHandler.post(mRequestFocus)
     }

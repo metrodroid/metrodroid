@@ -92,14 +92,8 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     Log.d(TAG, "error in deleting key?")
                 }
 
-                val deleteMessage: String
-                if (keys != null) {
-                    deleteMessage = Localizer.localizeString(R.string.delete_key_confirm_message,
-                            keys.description, keys.fileType)
-                } else {
-                    deleteMessage = Localizer.localizeString(R.string.delete_key_confirm_message,
-                            "??", "??")
-                }
+                val deleteMessage = Localizer.localizeString(R.string.delete_key_confirm_message,
+                            keys?.description ?: "??", keys?.fileType ?: "??")
 
                 AlertDialog.Builder(activity)
                         .setTitle(R.string.delete_key_confirm_title)

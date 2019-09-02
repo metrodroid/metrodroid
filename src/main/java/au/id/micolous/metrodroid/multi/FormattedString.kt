@@ -92,7 +92,7 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     }
 }
 
-actual class FormattedStringBuilder {
+actual class FormattedStringBuilder actual constructor() {
     actual fun append(value: StringBuilder): FormattedStringBuilder {
         ssb.append(value)
         return this
@@ -153,9 +153,6 @@ actual class FormattedStringBuilder {
 
     actual fun build(): FormattedString = FormattedString(ssb)
 
-    private val ssb: SpannableStringBuilder
+    private val ssb: SpannableStringBuilder = SpannableStringBuilder()
 
-    actual constructor() {
-        ssb = SpannableStringBuilder()
-    }
 }

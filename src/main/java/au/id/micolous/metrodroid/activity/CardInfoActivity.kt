@@ -133,10 +133,10 @@ class CardInfoActivity : MetrodroidActivity() {
 
                 try {
                     mShowCopyCardNumber = !Preferences.hideCardNumbers
-                    if (mShowCopyCardNumber) {
-                        mCardSerial = Utils.weakLTR(mTransitData?.serialNumber ?: mCard?.tagId?.toHexString() ?: "")
+                    mCardSerial = if (mShowCopyCardNumber) {
+                        Utils.weakLTR(mTransitData?.serialNumber ?: mCard?.tagId?.toHexString() ?: "")
                     } else {
-                        mCardSerial = ""
+                        ""
                     }
                     supportActionBar!!.title = mTransitData!!.cardName
                     supportActionBar!!.subtitle = mCardSerial
