@@ -30,8 +30,6 @@ import java.util.NoSuchElementException
  * [Cursor] position.
  */
 class CursorIterator(private val mCursor: Cursor) : Iterator<Cursor>, Closeable {
-    private val mMovedToNext: Boolean = false
-
     override fun close() = mCursor.close()
     override fun hasNext() = !mCursor.isLast
 
