@@ -268,10 +268,10 @@ abstract class Subscription : Parcelable {
 
             val zones = zones
             if (zones != null && zones.isNotEmpty()) {
-                val zones_list = zones.joinToString { it.toString() }
+                val zonesString = zones.joinToString { it.toString() }
 
                 items.add(ListItem(Localizer.localizePlural(R.plurals.travel_zones,
-                        zones.size, zones.size), zones_list))
+                        zones.size, zones.size), zonesString))
             }
 
             return items.ifEmpty { null }

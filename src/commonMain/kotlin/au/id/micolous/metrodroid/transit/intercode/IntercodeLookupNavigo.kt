@@ -44,8 +44,8 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
         if (locationId == 0)
             return null
         var mdstStationId = locationId or ((agency ?: 0) shl 16) or ((transport ?: 0) shl 24)
-        val sector_id = locationId shr 9
-        val station_id = locationId shr 4 and 0x1F
+        val sectorId = locationId shr 9
+        val stationId = locationId shr 4 and 0x1F
         var humanReadableId = locationId.toString()
         var fallBackName = locationId.toString()
         if (transport == En1545Transaction.TRANSPORT_TRAIN && (agency == RATP || agency == SNCF)) {
@@ -53,13 +53,13 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
         }
         if ((agency == RATP || agency == SNCF) && (transport == En1545Transaction.TRANSPORT_METRO || transport == En1545Transaction.TRANSPORT_TRAM)) {
             mdstStationId = mdstStationId and 0x0000fff0 or 0x3020000
-            fallBackName = if (SECTOR_NAMES[sector_id] != null)
+            fallBackName = if (SECTOR_NAMES[sectorId] != null)
                 Localizer.localizeString(R.string.navigo_sector_station_id,
-                        SECTOR_NAMES[sector_id], station_id)
+                        SECTOR_NAMES[sectorId], stationId)
             else
                 Localizer.localizeString(R.string.navigo_sector_id_station_id,
-                        sector_id, station_id)
-            humanReadableId = "$sector_id/$station_id"
+                        sectorId, stationId)
+            humanReadableId = "$sectorId/$stationId"
         }
 
         return StationTableReader.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId)

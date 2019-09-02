@@ -180,7 +180,7 @@ class ImmutableByteArray private constructor(
     }
 
     fun map(function: (Byte) -> Byte) = ImmutableByteArray(
-            mData = ByteArray(size) { it -> function(mData[it]) }
+            mData = ByteArray(size) { function(mData[it]) }
     )
 
     override fun isEmpty() = mData.isEmpty()

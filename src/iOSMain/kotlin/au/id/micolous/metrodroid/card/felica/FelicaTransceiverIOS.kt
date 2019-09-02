@@ -38,12 +38,11 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
         val err: NSError?)
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val s = suspendCoroutine<Capsule> { cont ->
+        val (repl, err) = suspendCoroutine<Capsule> { cont ->
             Log.d(TAG, ">>> $data")
             // iOS adds the length byte itself
             tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }
         }
-        val (repl, err) = s
         if (err != null) {
             Log.d(TAG, "<!< $err")
             if (err.code == 100L)

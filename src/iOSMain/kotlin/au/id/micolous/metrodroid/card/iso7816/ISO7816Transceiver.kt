@@ -43,11 +43,10 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
     )
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val s = suspendCoroutine<Capsule> { cont ->
+        val (rep, sw1, sw2, err) = suspendCoroutine<Capsule> { cont ->
             Log.d(TAG, ">>> $data")
             tag.transmit(data.toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }
         }
-        val (rep, sw1, sw2, err) = s
         if (err != null) {
             Log.d(TAG, "<!< $err")
             if (err.code == 100L)

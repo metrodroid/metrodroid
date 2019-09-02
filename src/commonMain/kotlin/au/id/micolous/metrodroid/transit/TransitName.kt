@@ -36,27 +36,25 @@ class TransitName(
     }
 
     fun selectBestName(isShort: Boolean): FormattedString? {
-        val english: String?
         val hasEnglishFull = englishFull != null && !englishFull.isEmpty()
         val hasEnglishShort = englishShort != null && !englishShort.isEmpty()
 
-        if (hasEnglishFull && !hasEnglishShort)
-            english = englishFull
-        else if (!hasEnglishFull && hasEnglishShort)
-            english = englishShort
-        else
-            english = if (isShort) englishShort else englishFull
+        val english: String? = when {
+            hasEnglishFull && !hasEnglishShort -> englishFull
+            !hasEnglishFull && hasEnglishShort -> englishShort
+            isShort -> englishShort
+            else -> englishFull
+        }
 
-        val local: String?
         val hasLocalFull = localFull != null && !localFull.isEmpty()
         val hasLocalShort = localShort != null && !localShort.isEmpty()
 
-        if (hasLocalFull && !hasLocalShort)
-            local = localFull
-        else if (!hasLocalFull && hasLocalShort)
-            local = localShort
-        else
-            local = if (isShort) localShort else localFull
+        val local: String? = when {
+            hasLocalFull && !hasLocalShort -> localFull
+            !hasLocalFull && hasLocalShort -> localShort
+            isShort -> localShort
+            else -> localFull
+        }
 
         if (showBoth() && english != null && !english.isEmpty()
                 && local != null && !local.isEmpty()) {

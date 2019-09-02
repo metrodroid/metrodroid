@@ -21,5 +21,4 @@ package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
-internal abstract class IntercodeLookupSTR(str: String) : En1545LookupSTR(str), IntercodeLookup {
-}
+internal abstract class IntercodeLookupSTR(str: String) : En1545LookupSTR(str), IntercodeLookup

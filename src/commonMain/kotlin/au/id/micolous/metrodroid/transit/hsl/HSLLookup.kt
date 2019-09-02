@@ -82,12 +82,10 @@ object HSLLookup : En1545LookupUnknown() {
         "City A", "A", "B", "C", "D", "E", "F", "G", "H", "I"
     )
 
-    private fun mapWalttiZone(region: Int, id: Int): String {
-        when (region) {
-            WALTTI_OULU -> return lahtiZones[id - 1]
-            WALTTI_LAHTI -> return ouluZones[id - 1]
-            else -> return String(charArrayOf('A' + id - 1))
-        }
+    private fun mapWalttiZone(region: Int, id: Int): String = when (region) {
+        WALTTI_OULU -> lahtiZones[id - 1]
+        WALTTI_LAHTI -> ouluZones[id - 1]
+        else -> String(charArrayOf('A' + id - 1))
     }
 
     private fun walttiNameRegion(id: Int): String? = StationTableReader.getOperatorName("waltti_region", id, true)?.unformatted

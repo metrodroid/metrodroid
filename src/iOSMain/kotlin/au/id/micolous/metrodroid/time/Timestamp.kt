@@ -71,7 +71,7 @@ internal actual fun getDaysFromMillis(millis: Long, tz: MetroTimeZone): DHM {
     val nstz = metroTz2NS(tz)
     val cal = NSCalendar(calendarIdentifier = NSCalendarIdentifierGregorian)
     cal.timeZone = nstz
-    val d = NSDate.dateWithTimeIntervalSince1970(millis / 1000.0)!!
+    val d = NSDate.dateWithTimeIntervalSince1970(millis / 1000.0)
     val comp = cal.componentsInTimeZone(nstz, fromDate = d)
     return DHM(days = YMD(
         year = comp.year.toInt(),
@@ -87,7 +87,7 @@ actual object TimestampFormatter {
     fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
 
     private fun makeRawCalendar(ts: TimestampFull): Calendar = Calendar (
-        time = NSDate.dateWithTimeIntervalSince1970(ts.timeInMillis / 1000.0)!!,
+        time = NSDate.dateWithTimeIntervalSince1970(ts.timeInMillis / 1000.0),
         tz = metroTz2NS(ts.tz))
 
     actual fun longDateFormat(ts: Timestamp) = FormattedString(longDateFormat(makeDateCalendar(ts)))
@@ -98,7 +98,7 @@ actual object TimestampFormatter {
                 is Daystamp -> {
                     val adjusted = TripObfuscator.maybeObfuscateTS(ts.adjust())
                     Calendar (
-                        time = NSDate.dateWithTimeIntervalSince1970(adjusted.daysSinceEpoch * 86400.0)!!,
+                        time = NSDate.dateWithTimeIntervalSince1970(adjusted.daysSinceEpoch * 86400.0),
                         tz = UTC)
                 }
             }

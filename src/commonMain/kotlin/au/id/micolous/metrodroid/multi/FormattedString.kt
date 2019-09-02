@@ -29,12 +29,10 @@ fun FormattedString.equals(other: Any?): Boolean {
     }
 }
 
-expect class FormattedString: Parcelable {
+expect class FormattedString(input: String) : Parcelable {
     val unformatted: String
 
     override fun toString(): String
-
-    constructor(input: String)
 
     operator fun plus(b: String): FormattedString
     operator fun plus(b: FormattedString): FormattedString
@@ -50,14 +48,12 @@ expect class FormattedString: Parcelable {
     }
 }
 
-expect class FormattedStringBuilder {
+expect class FormattedStringBuilder() {
     fun append(value: StringBuilder): FormattedStringBuilder
     fun append(value: String): FormattedStringBuilder
     fun append(value: FormattedString): FormattedStringBuilder
     fun append(value: FormattedString, start: Int, end: Int): FormattedStringBuilder
     fun build(): FormattedString
-
-    constructor()
 }
 
 @Parcelize
@@ -99,11 +95,7 @@ class FormattedStringBuilderFallback {
 
     fun build(): FormattedStringFallback = FormattedStringFallback(sb.toString())
 
-    private val sb: StringBuilder
-
-    constructor() {
-        sb = StringBuilder()
-    }
+    private val sb: StringBuilder = StringBuilder()
 }
 
 

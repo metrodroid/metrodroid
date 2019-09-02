@@ -88,13 +88,11 @@ data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
 
         fun makeSelector(vararg path: Int) = ISO7816Selector(path.map {ISO7816SelectorById(it)})
 
-        fun makeSelector(name: ImmutableByteArray): ISO7816Selector {
-            return ISO7816Selector(listOf<ISO7816SelectorElement>(ISO7816SelectorByName(name)))
-        }
+        fun makeSelector(name: ImmutableByteArray): ISO7816Selector =
+                ISO7816Selector(listOf<ISO7816SelectorElement>(ISO7816SelectorByName(name)))
 
-        fun makeSelector(folder: ImmutableByteArray, file: Int): ISO7816Selector {
-            return ISO7816Selector(listOf(ISO7816SelectorByName(folder), ISO7816SelectorById(file)))
-        }
+        fun makeSelector(folder: ImmutableByteArray, file: Int): ISO7816Selector =
+                ISO7816Selector(listOf(ISO7816SelectorByName(folder), ISO7816SelectorById(file)))
 
         override val descriptor: SerialDescriptor =
                 StringDescriptor.withName("ISO7816Selector")
@@ -103,9 +101,7 @@ data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
             encoder.encodeString(obj.formatString())
         }
 
-        override fun deserialize(decoder: Decoder): ISO7816Selector {
-            return fromString(decoder.decodeString())
-        }
+        override fun deserialize(decoder: Decoder): ISO7816Selector = fromString(decoder.decodeString())
 
         private fun fromString(input: String): ISO7816Selector {
             val path = mutableListOf<ISO7816SelectorElement>()

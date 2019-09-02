@@ -245,8 +245,8 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
     val hasExtraSector: Boolean get() = region == 52
 
     val header
-        get() = when {
-            secno == 8 -> null
+        get() = when (secno) {
+            8 -> null
             else -> HeaderListItem(R.string.siticard_aerial_tramway)
         }
 

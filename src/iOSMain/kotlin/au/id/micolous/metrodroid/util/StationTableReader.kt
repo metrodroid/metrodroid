@@ -60,7 +60,7 @@ object StationTableReaderRegistry {
 
 operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     val buffer = uintArrayOf(0.toUInt())
-    var found: Boolean = false
+    var found = false
     buffer.usePinned { pin ->
        found = this.getUInt32(pin.addressOf(0), forKey = key)
     }
@@ -69,7 +69,7 @@ operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     return null
 }
 
-fun GPBUInt32Array.toList(): List<UInt> = List<UInt>(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
+fun GPBUInt32Array.toList(): List<UInt> = List(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
 
 private const val MAX_VARINT = 10
 

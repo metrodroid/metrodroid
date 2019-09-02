@@ -30,7 +30,7 @@ import java.io.InputStream
 import java.util.*
 
 expect fun openMdstFile(dbName: String): InputStream?
-actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
 
 /**
@@ -64,7 +64,7 @@ private constructor(dbName: String) : StationTableReader {
             null
         }
     }
-    private val mTable: InputStream
+    private val mTable: InputStream = openMdstFile(dbName)!!
     private val mStationsLength: Int
 
     override val notice: String?
@@ -72,7 +72,6 @@ private constructor(dbName: String) : StationTableReader {
 
     class InvalidHeaderException : Exception()
     init {
-        mTable = openMdstFile(dbName)!!
 
         // Read the Magic, and validate it.
         val header = ByteArray(4)

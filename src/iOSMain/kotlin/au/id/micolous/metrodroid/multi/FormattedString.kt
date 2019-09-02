@@ -62,7 +62,7 @@ actual class FormattedString (val attributed: NSAttributedString): Parcelable {
     }
 }
 
-actual class FormattedStringBuilder {
+actual class FormattedStringBuilder actual constructor() {
     actual fun append(value: StringBuilder): FormattedStringBuilder {
         append(value.toString())
         return this
@@ -82,9 +82,5 @@ actual class FormattedStringBuilder {
 
     actual fun build(): FormattedString = FormattedString(mut)
 
-    private val mut: NSMutableAttributedString
-
-    actual constructor() {
-        mut = NSMutableAttributedString()
-    }
+    private val mut: NSMutableAttributedString = NSMutableAttributedString()
 }
