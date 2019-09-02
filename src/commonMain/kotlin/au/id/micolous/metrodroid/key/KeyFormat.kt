@@ -25,7 +25,7 @@ import kotlinx.io.charsets.Charsets
 import kotlinx.serialization.json.Json
 
 /**
- * Used by [Utils.detectKeyFormat] to return the format of a key contained within a
+ * Used by [au.id.micolous.metrodroid.util.Utils.detectKeyFormat] to return the format of a key contained within a
  * file.
  */
 enum class KeyFormat {

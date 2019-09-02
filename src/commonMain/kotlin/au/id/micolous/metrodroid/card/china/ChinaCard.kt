@@ -72,7 +72,7 @@ data class ChinaCard(
             /**
              * Dumps a China card in the field.
              * @param protocol Tag to dump.
-             * @param appData ISO7816 app interface
+             * @param capsule ISO7816 app interface
              * @return Dump of the card contents. Returns null if an unsupported card is in the
              * field.
              * @throws Exception On communication errors.

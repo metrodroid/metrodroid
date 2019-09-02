@@ -54,7 +54,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * Metrodroid never writes to cards (eg: PM3 Magic check), so we don't do all of the checks.
      *
      * @return MIFARE Ultralight card type.
-     * @throws IOException On card communication error (eg: reconnects)
+     * @throws CardTransceiveException On card communication error (eg: reconnects)
      */
     fun getCardType(): UltralightType {
         // Try EV1's GET_VERSION command
@@ -146,7 +146,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
     /**
      * Gets the version data from the card. This only works with MIFARE Ultralight EV1 cards.
      * @return byte[] containing data according to Table 15 in MFU-EV1 datasheet.
-     * @throws IOException on card communication failure, or if the card does not support the
+     * @throws CardTransceiveException on card communication failure, or if the card does not support the
      * command.
      */
     private fun getVersion(): ByteArray = sendRequest(GET_VERSION)
@@ -174,7 +174,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * Gets a nonce for 3DES authentication from the card. This only works on MIFARE Ultralight C
      * cards. Authentication is not implemented in Metrodroid or Android.
      * @return AUTH_ANSWER message from card.
-     * @throws IOException on card communication failure, or if the card does not support the
+     * @throws CardTransceiveException on card communication failure, or if the card does not support the
      * command.
      */
     private fun auth1(): ByteArray {

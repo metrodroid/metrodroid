@@ -43,8 +43,8 @@ actual object Localizer : LocalizerInterface {
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
      *
-     * @param stringResource R.string to localize.
-     * @param formatArgs     Formatting arguments to pass
+     * @param res R.string to localize.
+     * @param v     Formatting arguments to pass
      * @return Localized string
      */
     override fun localizeString(res: StringResource, vararg v: Any?): String {
@@ -66,9 +66,9 @@ actual object Localizer : LocalizerInterface {
      * Given a plural resource (R.plurals), localize the string according to the language preferences
      * on the device.
      *
-     * @param pluralResource R.plurals to localize.
-     * @param quantity       Quantity to use for pluaralisation rules
-     * @param formatArgs     Formatting arguments to pass
+     * @param res R.plurals to localize.
+     * @param count       Quantity to use for pluaralisation rules
+     * @param v     Formatting arguments to pass
      * @return Localized string
      */
     override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {

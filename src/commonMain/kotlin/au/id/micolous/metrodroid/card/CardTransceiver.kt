@@ -28,7 +28,7 @@ interface CardTransceiver {
     /**
      * Gets the UID of the card that is currently connected.
      *
-     * For [Protocol.JIS_X_6319_4] cards, this is the IDm.
+     * For FeliCa cards, this is the IDm.
      *
      * Returns null if no card is presently connected.
      */

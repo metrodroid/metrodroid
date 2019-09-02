@@ -99,7 +99,6 @@ class StationTableReaderImpl
 /**
  * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
  * @param dbName MdST filename
- * @throws IOException On read errors
  * @throws InvalidHeaderException If the file is not a MdST file.
  */
 internal constructor(dbName: String) : StationTableReader {
@@ -155,7 +154,6 @@ internal constructor(dbName: String) : StationTableReader {
      * Gets a Station object, according to the MdST buf definition.
      * @param id Stop ID
      * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
      */
     private fun getStationById(id: Int): Station? {
         val offset: Int
@@ -193,7 +191,6 @@ internal constructor(dbName: String) : StationTableReader {
      * Gets a Metrodroid-native Station object for a given stop ID.
      * @param id Stop ID.
      * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
      */
     override fun getStationById(id: Int, humanReadableID: String): ProtoStation? {
         val ps = getStationById(id) ?: return null

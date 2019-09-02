@@ -59,12 +59,12 @@ open class TransitCurrency (
      *
      * * For `currencyCode: String`: [DEFAULT_DIVISOR] (100).
      *
-     * * For `currencyCode: Int`: Looked up dynamically with [getCurrencyDescriptorByCode].
+     * * For `currencyCode: Int`: Looked up dynamically with [ISO4217.getInfoByCode].
      *
      * Constructors taking a numeric ISO 4217 `currencyCode: Int` will accept unknown currency
      * codes, replacing them with [UNKNOWN_CURRENCY_CODE] (XXX).
      *
-     * Constructors taking a [TransitCurrencyDesc] parameter are intended for
+     * Constructors taking a [ISO4217.CurrencyInfo] parameter are intended for
      * internal (to [TransitCurrency]) use. Do not use them outside of this class.
      *
      * Style note: If the [TransitData] only ever supports a single currency, prefer to use

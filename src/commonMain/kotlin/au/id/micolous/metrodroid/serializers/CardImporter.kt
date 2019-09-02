@@ -8,9 +8,7 @@ import kotlinx.serialization.toUtf8Bytes
 /**
  * Interface for writing card data importers.
  *
- * By default, this adopts a binary-based ([InputStream]) model. If a character (string) model
- * is desired (such as a format which consists only of plain text), then implement [Text]
- * instead.
+ * By default, this adopts a binary-based ([InputStream]) model.
  */
 interface CardImporter {
 

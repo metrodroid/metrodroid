@@ -141,7 +141,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
     /**
      * Gets a list of system codes supported by the card.
      *
-     * @throws TagLostException if the tag went out of the field
+     * @throws CardLostException if the tag went out of the field
      */
     suspend fun getSystemCodeList(): IntArray {
         val res = sendRequest(COMMAND_REQUEST_SYSTEMCODE, 0)

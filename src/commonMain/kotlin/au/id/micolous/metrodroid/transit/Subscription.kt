@@ -203,7 +203,7 @@ abstract class Subscription : Parcelable {
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      *
-     * * Check for [MetrodroidApplication.hideCardNumbers] whenever you show a card number, or
+     * * Check for [Preferences.hideCardNumbers] whenever you show a card number, or
      *   other mark (such as a name) that could be used to identify this card or its
      *   holder.
      *

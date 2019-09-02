@@ -203,7 +203,7 @@ class MD5Ctx {
      * Updates hash with the bytebuffer given (using at maximum length bytes from
      * that buffer)
      *
-     * @param state    Which state is updated
+     * @param stat      Which state is updated
      * @param buffer    Array of bytes to be hashed
      * @param offset    Offset to buffer array
      * @param length    Use at maximum `length' bytes (absolute
