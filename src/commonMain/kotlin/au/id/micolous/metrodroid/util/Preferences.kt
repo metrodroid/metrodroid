@@ -37,4 +37,5 @@ expect object Preferences {
     val obfuscateTripTimes: Boolean
     val debugSpans: Boolean
     val localisePlaces: Boolean
+    val metrodroidVersion: String
 }

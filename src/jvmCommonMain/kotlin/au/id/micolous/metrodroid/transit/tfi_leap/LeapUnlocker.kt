@@ -19,8 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.tfi_leap
 
-import android.util.Log
-
 import au.id.micolous.metrodroid.util.Preferences
 import com.google.protobuf.ByteString
 
@@ -29,12 +27,12 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID
 
-import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.metrodroid.card.desfire.DesfireAuthLog
 import au.id.micolous.metrodroid.card.desfire.DesfireUnlocker
 import au.id.micolous.metrodroid.card.desfire.DesfireManufacturingData
 import au.id.micolous.metrodroid.card.desfire.DesfireProtocol
 import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.proto.Leap
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
@@ -216,7 +214,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
             conn.doOutput = true
             conn.setRequestProperty("Content-Type", null)
 
-            conn.setRequestProperty("User-Agent", "Metrodroid/" + BuildConfig.VERSION_NAME)
+            conn.setRequestProperty("User-Agent", "Metrodroid/" + Preferences.metrodroidVersion)
             val send = conn.outputStream
 
             Log.d(TAG, "Sending $`in`")

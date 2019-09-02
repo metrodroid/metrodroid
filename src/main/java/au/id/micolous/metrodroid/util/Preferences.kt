@@ -25,6 +25,7 @@ import androidx.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.TransitData
@@ -151,4 +152,7 @@ actual object Preferences {
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
+
+    actual val metrodroidVersion: String
+        get() = BuildConfig.VERSION_NAME
 }

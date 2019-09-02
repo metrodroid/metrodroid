@@ -31,4 +31,6 @@ actual object Preferences {
         get() = showLocalAndEnglishActual
     actual val rawLevel: TransitData.RawLevel
         get() = TransitData.RawLevel.UNKNOWN_ONLY
+    actual val metrodroidVersion: String
+        get() = "testing"
 }
