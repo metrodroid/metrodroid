@@ -1,12 +1,11 @@
 package au.id.micolous.metrodroid.serializers
 
+import au.id.micolous.metrodroid.card.Card
 import kotlinx.io.ByteArrayInputStream
 import kotlinx.io.InputStream
-import kotlinx.io.charsets.Charsets
 import kotlinx.serialization.toUtf8Bytes
 import org.w3c.dom.Node
 import javax.xml.parsers.DocumentBuilderFactory
-import au.id.micolous.metrodroid.card.Card
 
 class NodeWrapperImpl(val node: Node): NodeWrapper {
     override val childNodes: List<NodeWrapper>

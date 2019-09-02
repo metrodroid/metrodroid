@@ -20,11 +20,7 @@
 package au.id.micolous.metrodroid.transit.venezia
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.time.Duration
-import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize

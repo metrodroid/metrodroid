@@ -20,14 +20,11 @@ package au.id.micolous.metrodroid.transit.venezia
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 private const val NAME = "Venezia Ultralight"

@@ -21,7 +21,6 @@
 
 package au.id.micolous.metrodroid.card.felica
 
-import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R

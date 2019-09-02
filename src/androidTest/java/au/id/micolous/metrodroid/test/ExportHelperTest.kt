@@ -18,7 +18,6 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.util.ExportHelper
 import au.id.micolous.metrodroid.util.Preferences
 import java.io.ByteArrayInputStream

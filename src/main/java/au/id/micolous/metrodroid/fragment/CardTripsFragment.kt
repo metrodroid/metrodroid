@@ -24,45 +24,31 @@ package au.id.micolous.metrodroid.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.TypedArray
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import androidx.annotation.StringRes
-import androidx.fragment.app.ListFragment
-import androidx.appcompat.content.res.AppCompatResources
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.style.LocaleSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
-
-import java.util.Locale
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
+import android.widget.*
+import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.ListFragment
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.activity.CardInfoActivity
 import au.id.micolous.metrodroid.activity.TripMapActivity
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.time.TimestampFormatter
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.TripObfuscator
+import java.util.*
 
 
 class CardTripsFragment : ListFragment() {

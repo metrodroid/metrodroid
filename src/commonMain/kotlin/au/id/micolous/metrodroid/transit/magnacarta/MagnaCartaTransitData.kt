@@ -18,15 +18,15 @@
  */
 package au.id.micolous.metrodroid.transit.magnacarta
 
-import au.id.micolous.metrodroid.transit.*
-
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
-import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
+import au.id.micolous.metrodroid.transit.TransitIdentity
 
 @Parcelize
 class MagnaCartaTransitData (

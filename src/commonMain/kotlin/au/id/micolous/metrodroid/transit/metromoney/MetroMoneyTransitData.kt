@@ -20,16 +20,16 @@
 package au.id.micolous.metrodroid.transit.metromoney
 
 import au.id.micolous.metrodroid.card.CardType
-
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.Epoch
-import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
+import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray

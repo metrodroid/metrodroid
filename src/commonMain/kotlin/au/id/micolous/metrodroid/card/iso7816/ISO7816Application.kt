@@ -32,7 +32,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlin.reflect.KClass
 
 @Serializable
 data class ISO7816ApplicationCapsule(

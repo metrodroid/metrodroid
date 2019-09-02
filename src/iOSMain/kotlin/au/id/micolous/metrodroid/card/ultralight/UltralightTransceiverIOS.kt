@@ -19,21 +19,16 @@
 
 package au.id.micolous.metrodroid.card.ultralight
 
-import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.toNSData
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlin.coroutines.resumeWithException
+import au.id.micolous.metrodroid.util.toNSData
+import platform.Foundation.NSData
+import platform.Foundation.NSError
 import kotlin.coroutines.suspendCoroutine
-
-import platform.Foundation.*
-import platform.objc.*
-import kotlinx.cinterop.*
 
 class UltralightTransceiverIOS(val tag: SwiftWrapper): CardTransceiver {
     override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()

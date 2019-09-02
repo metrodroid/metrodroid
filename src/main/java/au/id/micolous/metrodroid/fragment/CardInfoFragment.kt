@@ -23,17 +23,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Pair
-
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.util.Preferences
-import com.unnamed.b.atv.model.TreeNode
-
 import au.id.micolous.metrodroid.activity.CardInfoActivity
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.UriListItem
+import com.unnamed.b.atv.model.TreeNode
 
 class CardInfoFragment : TreeListFragment() {
 

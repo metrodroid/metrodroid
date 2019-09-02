@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.zolotayakorona.RussiaTaxCodes
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 

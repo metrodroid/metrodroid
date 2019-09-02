@@ -32,47 +32,29 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
+import android.view.*
+import android.widget.*
 import androidx.annotation.StringRes
 import androidx.fragment.app.ListFragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import android.util.Log
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.CursorAdapter
-import android.widget.ResourceCursorAdapter
-import android.widget.TextView
-import android.widget.Toast
-
-import au.id.micolous.metrodroid.key.*
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.util.Preferences
-import kotlinx.serialization.json.JsonObject
-import org.jetbrains.annotations.NonNls
-import org.json.JSONException
-
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.Objects
-
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.activity.AddKeyActivity
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
+import au.id.micolous.metrodroid.key.*
+import au.id.micolous.metrodroid.key.KeyFormat
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.BetterAsyncTask
-import au.id.micolous.metrodroid.key.KeyFormat
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.toUtf8Bytes
-import kotlin.text.Charsets
+import org.jetbrains.annotations.NonNls
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private var mActionMode: ActionMode? = null

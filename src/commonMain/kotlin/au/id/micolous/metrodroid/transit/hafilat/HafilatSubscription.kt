@@ -20,10 +20,10 @@
 package au.id.micolous.metrodroid.transit.hafilat
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.transit.en1545.*
-
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
+import au.id.micolous.metrodroid.transit.en1545.En1545Parser
+import au.id.micolous.metrodroid.transit.en1545.En1545Subscription
 import au.id.micolous.metrodroid.transit.intercode.IntercodeSubscription
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize

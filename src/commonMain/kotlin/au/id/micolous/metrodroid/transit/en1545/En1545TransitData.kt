@@ -20,8 +20,6 @@
 package au.id.micolous.metrodroid.transit.en1545
 
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.TimestampFormatter
-
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences

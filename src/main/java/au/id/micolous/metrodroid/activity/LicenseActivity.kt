@@ -23,13 +23,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
-
-import java.io.IOException
-import java.io.InputStream
-
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
-import au.id.micolous.metrodroid.util.Utils
+import java.io.IOException
+import java.io.InputStream
 
 class LicenseActivity : MetrodroidActivity() {
 

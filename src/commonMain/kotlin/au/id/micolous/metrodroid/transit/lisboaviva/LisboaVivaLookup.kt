@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.transit.lisboaviva
 
 import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone

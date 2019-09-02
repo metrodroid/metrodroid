@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.card
 
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.io.core.Closeable
 
 /**
  * Abstracts platform-specific interfaces to NFC cards.

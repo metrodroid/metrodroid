@@ -18,8 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.tampere
 
-import au.id.micolous.metrodroid.transit.*
-
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
@@ -29,9 +27,9 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.*
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlin.math.min
 
 private val EPOCH = Epoch.utc(1900, MetroTimeZone.HELSINKI)
 private fun parseTimestamp(day: Int, minute: Int): TimestampFull = EPOCH.dayMinute(day,

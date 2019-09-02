@@ -20,14 +20,14 @@
 
 package au.id.micolous.metrodroid.card.ultralight
 
-import au.id.micolous.metrodroid.card.*
+import au.id.micolous.metrodroid.card.CardProtocol
+import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable

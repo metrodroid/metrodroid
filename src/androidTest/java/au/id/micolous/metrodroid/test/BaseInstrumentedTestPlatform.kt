@@ -21,20 +21,14 @@ package au.id.micolous.metrodroid.test
 
 import android.content.Context
 import android.content.res.AssetManager
-import android.content.res.Resources
-import android.os.Build
-import android.text.Spanned
-import android.text.style.TtsSpan
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.InputStream
-import java.util.*
 
 actual fun <T> runAsync(block: suspend () -> T) {
     runBlocking { block() }

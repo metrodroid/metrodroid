@@ -20,21 +20,15 @@
 package au.id.micolous.metrodroid.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager.widget.ViewPager
 import au.id.micolous.metrodroid.multi.Localizer
-
-import au.id.micolous.farebot.R
 
 class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mViewPager: ViewPager) : FragmentPagerAdapter(mActivity.supportFragmentManager) {
     private val mActionBar: ActionBar? = mActivity.supportActionBar

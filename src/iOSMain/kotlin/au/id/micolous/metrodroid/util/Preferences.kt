@@ -19,9 +19,10 @@
 
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
-import platform.Foundation.*
+import platform.Foundation.NSLocale
+import platform.Foundation.NSUserDefaults
+import platform.Foundation.preferredLanguages
 
 actual object Preferences {
     private fun readBool(name: String) : Boolean = NSUserDefaults.standardUserDefaults.boolForKey(name)

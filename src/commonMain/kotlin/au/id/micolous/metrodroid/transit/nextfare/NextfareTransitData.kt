@@ -26,7 +26,6 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.transit.nextfare.record.*
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord.Companion.Type.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray

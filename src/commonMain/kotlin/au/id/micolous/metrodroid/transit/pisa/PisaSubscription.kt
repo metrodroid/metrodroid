@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.transit.pisa
 
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize

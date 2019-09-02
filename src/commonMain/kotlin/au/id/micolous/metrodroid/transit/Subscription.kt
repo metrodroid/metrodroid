@@ -24,7 +24,6 @@ package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences

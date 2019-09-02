@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.transit.gautrain
 
 import au.id.micolous.metrodroid.card.CardType
-
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
@@ -30,7 +29,6 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.transit.ovc.OVChipIndex
-import au.id.micolous.metrodroid.transit.ovc.OVChipSubscription
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray

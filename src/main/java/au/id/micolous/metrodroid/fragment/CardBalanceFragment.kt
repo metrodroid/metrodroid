@@ -22,25 +22,18 @@ package au.id.micolous.metrodroid.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.ListFragment
-import androidx.appcompat.content.res.AppCompatResources
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
-
+import android.widget.*
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.ListFragment
+import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.activity.CardInfoActivity
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
-
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.ui.ListItem
 
 class CardBalanceFragment : ListFragment() {

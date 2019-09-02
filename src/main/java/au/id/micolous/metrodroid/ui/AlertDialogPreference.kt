@@ -17,12 +17,11 @@
  */
 package au.id.micolous.metrodroid.ui
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
-import androidx.preference.DialogPreference
-import androidx.annotation.RequiresApi
 import android.util.AttributeSet
+import androidx.annotation.RequiresApi
+import androidx.preference.DialogPreference
 
 /**
  * Simple preference for an alert dialog with no other controls.

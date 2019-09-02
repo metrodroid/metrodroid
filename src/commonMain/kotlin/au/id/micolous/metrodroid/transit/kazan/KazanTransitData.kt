@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.HashUtils

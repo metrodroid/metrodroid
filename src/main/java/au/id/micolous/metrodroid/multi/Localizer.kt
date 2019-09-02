@@ -24,20 +24,15 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.LocaleSpan
 import android.text.style.TtsSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
-import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.ui.HiddenSpan
-import androidx.annotation.VisibleForTesting
+import au.id.micolous.metrodroid.util.Preferences
 import java.util.*
-
-import java.util.Locale
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int

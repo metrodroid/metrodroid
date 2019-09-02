@@ -19,13 +19,11 @@
 package au.id.micolous.metrodroid.transit.hafilat
 
 import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
-import au.id.micolous.metrodroid.util.NumberUtils
 
 object HafilatLookup : En1545LookupSTR("hafilat") {
 

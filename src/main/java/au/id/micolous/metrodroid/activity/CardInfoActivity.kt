@@ -21,23 +21,19 @@
 package au.id.micolous.metrodroid.activity
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
-import androidx.viewpager.widget.ViewPager
-import android.text.Spanned
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-
+import androidx.viewpager.widget.ViewPager
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.UnsupportedCardException
@@ -47,7 +43,6 @@ import au.id.micolous.metrodroid.fragment.CardTripsFragment
 import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
-import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.ui.TabPagerAdapter

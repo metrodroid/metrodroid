@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.snapper
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924CardTransitFactory
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData

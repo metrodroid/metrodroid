@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.io.InputStream
 import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.CompositeDecoder.Companion.UNKNOWN_NAME

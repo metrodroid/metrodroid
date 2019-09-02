@@ -19,18 +19,15 @@
  */
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.R
-
 import au.id.micolous.metrodroid.transit.TransitName
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.util.toNSData
+import au.id.micolous.metrodroid.util.StationTableReaderImpl.InvalidHeaderException
+import platform.Foundation.NSBundle
 
 import au.id.micolous.metrodroid.proto.stations.*
-import kotlinx.cinterop.*
-import platform.Foundation.*
+import kotlinx.cinterop.usePinned
+import kotlinx.cinterop.addressOf
 
 actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)

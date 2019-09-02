@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.hsl
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
