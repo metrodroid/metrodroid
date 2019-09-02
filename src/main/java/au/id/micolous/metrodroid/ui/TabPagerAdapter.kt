@@ -31,7 +31,6 @@ import androidx.viewpager.widget.ViewPager
 import au.id.micolous.metrodroid.multi.Localizer
 
 class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mViewPager: ViewPager) : FragmentPagerAdapter(mActivity.supportFragmentManager) {
-    private val mActionBar: ActionBar? = mActivity.supportActionBar
     private val mTabs = ArrayList<TabInfo>()
     private var mCurTransaction: FragmentTransaction? = null
 
