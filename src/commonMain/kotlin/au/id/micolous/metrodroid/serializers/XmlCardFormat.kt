@@ -538,8 +538,8 @@ fun readCardXML(root: NodeWrapper): Card {
     val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
             ignore = setOf("type", "id", "scanned_at", "label"),
             skippable = setOf("ultralightType", "idm"))
-    val tagId = ImmutableByteArray.fromHex(root.attributes["id"]!!)
-    val scannedAt = TimestampFull(timeInMillis = root.attributes["scanned_at"]!!.toLong(),
+    val tagId = ImmutableByteArray.fromHex(root.attributes.getValue("id"))
+    val scannedAt = TimestampFull(timeInMillis = root.attributes.getValue("scanned_at").toLong(),
             tz = MetroTimeZone.LOCAL)
     val label = root.attributes["label"]
     when (cardType.toInt()) {

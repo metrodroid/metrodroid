@@ -62,9 +62,9 @@ object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
         get() = "au.id.micolous.metrodroid.card.iso7816.ISO7816Application"
 
     override fun obj2serializer(obj: ISO7816Application) =
-            Pair(obj.type, klasses[obj.type]!!)
+            Pair(obj.type, klasses.getValue(obj.type))
 
-    override fun str2serializer(name: String) = klasses[name]!!
+    override fun str2serializer(name: String) = klasses.getValue(name)
 }
 
 @Serializable
