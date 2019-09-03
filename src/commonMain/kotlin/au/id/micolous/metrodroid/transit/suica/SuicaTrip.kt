@@ -172,7 +172,7 @@ class SuicaTrip (val balance: Int,
 
             val dateRaw = data.byteArrayToInt(4, 2)
             val startTimestamp = SuicaUtil.extractDate(isProductSale, data)
-            val endTimestamp = startTimestamp
+            @Suppress("UnnecessaryVariable") val endTimestamp = startTimestamp
             // Balance is little-endian
             val balance = data.byteArrayToIntReversed(10, 2)
 

@@ -117,6 +117,7 @@ abstract class ErgTransitData : TransitData() {
             // Read the index data
             val index1 = ErgIndexRecord.recordFromSector(card.getSector(1))
             val index2 = ErgIndexRecord.recordFromSector(card.getSector(2))
+            @Suppress("ConstantConditionIf")
             if (DEBUG) {
                 Log.d(TAG, "Index 1: $index1")
                 Log.d(TAG, "Index 2: $index2")
@@ -136,6 +137,7 @@ abstract class ErgTransitData : TransitData() {
                     val record = activeIndex.readRecord(sectorNum, blockNum, data) ?: continue
 
                     Log.d(TAG, "Sector $sectorNum, Block $blockNum: $record")
+                    @Suppress("ConstantConditionIf")
                     if (DEBUG) {
                         Log.d(TAG, data.getHexString())
                     }

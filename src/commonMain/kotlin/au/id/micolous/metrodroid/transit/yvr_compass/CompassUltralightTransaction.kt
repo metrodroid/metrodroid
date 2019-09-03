@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.nextfareul.NextfareUltralightTransactio
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
 
+@Suppress("CanBeParameter")
 @Parcelize
 class CompassUltralightTransaction (val rawData: ImmutableByteArray,
                                     val baseDate: Int): NextfareUltralightTransaction(rawData, baseDate) {

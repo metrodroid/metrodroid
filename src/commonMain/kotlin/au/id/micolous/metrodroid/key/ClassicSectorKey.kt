@@ -87,6 +87,7 @@ data class ClassicSectorKey internal constructor(
         B,
         MULTIPLE;
 
+        @Suppress("unused")
         val formatRes: StringResource
             get() = when (this) {
                 A -> R.string.classic_key_format_a

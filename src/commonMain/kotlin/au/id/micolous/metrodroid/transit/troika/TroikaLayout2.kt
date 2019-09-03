@@ -5,6 +5,7 @@ import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 // This was seen only as placeholder for Troika card sector 7
+@Suppress("CanBeParameter")
 @Parcelize
 class TroikaLayout2(private val rawData: ImmutableByteArray) : TroikaBlock(
     rawData,

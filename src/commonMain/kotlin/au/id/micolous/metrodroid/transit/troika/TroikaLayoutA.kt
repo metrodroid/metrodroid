@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 // This layout is found on newer single and double-rides
+@Suppress("CanBeParameter")
 @Parcelize
 class TroikaLayoutA(val rawData: ImmutableByteArray,
                     val validityStart : Int = rawData.getBitsFromBuffer(67, 9)) :

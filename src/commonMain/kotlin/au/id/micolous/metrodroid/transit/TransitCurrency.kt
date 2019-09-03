@@ -235,6 +235,7 @@ open class TransitCurrency (
         return result
     }
 
+    @Suppress("FunctionName")
     companion object {
         /**
          * Invalid or no currency information, per ISO 4217.

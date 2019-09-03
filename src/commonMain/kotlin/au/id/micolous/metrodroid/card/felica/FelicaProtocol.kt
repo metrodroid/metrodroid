@@ -119,12 +119,14 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         val length = 2 + idm.size + data.size
         val sendBuffer = ImmutableByteArray.ofB(length, commandCode) + idm + data
 
+        @Suppress("ConstantConditionIf")
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> ${sendBuffer.toHexString()}")
         }
 
         val recvBuffer = tag.transceive(sendBuffer)
 
+        @Suppress("ConstantConditionIf")
         if (ENABLE_TRACING) {
             Log.d(TAG, "<<< " + recvBuffer.toHexString())
         }

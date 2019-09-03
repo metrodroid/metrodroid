@@ -56,6 +56,8 @@
  * Contains internal state of the MD5 class
  */
 
+@file:Suppress("FunctionName")
+
 package au.id.micolous.metrodroid.util
 
 @UseExperimental(ExperimentalUnsignedTypes::class)

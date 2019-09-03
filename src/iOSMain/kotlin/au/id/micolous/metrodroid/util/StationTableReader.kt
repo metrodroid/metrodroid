@@ -198,6 +198,7 @@ internal constructor(dbName: String) : StationTableReader {
                             lineIdList = ps.lineIdArray.toList().map { it.toInt() }, operatorId = ps.operatorId.toInt())
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     private fun makeTransitName(name: Names) =
         TransitName(englishFull = name.english,
                     englishShort = name.englishShort,
