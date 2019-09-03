@@ -22,7 +22,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/import_xml"
@@ -50,4 +50,10 @@
     </item>
     <item android:id="@+id/deduplicate_cards"
         android:title="@string/deduplicate_cards" />
+
+    <item android:id="@+id/search"
+          android:title="@string/cards_search"
+          android:icon="@drawable/material_ic_search_24dp"
+          app:showAsAction="collapseActionView|ifRoom"
+          app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>
