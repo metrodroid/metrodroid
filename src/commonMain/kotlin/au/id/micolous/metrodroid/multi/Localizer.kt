@@ -24,24 +24,23 @@ expect class PluralsResource
 expect class DrawableResource
 
 internal fun stripTts(input: String): String {
-    val a = input
     val b = StringBuilder()
 
     // Find the TTS-exclusive bits
     // They are wrapped in parentheses: ( )
     var x = 0
-    while (x < a.length) {
-        val start = a.indexOf("(", x)
+    while (x < input.length) {
+        val start = input.indexOf("(", x)
         if (start == -1) break
-        var end = a.indexOf(")", start)
+        val end = input.indexOf(")", start)
         if (end == -1) break
 
         // Delete those characters
-        b.append(a, x, start)
+        b.append(input, x, start)
         x = end + 1
     }
-    if (x < a.length)
-        b.append(a, x, a.length)
+    if (x < input.length)
+        b.append(input, x, input.length)
 
     val c = StringBuilder()
     // Find the display-exclusive bits.
@@ -50,7 +49,7 @@ internal fun stripTts(input: String): String {
     while (x < b.length) {
         val start = b.indexOf("[", x)
         if (start == -1) break
-        var end = b.indexOf("]", start)
+        val end = b.indexOf("]", start)
         if (end == -1) break
         c.append(b, x, start).append(b, start + 1, end)
         x = end + 1
