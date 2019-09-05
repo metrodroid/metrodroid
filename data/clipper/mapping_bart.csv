@@ -44,6 +44,6 @@ reader_id,stop_id,stop_code,short_name,comment
 0x04002b,MLBR,,,
 0x04002c,WDUB,,W. Dublin/Pleasanton,
 0x04002d,OAKL,,OAK Airport,
-0x04002e,WARM,,,unconfirmed
+0x04002e,WARM,,,
 0x04002f,PCTR,,,unconfirmed
 0x040030,ANTC,,,unconfirmed
