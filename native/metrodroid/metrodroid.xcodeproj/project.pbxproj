@@ -99,6 +99,23 @@
 		9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderCell.swift; sourceTree = "<group>"; };
 		9C412C102319A39E005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
 		9C412C112319A3C2005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "metrodroid/pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderCell.swift; sourceTree = "<group>"; };
+		9C412C102319A39E005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C112319A3C2005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "metrodroid/pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C132319CF95005AB9C5 /* en-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IN"; path = "en-IN.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C142319CFF2005AB9C5 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C152319CFFC005AB9C5 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "metrodroid/en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C162319D01F005AB9C5 /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C172319D029005AB9C5 /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "metrodroid/en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C182319D049005AB9C5 /* en-IE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IE"; path = "en-IE.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C192319D053005AB9C5 /* en-IE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IE"; path = "metrodroid/en-IE.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C1A2319D088005AB9C5 /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C1B2319D093005AB9C5 /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "metrodroid/en-NZ.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C1C2319D0F9005AB9C5 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C1D2319D103005AB9C5 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "metrodroid/en-US.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C1F2319D190005AB9C5 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Main.strings"; sourceTree = "<group>"; };
+		9C412C202319D1AF005AB9C5 /* en-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-IN"; path = "metrodroid/en-IN.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C412C212319D1CC005AB9C5 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "metrodroid/en-AU.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C4D97292317366A0083FDBF /* SupportedCardsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCardsHeader.swift; sourceTree = "<group>"; };
 		9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
 		9C553FF322D5E5BB00665891 /* NFCReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCReader.swift; sourceTree = "<group>"; };
@@ -411,6 +428,13 @@
 				de,
 				it,
 				el,
+				"en-AU",
+				"en-IN",
+				"en-GB",
+				"en-CA",
+				"en-IE",
+				"en-NZ",
+				"en-US",
 				"pt-BR",
 			);
 			mainGroup = E7B1DFB722CCCE680061481F;
@@ -574,6 +598,13 @@
 				9C7556A322F8CCE5001FFF3B /* el */,
 				9C7556A422F8CCF5001FFF3B /* en */,
 				9C412C112319A3C2005AB9C5 /* pt-BR */,
+				9C412C152319CFFC005AB9C5 /* en-GB */,
+				9C412C172319D029005AB9C5 /* en-CA */,
+				9C412C192319D053005AB9C5 /* en-IE */,
+				9C412C1B2319D093005AB9C5 /* en-NZ */,
+				9C412C1D2319D103005AB9C5 /* en-US */,
+				9C412C202319D1AF005AB9C5 /* en-IN */,
+				9C412C212319D1CC005AB9C5 /* en-AU */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -599,6 +630,13 @@
 				9C7556A022F8CB40001FFF3B /* it */,
 				9C7556A222F8CB5B001FFF3B /* el */,
 				9C412C102319A39E005AB9C5 /* pt-BR */,
+				9C412C132319CF95005AB9C5 /* en-IN */,
+				9C412C142319CFF2005AB9C5 /* en-GB */,
+				9C412C162319D01F005AB9C5 /* en-CA */,
+				9C412C182319D049005AB9C5 /* en-IE */,
+				9C412C1A2319D088005AB9C5 /* en-NZ */,
+				9C412C1C2319D0F9005AB9C5 /* en-US */,
+				9C412C1F2319D190005AB9C5 /* en-AU */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
