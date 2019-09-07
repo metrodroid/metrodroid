@@ -313,6 +313,11 @@
     -->
     <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 
+    <string name="lang_override">Language override</string>
+    <string name="lang_override_desc">Override the application language. Needs application restart to apply</string>
+    <!-- Translators: use system language for app language. -->
+    <string name="lang_default">System default</string>
+
     <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
     <string name="unsupported_tag">Unsupported NFC card media</string>
 

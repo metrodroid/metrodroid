@@ -21,11 +21,14 @@
 package au.id.micolous.metrodroid
 
 import android.app.Application
+import android.content.Context
 import android.os.StrictMode
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.Utils
 
 class MetrodroidApplication : Application() {
     init {
@@ -42,6 +45,15 @@ class MetrodroidApplication : Application() {
                 .detectAll()
                 .penaltyLog()
                 .build())
+    }
+
+    override fun attachBaseContext(base: Context) {
+        // Do not use Preferences.langOverride as it relies on app context
+        // and it has not been inited yet
+        val prefs = PreferenceManager.getDefaultSharedPreferences(base)
+        val v = prefs.getString(Preferences.PREF_LANG_OVERRIDE, "") ?: ""
+        val locale = Utils.effectiveLocale(v)
+        super.attachBaseContext(Utils.languageContext(base, locale))
     }
 
     companion object {
