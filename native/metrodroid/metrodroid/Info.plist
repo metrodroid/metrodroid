@@ -81,6 +81,8 @@
 		<string>0003</string>
 		<string>fe00</string>
 		<string>90b7</string>
+		<string>927a</string>
+		<string>86a7</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
 	<array>
