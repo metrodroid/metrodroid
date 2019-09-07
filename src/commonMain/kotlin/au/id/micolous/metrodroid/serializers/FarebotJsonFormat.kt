@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.util.readToString
 import kotlinx.io.InputStream
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.json.JsonElement
 
 abstract class CardImporterString : CardImporter {
@@ -62,16 +63,20 @@ abstract class CardImporterString : CardImporter {
 } 
 
 object FarebotJsonFormat : CardImporterString() {
+    val jsonParser = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
+
     override fun readCardList(input: String): List<Card> =
-            Json.plain.parse(FarebotCards.serializer(), input).convert()
+            jsonParser.parse(FarebotCards.serializer(), input).convert()
     
     fun readCards(input: JsonElement): List<Card> =
-            Json.plain.fromJson(FarebotCards.serializer(), input).convert()
+            jsonParser.fromJson(FarebotCards.serializer(), input).convert()
 }
 
 object AutoJsonFormat : CardImporterString() {
+    val jsonParser = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
+
     override fun readCardList(input: String): List<Card> =
-            readCards(Json.plain.parseJson(input), input)
+            readCards(jsonParser.parseJson(input), input)
 
     fun readCards(input: JsonElement, plain: String): List<Card> =
         if (input.jsonObject.containsKey("cards") &&
