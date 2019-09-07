@@ -71,7 +71,7 @@ sealed class TransitRegion {
     companion object {
         // On very top put cards tha are most likely to be relevant to the user
         const val SECTION_NEARBY = -2
-        // Then put "Woldwide" cards like EMV and Amiibo
+        // Then put "Worldwide" cards like EMV and Amiibo
         const val SECTION_WORLDWIDE = -1
         // Then goes the rest
         const val SECTION_MAIN = 0
