@@ -455,4 +455,15 @@
     <string name="pisa_abb_mens_pers_pisa_sbe">Abbonamento mensile personale Pisa SBE</string>
     <string name="pisa_carnet_10_bgl_70_min_pisa">CARNET 10 BGL 70 MIN PISA</string>
     <string name="pisa_abb_trim_pers_pisa">Abbonamento trimestrale personale Pisa</string>
+    <string name="copy_card_number">Copia il numero della tessera</string>
+    <string name="card_serial_number">Numero di serie</string>
+    <string name="serial_only_card_description_not_stored">Questa scheda contiene solo un numero di serie. Il suo saldo e la sua storia sono memorizzati solo in un database centrale.</string>
+    <string name="serial_only_card_description_locked">Questa scheda è bloccata e può essere letto solo il numero di serie. Il suo saldo e la sua storia possono essere memorizzati su di esso, ma non sono accessibili.</string>
+    <string name="deduplicate_cards">Deduplicare le carte</string>
+    <string name="card_name_samara_school">Tessera scolare di Samara</string>
+    <string name="card_name_orenburg_school">Tessera scolare di Orenburg</string>
+    <string name="card_name_orenburg_student">Tessera studentesca di Orenburg</string>
+    <string name="card_name_penza">Tessera di trasporto di Penza</string>
+    <string name="card_name_kirov">Tessera di trasporto di Kirov</string>
+    <string name="siticard_aerial_tramway">Funivia</string>
 </resources>
