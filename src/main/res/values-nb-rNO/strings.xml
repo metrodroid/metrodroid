@@ -289,7 +289,6 @@
     <string name="ovc_autocharge_limit">Autoladingsgrense</string>
     <string name="ovc_autocharge_amount">Autoladingsbeløp</string>
     <string name="ovc_autocharge">Autolading</string>
-    <string name="credit_information">Kredittinformasjon</string>
     <string name="localise_places_longdesc">Tekst-til-tale -stemmer fungerer vanligvis bare bra for ett språk.
 \n
 \nLocaleSpan-hint brukes til å merke at tekst er forskjellig i et annet språk. Når det brukes på en stasjon, et stopp, linje eller rutenavn, vil en skjermleser som støtter disse hintene uttale navnet ved bruk av syntetiserte stemmer fra stedets lokale språk, snarere enn språket du har satt opp Android til å bruke.
@@ -592,7 +591,7 @@
     <string name="location_chicago">Chicago, IL, USA</string>
     <string name="location_portland">Portland, OR, USA</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, Frankrike</string>
-    <string name="lisboaviva_unknown_period">Ukjent gyldighet %x/%x</string>
+    <string name="lisboaviva_unknown_period">Ukjent gyldighet %1$x/%2$x</string>
     <string name="subscription_cost">Kostnad</string>
     <string name="location_montpellier">Montpellier, Frankrike</string>
     <string name="maps">Kart</string>
@@ -906,9 +905,8 @@
     </plurals>
     <string name="hsl_zone_station">Sone %s</string>
     <string name="hsl_customer_profile">Kundeprofil</string>
-    <string name="pref_show_hidden_cards_desc_on">Alle kortformer og tilhørende bilder vil vises i \"Støttede kort\"-listen</string>
     <string name="pref_hide_unsupported_ribbon_desc_on">Ustøttede kort viser sitt bilde i sin helhet, uten at noe dekker det</string>
-    <string name="mfc_rwid">Lesing: %s, skriving: %s, økning: %s, senking: %s</string>
+    <string name="mfc_rwid">Lesing: %1$s, skriving: %2$s, økning: %3$s, senking: %4$s</string>
     <string name="mfc_key_a">tast A</string>
     <string name="mfc_key_b">tast B</string>
     <string name="mfc_key_ab">tast A|B</string>

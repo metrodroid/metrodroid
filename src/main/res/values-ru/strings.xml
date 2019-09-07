@@ -638,7 +638,7 @@
     <string name="umarsh_school">Школьник</string>
     <string name="umarsh_student">Студент</string>
     <string name="umarsh_adult">Взрослый</string>
-    <string name="mfc_rwid">Чтение: %s, запись: %s, увеличение: %s, уменьшение: %s</string>
+    <string name="mfc_rwid">Чтение: %1$s, запись: %2$s, увеличение: %3$s, уменьшение: %4$s</string>
     <string name="mfc_key_never">никогда</string>
     <string name="mfc_key_a">ключ A</string>
     <string name="mfc_key_b">ключ B</string>
@@ -719,7 +719,7 @@
         <item quantity="many">%d статических ключей MIFARE Classic</item>
     </plurals>
     <string name="opal_agency_tfnsw">Транспорт для Нового Южного Уэльса</string>
-    <string name="lisboaviva_unknown_period">Неизвестный срок действия %x/%x</string>
+    <string name="lisboaviva_unknown_period">Неизвестный срок действия %1$x/%2$x</string>
     <string name="rkf_status_temp_disabled">Временно или окончательно приостановлено</string>
     <string name="rkf_status_not_ok">Окончательно приостановлено</string>
     <string name="branch_code">Код филиала</string>
@@ -838,7 +838,6 @@
     <string name="opal_action_tap_on_rejected">Неудачная валидация на входе</string>
     <string name="suica_bus_area_line_stop">Автобус: Зона %1$s, маршрут %2$s, остановка %3$s</string>
     <string name="ovc_autocharge_amount">Сумма автопополнения</string>
-    <string name="credit_information">Информация о автопополнении</string>
     <string name="troika_layout">Вид структуры Тройки</string>
     <string name="nfc_options_desc">Резервный парсер для MIFARE Classic, настройки интефейса NFC…</string>
     <string name="kmt_agency">Kereta Commuter Indonesia</string>

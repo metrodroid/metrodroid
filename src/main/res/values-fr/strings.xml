@@ -500,7 +500,6 @@
     <string name="ovc_autocharge_amount">Frais de recharge automatique</string>
     <string name="ovc_autocharge">Recharge automatique</string>
     <string name="date_of_birth">Date de naissance</string>
-    <string name="credit_information">Informations bancaires</string>
     <string name="software_information">Informations sur le logiciel</string>
     <string name="clipboard_error">Impossible d’accéder au presse-papiers</string>
     <string name="convert_timezones">Convertir des fuseaux horaires</string>
@@ -640,7 +639,7 @@
     <string name="issue_date">Date d’émission</string>
     <string name="leap_locked_warning">Cette carte n\'a pas été déverrouillée. Veuillez activer la récupération des clés Leap dans l\'écran Préférences NFC.</string>
     <string name="card_note_leap">Requiert la récupération des clés depuis TFI, cela doit être activé dans l\'écran Préférences NFC.</string>
-    <string name="lisboaviva_unknown_period">Validité inconnue %x/%x</string>
+    <string name="lisboaviva_unknown_period">Validité inconnue %1$x/%2$x</string>
     <string name="about_key_formats">À propos des formats de clé…</string>
     <string name="invalid_json">JSON non valide</string>
     <string name="invalid_key_file">Fichier de clés non valide</string>
@@ -803,7 +802,7 @@
     <string name="umarsh_school">Élève</string>
     <string name="umarsh_student">Étudiant</string>
     <string name="umarsh_adult">Adulte</string>
-    <string name="mfc_rwid">Lecture : %s, écriture : %s, incrément : %s, décrément : %s</string>
+    <string name="mfc_rwid">Lecture : %1$s, écriture : %2$s, incrément : %3$s, décrément : %4$s</string>
     <string name="mfc_key_never">jamais</string>
     <string name="mfc_key_a">clé A</string>
     <string name="mfc_key_b">clé B</string>

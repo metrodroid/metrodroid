@@ -294,7 +294,6 @@
     <string name="ovc_autocharge_amount">Automatisch opladen-bedrag</string>
     <string name="ovc_autocharge">Automatisch opladen</string>
     <string name="date_of_birth">Geboortedatum</string>
-    <string name="credit_information">Kredietinformatie</string>
     <string name="software_information">Software-informatie</string>
     <string name="clipboard_error">Geen toegang tot het klembord</string>
     <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
@@ -595,7 +594,7 @@
         <item quantity="other">%d maanden geldig</item>
     </plurals>
     <string name="location_sophia_antipolis">Sophia Antipolis, Frankrijk</string>
-    <string name="lisboaviva_unknown_period">Onbekende geldigheidsduur %x/%x</string>
+    <string name="lisboaviva_unknown_period">Onbekende geldigheidsduur %1$x/%2$x</string>
     <string name="location_portland">Portland, OR, VS</string>
     <string name="location_montpellier">Montpellier, Frankrijk</string>
     <string name="maps">Kaarten</string>
@@ -880,7 +879,7 @@
         <item quantity="one">Geen resterende dagen</item>
         <item quantity="other">1 resterende dag</item>
     </plurals>
-    <string name="mfc_rwid">Uitgelezen: %s, weggeschreven: %s, verhoging: %s, verlaging: %s</string>
+    <string name="mfc_rwid">Uitgelezen: %1$s, weggeschreven: %2$s, verhoging: %3$s, verlaging: %4$s</string>
     <string name="mfc_key_never">nooit</string>
     <string name="mfc_key_a">sleutel A</string>
     <string name="mfc_key_b">sleutel B</string>
@@ -908,7 +907,6 @@
     <string name="hardware">Hardware</string>
     <string name="android_nfc_settings">Android NFC-instellingen</string>
     <string name="exported_at">Door Metrodroid geëxporteerd naar %s</string>
-    <string name="readme_filename">LEESMIJ</string>
     <string name="last_refill">Laatste keer opgeladen</string>
     <string name="ovc_banned">Geblokkeerd</string>
     <string name="ovc_yes">Ja</string>

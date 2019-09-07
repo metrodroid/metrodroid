@@ -292,7 +292,6 @@
     <string name="location_london">Londres, Reino Unido</string>
     <string name="location_kazan">Kazán, Rusia</string>
     <string name="location_shanghai">Shanghai, China</string>
-    <string name="pref_show_hidden_cards">Mostrar cartas ocultas</string>
     <string name="pref_hide_unsupported_ribbon">Ocultar la cinta \"no compatible\"</string>
     <string name="pref_hide_unsupported_ribbon_desc_off">Las tarjetas que no puedan ser leídas tendrán la advertencia \"no compatible\" en rojo sobre su diseño</string>
     <string name="pref_hide_unsupported_ribbon_desc_on">Las tarjetas no compatibles no tendrán nada que cubra su diseño</string>
@@ -303,7 +302,7 @@
     <string name="location_penza">Penza, Rusia</string>
     <string name="location_yoshkar_ola">Yoshkar-Ola, Rusia</string>
     <string name="card_type_declarative">Declarativa</string>
-    <string name="mfc_rwid">Leer: %s, escribir: %s, incrementar: %s, reducir: %s</string>
+    <string name="mfc_rwid">Leer: %1$s, escribir: %2$s, incrementar: %3$s, reducir: %4$s</string>
     <string name="mfc_key_never">nunca</string>
     <string name="mfc_key_a">clave A</string>
     <string name="mfc_key_b">clave B</string>
@@ -486,8 +485,6 @@
         <item quantity="other">%d bytes</item>
     </plurals>
     <string name="mfc_uid_mode">Longitud de la UID</string>
-    <string name="pref_show_hidden_cards_desc_off">En la lista de \'tarjetas compatibles\' sólo se mostrarán las formas de tarjetas normales y las ilustraciones</string>
-    <string name="pref_show_hidden_cards_desc_on">Todas los tipos de tarjetas y las ilustraciones se mostrarán en la lista \'tarjetas compatibles\'</string>
     <string name="umarsh_school">Alumno</string>
     <string name="desfire_vendor_id">Identificación del proveedor</string>
     <string name="desfire_type">Tipo</string>

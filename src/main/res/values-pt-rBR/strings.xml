@@ -125,7 +125,6 @@
     <string name="auth_retries_summary">Número de vezes para tentar autenticação para cada setor</string>
     <string name="requires_android_17">Requer o Android 4.2 ou posterior.</string>
     <string name="requires_android_21">Requer Android 5.0 ou posterior.</string>
-    <string name="pref_show_hidden_cards">Mostrar cartões ocultos</string>
     <string name="obfuscation_title">Ofuscação</string>
     <string name="obfuscation_card_numbers">Ocultar números do cartão</string>
     <string name="obfuscation_card_numbers_desc">Não mostrar os números dos cartões em nenhum lugar</string>
@@ -151,7 +150,7 @@
     <string name="mfc_other_key">Tentando chave alternativa fornecida pelo usuário para o setor %d…</string>
     <string name="mfc_default_key">Tentando chaves conhecidas para o setor %d…</string>
     <string name="mfc_reading_blocks">Lendo setor %d…</string>
-    <string name="mfc_rwid">Leitura: %s, gravação: %s, incremento: %s, decremento: %s</string>
+    <string name="mfc_rwid">Leitura: %1$s, gravação: %2$s, incremento: %3$s, decremento: %4$s</string>
     <string name="mfc_key_never">nunca</string>
     <string name="mfc_key_a">chave A</string>
     <string name="mfc_key_b">chave B</string>

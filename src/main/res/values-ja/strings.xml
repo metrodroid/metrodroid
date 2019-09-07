@@ -288,7 +288,6 @@
     <string name="ovc_autocharge_amount">自動チャージのチャージ</string>
     <string name="ovc_autocharge">自動チャージ</string>
     <string name="date_of_birth">生年月日</string>
-    <string name="credit_information">クレジット情報</string>
     <string name="software_information">ソフトウェア情報</string>
     <string name="clipboard_error">クリップボードにアクセスできません</string>
     <string name="localise_places">母国語で駅名と路線名を発音します</string>

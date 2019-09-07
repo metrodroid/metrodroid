@@ -111,7 +111,6 @@
     <string name="mfc_fallback">Fallback-Leser</string>
     <string name="requires_android_17">Erfordert Android 4.2 oder höher.</string>
     <string name="requires_android_21">Erfordert Android 5.0 oder höher.</string>
-    <string name="pref_show_hidden_cards">Versteckte Karten anzeigen</string>
     <string name="directions">Halten Sie die Karte am Telefon.</string>
     <string name="import_clipboard">Aus der Zwischenablage einfügen</string>
     <string name="export_filename">Dateiname für den Export</string>
@@ -138,7 +137,7 @@
     <string name="saving_card">Karte wird gespeichert …</string>
     <string name="mfc_reading">MIFARE Classic Karte wird gelesen…</string>
     <string name="mfc_reading_blocks">Sektor %d wird gelesen…</string>
-    <string name="mfc_rwid">Lesen: %s, schreiben: %s, Inkrement: %s, Dekrement: %s</string>
+    <string name="mfc_rwid">Lesen: %1$s, schreiben: %2$s, Inkrement: %3$s, Dekrement: %4$s</string>
     <string name="mfc_key_never">nie</string>
     <string name="mfc_key_a">Schlüssel A</string>
     <string name="mfc_key_b">Schlüssel B</string>
