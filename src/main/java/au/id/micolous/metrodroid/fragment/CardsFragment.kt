@@ -60,7 +60,6 @@ import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.util.Preferences
 import org.jetbrains.annotations.NonNls
 
 import java.io.File
@@ -74,9 +73,7 @@ import au.id.micolous.metrodroid.provider.CardDBHelper
 import au.id.micolous.metrodroid.provider.CardProvider
 import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.util.ExportHelper
-import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.*
 
 class CardsFragment : ExpandableListFragment() {
 
@@ -305,7 +302,7 @@ class CardsFragment : ExpandableListFragment() {
                         tf))
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, Int>(Utils.getErrorMessage(ex), null)
+                return Pair<String, Int>(getErrorMessage(ex), null)
             }
 
         }
@@ -342,7 +339,7 @@ class CardsFragment : ExpandableListFragment() {
                 return Pair<String, File>(null, tf)
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, File>(Utils.getErrorMessage(ex), null)
+                return Pair<String, File>(getErrorMessage(ex), null)
             }
 
         }
@@ -380,7 +377,7 @@ class CardsFragment : ExpandableListFragment() {
                 return null
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Utils.getErrorMessage(ex)
+                return getErrorMessage(ex)
             }
 
         }
@@ -414,7 +411,7 @@ class CardsFragment : ExpandableListFragment() {
                 return Pair<String, Collection<Uri>>(null, iuri)
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, Collection<Uri>>(Utils.getErrorMessage(ex), null)
+                return Pair<String, Collection<Uri>>(getErrorMessage(ex), null)
             }
 
         }
@@ -530,7 +527,7 @@ class CardsFragment : ExpandableListFragment() {
                 try {
                     scan.mTransitIdentity = XmlOrJsonCardFormat.parseString(scan.mData)!!.parseTransitIdentity()
                 } catch (ex: Exception) {
-                    val error = String.format("Error: %s", Utils.getErrorMessage(ex))
+                    val error = String.format("Error: %s", getErrorMessage(ex))
                     scan.mTransitIdentity = TransitIdentity(error, null)
                 }
 
