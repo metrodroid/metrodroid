@@ -19,6 +19,11 @@
 
 package au.id.micolous.metrodroid.util
 
+/**
+ * Implementation of CMAC (cipher-based message authentication code).
+ *
+ * Reference: https://doi.org/10.6028/NIST.SP.800-38B
+ */
 object Cmac {
     private fun cmacPad(input: ImmutableByteArray) = input + ImmutableByteArray.of(0x80.toByte()) +
             ImmutableByteArray(16 - input.size - 1) { 0.toByte() }
