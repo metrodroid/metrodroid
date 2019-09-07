@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
 import android.telephony.TelephonyManager
 import androidx.preference.PreferenceManager
+import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.TransitData
@@ -175,4 +176,7 @@ actual object Preferences {
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
 
     val overrideLang get() = getStringPreference(PREF_LANG_OVERRIDE, "")
+
+    actual val metrodroidVersion: String
+        get() = BuildConfig.VERSION_NAME
 }

@@ -51,4 +51,6 @@ actual object Preferences {
             TransitData.RawLevel.fromString(it) } ?: TransitData.RawLevel.NONE
     val speakBalance
         get() = readBool("pref_key_speak_balance")
+    actual val metrodroidVersion: String
+        get() = (NSBundle.mainBundle.infoDictionary?.get("CFBundleShortVersionString") as? String) ?: "unknown"
 }
