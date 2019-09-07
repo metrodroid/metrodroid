@@ -91,7 +91,7 @@ enum class KeyFormat {
 
             // Now see if it actually parses.
             try {
-                val o = Json.plain.parseJson(kotlinx.io.core.String(bytes = data,
+                val o = CardKeys.jsonParser.parseJson(kotlinx.io.core.String(bytes = data,
                         charset = Charsets.UTF_8)).jsonObject
                 val type = o.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
                 when(type) {
