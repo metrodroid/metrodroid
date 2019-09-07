@@ -55,6 +55,7 @@ class CompassUltralightTransitData (override val capsule: NextfareUltralightTran
                 name = NAME,
                 locationId = R.string.location_vancouver,
                 cardType = CardType.MifareUltralight,
+                region = TransitRegion.CANADA,
                 resourceExtraNote = R.string.compass_note)
 
         internal val TZ = MetroTimeZone.VANCOUVER

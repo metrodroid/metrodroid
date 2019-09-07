@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -65,6 +66,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
                 name = MykiTransitData.NAME,
                 cardType = CardType.MifareDesfire,
                 locationId = R.string.location_victoria_australia,
+                region = TransitRegion.AUSTRALIA,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun parse(desfireCard: DesfireCard): MykiTransitData {

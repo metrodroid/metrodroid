@@ -63,6 +63,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.yoshkar_ola,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x287f00 to UmarshTariff(
@@ -78,6 +79,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.strizh,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x0a7f00 to UmarshTariff(
@@ -102,6 +104,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.barnaul,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x0a002e to UmarshTariff(
@@ -117,6 +120,7 @@ private val systemsMap = mapOf(
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         locationId = R.string.location_kirov,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x5000ff to UmarshTariff(R.string.umarsh_adult)
@@ -130,6 +134,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.siticard,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x0a7f00 to UmarshTariff(
@@ -173,6 +178,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.penza,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x1400ff to UmarshTariff(R.string.umarsh_adult)
@@ -186,6 +192,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.ekarta,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.RUSSIA,
                         preview = true),
                 tariffs = mapOf(
                         0x42640f to UmarshTariff(
@@ -202,6 +209,7 @@ private val systemsMap = mapOf(
                         imageId = R.drawable.crimea_trolley,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         keysRequired = true,
+                        region = TransitRegion.CRIMEA,
                         preview = true),
                 tariffs = mapOf(
                         0x3d7f00 to UmarshTariff(
@@ -377,6 +385,7 @@ object UmarshTransitFactory : ClassicCardTransitFactory {
                     imageId = R.drawable.parus_school,
                     imageAlphaId = R.drawable.iso7810_id1_alpha,
                     keysRequired = true,
+                    region = TransitRegion.CRIMEA,
                     preview = true)
     )
 

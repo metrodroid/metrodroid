@@ -70,6 +70,7 @@ class BilheteUnicoSPTransitData (private val mCredit: Int,
                 name = NAME,
                 locationId = R.string.location_sao_paulo,
                 cardType = CardType.MifareClassic,
+                region = TransitRegion.BRAZIL,
                 keysRequired = true)
 
         private fun parse(card: ClassicCard): BilheteUnicoSPTransitData {

@@ -78,6 +78,7 @@ class CharlieCardTransitData (private val mSerial: Long,
                 imageId = R.drawable.charlie_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 keysRequired = true, keyBundle = "charlie",
+                region = TransitRegion.USA,
                 preview = true)
 
         private fun parse(card: ClassicCard): CharlieCardTransitData {

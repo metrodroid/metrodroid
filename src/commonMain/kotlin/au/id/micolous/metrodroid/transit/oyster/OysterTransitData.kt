@@ -71,6 +71,7 @@ data class OysterTransitData(
         private val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_london,
+                region = TransitRegion.UK,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_oyster,
                 imageId = R.drawable.oyster_card,

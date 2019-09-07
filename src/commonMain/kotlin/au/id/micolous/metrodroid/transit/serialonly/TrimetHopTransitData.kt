@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -72,6 +73,7 @@ data class TrimetHopTransitData(private val mSerial: Int?,
                 cardType = CardType.MifareDesfire,
                 imageId = R.drawable.trimethop_card,
                 locationId = R.string.location_portland,
+                region = TransitRegion.USA,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun parse(card: DesfireCard): TrimetHopTransitData? {

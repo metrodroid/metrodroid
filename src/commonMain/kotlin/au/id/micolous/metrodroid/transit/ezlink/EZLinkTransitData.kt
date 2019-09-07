@@ -71,6 +71,7 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
         name = "EZ-Link",
         iOSSupported = false,
         locationId = R.string.location_singapore,
+        region = TransitRegion.SINGAPORE,
         cardType = CardType.CEPAS)
 
     private val NETS_FLASHPAY_CARD_INFO = CardInfo(
@@ -78,6 +79,7 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
         name = "NETS FlashPay",
         iOSSupported = false,
         locationId = R.string.location_singapore,
+        region = TransitRegion.SINGAPORE,
         cardType = CardType.CEPAS)
 
     override val allCards = listOf(

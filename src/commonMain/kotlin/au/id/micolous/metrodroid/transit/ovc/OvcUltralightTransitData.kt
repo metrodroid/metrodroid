@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 
 private const val NAME = "OV-chipkaart (single-use)"
 private val CARD_INFO = CardInfo(
@@ -34,6 +35,7 @@ private val CARD_INFO = CardInfo(
         locationId = R.string.location_the_netherlands,
         imageId = R.drawable.ovchip_single_card,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
+        region = TransitRegion.NETHERLANDS,
         cardType = CardType.MifareUltralight)
 
 @Parcelize

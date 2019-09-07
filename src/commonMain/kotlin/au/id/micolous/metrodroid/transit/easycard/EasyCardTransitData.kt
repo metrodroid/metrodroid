@@ -67,6 +67,7 @@ data class EasyCardTransitData internal constructor(
                 locationId = R.string.location_taipei,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
+                region = TransitRegion.TAIPEI,
                 preview = true)
 
         internal val MAGIC = ImmutableByteArray.fromHex("0e140001070208030904081000000000")

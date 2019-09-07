@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
@@ -88,6 +89,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
                 name = NAME,
                 locationId = R.string.location_brisbane_seq_australia,
                 cardType = CardType.MifareClassic,
+                region = TransitRegion.AUSTRALIA,
                 keysRequired = true)
 
         val SYSTEM_CODE1 = ImmutableByteArray.fromHex(

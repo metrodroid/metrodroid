@@ -76,5 +76,6 @@ class SupportedCardsViewCell: UICollectionViewCell {
         }
         cardNotice.text = getNoteText(ci)
         cardImage.image = getCardInfoDrawable(ci: ci)
+        layer.cornerRadius = 8.0
     }
 }

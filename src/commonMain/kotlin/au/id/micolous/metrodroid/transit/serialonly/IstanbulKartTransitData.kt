@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -80,6 +81,7 @@ class IstanbulKartTransitData (private val mSerial: String,
                 locationId = R.string.location_istanbul,
                 resourceExtraNote = R.string.card_note_card_number_only,
                 imageId = R.drawable.istanbulkart_card,
+                region = TransitRegion.TURKEY,
                 imageAlphaId = R.drawable.iso7810_id1_alpha)
 
         /**

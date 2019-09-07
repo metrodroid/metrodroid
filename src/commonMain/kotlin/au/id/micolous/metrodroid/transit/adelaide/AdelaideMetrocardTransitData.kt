@@ -137,6 +137,7 @@ class AdelaideMetrocardTransitData (
                 imageId = R.drawable.adelaide,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 resourceExtraNote = R.string.card_note_adelaide,
+                region = TransitRegion.AUSTRALIA,
                 preview = true)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {

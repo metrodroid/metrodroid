@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -55,6 +56,7 @@ data class NolTransitData (private val mSerial: Int?, private val mType: Int?): 
                 imageId = R.drawable.nol,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareDesfire,
+                region = TransitRegion.UAE,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun getSerial(card: DesfireCard) =

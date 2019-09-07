@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -55,6 +56,7 @@ data class PisaTransitData(val calypso: Calypso1545TransitDataCapsule) : Calypso
                 cardType = CardType.ISO7816,
                 imageId = R.drawable.cartamobile,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.ITALY,
                 preview = true)
 
         private val TICKETING_ENV_FIELDS = En1545Container(

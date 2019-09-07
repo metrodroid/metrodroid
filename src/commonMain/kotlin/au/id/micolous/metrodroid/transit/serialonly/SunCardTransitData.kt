@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -60,6 +61,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
                 resourceExtraNote = R.string.card_note_card_number_only,
                 imageId = R.drawable.suncard,
                 keysRequired = false,
+                region = TransitRegion.USA,
                 preview = true)
 
         private fun formatSerial(serial: Int) = serial.toString()

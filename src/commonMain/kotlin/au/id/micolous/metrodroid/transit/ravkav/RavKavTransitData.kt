@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -69,6 +70,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
                 imageId = R.drawable.ravkav_card,
                 name = R.string.card_name_ravkav,
                 locationId = R.string.location_israel,
+                region = TransitRegion.ISRAEL,
                 cardType = CardType.ISO7816,
                 preview = true
         )

@@ -69,6 +69,7 @@ open class TMoneyTransitData internal constructor(
                 name = R.string.card_name_tmoney,
                 locationId = R.string.location_seoul,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.SOUTH_KOREA,
                 preview = true)
 
         val FACTORY: KSX6924CardTransitFactory = object : KSX6924CardTransitFactory {

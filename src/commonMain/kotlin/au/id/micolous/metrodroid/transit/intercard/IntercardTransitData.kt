@@ -56,8 +56,15 @@ class IntercardTransitData (
                 name = NAME,
                 locationId = R.string.location_germany_and_switzerland,
                 imageId = R.drawable.logo_intercard,
+                region = TransitRegion.GERMANY,
                 cardType = CardType.MifareDesfire)
 
+        private val CARD_INFO_CH = CardInfo(
+                name = NAME,
+                locationId = R.string.location_germany_and_switzerland,
+                imageId = R.drawable.logo_intercard,
+                region = TransitRegion.SWITZERLAND,
+                cardType = CardType.MifareDesfire)
 		// FIXME: Apparently this system may be either in euro or in Swiss Francs. Unfortunately
 		// Swiss Franc one still has string "EUR" in file 0, so this suggests a lazy adaptation.
 		// I don't have samples from Germany to compare.
@@ -68,7 +75,7 @@ class IntercardTransitData (
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override val allCards: List<CardInfo>
-                get() = listOf(CARD_INFO)
+                get() = listOf(CARD_INFO, CARD_INFO_CH)
 
             override fun earlyCheck(appIds: IntArray) = APP_ID_BALANCE in appIds
 

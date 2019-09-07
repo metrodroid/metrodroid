@@ -72,6 +72,7 @@ class MetroQTransitData (private val mSerial: Long,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 keysRequired = true, keyBundle = "metroq",
+                region = TransitRegion.USA,
                 preview = true)
 
         private fun parseTimestamp(data: ImmutableByteArray, off: Int): Timestamp {

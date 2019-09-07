@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
@@ -52,6 +53,7 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
                 cardType = CardType.MifareDesfire,
                 imageId = R.drawable.athopcard,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.NEW_ZEALAND,
                 resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun getSerial(card: DesfireCard) =

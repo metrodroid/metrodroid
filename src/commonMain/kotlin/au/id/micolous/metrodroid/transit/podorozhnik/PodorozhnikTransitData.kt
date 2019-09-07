@@ -177,6 +177,7 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_russia,
                 keysRequired = true, keyBundle = "podorozhnik",
+                region = TransitRegion.RUSSIA,
                 preview = true)
 
         private val PODOROZHNIK_EPOCH = Epoch.utc(2010, MetroTimeZone.MOSCOW, -3 * 60)

@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitRegion
 
 internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo"), IntercodeLookupSingle {
     override val cardInfo: CardInfo
@@ -34,6 +35,7 @@ internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo"), IntercodeL
                     imageId = R.drawable.pastel,
                     imageAlphaId = R.drawable.iso7810_id1_alpha,
                     cardType = CardType.ISO7816,
+                    region = TransitRegion.FRANCE,
                     preview = true)
 
     private const val AGENCY_TISSEO = 1

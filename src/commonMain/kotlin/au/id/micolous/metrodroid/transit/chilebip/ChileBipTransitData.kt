@@ -42,6 +42,7 @@ private val CARD_INFO = CardInfo(
         locationId = R.string.location_santiago_chile,
         imageId = R.drawable.chilebip,
         cardType = CardType.MifareClassic,
+        region = TransitRegion.CHILE,
         keysRequired = true, keyBundle = "chilebip")
 
 private fun formatSerial(serial: Long) = serial.toString()

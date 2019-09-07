@@ -27,6 +27,8 @@ actual object Preferences {
         get() = showRawStationIdsActual
     actual val language: String
         get() = languageActual
+    actual val region: String?
+        get() = null
     actual val showBothLocalAndEnglish: Boolean
         get() = showLocalAndEnglishActual
     actual val rawLevel: TransitData.RawLevel

@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -94,6 +95,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.krasnodar_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronakrasnodar",
                         preview = true),
                 0x560200 to CardInfo(
@@ -102,6 +104,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.orenburg_ekg,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronaorenburg",
                         preview = true),
                 0x632600 to CardInfo(
@@ -110,6 +113,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                          imageId = R.drawable.samara_etk,
                          imageAlphaId = R.drawable.iso7810_id1_alpha,
                          cardType = CardType.MifareClassic,
+                         region = TransitRegion.RUSSIA,
                          keysRequired = true, keyBundle = "zolotayakoronasamara",
                          preview = true),
                 0x760500 to CardInfo(
@@ -118,6 +122,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.yaroslavl_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronayaroslavl",
                         preview = true)
         )
@@ -128,6 +133,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.orenburg_ekg,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronaorenburg",
                         preview = true),
                 0x562400 to CardInfo(
@@ -136,6 +142,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.orenburg_ekg,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronaorenburg",
                         preview = true),
                 0x631500 to CardInfo(
@@ -144,6 +151,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.samara_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
                 0x632700 to CardInfo(
@@ -152,6 +160,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.samara_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true),
                 0x633500 to CardInfo(
@@ -160,6 +169,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         imageId = R.drawable.samara_etk,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.MifareClassic,
+                        region = TransitRegion.RUSSIA,
                         keysRequired = true, keyBundle = "zolotayakoronasamara",
                         preview = true)
         )
@@ -175,6 +185,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 imageId = R.drawable.zolotayakorona,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
+                region = TransitRegion.RUSSIA,
                 preview = true)
 
         fun parseTime(time: Int, cardType: Int): Timestamp? {

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val NAVIGO_STR = "navigo"
@@ -115,6 +116,7 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             imageId = R.drawable.navigo,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
+            region = TransitRegion.FRANCE,
             cardType = CardType.ISO7816)
 
     private val NAVIGO_DECOUVERTE_CARD_INFO = CardInfo(
@@ -122,5 +124,6 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             imageId = R.drawable.navigo,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             locationId = R.string.location_paris,
+            region = TransitRegion.FRANCE,
             cardType = CardType.ISO7816)
 }

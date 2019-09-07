@@ -38,12 +38,14 @@ private val ROTORUA_CARD_INFO = CardInfo(
         cardType = CardType.MifareClassic,
         imageId = R.drawable.rotorua,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
+        region = TransitRegion.NEW_ZEALAND,
         preview = true)
 private val BUSIT_CARD_INFO = CardInfo(name = "BUSIT",
         locationId = R.string.location_waikato,
         cardType = CardType.MifareClassic,
         imageId = R.drawable.busitcard,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
+        region = TransitRegion.NEW_ZEALAND,
         preview = true)
 
 private fun formatSerial(serial: Long) = serial.toString(16)

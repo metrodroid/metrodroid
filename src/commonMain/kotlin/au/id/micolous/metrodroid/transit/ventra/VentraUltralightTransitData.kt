@@ -54,6 +54,7 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
                 locationId = R.string.location_chicago,
                 imageId = R.drawable.ventra,
                 cardType = CardType.MifareUltralight,
+                region = TransitRegion.USA,
                 resourceExtraNote = R.string.compass_note)
 
         internal val TZ = MetroTimeZone.CHICAGO

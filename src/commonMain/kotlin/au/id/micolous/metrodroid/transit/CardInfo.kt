@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.multi.StringResource
 class CardInfo(
         val name: String,
         val cardType: CardType,
+        val region: TransitRegion,
         val locationId: StringResource? = null,
         val keysRequired: Boolean = false,
         val keyBundle: String? = null,
@@ -52,6 +53,7 @@ class CardInfo(
     constructor(
             name: StringResource,
             cardType: CardType,
+            region: TransitRegion,
             locationId: StringResource? = null,
             keysRequired: Boolean = false,
             keyBundle: String? = null,
@@ -70,7 +72,8 @@ class CardInfo(
             resourceExtraNote = resourceExtraNote,
             imageId = imageId,
             imageAlphaId = imageAlphaId,
-            iOSSupported = iOSSupported)
+            iOSSupported = iOSSupported,
+            region = region)
 
     val hasBitmap get() = imageId != null
 }

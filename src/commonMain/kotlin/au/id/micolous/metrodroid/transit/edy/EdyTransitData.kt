@@ -64,6 +64,7 @@ class EdyTransitData (override val trips: List<EdyTrip>,
                 imageId = R.drawable.edy_card,
                 name = "Edy",
                 locationId = R.string.location_tokyo,
+                region = TransitRegion.JAPAN,
                 cardType = CardType.FeliCa)
 
         const val FELICA_MODE_EDY_DEBIT = 0x20

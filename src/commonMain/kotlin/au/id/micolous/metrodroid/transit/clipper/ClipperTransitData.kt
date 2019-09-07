@@ -138,6 +138,7 @@ class ClipperTransitData (private val mSerialNumber: Long?,
                 name = "Clipper",
                 locationId = R.string.location_san_francisco,
                 cardType = CardType.MifareDesfire,
+                region = TransitRegion.USA,
                 resourceExtraNote = R.string.card_note_clipper)
 
         const val APP_ID = 0x9011f2

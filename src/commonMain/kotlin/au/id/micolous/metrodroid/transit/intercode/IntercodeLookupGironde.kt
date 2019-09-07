@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitRegion
 
 internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde"), IntercodeLookupSingle {
 
@@ -36,6 +37,7 @@ internal object IntercodeLookupGironde : IntercodeLookupSTR("gironde"), Intercod
             imageId = R.drawable.transgironde,
             imageAlphaId = R.drawable.iso7810_id1_alpha,
             cardType = CardType.ISO7816,
+            region = TransitRegion.FRANCE,
             preview = true)
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?,

@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitDataCapsule
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
@@ -57,6 +58,7 @@ class ManlyFastFerryTransitData(override val capsule: ErgTransitDataCapsule) : E
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,
                 locationId = R.string.location_sydney_australia,
+                region = TransitRegion.AUSTRALIA,
                 cardType = CardType.MifareClassic,
                 keysRequired = true)
 

@@ -144,6 +144,7 @@ class TampereTransitData (
                 locationId = R.string.location_tampere,
                 imageId = R.drawable.tampere,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.FINLAND,
                 cardType = CardType.MifareDesfire)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {

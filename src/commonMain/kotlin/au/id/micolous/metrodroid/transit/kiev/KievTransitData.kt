@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -56,6 +57,7 @@ class KievTransitData (private val mSerial: String,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
                 resourceExtraNote = R.string.card_note_kiev,
+                region = TransitRegion.UKRAINE,
                 keysRequired = true, preview = true, keyBundle = "kiev")
 
         private fun parseTrips(card: ClassicCard): List<KievTrip> =

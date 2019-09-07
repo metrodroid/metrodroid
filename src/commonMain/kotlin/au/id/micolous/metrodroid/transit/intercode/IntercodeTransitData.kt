@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -61,6 +62,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 imageId = R.drawable.envibus,
                 imageAlphaId = R.drawable.envibus_alpha,
                 locationId = R.string.location_sophia_antipolis,
+                region = TransitRegion.FRANCE,
                 cardType = CardType.ISO7816)
 
         private val TAM_MONTPELLIER_CARD_INFO = CardInfo(
@@ -68,6 +70,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 locationId = R.string.location_montpellier,
                 imageId = R.drawable.tam_montpellier,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
+                region = TransitRegion.FRANCE,
                 cardType = CardType.ISO7816)
 
         val TICKET_ENV_FIELDS = En1545Container(

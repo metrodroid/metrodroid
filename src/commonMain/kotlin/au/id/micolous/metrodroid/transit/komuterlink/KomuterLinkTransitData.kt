@@ -40,6 +40,7 @@ private val CARD_INFO = CardInfo(
         imageId = R.drawable.komuterlink,
         imageAlphaId = R.drawable.iso7810_id1_alpha,
         cardType = CardType.MifareClassic,
+        region = TransitRegion.MALAYSIA,
         keysRequired = true)
 
 private fun parseTimestamp(input: ImmutableByteArray, off: Int): TimestampFull {

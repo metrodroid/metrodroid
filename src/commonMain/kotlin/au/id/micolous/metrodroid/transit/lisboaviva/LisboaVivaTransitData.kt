@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
@@ -60,6 +61,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 locationId = R.string.location_lisbon,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.PORTUGAL,
                 preview = true)
 
         private fun parse(card: CalypsoApplication) =

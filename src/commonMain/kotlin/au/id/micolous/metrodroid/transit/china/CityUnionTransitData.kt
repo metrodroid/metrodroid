@@ -73,6 +73,7 @@ class CityUnionTransitData (val validityStart: Int?,
                         imageId = R.drawable.shanghai,
                         imageAlphaId = R.drawable.iso7810_id1_alpha,
                         cardType = CardType.ISO7816,
+                        region = TransitRegion.CHINA,
                         preview = true
                 )
 
@@ -94,6 +95,7 @@ class CityUnionTransitData (val validityStart: Int?,
                 locationId = R.string.location_china_mainland,
                 imageId = R.drawable.city_union,
                 cardType = CardType.ISO7816,
+                region = TransitRegion.CHINA,
                 preview = true)
 
         val FACTORY: ChinaCardTransitFactory = object : ChinaCardTransitFactory {

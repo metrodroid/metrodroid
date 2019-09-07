@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.NZD
 import au.id.micolous.metrodroid.transit.TransitCurrencyRef
+import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitDataCapsule
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
@@ -76,6 +77,7 @@ class ChcMetrocardTransitData(override val capsule: ErgTransitDataCapsule) : Erg
                 locationId = R.string.location_christchurch_nz,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
+                region = TransitRegion.NEW_ZEALAND,
                 resourceExtraNote = R.string.card_note_chc_metrocard)
 
         val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
