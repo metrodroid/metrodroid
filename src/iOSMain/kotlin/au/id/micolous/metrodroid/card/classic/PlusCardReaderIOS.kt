@@ -1,5 +1,5 @@
 /*
- * DesfireCardReaderIOS.kt
+ * PlusCardReaderIOS.kt
  *
  * Copyright 2019 Google
  *
@@ -41,7 +41,7 @@ object PlusCardReaderIOS {
             feedback.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
             feedback.showCardType(null)
 
-            val techWrapper = MifarePlusWrapper.wrap(xfer) ?: throw Exception("Unknown MifarePlus")
+            val techWrapper = PlusProtocol.connect(xfer) ?: throw Exception("Unknown MifarePlus")
 
             val keyRetriever = CardKeysDummy()
 
