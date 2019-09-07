@@ -111,7 +111,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
             print ("json=\(json)")
             let url = try CardPersister.persistCard(card: card, json: json)
             if Preferences.init().speakBalance {
-                if let balance = card.parseTransitData()?.balances?.first?.balance.formatCurrencyString(isBalance: true).unformatted {
+                if let balance = card.safeBalance?.formatCurrencyString(isBalance: true).unformatted {
                     let balanceStr = Utils.localizeString(RKt.R.string.balance_speech, balance)
                     Utils.speakText(voiceOutdata: balanceStr)
                 }

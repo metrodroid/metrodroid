@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.nfcv.NFCVCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -125,6 +126,7 @@ class Card(
             else -> CardType.Unknown
         }
 
+    @NativeThrows
     fun parseTransitIdentity(): TransitIdentity? {
         for (protocol in allProtocols) {
             val td = protocol.parseTransitIdentity()
@@ -134,6 +136,7 @@ class Card(
         return null
     }
 
+    @NativeThrows
     fun parseTransitData(): TransitData? {
         for (protocol in allProtocols) {
             val td = protocol.parseTransitData()
@@ -141,6 +144,24 @@ class Card(
                 return td
         }
         return null
+    }
+
+    // Convenience for Swift interop
+    val safeBalance : TransitCurrency? by lazy {
+        try {
+            parseTransitData()?.balances?.first()?.balance
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    // Convenience for Swift interop
+    val safeTransitIdentity: TransitIdentity? by lazy {
+        try {
+            parseTransitIdentity()
+        } catch (e: Exception) {
+            null
+        }
     }
 
     init {

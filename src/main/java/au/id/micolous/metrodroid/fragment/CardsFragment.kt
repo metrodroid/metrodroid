@@ -51,6 +51,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 import au.id.micolous.metrodroid.card.*
+import androidx.appcompat.widget.SearchView
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.serializers.CardSerializer
@@ -75,7 +76,22 @@ import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.*
 
-class CardsFragment : ExpandableListFragment() {
+class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
+    private var searchText: String? = null
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        searchText = query
+        Log.d(TAG, "search submit $query")
+        (view!!.findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
+        return true
+
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        searchText = newText
+        Log.d(TAG, "search change $newText")
+        (view!!.findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
+        return true
+    }
 
     private val mLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
         override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor> {
@@ -86,24 +102,26 @@ class CardsFragment : ExpandableListFragment() {
         }
 
         override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
-            val scans: MutableMap<Pair<Int, String>, MutableList<Scan>> = HashMap()
-            val cards = ArrayList<Pair<Int, String>>()
+            val scans = mutableMapOf<CardId, MutableList<Scan>>()
+            val cards = ArrayList<CardId>()
+            val reverseCards = mutableMapOf<CardId, Int>()
             cursor.moveToPosition(-1)
             while (cursor.moveToNext()) {
                 val type = cursor.getInt(cursor
                         .getColumnIndex(CardsTableColumns.TYPE))
                 val serial = cursor.getString(cursor
                         .getColumnIndex(CardsTableColumns.TAG_SERIAL))
-                val id = Pair(type, serial)
+                val id = CardId(type, serial)
                 if (!scans.containsKey(id)) {
                     scans[id] = ArrayList()
                     cards.add(id)
+                    reverseCards[id] = cards.size - 1
                 }
                 scans[id]!!.add(Scan(cursor))
             }
 
             Log.d(TAG, "creating adapter " + cards.size)
-            listAdapter = CardsAdapter(activity!!, scans, cards)
+            listAdapter = CardsAdapter(activity!!, scans, cards, reverseCards)
             setListShown(true)
             setEmptyText(getString(R.string.no_scanned_cards))
         }
@@ -117,9 +135,31 @@ class CardsFragment : ExpandableListFragment() {
         internal val mType: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
         internal val mSerial: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
         internal val mData: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
-        internal var mTransitIdentity: TransitIdentity? = null
+        internal val mTransitIdentity: TransitIdentity? by lazy {
+            try {
+                XmlOrJsonCardFormat.parseString(mData)?.parseTransitIdentity()
+            } catch (ex: Exception) {
+                val error = String.format("Error: %s", getErrorMessage(ex))
+                TransitIdentity(error, null)
+            }
+        }
         internal val mId: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
+
+        fun matches(query: String): Boolean {
+            val ti = mTransitIdentity
+            val fields = listOfNotNull(
+                    ti?.name,
+                    ti?.serialNumber,
+                    mLabel,
+                    mSerial,
+                    CardType.parseValue(mType).toString(),
+                    if (ti == null) Localizer.localizeString(R.string.unknown_card) else null
+            )
+            return fields.any { it.contains(query, ignoreCase = true) }
+        }
     }
+
+    private data class CardId (val type: Int, val serial: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,13 +189,12 @@ class CardsFragment : ExpandableListFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.cards_menu, menu)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            var item: MenuItem? = menu.findItem(R.id.import_mct_file)
-            if (item != null)
-                item.isVisible = false
-            item = menu.findItem(R.id.import_mfc_file)
-            if (item != null)
-                item.isVisible = false
+            menu.findItem(R.id.import_mct_file)?.isVisible = false
+            menu.findItem(R.id.import_mfc_file)?.isVisible = false
         }
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenu.ContextMenuInfo) {
@@ -478,60 +517,57 @@ class CardsFragment : ExpandableListFragment() {
     }
 
     private class CardsAdapter internal constructor(ctxt: Context,
-                                                    private val mScans: Map<Pair<Int, String>, List<Scan>>,
-                                                    private val mCards: List<Pair<Int, String>>) : BaseExpandableListAdapter() {
-        private val mLayoutInflater: LayoutInflater
+                                                    private val mScans: Map<CardId, List<Scan>>,
+                                                    private val mCards: List<CardId>,
+                                                    private val mReverseCards: Map<CardId, Int>) : BaseExpandableListAdapter() {
+
+        private var filteredCards: List<CardId>? = null
+
+        private val effectiveCards: List<CardId>
+            get() = filteredCards ?: mCards
 
         init {
-            Log.d(TAG, "Cards adapter " + mCards.size)
-            mLayoutInflater = LayoutInflater.from(ctxt)
+            Log.d(TAG, "Cards adapter " + effectiveCards.size)
+        }
+
+        private val mLayoutInflater: LayoutInflater = LayoutInflater.from(ctxt)
+
+        fun filter(query: String?) {
+            if (query == null) {
+                filteredCards = mCards
+            } else {
+                filteredCards = mCards.filter { mScans[it]?.get(0)?.matches(query) ?: false }
+            }
+            notifyDataSetChanged()
         }
 
         override fun getGroupCount(): Int {
-            Log.d(TAG, "getgroupcount " + mCards.size)
-            return mCards.size
+            Log.d(TAG, "getgroupcount " + effectiveCards.size)
+            return effectiveCards.size
         }
 
-        override fun getChildrenCount(i: Int): Int {
-            return mScans[mCards[i]]!!.size
-        }
+        override fun getChildrenCount(i: Int): Int = mScans.getValue(effectiveCards[i]).size
 
         override fun getGroup(i: Int): Any? {
             Log.d(TAG, "getgroup $i")
-            return mScans[mCards[i]]
+            return mScans[effectiveCards[i]]
         }
 
-        override fun getChild(parent: Int, child: Int): Any {
-            return mScans[mCards[parent]]!![child]
-        }
+        override fun getChild(parent: Int, child: Int): Any = mScans.getValue(effectiveCards[parent])[child]
 
-        override fun getGroupId(i: Int): Long = (i.toLong() + 0x1000000)
+        override fun getGroupId(i: Int): Long = (mReverseCards[effectiveCards[i]] ?: i).toLong() + 0x1000000
 
-        override fun getChildId(parent: Int, child: Int): Long {
-            return mScans[mCards[parent]]!![child].mId.toLong()
-        }
+        override fun getChildId(parent: Int, child: Int): Long = mScans.getValue(effectiveCards[parent])[child].mId.toLong()
 
-        override fun hasStableIds(): Boolean {
-            return true
-        }
+        override fun hasStableIds(): Boolean = true
 
         override fun getGroupView(group: Int, isExpanded: Boolean, convertViewReuse: View?, parent: ViewGroup): View {
             val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.card_name_header,
                         parent, false)
-            val scan = mScans[mCards[group]]!![0]
+            val scan = mScans.getValue(effectiveCards[group])[0]
             val type = scan.mType
             val serial = scan.mSerial
             val label = scan.mLabel
-
-            if (scan.mTransitIdentity == null) {
-                try {
-                    scan.mTransitIdentity = XmlOrJsonCardFormat.parseString(scan.mData)!!.parseTransitIdentity()
-                } catch (ex: Exception) {
-                    val error = String.format("Error: %s", getErrorMessage(ex))
-                    scan.mTransitIdentity = TransitIdentity(error, null)
-                }
-
-            }
 
             val identity = scan.mTransitIdentity
 
@@ -550,12 +586,7 @@ class CardsFragment : ExpandableListFragment() {
                     // User doesn't want to show any card numbers.
                 } else {
                     // User wants to show card numbers (default).
-                    if (identity.serialNumber != null) {
-                        textView2.text = Utils.weakLTR(identity.serialNumber)
-                    } else {
-                        // Fall back to showing the serial number of the NFC chip.
-                        textView2.text = Utils.weakLTR(serial)
-                    }
+                    textView2.text = Utils.weakLTR(identity.serialNumber ?: serial)
                 }
             } else {
                 textView1.setText(R.string.unknown_card)
@@ -571,7 +602,7 @@ class CardsFragment : ExpandableListFragment() {
         override fun getChildView(parent: Int, child: Int, isLast: Boolean, convertViewReuse: View?, viewGroup: ViewGroup): View {
             val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.card_scan_item,
                         viewGroup, false)
-            val scan = mScans[mCards[parent]]!![child]
+            val scan = mScans.getValue(effectiveCards[parent])[child]
             val scannedAt = TripObfuscator.maybeObfuscateTS(TimestampFull(scan.mScannedAt, MetroTimeZone.LOCAL))
 
             val textView1 = convertView.findViewById<TextView>(android.R.id.text1)

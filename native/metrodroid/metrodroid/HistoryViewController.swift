@@ -22,12 +22,14 @@ import Foundation
 import UIKit
 import metrolib
 
-class HistoryViewController : UITableViewController {
+class HistoryViewController : UITableViewController, UISearchBarDelegate {
     class Section {
         let group: CardPersister.Group
         var expanded: Bool
-        init(group: CardPersister.Group) {
+        var idx: Int
+        init(group: CardPersister.Group, idx: Int) {
             self.group = group
+            self.idx = idx
             expanded = false
         }
         var entries: [CardPersister.Entry] {
@@ -35,22 +37,38 @@ class HistoryViewController : UITableViewController {
                 return group.entries
             }
         }
+        func matches(query: String) -> Bool {
+            if (entries.isEmpty) {
+                return false
+            }
+            return entries[0].matches(query: query)
+        }
     }
     var cardHistory: [Section] = []
+    var filteredHistory: [Section]? = nil
+    var query: String? = nil
+    var effectiveHistory: [Section] {
+        get {
+            return filteredHistory ?? cardHistory
+        }
+    }
+    
+    class func loadCards() -> [Section] {
+        do {
+            return try CardPersister.listGroupedCards().enumerated().map { idx, group in Section(group: group, idx: idx) }
+        } catch {
+            return []
+        }
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        do {
-            try cardHistory = CardPersister.listGroupedCards().map { Section(group: $0) }
-        } catch {
-        }
+        cardHistory = HistoryViewController.loadCards()
     }
     
     func reload() {
-        do {
-            try cardHistory = CardPersister.listGroupedCards().map { Section(group: $0) }
-        } catch {
-        }
+        cardHistory = HistoryViewController.loadCards()
+        filter()
         tableView.reloadData()
     }
     
@@ -163,33 +181,26 @@ class HistoryViewController : UITableViewController {
     
     // Return the number of rows for the table.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (cardHistory[section].expanded) ? cardHistory[section].entries.count : 0
+        return (effectiveHistory[section].expanded) ? effectiveHistory[section].entries.count : 0
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return cardHistory.count
+        return effectiveHistory.count
     }
     
     func header(section: Int) -> String {
-        let el = cardHistory[section].entries.first
+        let el = effectiveHistory[section].entries.first
         var hiddenSerial: String? = nil
         if (Preferences.init().hideCardNumbers) {
-            hiddenSerial =  Utils.localizeString(RKt.R.string.hidden_card_number)
+            hiddenSerial = Utils.localizeString(RKt.R.string.hidden_card_number)
         }
         let unknownCard = Utils.localizeString(RKt.R.string.unknown_card)
         let fallback = "\(unknownCard) \(Utils.directedDash) \(hiddenSerial ?? Utils.weakLTR(el?.uid ?? unknownCard))"
-        var card: Card?
-        do {
-            card = try el?.load()
-            let ti = card?.parseTransitIdentity()
-            if (ti != nil) {
-                return "\(ti?.name ?? unknownCard) \(Utils.directedDash) \(card?.label ?? hiddenSerial ?? Utils.weakLTR(ti?.serialNumber ?? el?.uid ?? unknownCard))"
-            } else {
-                return fallback
-            }
-        } catch {
+        guard let info = el?.info else {
             return fallback
         }
+        return "\(info.transitName ?? unknownCard) \(Utils.directedDash) \(info.label ?? hiddenSerial ?? Utils.weakLTR(info.transitSerialNumber ?? el?.uid ?? unknownCard))"
+        
     }
     
     // Provide a cell object for each row.
@@ -199,7 +210,7 @@ class HistoryViewController : UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath)
         
         // Configure the cell’s contents.
-        let el = cardHistory[indexPath.section].entries[indexPath.item]
+        let el = effectiveHistory[indexPath.section].entries[indexPath.item]
         let scanTime = TimestampKt_.date2Timestamp(date: el.date)
         cell.textLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
                                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
@@ -208,7 +219,7 @@ class HistoryViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let el = cardHistory[indexPath.section].entries[indexPath.item]
+        let el = effectiveHistory[indexPath.section].entries[indexPath.item]
         do {
             guard let json = try el.loadJson() else {
                 return
@@ -222,13 +233,13 @@ class HistoryViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let el = cardHistory[indexPath.section].entries[indexPath.item]
+            let el = effectiveHistory[indexPath.section].entries[indexPath.item]
             do {
                 print ("Deleting \(indexPath): \(el.fname)")
                 try el.delete()
-                cardHistory[indexPath.section].group.entries.remove(at: indexPath.item)
-                if (cardHistory[indexPath.section].entries.isEmpty) {
-                    cardHistory.remove(at: indexPath.section)
+                effectiveHistory[indexPath.section].group.entries.remove(at: indexPath.item)
+                if (effectiveHistory[indexPath.section].entries.isEmpty) {
+                    cardHistory.remove(at: effectiveHistory[indexPath.section].idx)
                 }
             
                 tableView.deleteRows(at: [indexPath], with: .fade)
@@ -252,15 +263,35 @@ class HistoryViewController : UITableViewController {
             withIdentifier: "HistoryHeaderCell") as! HistoryHeaderCell
         cell.setState(title: header(section: section),
                       delegate: self, section: section,
-                      expanded: cardHistory[section].expanded)
+                      expanded: effectiveHistory[section].expanded)
         return cell
     }
     
     func toggleSection(sectionNumber: Int) -> Bool {
         print ("Toggle \(sectionNumber)")
-        let expanded = !cardHistory[sectionNumber].expanded
-        cardHistory[sectionNumber].expanded = expanded
+        let expanded = !effectiveHistory[sectionNumber].expanded
+        effectiveHistory[sectionNumber].expanded = expanded
         tableView.reloadSections(NSIndexSet(index: sectionNumber) as IndexSet, with: .automatic)
         return expanded
+    }
+    
+    func filter() {
+        guard let queryCopy = query else {
+            filteredHistory = nil
+            return
+        }
+        if queryCopy == "" {
+            filteredHistory = nil
+            return
+        }
+        
+        filteredHistory = cardHistory.filter { $0.matches(query: queryCopy) }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print ("search \(searchText)")
+        query = searchText
+        filter()
+        tableView.reloadData()
     }
 }

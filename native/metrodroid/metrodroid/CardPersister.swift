@@ -125,6 +125,45 @@ class CardPersister {
             return try CardSerializer.init().fromPersist(input: json)
         }
         
+        class Info {
+            let label: String?
+            let transitName: String?
+            let transitSerialNumber: String?
+            let cardType: CardType
+            
+            init (card: Card) {
+                label = card.label
+                let ti = card.safeTransitIdentity
+                transitName = ti?.name
+                transitSerialNumber = ti?.serialNumber
+                cardType = card.cardType
+            }
+        }
+        
+        lazy var info: Info? = {
+            guard let card = try? load() else {
+                return nil
+            }
+            return Info(card: card)
+        }()
+        
+        func matches(query: String) -> Bool {
+            let inf = info
+            if inf?.label?.localizedCaseInsensitiveContains(query) ?? false
+                || uid.localizedCaseInsensitiveContains(query)
+                || inf?.transitName?.localizedCaseInsensitiveContains(query) ?? false
+                || inf?.transitSerialNumber?.localizedCaseInsensitiveContains(query) ?? false
+                || inf?.cardType.description().localizedCaseInsensitiveContains(query) ?? false
+            {
+                return true
+            }
+            if inf?.transitName == nil
+                && Utils.localizeString(RKt.R.string.unknown_card).localizedCaseInsensitiveContains(query) {
+                return true
+            }
+            return false
+        }
+        
         func delete() throws {
             try FileManager.default.removeItem(at: getUrl())
         }

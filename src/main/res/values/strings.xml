@@ -2402,4 +2402,5 @@
         <item quantity="one">%d card</item>
         <item quantity="other">%d cards</item>
     </plurals>
+    <string name="cards_search">Search</string>
 </resources>
