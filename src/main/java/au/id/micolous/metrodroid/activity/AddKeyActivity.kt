@@ -42,26 +42,18 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-
+import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.key.ClassicCardKeys
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.key.InsertKeyTask
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.key.KeyFormat
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
-
-import kotlinx.serialization.json.JsonObject
-import org.json.JSONException
-import org.json.JSONObject
-
-import java.io.IOException
-import java.io.InputStream
-
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.Json
-import kotlin.text.Charsets
+import kotlinx.serialization.json.JsonObject
+import java.io.IOException
 
 /**
  * Activity for associating a key import with a card.

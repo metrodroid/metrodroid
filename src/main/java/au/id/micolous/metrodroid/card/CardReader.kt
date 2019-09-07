@@ -8,15 +8,13 @@ import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
 import au.id.micolous.metrodroid.card.desfire.DesfireCardReader
 import au.id.micolous.metrodroid.card.felica.FelicaReader
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
+import au.id.micolous.metrodroid.card.nfcv.NFCVCard
+import au.id.micolous.metrodroid.card.nfcv.NFCVCardReader
+import au.id.micolous.metrodroid.card.ultralight.AndroidUltralightTransceiver
+import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReader
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReaderA
 import au.id.micolous.metrodroid.multi.Localizer
-
-import au.id.micolous.metrodroid.card.ultralight.AndroidUltralightTransceiver
-import android.nfc.tech.MifareUltralight
-import au.id.micolous.metrodroid.card.nfcv.NFCVCard
-import au.id.micolous.metrodroid.card.nfcv.NFCVCardReader
-import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.toImmutable
 

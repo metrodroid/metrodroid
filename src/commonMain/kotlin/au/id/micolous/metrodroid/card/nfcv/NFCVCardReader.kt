@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 

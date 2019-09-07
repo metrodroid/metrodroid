@@ -103,10 +103,10 @@ abstract class ClassicKeysImpl : ClassicKeys {
          * Even if a transit operator uses (some) fixed keys, please do not add them here!
          *
          * If you are unable to identify a card by some data on it (such as a "magic string"), then
-         * you should use [HashUtils.checkKeyHash], and include a hashed version of the key in
+         * you should use [au.id.micolous.metrodroid.util.HashUtils.checkKeyHash], and include a hashed version of the key in
          * Metrodroid.
          *
-         * See [SmartRiderTransitData.detectKeyType] for an example of how to do this.
+         * See [au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData.detectKeyType] for an example of how to do this.
          */
         private val WELL_KNOWN_KEYS = listOf(
                 wellKnown("ffffffffffff", "well-known-ff"),

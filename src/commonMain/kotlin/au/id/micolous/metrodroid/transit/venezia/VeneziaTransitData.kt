@@ -25,8 +25,6 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.Duration
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion

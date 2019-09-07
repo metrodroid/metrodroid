@@ -51,10 +51,13 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     constructor(parcel: Parcel) : this(TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel) as CharSequence)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        TextUtils.writeToParcel(spanned, parcel, flags);
+        TextUtils.writeToParcel(spanned, parcel, flags)
     }
 
     override fun describeContents() = 0
+    override fun hashCode(): Int {
+        return spanned.hashCode()
+    }
 
     actual companion object {
         actual fun monospace(input: String): FormattedString {
@@ -89,7 +92,7 @@ actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
     }
 }
 
-actual class FormattedStringBuilder {
+actual class FormattedStringBuilder actual constructor() {
     actual fun append(value: StringBuilder): FormattedStringBuilder {
         ssb.append(value)
         return this
@@ -155,9 +158,6 @@ actual class FormattedStringBuilder {
 
     actual fun build(): FormattedString = FormattedString(ssb)
 
-    private val ssb: SpannableStringBuilder
+    private val ssb: SpannableStringBuilder = SpannableStringBuilder()
 
-    actual constructor() {
-        ssb = SpannableStringBuilder()
-    }
 }

@@ -22,19 +22,14 @@
 package au.id.micolous.metrodroid.time
 
 import android.os.Build
+import android.text.SpannableString
+import android.text.format.DateFormat
+import android.text.style.LocaleSpan
+import android.text.style.TtsSpan
+import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.TripObfuscator
 import java.util.*
-import android.text.style.LocaleSpan
-import android.text.style.TtsSpan
-import android.text.SpannableStringBuilder
-import au.id.micolous.metrodroid.MetrodroidApplication
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.format.DateFormat
-
-fun calendar2ts(c: Calendar?) = if (c != null) TimestampFull(timeInMillis = c.timeInMillis,
-        tz = MetroTimeZone(c.timeZone.id)) else null
 
 actual object TimestampFormatter {
     fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())

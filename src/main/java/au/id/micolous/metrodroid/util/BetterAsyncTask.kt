@@ -23,10 +23,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.os.AsyncTask
-import android.text.TextUtils
 import android.util.Log
 import android.widget.ProgressBar
-
 import au.id.micolous.farebot.R
 
 abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val mActivity: Activity, showLoading: Boolean = true, loadingText: String? = null, private val mFinishOnError: Boolean = false) : AsyncTask<Void, ProgressBar, BetterAsyncTask.TaskResult<Result>>() {

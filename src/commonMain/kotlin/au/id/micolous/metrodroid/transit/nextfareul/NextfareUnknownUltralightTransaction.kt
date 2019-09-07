@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
+@Suppress("CanBeParameter")
 @Parcelize
 class NextfareUnknownUltralightTransaction (val rawData: ImmutableByteArray,
                                             val baseDate: Int): NextfareUltralightTransaction(rawData, baseDate) {

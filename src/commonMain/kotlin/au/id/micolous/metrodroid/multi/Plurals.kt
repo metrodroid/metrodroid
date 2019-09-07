@@ -16,9 +16,9 @@ object Plurals {
       1 -> "one"
       else -> "other"
     }
-    "tzm" -> when {
-      count in 0..1 || count in 11..99 -> "one"
-      else -> "other"
+    "tzm" -> when (count) {
+        in 0..1, in 11..99 -> "one"
+        else -> "other"
     }
     "is", "mk" -> when {
       count % 10 == 1 && count % 100 != 11 -> "one"

@@ -75,10 +75,12 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
             cla: Byte, ins: Byte, p1: Byte, p2: Byte,
             length: Byte, parameters: ImmutableByteArray): ImmutableByteArray {
         val sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters)
+        @Suppress("ConstantConditionIf")
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> $sendBuffer")
         }
         val recvBuffer = mTagTech.transceive(sendBuffer)
+        @Suppress("ConstantConditionIf")
         if (ENABLE_TRACING) {
             Log.d(TAG, "<<< $recvBuffer")
         }

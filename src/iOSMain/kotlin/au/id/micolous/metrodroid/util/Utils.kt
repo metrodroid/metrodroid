@@ -19,9 +19,11 @@
 
 package au.id.micolous.metrodroid.util
 
-import platform.Foundation.*
-import platform.objc.*
-import kotlinx.cinterop.*
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.readBytes
+import kotlinx.cinterop.toCValues
+import platform.Foundation.NSData
+import platform.Foundation.dataWithBytes
 
 fun ByteArray.toNSData(): NSData = memScoped {
     toCValues()

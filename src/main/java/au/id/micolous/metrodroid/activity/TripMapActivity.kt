@@ -23,24 +23,19 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.ActionBar
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import android.util.Log
 import android.view.MenuItem
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
 import android.webkit.WebViewFragment
-
+import androidx.annotation.RequiresApi
+import au.id.micolous.farebot.BuildConfig
+import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.Marker
 import au.id.micolous.metrodroid.util.Preferences
-
-import au.id.micolous.farebot.BuildConfig
-import au.id.micolous.farebot.R
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 class TripMapActivity : MetrodroidActivity() {

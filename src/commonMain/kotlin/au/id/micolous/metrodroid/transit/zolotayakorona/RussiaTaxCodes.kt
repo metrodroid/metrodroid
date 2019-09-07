@@ -9,8 +9,10 @@ import au.id.micolous.metrodroid.util.NumberUtils
 // They are used by Zolotaya Korona and Umarsh
 // This dataset may also include additional codes used by those systems
 object RussiaTaxCodes {
+    @Suppress("FunctionName")
     fun BCDToTimeZone(bcd: Int): MetroTimeZone = TAX_CODES[bcd]?.second ?: MetroTimeZone.MOSCOW
     fun codeToName(regionNum: Int): String = TAX_CODES[NumberUtils.intToBCD(regionNum)]?.first?.let { Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, regionNum)
+    @Suppress("FunctionName")
     fun BCDToName(regionNum: Int): String = TAX_CODES[regionNum]?.first?.let { Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, regionNum.toString(16))
 
     private val TAX_CODES = mapOf(

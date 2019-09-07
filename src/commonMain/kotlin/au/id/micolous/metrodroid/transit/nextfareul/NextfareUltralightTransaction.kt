@@ -95,5 +95,5 @@ abstract class NextfareUltralightTransaction : Transaction {
                 && !isBus && !other.isBus
                 && mRoute == other.mRoute)
 
-    override fun getAgencyName(isShort: Boolean) = null
+    override fun getAgencyName(isShort: Boolean): FormattedString? = null
 }

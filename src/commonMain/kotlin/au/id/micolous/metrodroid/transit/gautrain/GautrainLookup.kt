@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.gautrain
 
-import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR

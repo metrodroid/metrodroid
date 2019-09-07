@@ -20,14 +20,11 @@
 package au.id.micolous.metrodroid.transit.chilebip
 
 import au.id.micolous.metrodroid.card.CardType
-
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull

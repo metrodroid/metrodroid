@@ -43,13 +43,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-private fun getMainAppName(appProprietaryBerTlv: ImmutableByteArray?): ImmutableByteArray? {
-    val l2 = ISO7816TLV.findBERTLV(appProprietaryBerTlv ?: return null,
-            TAG_DISCRETIONARY_DATA, true) ?: return null
-    val l3 = ISO7816TLV.findBERTLV(l2, "61", true) ?: return null
-    return ISO7816TLV.findBERTLV(l3, "4f", false)
-}
-
 private const val LOG_FORMAT = 0x9f4f
 private const val PIN_RETRY = 0x9f17
 private const val TYPE_MAIN = "emv-main"

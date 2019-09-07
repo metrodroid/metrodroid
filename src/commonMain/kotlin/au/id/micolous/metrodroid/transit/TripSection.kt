@@ -27,8 +27,8 @@ data class TripSection internal constructor(val trips: List<Trip>, val date: Tim
         private fun shouldSplit(trips: List<Trip>, position: Int): Boolean {
             if (position == 0) return true
 
-            val date1 = trips[position].let { getDate(it) }
-            val date2 = trips[position - 1]?.let { getDate(it) }
+            val date1 = getDate(trips[position])
+            val date2 = getDate(trips[position - 1])
 
             if (date1 == null && date2 != null) return true
             return if (date1 == null || date2 == null) false else !date1.isSameDay(date2)

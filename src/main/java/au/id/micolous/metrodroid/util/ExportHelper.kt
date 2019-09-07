@@ -135,9 +135,6 @@ object ExportHelper {
         zo.close()
     }
 
-    fun exportCardsXml(context: Context): String = XmlUtils.concatCardsFromString(CardDBHelper.createCursor(context)?.let { cursor ->
-                readCardsXml(cursor) } ?: listOf<String>().iterator())
-
     fun importCards(istream: InputStream,
                     importer: CardImporter,
                     context: Context): Collection<Uri> {

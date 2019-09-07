@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
-import au.id.micolous.metrodroid.multi.VisibleForTesting
 
 /**
  * Constants used in Go card

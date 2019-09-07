@@ -21,21 +21,19 @@
 
 package au.id.micolous.metrodroid.card.cepas
 
-import au.id.micolous.metrodroid.card.iso7816.*
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.time.TimestampFormatter
-
-import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.ezlink.CEPASPurse
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.transit.ezlink.CEPASPurse
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

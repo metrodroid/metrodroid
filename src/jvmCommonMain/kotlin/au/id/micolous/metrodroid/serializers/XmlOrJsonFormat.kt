@@ -6,7 +6,6 @@ import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 import java.io.PushbackInputStream
-import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
 class XmlCardFormat : CardImporter {

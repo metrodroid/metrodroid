@@ -309,7 +309,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.
-            setListShown(false, false)
+            setListShown(shown = false, animate = false)
         }
         mHandler.post(mRequestFocus)
     }
@@ -353,6 +353,6 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
 
     companion object {
 
-        private val INTERNAL_EMPTY_ID = 0x00ff0001
+        private const val INTERNAL_EMPTY_ID = 0x00ff0001
     }
 }

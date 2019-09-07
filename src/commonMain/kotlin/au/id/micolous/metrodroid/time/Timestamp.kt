@@ -357,13 +357,13 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 
     /**
      * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
-     * conversion).  This is designed for [Calendar] values which only have a valid date
+     * conversion).  This is designed for [Daystamp] values which only have a valid date
      * component.
      *
      * This should only be used for debugging logs, in order to ensure consistent
      * information.
      *
-     * @param calendar Date to format
+     * @receiver Date to format
      * @return String representing the date in ISO8601 format.
      */
     private fun isoDateFormat(): String {
@@ -433,7 +433,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
      * Formats a GregorianCalendar in to ISO8601 date and time format in UTC. This should only be
      * used for debugging logs, in order to ensure consistent information.
      *
-     * @param calendar Date/time to format
+     * @receiver Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
     fun isoDateTimeFormat(): String {
@@ -452,7 +452,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
      * Formats a GregorianCalendar in to ISO8601 date and time format in UTC, but with only
      * characters that can be used in filenames on most filesystems.
      *
-     * @param calendar Date/time to format
+     * @receiver Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
     fun isoDateTimeFilenameFormat(): String {

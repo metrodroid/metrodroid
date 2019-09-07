@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 /**
  * Reader for South Korean One Card All Pass Config DF FCI.
  *
- * This is only used as a fall-back if [KSX6924Application] is not available. See
+ * This is only used as a fall-back if [au.id.micolous.metrodroid.card.ksx6924.KSX6924Application] is not available. See
  * [KROCAPConfigDFApplication] for selection logic.
  *
  * Reference: https://github.com/micolous/metrodroid/wiki/South-Korea#a0000004520001

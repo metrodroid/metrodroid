@@ -32,49 +32,39 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.core.content.FileProvider
-import androidx.loader.content.Loader
 import android.util.Log
 import android.util.Pair
-import android.view.ContextMenu
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
 import android.widget.Toast
-
-import au.id.micolous.metrodroid.card.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.FileProvider
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
+import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.MetrodroidApplication
+import au.id.micolous.metrodroid.activity.CardInfoActivity
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.provider.CardDBHelper
+import au.id.micolous.metrodroid.provider.CardProvider
+import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardImporter
-import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.serializers.classic.MctCardImporter
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.util.*
 import org.jetbrains.annotations.NonNls
-
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.ref.WeakReference
-
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.MetrodroidApplication
-import au.id.micolous.metrodroid.activity.CardInfoActivity
-import au.id.micolous.metrodroid.provider.CardDBHelper
-import au.id.micolous.metrodroid.provider.CardProvider
-import au.id.micolous.metrodroid.provider.CardsTableColumns
-import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.util.*
 
 class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     private var searchText: String? = null

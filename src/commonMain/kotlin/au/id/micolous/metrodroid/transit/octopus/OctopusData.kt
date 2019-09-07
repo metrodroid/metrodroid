@@ -42,9 +42,9 @@ class OctopusData {
         private fun getOffset(scanTime: TimestampFull, offsets: List<Pair<TimestampFull, Int>>) : Int {
             var offset = offsets.first().second
 
-            for (it in offsets) {
-                if (scanTime > it.first) {
-                    offset = it.second
+            for ((offsetStart, offsetValue) in offsets) {
+                if (scanTime > offsetStart) {
+                    offset = offsetValue
                 } else {
                     break
                 }

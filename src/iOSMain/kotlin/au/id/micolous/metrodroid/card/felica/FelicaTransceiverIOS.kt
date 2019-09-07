@@ -19,21 +19,15 @@
 
 package au.id.micolous.metrodroid.card.felica
 
-import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.toNSData
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlin.coroutines.resumeWithException
+import au.id.micolous.metrodroid.util.toNSData
+import platform.Foundation.NSData
+import platform.Foundation.NSError
 import kotlin.coroutines.suspendCoroutine
-
-import platform.Foundation.*
-import platform.objc.*
-import kotlinx.cinterop.*
 
 class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): FelicaTransceiver {
     override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
@@ -44,12 +38,11 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
         val err: NSError?)
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val s = suspendCoroutine<Capsule> { cont ->
+        val (repl, err) = suspendCoroutine<Capsule> { cont ->
             Log.d(TAG, ">>> $data")
             // iOS adds the length byte itself
             tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }
         }
-        val (repl, err) = s
         if (err != null) {
             Log.d(TAG, "<!< $err")
             if (err.code == 100L)

@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.multi.Log
-import java.io.File
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 

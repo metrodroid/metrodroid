@@ -20,13 +20,11 @@
 package au.id.micolous.metrodroid.card.ultralight
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
+import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
-
-import platform.Foundation.*
 
 object UltralightCardReaderIOS {
     @NativeThrows

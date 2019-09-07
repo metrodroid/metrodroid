@@ -156,7 +156,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             return IntercodeSubscription.parse(data, tariff shr 4 and 0xff, netID, counter)
         }
 
-        private val NETWORKS = mapOf<Int, IntercodeLookup> (
+        private val NETWORKS = mapOf(
                 0x250064 to IntercodeLookupUnknown(TAM_MONTPELLIER_CARD_INFO),
                 0x250502 to IntercodeLookupOura,
                 0x250901 to IntercodeLookupNavigo,

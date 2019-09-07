@@ -19,18 +19,15 @@
  */
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.R
-
 import au.id.micolous.metrodroid.transit.TransitName
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.util.toNSData
+import au.id.micolous.metrodroid.util.StationTableReaderImpl.InvalidHeaderException
+import platform.Foundation.NSBundle
 
 import au.id.micolous.metrodroid.proto.stations.*
-import kotlinx.cinterop.*
-import platform.Foundation.*
+import kotlinx.cinterop.usePinned
+import kotlinx.cinterop.addressOf
 
 actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)
@@ -63,7 +60,7 @@ object StationTableReaderRegistry {
 
 operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     val buffer = uintArrayOf(0.toUInt())
-    var found: Boolean = false
+    var found = false
     buffer.usePinned { pin ->
        found = this.getUInt32(pin.addressOf(0), forKey = key)
     }
@@ -72,7 +69,7 @@ operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     return null
 }
 
-fun GPBUInt32Array.toList(): List<UInt> = List<UInt>(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
+fun GPBUInt32Array.toList(): List<UInt> = List(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
 
 private const val MAX_VARINT = 10
 
@@ -102,7 +99,6 @@ class StationTableReaderImpl
 /**
  * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
  * @param dbName MdST filename
- * @throws IOException On read errors
  * @throws InvalidHeaderException If the file is not a MdST file.
  */
 internal constructor(dbName: String) : StationTableReader {
@@ -158,7 +154,6 @@ internal constructor(dbName: String) : StationTableReader {
      * Gets a Station object, according to the MdST buf definition.
      * @param id Stop ID
      * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
      */
     private fun getStationById(id: Int): Station? {
         val offset: Int
@@ -196,7 +191,6 @@ internal constructor(dbName: String) : StationTableReader {
      * Gets a Metrodroid-native Station object for a given stop ID.
      * @param id Stop ID.
      * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
      */
     override fun getStationById(id: Int, humanReadableID: String): ProtoStation? {
         val ps = getStationById(id) ?: return null
@@ -204,6 +198,7 @@ internal constructor(dbName: String) : StationTableReader {
                             lineIdList = ps.lineIdArray.toList().map { it.toInt() }, operatorId = ps.operatorId.toInt())
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     private fun makeTransitName(name: Names) =
         TransitName(englishFull = name.english,
                     englishShort = name.englishShort,

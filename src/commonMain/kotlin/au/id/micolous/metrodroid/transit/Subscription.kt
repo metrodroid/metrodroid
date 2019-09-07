@@ -24,7 +24,6 @@ package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Preferences
@@ -204,7 +203,7 @@ abstract class Subscription : Parcelable {
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      *
-     * * Check for [MetrodroidApplication.hideCardNumbers] whenever you show a card number, or
+     * * Check for [Preferences.hideCardNumbers] whenever you show a card number, or
      *   other mark (such as a name) that could be used to identify this card or its
      *   holder.
      *
@@ -269,10 +268,10 @@ abstract class Subscription : Parcelable {
 
             val zones = zones
             if (zones != null && zones.isNotEmpty()) {
-                val zones_list = zones.joinToString { it.toString() }
+                val zonesString = zones.joinToString { it.toString() }
 
                 items.add(ListItem(Localizer.localizePlural(R.plurals.travel_zones,
-                        zones.size, zones.size), zones_list))
+                        zones.size, zones.size), zonesString))
             }
 
             return items.ifEmpty { null }

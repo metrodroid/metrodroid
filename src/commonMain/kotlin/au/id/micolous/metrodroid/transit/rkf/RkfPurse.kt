@@ -105,7 +105,7 @@ data class RkfPurse(private val mStatic: En1545Parsed,
                 version = 3
             if (version > 6 || version == 5)
                 version = 6
-            val dynamic = En1545Parser.parseLeBits(block, TCPU_DYNAMIC_FIELDS[version]!!)
+            val dynamic = En1545Parser.parseLeBits(block, TCPU_DYNAMIC_FIELDS.getValue(version))
             Log.d(TAG, "static = $static, dynamic = $dynamic")
             return RkfPurse(mStatic = static, mDynamic = dynamic, mLookup = lookup)
         }

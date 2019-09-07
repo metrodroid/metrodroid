@@ -20,9 +20,7 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.FormattedString
-
 import platform.Foundation.*
-import platform.objc.*
 
 internal actual fun formatCurrency(value: Int, divisor: Int, currencyCode: String, isBalance: Boolean): FormattedString {
     val prefix: String

@@ -32,7 +32,7 @@ actual object TimestampFormatter {
     actual fun timeFormat(ts: TimestampFull) = FormattedString(timeFormat(makeDateCalendar(ts)))
 
     /** Reference to UTC timezone.  */
-    val UTC = TimeZone.getTimeZone("Etc/UTC")
+    val UTC = TimeZone.getTimeZone("Etc/UTC")!!
 
     private fun formatCalendar(df: DateFormat, c: Calendar): String {
         df.timeZone = c.timeZone

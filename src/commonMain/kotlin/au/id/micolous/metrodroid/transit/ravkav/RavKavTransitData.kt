@@ -45,7 +45,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
         get() = Localizer.localizeString(R.string.card_name_ravkav)
 
     override val info: List<ListItem>?
-        get() = listOfNotNull<ListItem>(
+        get() = listOfNotNull(
                 if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
                     ListItem(R.string.card_type, R.string.card_type_anonymous)
                 } else {

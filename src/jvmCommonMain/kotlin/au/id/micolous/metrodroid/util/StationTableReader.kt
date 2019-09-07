@@ -19,26 +19,18 @@
  */
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.R
-import org.jetbrains.annotations.NonNls
-
-import java.io.InputStream
-import java.io.IOException
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.HashMap
-import java.util.Locale
-
 import au.id.micolous.metrodroid.proto.Stations
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.TransitName
+import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.util.StationTableReaderImpl.InvalidHeaderException
+import org.jetbrains.annotations.NonNls
+import java.io.IOException
+import java.io.InputStream
+import java.util.*
 
 expect fun openMdstFile(dbName: String): InputStream?
-actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
 
 /**
@@ -72,7 +64,7 @@ private constructor(dbName: String) : StationTableReader {
             null
         }
     }
-    private val mTable: InputStream
+    private val mTable: InputStream = openMdstFile(dbName)!!
     private val mStationsLength: Int
 
     override val notice: String?
@@ -80,7 +72,6 @@ private constructor(dbName: String) : StationTableReader {
 
     class InvalidHeaderException : Exception()
     init {
-        mTable = openMdstFile(dbName)!!
 
         // Read the Magic, and validate it.
         val header = ByteArray(4)

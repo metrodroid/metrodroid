@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.CardInfo

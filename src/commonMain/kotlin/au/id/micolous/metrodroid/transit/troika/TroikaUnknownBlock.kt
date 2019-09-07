@@ -6,6 +6,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
+@Suppress("CanBeParameter")
 @Parcelize
 internal class TroikaUnknownBlock(private val rawData: ImmutableByteArray) : TroikaBlock(rawData) {
     override val info: List<ListItem>?

@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.fragment
 
-import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.preference.PreferenceDialogFragmentCompat

@@ -24,6 +24,7 @@
 package au.id.micolous.metrodroid.transit.easycard
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -54,7 +55,7 @@ data class EasyCardTopUp(
 
     override val mode get() = Mode.TICKET_MACHINE
 
-    override val routeName get() = null
+    override val routeName: FormattedString? get() = null
 
     override val humanReadableRouteID get(): String? = null
 

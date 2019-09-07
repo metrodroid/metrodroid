@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.util
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable

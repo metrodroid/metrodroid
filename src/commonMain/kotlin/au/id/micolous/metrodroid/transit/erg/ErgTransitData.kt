@@ -117,6 +117,7 @@ abstract class ErgTransitData : TransitData() {
             // Read the index data
             val index1 = ErgIndexRecord.recordFromSector(card.getSector(1))
             val index2 = ErgIndexRecord.recordFromSector(card.getSector(2))
+            @Suppress("ConstantConditionIf")
             if (DEBUG) {
                 Log.d(TAG, "Index 1: $index1")
                 Log.d(TAG, "Index 2: $index2")
@@ -136,6 +137,7 @@ abstract class ErgTransitData : TransitData() {
                     val record = activeIndex.readRecord(sectorNum, blockNum, data) ?: continue
 
                     Log.d(TAG, "Sector $sectorNum, Block $blockNum: $record")
+                    @Suppress("ConstantConditionIf")
                     if (DEBUG) {
                         Log.d(TAG, data.getHexString())
                     }
@@ -160,10 +162,10 @@ abstract class ErgTransitData : TransitData() {
         }
 
         // Flipping this to true shows more data from the records in Logcat.
-        private val DEBUG = true
+        private const val DEBUG = true
         private const val TAG = "ErgTransitData"
 
-        internal val NAME = "ERG"
+        internal const val NAME = "ERG"
         val SIGNATURE = byteArrayOf(0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01)
         val FALLBACK_FACTORY: ClassicCardTransitFactory = ErgTransitFactory()
 

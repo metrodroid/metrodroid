@@ -52,7 +52,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
     @VisibleForTesting
     val profile: String?
         get() {
-        val prof = parsed.getInt(CUSTOMER_PROFILE)
+            val prof = parsed.getInt(CUSTOMER_PROFILE)
             when (prof) {
                 null -> {}
                 1 -> return Localizer.localizeString(R.string.hsl_adult)

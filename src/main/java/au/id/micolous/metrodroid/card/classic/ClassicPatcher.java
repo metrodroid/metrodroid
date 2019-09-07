@@ -29,11 +29,14 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.util.Log;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ClassicPatcher {
     private final static String TAG = "ClassicPatcher";
 
-    public static MifareClassic getTech(Tag tag) {
+    @Nullable
+    public static MifareClassic getTech(@NotNull Tag tag) {
         try {
             return MifareClassic.get(tag);
         } catch (NullPointerException e) {
@@ -58,11 +61,8 @@ public class ClassicPatcher {
      * @param tag The broken tag.
      * @return The fixed tag.
      */
-    private static Tag patchTag(Tag tag) {
-        if (tag == null) {
-            return null;
-        }
-
+    @NotNull
+    private static Tag patchTag(@NotNull Tag tag) {
         @NonNls String[] sTechList = tag.getTechList();
         Parcel oldParcel;
         Parcel newParcel;

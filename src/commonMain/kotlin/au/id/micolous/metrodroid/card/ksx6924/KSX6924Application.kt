@@ -121,7 +121,7 @@ data class KSX6924Application (
     }
 
     companion object {
-        private val TAG = "KSX6924Application"
+        private const val TAG = "KSX6924Application"
 
         val APP_NAME = listOf(
                 // T-Money, Snapper

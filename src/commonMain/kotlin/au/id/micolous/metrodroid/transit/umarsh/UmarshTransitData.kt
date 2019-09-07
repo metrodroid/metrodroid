@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.zolotayakorona.RussiaTaxCodes
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -256,8 +255,8 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
     val hasExtraSector: Boolean get() = region == 52
 
     val header
-        get() = when {
-            secno == 8 -> null
+        get() = when (secno) {
+            8 -> null
             else -> HeaderListItem(R.string.siticard_aerial_tramway)
         }
 

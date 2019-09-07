@@ -283,7 +283,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             // Stub
             if (version > 5)
                 version = 5
-            return RkfTCSTTrip(En1545Parser.parseLeBits(record, FIELDS[version]!!), lookup)
+            return RkfTCSTTrip(En1545Parser.parseLeBits(record, FIELDS.getValue(version)), lookup)
         }
     }
 }

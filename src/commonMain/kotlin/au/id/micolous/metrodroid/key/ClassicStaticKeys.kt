@@ -22,9 +22,7 @@ package au.id.micolous.metrodroid.key
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.content
 import kotlinx.serialization.json.json
 
 /**

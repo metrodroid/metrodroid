@@ -46,8 +46,8 @@ class ListItemAdapter(context: Context, items: List<ListItem>) : ArrayAdapter<Li
                 parent, false)
 
         val item = getItem(position)
-        val text1: TextView? = convertView.findViewById<TextView>(android.R.id.text1)
-        val text2: TextView? = convertView.findViewById<TextView>(android.R.id.text2)
+        val text1: TextView? = convertView.findViewById(android.R.id.text1)
+        val text2: TextView? = convertView.findViewById(android.R.id.text2)
 
         text1?.text = item?.text1?.spanned
         if (item !is HeaderListItem) {

@@ -76,8 +76,7 @@ interface StationTableReader {
         }
 
         fun getStation(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): Station {
-            val s = getStationNoFallback(reader, id, humanReadableId) ?: return Station.unknown(humanReadableId)
-            return s
+            return getStationNoFallback(reader, id, humanReadableId) ?: return Station.unknown(humanReadableId)
         }
 
         fun getOperatorDefaultMode(reader: String?, id: Int): Trip.Mode {

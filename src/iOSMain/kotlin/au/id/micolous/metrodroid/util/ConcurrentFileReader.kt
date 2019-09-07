@@ -89,13 +89,13 @@ class ConcurrentFileReader private constructor(
         fun getLength(fd: Int): Long {
             val ret = lseek (fd, 0, SEEK_END)
             lseek (fd, 0, SEEK_SET)
-            return ret.toLong()
+            return ret
         }
         fun openFile(path: String): ConcurrentFileReader? {
             Log.d(TAG, "Opening $path")
             val fd = open(path, O_RDONLY)
             if (fd < 0) {
-                Log.w(TAG, "Error: ${errno}")
+                Log.w(TAG, "Error: $errno")
                 return null
             }
             Log.d(TAG, "Success")

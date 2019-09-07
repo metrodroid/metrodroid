@@ -19,11 +19,11 @@
 package au.id.micolous.metrodroid.util
 
 /**
- * [ifTrue] returns [lazyValue] if [condition] is true, or null otherwise.
+ * [ifTrue] returns [lazyValue] if [this] is true, or null otherwise.
  *
  * [lazyValue] itself may be nullable.
  *
- * This is similar to [takeIf], but will not evaluate the closure in [lazyValue] if [condition]
+ * This is similar to [takeIf], but will not evaluate the closure in [lazyValue] if [this]
  * is false.
  */
 inline fun <T>Boolean.ifTrue(lazyValue: () -> T?) : T? {
@@ -34,11 +34,11 @@ inline fun <T>Boolean.ifTrue(lazyValue: () -> T?) : T? {
 }
 
 /**
- * [ifFalse] returns [lazyValue] if [condition] is false, or null otherwise.
+ * [ifFalse] returns [lazyValue] if [this] is false, or null otherwise.
  *
  * [lazyValue] itself may be nullable.
  *
- * This is similar to [takeUnless], but will not evaluate the closure in [lazyValue] if [condition]
+ * This is similar to [takeUnless], but will not evaluate the closure in [lazyValue] if [this]
  * is true.
  */
 inline fun <T>Boolean.ifFalse(lazyValue: () -> T?) : T? {

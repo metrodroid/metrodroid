@@ -159,7 +159,7 @@ object DesfireCardReader {
         return DesfireCard(manufData, apps, isPartialRead = false, appListLocked = appListLocked)
     }
 
-    suspend private fun wrap(cmd: Byte, f: suspend () -> ImmutableByteArray): RawDesfireFile? {
+    private suspend fun wrap(cmd: Byte, f: suspend () -> ImmutableByteArray): RawDesfireFile? {
         try {
             return RawDesfireFile(null, f(), readCommand=cmd)
         } catch (e: DesfireProtocol.PermissionDeniedException) {

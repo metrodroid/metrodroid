@@ -68,17 +68,17 @@ class ErgIndexRecord private constructor(
 
             var o = 6
             for (x in 3..15) {
-                allocations.put(o + x, block0.byteArrayToInt(x, 1))
+                allocations[o + x] = block0.byteArrayToInt(x, 1)
             }
 
             o += 16
             repeat(16) {
-                allocations.put(o + it, block1.byteArrayToInt(it, 1))
+                allocations[o + it] = block1.byteArrayToInt(it, 1)
             }
 
             o += 16
             repeat(10) {
-                allocations.put(o + it, block2.byteArrayToInt(it, 1))
+                allocations[o + it] = block2.byteArrayToInt(it, 1)
             }
 
             val version2 = block2.byteArrayToInt(11, 2)

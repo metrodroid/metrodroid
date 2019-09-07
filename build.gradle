@@ -562,7 +562,7 @@ android {
     }
 
     applicationVariants.all { variant ->
-        if (variant.buildType.name.equals("debug")) {
+        if (variant.buildType.name == "debug") {
             variant.mergedFlavor.resourceConfigurations.add("en-rXA")
             variant.mergedFlavor.resourceConfigurations.add("ar-rXB")
         }

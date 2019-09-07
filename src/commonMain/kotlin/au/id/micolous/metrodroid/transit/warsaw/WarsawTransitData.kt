@@ -26,10 +26,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray

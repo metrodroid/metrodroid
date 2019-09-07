@@ -19,10 +19,8 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.content.Context
 import android.content.res.Resources
 import android.os.Build
-
 import java.util.*
 
 object LocaleTools {

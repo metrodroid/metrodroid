@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.io.InputStream
 import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.CompositeDecoder.Companion.UNKNOWN_NAME
@@ -539,8 +538,8 @@ fun readCardXML(root: NodeWrapper): Card {
     val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
             ignore = setOf("type", "id", "scanned_at", "label"),
             skippable = setOf("ultralightType", "idm"))
-    val tagId = ImmutableByteArray.fromHex(root.attributes["id"]!!)
-    val scannedAt = TimestampFull(timeInMillis = root.attributes["scanned_at"]!!.toLong(),
+    val tagId = ImmutableByteArray.fromHex(root.attributes.getValue("id"))
+    val scannedAt = TimestampFull(timeInMillis = root.attributes.getValue("scanned_at").toLong(),
             tz = MetroTimeZone.LOCAL)
     val label = root.attributes["label"]
     when (cardType.toInt()) {

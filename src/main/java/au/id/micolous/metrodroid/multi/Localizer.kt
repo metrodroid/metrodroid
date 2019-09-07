@@ -20,25 +20,19 @@
 
 package au.id.micolous.metrodroid.multi
 
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.LocaleSpan
 import android.text.style.TtsSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
-import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.ui.HiddenSpan
-import androidx.annotation.VisibleForTesting
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import java.util.*
-
-import java.util.Locale
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int
@@ -49,8 +43,8 @@ actual object Localizer : LocalizerInterface {
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
      *
-     * @param stringResource R.string to localize.
-     * @param formatArgs     Formatting arguments to pass
+     * @param res R.string to localize.
+     * @param v     Formatting arguments to pass
      * @return Localized string
      */
     override fun localizeString(res: StringResource, vararg v: Any?): String {
@@ -72,9 +66,9 @@ actual object Localizer : LocalizerInterface {
      * Given a plural resource (R.plurals), localize the string according to the language preferences
      * on the device.
      *
-     * @param pluralResource R.plurals to localize.
-     * @param quantity       Quantity to use for pluaralisation rules
-     * @param formatArgs     Formatting arguments to pass
+     * @param res R.plurals to localize.
+     * @param count       Quantity to use for pluaralisation rules
+     * @param v     Formatting arguments to pass
      * @return Localized string
      */
     override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {

@@ -1,7 +1,7 @@
 package au.id.micolous.metrodroid.multi
 
 actual object Log {
-    private fun ignoreExceptions(f: () -> Unit): Unit {
+    private fun ignoreExceptions(f: () -> Unit) {
         try {
             f()
         } catch (e: Exception) {

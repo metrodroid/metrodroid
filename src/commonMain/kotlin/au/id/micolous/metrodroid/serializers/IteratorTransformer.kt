@@ -24,7 +24,7 @@ package au.id.micolous.metrodroid.serializers
  * This implements similar functionality to Guice's Iterators.transform method.
  *
  * @param iterator The iterator to consume
- * @param transform A [FunctionalInterface] that transforms type [T] into [R].
+ * @param transform A function that transforms type [T] into [R].
  * @param T The source type
  * @param R The destination type
  */
