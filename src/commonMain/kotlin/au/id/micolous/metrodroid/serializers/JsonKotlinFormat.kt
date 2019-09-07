@@ -35,7 +35,7 @@ object JsonKotlinFormat : CardExporter, CardImporter {
     override fun writeCard(s: OutputStream, card: Card) {
         s.write(writeCard(card).toUtf8Bytes())
     }
-    fun writeCard(card: Card) = Json(JsonConfiguration(prettyPrint = true, encodeDefaults = false)).stringify(Card.serializer(), card)
+    fun writeCard(card: Card) = Json(JsonConfiguration.Stable.copy(prettyPrint = true, encodeDefaults = false)).stringify(Card.serializer(), card)
 
     override fun readCard(stream: InputStream) =
             readCard(stream.readToString())
@@ -46,8 +46,10 @@ object JsonKotlinFormat : CardExporter, CardImporter {
     // 1. This lets us remove old fields, without keeping attributes hanging around. There doesn't
     //    seem to be a simple way to explicitly ignore single fields in JSON inputs.
     // 2. Dumps from a newer version of Metrodroid can still be read (though, without these fields).
+    val nonstrict = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true,
+    	strictMode = false))
     override fun readCard(input: String): Card =
-            Json.nonstrict.parse(Card.serializer(), input)
+            nonstrict.parse(Card.serializer(), input)
 }
 
 // Standard polymorphic serializer works fine but let's avoid putting
