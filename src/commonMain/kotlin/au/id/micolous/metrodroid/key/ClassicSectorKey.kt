@@ -139,25 +139,20 @@ data class ClassicSectorKey internal constructor(
         }
 
     companion object {
-        internal const val KEY_LEN = 6
+        internal const val CLASSIC_KEY_LEN = 6
+        internal const val AES_KEY_LEN = 16
         const val KEY_TYPE = "type"
         const val KEY_VALUE = "key"
         const val SECTOR_IDX = "sector"
         const val TYPE_KEYA = "KeyA"
         const val TYPE_KEYB = "KeyB"
 
-
         fun fromDump(b: ImmutableByteArray, type: KeyType, bundle: String): ClassicSectorKey {
-            if (b.size != KEY_LEN) {
-                throw IllegalArgumentException("Key data must be $KEY_LEN bytes, got ${b.size}")
+            if (b.size != CLASSIC_KEY_LEN && b.size != AES_KEY_LEN) {
+                throw IllegalArgumentException("Key data must be $CLASSIC_KEY_LEN or $AES_KEY_LEN bytes, got ${b.size}")
             }
 
-            return ClassicSectorKey(key = b,
-                    type = type, bundle = bundle)
+            return ClassicSectorKey(key = b, type = type, bundle = bundle)
         }
-
-        fun fromDump(b: ImmutableByteArray, offset: Int, type: KeyType, bundle: String) =
-                fromDump(b.sliceOffLen(offset, ClassicSectorKey.KEY_LEN),
-                        type, bundle)
     }
 }

@@ -38,7 +38,13 @@ class ClassicCard constructor(
         @XMLListIdx("index")
         @SerialName("sectors")
         val sectorsRaw: List<ClassicSectorRaw>,
+        val subType: SubType = SubType.CLASSIC,
         override val isPartialRead: Boolean = false) : CardProtocol() {
+
+    enum class SubType {
+        CLASSIC,
+        PLUS;
+    }
 
     companion object {
         @VisibleForTesting
@@ -94,7 +100,11 @@ class ClassicCard constructor(
             : this(sectorsRaw = sectors.map { it.raw }, isPartialRead = false)
 
     private fun findTransitFactory(): ClassicCardTransitFactory? {
-        for (factory in ClassicCardFactoryRegistry.allFactories) {
+        val factories = when (subType) {
+            SubType.CLASSIC -> ClassicCardFactoryRegistry.classicFactories
+            SubType.PLUS -> ClassicCardFactoryRegistry.plusFactories
+        }
+        for (factory in factories) {
             try {
                 if (factory.check(this))
                     return factory

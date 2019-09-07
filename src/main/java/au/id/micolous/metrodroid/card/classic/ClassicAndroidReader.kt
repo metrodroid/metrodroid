@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 import au.id.micolous.metrodroid.key.CardKeysEmbed
@@ -90,7 +91,7 @@ object ClassicAndroidReader {
                 CardKeysDB(context)
         ))
 
-    fun dumpTag(tagId: ImmutableByteArray, tag: Tag, feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
+    suspend fun dumpTag(tagId: ImmutableByteArray, tag: Tag, feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_reading))
         feedbackInterface.showCardType(null)
 
@@ -111,5 +112,14 @@ object ClassicAndroidReader {
                 tech.close()
             }
         }
+    }
+
+    suspend fun dumpPlus(tag: CardTransceiver, feedbackInterface: TagReaderFeedbackInterface,
+                         atqa: Int, sak: Short): ClassicCard? {
+        feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
+        feedbackInterface.showCardType(null)
+
+        val keyRetriever = getKeyRetriever(MetrodroidApplication.instance)
+        return ClassicReader.readPlusCard(keyRetriever, tag, feedbackInterface, atqa, sak)
     }
 }

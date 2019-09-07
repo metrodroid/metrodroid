@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.key.CardKeysRetriever
 import au.id.micolous.metrodroid.key.ClassicSectorKey
@@ -33,7 +34,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object ClassicReader {
-    private fun readSectorWithKey(tech: ClassicCardTech, sectorIndex: Int,
+    private suspend fun readSectorWithKey(tech: ClassicCardTech, sectorIndex: Int,
         correctKey: ClassicSectorKey,
         extraKey: ClassicSectorKey? = null): ClassicSectorRaw {
         val blocks = mutableListOf<ImmutableByteArray>()
@@ -60,9 +61,15 @@ object ClassicReader {
 
     private const val TAG = "ClassicReader"
 
-    private fun earlyCheck(sectors: List<ClassicSector>, feedbackInterface: TagReaderFeedbackInterface): ClassicCardTransitFactory? {
+    private fun earlyCheck(subType: ClassicCard.SubType,
+                           sectors: List<ClassicSector>,
+                           feedbackInterface: TagReaderFeedbackInterface): ClassicCardTransitFactory? {
         val secnum = sectors.size
-        ClassicCardFactoryRegistry.allFactories.filter { factory -> factory.earlySectors == secnum }
+        val factories = when (subType) {
+            ClassicCard.SubType.CLASSIC -> ClassicCardFactoryRegistry.classicFactories
+            ClassicCard.SubType.PLUS -> ClassicCardFactoryRegistry.plusFactories
+        }
+        factories.filter { factory -> factory.earlySectors == secnum }
                 .forEach lambda@{ factory ->
                     val ci = try {
                         if (!factory.earlyCheck(sectors))
@@ -79,7 +86,7 @@ object ClassicReader {
         return null
     }
 
-    fun readCard(retriever: CardKeysRetriever, tech: ClassicCardTech,
+    suspend fun readCard(retriever: CardKeysRetriever, tech: ClassicCardTech,
                  feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
         val sectorCount = tech.sectorCount
         val sectors = mutableListOf<ClassicSector>()
@@ -134,18 +141,35 @@ object ClassicReader {
                 sectors.add(sector)
 
                 if (cardType == null)
-                    cardType = earlyCheck(sectors, feedbackInterface)
+                    cardType = earlyCheck(tech.subType, sectors, feedbackInterface)
 
                 feedbackInterface.updateProgressBar(sectorIndex * 5 + 4, maxProgress)
             } catch (ex: CardLostException) {
                 Log.w(TAG, "tag lost!", ex)
                 sectors.add(InvalidClassicSector(ex.message))
-                return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = true)
+                return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = true, subType = tech.subType)
             } catch (ex: CardTransceiveException) {
                 sectors.add(InvalidClassicSector(ex.message))
             }
         }
 
-        return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = false)
+        return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = false, subType = tech.subType)
+    }
+
+    suspend fun readPlusCardNoSak(retriever: CardKeysRetriever, tag: CardTransceiver,
+                                  feedbackInterface: TagReaderFeedbackInterface): ClassicCard? {
+        val protocol = PlusProtocol.connect(tag) ?: return null
+        return readCard(retriever, protocol, feedbackInterface)
+    }
+
+    suspend fun readPlusCard(retriever: CardKeysRetriever, tag: CardTransceiver,
+                             feedbackInterface: TagReaderFeedbackInterface,
+                             atqa: Int, sak: Short): ClassicCard? {
+        // MIFARE Type Identification Procedure
+        // ref: https://www.nxp.com/docs/en/application-note/AN10833.pdf
+        if (sak != 0x20.toShort() || atqa !in listOf(0x0002, 0x0004, 0x0042, 0x0044))
+            return null
+
+        return readPlusCardNoSak(retriever, tag, feedbackInterface)
     }
 }

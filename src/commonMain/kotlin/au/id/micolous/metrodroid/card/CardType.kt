@@ -28,6 +28,7 @@ enum class CardType constructor(private val mValue: Int) {
     ISO7816(5),
     MultiProtocol(7),
     Vicinity(8),
+    MifarePlus(9),
     Unknown(65535);
 
     fun toInteger() = mValue
@@ -42,6 +43,7 @@ enum class CardType constructor(private val mValue: Int) {
         6 -> "Calypso"
         7 -> "Multi-protocol"
         8 -> "Vicinity"
+        9 -> "MIFARE Plus"
         65535 -> "Unknown"
         else -> "Unknown"
     }

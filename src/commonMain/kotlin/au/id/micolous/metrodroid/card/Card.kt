@@ -112,7 +112,10 @@ class Card(
     val cardType: CardType
         get () = when {
             allProtocols.size > 1 -> CardType.MultiProtocol
-            mifareClassic != null -> CardType.MifareClassic
+            mifareClassic != null -> when (mifareClassic.subType) {
+                ClassicCard.SubType.CLASSIC -> CardType.MifareClassic
+                ClassicCard.SubType.PLUS -> CardType.MifarePlus
+            }
             mifareUltralight != null -> CardType.MifareUltralight
             mifareDesfire != null -> CardType.MifareDesfire
             cepasCompat != null -> CardType.CEPAS

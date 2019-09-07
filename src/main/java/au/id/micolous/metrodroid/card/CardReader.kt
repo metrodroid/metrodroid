@@ -11,7 +11,6 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReader
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReaderA
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 import au.id.micolous.metrodroid.card.ultralight.AndroidUltralightTransceiver
 import android.nfc.tech.MifareUltralight
@@ -24,6 +23,11 @@ import au.id.micolous.metrodroid.util.toImmutable
 
 object CardReader {
     private const val TAG = "CardReader"
+
+    /* Doesn't block and doesn't cause any RF activity. */
+    private fun getAtqaSak(tag: NfcA): Pair<Int, Short> = Pair(tag.atqa.toImmutable().byteArrayToIntReversed(), tag.sak)
+
+    private fun getAtqaSak(tag: Tag): Pair<Int, Short>? = NfcA.get(tag)?.let { getAtqaSak(it) }
 
     suspend fun dumpTag(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): Card {
         val techs = tag.techList
@@ -45,8 +49,15 @@ object CardReader {
                 if (d != null) {
                     return Card(tagId = tagId, scannedAt = TimestampFull.now(), mifareDesfire = d)
                 }
-
+                
                 val isoCard = ISO7816Card.dumpTag(it, feedbackInterface)
+                if (isoCard.applications.isEmpty() && NfcA::class.java.name in techs) {
+                    val p = getAtqaSak(tag)?.let { (atqa,sak) ->
+                        ClassicAndroidReader.dumpPlus(it, feedbackInterface, atqa, sak)
+                    }
+                    if (p != null)
+                        return Card(tagId = tagId, scannedAt = TimestampFull.now(), mifareClassic = p)
+                }
                 return Card(tagId = tagId, scannedAt = TimestampFull.now(), iso7816 = isoCard)
             }
         }
@@ -72,7 +83,7 @@ object CardReader {
                     mifareUltralight = dumpTagUL(tag, feedbackInterface))
         }
 
-        if (NfcA::class.java.name in techs) {
+        if (NfcA::class.java.name in techs && getAtqaSak(tag) == Pair(0x0044, 0.toShort())) {
             val u = dumpTagA(tag, feedbackInterface)
             if (u != null)
                 return Card(tagId = tagId, scannedAt = TimestampFull.now(),
@@ -108,8 +119,7 @@ object CardReader {
 
         AndroidNfcATransceiver(tag).use {
             it.connect()
-            if (it.sak == 0.toShort() && it.atqa?.contentEquals(byteArrayOf(0x44, 0x00)) == true)
-                card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
+            card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
         return card
     }

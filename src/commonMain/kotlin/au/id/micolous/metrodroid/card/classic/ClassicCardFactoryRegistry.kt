@@ -37,7 +37,7 @@ import au.id.micolous.metrodroid.transit.warsaw.WarsawTransitData
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
 
 object ClassicCardFactoryRegistry {
-    val allFactories = listOf(
+    val classicFactories = listOf(
             OVChipTransitData.FACTORY,
 
             // ERG
@@ -93,4 +93,16 @@ object ClassicCardFactoryRegistry {
             //
             // This is for agencies who don't have identifying "magic" in their card.
             FallbackFactory)
+
+    val plusFactories = listOf(
+            // This check must be THIRD TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all locked sectors
+            UnauthorizedClassicTransitData.FACTORY,
+            // This check must be SECOND TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all empty sectors
+            BlankClassicTransitData.FACTORY
+    )
+    val allFactories = classicFactories + plusFactories
 }

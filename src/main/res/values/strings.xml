@@ -319,6 +319,7 @@
     <string name="saving_card">Saving card…</string>
 
     <string name="mfc_reading">Reading MIFARE Classic card…</string>
+    <string name="mfp_reading">Reading MIFARE Plus card…</string>
     <string name="mfc_have_key">Trying user-supplied key for sector %d…</string>
     <string name="mfc_other_key">Trying alternate user-supplied keys for sector %d…</string>
     <string name="mfc_default_key">Trying well-known keys for sector %d…</string>
@@ -2242,8 +2243,6 @@
     <!-- Translators: message in scanning dialog on iOS. -->
     <string name="ios_nfcreader_tap">Tap your card</string>
     <string name="ios_nfcreader_exception">Got exception: %s</string>
-    <!-- Currectly only on iOS but to be backported to Android. -->
-    <string name="mifare_plus_not_supported">Mifare Plus is not suppored</string>
     <string name="ios_unknown_mifare">Unknown Mifare: %s</string>
     <string name="ios_unknown_tag">Unknown tag type: %s</string>
 
