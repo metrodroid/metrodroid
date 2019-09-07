@@ -15,6 +15,7 @@
 		9C16181E22E37D40008747F3 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16181D22E37D40008747F3 /* SelfSizedTableView.swift */; };
 		9C1C982E22E53CD20073683A /* ErrorLabelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C982D22E53CD20073683A /* ErrorLabelProtocol.swift */; };
 		9C371DA6230CCCBD00B90D3E /* HistoryHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */; };
+		9C371DA4230B53CE00B90D3E /* Cards.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C371DA3230B53CE00B90D3E /* Cards.xcassets */; };
 		9C5352B422F2750D00674952 /* iOSDeviceModelMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */; };
 		9C553FF422D5E5BB00665891 /* NFCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF322D5E5BB00665891 /* NFCReader.swift */; };
 		9C553FF622D5F0D700665891 /* CardPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553FF522D5F0D700665891 /* CardPersister.swift */; };
@@ -96,6 +97,7 @@
 		9C412C102319A39E005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
 		9C412C112319A3C2005AB9C5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "metrodroid/pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderCell.swift; sourceTree = "<group>"; };
+		9C371DA3230B53CE00B90D3E /* Cards.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cards.xcassets; sourceTree = "<group>"; };
 		9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iOSDeviceModelMapping.plist; sourceTree = "<group>"; };
 		9C553FF322D5E5BB00665891 /* NFCReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCReader.swift; sourceTree = "<group>"; };
 		9C553FF522D5F0D700665891 /* CardPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPersister.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				9C5352B322F2750D00674952 /* iOSDeviceModelMapping.plist */,
 				9C095685230639E4007C6F79 /* MapViewController.swift */,
 				9C371DA5230CCCBD00B90D3E /* HistoryHeaderCell.swift */,
+				9C371DA3230B53CE00B90D3E /* Cards.xcassets */,
 			);
 			path = metrodroid;
 			sourceTree = "<group>";
