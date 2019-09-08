@@ -183,8 +183,18 @@ private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
 data class YMD(val year: Int, val month: Int, val day: Int) {
     val daysSinceEpoch: Int get() {
         val ym = 12 * year + month
-        return yearToDays(ym / 12) + (day - 1) + monthToDays[ym % 12] + (
-                if (isBisextile(ym / 12) && (ym % 12) > 1) 1 else 0)
+        var y: Int = ym / 12
+        var m: Int = ym % 12
+        // We don't really care for dates before 1 CE
+        // but at least we shouldn't crash on them
+        // This code results in astronomical year numbering
+        // that includes year 0
+        if (m < 0) {
+            m += 12
+            y -= 1
+        }
+        return yearToDays(y) + (day - 1) + monthToDays[m] + (
+                if (isBisextile(y) && m > 1) 1 else 0)
     }
 }
 
