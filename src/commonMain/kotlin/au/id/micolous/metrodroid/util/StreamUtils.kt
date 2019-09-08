@@ -30,10 +30,7 @@ fun InputStream.fullRead() : ByteArray {
         val actualLen = this.read(buf, 0, buf.size)
         if (actualLen <= 0)
             break
-        if (actualLen == buf.size)
-            bo.write(buf)
-        else
-            bo.write(buf.sliceArray(0 until actualLen))
+        bo.write(buf, 0, actualLen)
     }
     return bo.toByteArray()
 }
