@@ -1,0 +1,62 @@
+{
+    "tagId": "08310518720928",
+    "scannedAt": {
+        "timeInMillis": 1566946585468,
+        "tz": "UNKNOWN"
+    },
+    "mifareDesfire": {
+        "manufacturingData": "0420c41461c824a2cc34e3d04524d45565d86400420c41461c824a2c",
+        "applications": {
+            "3229011": {
+                "files": {
+                    "0": {
+                        "settings": "0003ff3f100000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "1": {
+                        "settings": "0003ff2f100000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "2": {
+                        "settings": "00033123800000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "3": {
+                        "settings": "00035125200000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "4": {
+                        "settings": "00034124300000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "5": {
+                        "settings": "00033123f00000",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "6": {
+                        "settings": "00033123e00100",
+                        "data": null,
+                        "error": "Authentication error",
+                        "isUnauthorized": true
+                    },
+                    "7": {
+                        "settings": "000031e3100000",
+                        "data": "00108310518720928b30d38f41149351"
+                    }
+                }
+            }
+        }
+    }
+}
