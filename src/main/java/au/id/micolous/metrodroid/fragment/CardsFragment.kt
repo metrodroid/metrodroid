@@ -22,16 +22,14 @@ package au.id.micolous.metrodroid.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ClipboardManager
-import android.content.ContentUris
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.text.format.Formatter
 import android.util.Log
 import android.util.Pair
 import android.view.*
@@ -61,10 +59,16 @@ import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.annotations.NonNls
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.PushbackInputStream
 import java.lang.ref.WeakReference
+import kotlin.coroutines.suspendCoroutine
 
 class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     private var searchText: String? = null
@@ -422,22 +426,29 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
+    class UserCancelledException () : Exception()
+
     private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
-                                                               private val mCardImporter: CardImporter) : AsyncTask<Uri, Int, Pair<String, Collection<Uri>>>() {
+                                                               private val mCardImporter: CardImporter) : AsyncTask<Uri, Int, Pair<String, Collection<Uri>>?>() {
         private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
 
-        override fun doInBackground(vararg uris: Uri): Pair<String, Collection<Uri>> {
+        open fun verifyStream(stream: InputStream): InputStream = stream
+
+        override fun doInBackground(vararg uris: Uri): Pair<String, Collection<Uri>>? {
             try {
                 val cr = MetrodroidApplication.instance.contentResolver
 
                 Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + cr.getType(uris[0])!!)
                 val stream = cr.openInputStream(uris[0])!!
-// Will be handled by exception handler below...
+                // Will be handled by exception handler below...
 
                 val iuri = ExportHelper.importCards(
-                        stream, mCardImporter, MetrodroidApplication.instance)
+                       verifyStream(stream), mCardImporter,
+                       MetrodroidApplication.instance)
 
                 return Pair<String, Collection<Uri>>(null, iuri)
+            } catch (ex: UserCancelledException) {
+                return null
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
                 return Pair<String, Collection<Uri>>(getErrorMessage(ex), null)
@@ -445,7 +456,10 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
         }
 
-        override fun onPostExecute(res: Pair<String, Collection<Uri>>) {
+        override fun onPostExecute(res: Pair<String, Collection<Uri>>?) {
+            if (res == null) {
+                return
+            }
             val err = res.first
             val uris = res.second
             val cf = mCardsFragment.get() ?: return
@@ -455,7 +469,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 val it = uris.iterator()
                 onCardsImported(cf.activity!!, uris.size, if (it.hasNext()) it.next() else null)
                 return
-            }
+            }    
             AlertDialog.Builder(cf.activity)
                     .setMessage(err)
                     .show()
@@ -463,7 +477,36 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     }
 
 
-    private class ReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, XmlOrJsonCardFormat())
+    private class ReadTask internal constructor(val cardsFragment: CardsFragment)
+        : CommonReadTask(cardsFragment, XmlOrJsonCardFormat()) {
+        override fun verifyStream(stream: InputStream): InputStream {
+            val pb = PushbackInputStream(stream)
+            if (pb.peek() == 'P'.toByte()) { // ZIP
+                return pb
+            }
+            val l = stream.available()
+            if (l < 4194304) {
+                return pb
+            }
+            val s = runBlocking<Boolean> {
+                suspendCoroutine<Boolean> { cont ->
+                    launch(Dispatchers.Main) {
+                        AlertDialog.Builder(cardsFragment.activity)
+                                .setMessage(Localizer.localizeString(R.string.large_file_warning,
+                                        Formatter.formatFileSize(MetrodroidApplication.instance, l.toLong())))
+                                .setPositiveButton(R.string.large_file_yes) { _, _ -> cont.resumeWith(Result.success(true)) }
+                                .setNegativeButton(R.string.large_file_no) { _, _ -> cont.resumeWith(Result.success(false)) }
+                                .show()                
+                    }
+                }
+            }
+            if (s) {
+                return pb
+            }
+            pb.close()
+            throw UserCancelledException()
+        }
+    }
 
     private class MCTReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, MctCardImporter())
 

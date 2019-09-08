@@ -47,3 +47,9 @@ fun PushbackInputStream.peekAndSkipSpace(): Byte {
     this.unread(c)
     return c.toByte()
 }
+
+fun PushbackInputStream.peek(): Byte {
+    val c = this.read()
+    this.unread(c)
+    return c.toByte()
+}
