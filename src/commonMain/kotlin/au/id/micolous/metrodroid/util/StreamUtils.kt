@@ -24,7 +24,7 @@ import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 
 fun InputStream.fullRead() : ByteArray {
-    val bo = ByteArrayOutputStream()
+    val bo = ByteArrayOutputStream(this.available())
     val buf = ByteArray(64 * 1024) { 0 }
     while(true) {
         val actualLen = this.read(buf, 0, buf.size)
