@@ -41,3 +41,7 @@ fun InputStream.fullRead(maxSize: Int? = null) : ByteArray {
 fun InputStream.readToString(maxSize: Int? = null) : String = kotlinx.io.core.String(
             bytes = this.fullRead(maxSize=maxSize),
             charset = Charsets.UTF_8)
+
+fun InputStream.forEachLine(maxSize: Int? = null, function: (String) -> Unit) {
+    this.readToString(maxSize=maxSize).split('\n', '\r').filter { it.isNotEmpty() }.forEach(function)
+}
