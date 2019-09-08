@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.serializers
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
+import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.io.InputStream
 
 object CardSerializer {
@@ -17,23 +18,13 @@ object CardSerializer {
         }
     }
 
-    private fun fromJson(xml: String): Card {
-        try {
-            return jsonKotlinFormat.readCard(xml)
-        } catch (ex: Exception) {
-            Log.e("Card", "Failed to deserialize", ex)
-            throw RuntimeException(ex)
-        }
+    private fun fromJson(xml: String): Card = logAndSwiftWrap ("Card", "Failed to deserialize") {
+        jsonKotlinFormat.readCard(xml)
     }
 
     @NativeThrows
-    fun toJson(card: Card): String {
-        try {
-            return jsonKotlinFormat.writeCard(card)
-        } catch (ex: Exception) {
-            Log.e("Card", "Failed to serialize", ex)
-            throw RuntimeException(ex)
-        }
+    fun toJson(card: Card): String = logAndSwiftWrap ("Card", "Failed to serialize") {
+        jsonKotlinFormat.writeCard(card)
     }
 
     @NativeThrows

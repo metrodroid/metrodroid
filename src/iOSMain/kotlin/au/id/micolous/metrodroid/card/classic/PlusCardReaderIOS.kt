@@ -23,20 +23,17 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransceiverIOS
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.key.CardKeysDummy
-import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.NativeThrows
-import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
 object PlusCardReaderIOS {
     @NativeThrows
     fun dump(wrapper: UltralightTransceiverIOS.SwiftWrapper,
-             feedback: TagReaderFeedbackInterface): Card {
+             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
         val xfer = UltralightTransceiverIOS(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        return runBlocking {
+        runBlocking {
             Log.d(TAG, "Start async")
             feedback.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
             feedback.showCardType(null)

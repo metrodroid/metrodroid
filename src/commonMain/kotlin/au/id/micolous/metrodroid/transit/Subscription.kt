@@ -388,16 +388,18 @@ abstract class Subscription : Parcelable {
     // Nullable Throwable is a pain for kotlin-swift interop, hence have
     // this wrapper to format all values at the same time
     @NativeThrows
-    fun format(): Formatted = Formatted(
-        shortAgencyLabel = getAgencyName(true),
-        subscriptionName = subscriptionName,
-        validity = formatValidity(),
-        remainingTrips = formatRemainingTrips(),
-        info = Subscription.mergeInfo(this),
-        subscriptionState = subscriptionState,
-        remainingDayCount = remainingDayCount,
-        passengerCount = passengerCount
-    )
+    fun format(): Formatted = logAndSwiftWrap ("Subsctiption", "Failed to format()") {
+        Formatted(
+                shortAgencyLabel = getAgencyName(true),
+                subscriptionName = subscriptionName,
+                validity = formatValidity(),
+                remainingTrips = formatRemainingTrips(),
+                info = Subscription.mergeInfo(this),
+                subscriptionState = subscriptionState,
+                remainingDayCount = remainingDayCount,
+                passengerCount = passengerCount
+        )
+    }
 
     companion object {
         fun mergeInfo(sub: Subscription): List<ListItem>? {
