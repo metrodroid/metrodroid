@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.serializers
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
+import au.id.micolous.metrodroid.util.peekAndSkipSpace
 import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 import java.io.PushbackInputStream
@@ -18,20 +19,10 @@ class XmlCardFormat : CardImporter {
 
 class XmlOrJsonCardFormat : CardImporter {
     private val mfcFormat = MfcCardImporter()
-    private fun peek(pb: PushbackInputStream): Char {
-        var c: Int
-        while (true) {
-            c = pb.read()
-            if (!Character.isSpaceChar(c.toChar()))
-                break
-        }
-        pb.unread(c)
-        return c.toChar()
-    }
 
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
-        when (peek(pb)) {
+        when (pb.peekAndSkipSpace().toChar()) {
             '<' -> return iterateXmlCards(pb) { readCard(it) }
             '[', '{' -> return AutoJsonFormat.readCards(pb)
             'P' -> return readZip(pb).iterator()
@@ -56,7 +47,7 @@ class XmlOrJsonCardFormat : CardImporter {
 
     override fun readCard(stream: InputStream): Card? {
         val pb = PushbackInputStream(stream)
-        if (peek(pb) == '<')
+        if (pb.peekAndSkipSpace() == '<'.toByte())
             return readCardXML(pb)
         return AutoJsonFormat.readCard(pb.bufferedReader().readText())
     }
