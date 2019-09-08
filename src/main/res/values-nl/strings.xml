@@ -1138,4 +1138,5 @@
     <string name="lang_override_desc">Dwing de taal van de app af. Herstart de app om de wijziging door te voeren.</string>
     <string name="lang_default">Systeemstandaard</string>
     <string name="cards_search">Zoeken</string>
+    <string name="location_fribourg_ch">Fribourg, Zwitserland</string>
 </resources>
