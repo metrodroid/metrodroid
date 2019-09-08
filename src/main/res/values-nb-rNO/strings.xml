@@ -919,4 +919,14 @@
     <string name="desfire_minor_version">Småversjon</string>
     <string name="raw_level_none">Ingen (avskrudd)</string>
     <string name="hsl_transport_juna">Tog</string>
+    <string name="hsl_period">Gyldighetsperiode</string>
+    <string name="hsl_region_helsinki">Helsinki</string>
+    <string name="hsl_region_espoo">Esbo</string>
+    <string name="hsl_region_vantaa">Vanda</string>
+    <string name="location_finland">Finland</string>
+    <string name="mfp_reading">Leser MIFARE Plus-kort…</string>
+    <string name="lang_override">Språkoverstyring</string>
+    <string name="lang_override_desc">Overstyrer programspråket. Krever omstart av programmet.</string>
+    <string name="lang_default">Systemforvalg</string>
+    <string name="location_fribourg_ch">Fribourg, Sveits</string>
 </resources>
