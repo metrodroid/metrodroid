@@ -20,10 +20,8 @@ class NodeWrapperImpl(val node: Node): NodeWrapper {
             val attr = node.attributes ?: return emptyMap()
             return (0 until attr.length).map { attr.item(it).nodeName to attr.item(it).nodeValue }.toMap()
         }
-    override val nodeValue: String?
-        get() = node.nodeValue
-    override val textContent: String?
-        get() = node.textContent
+    override val inner: String?
+        get() = node.nodeValue ?: node.textContent
 
     companion object {
         fun read(stream: InputStream): NodeWrapper {
