@@ -66,9 +66,15 @@ data class MetroTimeZone(val olson: String): Parcelable {
         val JERUSALEM = MetroTimeZone(olson = "Asia/Jerusalem")
         val JOHANNESBURG = MetroTimeZone(olson ="Africa/Johannesburg")
         val KAMCHATKA = MetroTimeZone(olson = "Asia/Kamchatka")
-        val KIEV = MetroTimeZone(olson = "Europe/Kiev")
         val KIROV = MetroTimeZone(olson = "Europe/Kirov")
         val KRASNOYARSK = MetroTimeZone(olson = "Asia/Krasnoyarsk")
+        // Note: tzdata uses "Europe/Kiev":
+        // https://github.com/eggert/tz/commit/b2eede3d1b62c43d0121dd2f6e790b97f29da7b7
+        //
+        // We'll probably keep it this way _even after_ tzdata change it, as
+        // Android OEMs are consistently terrible at applying updates, and new
+        // versions of tzdata would have an alias anyway.
+        val KYIV = MetroTimeZone(olson = "Europe/Kiev")
         val KUALA_LUMPUR = MetroTimeZone(olson = "Asia/Kuala_Lumpur")
         val LISBON = MetroTimeZone(olson = "Europe/Lisbon")
         val LONDON = MetroTimeZone(olson = "Europe/London")

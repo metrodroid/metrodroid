@@ -415,7 +415,7 @@
     <string name="location_israel">Israël</string>
     <string name="location_istanbul">Istanbul, Turquie</string>
     <string name="location_jakarta">Jakarta, Indonésie</string>
-    <string name="location_kiev">Kiev, Ukraine</string>
+    <string name="location_kyiv">Kyiv, Ukraine</string>
     <string name="location_krasnodar">Krasnodar, Russie</string>
     <string name="location_lisbon">Lisbonne, Portugal</string>
     <string name="location_milan">Milan, Italie</string>
@@ -658,8 +658,8 @@
     <string name="card_id">ID de carte</string>
     <string name="tap_for_more_info">Tapez pour plus d\'informations…</string>
     <string name="maps">Cartes</string>
-    <string name="card_note_kiev">Uniquement les cartes antérieures à 2016. Seul le journal de bord peut être lu.</string>
-    <string name="card_name_kiev">Métro de Kiev</string>
+    <string name="card_note_kyiv">Uniquement les cartes antérieures à 2016. Seul le journal de bord peut être lu.</string>
+    <string name="card_name_kyiv">Métro de Kyiv</string>
     <string name="transfer">Transfert</string>
     <string name="copy_card_number">Copier le numéro de carte</string>
     <string name="card_serial_number">Numéro de série</string>

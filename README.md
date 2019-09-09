@@ -104,10 +104,10 @@ City Union | :cn: Mainland China | :new:
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id:
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT`
 [Kazan transport card][kazan] | :ru: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
-[Kiev Metro][kievm] | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Kirov transport card][kirov] | :ru: Kirov, Russia | :new: :closed_lock_with_key: `MFC`
 [KomuterLink][komuterlink] | :malaysia: Malaysia | :new: :closed_lock_with_key: `MFC`
 [Krasnodar ETK][krasnodar] | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
+[Kyiv Metro][kyivm] | :ukraine: Kyiv, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Leap][leap] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][lisboa] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][manly] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
@@ -269,11 +269,11 @@ This software and it's authors are not associated with any public transit agency
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/
 [kazan]: http://transkart.ru/
-[kievm]: http://www.metro.kyiv.ua/
 [kirov]: http://www.mo-kirov.ru/gorozhanam/transport/
 [kmt]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 [komuterlink]: http://www.ktmb.com.my/KomuterLink.html
 [krasnodar]: https://t-karta.ru/Cards/Krasnodar
+[kyivm]: http://www.metro.kyiv.ua/
 [laxtap]: https://www.taptogo.net/
 [leap]: https://www.leapcard.ie/
 [lisboa]: https://www.portalviva.pt/

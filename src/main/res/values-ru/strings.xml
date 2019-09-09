@@ -347,7 +347,7 @@
     <string name="location_beijing">Пекин, Китай</string>
     <string name="location_china_mainland">Континентальный Китай</string>
     <string name="location_wuhan">Ухань, Китай</string>
-    <string name="location_kiev">Киев, Украина</string>
+    <string name="location_kyiv">Киев, Украина</string>
     <string name="rejected">Отказано</string>
     <string name="location_adelaide">Аделаида, Австралия</string>
     <string name="location_tartu">Тарту, Эстония</string>
@@ -469,7 +469,7 @@
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_tunion">T-Union</string>
     <string name="city_union_city">Город</string>
-    <string name="card_note_kiev">Только карты выпущенные до 2016 года. Только журнал поездки можно прочитать.</string>
+    <string name="card_note_kyiv">Только карты выпущенные до 2016 года. Только журнал поездки можно прочитать.</string>
     <string name="transfer">Пересадка</string>
     <string name="card_note_adelaide">Только серийный номер, поездки и проездные могут быть прочитаны</string>
     <string name="purse_serial_number">Серийный номер кошелька</string>
@@ -557,7 +557,7 @@
     <string name="subscription_expired">Просрочен</string>
     <string name="last_used_on">Последнее использование</string>
     <string name="payment_method_transit_card">Транзитная карта</string>
-    <string name="card_name_kiev">Киевский метрополитен</string>
+    <string name="card_name_kyiv">Киевский метрополитен</string>
     <plurals name="cards_deduped">
         <item quantity="one">Удалено %d дупликат</item>
         <item quantity="few">Удалено %d дупликата</item>

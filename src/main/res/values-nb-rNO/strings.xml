@@ -615,14 +615,14 @@
     <string name="with_receipt">Med kvittering</string>
     <string name="location_beijing">Beijing, Kina</string>
     <string name="location_china_mainland">Fastlandskina</string>
-    <string name="location_kiev">Kiev, Ukraina</string>
+    <string name="location_kyiv">Kyjiv, Ukraina</string>
     <string name="location_wuhan">Wuhan, Kina</string>
     <string name="card_name_beijing">Beijing Municipal-kort</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_cityunion">City Union</string>
     <string name="card_name_tunion">T-Union</string>
-    <string name="card_note_kiev">Kun kort fra før 2016. Kun turlogg kan leses</string>
-    <string name="card_name_kiev">Kiev Metro</string>
+    <string name="card_note_kyiv">Kun kort fra før 2016. Kun turlogg kan leses</string>
+    <string name="card_name_kyiv">Kyjiv Metro</string>
     <string name="city_union_city">City</string>
     <string name="transfer">Overgang</string>
     <string name="rejected">Avslått</string>

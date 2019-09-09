@@ -1,5 +1,5 @@
 /*
- * KievTransitData.kt
+ * KyivTransitData.kt
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.kiev
+package au.id.micolous.metrodroid.transit.kyiv
 
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
@@ -34,14 +34,14 @@ import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.NumberUtils
 
 @Parcelize
-class KievTransitData (private val mSerial: String,
-                       override val trips: List<KievTrip>): TransitData() {
+class KyivTransitData (private val mSerial: String,
+                       override val trips: List<KyivTrip>): TransitData() {
 
     override val serialNumber: String?
         get() = formatSerial(mSerial)
 
     override val cardName: String
-        get() = Localizer.localizeString(R.string.card_name_kiev)
+        get() = Localizer.localizeString(R.string.card_name_kyiv)
 
     private constructor(card: ClassicCard) :this(
         mSerial = getSerial(card),
@@ -49,20 +49,20 @@ class KievTransitData (private val mSerial: String,
 
     companion object {
         // It doesn't really have a name and is just called
-        // "Ticket for Kiev Metro".
+        // "Ticket for Kyiv Metro".
         private val CARD_INFO = CardInfo(
-                name = R.string.card_name_kiev,
-                locationId = R.string.location_kiev,
-                imageId = R.drawable.kiev,
+                name = R.string.card_name_kyiv,
+                locationId = R.string.location_kyiv,
+                imageId = R.drawable.kyiv,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 cardType = CardType.MifareClassic,
-                resourceExtraNote = R.string.card_note_kiev,
+                resourceExtraNote = R.string.card_note_kyiv,
                 region = TransitRegion.UKRAINE,
-                keysRequired = true, preview = true, keyBundle = "kiev")
+                keysRequired = true, preview = true, keyBundle = "kyiv")
 
-        private fun parseTrips(card: ClassicCard): List<KievTrip> =
+        private fun parseTrips(card: ClassicCard): List<KyivTrip> =
                 (0..5).map { card.getSector(3 + it / 3).getBlock(it % 3).data }
-                        .filter { it.byteArrayToInt(0, 4) != 0 }.map { KievTrip(it) }
+                        .filter { it.byteArrayToInt(0, 4) != 0 }.map { KyivTrip(it) }
 
         private fun getSerial(card: ClassicCard): String =
                 card.getSector(1).getBlock(0).data.sliceOffLen(6, 8)
@@ -84,9 +84,9 @@ class KievTransitData (private val mSerial: String,
                         "902a69a9d68afa1ddac7b61a512f7d4f") >= 0
 
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Localizer.localizeString(R.string.card_name_kiev), formatSerial(getSerial(card)))
+                    TransitIdentity(Localizer.localizeString(R.string.card_name_kyiv), formatSerial(getSerial(card)))
 
-            override fun parseTransitData(card: ClassicCard) = KievTransitData(card)
+            override fun parseTransitData(card: ClassicCard) = KyivTransitData(card)
         }
     }
 }

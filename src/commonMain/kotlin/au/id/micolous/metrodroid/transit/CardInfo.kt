@@ -34,6 +34,15 @@ class CardInfo(
         val region: TransitRegion,
         val locationId: StringResource? = null,
         val keysRequired: Boolean = false,
+        /**
+         * If keysRequired == true, we display "encryption keys loaded" if a key bundle is loaded
+         * with the given bundle name.
+         *
+         * This is only a descriptive name, and doesn't impact whether the a particular bundle is
+         * used for reading this card.
+         *
+         * https://github.com/metrodroid/metrodroid/wiki/Importing-MIFARE-Classic-keys#key-bundles
+         */
         val keyBundle: String? = null,
 
         /**

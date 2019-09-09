@@ -9,7 +9,7 @@ import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.gautrain.GautrainTransitFactory
 import au.id.micolous.metrodroid.transit.kazan.KazanTransitFactory
-import au.id.micolous.metrodroid.transit.kiev.KievTransitData
+import au.id.micolous.metrodroid.transit.kyiv.KyivTransitData
 import au.id.micolous.metrodroid.transit.komuterlink.KomuterLinkTransitFactory
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData
@@ -60,7 +60,7 @@ object ClassicCardFactoryRegistry {
             CharlieCardTransitData.FACTORY,
             RicaricaMiTransitData.FACTORY,
             BilheteUnicoSPTransitData.FACTORY,
-            KievTransitData.FACTORY,
+            KyivTransitData.FACTORY,
             MetroQTransitData.FACTORY,
             EasyCardTransitData.FACTORY,
             TartuTransitFactory,

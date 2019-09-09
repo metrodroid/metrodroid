@@ -74,7 +74,7 @@ def iOSUnsupportedImages = [
         'ezlink_card',
         'gautrain',
         'kazan',
-        'kiev',
+        'kyiv',
         'kirov',
         'komuterlink',
         'krasnodar_etk',

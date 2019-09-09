@@ -1,5 +1,5 @@
 /*
- * KievTrip.kt
+ * KyivTrip.kt
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.kiev
+package au.id.micolous.metrodroid.transit.kyiv
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
@@ -33,7 +33,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-class KievTrip (
+class KyivTrip (
         override val startTimestamp: Timestamp?,
         private val mTransactionType: String?,
         private val mCounter1: Int,
@@ -65,7 +65,7 @@ class KievTrip (
     }
 
     companion object {
-        private val TZ = MetroTimeZone.KIEV
+        private val TZ = MetroTimeZone.KYIV
 
         private fun parseTimestamp(data: ImmutableByteArray): TimestampFull {
             return TimestampFull(TZ, data.getBitsFromBuffer(17, 5) + 2000,

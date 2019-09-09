@@ -95,7 +95,7 @@
        cards at the top. A fr-FR translation (French in France) can put just French cards at the
        top, and an fr-CA translation (Canadian French) can put just the Canadian cards at the top.
     -->
-    <string name="market_long_desc">Metrodroid reads some NFC smartcards for public transport.\n\nSupported cards:\n• Amiibo 🆕\n• AT HOP - Auckland, New Zealand 🆕🆔\n• Beijing Municipal Card, Shenzhen Tong, T-Union, Wuhan Tong - China 🆕\n• Bilhete Único - São Paulo, Brazil 📜🗝\n• bip! - Santiago, Chile 🆕📜🗝\n• BUS-IT - Greater Hamilton (Waikato), New Zealand 🆕📜🗝\n• Carta Mobile - Pisa, Italy 🆕\n• CEPAS (EZ-Link, NETS Flashpay) - Singapore 🇸🇬\n• CharlieCard - Boston, MA, USA 🆕📜🗝\n• City Union, T-Union - Mainland China 🆕\n• Clipper - San Francisco, CA, USA\n• Compass (single-use tickets) - Vancouver, BC, Canada 🆕\n• Crimea Trolleybus 🆕📜🗝\n• EasyCard - Taipei 📜🗝\n• EMV bank cards 🆕\n• Go card - Brisbane, QLD, Australia 🆕📜🗝\n• GoCard - Otago (Dunedin and Queenstown), New Zealand 🆕📜\n• Go-to Card - Minneapolis-St. Paul, MN, USA 🆕📜🗝\n• Hafilat - Abu Dhabi, UAE 🆕\n• Hop Fastpass - Portland, OR, USA 🆕🆔\n• HSL, Matkakortti - Finland\n• IC (Suica, ICOCA, PASMO), Edy - Japan\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - France\n• IstanbulKart - Turkey 🆕🆔\n• Kartu Multi Trip - Jakarta, Indonesia\n• Kiev Metro - Ukraine 🆕📜🗝\n• KomuterLink - Malaysia 🆕📜🗝\n• Leap - Ireland 🆕🇮🇪\n• Lisboa Viva - Lisbon, Portugal 🆕\n• Manly Fast Ferry - Sydney, NSW, Australia 🆕📜🗝\n• metroCARD - Adelaide, Australia 🆕\n• Metrocard (1st-gen) - Christchurch, New Zealand 🆕📜🗝\n• Metromoney - Tbilisi, Georgia 🆕📜🗝\n• Mobib - Brussels, Belgium 🆕\n• Myki - Melbourne, VIC, Australia 🆕🆔\n• MyWay - Canberra, ACT, Australia 🆕📜🗝\n• Nol - Dubai, UAE 🆕🆔\n• Octopus - Hong Kong 🆕\n• Opal - Sydney, NSW, Australia 🆕\n• Opus - Québec, Canada 🆕\n• ORCA - Seattle, WA, USA\n• OV-chipkaart - Netherlands 📜🗝\n• Oyster (1st-gen) - London, UK 🆕📜🗝\n• Podorozhnik - Saint Petersburg, Russia 🆕📜🗝\n• Rav-Kav - Israel 🆕\n• Rejsekort - Denmark 🆕📜🗝\n• RicaricaMi - Milan, Italy 🆕\n• Selecta - France 🆕\n• SLAccess - Stockholm, Sweden 🆕📜🗝\n• Smartride - Rotorua, New Zealand 🆕📜\n• SmartRider - Perth, WA, Australia 🆕📜🗝\n• Snapper (plus) - Wellington, New Zealand 🆕\n• Strelka - Moscow, Russia 🆕📜🆔\n• SunCard - Orlando, FL, USA 🆕📜🗝🆔\n• Tartu Bus - Estonia 🆕📜🆔\n• T-Money - South Korea 🆕\n• Touch ’n Go - Malaysia 🆕📜🗝\n• Transit Access Pass - Los Angeles, CA, USA 🆕📜🗝\n• Troika - Moscow, Russia 🆕📜🗝\n• Umarsh (Electronic Barnaul, Kirov, Ekaterinburg Ekarta, Izhevsk Strizh, Nizhniy Novgorod Siticard, Penza, Yoshkar-Ola) - Russia 🆕📜🗝\n• Ventra (single-use tickets) - Chicago, IL, USA 🆕\n• Warszawska Karta Miejska - Warsaw, Poland 🆕📜🗝🆔\n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Russia 🆕📜🗝\n\n🆕 New in Metrodroid.\n📜 MIFARE Classic: not compatible with all devices - you need a device NXP NFC chipset to read this.\n🗝 Encryption keys are required to read this card.\n🇸🇬 CEPAS not compatible with all devices (ISO 14443-B).\n🆔 Only the card number can be read.\n🇮🇪 Encryption keys are downloaded from the operator.\n\nYou require a NFC-compatible device to read cards.\n\nSome agencies have encrypted cards. You need to acquire encryption keys to read them, which are generally unique to each card. Sorry, I can’t help you with this.\n\nMetrodroid and its authors are not affiliated with and public transit agency. Other agencies’ cards using Cubic Nextfare or ERG on MIFARE Classic may also work.\n\nFor more details about permissions required, please see the privacy policy.\n\nThis is a fork of Eric Butler’s Farebot, with support for additional cards and bug fixes.\n\nThis software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/</string>
+    <string name="market_long_desc">Metrodroid reads some NFC smartcards for public transport.\n\nSupported cards:\n• Amiibo 🆕\n• AT HOP - Auckland, New Zealand 🆕🆔\n• Beijing Municipal Card, Shenzhen Tong, T-Union, Wuhan Tong - China 🆕\n• Bilhete Único - São Paulo, Brazil 📜🗝\n• bip! - Santiago, Chile 🆕📜🗝\n• BUS-IT - Greater Hamilton (Waikato), New Zealand 🆕📜🗝\n• Carta Mobile - Pisa, Italy 🆕\n• CEPAS (EZ-Link, NETS Flashpay) - Singapore 🇸🇬\n• CharlieCard - Boston, MA, USA 🆕📜🗝\n• City Union, T-Union - Mainland China 🆕\n• Clipper - San Francisco, CA, USA\n• Compass (single-use tickets) - Vancouver, BC, Canada 🆕\n• Crimea Trolleybus 🆕📜🗝\n• EasyCard - Taipei 📜🗝\n• EMV bank cards 🆕\n• Go card - Brisbane, QLD, Australia 🆕📜🗝\n• GoCard - Otago (Dunedin and Queenstown), New Zealand 🆕📜\n• Go-to Card - Minneapolis-St. Paul, MN, USA 🆕📜🗝\n• Hafilat - Abu Dhabi, UAE 🆕\n• Hop Fastpass - Portland, OR, USA 🆕🆔\n• HSL, Matkakortti - Finland\n• IC (Suica, ICOCA, PASMO), Edy - Japan\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - France\n• IstanbulKart - Turkey 🆕🆔\n• Kartu Multi Trip - Jakarta, Indonesia\n• KomuterLink - Malaysia 🆕📜🗝\n• Kyiv Metro - Ukraine 🆕📜🗝\n• Leap - Ireland 🆕🇮🇪\n• Lisboa Viva - Lisbon, Portugal 🆕\n• Manly Fast Ferry - Sydney, NSW, Australia 🆕📜🗝\n• metroCARD - Adelaide, Australia 🆕\n• Metrocard (1st-gen) - Christchurch, New Zealand 🆕📜🗝\n• Metromoney - Tbilisi, Georgia 🆕📜🗝\n• Mobib - Brussels, Belgium 🆕\n• Myki - Melbourne, VIC, Australia 🆕🆔\n• MyWay - Canberra, ACT, Australia 🆕📜🗝\n• Nol - Dubai, UAE 🆕🆔\n• Octopus - Hong Kong 🆕\n• Opal - Sydney, NSW, Australia 🆕\n• Opus - Québec, Canada 🆕\n• ORCA - Seattle, WA, USA\n• OV-chipkaart - Netherlands 📜🗝\n• Oyster (1st-gen) - London, UK 🆕📜🗝\n• Podorozhnik - Saint Petersburg, Russia 🆕📜🗝\n• Rav-Kav - Israel 🆕\n• Rejsekort - Denmark 🆕📜🗝\n• RicaricaMi - Milan, Italy 🆕\n• Selecta - France 🆕\n• SLAccess - Stockholm, Sweden 🆕📜🗝\n• Smartride - Rotorua, New Zealand 🆕📜\n• SmartRider - Perth, WA, Australia 🆕📜🗝\n• Snapper (plus) - Wellington, New Zealand 🆕\n• Strelka - Moscow, Russia 🆕📜🆔\n• SunCard - Orlando, FL, USA 🆕📜🗝🆔\n• Tartu Bus - Estonia 🆕📜🆔\n• T-Money - South Korea 🆕\n• Touch ’n Go - Malaysia 🆕📜🗝\n• Transit Access Pass - Los Angeles, CA, USA 🆕📜🗝\n• Troika - Moscow, Russia 🆕📜🗝\n• Umarsh (Electronic Barnaul, Kirov, Ekaterinburg Ekarta, Izhevsk Strizh, Nizhniy Novgorod Siticard, Penza, Yoshkar-Ola) - Russia 🆕📜🗝\n• Ventra (single-use tickets) - Chicago, IL, USA 🆕\n• Warszawska Karta Miejska - Warsaw, Poland 🆕📜🗝🆔\n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Russia 🆕📜🗝\n\n🆕 New in Metrodroid.\n📜 MIFARE Classic: not compatible with all devices - you need a device NXP NFC chipset to read this.\n🗝 Encryption keys are required to read this card.\n🇸🇬 CEPAS not compatible with all devices (ISO 14443-B).\n🆔 Only the card number can be read.\n🇮🇪 Encryption keys are downloaded from the operator.\n\nYou require a NFC-compatible device to read cards.\n\nSome agencies have encrypted cards. You need to acquire encryption keys to read them, which are generally unique to each card. Sorry, I can’t help you with this.\n\nMetrodroid and its authors are not affiliated with and public transit agency. Other agencies’ cards using Cubic Nextfare or ERG on MIFARE Classic may also work.\n\nFor more details about permissions required, please see the privacy policy.\n\nThis is a fork of Eric Butler’s Farebot, with support for additional cards and bug fixes.\n\nThis software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/</string>
 
     <!--
     Translators:
@@ -105,7 +105,7 @@
     * Use "smart" quotation marks (eg: ’).
     * The full changelog is only in English.
     -->
-    <string name="market_changelog_generic">Fixes bugs, adds new features and data.\n\nMore details and known issues (in English): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic" translatable="false">Fixes bugs, adds new features and data.\n\nMore details and known issues (in English): https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
@@ -114,7 +114,7 @@
     * Use "smart" quotation marks (eg: ’).
     * The full changelog is only in English.
     -->
-    <string name="market_changelog_43">• Adds support for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh, Santiago bip, and Warsaw card\n• Improvements and fixes for Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go and Troika cards\n• Fixes some bugs that caused Metrodroid to crash, and some bugs with MIFARE Classic cards\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_43" translatable="false">• Adds support for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh, Santiago bip, and Warsaw card\n• Improvements and fixes for Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go and Troika cards\n• Fixes some bugs that caused Metrodroid to crash, and some bugs with MIFARE Classic cards\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 
     <!-- Changelog 42 is same as 41. -->
@@ -123,7 +123,7 @@
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_41">* Reads EMV bank, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, 1st-gen London Oyster, UAE Hafilat and Nol cards.\n* Adds new stations for EZ-Link and ORCA cards.\n* Fixes issues with Mobib reader.\n* Adds support for importing binary MFC files and reading DESFire cards with locked directory lists.\n* Many under-the-hood changes.\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_41" translatable="false">* Reads EMV bank, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, 1st-gen London Oyster, UAE Hafilat and Nol cards.\n* Adds new stations for EZ-Link and ORCA cards.\n* Fixes issues with Mobib reader.\n* Adds support for importing binary MFC files and reading DESFire cards with locked directory lists.\n* Many under-the-hood changes.\n\nMore details and known issues: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!-- Changelog 40 is same as 39. -->
 
@@ -131,84 +131,84 @@
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_39">* Adds support for Malaysia Tap ’n Go, Otago Gocard, Rotorua SmartRide, Waikato BUSIT and Wellington Snapper cards.\n* Adds many new route and station IDs.\n* Improved FeliCa reader.\n* Fixes issues with EZ-Link and Octopus cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_39" translatable="false">* Adds support for Malaysia Tap ’n Go, Otago Gocard, Rotorua SmartRide, Waikato BUSIT and Wellington Snapper cards.\n* Adds many new route and station IDs.\n* Improved FeliCa reader.\n* Fixes issues with EZ-Link and Octopus cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_38">* Adds support for Otago Gocard, Rotorua SmartRide, Waikato BUSIT and Wellington Snapper cards.\n* Adds many new route and station IDs.\n* Improved FeliCa reader.\n* Fixes issues with EZ-Link and Octopus cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_38" translatable="false">* Adds support for Otago Gocard, Rotorua SmartRide, Waikato BUSIT and Wellington Snapper cards.\n* Adds many new route and station IDs.\n* Improved FeliCa reader.\n* Fixes issues with EZ-Link and Octopus cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_37">* Adds support for Adelaide Metrocard, many Chinese (PRC) cards, Clipper single tickets, Kiev Metro, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus and multiple Zolotaya Korona based cards.\n* Fixes OV-Chipkaart reader.\n* Reads serial number for AT-HOP.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_37" translatable="false">* Adds support for Adelaide Metrocard, many Chinese (PRC) cards, Clipper single tickets, Kiev Metro, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus and multiple Zolotaya Korona based cards.\n* Fixes OV-Chipkaart reader.\n* Reads serial number for AT-HOP.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_36">* Adds support for CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (France), IstanbulKart, Mobib, Leap, RicaciraMi and Strelka cards.\n* Fixes HSL reader.\n* Adds new stations for Clipper and Kartu Multi Trip.\n* Suica now shows the time of the 2 most recent trips.\n* Improved MIFARE Classic key management.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_36" translatable="false">* Adds support for CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (France), IstanbulKart, Mobib, Leap, RicaciraMi and Strelka cards.\n* Fixes HSL reader.\n* Adds new stations for Clipper and Kartu Multi Trip.\n* Suica now shows the time of the 2 most recent trips.\n* Improved MIFARE Classic key management.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_35">* Adds support for Kartu Multi Trip, Opus, Podorozhnik, Rav-Kav, T-Money, Troika cards and single-trip Compass (Vancouver) cards.\n* Fixes a crash bug for some Clipper cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_35" translatable="false">* Adds support for Kartu Multi Trip, Opus, Podorozhnik, Rav-Kav, T-Money, Troika cards and single-trip Compass (Vancouver) cards.\n* Fixes a crash bug for some Clipper cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_34">* Adds timezone support for most cards.\n* Clipper: Fix incorrect travel times.\n* Opal: Fix incorrect travel times on Daylight Savings change days.\n* New icons, accessibility improvements, and app install size reduced.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_34" translatable="false">* Adds timezone support for most cards.\n* Clipper: Fix incorrect travel times.\n* Opal: Fix incorrect travel times on Daylight Savings change days.\n* New icons, accessibility improvements, and app install size reduced.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_33">* Adds experimental support for Metrocard (Christchurch, New Zealand).\n* Fixes multiple issues with MIFARE Classic and Ultralight cards.\n* Shows more information while reading a card.\n* Opal: Handle unknown status "0xc".\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_33" translatable="false">* Adds experimental support for Metrocard (Christchurch, New Zealand).\n* Fixes multiple issues with MIFARE Classic and Ultralight cards.\n* Shows more information while reading a card.\n* Opal: Handle unknown status "0xc".\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_32">* Adds Obfuscation Mode.\n* Fix a crash with unknown CEPAS cards.\n* Fix a crash with partially-read MIFARE Classic cards when viewing raw card details.\n* Support negative balances on Cubic Nextfare cards.\n* New stop IDs for Go card (Brisbane, Australia).\n* Adds partial translations into Kabyle thanks to @belkacem77 and Norwegian Bokmål thanks to @comradekingu.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_32" translatable="false">* Adds Obfuscation Mode.\n* Fix a crash with unknown CEPAS cards.\n* Fix a crash with partially-read MIFARE Classic cards when viewing raw card details.\n* Support negative balances on Cubic Nextfare cards.\n* New stop IDs for Go card (Brisbane, Australia).\n* Adds partial translations into Kabyle thanks to @belkacem77 and Norwegian Bokmål thanks to @comradekingu.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_31">* Adds support for SmartRider (WA, Australia).\n* Adds translations into Dutch thanks to @Vistaus, French thanks to @Albirew, Hebrew thanks to @steets250\n* MyWay: Auto-detect card by common key for newly scanned cards.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_31" translatable="false">* Adds support for SmartRider (WA, Australia).\n* Adds translations into Dutch thanks to @Vistaus, French thanks to @Albirew, Hebrew thanks to @steets250\n* MyWay: Auto-detect card by common key for newly scanned cards.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_30">* Multiple fixes for Cubic Nextfare cards.\n* Fudan FM11RF08 cards are no longer falsely detected as Bilhete Único.\n* Adds experimental support for MyWay (ACT, Australia).\n* Works around MIFARE Classic bugs on some HTC and Sony devices.\n* Fix permissions bugs on Android 6 and later.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_30" translatable="false">* Multiple fixes for Cubic Nextfare cards.\n* Fudan FM11RF08 cards are no longer falsely detected as Bilhete Único.\n* Adds experimental support for MyWay (ACT, Australia).\n* Works around MIFARE Classic bugs on some HTC and Sony devices.\n* Fix permissions bugs on Android 6 and later.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_29">* Improve reliability authenticating with MIFARE Classic cards.\n* Adds support for Octopus (Hong Kong), Shenzhen Tong and Transit Access Pass (Los Angeles, CA, US).\n* Adds a generic reader for Cubic Nextfare MFC (based on Go card reader).\n* Export to USB Storage now allows you to pick a location on Android 4.4 (KitKat) and later.\n* Go card: Fares are now retrieved from the card, so should work with all stations. Added 7 extra stations. Now detects Adult and Concession cards.</string>
+    <string name="market_changelog_29" translatable="false">* Improve reliability authenticating with MIFARE Classic cards.\n* Adds support for Octopus (Hong Kong), Shenzhen Tong and Transit Access Pass (Los Angeles, CA, US).\n* Adds a generic reader for Cubic Nextfare MFC (based on Go card reader).\n* Export to USB Storage now allows you to pick a location on Android 4.4 (KitKat) and later.\n* Go card: Fares are now retrieved from the card, so should work with all stations. Added 7 extra stations. Now detects Adult and Concession cards.</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_28">* Now requires Android 4.1, to fix a map issue.\n* Added support for viewing raw FeliCa data.\n* Added support for MIFARE Ultralight, including raw data.\n* Fixed an issue where 2 trips on different days may not show the date header on the earlier trip (Issue #15).\n* Go card: Added 11 extra stops, thanks to data donations. Implement fare calculation, with some limitations.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_28" translatable="false">* Now requires Android 4.1, to fix a map issue.\n* Added support for viewing raw FeliCa data.\n* Added support for MIFARE Ultralight, including raw data.\n* Fixed an issue where 2 trips on different days may not show the date header on the earlier trip (Issue #15).\n* Go card: Added 11 extra stops, thanks to data donations. Implement fare calculation, with some limitations.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_27">Farebot M is now Metrodroid.\n\n* Implemented support for reading the card number from Myki (VIC, AU).\n* Last digit of Go Card (Brisbane, AU) is now read.\n* Improved handling of MIFARE DESFire cards.\n* Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).\n* Japanese translation improved greatly (thanks to @naofum).\n* Trips and Refills are now combined into \"History\" for all cards.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_27" translatable="false">Farebot M is now Metrodroid.\n\n* Implemented support for reading the card number from Myki (VIC, AU).\n* Last digit of Go Card (Brisbane, AU) is now read.\n* Improved handling of MIFARE DESFire cards.\n* Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).\n* Japanese translation improved greatly (thanks to @naofum).\n* Trips and Refills are now combined into \"History\" for all cards.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
     Translators:
     This is for an old version of Metrodroid. There is no need to translate this.
     -->
-    <string name="market_changelog_26">Happy new year!\n\n* Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with MIFARE Classic support. Limited stop support.\n* Added card identification support for Adelaide Metrocard, AT HOP and Myki.\n* Fixed importing individual cards from XML files.\n* Various UI improvements.\n* Minor bug fixes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_26" translatable="false">Happy new year!\n\n* Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with MIFARE Classic support. Limited stop support.\n* Added card identification support for Adelaide Metrocard, AT HOP and Myki.\n* Fixed importing individual cards from XML files.\n* Various UI improvements.\n* Minor bug fixes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 </resources>

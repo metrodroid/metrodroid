@@ -800,10 +800,18 @@
     -->
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_kazan">Kazan, Russia</string>
-    <string name="location_kiev">Kiev, Ukraine</string>
     <string name="location_kirov">Kirov, Russia</string>
     <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
+    <!--
+    Translators:
+    "Kyiv" is the romanization of the name of the capital city of Ukraine, in Ukrainian.
+    "Kiev" is the romanization of the city's name in Russian. Do not use "Kiev", except for Russian.
+    References:
+    https://mfa.gov.ua/en/page/open/id/5418
+    https://blog.ap.org/announcements/an-update-on-ap-style-on-kyiv
+    -->
+    <string name="location_kyiv">Kyiv, Ukraine</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_london">London, UK</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
@@ -2087,8 +2095,17 @@
     <string name="tap_for_more_info">Tap for more info…</string>
     <!-- Translators: used as a preference category label, for settings related to the display of maps -->
     <string name="maps">Maps</string>
-    <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read.</string>
-    <string name="card_name_kiev">Kiev Metro</string>
+    <!-- Translators: extra note shown for Kyiv Metro card -->
+    <string name="card_note_kyiv">Only pre-2016 cards. Only trip log can be read.</string>
+    <!--
+    Translators:
+    "Kyiv" is the romanization of the name of the capital city of Ukraine, in Ukrainian.
+    "Kiev" is the romanization of the city's name in Russian. Do not use "Kiev", except for Russian.
+    References:
+    https://mfa.gov.ua/en/page/open/id/5418
+    https://blog.ap.org/announcements/an-update-on-ap-style-on-kyiv
+    -->
+    <string name="card_name_kyiv">Kyiv Metro</string>
     <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
     within a time period. -->
     <string name="transfer">Transfer</string>
