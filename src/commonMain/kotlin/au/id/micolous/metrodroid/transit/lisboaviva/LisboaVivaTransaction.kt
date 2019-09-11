@@ -23,6 +23,8 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.transit.Station
+import au.id.micolous.metrodroid.transit.Transaction
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -56,8 +58,18 @@ internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): E
     override val lookup: En1545Lookup
         get() = LisboaVivaLookup
 
-    override fun getStation(station: Int?): Station? {
-        return if (station == null) null else lookup.getStation(station, agency, parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER))
+    override fun getStation(station: Int?): Station? = station?.let {
+        lookup.getStation(it, agency, parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER))
+    }
+
+    override fun isSameTrip(other: Transaction): Boolean {
+        if (other !is En1545Transaction)
+            return false
+        // Metro transfers don't involve tap-off/tap-on
+        if (parsed.getIntOrZero(EVENT_SERVICE_PROVIDER) == LisboaVivaLookup.AGENCY_METRO
+            && other.parsed.getIntOrZero(EVENT_SERVICE_PROVIDER) == LisboaVivaLookup.AGENCY_METRO)
+            return true
+        return super.isSameTrip(other)
     }
 
     constructor(data: ImmutableByteArray) : this(En1545Parser.parse(data, tripFields))
