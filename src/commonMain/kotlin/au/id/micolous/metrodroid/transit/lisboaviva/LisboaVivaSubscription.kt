@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.lisboaviva
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -57,6 +58,12 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
             }
             return super.validTo
         }
+
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
+        if (contractProvider == 31)
+            return null
+        return super.getAgencyName(isShort)
+    }
 
     constructor(data: ImmutableByteArray, ctr: Int?) : this(En1545Parser.parse(data, SUB_FIELDS), ctr)
 

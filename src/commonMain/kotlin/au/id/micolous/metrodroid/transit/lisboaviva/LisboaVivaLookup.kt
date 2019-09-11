@@ -99,6 +99,7 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         Pair(30, 725) to R.string.lisboaviva_sub_navegante_rede,
         Pair(30, 733) to R.string.lisboaviva_sub_navegante_sl_tcb_barreiro,
         Pair(30, 1088) to R.string.lisboaviva_sub_fertagus_pal_lis_ml,
+        Pair(31, 906) to R.string.lisboaviva_sub_navegante_lisboa,
         Pair(ZAPPING_AGENCY, ZAPPING_TARIFF) to R.string.lisboaviva_sub_zapping
     )
 }
