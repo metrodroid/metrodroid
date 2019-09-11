@@ -22,6 +22,7 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitBalance
@@ -54,7 +55,14 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
             val units = parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)
             when (units) {
                 0x109 -> return vf + Duration.daysLocal(period - 1)
-                0x10a -> return vf + Duration.monthsLocal(period - 1)
+                0x10a -> {
+                    // It's calendar months. Hence this trickery
+                    val ymdStart = vf.ymd
+                    val ymStart = ymdStart.year * 12 + ymdStart.month
+                    val ymEnd = ymStart + period
+                    val dEnd = Daystamp(year = ymEnd / 12, month = ymEnd % 12, day = 1)
+                    return dEnd + Duration.daysLocal(-1)
+                }
             }
             return super.validTo
         }
