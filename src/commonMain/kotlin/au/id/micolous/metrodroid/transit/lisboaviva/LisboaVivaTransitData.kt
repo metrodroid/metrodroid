@@ -36,18 +36,23 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c131.lua
 @Parcelize
 class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
-                             private val holderName: String?):
+                             private val holderName: String?,
+                             private val tagId: Long?):
         Calypso1545TransitData(capsule) {
 
     override val cardName: String
         get() = NAME
 
     override val info: List<ListItem>?
-        get() = super.info.orEmpty() +
-            if (holderName != null && !holderName.isEmpty() && !Preferences.hideCardNumbers)
-                listOf(ListItem(R.string.card_holders_name, holderName))
-            else
-                emptyList()
+        get() = super.info.orEmpty() + (
+                if (!Preferences.hideCardNumbers)
+                    listOf(ListItem(R.string.lisboaviva_engraved_serial, tagId?.toString()))
+                else
+                    emptyList()) +
+                (if (holderName != null && holderName.isNotEmpty() && !Preferences.hideCardNumbers)
+                    listOf(ListItem(R.string.card_holders_name, holderName))
+                else
+                    emptyList())
 
     override val lookup get() = LisboaVivaLookup
 
@@ -70,6 +75,8 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                                 card, TICKETING_ENV_FIELDS, null, getSerial(card),
                                 { data, ctr, _, _ -> LisboaVivaSubscription(data, ctr) },
                                 { data -> LisboaVivaTransaction(data) }),
+                        tagId = card.getFile(CalypsoApplication.File.ICC)?.getRecord(1)
+                                ?.byteArrayToLong(16, 4),
                         holderName = card.getFile(CalypsoApplication.File.ID)?.getRecord(1)?.readLatin1())
 
         private val TICKETING_ENV_FIELDS = En1545Container(

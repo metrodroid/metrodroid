@@ -2027,6 +2027,7 @@
     <string name="oyster_travelpass">Travelpass / Season Ticket</string>
 
     <string name="lisboaviva_unknown_period">Unknown validity %1$x/%2$x</string>
+    <string name="lisboaviva_engraved_serial">Engraved number</string>
 
     <!-- TODO: Translate into English and remove translatable=false. -->
     <!-- Translators: Portuguese "Ass. PAL - LIS" -->
