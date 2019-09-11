@@ -32,16 +32,13 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): En1545Transaction() {
 
     override val isTapOn: Boolean
-        get() {
-            val transition = parsed.getIntOrZero(TRANSITION)
-            return transition == 1
-        }
+        get() = parsed.getIntOrZero(TRANSITION) == 1
+
+    override val isTransfer: Boolean
+        get() = parsed.getIntOrZero(TRANSITION) == 3
 
     override val isTapOff: Boolean
-        get() {
-            val transition = parsed.getIntOrZero(TRANSITION)
-            return transition == 4
-        }
+        get() = parsed.getIntOrZero(TRANSITION) == 4
 
     override val routeNames: List<FormattedString>?
         get() {
