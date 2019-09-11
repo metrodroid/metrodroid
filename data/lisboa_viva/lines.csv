@@ -1,8 +1,8 @@
-id,name
-0x021001,Blue
-0x022002,Yellow
-0x023003,Green
-0x024004,Red
+id,name,local_name
+0x021001,Blue,Azul
+0x022002,Yellow,Amarela
+0x023003,Green,Verde
+0x024004,Red,Vermelha
 0x031000,Sintra-Azambuja
 0x03a000,Sado/Cascais
 0x042000,Cais do Sodré - Cacilhas
