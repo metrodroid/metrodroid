@@ -466,4 +466,20 @@
     <string name="card_name_penza">Tessera di trasporto di Penza</string>
     <string name="card_name_kirov">Tessera di trasporto di Kirov</string>
     <string name="siticard_aerial_tramway">Funivia</string>
+    <string name="mobile_carrier">Operatore di telefonia mobile</string>
+    <string name="tap_for_more_info">Tocca per maggiori informazioni …</string>
+    <string name="maps">Mappe</string>
+    <string name="card_name_kiev">Metro di Kiev</string>
+    <string name="card_name_crimea_parus_school">Tessera scolastica «Parus»</string>
+    <string name="rkf_status_temp_disabled">Sospeso temporaneamente o permanentemente</string>
+    <string name="rkf_status_not_ok">Sospeso permanentemente</string>
+    <string name="ios_main_screen_back">Principale</string>
+    <string name="ios_menu_button">Altro</string>
+    <string name="ios_menu_title">Menu</string>
+    <string name="ios_menu_cancel">Annulla</string>
+    <string name="ios_error_ok">OK</string>
+    <string name="ios_nfcreader_connection_error">Errore di connessione: %s</string>
+    <string name="ios_nfcreader_connecting">Connessione a %s</string>
+    <string name="ios_nfcreader_reading">Lettura di %s</string>
+    <string name="ios_nfcreader_tap">Tocca una tessera</string>
 </resources>
