@@ -1139,4 +1139,7 @@
     <string name="lang_default">Systeemstandaard</string>
     <string name="cards_search">Zoeken</string>
     <string name="location_fribourg_ch">Fribourg, Zwitserland</string>
+    <string name="hotel_room_number">Kamernummer</string>
+    <string name="hotel_checkin">Check-in</string>
+    <string name="hotel_checkout">Check-uit</string>
 </resources>
