@@ -469,7 +469,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 val it = uris.iterator()
                 onCardsImported(cf.activity!!, uris.size, if (it.hasNext()) it.next() else null)
                 return
-            }    
+            }
             AlertDialog.Builder(cf.activity)
                     .setMessage(err)
                     .show()
