@@ -31,7 +31,7 @@ import codecs, csv
 
 
 def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None, operators_f=None, local_languages=None,
-                           lines_f=None):
+                           lines_f=None, notice_f=None):
   csv_f = codecs.getreader('utf-8-sig')(csv_f)
 
   operators = {}
@@ -62,6 +62,7 @@ def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None
     lines=lines,
     local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
+    license_notice_f=notice_f,
   )
 
   mdst.read_stops_from_csv(db, csv_f)
@@ -108,9 +109,17 @@ def main():
     required=False,
     help='If specified, provides a list of languages when to show local name. Comma-separated')
 
+  parser.add_argument('-n', '--license-notice',
+    required=False,
+    type=FileType('r'),
+    help='If specified, the file from which to read a license notice from.')
+
   options = parser.parse_args()
 
-  compile_stops_from_csv(options.input_csv[0], options.output, options.version, options.tts_hint_language, options.operators, options.local_languages, options.lines)
+  compile_stops_from_csv(options.input_csv[0], options.output,
+                         options.version, options.tts_hint_language,
+                         options.operators, options.local_languages,
+                         options.lines, options.license_notice)
 
 if __name__ == '__main__':
   main()
