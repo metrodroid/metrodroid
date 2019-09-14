@@ -1104,4 +1104,14 @@
     <string name="ios_nfcreader_reading">Читаем карту %s</string>
     <string name="ios_nfcreader_tap">Приложите карту</string>
     <string name="mifare_plus_not_supported">Mifare Plus не поддерживается</string>
+    <string name="location_finland">Финляндия</string>
+    <string name="mfp_reading">Считываем карту MIFARE Plus…</string>
+    <string name="lang_override">Язык приложения</string>
+    <string name="lang_override_desc">Сменить язык приложения. Нужно перезапустить приложение, чтобы применить</string>
+    <string name="lang_default">Язык системы</string>
+    <string name="cards_search">Поиск</string>
+    <string name="location_fribourg_ch">Фрибург, Швейцария</string>
+    <string name="hotel_room_number">Номер</string>
+    <string name="hotel_checkin">Время заселения</string>
+    <string name="hotel_checkout">Время выселения</string>
 </resources>
