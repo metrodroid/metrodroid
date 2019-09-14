@@ -2404,4 +2404,11 @@
         <item quantity="other">%d cards</item>
     </plurals>
     <string name="cards_search">Search</string>
+
+    <!-- Translators: It's about hotel. -->
+    <string name="hotel_room_number">Room number</string>
+    <!-- Translators: It's about hotel. -->
+    <string name="hotel_checkin">Check-in</string>
+    <!-- Translators: It's about hotel. -->
+    <string name="hotel_checkout">Check-out</string>
 </resources>
