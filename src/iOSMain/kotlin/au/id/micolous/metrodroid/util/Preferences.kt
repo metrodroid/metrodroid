@@ -20,8 +20,11 @@
 package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.transit.TransitData
+import platform.Foundation.NSBundle
 import platform.Foundation.NSLocale
 import platform.Foundation.NSUserDefaults
+import platform.Foundation.countryCode
+import platform.Foundation.currentLocale
 import platform.Foundation.preferredLanguages
 
 actual object Preferences {
