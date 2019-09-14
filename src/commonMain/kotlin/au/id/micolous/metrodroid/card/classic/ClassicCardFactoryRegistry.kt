@@ -5,6 +5,7 @@ import au.id.micolous.metrodroid.transit.bonobus.BonobusTransitFactory
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData
 import au.id.micolous.metrodroid.transit.chilebip.ChileBipTransitFactory
+import au.id.micolous.metrodroid.transit.cifial.CifialTransitFactory
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.gautrain.GautrainTransitFactory
@@ -80,6 +81,7 @@ object ClassicCardFactoryRegistry {
             UmarshTransitFactory,
             ChileBipTransitFactory,
             WarsawTransitData.FACTORY,
+            CifialTransitFactory,
 
             // This check must be THIRD TO LAST.
             //
