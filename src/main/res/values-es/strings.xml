@@ -509,4 +509,5 @@
     </plurals>
     <string name="cepas_autoload_amount">importe de recarga</string>
     <string name="desfire_subtype">Subtipo</string>
+    <string name="mfp_reading">Leyendo tarjeta MIFARE Plus.…</string>
 </resources>
