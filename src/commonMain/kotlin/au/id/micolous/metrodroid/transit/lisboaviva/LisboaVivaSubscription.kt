@@ -40,7 +40,7 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
 
     private val isZapping: Boolean
         get() = parsed.getIntOrZero(En1545Subscription.CONTRACT_TARIFF) == LisboaVivaLookup.ZAPPING_TARIFF &&
-                parsed.getIntOrZero(En1545Subscription.CONTRACT_PROVIDER) == LisboaVivaLookup.ZAPPING_AGENCY
+                parsed.getIntOrZero(En1545Subscription.CONTRACT_PROVIDER) == LisboaVivaLookup.INTERAGENCY31_AGENCY
 
     override val lookup: En1545Lookup
         get() = LisboaVivaLookup
@@ -68,7 +68,7 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
         }
 
     override fun getAgencyName(isShort: Boolean): FormattedString? {
-        if (contractProvider == 31)
+        if (contractProvider == LisboaVivaLookup.INTERAGENCY31_AGENCY)
             return null
         return super.getAgencyName(isShort)
     }

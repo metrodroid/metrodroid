@@ -81,7 +81,7 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
     }
 
     const val ZAPPING_TARIFF = 33592
-    const val ZAPPING_AGENCY = 31
+    const val INTERAGENCY31_AGENCY = 31
     const val AGENCY_CARRIS = 1
     const val AGENCY_METRO = 2
     const val AGENCY_CP = 3
@@ -99,7 +99,7 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         Pair(30, 725) to R.string.lisboaviva_sub_navegante_rede,
         Pair(30, 733) to R.string.lisboaviva_sub_navegante_sl_tcb_barreiro,
         Pair(30, 1088) to R.string.lisboaviva_sub_fertagus_pal_lis_ml,
-        Pair(31, 906) to R.string.lisboaviva_sub_navegante_lisboa,
-        Pair(ZAPPING_AGENCY, ZAPPING_TARIFF) to R.string.lisboaviva_sub_zapping
+        Pair(INTERAGENCY31_AGENCY, 906) to R.string.lisboaviva_sub_navegante_lisboa,
+        Pair(INTERAGENCY31_AGENCY, ZAPPING_TARIFF) to R.string.lisboaviva_sub_zapping
     )
 }
