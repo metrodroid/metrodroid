@@ -24,15 +24,16 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
+import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.coroutines.runBlocking
 
 object ISO7816CardReaderIOS {
     @NativeThrows
     fun dump(wrapper: ISO7816Transceiver.SwiftWrapper,
-             feedback: TagReaderFeedbackInterface): Card {
+             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
         val xfer = ISO7816Transceiver(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        return runBlocking {
+        runBlocking {
             Log.d(TAG, "Start async")
             val df = ISO7816Card.dumpTag(xfer, feedback, coreNFC = true)
             Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,

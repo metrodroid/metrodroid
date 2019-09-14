@@ -261,6 +261,117 @@ class CardPersister {
         let card = try CardSerializer.init().fromPersist(input: String(data: data, encoding: .utf8)!)
         let importUrl = try CardPersister.persistCard(card: card)
         return (card, importUrl, 1)
+    }    
+    
+    class XMLAST: NodeWrapper {
+        var children: [XMLAST]
+        
+        var childNodes: [NodeWrapper] {
+            get {
+                return children
+            }
+        }
+        
+        let nodeName: String
+        
+        var inner: String?
+        
+        let parent: XMLAST?
+        let attributes: [String : String]
+        init(name : String, attributes: [String : String], parent: XMLAST?) {
+            self.nodeName = name
+            self.parent = parent
+            self.attributes = attributes
+            self.inner = ""
+            self.children = []
+        }
+        
+        func addChild(child: XMLAST) {
+            children.append(child)
+        }
+        
+        func addInner(_ s: String) {
+            inner = (inner ?? "") + s
+        }
+    }
+    
+    class XMLDelegate: NSObject, XMLParserDelegate {
+        var isFirst = true
+        var cardDepth = 0
+        var depth = 0
+        var valid = true
+        var astRoot : XMLAST? = nil
+        var curElement: XMLAST? = nil
+        var lastCard: Card? = nil
+        var lastUrl: URL? = nil
+        var cardCount: Int = 0
+        func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+            if (isFirst) {
+                if elementName == "cards" {
+                    cardDepth = 2
+                } else if elementName == "card" {
+                    cardDepth = 1
+                } else {
+                    valid = false
+                    parser.abortParsing()
+                }
+            }
+            isFirst = false
+            depth += 1
+            if depth == cardDepth {
+                astRoot = XMLAST(name: elementName, attributes: attributeDict, parent: nil)
+                curElement = astRoot
+            }
+            if depth > cardDepth {
+                let newElement = XMLAST(name: elementName, attributes: attributeDict, parent: curElement)
+                curElement?.addChild(child: newElement)
+                curElement = newElement
+            }
+        }
+        func parser(_ parser: XMLParser, foundCharacters string: String) {
+            curElement?.addInner(string)
+        }
+        private func parseCard() {
+            print("astRoot=\(String(describing: astRoot))")
+            guard let root = astRoot else {
+                return
+            }
+            guard let card = try? XmlCardFormatKt.readCardXML(root: root) else {
+                return
+            }
+            lastUrl = try? persistCard(card: card)
+            lastCard = card
+            cardCount += 1
+        }
+        func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+            if depth == cardDepth {
+                parseCard()
+                astRoot = nil
+            }
+            depth -= 1
+            curElement = curElement?.parent
+        }
+        func parserDidEndDocument(_ parser: XMLParser) {
+            parseCard()
+            astRoot = nil
+        }
+        func parserDidStartDocument(_ parser: XMLParser) {
+            print("Start document")
+        }
+        func collapse() -> (Card?, URL?, Int)  {
+            if cardCount == 1 {
+                return (lastCard, lastUrl, 1)
+            }
+            return (nil, nil, cardCount)
+        }
+    }
+    
+    class func readXml(xmlUrl: URL) throws -> (Card?, URL?, Int) {
+        let parser = XMLParser.init(contentsOf: xmlUrl)
+        let delegate = XMLDelegate()
+        parser?.delegate = delegate
+        parser?.parse()
+        return delegate.collapse()
     }
     
     class func readZip(zipUrl: URL) throws -> (Card?, URL?, Int) {
@@ -321,6 +432,10 @@ class CardPersister {
         
         if head[0] == 0x50 {
             return try readZip(zipUrl: url)
+        }
+                
+        if head[0] == 0x3c {
+            return try readXml(xmlUrl: url)
         }
         
         return (nil, nil, 0)

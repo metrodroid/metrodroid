@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.ui.ListItem
 
 @Parcelize
@@ -66,6 +67,8 @@ data class TransitDataStored internal constructor(
             rawFieldsUnknown = original.getRawFields(RawLevel.UNKNOWN_ONLY))
 
         @NativeThrows
-        fun parse(card: Card): TransitDataStored? = card.parseTransitData()?.let { store(it) }
+        fun parse(card: Card): TransitDataStored? = logAndSwiftWrap ("TransitDataStore", "Failed to parse") {
+            card.parseTransitData()?.let { store(it) }
+        }
     }
 }

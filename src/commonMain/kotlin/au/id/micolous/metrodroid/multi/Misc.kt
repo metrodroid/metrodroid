@@ -24,3 +24,12 @@ expect annotation class Parcelize()
 expect interface Parcelable
 @Target(AnnotationTarget.FUNCTION)
 expect annotation class NativeThrows (vararg val exceptionClasses: kotlin.reflect.KClass<out kotlin.Throwable>)
+// Swift doesn't propagate RuntimeException, hence we need this ugly wrapper
+fun <T> logAndSwiftWrap(tag: String, msg: String, f: () -> T): T {
+    try {
+        return f()
+    } catch (ex: Exception) {
+        Log.e(tag, msg, ex)
+        throw Exception(ex)
+    }
+}

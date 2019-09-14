@@ -35,6 +35,8 @@ import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.NativeThrows
+import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -42,9 +44,11 @@ import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.CompositeDecoder.Companion.UNKNOWN_NAME
 import kotlinx.serialization.internal.EnumDescriptor
+import kotlin.native.concurrent.SharedImmutable
 
 private const val TAG = "XmlCardFormat"
 
+@SharedImmutable
 private val aliases = mapOf(
         "partial_read" to "isPartialRead")
 
@@ -75,8 +79,7 @@ annotation class XMLIgnore(val ignore: String)
 interface NodeWrapper {
     val childNodes: List<NodeWrapper>
     val nodeName: String
-    val nodeValue: String?
-    val textContent: String?
+    val inner: String?
     val attributes: Map <String, String>
 }
 
@@ -275,7 +278,7 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
                         && currentNode.nodeName !in ignore) {
                     curCounter++
                     currentKey = currentNode.nodeName
-                    currentValue = currentNode.nodeValue ?: currentNode.textContent
+                    currentValue = currentNode.inner
                     return true
                 }
             }
@@ -286,7 +289,7 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
         if (state == State.INLINE_LIST) {
             curTagIndex++
             if (curTagIndex < 1) {
-                currentValue = parent.nodeValue ?: parent.textContent
+                currentValue = parent.inner
                 currentKey = parent.nodeName
                 return true
             }
@@ -531,7 +534,8 @@ class ISO7816ApplicationXmlAdapter(
         }
 }
 
-fun readCardXML(root: NodeWrapper): Card {
+@NativeThrows
+fun readCardXML(root: NodeWrapper): Card = logAndSwiftWrap("XmlCardFormat", "XML parsing failed") {
     if (root.nodeName != "card")
         throw Exception("Invalid root ${root.nodeName}")
     val cardType = root.attributes["type"] ?: throw Exception("type attribute not found")
@@ -543,22 +547,22 @@ fun readCardXML(root: NodeWrapper): Card {
             tz = MetroTimeZone.LOCAL)
     val label = root.attributes["label"]
     when (cardType.toInt()) {
-        CardType.MifareClassic.toInteger() -> return Card(
+        CardType.MifareClassic.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareClassic = xi.decode(ClassicCard.serializer()))
-        CardType.MifareUltralight.toInteger() -> return Card(
+        CardType.MifareUltralight.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareUltralight = xi.decode(UltralightCard.serializer()))
-        CardType.MifareDesfire.toInteger() -> return Card(
+        CardType.MifareDesfire.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareDesfire = xi.decode(DesfireCard.serializer()))
-        CardType.CEPAS.toInteger() -> return Card(
+        CardType.CEPAS.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 cepasCompat = xi.decode(CEPASCard.serializer()))
-        CardType.FeliCa.toInteger() -> return Card(
+        CardType.FeliCa.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 felica = xi.decode(FelicaCard.serializer()))
-        CardType.ISO7816.toInteger() -> return Card(
+        CardType.ISO7816.toInteger() -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 iso7816 = xi.decode(ISO7816Card.serializer()))
         else -> throw Exception("Unknown card type $cardType")

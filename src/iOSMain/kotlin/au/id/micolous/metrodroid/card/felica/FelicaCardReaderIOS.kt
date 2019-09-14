@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
+import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.coroutines.runBlocking
 
 import platform.Foundation.*
@@ -32,10 +33,10 @@ object FelicaCardReaderIOS {
     @NativeThrows
     fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,
              defaultSysCode: NSData,
-             feedback: TagReaderFeedbackInterface): Card {
+             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
         val xfer = FelicaTransceiverIOS(wrapper, defaultSysCode)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        return runBlocking {
+        runBlocking {
             Log.d(TAG, "Start async")
             val df = FelicaReader.dumpTag(xfer, feedback)
             Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,

@@ -89,8 +89,6 @@ to rely on your screen reader being smart enough.
   
 ## Other missing features
 
-* XML importing is not supported
-
 * Locales without real translations are omitted: Irish, Maori, Malay and
   Traditional Chinese.
   

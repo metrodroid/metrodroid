@@ -174,7 +174,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
     
     func importFileAction(_: UIAlertAction) {
         let importMenu = UIDocumentPickerViewController.init(
-            documentTypes: ["public.zip-archive", "public.json"],
+            documentTypes: ["public.zip-archive", "public.json", "public.xml"],
             in: .import)
         importMenu.delegate = self
         self.present(importMenu, animated: true, completion: nil)
