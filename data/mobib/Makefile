@@ -6,7 +6,9 @@ MOBIB_URL = "https://transitfeeds.com/p/societe-des-transports-intercommunaux-de
 all: mobib.mdst mobib.csv
 
 mobib.mdst: mapping.csv historical_stations.csv mobib_gtfs.zip mdst
-	python3 $(MDST)/compile_stops_from_gtfs.py mobib_gtfs.zip -m mapping.csv -l en-US -p operators.csv -x historical_stations.csv -o $@
+	python3 $(MDST)/compile_stops_from_gtfs.py mobib_gtfs.zip \
+		-m mapping.csv -l en-US -p operators.csv \
+		-x historical_stations.csv -n NOTICE -o $@
 
 # Need to follow redirects. (-L)
 mobib_gtfs.zip:
