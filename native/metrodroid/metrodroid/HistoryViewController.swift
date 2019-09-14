@@ -22,7 +22,7 @@ import Foundation
 import UIKit
 import metrolib
 
-class HistoryViewController : UITableViewController, UISearchBarDelegate {
+class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocumentPickerDelegate {
     class Section {
         let group: CardPersister.Group
         var expanded: Bool
@@ -139,15 +139,20 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate {
                     navigationController.viewControllers.forEach{ v in (v as? HistoryViewController)?.reload() }
                     let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(RKt.R.plurals.cards_imported, count, count))
                     navigationController.present(alert, animated: true) {
-                        let cr: UIViewController
+                        let cr: UIViewController?
                         if json != nil && url != nil {
                             cr = CardViewController.create(json: json!, url: url!)
+                        } else if (navigationController.viewControllers.last is HistoryViewController) {
+                            cr = nil
                         } else {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             cr = storyboard.instantiateViewController(withIdentifier: "HistoryViewController")
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                navigationController.pushViewController(cr, animated: true)
+                        if cr != nil {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    navigationController.pushViewController(
+                                        cr!, animated: true)
+                            }
                         }
                     }
                 }
@@ -160,9 +165,37 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate {
         }
     }
     
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if urls.isEmpty {
+            return
+        }
+        HistoryViewController.importFile(navigationController: navigationController!, from: urls[0])
+    }
+    
+    func importFileAction(_: UIAlertAction) {
+        let importMenu = UIDocumentPickerViewController.init(
+            documentTypes: ["public.zip-archive", "public.json"],
+            in: .import)
+        importMenu.delegate = self
+        self.present(importMenu, animated: true, completion: nil)
+    }
+    
+    func importAction(_: UIAlertAction) {
+        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.import_xml), preferredStyle: .actionSheet)
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.import_clipboard), style: .default, handler: importClipboard))
+        optionMenu.addAction(
+            UIAlertAction(title: Utils.localizeString(RKt.R.string.import_file), style: .default, handler: importFileAction))
+        optionMenu.addAction(
+            UIAlertAction(title: Utils.localizeString(RKt.R.string.export_all), style: .default, handler: exportAllAction))
+        
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_menu_cancel), style: .cancel))
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
     @objc func menuAction() {
         let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.ios_menu_title), preferredStyle: .actionSheet)
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.import_clipboard), style: .default, handler: importClipboard))
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.import_xml), style: .default, handler: importAction))
         optionMenu.addAction(
             UIAlertAction(title: Utils.localizeString(RKt.R.string.deduplicate_cards), style: .default, handler: dedupAction))
         optionMenu.addAction(
