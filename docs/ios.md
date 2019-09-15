@@ -5,110 +5,203 @@ permalink: /ios
 
 ## Introduction
 
-On iOS before iOS 13 it was impossible to read NFC cards. However this changed
-with extension of CoreNFC framework on iOS. Hence our iOS port is very young
-and may have undiscovered issues. We don't strive to feature parity between
-iOS and Android version, however we document the differences.
+In iOS 12 and earlier, there was only limited support for reading NDEF NFC tags. Unfortunately, this
+isn't enough to read the majority of transit cards.
 
-## Card support
+iOS 13 has [significantly expanded the CoreNFC API][corenfc], such that it is possible to read some
+NFC transit cards on iPhone 7 and later.
 
-iOS supports omits support for several cards for various reasons
+It is fairly early days for both Metrodroid on iOS and NFC support on iOS in general, so we expect
+to see many issues. There are still significant limitations imposed by iOS, but we aim to get as
+close to feature parity with the Android version as we can.
 
-* Mifare Classic based cards. iOS 13 doesn't allow to read generic Mifare
-  Classic which precludes us from reading MFC-based transit cards. Hence MFC
-  support is omitted including following components:
-  
-  1. Key management.
-  2. Fallback reader. Hence old dumps of Smartrider/Myway can't be effectively
-     imported into iOS Metrodroid.
-  3. Card hiding possibility. It's currently used only by few Zolotaya Korona
-     variants and its future is unclear on Android as well.
-  4. Import of MFC files.
-  5. Import of Mifare Classic Tool (MCT) files
-  6. Pledge to submit unknown stations and card warning. Currently used only by
-     SEQ Go and Troika cards.
-  
-* EMV cards. iOS 13 doesn't allow reading dynamic AIDs which precludes EMV
-  support, hence EMV support is disabled on iOS version.
+* [Requirements](#requirements)
+* [Getting Metrodroid for iOS](#getting-metrodroid-for-ios)
+* [Known differences and issues](#known-differences-and-issues)
+* [Report iOS-specific issues][ios-issue]
+* [Build Metrodroid for iOS from source](#build-metrodroid-for-ios-from-source)
 
-* CEPAS cards. CEPAS uses implicit application selections which is unsupported
-  by iOS 13 and hence CEPAS support is disabled on iOS version.
-  
-* Beijing Municipal card. iOS 13 doesn't allow selection of very short AIDs
-  which excludes Beijing Municipal card which uses either 2-byte or 4-byte ID
-  depending on revision.
-  
-* Leap unlocking is not implemented yet.
+## Requirements
 
-## UX differences
+* iOS 13.0 beta 7 or later
+* iPhone 7 or later
 
-* On Android when on main screen you can just tap the card. CoreNFC API doesn't
-  allow this and hence you have to click "Scan card" button first.
+**Note:** other iOS devices, including those supported by Apple Pay, do not support the new CoreNFC
+APIs available in iOS 13.
 
-* Toasts are replaced with alert prompts which is less optimal as requires the
-  user to acknowledge every toast message
-  
-* The feature "Launch from background" that allows scanning the card without
-  prior openning the metrodroid app is omitted as it's not supported by CoreNFC
-  except for some NDEF cases.
-  
-* Preference screen misses preference explanations as it doesn't exist on iOS.
-  This includes both detailed text explanations on preference screens and
-  separate dialog opened for LocaleSpan explanation.
+## Getting Metrodroid for iOS
 
-## UI differences
+We're currently working on getting Metrodroid available to interested testers via [TestFlight][].
+Watch this page for further updates.
 
-* General interface is revamped to suit iOS look and feel and to use standard
-  iOS elements.
+If you are a member of the [Apple Developer Program][apple-dev], you can [build Metrodroid for iOS
+from source](#build-metrodroid-for-ios-from-source) and deploy it to your device today!
 
-* Interface while scanning has to conform to CoreNFC limits and hence is very
-  different to Android counterpart. Card image is omitted and the progress bar
-  is replaced with text indicator showing percents.
+## Known differences and issues
 
-* Map uses Apple maps instead of Leaflet.
+* [Card support, and unsupported cards on iOS](#card-support)
+* [UX differences](#ux-differences)
+* [UI differences](#ui-differences)
+* [Accessibility](#accessibility)
+* [Other missing features](#other-missing-features)
 
-* Android has 3 themes and they're selectable in preferences. iOS version has
-  only 2 themes: light and dark and switched following system-wide preference.
-  Farebot theme is missing but it would probably be very similar to light
-  theme on iOS due to general look difference.
-  
-* Collapsed elements are not implented yet. This has following implications:
+### Card support
+
+Metrodroid for iOS **does not support**:
+
+* **Apple Pay**: _like the Android version,_ Metrodroid does not read virtual cards (HCE) from the
+  device it is running on.
+
+* **Beijing Municipal Card**: this card uses very short 2 or 4 byte AIDs (depending on revision),
+  which are not allowed on iOS.
+
+* **CEPAS (Singapore) cards**: the SS-518 protocol requires implicit AID selection, which is not
+  allowed on iOS.
+
+* **EMV cards**: the EMV protocol requires dynamic AID selection, which is not allowed on iOS.
+
+* **FeliCa cards with more than one system not supported**: [this appears to be an iOS
+  bug][ios-felica]. This impacts Hu Tong Xing (互通行) cards, as well as some Hayakaken, PASMO and
+  Suica cards. ICOCA and nimoca cards both appear fine.
+
+* **Leap**: unlocking Leap cards is not yet implemented; this is to come in a future release.
+
+* **MIFARE Classic based cards**: iOS 13 does not support the proprietary [Crypto-1][] algorithm
+  used by MIFARE Classic, so we cannot read any such transit card. MFC support is omitted, including
+  the following components:
+
+  * Key management
+  * Fallback reader option (ie: dumps of SmartRider and MyWay can't be imported from old versions of
+    Metrodroid for Android)
+  * Importing (binary) MFC dump files
+  * Importing MIFARE Classic Tool (MCT) files
+  * "submit unknown stations" prompt is removed (only used by Brisbane Go Card and Troika)
+
+### UX differences
+
+* **Must press "scan card" on home screen**: iOS only allows scanning from a modal pop-up created
+  by CoreNFC.
+
+  By comparison, Android lets foreground applications scan at all times.
+
+* **Toasts are replaced with alert prompts.** Unfortunately, the user must acknowledge every toast
+  message.
+
+* **Launch from background is not supported**: not possible to implement in CoreNFC for the cards
+  we support -- only NDEF.
+
+* **Preferences screen misses detailed help text**: this doesn't exist on iOS.
+
+### UI differences
+
+* **Metrodroid interface follows iOS look and feel.** This is working as intended. ;)
+
+* **Card image and progress bar is not displayed while reading cards**: we can only display a
+  textual message using the CoreNFC API, and a percentage.
+
+* **Apple Maps used instead of Leaflet.**
+
+* **Theming follows system-wide preference only**: The "Farebot" theme is missing as a result (but
+  this would look very similar on iOS).
+
+* **Collapsed elements are not yet implemented.**  As a result:
 
   1. In subscription view the details are always shown
   2. In raw view subtrees are not collapsible
 
-## Accessibility
+### Accessibility
 
-Some acessibility features are omitted from iOS version.
+Some accessibility features are not available from iOS version:
 
-* TtsSpan that marks date/time and money text as such are omitted and you have
-to rely on your screen reader being smart enough.
+* `TtsSpan` that marks date/time and money text as such are omitted and you have
+  to rely on your screen reader being smart enough.
 
-* HiddenSpan used in time and route indications to provide readable alternative
-  to arrows is not implemented yet.
+* `HiddenSpan` used in time and route indications to provide readable
+  alternative to arrows is not implemented yet.
   
-## Other missing features
+### Other missing features
 
-* Locales without real translations are omitted: Irish, Maori, Malay and
-  Traditional Chinese.
+* Locales without real translations are omitted: Irish, Maori, Malay and Traditional Chinese.
   
 * Currently the library tests don't run due to a compiler problem.
 
 * Currently there are no iOS-specific tests.
 
-## System requirements
+## Build Metrodroid for iOS from source
 
-* iOS 13 beta or later
-* iPhone 7 or later
+**Note:** We're working on making this available via [TestFlight][].
 
-## Compilation
+Requirements:
 
-You need Android SDK due to technical reasons
-You also need Xcode 11 beta or later. Then:
+* macOS 10.14 Mojave or later
+* Android SDK (for technical reasons)
+* Xcode 11 beta or later
+* Java runtime environment
+
+**Note:** If you want to deploy your build to a physical device, you must also enroll in the
+[Apple Developer Program][apple-dev]. _This has an annual membership fee._
+
+First, build the generated files needed for Xcode:
 
 ```shell
-    ./gradlew generateLocalize iOSLanguages iOSMappedLanguages proto:mainSharedLibrary proto:mainStaticLibrary packForXCode 
+./gradlew generateLocalize iOSLanguages iOSMappedLanguages proto:mainSharedLibrary proto:mainStaticLibrary packForXCode
 ```
 
-Then open `native/metrodroid` in Xcode and compile.
+Then open `native/metrodroid` in Xcode, then compile and deploy as usual.
 
+### Using in the simulator
+
+**Note:** This works even if you are not enrolled in the [Apple Developer Program][apple-dev].
+
+Once you've deployed to the simulator, you can load card dumps by dragging Metrodroid card JSON
+files from Finder to the simulator window.
+
+### Deploying to a physical device
+
+**Note:** you must be enrolled in the [Apple Developer Program][apple-dev] to deploy to a physical
+device.
+
+You will need to [modify the signing configuration][signing-workflow] in Xcode before you can
+deploy:
+
+1. Open the Project Navigator (<kbd>⌘1</kbd>)
+
+2. Select `metrodroid` (the project) at the root of the tree.
+
+3. In the projects and targets list, pick the `metrodroid` target. This has a green Metrodroid logo.
+
+4. Click `Signing & Capabilities`.
+
+   You should see a `Team` of `Unknown Name` appear in red, and the errors `No account for team` and
+   `No profiles for 'org.metrodroid.ios' were found`. We'll resolve these issues in the next steps.
+
+5. Change the `Team` to your Apple Developer Program Team's name. This is either your full name, or
+   your organisation's name.
+
+   If you don't see a team name in the list, you need to [set up your Apple ID in
+   Xcode][xcode-setup] first.
+
+   You should now see the error `Failed to register bundle identifier.`  We'll resolve that next.
+
+6. Set a [unique bundle identifier][bundle-id].  For example, `com.example.metrodroid.ios.dev`.
+
+   If you don't have your own domain name, but have a GitHub account, use something like
+   `io.github.your_name_here.metrodroid.ios`.
+
+You should now see `Waiting to repair`, `Creating provisioning profile`, and then the errors should
+disappear.
+
+At this point, you can deploy to your device!
+
+**Note:** when submitting pull requests, please ensure that your developer ID and bundle name
+changes have been removed from `native/metrodroid/metrodroid.xcodeproj/project.pbxproj`.
+
+[apple-dev]: https://developer.apple.com/programs/enroll/
+[bundle-id]: https://help.apple.com/xcode/mac/current/#/deve70ea917b
+[corenfc]: https://developer.apple.com/documentation/corenfc
+[Crypto-1]: https://en.wikipedia.org/wiki/Crypto-1
+[ios-felica]: https://github.com/metrodroid/metrodroid/issues/613
+[ios-issue]: https://github.com/metrodroid/metrodroid/issues/new?assignees=&labels=bug&template=bug.md&title=%5BBUG%5D
+[signing-workflow]: https://help.apple.com/xcode/mac/current/#/dev60b6fbbc7
+[TestFlight]: https://developer.apple.com/testflight/
+[xcode-setup]: https://help.apple.com/xcode/mac/current/#/devaf282080a
