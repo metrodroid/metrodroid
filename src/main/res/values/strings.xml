@@ -2399,7 +2399,7 @@
     <!-- Translators: Italian "ABB. TRIM. PERS. PISA" -->
     <string name="pisa_abb_trim_pers_pisa">Trimestrial subscription Pisa</string>
 
-    <plurals name="supported_cards">
+    <plurals name="supported_cards_format">
         <item quantity="one">%d card</item>
         <item quantity="other">%d cards</item>
     </plurals>
