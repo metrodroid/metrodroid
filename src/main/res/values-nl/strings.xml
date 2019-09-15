@@ -1142,4 +1142,7 @@
     <string name="hotel_room_number">Kamernummer</string>
     <string name="hotel_checkin">Check-in</string>
     <string name="hotel_checkout">Check-uit</string>
+    <string name="large_file_yes">Tóch laden (maar met kans op een crash)</string>
+    <string name="large_file_no">Annuleren (veilig)</string>
+    <string name="large_file_warning">Het gekozen bestand is groot (%s) en kan leiden tot een crash. Weet je zeker dat je wilt doorgaan\?</string>
 </resources>
