@@ -728,4 +728,84 @@
     <string name="hotel_room_number">Zimmernummer</string>
     <string name="hotel_checkin">Check-In</string>
     <string name="hotel_checkout">Check-Out</string>
+    <string name="map_tiles_url">URL für Kartenkacheln</string>
+    <string name="map_tiles_url_summary">Einen benutzerdefinierten Kachelserver für Karten verwenden, mit der Leaflet TileLayer-Syntax.</string>
+    <string name="map_tiles_subdomains">Kartenkachel-Subdomains</string>
+    <string name="map_tiles_subdomains_summary">Wenn Sie {s} in Map-URLs verwenden, eine kommagetrennte Liste von Subdomains oder eine einstellige Liste von Subdomains.</string>
+    <string name="map_tiles_help">Dokumentation zur Leaflet TileLayer anzeigen</string>
+    <string name="mfc_fallback_desc">Einige Karten haben kein identifizierendes Magiezahl. Um sie zu lesen, müssen Sie eine Karte explizit auswählen.</string>
+    <string name="pref_hide_unsupported_ribbon_desc_on">Nicht unterstützte Karten haben nichts, was ihre Grafik abdeckt</string>
+    <string name="obfuscation_title">Verschleierung</string>
+    <string name="obfuscation_balance">Guthaben verschleiern</string>
+    <string name="obfuscation_balance_desc">Den angezeigten Kontostand nach dem Zufallsprinzip ändern</string>
+    <string name="obfuscation_dates">Daten verschleiern</string>
+    <string name="obfuscation_dates_desc">Reise-, Abo-, Ablauf- und Scandaten als unterschiedliche, zufällige Tage anzeigen</string>
+    <string name="obfuscation_times">Uhrzeiten verschleiern</string>
+    <string name="obfuscation_fares">Tarife verschleieren</string>
+    <string name="obfuscation_fares_desc">Angezeigten Tarife um einen zufälligen Betrag ändern</string>
+    <string name="localise_places_longdesc">Text-zu-Sprache-Stimmen funktionieren normalerweise gut nur für eine Sprache.
+\n
+\nLocaleSpan-Hinweise werden verwendet, um Text in einer anderen Sprache zu kennzeichnen. Bei Anwendung auf einen Bahnhofs-, Stopp-, Linien- oder Routennamen spricht ein Bildschirmleser, der diese Hinweise unterstützt, den Namen mit synthetisierten Stimmen aus der Muttersprache des Orts aus, anstatt mit der Sprache, für die Sie Android konfiguriert haben.
+\n
+\nWenn Sie diese Option aktivieren, wird die Aussprache von ausländischen Ortsnamen, die nicht international bekannt sind, im Allgemeinen verbessert. Es kann jedoch sein, dass Sie Schwierigkeiten haben, diese zu verstehen.
+\n
+\nDies ändert normalerweise nicht die Bildschirmanzeige von Ortsnamen, aber einige Geräte verwenden möglicherweise eine andere Schriftart.
+\n
+\nHierfür ist eine Eingabehilfesoftware erforderlich, die die LocaleSpan-API unterstützt (z. B. Google TalkBack) und auf der Sie die entsprechenden Stimmen installiert haben.</string>
+    <string name="compass_product_type">Produktart</string>
+    <string name="compass_ticket_type_concession">Konzession</string>
+    <string name="compass_ticket_type_regular">Normal</string>
+    <string name="gender">Geschlecht</string>
+    <string name="gender_female">Weiblich</string>
+    <string name="gender_male">Männlich</string>
+    <string name="adelaide_ticket_type_concession">Konzession</string>
+    <string name="adelaide_ticket_type_regular">Normal</string>
+    <string name="adelaide_ticket_type_seniors">Senioren</string>
+    <string name="adelaide_ticket_type_student">Student</string>
+    <string name="passenger_class">Klasse</string>
+    <string name="en1545_network_id">Netzwerk-ID</string>
+    <string name="card_note_russia">Bankkarten sind nicht unterstützt.</string>
+    <string name="fully_blank_desc">Diese Karte scheint leer zu sein. Es ist formatiert, enthält jedoch keine anderen Daten als eine Seriennummer, anhand derer es eindeutig identifiziert und mit einer Datenbank verknüpft werden kann.</string>
+    <string name="one_time_transaction_limit">Einmalige Transaktionslimite</string>
+    <string name="tmoney_usercode_regular">Normal</string>
+    <string name="tmoney_usercode_child">Kind</string>
+    <string name="tmoney_usercode_youth">Jugend</string>
+    <string name="tmoney_usercode_test">Test</string>
+    <string name="tmoney_usercode_inactive">Inaktiv</string>
+    <string name="discount_type">Rabattart</string>
+    <string name="card_name_tampere">Tampere Fahrkarte (matkakortti)</string>
+    <string name="card_name_hafilat">Hafilat</string>
+    <string name="card_name_nol">Nol</string>
+    <string name="compass_sub_daypass">Tageskarte</string>
+    <string name="compass_sub_one_zone">Eine Zone</string>
+    <string name="compass_sub_two_zone">Zwei Zonen</string>
+    <string name="compass_sub_three_zone">Drei Zonen</string>
+    <string name="compass_sub_exit">Ausgang</string>
+    <string name="compass_sub_one_zone_with_yvr">Eine Zone mit Flughafen (YVR)</string>
+    <string name="compass_sub_two_zone_with_yvr">Zwei Zonen mit Flughafen (YVR)</string>
+    <string name="compass_sub_three_zone_with_yvr">Drei Zonen mit Flughafen (YVR)</string>
+    <string name="compass_sub_daypass_with_yvr">Tageskarte mit Flughafen (YVR)</string>
+    <string name="navigo_sector_station_id">Sektor %1$s, Stations-ID %2$d</string>
+    <string name="navigo_sector_id_station_id">Sektor-ID %1$d, Stations-ID %2$d</string>
+    <string name="navigo_forfait_jour">Tageskarte</string>
+    <string name="navigo_forfait">Abo</string>
+    <string name="oura_billet_tarif_normal">Normalpreis-Ticket</string>
+    <string name="gironde_line">Linie %d</string>
+    <string name="mobib_jump_1_trip">Jump 1 Fahrt</string>
+    <string name="mobib_jump_10_trips">Jump 10 Fahrten</string>
+    <string name="mobib_jump_24h_bus_airport">Jump 24h + Bus Flughafen</string>
+    <string name="ricaricami_daily_urban">Tageskarte Urbano</string>
+    <string name="ricaricami_yearly_urban">Jahresabo Urbano</string>
+    <string name="ricaricami_monthly_urban">Monatsabo Urbano</string>
+    <string name="venezia_bus_ticket_75min">75-Minuten-Busfahrkarte</string>
+    <string name="venezia_airport_bus_ticket">Flughafenbusfahrkarte</string>
+    <string name="pisa_abb_ann_pers_pisa_sbe">Jahresabo Pisa</string>
+    <string name="pisa_abb_mens_pers_pisa_sbe">Monatsabo Pisa</string>
+    <string name="mfp_reading">MIFARE Plus Karte wird gelesen…</string>
+    <string name="lang_override">Anwendungssprache</string>
+    <string name="lang_override_desc">Die Anwendungssprache ändern. Zum Übernehmen muss die Anwendung neu gestartet werden</string>
+    <string name="lang_default">Systemstandard</string>
+    <string name="large_file_yes">Trotzdem laden (Absturzrisiko)</string>
+    <string name="large_file_no">Abbrechen (sicher)</string>
+    <string name="large_file_warning">Die ausgewählte Datei ist groß (%s) und kann die Anwendung zum Absturz bringen. Möchten Sie fortfahren\?</string>
 </resources>
