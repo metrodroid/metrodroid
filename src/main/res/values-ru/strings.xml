@@ -1114,4 +1114,14 @@
     <string name="hotel_room_number">Номер</string>
     <string name="hotel_checkin">Время заселения</string>
     <string name="hotel_checkout">Время выселения</string>
+    <string name="oyster_travelpass">Проездной билет</string>
+    <string name="ios_version">Версия iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    </string>
+    <string name="ios_error_ok">ОК</string>
+    <string name="ios_unknown_tag">Неизвестный тип тега: %s</string>
+    <string name="rkf_stockholm_7_days">Стокгольм 7-дневный проездной</string>
+    <string name="rkf_stockholm_72_hours">72-часовой билет Стокгольма</string>
+    <string name="large_file_yes">Всё равно загрузить (риск сбоя)</string>
+    <string name="large_file_no">Отменить (безопасно)</string>
+    <string name="large_file_warning">Файл, который вы выбрали, имеет большой размер (%s) и может привести к сбою приложения. Вы хотите продолжить\?</string>
 </resources>
