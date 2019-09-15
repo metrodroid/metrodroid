@@ -936,6 +936,10 @@
     <string name="rkf_stockholm_7_days">Billet de 7 jours pour Stockholm</string>
     <string name="rkf_stockholm_72_hours">Billet de 72 heures pour Stockholm</string>
     <string name="location_finland">Finlande</string>
-    <string name="waltti_city_zone">%s, zone %s</string>
-    <string name="waltti_city_zones">%s, zones %s</string>
+    <string name="waltti_city_zone">%1$s, zone %2$s</string>
+    <string name="waltti_city_zones">%1$s, zones %2$s</string>
+    <string name="mfp_reading">Lecture de la carte MIFARE Plus…</string>
+    <string name="lang_override">Langue de l’application</string>
+    <string name="lang_override_desc">Changer la langue de l\'application. Nécessite un redémarrage de l\'application pour appliquer</string>
+    <string name="lang_default">Défaut du système</string>
 </resources>
