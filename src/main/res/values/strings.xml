@@ -2412,8 +2412,8 @@
     <!-- Translators: It's about hotel. It's a title for date/time of check-out. -->
     <string name="hotel_checkout">Check-out</string>
 
-    <string name="large_file_yes">Load anyway (risk crashing)</string>
-    <string name="large_file_no">Cancel (safe)</string>
     <!-- Translators: "%s" is replaced with a file size including units -->
     <string name="large_file_warning">The file you have chosen is large (%s) and may crash the application. Do you want to proceed?</string>
+    <string name="large_file_yes">Load anyway (risk crashing)</string>
+    <string name="large_file_no">Cancel (safe)</string>
 </resources>
