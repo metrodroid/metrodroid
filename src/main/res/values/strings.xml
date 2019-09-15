@@ -2407,9 +2407,9 @@
 
     <!-- Translators: It's about hotel. -->
     <string name="hotel_room_number">Room number</string>
-    <!-- Translators: It's about hotel. -->
+    <!-- Translators: It's about hotel. It's a title for date/time of check-in. -->
     <string name="hotel_checkin">Check-in</string>
-    <!-- Translators: It's about hotel. -->
+    <!-- Translators: It's about hotel. It's a title for date/time of check-out. -->
     <string name="hotel_checkout">Check-out</string>
 
     <string name="large_file_yes">Load anyway (risk crashing)</string>
