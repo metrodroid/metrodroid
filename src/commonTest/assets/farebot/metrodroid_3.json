@@ -1,0 +1,23 @@
+{
+    "tagId": "0010831051881c82",
+    "scannedAt": {
+        "timeInMillis": 1566946551787,
+        "tz": "UNKNOWN"
+    },
+    "felica": {
+        "pMm": null,
+        "systems": {
+            "32776": {
+                "services": {
+                    "279": {
+                        "blocks": [
+                            {
+                                "data": "00108310518720928b30d38f00000000"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

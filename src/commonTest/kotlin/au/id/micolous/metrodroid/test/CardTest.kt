@@ -53,13 +53,13 @@ class CardTest : BaseInstrumentedTest() {
                 d,
                 mifareClassic = ClassicCard(emptyList<ClassicSectorRaw>()))
 
-        val json = JsonKotlinFormat().writeCard(c1)
+        val json = JsonKotlinFormat.writeCard(c1)
 
         assertTrue(json.contains("\"timeInMillis\": 1264982400000"))
         assertTrue(json.contains("\"tagId\": \"00123456\""))
         Log.d("CardTest", "JSON serialized to $json")
 
-        val c2 = JsonKotlinFormat().readCard(json)
+        val c2 = JsonKotlinFormat.readCard(json)
 
         assertEquals(d.timeInMillis, c1.scannedAt.timeInMillis)
         assertEquals(c1.scannedAt.timeInMillis, c2.scannedAt.timeInMillis)

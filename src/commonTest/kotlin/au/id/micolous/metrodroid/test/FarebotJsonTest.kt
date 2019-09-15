@@ -1,7 +1,7 @@
 /*
- * EZLinkCompatTest.kt
+ * FarebotJsonTest.kt
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,28 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
-import au.id.micolous.metrodroid.serializers.XmlCardFormat
+import au.id.micolous.metrodroid.serializers.AutoJsonFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * Contains tests for the old CEPAS XML format, before it was handled by an ISO7816 reader.
+ * Contains tests for the Farebot Json format.
  */
-class EZLinkCompatTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
+class FarebotJsonTest : CardReaderWithAssetDumpsTest(AutoJsonFormat) {
     @Test
-    fun testCardInfo() {
-        val c = loadCard<CEPASCard>("cepas/legacy.xml")
-        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat.writeCard(c))
-        val p = parseCard<EZLinkCompatTransitData>(c)
-        assertEquals(TransitCurrency.SGD(897), p.balance)
+    fun testFarebotJson() {
+        val cards = importer.readCards(loadAsset("farebot/farebot.json"))
+        var ctr = 0
+        for (card in cards!!) {
+            val json = JsonKotlinFormat.writeCard(card)
+            Log.d("FarebotJsonTest", "reserial[$ctr] = " + json)
+            val expected = loadSmallAssetBytes("farebot/metrodroid_$ctr.json")
+            assertEquals<String>(expected = String(expected).trim(),
+                         actual = json.toString().trim(),
+                         message = "Wrong reserialization for card $ctr")
+            ctr++
+        }
     }
 }

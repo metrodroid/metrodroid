@@ -1,0 +1,936 @@
+{
+    "cards": [
+        {
+            "applications": [
+                {
+                    "appId": 3229011,
+                    "files": [
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 0,
+                            "fileSettings": {
+                                "data": "AAP/PxAAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 1,
+                            "fileSettings": {
+                                "data": "AAP/LxAAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 2,
+                            "fileSettings": {
+                                "data": "AAMxI4AAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 3,
+                            "fileSettings": {
+                                "data": "AANRJSAAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 4,
+                            "fileSettings": {
+                                "data": "AANBJDAAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 5,
+                            "fileSettings": {
+                                "data": "AAMxI/AAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 6,
+                            "fileSettings": {
+                                "data": "AAMxI+ABAA=="
+                            }
+                        },
+                        {
+                            "fileData": "ABCDEFGHIJKLMNOPQRSTUV==",
+                            "fileId": 7,
+                            "fileSettings": {
+                                "data": "AAAx4xAAAA=="
+                            }
+                        }
+                    ]
+                }
+            ],
+            "cardType": "MifareDesfire",
+            "manufacturingData": {
+                "data": "BCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM=="
+            },
+            "scannedAt": 1566946585468,
+            "tagId": "CDEFGHIJKL=="
+        },
+        {
+            "cardType": "CEPAS",
+            "histories": [
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 0
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 1
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 2
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 3
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 4
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 5
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 6
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 7
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 8
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 9
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 10
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 11
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 12
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 13
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 14
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 15
+                }
+            ],
+            "purses": [
+                {
+                    "errorMessage": "File 0 was an invalid file.",
+                    "id": 0
+                },
+                {
+                    "errorMessage": "File 1 was an invalid file.",
+                    "id": 1
+                },
+                {
+                    "errorMessage": "File 2 was an invalid file.",
+                    "id": 2
+                },
+                {
+                    "data": "ABCDEFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+                    "id": 3
+                },
+                {
+                    "errorMessage": "File 4 was an invalid file.",
+                    "id": 4
+                },
+                {
+                    "errorMessage": "File 5 was an invalid file.",
+                    "id": 5
+                },
+                {
+                    "errorMessage": "File 6 was an invalid file.",
+                    "id": 6
+                },
+                {
+                    "errorMessage": "File 7 was an invalid file.",
+                    "id": 7
+                },
+                {
+                    "errorMessage": "File 8 was an invalid file.",
+                    "id": 8
+                },
+                {
+                    "errorMessage": "File 9 was an invalid file.",
+                    "id": 9
+                },
+                {
+                    "errorMessage": "File 10 was an invalid file.",
+                    "id": 10
+                },
+                {
+                    "errorMessage": "File 11 was an invalid file.",
+                    "id": 11
+                },
+                {
+                    "errorMessage": "File 12 was an invalid file.",
+                    "id": 12
+                },
+                {
+                    "errorMessage": "File 13 was an invalid file.",
+                    "id": 13
+                },
+                {
+                    "errorMessage": "File 14 was an invalid file.",
+                    "id": 14
+                },
+                {
+                    "errorMessage": "File 15 was an invalid file.",
+                    "id": 15
+                }
+            ],
+            "scannedAt": 1566946567961,
+            "tagId": "abcdef=="
+        },
+        {
+            "cardType": "CEPAS",
+            "histories": [
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 0
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 1
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 2
+                },
+                {
+                    "data": "ABCDEFGIJKLMNOPQRSTUVWXYZAAAAAAAAAAAAAAAAAA=",
+                    "id": 3
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 4
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 5
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 6
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 7
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 8
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 9
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 10
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 11
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 12
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 13
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 14
+                },
+                {
+                    "errorMessage": "Invalid Purse",
+                    "id": 15
+                }
+            ],
+            "purses": [
+                {
+                    "errorMessage": "File 0 was an invalid file.",
+                    "id": 0
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 1
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 2
+                },
+                {
+                    "data": "ABCDEFGHIJKLMNOPQRSTUVWXYZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+                    "id": 3
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 4
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 5
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 6
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 7
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 8
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 9
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 10
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 11
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 12
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 13
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 14
+                },
+                {
+                    "errorMessage": "Got generic invalid response: 6a",
+                    "id": 15
+                }
+            ],
+            "scannedAt": 1566946560587,
+            "tagId": "cdefgh=="
+        },
+        {
+            "cardType": "FeliCa",
+            "idm": {
+                "cardIdentification": [
+                    1,
+                    1,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "manufactureCode": [
+                    1,
+                    1
+                ]
+            },
+            "pmm": {
+                "icCode": [
+                    1,
+                    32
+                ],
+                "maximumResponseTime": [
+                    34,
+                    4,
+                    39,
+                    103,
+                    78,
+                    -1
+                ]
+            },
+            "scannedAt": 1566946551787,
+            "systems": [
+                {
+                    "code": 32776,
+                    "services": [
+                        {
+                            "blocks": [
+                                {
+                                    "address": 0,
+                                    "data": "ABCDEFGHIJKLMNOPAAAAAA=="
+                                }
+                            ],
+                            "serviceCode": 279
+                        }
+                    ]
+                }
+            ],
+            "tagId": "ABCDEFGIHIJ="
+        },
+        {
+            "cardType": "MifareClassic",
+            "scannedAt": 1566840006049,
+            "sectors": [
+                {
+                    "blocks": [
+                        {
+                            "data": "abcdefgihjklmopqrstuvw==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 0,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 1,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 2,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 3,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 4,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 5,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 6,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 7,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 8,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 9,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 10,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 11,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 12,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 13,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 14,
+                    "type": "data"
+                },
+                {
+                    "blocks": [
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 0
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 1
+                        },
+                        {
+                            "data": "AAAAAAAAAAAAAAAAAAAAAA==",
+                            "index": 2
+                        },
+                        {
+                            "data": "AAAAAAAA/weAaf///////w==",
+                            "index": 3
+                        }
+                    ],
+                    "index": 15,
+                    "type": "data"
+                }
+            ],
+            "tagId": "abcdef=="
+        },
+        {
+            "cardType": "MifareUltralight",
+            "pages": [
+                {
+                    "data": "bcdefg==",
+                    "index": 0
+                },
+                {
+                    "data": "hijklm==",
+                    "index": 1
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 2
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 3
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 4
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 5
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 6
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 7
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 8
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 9
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 10
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 11
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 12
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 13
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 14
+                },
+                {
+                    "data": "AAAAAA==",
+                    "index": 15
+                }
+            ],
+            "scannedAt": 1566832110993,
+            "tagId": "bcdefghijk==",
+            "ultralightType": 1
+        },
+        {
+            "applications": [
+                {
+                    "appId": 1319151,
+                    "files": [
+                        {
+                            "fileData": "AAAAAAACAAAAAA==",
+                            "fileId": 0,
+                            "fileSettings": {
+                                "data": "AQEQ4QoAAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+                            "fileId": 1,
+                            "fileSettings": {
+                                "data": "AQEQ4SMAAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAAAAA==",
+                            "fileId": 2,
+                            "fileSettings": {
+                                "data": "AQEQ4Q0AAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "fileId": 3,
+                            "fileSettings": {
+                                "data": "AQEQ4S0AAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "fileId": 4,
+                            "fileSettings": {
+                                "data": "BAEQ4QwAAAgAAAcAAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAAA",
+                            "fileId": 5,
+                            "fileSettings": {
+                                "data": "AQAQ7QwAAA=="
+                            }
+                        },
+                        {
+                            "fileData": "AAAAAAAAAAAAAAA=",
+                            "fileId": 8,
+                            "fileSettings": {
+                                "data": "AAEA4AsAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 9,
+                            "fileSettings": {
+                                "data": "AQMQERUAAA=="
+                            }
+                        },
+                        {
+                            "error": {
+                                "message": "Authentication error",
+                                "type": 1
+                            },
+                            "fileId": 10,
+                            "fileSettings": {
+                                "data": "AQEQEQYAAA=="
+                            }
+                        }
+                    ]
+                }
+            ],
+            "cardType": "MifareDesfire",
+            "manufacturingData": {
+                "data": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=="
+            },
+            "scannedAt": 1566631671807,
+            "tagId": "BBBBBBBBBB=="
+        }
+    ],
+    "versionCode": 29,
+    "versionName": "3.1.1"
+}

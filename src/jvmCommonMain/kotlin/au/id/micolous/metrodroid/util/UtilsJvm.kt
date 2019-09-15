@@ -20,6 +20,8 @@
 
 package au.id.micolous.metrodroid.util
 
+import java.io.PushbackInputStream
+
 operator fun StringBuilder.plusAssign(other: String) {
     this.append(other)
 }
@@ -33,4 +35,21 @@ fun getErrorMessage(ex: Throwable?): String {
     val ex = ex.cause ?: ex
     val errorMessage = ex.localizedMessage?.ifEmpty { null } ?: ex.message?.ifEmpty { null } ?: ex.toString()
     return ex.javaClass.simpleName + ": " + errorMessage
+}
+
+fun PushbackInputStream.peekAndSkipSpace(): Byte {
+    var c: Int
+    while (true) {
+        c = this.read()
+        if (!Character.isSpaceChar(c.toChar()))
+            break
+    }
+    this.unread(c)
+    return c.toByte()
+}
+
+fun PushbackInputStream.peek(): Byte {
+    val c = this.read()
+    this.unread(c)
+    return c.toByte()
 }

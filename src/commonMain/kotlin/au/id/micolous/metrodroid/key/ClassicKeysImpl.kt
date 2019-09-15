@@ -173,6 +173,6 @@ abstract class ClassicKeysImpl : ClassicKeys {
         }
 
         fun classicFromJSON(json: String, defaultBundle: String): ClassicSectorAlgoKey? =
-                classicFromJSON(Json.plain.parseJson(json).jsonObject, defaultBundle)
+                classicFromJSON(CardKeys.jsonParser.parseJson(json).jsonObject, defaultBundle)
     }
 }

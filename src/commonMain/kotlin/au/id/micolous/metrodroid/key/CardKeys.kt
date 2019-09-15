@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.key
 
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.json.JsonObject
 
 interface CardKeys {
@@ -58,7 +59,9 @@ interface CardKeys {
         fun fromJSON(keyJSON: JsonObject, defaultBundle: String): CardKeys? = fromJSON(keyJSON,
                 keyJSON[CardKeys.JSON_KEY_TYPE_KEY]!!.primitive.content, defaultBundle)
 
+	val jsonParser = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
+
         fun fromJSON(keyJSON: String, defaultBundle: String) = fromJSON(
-                Json.plain.parseJson(keyJSON).jsonObject, defaultBundle)
+                jsonParser.parseJson(keyJSON).jsonObject, defaultBundle)
     }
 }

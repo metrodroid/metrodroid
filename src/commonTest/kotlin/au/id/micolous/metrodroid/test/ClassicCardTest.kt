@@ -25,7 +25,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class ClassicCardTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat()) {
+class ClassicCardTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat) {
     @Test
     fun testIncomplete() {
         val incompleteFiles = arrayOf(

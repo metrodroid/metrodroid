@@ -26,20 +26,10 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.forEachLine
 import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 import kotlinx.io.core.String
-
-// TODO: remove it when kotlinx will get this
-private fun InputStream.forEachLine(function: (String) -> Unit) {
-    // Largest MFC is 4K. hex brings it up to 8K. Newlines and +Sector
-    // Add less than 2x. So 16K chars is the most we are interested in
-    // IT should be ASCII, but let's be safe and allocate 32K
-    val buf = ByteArray(32768) { 0 }
-    val actualLen = this.read(buf, 0, buf.size)
-    val str = String(bytes = buf.sliceArray(0 until actualLen), charset = Charsets.UTF_8)
-    str.split('\n', '\r').filter { it.isNotEmpty() }.forEach(function)
-}
 
 /**
  * Class to read files built by MIFARE Classic Tool.
@@ -51,7 +41,10 @@ class MctCardImporter : CardImporter {
         var maxSector = -1
         var curBlocks = mutableListOf<ImmutableByteArray>()
         var lastBlock: String? = null
-        stream.forEachLine { lineRaw ->
+        // Largest MFC is 4K. hex brings it up to 8K. Newlines and +Sector
+        // Add less than 2x. So 16K chars is the most we are interested in
+        // It should be ASCII, but let's be safe and allocate 32K
+        stream.forEachLine(maxSize=32768) { lineRaw ->
             val line = lineRaw.trim()
             if (line.startsWith("+Sector:")) {
                 flushSector(sectors, curSector, curBlocks, lastBlock)
