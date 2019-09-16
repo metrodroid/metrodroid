@@ -63,20 +63,16 @@ abstract class CardImporterString : CardImporter {
 } 
 
 object FarebotJsonFormat : CardImporterString() {
-    val jsonParser = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
-
     override fun readCardList(input: String): List<Card> =
-            jsonParser.parse(FarebotCards.serializer(), input).convert()
+            CardSerializer.jsonPlainStable.parse(FarebotCards.serializer(), input).convert()
     
     fun readCards(input: JsonElement): List<Card> =
-            jsonParser.fromJson(FarebotCards.serializer(), input).convert()
+            CardSerializer.jsonPlainStable.fromJson(FarebotCards.serializer(), input).convert()
 }
 
 object AutoJsonFormat : CardImporterString() {
-    val jsonParser = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
-
     override fun readCardList(input: String): List<Card> =
-            readCards(jsonParser.parseJson(input), input)
+            readCards(CardSerializer.jsonPlainStable.parseJson(input), input)
 
     fun readCards(input: JsonElement, plain: String): List<Card> =
         if (input.jsonObject.containsKey("cards") &&
