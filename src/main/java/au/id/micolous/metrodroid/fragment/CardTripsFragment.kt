@@ -112,7 +112,7 @@ class CardTripsFragment : ListFragment() {
                 } else SpannableString(Localizer.localizeString(R.string.unknown_date_title))
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && headerDate != null) {
+                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     val ss = SpannableString(headerDate)
                     ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
                     headerText.text = ss
