@@ -175,7 +175,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
      * @param position The position of the view in the list
      * @param id       The row id of the item that was clicked
      */
-    fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {}
+    open fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {}
 
     open fun onListChildClick(parent: ExpandableListView, v: View, groupPosition: Int, childPosition: Int, id: Long): Boolean {
         return false
