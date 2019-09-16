@@ -36,13 +36,17 @@ data class OVChipIndex internal constructor(
         val recentCreditSlot: Boolean,         // Most recent credit index slot (0xF90(false) or 0xFA0(true))
         val subscriptionIndex: List<Int>
 ) : Parcelable {
-    fun getRawFields(level: TransitData.RawLevel): List<ListItem> = listOf(
-            HeaderListItem("Recent Slots"),
-            ListItem("Transaction Slot", if (recentTransactionSlot) "B" else "A"),
-            ListItem("Info Slot", if (recentInfoSlot) "B" else "A"),
-            ListItem("Subscription Slot", if (recentSubscriptionSlot) "B" else "A"),
-            ListItem("Travelhistory Slot", if (recentTravelhistorySlot) "B" else "A"),
-            ListItem("Credit Slot", if (recentCreditSlot) "B" else "A"))
+    fun getRawFields(level: TransitData.RawLevel): List<ListItem> =
+        if (level == TransitData.RawLevel.ALL)
+            listOf(
+                HeaderListItem("Recent Slots"),
+                ListItem("Transaction Slot", if (recentTransactionSlot) "B" else "A"),
+                ListItem("Info Slot", if (recentInfoSlot) "B" else "A"),
+                ListItem("Subscription Slot", if (recentSubscriptionSlot) "B" else "A"),
+                ListItem("Travelhistory Slot", if (recentTravelhistorySlot) "B" else "A"),
+                ListItem("Credit Slot", if (recentCreditSlot) "B" else "A"))
+        else
+            listOf()
 
     companion object {
         fun parse(data: ImmutableByteArray): OVChipIndex {
