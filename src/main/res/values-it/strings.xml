@@ -432,8 +432,8 @@
     <string name="compass_sub_free_sea_island">Biglietto gratuito per Sea Island</string>
     <string name="compass_sub_exit">Uscita</string>
     <string name="compass_sub_one_zone_with_yvr">Una zona con l\'aeroporto (YVR)</string>
-    <string name="compass_sub_two_zone_with_yvr">Due zone con con l\'aeroporto (YVR)</string>
-    <string name="compass_sub_three_zone_with_yvr">Tre zone con con l\'aeroporto (YVR)</string>
+    <string name="compass_sub_two_zone_with_yvr">Due zone con l\'aeroporto (YVR)</string>
+    <string name="compass_sub_three_zone_with_yvr">Tre zone con l\'aeroporto (YVR)</string>
     <string name="ravkav_generic_trips">Viaggi</string>
     <string name="lisboaviva_sub_ass_pal_lis">Da Palmela a Lisbona</string>
     <string name="lisboaviva_sub_ass_fog_lis">Da Fogueteiro a Lisbona</string>
@@ -792,5 +792,5 @@
     <string name="rkf_stockholm_72_hours">Biglietto di 72 ore per Stoccolma</string>
     <string name="large_file_yes">Carica comunque (rischio di crash)</string>
     <string name="large_file_no">Annulla (sicuro)</string>
-    <string name="large_file_warning">Il file che hai scelto è grande (% s) e potrebbe causare l\'arresto anomalo dell\'applicazione. Vuoi procedere\?</string>
+    <string name="large_file_warning">Il file che hai scelto è grande (%s) e potrebbe causare l\'arresto anomalo dell\'applicazione. Vuoi procedere\?</string>
 </resources>
