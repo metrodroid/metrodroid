@@ -259,7 +259,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                         object : BetterAsyncTask<Void?>(activity!!, false, false) {
                             override fun doInBackground(): Void? {
                                 val ctxt = MetrodroidApplication.instance
-                                val os = ctxt.contentResolver.openOutputStream(uri!!)!!
+                                val os = ctxt.contentResolver.openOutputStream(uri)!!
 
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
                                 val json = keys.toJSON().toString()
