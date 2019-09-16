@@ -3,14 +3,6 @@
  *
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2011 Chris Hundt <hundt@google.com>
- * Copyright 2011 David Hoover <karma@deadmoose.com>
- * Copyright 2011 Devin Carraway <git@devin.com>
- * Copyright 2012 Jason Hsu <jashsu@gmail.com>
- * Copyright 2012 Sebastian Oliva <tian2992@gmail.com>
- * Copyright 2012 Shayan Guha <shayan@coliloquy.com>
- * Copyright 2013 Mike Castleman <m@mlcastle.net>
- * Copyright 2014 Bao-Long Nguyen-Trong <baolong@inkling.com>
  * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
