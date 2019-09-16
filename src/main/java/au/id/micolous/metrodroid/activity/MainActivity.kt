@@ -56,8 +56,8 @@ class MainActivity : MetrodroidActivity() {
 
     override val themeVariant get(): Int? = R.attr.MainActivityTheme
 
-    override fun onCreate(bundle: Bundle?) {
-        super.onCreate(bundle)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setHomeButtonEnabled(false)
