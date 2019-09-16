@@ -61,6 +61,7 @@ class FormattedStringFallback (private val input: String): Parcelable {
         fun monospace(input: String) = FormattedStringFallback(input)
         fun defaultLanguage(input: String) = FormattedStringFallback(input)
         fun english(input: String) = FormattedStringFallback(input)
+        @Suppress("UNUSED_PARAMETER")
         fun language(input: String, lang: String) = FormattedStringFallback(input)
     }
 }
