@@ -931,7 +931,6 @@
     <string name="ios_nfcreader_connecting">Connexion à %s</string>
     <string name="ios_nfcreader_reading">Lecture de %s</string>
     <string name="ios_nfcreader_tap">Tapotez une carte</string>
-    <string name="mifare_plus_not_supported">Mifare Plus n\'est pas supporté</string>
     <string name="ios_unknown_mifare">Mifare inconnu : %s</string>
     <string name="rkf_stockholm_7_days">Billet de 7 jours pour Stockholm</string>
     <string name="rkf_stockholm_72_hours">Billet de 72 heures pour Stockholm</string>
