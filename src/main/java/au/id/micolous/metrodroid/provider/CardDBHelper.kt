@@ -43,8 +43,8 @@ class CardDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        var oldVersion = oldVersion
-        if (oldVersion == 1 && newVersion >= 2) {
+        var currentVersion = oldVersion
+        if (currentVersion == 1 && newVersion >= 2) {
             db.beginTransaction()
             try {
                 db.execSQL("ALTER TABLE cards RENAME TO cards_old")
@@ -52,13 +52,13 @@ class CardDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
                 db.execSQL("INSERT INTO cards (type, serial, data) SELECT type, serial, data from cards_old")
                 db.execSQL("DROP TABLE cards_old")
                 db.setTransactionSuccessful()
-                oldVersion = 2
+                currentVersion = 2
             } finally {
                 db.endTransaction()
             }
         }
 
-        if (oldVersion == 2 && newVersion == 3) {
+        if (currentVersion == 2 && newVersion == 3) {
             db.beginTransaction()
             try {
                 db.execSQL("ALTER TABLE cards RENAME TO cards_old")
@@ -66,13 +66,13 @@ class CardDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
                 db.execSQL("INSERT INTO cards (type, serial, data, scanned_at) SELECT type, serial, data, scanned_at from cards_old")
                 db.execSQL("DROP TABLE cards_old")
                 db.setTransactionSuccessful()
-                oldVersion = 3
+                currentVersion = 3
             } finally {
                 db.endTransaction()
             }
         }
 
-        if (oldVersion != newVersion) {
+        if (currentVersion != newVersion) {
             throw UnsupportedOperationException("Not yet implemented")
         }
     }
