@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.TypedArray
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -144,7 +145,7 @@ class CardTripsFragment : ListFragment() {
 
             @StringRes val modeContentDescriptionRes = trip.mode.contentDescription
 
-            val a = context.obtainStyledAttributes(intArrayOf(R.attr.TransportIcons))
+            val a: TypedArray? = context.obtainStyledAttributes(intArrayOf(R.attr.TransportIcons))
             val iconArrayRes = a?.getResourceId(0, -1) ?: -1
             val iconIdx = trip.mode.idx
             val icon: Drawable?
