@@ -25,8 +25,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
-import java.io.IOException
-import java.io.InputStream
+import kotlin.io.use
 
 class LicenseActivity : MetrodroidActivity() {
 
@@ -55,24 +54,16 @@ class LicenseActivity : MetrodroidActivity() {
     }
 
     private fun readLicenseTextFromAsset(lblLicenseText: TextView, path: String) {
-        var s: InputStream? = null
         try {
-            s = assets.open(path, AssetManager.ACCESS_RANDOM)
-
-            s.reader().forEachLine {
-                lblLicenseText.append(it)
-                lblLicenseText.append("\n")
+            assets.open(path, AssetManager.ACCESS_RANDOM).use { s->
+                s.reader().forEachLine {
+                    lblLicenseText.append(it)
+                    lblLicenseText.append("\n")
+                }
             }
-        } catch (e: IOException) {
-
+        } catch (e: Exception) {
             Log.w(TAG, "Error reading license: $path", e)
             lblLicenseText.append("\n\n** Error reading license notice from $path\n\n")
-        } finally {
-            try {
-                s?.close()
-            } catch(e: Exception) {
-                // ignore
-            }
         }
 
         lblLicenseText.append("\n\n")
