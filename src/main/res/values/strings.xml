@@ -1542,7 +1542,6 @@
     </plurals>
     <!-- Translators: some cards limit the number of travel days. -->
     <plurals name="remaining_day_count">
-        <item quantity="zero">No days remain</item>
         <item quantity="one">1 day remains</item>
         <item quantity="other">%d days remaining</item>
     </plurals>
