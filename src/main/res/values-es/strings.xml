@@ -785,4 +785,8 @@
     <string name="cards_search">Buscar</string>
     <string name="location_fribourg_ch">Friburgo, Suiza</string>
     <string name="hotel_room_number">Número de habitación</string>
+    <string name="felica_terminal_turnstile">Torniquete</string>
+    <string name="felica_terminal_ticket_validator">Validador de boletos</string>
+    <string name="felica_terminal_ticket_booth">Taquilla</string>
+    <string name="felica_terminal_ticket_office_green">Taquilla (ventana verde)</string>
 </resources>
