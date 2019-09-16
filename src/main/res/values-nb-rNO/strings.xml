@@ -931,4 +931,16 @@
     <string name="location_fribourg_ch">Fribourg, Sveits</string>
     <string name="compass_sub_exit">Utgang</string>
     <string name="ravkav_generic_trips">Turer</string>
+    <string name="hsl_region_kirkkonummi_siuntio">Kyrkslätt-Sjundeå</string>
+    <string name="hsl_region_vihti">Vichtis</string>
+    <string name="hsl_region_nurmijarvi">Nurmijärvi</string>
+    <string name="hsl_region_sipoo">Sibbo</string>
+    <string name="hsl_transport_raitiovaunu">Trikk</string>
+    <string name="hsl_transport_metro">Undergrunn</string>
+    <string name="hsl_transport_lautta">Ferge</string>
+    <string name="hsl_transport_u_linja">U-linjen</string>
+    <string name="waltti_city_zone">%1$s, sone %2$s</string>
+    <string name="waltti_city_zones">%1$s, %2$s-soner</string>
+    <string name="theme_dark">Mørk</string>
+    <string name="theme_light">Lys</string>
 </resources>
