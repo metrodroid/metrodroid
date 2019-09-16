@@ -42,11 +42,9 @@ class CardInfoFragment : TreeListFragment() {
     }
 
     override fun onClick(node: TreeNode, value: Any) {
-        var value = value
-        if (value is Pair<*, *>)
-            value = value.first
-        if (value is UriListItem) {
-            val uri = Uri.parse(value.uri)
+        val urilistitem = (value as? Pair<*, *>)?.first ?: value
+        if (urilistitem is UriListItem) {
+            val uri = Uri.parse(urilistitem.uri)
             startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
     }
