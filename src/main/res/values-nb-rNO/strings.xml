@@ -929,4 +929,6 @@
     <string name="lang_override_desc">Overstyrer programspråket. Krever omstart av programmet.</string>
     <string name="lang_default">Systemforvalg</string>
     <string name="location_fribourg_ch">Fribourg, Sveits</string>
+    <string name="compass_sub_exit">Utgang</string>
+    <string name="ravkav_generic_trips">Turer</string>
 </resources>

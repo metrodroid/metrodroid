@@ -734,4 +734,63 @@
     <string name="cards_search">Cerca</string>
     <string name="location_fribourg_ch">Friburgo, Svizzera</string>
     <string name="hotel_room_number">Numero della camera</string>
+    <string name="suica_area_line_station">Area %1$s, linea %2$s, stazione %3$s</string>
+    <string name="card_name_shanghai">Tessera del trasporto pubblico di Shanghai</string>
+    <string name="single_trips">Viaggi singoli</string>
+    <string name="subscription_started">Iniziato</string>
+    <string name="none">Nessuno</string>
+    <string name="emv_application_transaction_counter">Contatore delle transazioni dell\'applicazione</string>
+    <string name="no_data_in_clipboard">Nessun dato negli appunti.</string>
+    <string name="app_version">Versione: %s</string>
+    <string name="device_model">Modello: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
+    <string name="device_manufacturer">Produttore: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
+    <string name="nfc_enabled">NFC: Attivato</string>
+    <string name="nfc_disabled">NFC: Disattivato</string>
+    <string name="nfc_not_available">NFC: Non disponibile</string>
+    <string name="mfc_supported">MIFARE Classic: Supportato</string>
+    <string name="mfc_not_supported">MIFARE Classic: Non supportato</string>
+    <string name="balances_and_subscriptions">Biglietti</string>
+    <string name="card_number">Numero della carta</string>
+    <string name="pref_show_raw_station_ids_desc_on">Gli ID di stazione e percorso vengono visualizzati in aggiunta ai loro nomi</string>
+    <string name="pref_show_raw_station_ids_desc_off">Gli ID di stazione e percorso sono nascosti se nome non sono sconosciuti</string>
+    <string name="station_database">Database delle stazioni</string>
+    <string name="advanced_options">Opzioni avanzate</string>
+    <string name="developer_options">Opzioni di sviluppo</string>
+    <string name="nfc">comunicazione in prossimità (NFC)</string>
+    <string name="istanbulkart_2nd_card_number">Numero di serie secondario</string>
+    <string name="locked_leap">Leap bloccato</string>
+    <string name="leap_accumulator_total">Spesa totale</string>
+    <string name="leap_accumulator_agency">Spesa totale da %s</string>
+    <string name="card_id">ID della carta</string>
+    <string name="iso7816_sfi">Identificatore di file breve (SFI) %s</string>
+    <string name="unsupported_tag_message">Questo tag non è attualmente supportato da Metrodroid.
+\n Identificatore del tag: %1$s
+\n Tecnologie supportate:
+\n %2$s</string>
+    <string name="unknown_ultralight_message">Tag Mifare Ultralight sconosciuto</string>
+    <string name="nfc_connection_failed">Connessione NFC a %s non riuscita</string>
+    <string name="unknown_date_title">Data sconosciuta</string>
+    <string name="card_name_metromoney">Metromoney</string>
+    <string name="card_name_tampere">Tampere tessera di viaggio (matkakortti)</string>
+    <string name="card_name_hafilat">Hafilat</string>
+    <string name="oyster_travelpass">Abbonamento</string>
+    <string name="lisboaviva_sub_vermelho_a1">Rosso A1</string>
+    <string name="mobib_airport_bus">Singola corsa per autobus per aeroporto</string>
+    <string name="mobib_jump_24h_bus_airport">Jump 24h + Autobus aeroporto</string>
+    <string name="ricaricami_yearly_urban">Abbonamento annuale urbano</string>
+    <string name="ricaricami_monthly_urban">Abbonamento mensile urbano</string>
+    <string name="venezia_ticket_24h">Biglietto di 24 ore</string>
+    <string name="venezia_bus_ticket_75min">Biglietto autobus da 75 minuti</string>
+    <string name="venezia_airport_bus_ticket">Biglietto dell\'autobus per l\'aeroporto</string>
+    <string name="ios_version">Versione di iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    </string>
+    <string name="ios_nfcreader_exception">Eccezione: %s</string>
+    <string name="ios_unknown_mifare">Mifare sconosciuto: %s</string>
+    <string name="ios_unknown_tag">Tipo di tag sconosciuto: %s</string>
+    <string name="rkf_stockholm_7_days">Biglietto di 7 giorni per Stoccolma</string>
+    <string name="rkf_stockholm_72_hours">Biglietto di 72 ore per Stoccolma</string>
+    <string name="large_file_yes">Carica comunque (rischio di crash)</string>
+    <string name="large_file_no">Annulla (sicuro)</string>
+    <string name="large_file_warning">Il file che hai scelto è grande (% s) e potrebbe causare l\'arresto anomalo dell\'applicazione. Vuoi procedere\?</string>
 </resources>
