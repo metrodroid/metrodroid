@@ -16,7 +16,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<!-- Lint gets confused by theme definitions. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateDefinition">
     <color name="Metrodroid.Dark.CardIdTextColor">#ffcc44</color>
 
     <style name="Metrodroid.Dark" parent="@style/Theme.AppCompat">
