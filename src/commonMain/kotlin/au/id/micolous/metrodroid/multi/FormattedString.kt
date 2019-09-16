@@ -19,16 +19,6 @@
 
 package au.id.micolous.metrodroid.multi
 
-fun FormattedString.equals(other: Any?): Boolean {
-    return when (other) {
-        null -> false
-        is StringResource -> equals(Localizer.localizeString(other))
-        is FormattedString -> equals(other.toString())
-        is String -> toString() == other
-        else -> false
-    }
-}
-
 expect class FormattedString(input: String) : Parcelable {
     val unformatted: String
 
