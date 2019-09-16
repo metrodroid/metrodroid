@@ -47,7 +47,7 @@
     <string name="machine_id_format">Id Máquina %s</string>
     <string name="machine_id">ID Máquina</string>
     <string name="unknown_card_header">Formato de tarjeta no soportado</string>
-    <string name="unknown_card_description">Esta tarjeta no es soportada todavía por Metrodroid. Solo la información bruta sera mostrada.</string>
+    <string name="unknown_card_description">Esta tarjeta no es soportada todavía por Metrodroid. Solo la información bruta será mostrada.</string>
     <string name="unknown_more_info">Más información</string>
     <string name="unknown_more_info_desc">Toca para mas información sobre el soporte de Metrodroid para esta tarjeta.</string>
     <string name="lawyercats">Metrodroid y sus autores no están asociados a ninguna agencia de transporte público.</string>
@@ -63,7 +63,7 @@
     <string name="sector_title_format">Sector: %s</string>
     <string name="unauthorized_sector_title_format">Sector: %s (desautorizado)</string>
     <string name="sector_title_format_empty">Sector: %s (vacío)</string>
-    <string name="invalid_sector_title_format">Sector: 0x1$s (inválido: %2$s)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (inválido: %2$s)</string>
     <string name="felica_system_title_format">Sistema: %1$s (%2$s)</string>
     <string name="felica_service_title_format">Servicio: %1$s (%2$s)</string>
     <string name="binary_title_format">Datos Binarios</string>
