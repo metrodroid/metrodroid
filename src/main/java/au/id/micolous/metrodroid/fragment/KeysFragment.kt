@@ -107,7 +107,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                                     return null
                                 }
 
-                                override fun onResult(unused: Void?) {
+                                override fun onResult(result: Void?) {
                                     mActionMode!!.finish()
                                     (listAdapter as KeysAdapter).notifyDataSetChanged()
                                 }
@@ -270,7 +270,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                             }
 
-                            override fun onResult(unused: Void?) {
+                            override fun onResult(result: Void?) {
                                 Toast.makeText(MetrodroidApplication.instance, R.string.file_exported, Toast.LENGTH_SHORT).show()
                                 mActionMode!!.finish()
                             }
