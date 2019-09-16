@@ -77,12 +77,13 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
         <Button
-            android:id="@+id/load_keys"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:text="@string/load_keys" />
+                android:id="@+id/load_keys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="@string/load_keys"
+                android:layout_marginStart="8dp"/>
     </LinearLayout>
 
     <TextView
