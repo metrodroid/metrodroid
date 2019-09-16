@@ -135,7 +135,7 @@ Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [Rejsekort][rejse] | :denmark: Denmark | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][ricarica] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 [Samara ETK][samara] | :ru: Samara, Russia | :new: :closed_lock_with_key: `MFC`
-[Selecta][] | :fr: France | :new: `IOS`
+[Selecta][] | :fr: France | :new: `MFC`
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new: `IOS`
 [Siticard][siticard] | :ru: Nizhniy Novgorod, Russia | :new: :closed_lock_with_key: `MFC`
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`

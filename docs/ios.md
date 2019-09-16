@@ -64,7 +64,7 @@ Metrodroid for iOS **does not support**:
   bug][ios-felica]. This impacts Hu Tong Xing (互通行) cards, as well as some Hayakaken, PASMO and
   Suica cards. ICOCA and nimoca cards both appear fine.
 
-* **Leap**: unlocking Leap cards is not yet implemented; this is to come in a future release.
+* **Leap**: unlocking Leap cards is not implemented.
 
 * **MIFARE Classic based cards**: iOS 13 does not support the proprietary [Crypto-1][] algorithm
   used by MIFARE Classic, so we cannot read any such transit card. MFC support is omitted, including
@@ -75,7 +75,8 @@ Metrodroid for iOS **does not support**:
     Metrodroid for Android)
   * Importing (binary) MFC dump files
   * Importing MIFARE Classic Tool (MCT) files
-  * "submit unknown stations" prompt is removed (only used by Brisbane Go Card and Troika)
+  * "submit unknown stations" prompt and card warning are removed (only used by Brisbane Go Card
+    and Troika)
 
 ### UX differences
 
@@ -102,9 +103,9 @@ Metrodroid for iOS **does not support**:
 * **Apple Maps used instead of Leaflet.**
 
 * **Theming follows system-wide preference only**: The "Farebot" theme is missing as a result (but
-  this would look very similar on iOS).
+  this would look very similar to light theme on iOS anyway).
 
-* **Collapsed elements are not yet implemented.**  As a result:
+* **Some collapsed elements are not yet implemented.**  As a result:
 
   1. In subscription view the details are always shown
   2. In raw view subtrees are not collapsible
@@ -135,19 +136,14 @@ Requirements:
 
 * macOS 10.14 Mojave or later
 * Android SDK (for technical reasons)
-* Xcode 11 beta or later
+* Xcode 11.0 or later
 * Java runtime environment
 
-**Note:** If you want to deploy your build to a physical device, you must also enroll in the
-[Apple Developer Program][apple-dev]. _This has an annual membership fee._
+**Note:** If you want to deploy your build to a physical device [and use NFC support][dev-caps], you
+must also enroll in the [Apple Developer Program][apple-dev]. _This has an annual membership fee._
 
-First, build the generated files needed for Xcode:
-
-```shell
-./gradlew generateLocalize iOSLanguages iOSMappedLanguages proto:mainSharedLibrary proto:mainStaticLibrary packForXCode
-```
-
-Then open `native/metrodroid` in Xcode, then compile and deploy as usual.
+Open `./native/metrodroid` in Xcode, and you should be able to compile and deploy as normal.  This
+will invoke Gradle to generate any needed resources.
 
 ### Using in the simulator
 
@@ -159,7 +155,7 @@ files from Finder to the simulator window.
 ### Deploying to a physical device
 
 **Note:** you must be enrolled in the [Apple Developer Program][apple-dev] to deploy to a physical
-device.
+device [with NFC support][dev-caps].
 
 You will need to [modify the signing configuration][signing-workflow] in Xcode before you can
 deploy:
@@ -200,6 +196,7 @@ changes have been removed from `native/metrodroid/metrodroid.xcodeproj/project.p
 [bundle-id]: https://help.apple.com/xcode/mac/current/#/deve70ea917b
 [corenfc]: https://developer.apple.com/documentation/corenfc
 [Crypto-1]: https://en.wikipedia.org/wiki/Crypto-1
+[dev-caps]: https://help.apple.com/developer-account/#/dev21218dfd6
 [ios-felica]: https://github.com/metrodroid/metrodroid/issues/613
 [ios-issue]: https://github.com/metrodroid/metrodroid/issues/new?assignees=&labels=bug&template=bug.md&title=%5BBUG%5D
 [signing-workflow]: https://help.apple.com/xcode/mac/current/#/dev60b6fbbc7
