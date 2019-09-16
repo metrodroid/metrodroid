@@ -39,8 +39,8 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         if (routeNumber == null || routeNumber == 0)
             return null
 
-        if (agency == null || agency == 1)
-            return FormattedString(routeNumber.toString())
+        if (agency == null || agency == AGENCY_CARRIS)
+            return FormattedString((routeNumber and 0xfff).toString())
         val mungedRouteNumber = mungeRouteNumber(agency, routeNumber)
         return StationTableReader.getLineName(LISBOA_VIVA_STR, agency shl 16 or mungedRouteNumber,
                 mungedRouteNumber.toString())
@@ -63,11 +63,11 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
             return null
         val mungedRouteNumber = mungeRouteNumber(agency, routeNumber)
         var station = station
-        if (agency == 2)
+        if (agency == AGENCY_METRO)
             station = station shr 2
         return StationTableReader.getStation(LISBOA_VIVA_STR,
                 station or (mungedRouteNumber shl 8) or (agency shl 24),
-                station.toString())
+                "$agency/$routeNumber/$station")
     }
 
     private fun mungeRouteNumber(agency: Int, routeNumber: Int): Int {
@@ -81,7 +81,9 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
     }
 
     const val ZAPPING_TARIFF = 33592
-    const val ZAPPING_AGENCY = 31
+    const val INTERAGENCY31_AGENCY = 31
+    const val AGENCY_CARRIS = 1
+    const val AGENCY_METRO = 2
     const val AGENCY_CP = 3
     const val ROUTE_CASCAIS_SADO = 40960
 
@@ -97,6 +99,7 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         Pair(30, 725) to R.string.lisboaviva_sub_navegante_rede,
         Pair(30, 733) to R.string.lisboaviva_sub_navegante_sl_tcb_barreiro,
         Pair(30, 1088) to R.string.lisboaviva_sub_fertagus_pal_lis_ml,
-        Pair(ZAPPING_AGENCY, ZAPPING_TARIFF) to R.string.lisboaviva_sub_zapping
+        Pair(INTERAGENCY31_AGENCY, 906) to R.string.lisboaviva_sub_navegante_lisboa,
+        Pair(INTERAGENCY31_AGENCY, ZAPPING_TARIFF) to R.string.lisboaviva_sub_zapping
     )
 }

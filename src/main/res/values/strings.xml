@@ -2034,6 +2034,7 @@
     <string name="oyster_travelpass">Travelpass / Season Ticket</string>
 
     <string name="lisboaviva_unknown_period">Unknown validity %1$x/%2$x</string>
+    <string name="lisboaviva_engraved_serial">Engraved number</string>
 
     <!-- TODO: Translate into English and remove translatable=false. -->
     <!-- Translators: Portuguese "Ass. PAL - LIS" -->
@@ -2059,6 +2060,8 @@
     <!-- Translators: Fertagus is a company: https://en.wikipedia.org/wiki/Fertagus. Portuguese "Fertagus PAL - LIS + ML" -->
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela to Lisbon + Metropolitan Area</string>
     <string name="lisboaviva_sub_zapping" translatable="false">Zapping</string>
+    <!-- Translators: Portuguese "Navegante Lisboa" -->
+    <string name="lisboaviva_sub_navegante_lisboa">Navegante Lisbon</string>
 
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
