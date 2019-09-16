@@ -1134,8 +1134,8 @@
     <string name="waltti_city_zone">%1$s, zone %2$s</string>
     <string name="waltti_city_zones">%1$s, zones %2$s</string>
     <string name="mfp_reading">Bezig met uitlezen van MIFARE Plus-kaart…</string>
-    <string name="lang_override">Taal afdwingen</string>
-    <string name="lang_override_desc">Dwing de taal van de app af. Herstart de app om de wijziging door te voeren.</string>
+    <string name="lang_override">Taal</string>
+    <string name="lang_override_desc">Wijzig de taal van de app. Herstart de app om de wijziging door te voeren.</string>
     <string name="lang_default">Systeemstandaard</string>
     <string name="cards_search">Zoeken</string>
     <string name="location_fribourg_ch">Fribourg, Zwitserland</string>
@@ -1145,4 +1145,12 @@
     <string name="large_file_yes">Tóch laden (maar met kans op een crash)</string>
     <string name="large_file_no">Annuleren (veilig)</string>
     <string name="large_file_warning">Het gekozen bestand is groot (%s) en kan leiden tot een crash. Weet je zeker dat je wilt doorgaan\?</string>
+    <string name="theme_dark">Donker</string>
+    <string name="theme_light">Licht</string>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d kaart</item>
+        <item quantity="other">%d kaarten</item>
+    </plurals>
+    <string name="lisboaviva_engraved_serial">Gegraveerd getal</string>
+    <string name="lisboaviva_sub_navegante_lisboa">Navegante Lissabon</string>
 </resources>
