@@ -354,7 +354,7 @@
         <item quantity="one">Valable pour %d mois</item>
         <item quantity="other">Valable pour %d mois</item>
     </plurals>
-    <string name="desfire_value_format">Type : 1$s, fourchette : %2$s - %3$s, crédit limité : %4$s (%5$s)</string>
+    <string name="desfire_value_format">Type : %1$s, fourchette : %2$s - %3$s, crédit limité : %4$s (%5$s)</string>
     <string name="hardware_information">Informations sur le matériel</string>
     <string name="enabled">Activé</string>
     <string name="disabled">Désactivé</string>
@@ -529,8 +529,8 @@
         <item quantity="other">%1$d voyages restants sur %2$s</item>
     </plurals>
     <plurals name="remaining_day_count">
-        <item quantity="one">Aucun jour restant</item>
-        <item quantity="other">%d jour(s) restants</item>
+        <item quantity="one">%d jour restant</item>
+        <item quantity="other">%d jours restants</item>
     </plurals>
     <plurals name="travel_zones">
         <item quantity="one">%d zone de déplacement</item>
