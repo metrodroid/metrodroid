@@ -7,7 +7,7 @@ clean:
 	rm -f compass.mdst compass.csv
 
 compass.mdst: stations.csv mdst
-	python3 $(MDST)/csv2pb.py stations.csv -o $@ -V 2 -l en_CA
+	python3 $(MDST)/csv2pb.py stations.csv -o $@ -V 2 -l en_CA -n NOTICE
 
 copy: compass.copy
 
