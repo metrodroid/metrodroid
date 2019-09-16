@@ -57,7 +57,7 @@ class LicenseActivity : MetrodroidActivity() {
     private fun readLicenseTextFromAsset(lblLicenseText: TextView, path: String) {
         var s: InputStream? = null
         try {
-            s = assets.open(path, AssetManager.ACCESS_RANDOM) ?: return
+            s = assets.open(path, AssetManager.ACCESS_RANDOM)
 
             s.reader().forEachLine {
                 lblLicenseText.append(it)
