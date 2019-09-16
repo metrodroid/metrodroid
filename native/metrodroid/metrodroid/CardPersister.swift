@@ -374,6 +374,25 @@ class CardPersister {
         return delegate.collapse()
     }
     
+    class func readAutoJson(jsonUrl: URL) throws -> (Card?, URL?, Int) {
+        let data = try Data(contentsOf: jsonUrl)
+        try FileManager.default.removeItem(at: jsonUrl)
+        let cards = try CardSerializer.init().fromAutoJson(json: String(data: data, encoding: .utf8)!)
+        var count = 0
+        var lastImportUrl: URL? = nil
+        var lastCard: Card? = nil
+        while (cards.hasNext()) {
+            let card = cards.next() as! Card
+            lastImportUrl = try CardPersister.persistCard(card: card)
+            lastCard = card
+            count += 1
+        }
+        if count == 1 {
+            return (lastCard, lastImportUrl, 1)
+        }
+        return (nil, nil, count)
+    }
+
     class func readZip(zipUrl: URL) throws -> (Card?, URL?, Int) {
         let arch = Archive(url: zipUrl, accessMode: .read)!
         var count = 0
@@ -441,7 +460,7 @@ class CardPersister {
                     return (nil, nil, 0)
                 }
             }
-            return try readJson(jsonUrl: url)
+            return try readAutoJson(jsonUrl: url)
         }
 
         if head[0] == 0x3c {

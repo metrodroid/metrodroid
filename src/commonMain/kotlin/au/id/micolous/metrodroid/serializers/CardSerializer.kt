@@ -21,6 +21,11 @@ object CardSerializer {
     }
 
     @NativeThrows
+    fun fromAutoJson(json: String): Iterator<Card> = logAndSwiftWrap ("Card", "Failed to deserialize") {
+        AutoJsonFormat.readCards(json)
+    }
+
+    @NativeThrows
     fun toJson(card: Card): String = logAndSwiftWrap ("Card", "Failed to serialize") {
         JsonKotlinFormat.writeCard(card)
     }
