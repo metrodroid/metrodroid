@@ -56,7 +56,7 @@ class SupportedCardsHeader : UICollectionReusableView {
                   expanded: Bool) {
         self.label.text = title
         self.cardCount.text = Utils.localizePlural(
-            RKt.R.plurals.supported_cards, count, count)
+            RKt.R.plurals.supported_cards_format, count, count)
         self.delegate = delegate
         self.section = section
         setExpansion(expanded: expanded)

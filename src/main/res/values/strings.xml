@@ -313,8 +313,8 @@
     -->
     <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 
-    <string name="lang_override">Language override</string>
-    <string name="lang_override_desc">Override the application language. Needs application restart to apply</string>
+    <string name="lang_override">Application language</string>
+    <string name="lang_override_desc">Change the application language. Needs application restart to apply</string>
     <!-- Translators: use system language for app language. -->
     <string name="lang_default">System default</string>
 
@@ -418,11 +418,18 @@
     <string name="pref_theme">Theme</string>
     <string name="pref_theme_desc">Choose look and feel</string>
 
-    <string-array name="themes">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>FareBot</item>
+    <string-array name="themes" translatable="false">
+        <item>@string/theme_dark</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_farebot</item>
     </string-array>
+
+    <!-- Translators: It's about dark theme. -->
+    <string name="theme_dark">Dark</string>
+    <!-- Translators: It's about light theme. -->
+    <string name="theme_light">Light</string>
+    <!-- Translators: It's about theme that mimicks FareBot appearence. -->
+    <string name="theme_farebot" translatable="false">FareBot</string>
 
     <!-- Translators: do not translate -->
     <string-array name="theme_values" translatable="false">
@@ -2399,7 +2406,7 @@
     <!-- Translators: Italian "ABB. TRIM. PERS. PISA" -->
     <string name="pisa_abb_trim_pers_pisa">Trimestrial subscription Pisa</string>
 
-    <plurals name="supported_cards">
+    <plurals name="supported_cards_format">
         <item quantity="one">%d card</item>
         <item quantity="other">%d cards</item>
     </plurals>
@@ -2407,13 +2414,13 @@
 
     <!-- Translators: It's about hotel. -->
     <string name="hotel_room_number">Room number</string>
-    <!-- Translators: It's about hotel. -->
+    <!-- Translators: It's about hotel. It's a title for date/time of check-in. -->
     <string name="hotel_checkin">Check-in</string>
-    <!-- Translators: It's about hotel. -->
+    <!-- Translators: It's about hotel. It's a title for date/time of check-out. -->
     <string name="hotel_checkout">Check-out</string>
 
-    <string name="large_file_yes">Load anyway (risk crashing)</string>
-    <string name="large_file_no">Cancel (safe)</string>
     <!-- Translators: "%s" is replaced with a file size including units -->
     <string name="large_file_warning">The file you have chosen is large (%s) and may crash the application. Do you want to proceed?</string>
+    <string name="large_file_yes">Load anyway (risk crashing)</string>
+    <string name="large_file_no">Cancel (safe)</string>
 </resources>
