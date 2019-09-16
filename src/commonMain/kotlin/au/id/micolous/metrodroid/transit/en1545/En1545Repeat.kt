@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  */
 class En1545Repeat(private val mCtrLen: Int, private val mField: En1545Field) : En1545Field {
 
+    @Suppress("NAME_SHADOWING")
     override fun parseField(b: ImmutableByteArray, off: Int, path: String, holder: En1545Parsed, bitParser: En1545Bits): Int {
         var off = off
         val ctr: Int

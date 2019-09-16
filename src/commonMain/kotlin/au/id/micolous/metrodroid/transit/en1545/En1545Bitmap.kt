@@ -39,6 +39,7 @@ class En1545Bitmap private constructor(
         reversed = reversed
     )
 
+    @Suppress("NAME_SHADOWING")
     override fun parseField(b: ImmutableByteArray, off: Int, path: String, holder: En1545Parsed, bitParser: En1545Bits): Int {
         var off = off
         val bitmask: Int
