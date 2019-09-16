@@ -30,7 +30,6 @@ import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Transient
 
 @Parcelize
 class SnapperTransaction(
@@ -42,16 +41,12 @@ class SnapperTransaction(
         val time: Long,
         val operator: String) : Transaction() {
 
-
-    @Transient
-    override val isTapOff = !isTapOn
+    override val isTapOff get() = !isTapOn
 
     // TODO: Implement this properly
-    @Transient
-    override val station = Station.nameOnly("$journeyId / $seq")
+    override val station get() = Station.nameOnly("$journeyId / $seq")
 
-    @Transient
-    override val mode = when (type) {
+    override val mode get() = when (type) {
         2 -> Trip.Mode.BUS
         else -> Trip.Mode.TROLLEYBUS
     }
@@ -61,14 +56,11 @@ class SnapperTransaction(
         return journeyId == o.journeyId && seq == o.seq
     }
 
-    @Transient
-    override val timestamp = parseHexDateTime(time, TZ)
+    override val timestamp get() = parseHexDateTime(time, TZ)
 
-    @Transient
-    override val fare = TransitCurrency.NZD(cost)
+    override val fare get() = TransitCurrency.NZD(cost)
 
-    @Transient
-    override val isTransfer = seq != 0
+    override val isTransfer get() = seq != 0
 
     companion object {
         private val TZ = MetroTimeZone.AUCKLAND
