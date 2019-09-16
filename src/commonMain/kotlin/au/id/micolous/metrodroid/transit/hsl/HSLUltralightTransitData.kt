@@ -1,7 +1,6 @@
 /*
  * HSLUltralightTransitData.kt
  *
- * Copyright (C) 2018 HSL/HRT (Helsingin seudun liikenne/ Helsinki Region Transport)
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +15,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
+
+/* Based on HSL documentation at https://github.com/HSLdevcom/hsl-card-java/blob/master/HSL%20Matkakortin%20kuvaus%20ja%20API%20kehitt%C3%A4jille%20v1.11.pdf */
 package au.id.micolous.metrodroid.transit.hsl
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
