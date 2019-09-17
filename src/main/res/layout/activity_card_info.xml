@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dip"
                 android:background="#FF4444"
-                android:layout_gravity="left|bottom"
+                android:layout_gravity="bottom"
                 android:visibility="gone">
             <TextView
                     android:layout_width="0dp"
