@@ -2426,4 +2426,5 @@
     <string name="large_file_warning">The file you have chosen is large (%s) and may crash the application. Do you want to proceed?</string>
     <string name="large_file_yes">Load anyway (risk crashing)</string>
     <string name="large_file_no">Cancel (safe)</string>
+    <string name="app_logo_description">Metrodroid logo</string>
 </resources>

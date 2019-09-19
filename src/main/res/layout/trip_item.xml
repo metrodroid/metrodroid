@@ -44,12 +44,14 @@
         android:duplicateParentState="true"
         android:background="@drawable/list_selector_holo_dark">
 
+        <!-- contentDescription is set programmatically. -->
         <ImageView
             android:id="@+id/icon_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             tools:src="@drawable/bus"
+            tools:ignore="ContentDescription"
             android:padding="5dip" />
 
         <LinearLayout
