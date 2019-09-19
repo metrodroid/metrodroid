@@ -33,7 +33,7 @@ class LicenseActivity : MetrodroidActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_license)
 
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        setDisplayHomeAsUpEnabled(true)
 
         val lblLicenseText = findViewById<TextView>(R.id.lblLicenseText)
         lblLicenseText.beginBatchEdit()

@@ -83,7 +83,7 @@ class CardInfoActivity : MetrodroidActivity() {
         val viewPager = findViewById<ViewPager>(R.id.pager)
         mTabsAdapter = TabPagerAdapter(this, viewPager)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.loading)
 
         object : AsyncTask<Void?, Void?, Void?>() {

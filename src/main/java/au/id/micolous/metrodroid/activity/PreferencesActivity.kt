@@ -42,10 +42,4 @@ class PreferencesActivity : FragmentWrapperActivity(), PreferenceFragmentCompat.
     }
 
     override fun createFragment() = PreferencesFragment()
-
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 }
