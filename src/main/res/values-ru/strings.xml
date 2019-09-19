@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Метродроид</string>
     <string name="license">Лицензии</string>
     <string name="directions">Приложите карту.</string>
@@ -307,7 +307,7 @@
     <string name="desfire_key_number">Ключ %s</string>
     <string name="location_ireland">Ирландия</string>
     <string name="location_minneapolis">Миннеаполис, Миннесота, США</string>
-    <plurals name="passengers">
+    <plurals name="passengers" tools:ignore="ImpliedQuantity">
         <item quantity="one">пассажир</item>
         <item quantity="few">пассажира</item>
         <item quantity="many">пассажиров</item>
@@ -900,7 +900,7 @@
     <string name="additional_file_references">Дополнительные ссылки на файлы</string>
     <string name="discretionary_data">Дискреционные данные</string>
     <string name="emv_icc_public_key_certificate">Сертификат открытого ключа чипа</string>
-    <plurals name="emv_pin_attempts_remaining">
+    <plurals name="emv_pin_attempts_remaining" tools:ignore="ImpliedQuantity">
         <item quantity="one">Количество оставшихся попыток ввода пина</item>
         <item quantity="few">Количество оставшихся попыток ввода пина</item>
         <item quantity="many">Количество оставшихся попыток ввода пина</item>
