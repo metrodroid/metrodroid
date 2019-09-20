@@ -2427,4 +2427,10 @@
     <string name="large_file_yes">Load anyway (risk crashing)</string>
     <string name="large_file_no">Cancel (safe)</string>
     <string name="app_logo_description">Metrodroid logo</string>
+    <!-- Translators: used as contentDescription for arrow indicating
+         collapsed list. -->
+    <string name="closed_arrow">Collapsed list</string>
+    <!-- Translators: used as contentDescription for arrow indicating
+         open list. -->
+    <string name="open_arrow">Open list</string>
 </resources>

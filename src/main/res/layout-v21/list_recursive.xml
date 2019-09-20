@@ -12,6 +12,7 @@
         android:layout_centerVertical="true"
         android:id="@+id/arrow_img"
         android:src="?attr/DrawableClosedIndicator"
+        android:contentDescription="@string/closed_arrow"
         />
     <TextView android:id="@android:id/text1"
         android:textSize="16sp"

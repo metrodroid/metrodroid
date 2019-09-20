@@ -42,6 +42,7 @@ import com.unnamed.b.atv.model.TreeNode
 import com.unnamed.b.atv.view.AndroidTreeView
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 
@@ -197,6 +198,12 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
                     else
                         R.drawable.expander_close_holo_dark))
             a.recycle()
+            mArrowView?.contentDescription = Localizer.localizeString(
+                if (active)
+                    R.string.closed_arrow
+                else
+                    R.string.open_arrow
+            )
         }
     }
 
