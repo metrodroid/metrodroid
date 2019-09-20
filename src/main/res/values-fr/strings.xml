@@ -339,7 +339,7 @@
         <item quantity="other">%d voyages restants sur %d</item>
     </plurals>
     <plurals name="troika_rides">
-        <item quantity="one">Aller simple</item>
+        <item quantity="one">%d trajet</item>
         <item quantity="other">%d trajets</item>
     </plurals>
     <plurals name="cards_deduped">
