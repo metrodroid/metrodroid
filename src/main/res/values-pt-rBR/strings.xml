@@ -247,7 +247,7 @@
         <item quantity="other">%d viagens restantes de %d</item>
     </plurals>
     <plurals name="troika_rides">
-        <item quantity="one">passeio único</item>
+        <item quantity="one">%d passeio</item>
         <item quantity="other">%d passeios</item>
     </plurals>
     <plurals name="cards_deduped">
@@ -327,7 +327,7 @@
         <item quantity="other">%1$d viagens restantes em %2$s</item>
     </plurals>
     <plurals name="remaining_day_count">
-        <item quantity="one">Sem dias restantes</item>
+        <item quantity="one">%d dia restante</item>
         <item quantity="other">%d dias restantes</item>
     </plurals>
     <plurals name="travel_zones">
