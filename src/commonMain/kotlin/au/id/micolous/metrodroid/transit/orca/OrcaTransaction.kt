@@ -2,8 +2,6 @@
  * OrcaTransaction.kt
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
- * Copyright 2014 Kramer Campbell
- * Copyright 2015 Sean CyberKitsune McClenaghan
  *
  * Thanks to:
  * Karl Koscher <supersat@cs.washington.edu>

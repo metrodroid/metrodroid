@@ -40,7 +40,8 @@ import au.id.micolous.metrodroid.util.NumberUtils
  * http://dev.hsl.fi/#travel-card
  *
  * The documentation (in Finnish) is available at:
- * http://dev.hsl.fi/hsl-card-java/HSL-matkakortin-kuvaus.pdf
+ * http://dev.hsl.fi/hsl-card-java/HSL-matkakortin-kuvaus.pdf (old)
+ * https://github.com/HSLdevcom/hsl-card-java/blob/master/HSL%20Matkakortin%20kuvaus%20ja%20API%20kehitt%C3%A4jille%20v1.11.pdf (new)
  *
  * Machine translation to English:
  * https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Fdev.hsl.fi%2Fhsl-card-java%2FHSL-matkakortin-kuvaus.pdf&edit-text=&act=url

@@ -1,8 +1,6 @@
 /*
  * IntercodeTrip.kt
  *
- * Copyright 2009 by 'L1L1'
- * Copyright 2013-2014 by 'kalon33'
  * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it &&/or modify
