@@ -25,7 +25,7 @@ from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station, Operator, TransportType
+from stations_pb2 import Station, Operator, TransportType, Line
 import mdst
 import codecs, csv
 
@@ -45,7 +45,22 @@ def empty(s):
 def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None,
                             strip_suffixes='', agency_ids=None, tts_hint_language=None,
                             operators_f=None, extra_f=None, local_languages=None,
-                            license_notice_f=None):
+                            license_notice_f=None, lines_f=None):
+  lines = {}
+
+  if lines_f is not None:
+    lines_f = codecs.getreader('utf-8-sig')(lines_f)
+    lineread = csv.DictReader(lines_f)
+
+    for line in lineread:
+        linepb = Line()
+        linepb.name.english = line['name']
+        if 'short_name' in line and line['short_name']:
+          linepb.name.english_short = line['short_name']
+        if 'local_name' in line and line['local_name']:
+          linepb.name.local = line['local_name']
+        lines[int(line['id'], 0)] = linepb
+
   if all_matching_f is not None:
     all_matching_f = [codecs.getreader('utf-8-sig')(x) for x in all_matching_f]
   if operators_f is not None:
@@ -87,6 +102,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
     local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
     license_notice_f=license_notice_f,
+    lines=lines
   )
 
   station_count = 0
@@ -270,9 +286,14 @@ def main():
     type=FileType('r'),
     help='If specified, the file from which to read a license notice from.')
 
+  parser.add_argument('-r', '--lines',
+    required=False,
+    type=FileType('rb'),
+    help='If supplied, this is a lines file of mapping between ids and lines. If a matching file is not supplied, this will produce an empty list of lines.')
+
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages, options.license_notice)
+  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages, options.license_notice, options.lines)
 
 if __name__ == '__main__':
   main()

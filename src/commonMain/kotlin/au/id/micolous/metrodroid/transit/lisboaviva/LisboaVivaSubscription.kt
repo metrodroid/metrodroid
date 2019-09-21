@@ -18,9 +18,11 @@
  */
 package au.id.micolous.metrodroid.transit.lisboaviva
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitBalance
@@ -38,7 +40,7 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
 
     private val isZapping: Boolean
         get() = parsed.getIntOrZero(En1545Subscription.CONTRACT_TARIFF) == LisboaVivaLookup.ZAPPING_TARIFF &&
-                parsed.getIntOrZero(En1545Subscription.CONTRACT_PROVIDER) == LisboaVivaLookup.ZAPPING_AGENCY
+                parsed.getIntOrZero(En1545Subscription.CONTRACT_PROVIDER) == LisboaVivaLookup.INTERAGENCY31_AGENCY
 
     override val lookup: En1545Lookup
         get() = LisboaVivaLookup
@@ -53,10 +55,23 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
             val units = parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)
             when (units) {
                 0x109 -> return vf + Duration.daysLocal(period - 1)
-                0x10a -> return vf + Duration.monthsLocal(period - 1)
+                0x10a -> {
+                    // It's calendar months. Hence this trickery
+                    val ymdStart = vf.ymd
+                    val ymStart = ymdStart.year * 12 + ymdStart.month
+                    val ymEnd = ymStart + period
+                    val dEnd = Daystamp(year = ymEnd / 12, month = ymEnd % 12, day = 1)
+                    return dEnd + Duration.daysLocal(-1)
+                }
             }
             return super.validTo
         }
+
+    override fun getAgencyName(isShort: Boolean): FormattedString? {
+        if (contractProvider == LisboaVivaLookup.INTERAGENCY31_AGENCY)
+            return null
+        return super.getAgencyName(isShort)
+    }
 
     constructor(data: ImmutableByteArray, ctr: Int?) : this(En1545Parser.parse(data, SUB_FIELDS), ctr)
 
@@ -78,10 +93,10 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
         private val SUB_FIELDS = En1545Container(
                 En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 7),
                 En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 16),
-                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_A, 2),
+                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 2),
                 En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
                 En1545FixedInteger(En1545Subscription.CONTRACT_SALE_AGENT, 5),
-                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_B, 19),
+                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_B, 19),
                 En1545FixedInteger(CONTRACT_PERIOD_UNITS, 16),
                 En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
                 En1545FixedInteger(CONTRACT_PERIOD, 7),

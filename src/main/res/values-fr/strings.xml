@@ -339,7 +339,7 @@
         <item quantity="other">%d voyages restants sur %d</item>
     </plurals>
     <plurals name="troika_rides">
-        <item quantity="one">Aller simple</item>
+        <item quantity="one">%d trajet</item>
         <item quantity="other">%d trajets</item>
     </plurals>
     <plurals name="cards_deduped">
@@ -354,7 +354,7 @@
         <item quantity="one">Valable pour %d mois</item>
         <item quantity="other">Valable pour %d mois</item>
     </plurals>
-    <string name="desfire_value_format">Type : 1$s, fourchette : %2$s - %3$s, crédit limité : %4$s (%5$s)</string>
+    <string name="desfire_value_format">Type : %1$s, fourchette : %2$s - %3$s, crédit limité : %4$s (%5$s)</string>
     <string name="hardware_information">Informations sur le matériel</string>
     <string name="enabled">Activé</string>
     <string name="disabled">Désactivé</string>
@@ -529,8 +529,8 @@
         <item quantity="other">%1$d voyages restants sur %2$s</item>
     </plurals>
     <plurals name="remaining_day_count">
-        <item quantity="one">Aucun jour restant</item>
-        <item quantity="other">%d jour(s) restants</item>
+        <item quantity="one">%d jour restant</item>
+        <item quantity="other">%d jours restants</item>
     </plurals>
     <plurals name="travel_zones">
         <item quantity="one">%d zone de déplacement</item>
@@ -589,7 +589,7 @@
     <string name="led_shared_taxi">Taxi partagé de Saint-Pétersbourg</string>
     <string name="blank_mfu_card">Carte MIFARE Ultralight vierge</string>
     <string name="blank_mfc_card">Carte MIFARE Classic vierge</string>
-    <string name="fully_blank_desc">Cette carte est complètement vierge. Elle est formaté mais sans aucune donnée écrite dessus. Elle possède toujours un numéro de série par lequel elle peut être identifiée de façon unique et liée à une base de données, mais la carte elle-même ne contient pas d\'autres données.</string>
+    <string name="fully_blank_desc">Cette carte paraît être complètement vierge. Elle est formatée mais sans aucune donnée écrite dessus. Elle possède toujours un numéro de série par lequel elle peut être identifiée de façon unique et liée à une base de données, mais la carte elle-même ne contient pas d\'autres données.</string>
     <string name="fully_blank_title">Carte vierge</string>
     <string name="card_name_tmoney">T-Money</string>
     <string name="charlie_2nd_card_number">Second numéro</string>
@@ -627,7 +627,7 @@
     <string name="refill_counter">Compteur de recharges</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Récupération de clés pour les cartes Leap</string>
-    <string name="leap_retrieve_keys_longdesc">Ceci partagera vos détails de carte avec Transport pour l’Irlande (TFI), afin de répondre à une stimulation d’authentification de la carte Leap. TFI sera en mesure de savoir que vous avez utilisé Metrodroid sur cette carte. La carte n’est pas lisible sans cette clé.</string>
+    <string name="leap_retrieve_keys_longdesc">Ceci partagera vos détails de carte avec Transport pour l’Irlande (TFI), afin de répondre à une requête d’authentification de la carte Leap. TFI sera en mesure de savoir que vous avez utilisé Metrodroid sur cette carte. La carte n’est pas lisible sans cette clé.</string>
     <string name="locked_leap">Leap verrouillé</string>
     <string name="leap_period_start">Début de période</string>
     <string name="leap_accumulator_region">Région</string>
@@ -637,7 +637,7 @@
     <string name="leap_weekly_accumulators">Plafonds tarifaires hebdomadaires</string>
     <string name="initialisation_date">Date d’entrée en vigueur</string>
     <string name="issue_date">Date d’émission</string>
-    <string name="leap_locked_warning">Cette carte n\'a pas été déverrouillée. Veuillez activer la récupération des clés Leap dans l\'écran Préférences NFC.</string>
+    <string name="leap_locked_warning">Cette carte n\'a pas été déverrouillée. Veuillez activer la »Récupération de clés pour les cartes Leap« dans l\'écran Préférences NFC.</string>
     <string name="card_note_leap">Requiert la récupération des clés depuis TFI, cela doit être activé dans l\'écran Préférences NFC.</string>
     <string name="lisboaviva_unknown_period">Validité inconnue %1$x/%2$x</string>
     <string name="about_key_formats">À propos des formats de clé…</string>
@@ -880,7 +880,7 @@
     <string name="hsl_transport_juna">Train</string>
     <string name="hsl_transport_lautta">Ferry</string>
     <string name="hsl_transport_u_linja">U-ligne</string>
-    <string name="navigo_sector_station_id">ID de secteur: %1$s, ID de la station: %2$d</string>
+    <string name="navigo_sector_station_id">ID de secteur : %1$s, ID de la station : %2$d</string>
     <string name="navigo_sector_id_station_id">ID du secteur %1$d, ID de la station %2$d</string>
     <string name="navigo_forfait_jour">Forfait jour</string>
     <string name="navigo_forfait">Forfait</string>
@@ -942,4 +942,139 @@
     <string name="lang_override">Langue de l’application</string>
     <string name="lang_override_desc">Changer la langue de l\'application. Nécessite un redémarrage de l\'application pour appliquer</string>
     <string name="lang_default">Défaut du système</string>
+    <string name="edy_file_history">Histoire d\'Edy</string>
+    <string name="edy_file_id">Identité Edy</string>
+    <string name="edy_file_purse_balance">Solde de la bourse Edy</string>
+    <string name="kmt_file_id">Identité KMT</string>
+    <string name="card_name_kmt">Kartu Multi Trip</string>
+    <string name="one_time_transaction_limit">Limite de transaction unique</string>
+    <string name="cardtype_header">Conditions de paiement par carte</string>
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <string name="tmoney_issuer_seoul_bus">Association de transport par autobus de Séoul</string>
+    <string name="tmoney_usercode_regular">Normal</string>
+    <string name="tmoney_usercode_child">Enfant</string>
+    <string name="tmoney_usercode_youth">Jeune</string>
+    <string name="tmoney_usercode_test">Test</string>
+    <string name="tmoney_usercode_inactive">Inactif</string>
+    <string name="discount_type">Type de rabais</string>
+    <string name="tmoney_disrate_none">Aucun rabais</string>
+    <string name="tmoney_disrate_disabled_basic">Handicapé</string>
+    <string name="tmoney_disrate_disabled_companion">Accompagnant de l\'handicapé</string>
+    <string name="none">Aucun</string>
+    <string name="mobile_carrier">Opérateur mobile</string>
+    <string name="tmoney_tcode_sk">SK Telecom</string>
+    <string name="tmoney_tcode_kt">Korea Telecom</string>
+    <string name="tmoney_tcode_lg">LG U+</string>
+    <string name="financial_institution_name">Nom de l\'institution financière</string>
+    <string name="tmoney_ccode_kb">Banque KB Kookmin</string>
+    <string name="tmoney_ccode_nonghyup">Banque Nonghyup</string>
+    <string name="tmoney_ccode_lotte">Carte Lotte</string>
+    <string name="tmoney_ccode_bc">Carte BC</string>
+    <string name="tmoney_ccode_samsung">Carte Samsung</string>
+    <string name="tmoney_ccode_shinhan">Banque Shinhan</string>
+    <string name="tmoney_ccode_citi">Citibank de Corée</string>
+    <string name="tmoney_ccode_hana_sk">Carte Hana SK</string>
+    <string name="card_name_snapper">Snapper</string>
+    <string name="card_media_felica_lite">FeliCa Lite</string>
+    <string name="felica_lite_read_only">Données en lecture seule</string>
+    <string name="felica_lite_read_write">Données réinscriptibles</string>
+    <string name="card_format_ndef">NDEF</string>
+    <string name="felica_system_common">Zone commune (réseaux FeliCa)</string>
+    <string name="card_name_samara_etk">Samara ETK</string>
+    <string name="card_name_samara_school">Carte d\'écolier de Samara</string>
+    <string name="card_name_samara_student">Carte d\'étudiant de Samara</string>
+    <string name="additional_file_references">Références de fichiers supplémentaires</string>
+    <string name="emv_name_1">Nom 1</string>
+    <string name="emv_name_2">Nom 2</string>
+    <string name="emv_track_1">Piste 1</string>
+    <string name="emv_track_2">Piste 2</string>
+    <string name="issuer_country">Pays de l\'émetteur</string>
+    <string name="emv_language_preference">Préférence linguistique</string>
+    <string name="emv_issuer_public_key_certificate">Certificat de clé publique de l\'émetteur</string>
+    <string name="emv_issuer_public_key_modulus">Module de clé publique de l\'émetteur</string>
+    <string name="emv_issuer_public_key_exponent">Exposant de clé publique de l\'émetteur</string>
+    <string name="emv_icc_public_key_certificate">Certificat de clé publique ICC</string>
+    <string name="emv_icc_public_key_modulus">Module de la clé publique ICC</string>
+    <string name="emv_icc_public_key_exponent">Exposant de clé publique ICC</string>
+    <string name="emv_application_currency">Devise de l\'application</string>
+    <string name="emv_application_currency_exponent">Exposant de la devise de l\'application</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">Tentative de NIP restante</item>
+        <item quantity="other">Tentatives de NIP restantes</item>
+    </plurals>
+    <string name="emv_pan_sequence_number">Numéro de séquence PAN</string>
+    <string name="emv_application_priority_indicator">Indicateur de priorité de l\'application</string>
+    <string name="emv_ca_public_key_index">Indice des clés publiques de l\'autorité de certification</string>
+    <string name="emv_signed_static_application_data">Données d\'application statiques signées</string>
+    <string name="emv_application_file_locator">Localisateur de fichiers d\'application</string>
+    <string name="emv_issuer_application_data">Données d\'application de l\'émetteur</string>
+    <string name="emv_track_1_discretionary_data">Données discrétionnaires de la piste 1</string>
+    <string name="emv_application_cryptogram">Cryptogramme de l\'application</string>
+    <string name="emv_application_transaction_counter">Compteur de transactions de l\'application</string>
+    <string name="answer_to_request">ATQA (Réponse à la requête)</string>
+    <string name="emv_track_2_equiv">Données équivalentes à la piste 2</string>
+    <string name="emv_track_3_equiv">Données équivalentes à la piste 3</string>
+    <string name="emv_service_code">Code de service</string>
+    <string name="tlv_tags">Balises TLV</string>
+    <string name="unknown_tags">Balises inconnus</string>
+    <string name="card_note_oyster">Seules les cartes de première génération (MIFARE Classic) sont prises en charge. Les cartes de la génération actuelle (avec un D imprimé dans le coin inférieur gauche) sont des cartes DESFire entièrement verrouillées, et donc non supportées.</string>
+    <string name="card_name_kazan">Carte de transport de Kazan</string>
+    <string name="card_name_orenburg_ekg">EKG d\'Orenburg</string>
+    <string name="card_name_strizh">Strizh</string>
+    <string name="card_name_penza">Carte de transport de Penza</string>
+    <string name="card_name_kirov">Carte de transport de Kirov</string>
+    <string name="card_name_ekarta">Ekarta</string>
+    <string name="card_name_crimea_trolleybus">Carte de Trolleybus de Crimée</string>
+    <string name="troika_druzhinnik_card">Carte Druzhinnik</string>
+    <string name="russia_region_25_primorsky">Kraï Primorski</string>
+    <string name="cepas_purse_num">CEPAS bourse numéro %d</string>
+    <string name="cepas_purse_num_history">Histoire de la bourse CEPAS numéro %d</string>
+    <string name="cepas_can">Numéro de l\'application de carte (CAN)</string>
+    <string name="cepas_credit_trp">Pointeur à transaction de crédit (TRP)</string>
+    <string name="tmoney_balance">Solde de T-Money</string>
+    <string name="china_balance">Solde numéro %d</string>
+    <string name="iso7816_raw">Données brutes</string>
+    <string name="iso7816_tlv">Balises TLV</string>
+    <string name="unsupported_tag_message">Cette balise n\'est actuellement pas prise en charge par Metrodroid.
+\n Identifiant de tag : %1$s
+\n Technologies supportées :
+\n %2$s</string>
+    <string name="unknown_ultralight_message">Balise Mifare Ultralight inconnue</string>
+    <string name="card_name_emv_long">EMV (Cartes de crédit et de débit)</string>
+    <string name="card_reading_emv">Lecture d\'EMV (carte de crédit ou de débit)…</string>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d jour de calendrier</item>
+        <item quantity="other">%d jours de calendrier</item>
+    </plurals>
+    <string name="hsl_kausi_format">PeriodPass pour %s</string>
+    <string name="compass_sub_one_zone">Une zone</string>
+    <string name="compass_sub_two_zone">Deux zones</string>
+    <string name="compass_sub_three_zone">Trois zones</string>
+    <string name="compass_sub_four_zone_wce_one_way">Quatre zones WCE (aller simple)</string>
+    <string name="compass_sub_free_sea_island">Billet gratuit pour Sea Island</string>
+    <string name="compass_sub_exit">Sortie</string>
+    <string name="compass_sub_one_zone_with_yvr">Une zone avec l\'aéroport (YVR)</string>
+    <string name="compass_sub_two_zone_with_yvr">Deux zones avec l\'aéroport (YVR)</string>
+    <string name="compass_sub_three_zone_with_yvr">Trois zones avec l\'aéroport (YVR)</string>
+    <string name="compass_sub_daypass_with_yvr">Carte journalière avec l\'aéroport (YVR)</string>
+    <string name="oyster_travelpass">Abonnement</string>
+    <string name="lisboaviva_sub_ass_pal_lis">Palmela à Lisbonne</string>
+    <string name="lisboaviva_sub_ass_fog_lis">Fogueteiro à Lisbonne</string>
+    <string name="lisboaviva_sub_ass_pra_lis">Pragal à Lisbonne</string>
+    <string name="lisboaviva_sub_passe_mts">Abonnement MTS (passe)</string>
+    <string name="lisboaviva_sub_vermelho_a1">Rouge A1</string>
+    <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Ligne de métro CP - Rio de Mouro/Meleças</string>
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela à Lisbonne + Zone métropolitaine</string>
+    <string name="ios_version">Version iOS : <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    </string>
+    <string name="ios_nfc_usage">Application pour afficher le solde sur les cartes de transport en commun</string>
+    <string name="ios_nfcreader_exception">Exception : %s</string>
+    <string name="ios_unknown_tag">Type de balise inconnue : %s</string>
+    <string name="ovc_autocharge_information">Informations sur les recharges automatiques</string>
+    <string name="cards_search">Chercher</string>
+    <string name="location_fribourg_ch">Fribourg, Suisse</string>
+    <string name="hotel_room_number">Numéro de chambre</string>
+    <string name="large_file_yes">Charger quand même (risque de crash)</string>
+    <string name="large_file_no">Annuler (sûr)</string>
+    <string name="large_file_warning">Le fichier que vous avez choisi est volumineux (%s) et peut faire planter l\'application. Voulez-vous continuer \?</string>
 </resources>

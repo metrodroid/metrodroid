@@ -1,0 +1,2 @@
+This software contains Lisbon public transit data from Opendatasoft. The following terms apply to this data:
+

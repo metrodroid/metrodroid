@@ -4,7 +4,8 @@ MDROOT = ../..
 all: navigo.mdst navigo.csv
 
 navigo.mdst: mdst operators.csv stations.csv
-	python3 $(MDST)/csv2pb.py -p operators.csv -o $@ -V 2 stations.csv
+	python3 $(MDST)/csv2pb.py -p operators.csv -o $@ -V 2 \
+		-n NOTICE stations.csv
 
 copy: navigo.copy
 

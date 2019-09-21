@@ -1,3 +1,9 @@
+This software contains a Mobib station and line code database derived from Brussels public transit
+data provided by STIB/MIVB, and Mobib public data from MOBIB Extractor, which has been modified for
+use in Metrodroid.
+
+The following terms apply to MOBIB Extractor data:
+
 (c) 2009 MOBIB Extractor project. This software is provided 'as-is',
 without any express or implied warranty. In no event will the authors be held
 liable for any damages arising from the use of this software.

@@ -187,7 +187,7 @@
     <string name="seqgo_ticket_type_senior">シニア</string>
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">システム コード</string>
-    <string name="nextfare_ticket_class">チケット クラス コード</string>
+    <string name="nextfare_ticket_class">チケット クラス コード%d</string>
     <string name="export_filename">エクスポート ファイル名</string>
     <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
     <string name="location_hong_kong">香港</string>

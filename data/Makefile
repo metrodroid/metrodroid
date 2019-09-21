@@ -15,7 +15,6 @@ HERMETIC_TARGETS := \
 	gironde \
 	hafilat \
 	kmt \
-	lisboa_viva \
 	navigo \
 	orca \
 	orca_brt \
@@ -35,6 +34,7 @@ WEB_TARGETS := \
 	clipper \
 	ezlink \
 	lax_tap \
+	lisboa_viva \
 	mobib \
 	ricaricami \
 	seq_go \
