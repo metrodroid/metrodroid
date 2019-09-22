@@ -34,7 +34,7 @@ internal class TroikaPurse(val rawData: ImmutableByteArray) : TroikaBlock(
     /**
      * Balance of the card, in kopeyka (0.01 RUB).
      */
-    private val mBalance = rawData.getBitsFromBuffer(188, 22)
+    private val mBalance get() = rawData.getBitsFromBuffer(188, 22)
 
     override val balance: TransitBalance?
         get() = TransitBalanceStored(

@@ -1124,7 +1124,6 @@
     <string name="ios_nfcreader_reading">Bezig met uitlezen van %s</string>
     <string name="ios_nfcreader_tap">Scan je kaart</string>
     <string name="ios_nfcreader_exception">Uitzondering: %s</string>
-    <string name="mifare_plus_not_supported">Mifare Plus wordt niet ondersteund</string>
     <string name="ios_unknown_mifare">Onbekende Mifare: %s</string>
     <string name="ios_unknown_tag">Onbekend label: %s</string>
     <string name="ovc_autocharge_information">Informatie over automatisch opladen</string>

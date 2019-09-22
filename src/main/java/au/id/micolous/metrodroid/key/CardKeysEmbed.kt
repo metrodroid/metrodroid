@@ -30,7 +30,7 @@ class CardKeysFileReaderEmbed(private val context: Context,
                               private val baseDir: String) : CardKeysFileReader {
     override fun readFile(fileName: String): String? = try {
         context.assets.open("$baseDir/$fileName",
-                AssetManager.ACCESS_RANDOM)?.reader(Charsets.UTF_8)?.readText()
+                AssetManager.ACCESS_RANDOM).reader(Charsets.UTF_8).readText()
     } catch (e: Exception) {
         null
     }

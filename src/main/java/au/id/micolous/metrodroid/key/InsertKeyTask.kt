@@ -42,7 +42,7 @@ class InsertKeyTask(activity: Activity, private val mKeys: CardKeys)
         return null
     }
 
-    override fun onResult(unused: Void?) {
+    override fun onResult(result: Void?) {
         val intent = Intent(mActivity, mActivity.javaClass)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         mActivity.startActivity(intent)

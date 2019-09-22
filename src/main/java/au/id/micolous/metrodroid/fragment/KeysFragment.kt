@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
+import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
@@ -106,7 +107,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                                     return null
                                 }
 
-                                override fun onResult(unused: Void?) {
+                                override fun onResult(result: Void?) {
                                     mActionMode!!.finish()
                                     (listAdapter as KeysAdapter).notifyDataSetChanged()
                                 }
@@ -258,7 +259,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                         object : BetterAsyncTask<Void?>(activity!!, false, false) {
                             override fun doInBackground(): Void? {
                                 val ctxt = MetrodroidApplication.instance
-                                val os = ctxt.contentResolver.openOutputStream(uri!!)!!
+                                val os = ctxt.contentResolver.openOutputStream(uri)!!
 
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
                                 val json = keys.toJSON().toString()
@@ -269,7 +270,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                             }
 
-                            override fun onResult(unused: Void?) {
+                            override fun onResult(result: Void?) {
                                 Toast.makeText(MetrodroidApplication.instance, R.string.file_exported, Toast.LENGTH_SHORT).show()
                                 mActionMode!!.finish()
                             }
@@ -299,7 +300,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     var fileType: String? = null
                     try {
                         val k = ClassicStaticKeys.fromJSON(
-                                Json.plain.parseJson(keyData).jsonObject,
+                                CardSerializer.jsonPlainStable.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         desc = k!!.description
                         fileType = k.fileType
@@ -324,7 +325,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                     try {
                         val k = ClassicCardKeys.fromJSON(
-                                Json.plain.parseJson(keyData).jsonObject,
+                                CardSerializer.jsonPlainStable.parseJson(keyData).jsonObject,
                                 "cursor/$id")
                         fileType = k.fileType
                     } catch (ignored: Exception) {
@@ -365,7 +366,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = stream.readBytes()
 
             try {
-                val json = Json.plain.parseJson(String(keyData, Charsets.UTF_8))
+                val json = CardSerializer.jsonPlainStable.parseJson(String(keyData, Charsets.UTF_8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this

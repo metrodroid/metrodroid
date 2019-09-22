@@ -26,7 +26,6 @@ import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Transient
 
 @Parcelize
 class OysterTransaction(
@@ -37,15 +36,12 @@ class OysterTransaction(
         private val rawRecord: ImmutableByteArray = ImmutableByteArray.empty()
 ) : Transaction() {
     // TODO: implement
-    @Transient
     override val isTapOff: Boolean
         get() = false
     // TODO: implement
-    @Transient
     override val fare: TransitCurrency?
         get() = null
     // TODO: implement
-    @Transient
     override val isTapOn: Boolean
         get() = true
     // TODO: implement

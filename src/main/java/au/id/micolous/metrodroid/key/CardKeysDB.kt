@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
+import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.Json
 
@@ -20,7 +21,7 @@ class CardKeysDB (private val context: Context): CardKeysRetriever {
                 continue
             try {
                 val id = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
-                val json = Json.plain.parseJson(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA)))
+                val json = CardSerializer.jsonPlainStable.parseJson(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA)))
                 val nk = ClassicStaticKeys.fromJSON(json.jsonObject, "cursor/$id") ?: continue
                 if (keys == null)
                     keys = nk
@@ -56,7 +57,7 @@ class CardKeysDB (private val context: Context): CardKeysRetriever {
         if (!cursor.moveToFirst())
             return null
         return CardKeys.fromJSON(
-                Json.plain.parseJson(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))).jsonObject,
+                CardSerializer.jsonPlainStable.parseJson(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))).jsonObject,
                 cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE)))
     }
 }

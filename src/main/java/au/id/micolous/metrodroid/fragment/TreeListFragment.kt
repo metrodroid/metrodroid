@@ -115,7 +115,7 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             return view
         }
 
-        private fun getHeaderListL1View(li: HeaderListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
+        private fun getHeaderListL1View(li: HeaderListItem, inflater: LayoutInflater): View {
             val ctxt = inflater.context
             val rl = RelativeLayout(ctxt)
             val text = TextView(ctxt)
@@ -141,7 +141,7 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
 
         private fun getHeaderListView(li: HeaderListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
             val level = li.headingLevel
-            return if (level == 1) getHeaderListL1View(li, inflater, root, attachToRoot) else getHeaderListL2View(li, inflater, root, attachToRoot)
+            return if (level == 1) getHeaderListL1View(li, inflater) else getHeaderListL2View(li, inflater, root, attachToRoot)
         }
 
         private fun getRecursiveListView(li: ListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {

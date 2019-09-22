@@ -207,11 +207,9 @@ class CardBalanceFragment : ListFragment() {
                 nameView.visibility = View.VISIBLE
             } else
                 nameView.visibility = View.GONE
-            if (balanceCur != null) {
-                balanceView.text = balanceCur.maybeObfuscateBalance().formatCurrencyString(true).spanned
-                balanceView.visibility = View.VISIBLE
-            } else
-                balanceView.visibility = View.GONE
+
+            balanceView.text = balanceCur.maybeObfuscateBalance().formatCurrencyString(true).spanned
+            balanceView.visibility = View.VISIBLE
 
             return view
         }

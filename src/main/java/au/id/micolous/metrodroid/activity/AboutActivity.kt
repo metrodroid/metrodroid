@@ -44,6 +44,7 @@ class AboutActivity : MetrodroidActivity() {
         this.findViewById<TextView>(R.id.lblDebugText).text = Utils.deviceInfoString
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onWebsiteClick(view: View) {
         val b = Uri.parse("https://micolous.github.io/metrodroid/").buildUpon()
         val version: Int = try {

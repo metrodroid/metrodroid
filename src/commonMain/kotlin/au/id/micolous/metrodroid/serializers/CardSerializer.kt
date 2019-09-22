@@ -5,6 +5,8 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.io.InputStream
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 
 object CardSerializer {
     fun load(importer: CardImporter, stream: InputStream): Card? {
@@ -30,4 +32,6 @@ object CardSerializer {
 
     @NativeThrows
     fun toPersist(card: Card): String = toJson(card)
+
+    val jsonPlainStable get() = Json(JsonConfiguration.Stable.copy(useArrayPolymorphism = true))
 }

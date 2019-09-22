@@ -57,7 +57,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advanced_card_info)
 
-        val card = CardSerializer.fromPersist(intent.getStringExtra(EXTRA_CARD))
+        val card = CardSerializer.fromPersist(intent.getStringExtra(EXTRA_CARD)!!)
         mCard = card
 
         val viewPager = findViewById<ViewPager>(R.id.pager)

@@ -331,7 +331,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         override fun doInBackground(vararg voids: Void): Pair<String, Int> {
             try {
                 val tf = ExportHelper.findDuplicates(MetrodroidApplication.instance)
-                return if (tf == null || tf.isEmpty()) Pair<String, Int>(null, 0) else Pair<String, Int>(null, ExportHelper.deleteSet(MetrodroidApplication.instance,
+                return if (tf.isEmpty()) Pair<String, Int>(null, 0) else Pair<String, Int>(null, ExportHelper.deleteSet(MetrodroidApplication.instance,
                         tf))
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)

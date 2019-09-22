@@ -84,13 +84,17 @@ data class WarsawSector(
         private val mTripType: Int, //educated guess
         private val mCounter: Int
 ): Parcelable, Comparable<WarsawSector> {
-    fun getRawFields(level: TransitData.RawLevel): List<ListItem>? = listOf(
-            ListItem(FormattedString("Trip timestamp"), mTripTimestamp?.format()),
-            ListItem(FormattedString("Expiry timestamp"), mExpiryTimestamp?.format()),
-            ListItem("Trip type", mTripType.hexString),
-            ListItem("Ticket type", mTicketType.hexString),
-            ListItem("Counter", mCounter.hexString)
-    )
+    fun getRawFields(level: TransitData.RawLevel): List<ListItem>? =
+        if (level == TransitData.RawLevel.ALL)
+            listOf(
+                ListItem(FormattedString("Trip timestamp"), mTripTimestamp?.format()),
+                ListItem(FormattedString("Expiry timestamp"), mExpiryTimestamp?.format()),
+                ListItem("Trip type", mTripType.hexString),
+                ListItem("Ticket type", mTicketType.hexString),
+                ListItem("Counter", mCounter.hexString)
+            )
+        else
+            null
     override operator fun compareTo(other: WarsawSector): Int = when {
         mTripTimestamp == null && other.mTripTimestamp == null -> 0
         mTripTimestamp == null -> -1

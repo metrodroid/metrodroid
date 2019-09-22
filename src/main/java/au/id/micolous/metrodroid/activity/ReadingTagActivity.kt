@@ -114,8 +114,8 @@ class ReadingTagActivity : MetrodroidActivity(), TagReaderFeedbackInterface {
         }
     }
 
-    public override fun onCreate(icicle: Bundle?) {
-        super.onCreate(icicle)
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reading_tag)
 
         resolveIntent(intent)

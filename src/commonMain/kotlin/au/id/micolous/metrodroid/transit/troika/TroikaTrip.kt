@@ -37,7 +37,6 @@ internal class TroikaTrip (override val startTimestamp: Timestamp?,
             TroikaBlock.TroikaTransportType.MONORAIL -> Trip.Mode.TRAIN
             TroikaBlock.TroikaTransportType.GROUND -> Trip.Mode.BUS
             TroikaBlock.TroikaTransportType.MCC -> Trip.Mode.TRAIN
-            else -> Trip.Mode.OTHER
         }
 
     override fun getAgencyName(isShort: Boolean) =

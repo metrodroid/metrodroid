@@ -175,7 +175,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
      * @param position The position of the view in the list
      * @param id       The row id of the item that was clicked
      */
-    fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {}
+    open fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {}
 
     open fun onListChildClick(parent: ExpandableListView, v: View, groupPosition: Int, childPosition: Int, id: Long): Boolean {
         return false
@@ -330,7 +330,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
         return false
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) {}
+    override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo) {}
 
     fun onContentChanged() {
         val emptyView = view!!.findViewById<View>(android.R.id.empty)

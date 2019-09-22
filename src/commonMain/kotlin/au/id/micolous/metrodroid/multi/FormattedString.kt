@@ -19,16 +19,6 @@
 
 package au.id.micolous.metrodroid.multi
 
-fun FormattedString.equals(other: Any?): Boolean {
-    return when (other) {
-        null -> false
-        is StringResource -> equals(Localizer.localizeString(other))
-        is FormattedString -> equals(other.toString())
-        is String -> toString() == other
-        else -> false
-    }
-}
-
 expect class FormattedString(input: String) : Parcelable {
     val unformatted: String
 
@@ -71,6 +61,7 @@ class FormattedStringFallback (private val input: String): Parcelable {
         fun monospace(input: String) = FormattedStringFallback(input)
         fun defaultLanguage(input: String) = FormattedStringFallback(input)
         fun english(input: String) = FormattedStringFallback(input)
+        @Suppress("UNUSED_PARAMETER")
         fun language(input: String, lang: String) = FormattedStringFallback(input)
     }
 }

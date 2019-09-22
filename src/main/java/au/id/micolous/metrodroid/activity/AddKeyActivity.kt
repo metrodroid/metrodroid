@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.key.InsertKeyTask
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
@@ -132,7 +133,7 @@ class AddKeyActivity : MetrodroidActivity() {
                 mKeyFormat.isJSON -> {
                     val o: JsonObject
                     try {
-                        o = Json.plain.parseJson(String(keyData, Charsets.UTF_8)).jsonObject
+                        o = CardSerializer.jsonPlainStable.parseJson(String(keyData, Charsets.UTF_8)).jsonObject
                     } catch (e: Exception) {
                         // Invalid JSON, grumble.
                         Utils.showErrorAndFinish(this, e)

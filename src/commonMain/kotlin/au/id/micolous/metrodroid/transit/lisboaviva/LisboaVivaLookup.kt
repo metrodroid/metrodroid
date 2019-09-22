@@ -62,11 +62,13 @@ object LisboaVivaLookup : En1545LookupSTR(LISBOA_VIVA_STR) {
         if (station == 0 || agency == null || routeNumber == null)
             return null
         val mungedRouteNumber = mungeRouteNumber(agency, routeNumber)
-        var station = station
-        if (agency == AGENCY_METRO)
-            station = station shr 2
+        val mungedStation =
+            if (agency == AGENCY_METRO)
+                station shr 2
+            else
+                station
         return StationTableReader.getStation(LISBOA_VIVA_STR,
-                station or (mungedRouteNumber shl 8) or (agency shl 24),
+                mungedStation or (mungedRouteNumber shl 8) or (agency shl 24),
                 "$agency/$routeNumber/$station")
     }
 

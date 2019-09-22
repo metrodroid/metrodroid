@@ -86,7 +86,7 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
 
     }
 
-    override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> = mapOf(
+    override val subscriptionMapByAgency: Map<Pair<Int?, Int>, StringResource> get() = mapOf(
         Pair(SLACCESS, 1022) to R.string.rkf_stockholm_30_days,
         Pair(SLACCESS, 1184) to R.string.rkf_stockholm_7_days,
         Pair(SLACCESS, 1225) to R.string.rkf_stockholm_72_hours
