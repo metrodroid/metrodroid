@@ -36,20 +36,22 @@ Please do not attach it to this issue -- you may be asked for it later via priva
 
 
 
-## Android Logs
+## Device Logs
 
-Generate a bug report ZIP using the instructions here: https://developer.android.com/studio/debug/bug-report.html
+Android: Generate a bug report ZIP using the instructions here: https://developer.android.com/studio/debug/bug-report.html
+
+iOS: Generate a sysdiagnose using the instructions here: https://www.jessesquires.com/blog/how-to-sysdiagnose-ios/
 
 Please do not attach it to this issue -- you may be asked for it later via private email.
 
 ## Details from About screen:
 
-- Version:
-- Model:
-- Manufacturer:
-- Android OS version:
-- NFC:
-- MIFARE Classic:
+- Metrodroid version:
+- Device Model:
+- (Android only) Manufacturer:
+- Android/iOS version:
+- (Android only) NFC:
+- (Android only) MIFARE Classic:
 
 ## Checklist
 
