@@ -54,7 +54,7 @@ internal class MobibTransaction(override val parsed: En1545Parsed) : En1545Trans
                             version <= 2 -> En1545Container(
                                     En1545FixedInteger(EVENT_VERSION, 6),
                                     En1545FixedInteger.date(EVENT),
-                                    En1545FixedInteger.time(EVENT),
+                                    En1545FixedInteger.timeLocal(EVENT),
                                     En1545FixedInteger(EVENT_UNKNOWN_B, 21),
                                     En1545FixedInteger(EVENT_PASSENGER_COUNT, 5),
                                     En1545FixedInteger(EVENT_UNKNOWN_C, 14),
@@ -67,13 +67,13 @@ internal class MobibTransaction(override val parsed: En1545Parsed) : En1545Trans
                                     En1545FixedInteger(EVENT_SERIAL_NUMBER, 24),
                                     En1545FixedInteger("EventTransferNumber", 24),
                                     En1545FixedInteger.date(EVENT_FIRST_STAMP),
-                                    En1545FixedInteger.time(EVENT_FIRST_STAMP),
+                                    En1545FixedInteger.timeLocal(EVENT_FIRST_STAMP),
                                     En1545FixedInteger(EVENT_UNKNOWN_G, 21)
                             )
                             else -> En1545Container(
                                     En1545FixedInteger(EVENT_VERSION, 6), // confirmed
                                     En1545FixedInteger.date(EVENT), // confirmed
-                                    En1545FixedInteger.time(EVENT), // confirmed
+                                    En1545FixedInteger.timeLocal(EVENT), // confirmed
                                     En1545FixedInteger(EVENT_UNKNOWN_B + "1", 31),
                                     En1545Bitmap(
                                             En1545Container(
@@ -96,7 +96,7 @@ internal class MobibTransaction(override val parsed: En1545Parsed) : En1545Trans
                                             En1545FixedInteger("NeverSeenA3", 16),
                                             En1545Container(
                                                     En1545FixedInteger.date(EVENT_FIRST_STAMP), // confirmed
-                                                    En1545FixedInteger.time(EVENT_FIRST_STAMP) // confirmed
+                                                    En1545FixedInteger.timeLocal(EVENT_FIRST_STAMP) // confirmed
                                             ),
                                             En1545FixedInteger("NeverSeenA5", 16)
                                     ),
