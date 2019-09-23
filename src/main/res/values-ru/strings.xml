@@ -1123,4 +1123,12 @@
     <string name="large_file_yes">Всё равно загрузить (риск сбоя)</string>
     <string name="large_file_no">Отменить (безопасно)</string>
     <string name="large_file_warning">Файл, который вы выбрали, имеет большой размер (%s) и может привести к сбою приложения. Вы хотите продолжить\?</string>
+    <string name="ios_unknown_mifare">Неизвестный Mifare: %s</string>
+    <string name="theme_dark">Темная</string>
+    <string name="theme_light">Светлая</string>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d карта</item>
+        <item quantity="few">%d карты</item>
+        <item quantity="many">%d карт</item>
+    </plurals>
 </resources>
