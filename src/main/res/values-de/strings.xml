@@ -802,8 +802,8 @@
     <string name="pisa_abb_ann_pers_pisa_sbe">Jahresabo Pisa</string>
     <string name="pisa_abb_mens_pers_pisa_sbe">Monatsabo Pisa</string>
     <string name="mfp_reading">MIFARE Plus Karte wird gelesen…</string>
-    <string name="lang_override">Anwendungssprache</string>
-    <string name="lang_override_desc">Die Anwendungssprache ändern. Zum Übernehmen muss die Anwendung neu gestartet werden</string>
+    <string name="lang_override">Appssprache</string>
+    <string name="lang_override_desc">Die Appssprache ändern. Zum Übernehmen muss die App neu gestartet werden</string>
     <string name="lang_default">Systemstandard</string>
     <string name="large_file_yes">Trotzdem laden (Absturzrisiko)</string>
     <string name="large_file_no">Abbrechen (sicher)</string>
