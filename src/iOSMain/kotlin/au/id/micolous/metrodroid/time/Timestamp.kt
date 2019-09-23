@@ -36,8 +36,10 @@ internal actual fun makeNow(): TimestampFull = date2Timestamp(NSDate())
 @SharedImmutable
 private val UTC : NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
 
+// Currently empty but there are few time zones that may need mapping in
+// the future like e.g. America/Buenos_Aires
 @SharedImmutable
-private val tzOverrides = mapOf("Asia/Beijing" to "Asia/Hong_Kong")
+private val tzOverrides = mapOf<String,String>()
 
 private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
     if (tz == MetroTimeZone.LOCAL)
