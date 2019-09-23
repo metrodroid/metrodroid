@@ -2,22 +2,22 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="license">Licenze</string>
     <string name="title_activity_license">Licenze Open Source</string>
-    <string name="directions">Tocca una tessera.</string>
-    <string name="reading_card">Lettura della tessera..…</string>
-    <string name="dont_move">Non spostare la tessera</string>
+    <string name="directions">Tocca una carta.</string>
+    <string name="reading_card">Lettura della carta..…</string>
+    <string name="dont_move">Non spostare la carta</string>
     <string name="advanced_info">Informazioni avanzate</string>
-    <string name="delete_card">Elimina la tessera</string>
-    <string name="unknown_card">Tessera sconosciuta</string>
-    <string name="locked_mfc_card">Tessera MIFARE Classic bloccata</string>
-    <string name="locked_mfu_card">Tessera MIFARE Ultralight bloccata</string>
-    <string name="locked_mfd_card">Tessera MIFARE DESFire bloccata</string>
+    <string name="delete_card">Elimina la carta</string>
+    <string name="unknown_card">Carta sconosciuta</string>
+    <string name="locked_mfc_card">Carta MIFARE Classic bloccata</string>
+    <string name="locked_mfu_card">Carta MIFARE Ultralight bloccata</string>
+    <string name="locked_mfd_card">Carta MIFARE DESFire bloccata</string>
     <string name="hw_detail">Informazioni sulla produzione</string>
     <string name="data">Dati grezzi</string>
     <string name="copy_xml">Copia</string>
     <string name="share_xml">Condividi</string>
     <string name="save_xml">Salva su file</string>
     <string name="history">Storia</string>
-    <string name="no_trip_data">Nessun viaggio trovato. Questa tessera è stata usata\?</string>
+    <string name="no_trip_data">Nessun viaggio trovato. Questa carta è stata usata\?</string>
     <string name="import_xml">Importa</string>
     <string name="import_file">Importa da file</string>
     <string name="export">Esporta</string>
@@ -29,29 +29,29 @@
     <string name="loading">Caricamento…</string>
     <string name="supported_cards">Tessere supportate</string>
     <string name="transaction_counter">Contatore delle transazioni</string>
-    <string name="fully_locked_desc">Nessuna parte di questa tessera è liberamente leggibile senza la chiave e attualmente questo formato non presenta vulnerabilità pratiche.
-\n
-\nLa sua scheda non è supportata da Metrodroid ed è improbabile che lo sarà mai, a meno che la chiave non sia decifrata.
-\n
+    <string name="fully_locked_desc">Nessuna parte di questa carta è liberamente leggibile senza la chiave e attualmente questo formato non presenta vulnerabilità pratiche. 
+\n 
+\nLa sua carta non è supportata da Metrodroid ed è improbabile che lo sarà mai, a meno che la chiave non sia decifrata. 
+\n 
 \nSi prega di fare pressione sull\'emittente della carta per consentire l\'accesso ai dati aperti sulle carte emesse. È sicuro consentire l\'accesso aperto e di sola lettura ai dati con la moderna tecnologia smart card. Alcune agenzie forniscono persino documentazione aperta sul formato dei dati!</string>
-    <string name="fully_locked_desc_unlockable">Nessuna parte di questa tessera è liberamente leggibile senza la chiave. Non ha installato delle chiavi valide per questo.
-\n 
-\nLa tessera funzionerà una volta installate le chiavi. Questi sono generalmente diversi per ogni carta. Ulteriori informazioni sull\'acquisizione e l\'installazione delle chiavi sono disponibili nella documentazione.
-\n 
+    <string name="fully_locked_desc_unlockable">Nessuna parte di questa carta è liberamente leggibile senza la chiave. Non ha installato delle chiavi valide per questo. 
+\n  
+\nLa carta funzionerà una volta installate le chiavi. Questi sono generalmente diversi per ogni carta. Ulteriori informazioni sull\'acquisizione e l\'installazione delle chiavi sono disponibili nella documentazione. 
+\n  
 \nSi prega di fare pressione sull\'emittente della tessera per consentire l\'accesso ai dati aperti sulle carte emesse. È sicuro consentire l\'accesso aperto e di sola lettura ai dati con la moderna tecnologia smart card. Alcune agenzie forniscono persino documentazione aperta sul formato dei dati!</string>
-    <string name="fully_locked_title">Tessera completamente bloccata.</string>
+    <string name="fully_locked_title">Carta completamente bloccata.</string>
     <string name="nfc_off_error">NFC disattivato</string>
-    <string name="turn_on_nfc">Si prega di attivare NFC per leggere la tessera.</string>
+    <string name="turn_on_nfc">Si prega di attivare NFC per leggere la carta.</string>
     <string name="nfc_settings">Impostazioni NFC</string>
     <string name="machine_id_format">ID macchina %s</string>
     <string name="machine_id">ID macchina</string>
-    <string name="unknown_card_header">Formato della tessera non supportato</string>
-    <string name="unknown_card_description">Questa tessera non è ancora supportata da Metrodroid. È possibile visualizzare solo i dati grezzi.</string>
+    <string name="unknown_card_header">Formato della carta non supportato</string>
+    <string name="unknown_card_description">Questa carta non è ancora supportata da Metrodroid. È possibile visualizzare solo i dati grezzi.</string>
     <string name="unknown_more_info">Maggiori informazioni</string>
-    <string name="unknown_more_info_desc">Tocca per maggiori informazioni sul supporto Metrodroid per questa tessera.</string>
+    <string name="unknown_more_info_desc">Tocca per maggiori informazioni sul supporto Metrodroid per questa carta.</string>
     <string name="lawyercats">Metrodroid e i suoi autori non sono associati ad alcuna agenzia di trasporto pubblico.</string>
     <string name="scanned_cards">Storia</string>
-    <string name="no_scanned_cards">Non ha scansionato nessuna tessera.</string>
+    <string name="no_scanned_cards">Non ha scansionato nessuna carta.</string>
     <string name="block_title_format">Blocco: %s</string>
     <string name="block_title_format_unauthorized">Blocco: %s (non autorizzato)</string>
     <string name="application_title_format">Applicazione: %s</string>
@@ -78,10 +78,10 @@
     <string name="subscription_cost">Costo</string>
     <string name="unknown_format">Sconosciuto (%s)</string>
     <string name="unknown">sconosciuto</string>
-    <string name="keys_required">Le chiavi di crittografia sono necessarie per leggere questa tessera.</string>
-    <string name="keys_loaded">Le chiavi di crittografia per questa tessera sono caricate.</string>
+    <string name="keys_required">Le chiavi di crittografia sono necessarie per leggere questa carta.</string>
+    <string name="keys_loaded">Le chiavi di crittografia per questa carta sono caricate.</string>
     <string name="load_keys">Carica chiavi</string>
-    <string name="card_keys_not_supported">Metrodroid non supporta le chiavi per questo tipo di tessera.</string>
+    <string name="card_keys_not_supported">Metrodroid non supporta le chiavi per questo tipo di carta.</string>
     <string name="add_key">Aggiungi chiave</string>
     <string name="error">Errore</string>
     <string name="keys">Chiavi</string>
@@ -100,17 +100,17 @@
     <string name="time">Ora</string>
     <string name="vehicle_type">Tipo di veicolo</string>
     <string name="transaction_type">Tipo di transazione</string>
-    <string name="card_not_supported_on_device">Questa tessera non è supportata dal dispositivo.</string>
+    <string name="card_not_supported_on_device">Questa carta non è supportata dal dispositivo.</string>
     <string name="need_stations">Alcuni nomi di stazioni sono sconosciuti.</string>
     <string name="need_stations_submit">Segnala</string>
     <string name="card_preview_reader">Versione beta del lettore di tessere.</string>
     <string name="visit_website">Visita il sito web</string>
     <string name="title_activity_about">A proposito</string>
-    <string name="card_format">Formato della tessera</string>
+    <string name="card_format">Formato della carta</string>
     <string name="select_file">Seleziona file</string>
     <string name="copied_to_clipboard">Copiato negli appunti</string>
     <string name="file_exported">File esportato.</string>
-    <string name="about_card_format">Informazioni su questo formato di tessera</string>
+    <string name="about_card_format">Informazioni su questo formato della carta</string>
     <string name="online_services">Servizi online</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="requires_android_17">Richiede Android 4.2 o successivo.</string>
@@ -291,7 +291,7 @@
     <string name="payment_method_cash">Contanti</string>
     <string name="payment_method_credit_card">Carta di credito</string>
     <string name="payment_method_debit_card">Carta di debito</string>
-    <string name="payment_method_transit_card">Tessera di transito</string>
+    <string name="payment_method_transit_card">Carta di transito</string>
     <string name="payment_method_cheque">Assegno</string>
     <string name="payment_method_free">Gratuito</string>
     <string name="card_holders_name">Nome del titolare della carta</string>
@@ -316,10 +316,10 @@
     <string name="podorozhnik_topup">Ricarica di Podorozhnik</string>
     <string name="led_bus">Autobus di San Pietroburgo</string>
     <string name="led_metro">Metro di San Pietroburgo</string>
-    <string name="blank_mfu_card">Tessera MIFARE Ultralight vuota</string>
-    <string name="blank_mfc_card">Tessera MIFARE Classic vuota</string>
-    <string name="blank_mfd_card">Tessera MIFARE DESFire vuota</string>
-    <string name="fully_blank_title">Tessera vuota</string>
+    <string name="blank_mfu_card">Carta MIFARE Ultralight vuota</string>
+    <string name="blank_mfc_card">Carta MIFARE Classic vuota</string>
+    <string name="blank_mfd_card">Carta MIFARE DESFire vuota</string>
+    <string name="fully_blank_title">Carta vuota</string>
     <string name="card_name_tmoney">T-Money</string>
     <string name="maximum_balance">Saldo massimo</string>
     <string name="branch_code">Codice di filiale</string>
@@ -362,8 +362,8 @@
     <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
     <string name="card_name_krasnodar_etk">Krasnodar ETK</string>
     <string name="card_name_samara_etk">Samara ETK</string>
-    <string name="card_name_samara_student">Tessera studentesca di Samara</string>
-    <string name="card_name_kazan">Tessera di trasporto di Kazan</string>
+    <string name="card_name_samara_student">Carta studentesca di Samara</string>
+    <string name="card_name_kazan">Carta di trasporto di Kazan</string>
     <string name="kazan_blank">Vuoto</string>
     <string name="card_name_orenburg_ekg">Orenburg EKG</string>
     <string name="card_name_strizh">Strizh</string>
@@ -372,7 +372,7 @@
     <string name="card_name_siticard">SitiCard</string>
     <string name="card_name_ekarta">Ekarta</string>
     <string name="siticard_purse_sarov">Portafoglio elettronico di Sarov</string>
-    <string name="card_name_crimea_trolleybus">Tessera per il filobus di Crimea</string>
+    <string name="card_name_crimea_trolleybus">Carta per il filobus di Crimea</string>
     <string name="card_name_yoshkar_ola">Carta di trasporto di Yoshkar-Ola</string>
     <string name="card_name_umarsh">Umarsh</string>
     <string name="umarsh_student">Studente</string>
@@ -388,7 +388,7 @@
     <string name="warsaw_90_days">Abbonamento di 90 giorni</string>
     <string name="venezia_profile">Profilo</string>
     <string name="venezia_profile_normal">Fuori REGIONE ordinario</string>
-    <string name="rkf_card_status">Stato della tessera</string>
+    <string name="rkf_card_status">Stato della carta</string>
     <string name="location_tbilisi">Tbilisi, Georgia</string>
     <string name="import_mct_file">Importa da file MCT</string>
     <string name="subscription_id">ID abbonamento</string>
@@ -455,22 +455,22 @@
     <string name="pisa_abb_mens_pers_pisa_sbe">Abbonamento mensile personale Pisa SBE</string>
     <string name="pisa_carnet_10_bgl_70_min_pisa">CARNET 10 BGL 70 MIN PISA</string>
     <string name="pisa_abb_trim_pers_pisa">Abbonamento trimestrale personale Pisa</string>
-    <string name="copy_card_number">Copia il numero della tessera</string>
+    <string name="copy_card_number">Copia il numero della carta</string>
     <string name="card_serial_number">Numero di serie</string>
     <string name="serial_only_card_description_not_stored">Questa scheda contiene solo un numero di serie. Il suo saldo e la sua storia sono memorizzati solo in un database centrale.</string>
     <string name="serial_only_card_description_locked">Questa scheda è bloccata e può essere letto solo il numero di serie. Il suo saldo e la sua storia possono essere memorizzati su di esso, ma non sono accessibili.</string>
     <string name="deduplicate_cards">Deduplicare le carte</string>
-    <string name="card_name_samara_school">Tessera scolare di Samara</string>
-    <string name="card_name_orenburg_school">Tessera scolare di Orenburg</string>
-    <string name="card_name_orenburg_student">Tessera studentesca di Orenburg</string>
-    <string name="card_name_penza">Tessera di trasporto di Penza</string>
-    <string name="card_name_kirov">Tessera di trasporto di Kirov</string>
+    <string name="card_name_samara_school">Carta scolare di Samara</string>
+    <string name="card_name_orenburg_school">Carta scolare di Orenburg</string>
+    <string name="card_name_orenburg_student">Carta studentesca di Orenburg</string>
+    <string name="card_name_penza">Carta di trasporto di Penza</string>
+    <string name="card_name_kirov">Carta di trasporto di Kirov</string>
     <string name="siticard_aerial_tramway">Funivia</string>
     <string name="mobile_carrier">Operatore di telefonia mobile</string>
     <string name="tap_for_more_info">Tocca per maggiori informazioni …</string>
     <string name="maps">Mappe</string>
     <string name="card_name_kiev">Metro di Kiev</string>
-    <string name="card_name_crimea_parus_school">Tessera scolastica «Parus»</string>
+    <string name="card_name_crimea_parus_school">Carta scolastica «Parus»</string>
     <string name="rkf_status_temp_disabled">Sospeso temporaneamente o permanentemente</string>
     <string name="rkf_status_not_ok">Sospeso permanentemente</string>
     <string name="ios_main_screen_back">Principale</string>
@@ -481,11 +481,11 @@
     <string name="ios_nfcreader_connection_error">Errore di connessione: %s</string>
     <string name="ios_nfcreader_connecting">Connessione a %s</string>
     <string name="ios_nfcreader_reading">Lettura di %s</string>
-    <string name="ios_nfcreader_tap">Tocca una tessera</string>
+    <string name="ios_nfcreader_tap">Tocca una carta</string>
     <string name="import_clipboard">Incolla dagli appunti</string>
     <string name="export_filename">Nome file di esportazione</string>
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
-    <string name="card_epoch">Epoca della tessera</string>
+    <string name="card_epoch">Epoca della carta</string>
     <string name="saved_metrodroid_zip">Metrodroid-Export.zip salvato su memoria USB.</string>
     <string name="saved_xml_custom">XML salvato su memoria USB.</string>
     <string name="auth_retries">Tentativi di autenticazione</string>
@@ -735,7 +735,7 @@
     <string name="location_fribourg_ch">Friburgo, Svizzera</string>
     <string name="hotel_room_number">Numero della camera</string>
     <string name="suica_area_line_station">Area %1$s, linea %2$s, stazione %3$s</string>
-    <string name="card_name_shanghai">Tessera del trasporto pubblico di Shanghai</string>
+    <string name="card_name_shanghai">Carta del trasporto pubblico di Shanghai</string>
     <string name="single_trips">Viaggi singoli</string>
     <string name="subscription_started">Iniziato</string>
     <string name="none">Nessuno</string>
@@ -772,7 +772,7 @@
     <string name="nfc_connection_failed">Connessione NFC a %s non riuscita</string>
     <string name="unknown_date_title">Data sconosciuta</string>
     <string name="card_name_metromoney">Metromoney</string>
-    <string name="card_name_tampere">Tampere tessera di viaggio (matkakortti)</string>
+    <string name="card_name_tampere">Tampere carta di viaggio (matkakortti)</string>
     <string name="card_name_hafilat">Hafilat</string>
     <string name="oyster_travelpass">Abbonamento</string>
     <string name="lisboaviva_sub_vermelho_a1">Rosso A1</string>
