@@ -1076,4 +1076,11 @@
     <string name="large_file_yes">Charger quand même (risque de crash)</string>
     <string name="large_file_no">Annuler (sûr)</string>
     <string name="large_file_warning">Le fichier que vous avez choisi est volumineux (%s) et peut faire planter l\'application. Voulez-vous continuer \?</string>
+    <string name="compass_sub_daypass">Carte journalière</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="theme_light">Claire</string>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d carte</item>
+        <item quantity="other">%d cartes</item>
+    </plurals>
 </resources>
