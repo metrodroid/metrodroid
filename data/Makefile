@@ -10,6 +10,7 @@ MDROOT=..
 HERMETIC_TARGETS := \
 	adelaide \
 	chc_metrocard \
+	cadiz \
 	compass \
 	gautrain \
 	gironde \
