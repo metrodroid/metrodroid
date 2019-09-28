@@ -9,26 +9,17 @@ allprojects {
 }
 
 buildscript {
-    ext {
-        kotlin_version = '1.3.11'
-        lint_version = '26.2.1'
-        support_version = '28.0.0'
-        android_test_version = '1.1.0'
-        build_version = '28.0.3'
-        android_sdk_version = 28
-        android_min_version = 16
-    }
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.6'
+        classpath "com.android.tools.build:gradle:$android_gradle_version"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:$protobuf_gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
-	classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
     }
 }
 
