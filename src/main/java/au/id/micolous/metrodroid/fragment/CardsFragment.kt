@@ -95,7 +95,9 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                     "${CardsTableColumns.SCANNED_AT} DESC, ${CardsTableColumns._ID} DESC")
         }
 
-        override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
+        override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor?) {
+            if (cursor == null)
+                return
             val scans = mutableMapOf<CardId, MutableList<Scan>>()
             val cards = ArrayList<CardId>()
             val reverseCards = mutableMapOf<CardId, Int>()

@@ -142,7 +142,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             return KeyLoader(MetrodroidApplication.instance)
         }
 
-        override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor) {
+        override fun onLoadFinished(cursorLoader: Loader<Cursor>, cursor: Cursor?) {
             (listView.adapter as CursorAdapter).swapCursor(cursor)
             setListShown(true)
         }
@@ -161,11 +161,11 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             return cur
         }
 
-        override fun loadInBackground(): Cursor {
-            val cursor = super.loadInBackground()
+        override fun loadInBackground(): Cursor? {
+            val cursor: Cursor? = super.loadInBackground()
             val embedList = ClassicAndroidReader.getKeyRetrieverEmbed(context).getKeyList()
             if (embedList.isEmpty())
-                return cursor!!
+                return cursor
             val embedCursor = list2Cursor(embedList)
             return MergeCursor(arrayOf(cursor, embedCursor))
         }
