@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.time
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
 import kotlin.native.concurrent.SharedImmutable
@@ -36,16 +37,23 @@ internal actual fun makeNow(): TimestampFull = date2Timestamp(NSDate())
 @SharedImmutable
 private val UTC : NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
 
+// Currently empty but there are few time zones that may need mapping in
+// the future like e.g. America/Buenos_Aires
 @SharedImmutable
-private val tzOverrides = mapOf("Asia/Beijing" to "Asia/Hong_Kong")
+private val tzOverrides = mapOf<String,String>()
 
 private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
     if (tz == MetroTimeZone.LOCAL)
       return NSTimeZone.defaultTimeZone
-    if (tz == MetroTimeZone.UNKNOWN)
+    if (tz == MetroTimeZone.UTC || tz == MetroTimeZone.UNKNOWN)
       return UTC
     val tzMapped = tzOverrides[tz.olson] ?: tz.olson
-    return NSTimeZone.timeZoneWithName(tzName = tzMapped)!!
+    val nstz = NSTimeZone.timeZoneWithName(tzName = tzMapped)
+    if (nstz != null) {
+        return nstz
+    }
+    Log.e("metroTz2NS", "Unable to find timezone ${tz.olson}. Using UTC as fallback but it's likely to result in wrong timestamps")
+    return UTC
 }
 
 internal actual fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: Int, hour: Int, min: Int): Long {
