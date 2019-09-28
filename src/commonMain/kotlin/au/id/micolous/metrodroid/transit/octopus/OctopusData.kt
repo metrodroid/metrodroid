@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.octopus
 
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.time.TimestampFull
 
 class OctopusData {
@@ -26,12 +27,14 @@ class OctopusData {
         val OCTOPUS_TZ = MetroTimeZone.BEIJING
 
         private val OCTOPUS_OFFSETS = listOf(
-                TimestampFull(year = 1997, month = 0, day = 1, hour = 0, min = 0, tz = OCTOPUS_TZ) to 350,
+                TimestampFull(OCTOPUS_TZ,
+                    1997, Month.JANUARY, 1, 0, 0) to 350,
 
-                // Negative balance amount changes, which changes the offset:
+                // Negative balance amount change effective 2017-10-01, which changes the offset:
                 // https://www.octopus.com.hk/en/consumer/customer-service/faq/get-your-octopus/about-octopus.html#3532
                 // https://www.octopus.com.hk/en/consumer/customer-service/faq/get-your-octopus/about-octopus.html#3517
-                TimestampFull(year = 2017, month = 10, day = 1, hour = 0, min = 0, tz = OCTOPUS_TZ) to 500
+                TimestampFull(OCTOPUS_TZ,
+                    2017, Month.OCTOBER, 1, 0, 0) to 500
         )
 
         private const val SHENZHEN_OFFSET = 350

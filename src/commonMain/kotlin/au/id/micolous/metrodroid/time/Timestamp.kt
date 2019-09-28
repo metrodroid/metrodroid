@@ -175,12 +175,37 @@ private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
         212, 243, 273, 304, 334)
 
 /**
+ * Enum of 0-indexed months in the Gregorian calendar
+ */
+@Suppress("unused")
+enum class Month(val m: Int) {
+    JANUARY(0),
+    FEBRUARY(1),
+    MARCH(2),
+    APRIL(3),
+    MAY(4),
+    JUNE(5),
+    JULY(6),
+    AUGUST(7),
+    SEPTEMBER(8),
+    OCTOBER(9),
+    NOVEMBER(10),
+    DECEMBER(11);
+
+    /** Converts a month to a 0-indexed month */
+    fun toInt() : Int { return m; }
+}
+
+/**
  * Represents a year, month and day in the Gregorian calendar.
  *
  * @property month Month, where January = 0.
  * @property day Day of the month, where the first day of the month = 1.
  */
 data class YMD(val year: Int, val month: Int, val day: Int) {
+    @Suppress("unused")
+    constructor(year: Int, month: Month, day: Int) : this(year, month.m, day)
+
     val daysSinceEpoch: Int get() {
         val ym = 12 * year + month
         var y: Int = ym / 12
@@ -431,6 +456,13 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
             timeInMillis = epochDayHourMinToMillis(
                     tz, YMD(year, month, day).daysSinceEpoch, hour, min) + sec * SEC,
             tz = tz
+    )
+
+    constructor(tz : MetroTimeZone, year: Int, month: Month, day: Int, hour: Int,
+                min: Int, sec: Int = 0) : this(
+        year = year, month = month.m, day = day,
+        hour = hour, min = min, sec = sec,
+        tz = tz
     )
 
     constructor(tz: MetroTimeZone, dhm: DHM) : this(
