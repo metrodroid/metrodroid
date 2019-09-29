@@ -25,7 +25,6 @@ import android.app.AlertDialog
 import android.content.*
 import android.database.Cursor
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -282,25 +281,22 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    private class DedupTask internal constructor(context: Context) : AsyncTask<Void, Int, Pair<String, Int>>() {
-        private val mContext: WeakReference<Context> = WeakReference(context)
-
-        override fun doInBackground(vararg voids: Void): Pair<String, Int> {
+    private class DedupTask internal constructor(activity: Activity) : BetterAsyncTask<Pair<String?, Int?>>(activity) {
+        override fun doInBackground(): Pair<String?, Int?> {
             try {
                 val tf = ExportHelper.findDuplicates(MetrodroidApplication.instance)
-                return if (tf.isEmpty()) Pair<String, Int>(null, 0) else Pair<String, Int>(null, ExportHelper.deleteSet(MetrodroidApplication.instance,
-                        tf))
+                if (tf.isEmpty()) return Pair(null, 0)
+                return Pair(null, ExportHelper.deleteSet(MetrodroidApplication.instance, tf))
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, Int>(getErrorMessage(ex), null)
+                return Pair(getErrorMessage(ex), null)
             }
-
         }
 
-        override fun onPostExecute(res: Pair<String, Int>) {
-            val err = res.first
-            val tf = res.second
-            val context = mContext.get() ?: return
+        override fun onResult(result: Pair<String?, Int?>?) {
+            val err = result?.first
+            val tf = result?.second
+            val context = mWeakActivity.get() ?: return
 
             if (err != null) {
                 AlertDialog.Builder(context)
@@ -315,9 +311,9 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class ShareTask (val activity: Activity): AsyncTask<Void, Int, Pair<String, File>>() {
+    private class ShareTask (val activity: Activity): BetterAsyncTask<Pair<String?, File?>>(activity) {
 
-        override fun doInBackground(vararg voids: Void): Pair<String, File> {
+        override fun doInBackground(): Pair<String?, File?> {
             try {
                 val folder = File(MetrodroidApplication.instance.cacheDir, "share")
                 folder.mkdirs()
@@ -326,21 +322,21 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 val os = FileOutputStream(tf)
                 ExportHelper.exportCardsZip(os, MetrodroidApplication.instance)
                 os.close()
-                return Pair<String, File>(null, tf)
+                return Pair(null, tf)
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, File>(getErrorMessage(ex), null)
+                return Pair(getErrorMessage(ex), null)
             }
 
         }
 
-        override fun onPostExecute(res: Pair<String, File>) {
-            val err = res.first
-            val tf = res.second
+        override fun onResult(result: Pair<String?, File?>?) {
+            val err = result?.first
+            val tf = result?.second
 
-            if (err != null) {
+            if (err != null || tf == null) {
                 AlertDialog.Builder(MetrodroidApplication.instance)
-                        .setMessage(err)
+                        .setMessage(err ?: "No File")
                         .show()
                 return
             }
@@ -356,11 +352,11 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class SaveTask : AsyncTask<Uri, Int, String>() {
+    private class SaveTask (activity: Activity, val uri: Uri) : BetterAsyncTask<String?>(activity) {
 
-        override fun doInBackground(vararg uris: Uri): String? {
+        override fun doInBackground(): String? {
             try {
-                val os = MetrodroidApplication.instance.contentResolver.openOutputStream(uris[0])
+                val os = MetrodroidApplication.instance.contentResolver.openOutputStream(uri)
                         ?: return "openOutputStream failed"
                 ExportHelper.exportCardsZip(os, MetrodroidApplication.instance)
                 os.close()
@@ -372,70 +368,72 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
         }
 
-        override fun onPostExecute(err: String?) {
-            if (err == null) {
+        override fun onResult(result: String?) {
+            if (result == null) {
                 Toast.makeText(MetrodroidApplication.instance, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
                 return
             }
             AlertDialog.Builder(MetrodroidApplication.instance)
-                    .setMessage(err)
+                    .setMessage(result)
                     .show()
         }
     }
 
-    class UserCancelledException () : Exception()
+    class UserCancelledException : Exception()
 
     private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
-                                                               private val mCardImporter: CardImporter) : AsyncTask<Uri, Int, Pair<String, Collection<Uri>>?>() {
+                                                               private val mCardImporter: CardImporter,
+                                                               val uri: Uri) : BetterAsyncTask<Pair<String?, Collection<Uri>?>?>(
+            cardsFragment.activity!!) {
         private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
 
         open fun verifyStream(stream: InputStream): InputStream = stream
 
-        override fun doInBackground(vararg uris: Uri): Pair<String, Collection<Uri>>? {
+        override fun doInBackground(): Pair<String?, Collection<Uri>?>? {
             try {
                 val cr = MetrodroidApplication.instance.contentResolver
 
-                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + cr.getType(uris[0])!!)
-                val stream = cr.openInputStream(uris[0])!!
+                Log.d(TAG, "REQUEST_SELECT_FILE content_type = ${cr.getType(uri)}")
+                val stream = cr.openInputStream(uri)!!
                 // Will be handled by exception handler below...
 
                 val iuri = ExportHelper.importCards(
                        verifyStream(stream), mCardImporter,
                        MetrodroidApplication.instance)
 
-                return Pair<String, Collection<Uri>>(null, iuri)
+                return Pair(null, iuri)
             } catch (ex: UserCancelledException) {
                 return null
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
-                return Pair<String, Collection<Uri>>(getErrorMessage(ex), null)
+                return Pair(getErrorMessage(ex), null)
             }
 
         }
 
-        override fun onPostExecute(res: Pair<String, Collection<Uri>>?) {
-            if (res == null) {
+        override fun onResult(result: Pair<String?, Collection<Uri>?>?) {
+            if (result == null) {
                 return
             }
-            val err = res.first
-            val uris = res.second
+            val err = result.first
+            val uris = result.second
             val cf = mCardsFragment.get() ?: return
 
-            if (err == null) {
+            if (err == null && uris != null) {
                 cf.updateListView()
                 val it = uris.iterator()
                 onCardsImported(cf.activity!!, uris.size, if (it.hasNext()) it.next() else null)
                 return
             }
             AlertDialog.Builder(cf.activity)
-                    .setMessage(err)
+                    .setMessage(err ?: "No URIs")
                     .show()
         }
     }
 
 
-    private class ReadTask internal constructor(val cardsFragment: CardsFragment)
-        : CommonReadTask(cardsFragment, XmlOrJsonCardFormat()) {
+    private class ReadTask internal constructor(val cardsFragment: CardsFragment, uri: Uri)
+        : CommonReadTask(cardsFragment, XmlOrJsonCardFormat(), uri) {
         override fun verifyStream(stream: InputStream): InputStream {
             val pb = PushbackInputStream(stream)
             if (pb.peek() == 'P'.toByte()) { // ZIP
@@ -465,9 +463,9 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class MCTReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, MctCardImporter())
+    private class MCTReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri) : CommonReadTask(cardsFragment, MctCardImporter(), uri)
 
-    private class MFCReadTask internal constructor(cardsFragment: CardsFragment) : CommonReadTask(cardsFragment, MfcCardImporter())
+    private class MFCReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri) : CommonReadTask(cardsFragment, MfcCardImporter(), uri)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val uri: Uri?
@@ -475,24 +473,24 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {
                     REQUEST_SELECT_FILE -> {
-                        uri = data?.data
-                        ReadTask(this).execute(uri)
+                        uri = data?.data!!
+                        ReadTask(this, uri).execute()
                     }
 
                     REQUEST_SELECT_FILE_MCT -> {
-                        uri = data?.data
-                        MCTReadTask(this).execute(uri)
+                        uri = data?.data!!
+                        MCTReadTask(this, uri).execute()
                     }
 
                     REQUEST_SELECT_FILE_MFC -> {
-                        uri = data?.data
-                        MFCReadTask(this).execute(uri)
+                        uri = data?.data!!
+                        MFCReadTask(this, uri).execute()
                     }
 
                     REQUEST_SAVE_FILE -> {
-                        uri = data?.data
+                        uri = data?.data!!
                         Log.d(TAG, "REQUEST_SAVE_FILE")
-                        SaveTask().execute(uri)
+                        SaveTask(activity!!, uri).execute()
                     }
                 }
             }
