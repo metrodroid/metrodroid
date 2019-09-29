@@ -82,7 +82,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
             }
         }
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setDisplayHomeAsUpEnabled(true)
 
         if (Preferences.hideCardNumbers) {
             supportActionBar?.title = card.cardType.toString()

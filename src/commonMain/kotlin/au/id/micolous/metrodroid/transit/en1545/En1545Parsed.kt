@@ -144,7 +144,7 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
     }
 
     fun appendLeBits(data: ImmutableByteArray, off: Int, field: En1545Field): En1545Parsed {
-        field.parseField(data, off, "", this) { obj, off, len -> obj.getBitsFromBufferLeBits(off, len) }
+        field.parseField(data, off, "", this) { obj, offset, len -> obj.getBitsFromBufferLeBits(offset, len) }
         return this
     }
 

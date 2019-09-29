@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="license">Lizenzen</string>
     <string name="title_activity_license">Open Source Lizenzen</string>
     <string name="reading_card">Karte wird gelesen…</string>
@@ -743,7 +743,7 @@
     <string name="obfuscation_times">Uhrzeiten verschleiern</string>
     <string name="obfuscation_fares">Tarife verschleieren</string>
     <string name="obfuscation_fares_desc">Angezeigten Tarife um einen zufälligen Betrag ändern</string>
-    <string name="localise_places_longdesc">Text-zu-Sprache-Stimmen funktionieren normalerweise gut nur für eine Sprache.
+    <string name="localise_places_longdesc" tools:ignore="Typos">Text-zu-Sprache-Stimmen funktionieren normalerweise gut nur für eine Sprache.
 \n
 \nLocaleSpan-Hinweise werden verwendet, um Text in einer anderen Sprache zu kennzeichnen. Bei Anwendung auf einen Bahnhofs-, Stopp-, Linien- oder Routennamen spricht ein Bildschirmleser, der diese Hinweise unterstützt, den Namen mit synthetisierten Stimmen aus der Muttersprache des Orts aus, anstatt mit der Sprache, für die Sie Android konfiguriert haben.
 \n

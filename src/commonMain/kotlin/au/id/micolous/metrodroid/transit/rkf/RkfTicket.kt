@@ -22,6 +22,7 @@ data class RkfTicket(override val parsed: En1545Parsed, override val lookup: Rkf
             }
             return RkfTicket(parsed, lookup)
         }
+        @Suppress("UNUSED_PARAMETER")
         private fun getFields(id: Byte, version: Int): En1545Field? = when (id.toInt() and 0xff) {
             0x87 -> En1545Container(
                     ID_FIELD, // verified

@@ -123,6 +123,7 @@ class SupportedCardsFragment : ExpandableListFragment() {
                 d = AppCompatResources.getDrawable(context, R.drawable.logo)
             image.setImageDrawable(d)
             image.invalidate()
+            image.contentDescription = info.name
 
             var notes = ""
 
@@ -154,12 +155,14 @@ class SupportedCardsFragment : ExpandableListFragment() {
                 val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImageUnlocked))
                 lockIcon.setImageResource(a.getResourceId(0, R.drawable.unlocked))
                 a.recycle()
+                lockIcon.contentDescription = Localizer.localizeString(R.string.keys_loaded)
                 lockIcon.visibility = View.VISIBLE
             } else if (info.keysRequired) {
                 notes += Localizer.localizeString(R.string.keys_required) + " "
                 val a = context.obtainStyledAttributes(intArrayOf(R.attr.LockImage))
                 lockIcon.setImageResource(a.getResourceId(0, R.drawable.locked))
                 a.recycle()
+                lockIcon.contentDescription = Localizer.localizeString(R.string.keys_required)
                 lockIcon.visibility = View.VISIBLE
             } else
                 lockIcon.visibility = View.GONE

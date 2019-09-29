@@ -1,6 +1,10 @@
+<!-- GoogleAppIndexingWarning triggers because action-view intent-filter
+     is in main AndroidManifest rather than this override.
+-->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="GoogleAppIndexingWarning">
     <application>
         <provider
             android:name="au.id.micolous.metrodroid.provider.CardProvider"

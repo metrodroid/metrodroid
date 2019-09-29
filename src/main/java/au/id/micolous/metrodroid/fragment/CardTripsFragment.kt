@@ -143,17 +143,11 @@ class CardTripsFragment : ListFragment() {
             val paxTextView = convertView.findViewById<TextView>(R.id.pax_text_view)
             val machineIdTextView = convertView.findViewById<TextView>(R.id.machine_id_text_view)
 
-            @StringRes val modeContentDescriptionRes = trip.mode.contentDescription
-
-            val a: TypedArray? = context.obtainStyledAttributes(intArrayOf(R.attr.TransportIcons))
-            val iconArrayRes = a?.getResourceId(0, -1) ?: -1
+            @StringRes val modeContentDescriptionRes: Int = trip.mode.contentDescription
+            val iconArrayRes = getStyledRes(context, R.attr.TransportIcons)
             val iconIdx = trip.mode.idx
-            val icon: Drawable?
-            val iconArray = if (iconArrayRes != -1) context.resources.obtainTypedArray(iconArrayRes) else
-                null
-
-            val iconResId = iconArray?.getResourceId(iconIdx, -1) ?: -1
-            icon = if (iconResId != -1) {
+            val iconResId = getResourceFromArray(context, iconArrayRes, iconIdx)
+            val icon = if (iconResId != -1) {
                 try {
                     AppCompatResources.getDrawable(context, iconResId)
                 } catch (ex: Exception) {
@@ -167,8 +161,6 @@ class CardTripsFragment : ListFragment() {
             } else
                 iconImageView.setImageDrawable(icon)
 
-            a?.recycle()
-            iconArray?.recycle()
             val s = Localizer.localizeString(modeContentDescriptionRes)
             if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val ss = SpannableString(s)
@@ -298,5 +290,22 @@ class CardTripsFragment : ListFragment() {
 
     companion object {
         private const val TAG = "CardTripsFragment"
+
+        private fun getResourceFromArray(context: Context, arrayRes: Int, idx: Int): Int {
+            if (arrayRes == -1) {
+                return -1
+            }
+            val arr: TypedArray? = context.resources.obtainTypedArray(arrayRes)
+            val resId = arr?.getResourceId(idx, -1)
+            arr?.recycle()
+            return resId ?: -1
+        }
+
+        private fun getStyledRes(context: Context, baseRes: Int): Int {
+            val a: TypedArray? = context.obtainStyledAttributes(intArrayOf(baseRes))
+            val styledRes = a?.getResourceId(0, -1)
+            a?.recycle()
+            return styledRes ?: -1
+        }
     }
 }

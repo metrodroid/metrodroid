@@ -21,7 +21,8 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
---><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name" translatable="false">Metrodroid</string>
 
@@ -595,7 +596,7 @@
          purse 1,... on a single card. It's not a serial number of purse -->
     <string name="cepas_purse_num">CEPAS purse number %d</string>
     <!-- Translators: this is a history of CEPAS purse with index %d. -->
-    <string name="cepas_purse_num_history">CEPAS purse number %d history</string>
+    <string name="cepas_purse_num_history" tools:ignore="PluralsCandidate">CEPAS purse number %d history</string>
     <string name="cepas_can">Card Application Number (CAN)</string>
     <string name="cepas_csn">Card Serial Number (CSN)</string>
     <string name="cepas_trp">Transaction Pointer (TRP)</string>
@@ -1542,7 +1543,6 @@
     </plurals>
     <!-- Translators: some cards limit the number of travel days. -->
     <plurals name="remaining_day_count">
-        <item quantity="zero">No days remain</item>
         <item quantity="one">1 day remains</item>
         <item quantity="other">%d days remaining</item>
     </plurals>
@@ -2426,4 +2426,11 @@
     <string name="large_file_warning">The file you have chosen is large (%s) and may crash the application. Do you want to proceed?</string>
     <string name="large_file_yes">Load anyway (risk crashing)</string>
     <string name="large_file_no">Cancel (safe)</string>
+    <string name="app_logo_description">Metrodroid logo</string>
+    <!-- Translators: used as contentDescription for arrow indicating
+         collapsed list. -->
+    <string name="closed_arrow">Collapsed list</string>
+    <!-- Translators: used as contentDescription for arrow indicating
+         open list. -->
+    <string name="open_arrow">Open list</string>
 </resources>

@@ -12,6 +12,7 @@
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:contentDescription="@string/app_logo_description"
         android:background="@drawable/logo" />
 
     <TextView

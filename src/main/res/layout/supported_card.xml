@@ -90,6 +90,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!-- ContentDescription is filled in by the code. -->
             <ImageView
                 android:id="@+id/card_image"
                 android:layout_width="wrap_content"
@@ -97,7 +98,8 @@
                 android:layout_gravity="center"
                 android:src="@drawable/orca_card"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"/>
+                android:layout_marginBottom="40dp"
+                tools:ignore="ContentDescription"/>
             <TextView
                 android:id="@+id/card_not_supported"
                 android:layout_width="match_parent"

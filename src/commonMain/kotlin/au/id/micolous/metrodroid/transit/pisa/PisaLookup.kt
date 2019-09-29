@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 
 object PisaLookup : En1545LookupSTR("pisa") {
+	@Suppress("UNUSED_PARAMETER")
 	fun subscriptionUsesCounter(agency: Int?, contractTariff: Int?) = contractTariff !in listOf(316, 317, 385)
 
 	override fun parseCurrency(price: Int) = TransitCurrency.EUR(price)

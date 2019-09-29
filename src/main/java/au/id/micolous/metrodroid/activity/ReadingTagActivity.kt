@@ -34,6 +34,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.util.DrawableUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -97,7 +98,7 @@ class ReadingTagActivity : MetrodroidActivity(), TagReaderFeedbackInterface {
                 i.contentDescription = cardInfo.name
             } else {
                 i.setImageResource(R.drawable.logo)
-                i.contentDescription = ""
+                i.contentDescription = Localizer.localizeString(R.string.unknown_card)
             }
             i.invalidate()
 

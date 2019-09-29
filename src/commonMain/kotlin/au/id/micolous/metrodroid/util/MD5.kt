@@ -211,6 +211,7 @@ class MD5Ctx {
      * @param length    Use at maximum `length' bytes (absolute
      * maximum is buffer.length)
      */
+    @Suppress("NAME_SHADOWING")
     fun Update(stat: MD5State, buffer: ImmutableByteArray, offset: Int, length: Int) {
         var length = length
         var i: Int

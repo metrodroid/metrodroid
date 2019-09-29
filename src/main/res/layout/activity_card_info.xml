@@ -53,12 +53,13 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
             <Button
-                android:id="@+id/need_stations_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:text="@string/need_stations_submit" />
+                    android:id="@+id/need_stations_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/need_stations_submit"
+                    android:layout_marginStart="8dp"/>
         </LinearLayout>
 
         <androidx.viewpager.widget.ViewPager
@@ -66,7 +67,7 @@
             android:visibility="gone"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="0dp" >
           <androidx.viewpager.widget.PagerTabStrip
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dip"
                 android:background="#FF4444"
-                android:layout_gravity="left|bottom"
+                android:layout_gravity="bottom"
                 android:visibility="gone">
             <TextView
                     android:layout_width="0dp"
@@ -96,7 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
-                    android:text="@string/load_keys" />
+                    android:text="@string/load_keys"
+                    android:layout_marginStart="8dp"/>
         </LinearLayout>
 
     </LinearLayout>

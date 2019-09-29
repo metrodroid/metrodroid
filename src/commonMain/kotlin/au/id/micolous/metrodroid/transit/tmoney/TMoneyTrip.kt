@@ -26,13 +26,15 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-open class TMoneyTrip(open val type: Int,
-                      open val cost: Int,
-                      open val time: Long) : Trip() {
+class TMoneyTrip(val type: Int,
+                 val cost: Int,
+                 val time: Long,
+                 val balance: Int) : Trip() {
 
     override val fare
         get() = TransitCurrency.KRW(cost)
@@ -45,6 +47,8 @@ open class TMoneyTrip(open val type: Int,
 
     override val startTimestamp: TimestampFull?
         get() = parseHexDateTime(time, TZ)
+
+    override fun getRawFields(level: TransitData.RawLevel): String? = if (level == TransitData.RawLevel.ALL) "balance=$balance" else null
 
     companion object {
         private val TZ = MetroTimeZone.SEOUL
@@ -69,7 +73,7 @@ open class TMoneyTrip(open val type: Int,
             // 4 bytes unknown
             // 2 bytes zero
 
-            return if (cost == 0 && time == INVALID_DATETIME) null else TMoneyTrip(type, cost, time)
+            return if (cost == 0 && time == INVALID_DATETIME) null else TMoneyTrip(type, cost, time, balance)
         }
     }
 }

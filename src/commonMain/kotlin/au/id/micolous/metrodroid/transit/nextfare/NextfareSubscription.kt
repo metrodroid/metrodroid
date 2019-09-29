@@ -42,6 +42,7 @@ class NextfareSubscription (
 
     // Used when there is a subscription on the card that is not yet active.
     // TODO: Figure out subscription types
+    @Suppress("UNUSED_PARAMETER")
     constructor(record: NextfareBalanceRecord) : this(
             subscriptionState = SubscriptionState.UNUSED)
 }

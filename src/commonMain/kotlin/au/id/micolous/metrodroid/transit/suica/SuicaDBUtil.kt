@@ -42,17 +42,14 @@ object SuicaDBUtil {
      * or there was some other database error, null is returned.
      */
     internal fun getBusStop(regionCode: Int, lineCode: Int, stationCode: Int): Station? {
-        var lineCode = lineCode
-        var stationCode = stationCode
-        lineCode = lineCode and 0xFF
-        stationCode = stationCode and 0xFF
-
-        val stationId = (lineCode shl 8) + stationCode
+        val lineCodeLow = lineCode and 0xFF
+        val stationCodeLow = stationCode and 0xFF
+        val stationId = (lineCodeLow shl 8) + stationCodeLow
         return if (stationId == 0) null else StationTableReader.getStation(SUICA_BUS_STR, stationId,
                 Localizer.localizeString(R.string.suica_bus_area_line_stop,
                         NumberUtils.intToHex(regionCode),
-                        NumberUtils.intToHex(lineCode),
-                        NumberUtils.intToHex(stationCode)))
+                        NumberUtils.intToHex(lineCodeLow),
+                        NumberUtils.intToHex(stationCodeLow)))
 
     }
 
@@ -66,18 +63,15 @@ object SuicaDBUtil {
      * or there was some other database error, null is returned.
      */
     fun getRailStation(regionCode: Int, lineCode: Int, stationCode: Int): Station? {
-        var lineCode = lineCode
-        var stationCode = stationCode
+        var lineCodeLow = lineCode and 0xFF
+        var stationCodeLow = stationCode and 0xFF
         val areaCode = regionCode shr 6 and 0xFF
-        lineCode = lineCode and 0xFF
-        stationCode = stationCode and 0xFF
-
-        val stationId = (areaCode shl 16) + (lineCode shl 8) + stationCode
+        val stationId = (areaCode shl 16) + (lineCodeLow shl 8) + stationCodeLow
         return if (stationId == 0) null else StationTableReader.getStation(SUICA_RAIL_STR, stationId,
                 Localizer.localizeString(R.string.suica_area_line_station,
                         NumberUtils.intToHex(regionCode),
-                        NumberUtils.intToHex(lineCode),
-                        NumberUtils.intToHex(stationCode)))
+                        NumberUtils.intToHex(lineCodeLow),
+                        NumberUtils.intToHex(stationCodeLow)))
 
     }
 }

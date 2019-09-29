@@ -32,9 +32,9 @@ operator fun StringBuilder.plusAssign(other: String) {
 fun getErrorMessage(ex: Throwable?): String {
     if (ex == null)
         return "unknown error"
-    val ex = ex.cause ?: ex
-    val errorMessage = ex.localizedMessage?.ifEmpty { null } ?: ex.message?.ifEmpty { null } ?: ex.toString()
-    return ex.javaClass.simpleName + ": " + errorMessage
+    val exCause = ex.cause ?: ex
+    val errorMessage = exCause.localizedMessage?.ifEmpty { null } ?: exCause.message?.ifEmpty { null } ?: exCause.toString()
+    return exCause.javaClass.simpleName + ": " + errorMessage
 }
 
 fun PushbackInputStream.peekAndSkipSpace(): Byte {

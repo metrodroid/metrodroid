@@ -38,6 +38,9 @@ import au.id.micolous.metrodroid.util.Marker
 import au.id.micolous.metrodroid.util.Preferences
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+// We only do it only on API >= 17 and we almost don't
+// handle any user data in javascript. We use external reviewed code (Leaflet)
+@Suppress("AddJavascriptInterface", "SetJavaScriptEnabled")
 class TripMapActivity : MetrodroidActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
