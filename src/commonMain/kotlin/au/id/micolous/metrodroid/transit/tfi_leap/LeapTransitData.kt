@@ -228,7 +228,7 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
             // luhn checksum of number without date is always 6
             val checkDigit = (NumberUtils.calculateLuhn(serial.toString()) + 6) % 10
             return (NumberUtils.formatNumber(serial.toLong(), " ", 5, 4) + checkDigit + " "
-                    + NumberUtils.zeroPad((initDate.getMonth()) + 1, 2) +
+                    + NumberUtils.zeroPad(initDate.getMonth().oneBasedIndex, 2) +
                     NumberUtils.zeroPad((initDate.getYear()) % 100, 2))
         }
 

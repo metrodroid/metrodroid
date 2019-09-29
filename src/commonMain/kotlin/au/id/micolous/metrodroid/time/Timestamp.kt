@@ -177,8 +177,7 @@ private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
 /**
  * Enum of 0-indexed months in the Gregorian calendar
  */
-@Suppress("unused")
-enum class Month(val m: Int) {
+enum class Month(val zeroBasedIndex: Int) {
     JANUARY(0),
     FEBRUARY(1),
     MARCH(2),
@@ -192,35 +191,44 @@ enum class Month(val m: Int) {
     NOVEMBER(10),
     DECEMBER(11);
 
-    /** Converts a month to a 0-indexed month */
-    fun toInt() : Int { return m; }
+    val oneBasedIndex: Int get() = zeroBasedIndex + 1
+
+    companion object {
+        fun zeroBased(idx: Int): Month = values()[idx]
+    }
 }
 
 /**
  * Represents a year, month and day in the Gregorian calendar.
  *
- * @property month Month, where January = 0.
+ * @property month Month, where January = Month.JANUARY.
  * @property day Day of the month, where the first day of the month = 1.
  */
-data class YMD(val year: Int, val month: Int, val day: Int) {
-    @Suppress("unused")
-    constructor(year: Int, month: Month, day: Int) : this(year, month.m, day)
+data class YMD(val year: Int, val month: Month, val day: Int) {
+    constructor(other: YMD): this(other.year, other.month, other.day)
+    constructor(year: Int, month: Int, day: Int) : this(normalize(year, month, day))
 
-    val daysSinceEpoch: Int get() {
-        val ym = 12 * year + month
-        var y: Int = ym / 12
-        var m: Int = ym % 12
-        // We don't really care for dates before 1 CE
-        // but at least we shouldn't crash on them
-        // This code results in astronomical year numbering
-        // that includes year 0
-        if (m < 0) {
-            m += 12
-            y -= 1
+    val daysSinceEpoch: Int get() = countDays(year, month.zeroBasedIndex, day)
+
+    companion object {
+        private fun countDays(year: Int, month: Int, day: Int): Int {
+            val ym = 12 * year + month
+            var y: Int = ym / 12
+            var m: Int = ym % 12
+            // We don't really care for dates before 1 CE
+            // but at least we shouldn't crash on them
+            // This code results in astronomical year numbering
+            // that includes year 0
+            if (m < 0) {
+                m += 12
+                y -= 1
+            }
+            return yearToDays(y) + (day - 1) + monthToDays[m] + (
+                if (isBisextile(y) && m > Month.FEBRUARY.zeroBasedIndex) 1 else 0)
         }
-        return yearToDays(y) + (day - 1) + monthToDays[m] + (
-                if (isBisextile(y) && m > 1) 1 else 0)
-    }
+        private fun normalize(year: Int, month: Int, day: Int): YMD =
+            getYMD(countDays(year, month, day))
+    }    
 }
 
 internal fun yearToMillis(year: Int) = yearToDays(year) * DAY
@@ -232,7 +240,7 @@ fun addYearToDays(from: Int, years: Int): Int {
 
 fun addMonthToDays(from: Int, months: Int): Int {
     val ymd = getYMD(from)
-    return YMD(ymd.year, ymd.month + months, ymd.day).daysSinceEpoch
+    return YMD(ymd.year, ymd.month.zeroBasedIndex + months, ymd.day).daysSinceEpoch
 }
 
 internal fun addYearToMillis(from: Long, tz: MetroTimeZone, years: Int): Long {
@@ -366,7 +374,7 @@ sealed class Timestamp: Parcelable {
     abstract fun obfuscateDelta(delta: Long): Timestamp
 
     fun isSameDay(other: Timestamp): Boolean = this.toDaystamp() == other.toDaystamp()
-    abstract fun getMonth(): Int
+    abstract fun getMonth(): Month
     abstract fun getYear(): Int
 }
 
@@ -374,7 +382,7 @@ sealed class Timestamp: Parcelable {
 @Serializable
 // Only date is known
 data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), Comparable<Daystamp> {
-    override fun getMonth(): Int = getYMD(daysSinceEpoch).month
+    override fun getMonth(): Month = getYMD(daysSinceEpoch).month
 
     override fun getYear(): Int = getYMD(daysSinceEpoch).year
 
@@ -405,7 +413,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
         // ISO_DATE_FORMAT = SimpleDateFormat ("yyyy-MM-dd", Locale.US)
         val ymd = getYMD(daysSinceEpoch = daysSinceEpoch)
         return NumberUtils.zeroPad(ymd.year, 4) + "-" +
-                NumberUtils.zeroPad(ymd.month + 1, 2) + "-" +
+                NumberUtils.zeroPad(ymd.month.oneBasedIndex, 2) + "-" +
                 NumberUtils.zeroPad(ymd.day, 2)
     }
 
@@ -419,7 +427,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
      */
     constructor(year: Int, month: Int, day: Int) : this(YMD(year, month, day))
 
-    constructor(year: Int, month: Month, day: Int) : this(YMD(year, month.m, day))
+    constructor(year: Int, month: Month, day: Int) : this(YMD(year, month, day))
 
     constructor(ymd: YMD) : this(
             daysSinceEpoch = ymd.daysSinceEpoch
@@ -435,7 +443,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 // Precision or minutes and higher
 data class TimestampFull internal constructor(val timeInMillis: Long,
                                             val tz: MetroTimeZone): Parcelable, Comparable<TimestampFull>, Timestamp() {
-    override fun getMonth(): Int = toDaystamp().getMonth()
+    override fun getMonth(): Month = toDaystamp().getMonth()
 
     override fun getYear(): Int = toDaystamp().getYear()
 
@@ -462,7 +470,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
 
     constructor(tz : MetroTimeZone, year: Int, month: Month, day: Int, hour: Int,
                 min: Int, sec: Int = 0) : this(
-        year = year, month = month.m, day = day,
+        year = year, month = month.zeroBasedIndex, day = day,
         hour = hour, min = min, sec = sec,
         tz = tz
     )
@@ -486,7 +494,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
         val timeInDay = (timeInMillis % DAY) / MIN
         val ymd = getYMD(daysSinceEpoch = daysSinceEpoch.toInt())
         return NumberUtils.zeroPad(ymd.year, 4) + "-" +
-                NumberUtils.zeroPad(ymd.month + 1, 2) + "-" +
+                NumberUtils.zeroPad(ymd.month.oneBasedIndex, 2) + "-" +
                 NumberUtils.zeroPad(ymd.day, 2) + " " +
                 NumberUtils.zeroPad(timeInDay / 60, 2) + ":" +
                 NumberUtils.zeroPad(timeInDay % 60, 2)
@@ -506,7 +514,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
         val timeInDay = (timeInMillis % DAY) / MIN
         val ymd = getYMD(daysSinceEpoch = daysSinceEpoch.toInt())
         return NumberUtils.zeroPad(ymd.year, 4) +
-                NumberUtils.zeroPad(ymd.month + 1, 2) +
+                NumberUtils.zeroPad(ymd.month.oneBasedIndex, 2) +
                 NumberUtils.zeroPad(ymd.day, 2) + "-" +
                 NumberUtils.zeroPad(timeInDay / 60, 2) +
                 NumberUtils.zeroPad(timeInDay % 60, 2) +
