@@ -22,44 +22,60 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_centerInParent="true"
     android:orientation="vertical">
-  <TextView
-      android:id="@+id/directions"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawableTop="@drawable/logo"
-      android:drawablePadding="16dp"
-      android:text="@string/directions"
-      android:textSize="45sp"
-      android:gravity="center" />
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="32dp"
-      android:layout_gravity="center"
-      android:gravity="center">
+    <!--
+    The parent is not useless: the (child) LinearLayout matches the size of the displayed elements,
+    whereas the (parent) RelativeLayout matches the size of the display.
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onSupportedCardsClick"
-        android:text="@string/supported_cards" />
+    This allows the LinearLayout to be vertically centred, which isn't possible at the "parent"
+    level.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <TextView
+            android:id="@+id/directions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/logo"
+            android:drawablePadding="16dp"
+            android:text="@string/directions"
+            android:textSize="45sp"
+            android:gravity="center" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:ignore="ButtonStyle">
+            <!-- This is not a ButtonBar. -->
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onHistoryClick"
-        android:text="@string/scanned_cards" />
-  </LinearLayout>
-</LinearLayout>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onSupportedCardsClick"
+                android:text="@string/supported_cards" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onHistoryClick"
+                android:text="@string/scanned_cards" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
