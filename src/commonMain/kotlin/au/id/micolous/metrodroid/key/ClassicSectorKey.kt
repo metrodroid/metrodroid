@@ -137,6 +137,7 @@ data class ClassicSectorKey internal constructor(
             }
             KEY_VALUE to key.toHexString()
             SECTOR_IDX to sector
+            ClassicKeysImpl.KEY_BUNDLE to bundle
         }
 
     companion object {
