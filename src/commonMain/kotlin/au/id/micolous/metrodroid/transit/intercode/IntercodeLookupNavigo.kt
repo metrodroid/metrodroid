@@ -41,14 +41,14 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
     override val allCards: List<CardInfo>
         get() = listOf(NAVIGO_CARD_INFO)
 
-    override fun getStation(locationId: Int, agency: Int?, transport: Int?): Station? {
-        if (locationId == 0)
+    override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {
+        if (station == 0)
             return null
-        var mdstStationId = locationId or ((agency ?: 0) shl 16) or ((transport ?: 0) shl 24)
-        val sectorId = locationId shr 9
-        val stationId = locationId shr 4 and 0x1F
-        var humanReadableId = locationId.toString()
-        var fallBackName = locationId.toString()
+        var mdstStationId = station or ((agency ?: 0) shl 16) or ((transport ?: 0) shl 24)
+        val sectorId = station shr 9
+        val stationId = station shr 4 and 0x1F
+        var humanReadableId = station.toString()
+        var fallBackName = station.toString()
         if (transport == En1545Transaction.TRANSPORT_TRAIN && (agency == RATP || agency == SNCF)) {
             mdstStationId = mdstStationId and -0xff0010 or 0x30000
         }
