@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.felica.FelicaService
 import au.id.micolous.metrodroid.card.felica.FelicaSystem
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
@@ -70,8 +71,10 @@ class OctopusTest : BaseInstrumentedTest() {
 
     @Test
     fun test2018Card() {
+        // This data is from a card last used in 2018, but we've adjusted the date here to
+        // 2017-10-02 to test the behaviour of OctopusData.getOctopusOffset.
         val c = octopusCardFromHex("00000164000000000000000000000021",
-                TimestampFull(year = 2019, month = 0, day = 1, hour = 0, min = 0, tz = MetroTimeZone.BEIJING))
+                TimestampFull(MetroTimeZone.UTC, 2017, Month.OCTOBER, 2, 0, 0))
 
         checkCard(c, TransitCurrency.HKD(-1440))
     }
@@ -79,7 +82,7 @@ class OctopusTest : BaseInstrumentedTest() {
     @Test
     fun test2016Card() {
         val c = octopusCardFromHex("000001520000000000000000000086B1",
-                TimestampFull(year = 2016, month = 0, day = 1, hour = 0, min = 0, tz = MetroTimeZone.BEIJING))
+            TimestampFull(MetroTimeZone.UTC, 2016, Month.JANUARY, 1, 0, 0))
 
         checkCard(c, TransitCurrency.HKD(-120))
     }
