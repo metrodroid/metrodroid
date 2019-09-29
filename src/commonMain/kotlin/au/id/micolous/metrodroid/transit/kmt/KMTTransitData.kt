@@ -69,7 +69,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
 
         // TODO: Figure out what the proper epoch transition point is; this is a guess (2019)
         // This is a guess (2019-01-01 00:00 local time)
-        private val KMT_EPOCH_TRANSITION = TimestampFull(TZ, 2019, 0, 1, 0, 0)
+        private val KMT_EPOCH_TRANSITION = TimestampFull(TZ, 2019, Month.JANUARY, 1, 0, 0)
 
         internal fun parseTimestamp(data: ImmutableByteArray): Timestamp? {
             val fulloffset = data.byteArrayToLong(0, 4)
