@@ -85,19 +85,17 @@ object ExportHelper {
         return res
     }
 
-    private fun makeFilename(tagId: String,
-                             scannedAt: TimestampFull,
-                             format: String, gen: Int): String {
-        val dt = scannedAt.isoDateTimeFilenameFormat()
-        return if (gen != 0) "Metrodroid-$tagId-$dt-$gen.$format" else "Metrodroid-$tagId-$dt.$format"
-    }
-
-    fun makeFilename(card: Card): String = makeFilename(card.tagId.toHexString(),
-                card.scannedAt, "json", 0)
-
-    fun zipFileFromString(zo: ZipOutputStream, ts: TimestampFull, name: String, contents: String) {
+    /**
+     * Adds a file from a [String] to a ZIP file ([ZipOutputStream]).
+     *
+     * @param zo The ZIP file to write to
+     * @param ts The timestamp to set on the file
+     * @param name A filename for the new ZIP entry
+     * @param contents The contents of the file to write. This will be encoded in UTF-8.
+     */
+    private fun zipFileFromString(zo: ZipOutputStream, ts: TimestampFull?, name: String, contents: String) {
         ZipEntry(name).let { ze ->
-            ze.time = ts.timeInMillis
+            if (ts != null) ze.time = ts.timeInMillis
             zo.putNextEntry(ze)
         }
         zo.write(ImmutableByteArray.fromUTF8(contents).dataCopy)

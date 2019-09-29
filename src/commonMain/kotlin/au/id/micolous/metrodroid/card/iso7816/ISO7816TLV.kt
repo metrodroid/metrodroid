@@ -353,4 +353,83 @@ object ISO7816TLV {
             }
         }.toList(), unknownIds.toSet())
     }
+
+
+    /**
+     * Iterates over Simple-TLV encoded data lazily with a [Sequence].
+     *
+     * Simple-TLV format is defined in ISO7816-4.
+     *
+     * @param buf The Simple-TLV encoded data to iterate over
+     * @return [Sequence] of [Pair] of `id, data`
+     */
+    fun simpleTlvIterate(buf: ImmutableByteArray) :
+        Sequence<Pair<Int, ImmutableByteArray>> {
+        return sequence {
+            // Skip null bytes at start:
+            // "Before, between, or after TLV-coded data objects, '00' bytes without any meaning may
+            // occur (for example, due to erased or modified TLV-coded data objects)."
+            var p = buf.indexOfFirst { it != 0.toByte() }
+
+            if (p == -1) {
+                // No non-null bytes
+                return@sequence
+            }
+
+            while (p < buf.count()) {
+                val tag = buf[p++].toInt() and 0xff
+                var len = buf[p++].toInt() and 0xff
+
+                // If the length byte is FF, then the length is stored in the subsequent 2 bytes
+                // (big-endian).
+                if (len == 0xff) {
+                    len = buf.byteArrayToInt(p, 2) and 0xffff
+                    p += 2
+                }
+
+                // Skip empty tag
+                if (len < 1) continue
+
+                val d = buf.sliceOffLenSafe(p, len)
+                    ?: return@sequence // Invalid length
+
+                yield(Pair(tag, d))
+                p += len
+            }
+        }
+    }
+
+    /**
+     * Iterates over Compact-TLV encoded data lazily with a [Sequence].
+     *
+     * @param buf The Compact-TLV encoded data to iterate over
+     * @return [Sequence] of [Pair] of `id, data`
+     */
+    fun compactTlvIterate(buf: ImmutableByteArray) :
+        Sequence<Pair<Int, ImmutableByteArray>> {
+        return sequence {
+            // Skip null bytes at start:
+            // "Before, between, or after TLV-coded data objects, '00' bytes without any meaning may
+            // occur (for example, due to erased or modified TLV-coded data objects)."
+            var p = buf.indexOfFirst { it != 0.toByte() }
+
+            if (p == -1) {
+                // No non-null bytes
+                return@sequence
+            }
+
+            while (p < buf.count()) {
+                val tag = buf[p].toInt() and 0xf0 shr 4
+                val len = buf[p++].toInt() and 0xf
+
+                // Skip empty tag
+                if (len < 1) continue
+                val d = buf.sliceOffLenSafe(p, len)
+                    ?: return@sequence // Invalid length
+
+                yield(Pair(tag, d))
+                p += len
+            }
+        }
+    }
 }
