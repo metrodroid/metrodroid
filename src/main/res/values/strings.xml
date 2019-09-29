@@ -1594,14 +1594,15 @@
 
     <!-- Translators: "Last used" is a date, time or date+time attribute -->
     <string name="last_used_on">Last used</string>
-    <string name="payment_method">Payment method</string>
+    <!-- Translators: "This signifies the payment method -->
+    <string name="payment_method">Payment</string>
     <string name="payment_method_cash">Cash</string>
     <string name="payment_method_credit_card">Credit card</string>
     <string name="payment_method_debit_card">Debit card</string>
     <string name="payment_method_transit_card">Transit card</string>
     <string name="payment_method_cheque">Cheque</string>
     <!-- Translators: As in free of charge (costing no money) -->
-    <string name="payment_method_free">Gratis</string>
+    <string name="payment_method_free">Free</string>
 
     <!-- Translators: This refers to a person's name. -->
     <string name="card_holders_name">Cardholder\'s name</string>
