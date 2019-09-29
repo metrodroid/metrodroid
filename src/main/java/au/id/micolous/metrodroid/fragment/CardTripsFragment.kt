@@ -97,8 +97,6 @@ class CardTripsFragment : ListFragment() {
         override fun getView(position: Int, convertViewReuse: View?, parent: ViewGroup): View {
             val activity = context as Activity
             val inflater = activity.layoutInflater
-            val localisePlaces = Preferences.localisePlaces
-
             val convertView = convertViewReuse ?: inflater.inflate(R.layout.trip_item, parent, false)
 
             val trip = getItem(position)!!
@@ -109,17 +107,11 @@ class CardTripsFragment : ListFragment() {
             if (isFirstInSection(position)) {
                 listHeader.visibility = View.VISIBLE
                 val headerDate = if (date != null) {
-                    TimestampFormatter.longDateFormat(date).spanned
-                } else SpannableString(Localizer.localizeString(R.string.unknown_date_title))
+                    TimestampFormatter.longDateFormat(date)
+                } else Localizer.localizeFormatted(R.string.unknown_date_title)
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val ss = SpannableString(headerDate)
-                    ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
-                    headerText.text = ss
-                } else {
-                    headerText.text = headerDate
-                }
+                headerText.text = headerDate.spanned
 
                 (listHeader.findViewById<View>(android.R.id.text1) as TextView).text = if (date != null) TimestampFormatter.longDateFormat(date).spanned else null
             } else {
@@ -161,14 +153,7 @@ class CardTripsFragment : ListFragment() {
             } else
                 iconImageView.setImageDrawable(icon)
 
-            val s = Localizer.localizeString(modeContentDescriptionRes)
-            if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val ss = SpannableString(s)
-                ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
-                iconImageView.contentDescription = ss
-            } else {
-                iconImageView.contentDescription = s
-            }
+            iconImageView.contentDescription = Localizer.localizeFormatted(modeContentDescriptionRes).spanned
 
             val time = Trip.formatTimes(trip)
             if (time != null) {
