@@ -47,6 +47,8 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.DrawableUtils
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.getErrorMessage
+import au.id.micolous.metrodroid.util.Utils
 
 /**
  * @author Eric Butler, Michael Farrell
@@ -103,8 +105,18 @@ class SupportedCardsFragment : ExpandableListFragment() {
         }
 
         override fun getChildView(parent: Int, child: Int, isLast: Boolean, convertViewReuse: View?, viewGroup: ViewGroup): View {
-            val convertView = convertViewReuse ?: mLayoutInflater.inflate(R.layout.supported_card, null)
+            try {
+                return getChildViewReal(parent, child, convertViewReuse)
+            } catch (e: Exception) {
+                val convertView = Utils.loadMultiReuse(convertViewReuse, mLayoutInflater, android.R.layout.simple_list_item_1, null, false)
+                val tv = convertView.findViewById<TextView>(android.R.id.text1)
+                tv.text = getErrorMessage(e)
+                return convertView
+            }
+        }
 
+        private fun getChildViewReal(parent: Int, child: Int, convertViewReuse: View?): View {
+            val convertView = Utils.loadMultiReuse(convertViewReuse, mLayoutInflater, R.layout.supported_card, null, false)
             val info = cards[parent].second[child]
 
             convertView.findViewById<TextView>(R.id.card_name).text = info.name
