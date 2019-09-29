@@ -374,6 +374,25 @@ class CardPersister {
         return delegate.collapse()
     }
     
+    class func readAutoJson(jsonUrl: URL) throws -> (Card?, URL?, Int) {
+        let data = try Data(contentsOf: jsonUrl)
+        try FileManager.default.removeItem(at: jsonUrl)
+        let cards = try CardSerializer.init().fromAutoJson(json: String(data: data, encoding: .utf8)!)
+        var count = 0
+        var lastImportUrl: URL? = nil
+        var lastCard: Card? = nil
+        while (cards.hasNext()) {
+            let card = cards.next() as! Card
+            lastImportUrl = try CardPersister.persistCard(card: card)
+            lastCard = card
+            count += 1
+        }
+        if count == 1 {
+            return (lastCard, lastImportUrl, 1)
+        }
+        return (nil, nil, count)
+    }
+
     class func readZip(zipUrl: URL) throws -> (Card?, URL?, Int) {
         let arch = Archive(url: zipUrl, accessMode: .read)!
         var count = 0
@@ -416,7 +435,11 @@ class CardPersister {
         return (singleCard, singleURL, count)
     }
     
-    class func readAutodetect(url: URL) throws -> (Card?, URL?, Int) {
+    class func getUrlSize(url: URL) -> Int? {
+        return try? url.resourceValues(forKeys:[.fileSizeKey]).fileSize
+    }
+
+    class func readAutodetect(url: URL, largeFileDelegate: (Int) -> Bool) throws -> (Card?, URL?, Int) {
         let i = InputStream.init(url: url)!
         i.open()
         let head = UnsafeMutablePointer<UInt8>.allocate(capacity: 16)
@@ -426,15 +449,26 @@ class CardPersister {
         let r = i.read(head, maxLength: 1)
         i.close()
         print("Head byte \(head[0]) [\(r)] \(String(describing: i.streamError))")
-        if head[0] == 0x7b {
-            return try readJson(jsonUrl: url)
-        }
         
         if head[0] == 0x50 {
             return try readZip(zipUrl: url)
         }
                 
+        if head[0] == 0x7b {
+            if let size = getUrlSize(url: url) {
+                if size > 4194304 && !largeFileDelegate(size) {
+                    return (nil, nil, 0)
+                }
+            }
+            return try readAutoJson(jsonUrl: url)
+        }
+
         if head[0] == 0x3c {
+            if let size = getUrlSize(url: url) {
+                if size > 4194304 && !largeFileDelegate(size) {
+                    return (nil, nil, 0)
+                }
+            }
             return try readXml(xmlUrl: url)
         }
         

@@ -125,10 +125,39 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         }
     }
     
+    class func largeFileDelegate(navigationController: UINavigationController,
+                                 size: Int) -> Bool {
+        var result = false
+        let dg = DispatchGroup()
+        dg.enter()
+        DispatchQueue.main.async {
+            let optionMenu = UIAlertController(
+                title: nil,
+                message: Utils.localizeString(
+                    RKt.R.string.large_file_warning,
+                    ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)),
+                preferredStyle: .actionSheet)
+            optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.large_file_yes), style: .default, handler: {_ in
+                result = true
+                dg.leave()
+            }) )
+            optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.large_file_no), style: .cancel, handler: {_ in
+                result = false
+                dg.leave()
+            }))
+
+            navigationController.present(optionMenu, animated: true, completion: nil)
+        }
+        dg.wait()
+        return result
+    }
+
     class func importFile(navigationController: UINavigationController, from url: URL) {
         DispatchQueue.global().async {
             do {
-                let (card, url, count) = try CardPersister.readAutodetect(url: url)
+                let (card, url, count) = try CardPersister.readAutodetect(url: url) {
+                    largeFileDelegate(navigationController: navigationController, size: $0)
+                }
                 let json: String?
                 if card != nil {
                     json = try CardSerializer.init().toJson(card: card!)
