@@ -40,11 +40,7 @@ abstract class FragmentWrapperActivity : MetrodroidActivity() {
         super.onCreate(savedInstanceState)
         setDisplayHomeAsUpEnabled(true)
 
-        val container = FrameLayout(this)
-        container.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT)
-        container.id = R.id.content
-        setContentView(container)
+        setContentView(R.layout.activity_fragment_wrapper)
 
         if (fragment == null) {
             val transaction = supportFragmentManager.beginTransaction()
