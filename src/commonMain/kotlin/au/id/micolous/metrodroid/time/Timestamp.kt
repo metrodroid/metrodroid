@@ -144,18 +144,18 @@ fun getYMD(daysSinceEpoch: Int): YMD {
     val correctedDays = dy + correctionD
 
     val (m, d) = when (correctedDays) {
-        in 0..30 -> Pair(0, correctedDays + 1)
-        in 31..59 -> Pair(1, correctedDays - 30)
-        in 60..90 -> Pair(2, correctedDays - 59)
-        in 91..120 -> Pair(3, correctedDays - 90)
-        in 121..151 -> Pair(4, correctedDays - 120)
-        in 152..181 -> Pair(5, correctedDays - 151)
-        in 182..212 -> Pair(6, correctedDays - 181)
-        in 213..243 -> Pair(7, correctedDays - 212)
-        in 244..273 -> Pair(8, correctedDays - 243)
-        in 274..304 -> Pair(9, correctedDays - 273)
-        in 305..334 -> Pair(10, correctedDays - 304)
-        else -> Pair(11, correctedDays - 334)
+        in 0..30 -> Pair(Month.JANUARY, correctedDays + 1)
+        in 31..59 -> Pair(Month.FEBRUARY, correctedDays - 30)
+        in 60..90 -> Pair(Month.MARCH, correctedDays - 59)
+        in 91..120 -> Pair(Month.APRIL, correctedDays - 90)
+        in 121..151 -> Pair(Month.MAY, correctedDays - 120)
+        in 152..181 -> Pair(Month.JUNE, correctedDays - 151)
+        in 182..212 -> Pair(Month.JULY, correctedDays - 181)
+        in 213..243 -> Pair(Month.AUGUST, correctedDays - 212)
+        in 244..273 -> Pair(Month.SEPTEMBER, correctedDays - 243)
+        in 274..304 -> Pair(Month.OCTOBER, correctedDays - 273)
+        in 305..334 -> Pair(Month.NOVEMBER, correctedDays - 304)
+        else -> Pair(Month.DECEMBER, correctedDays - 334)
     }
 
     return YMD(year = y, month = m, day = d)
@@ -418,6 +418,8 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
      * @param day Day of the month, where the first day of the month = 1.
      */
     constructor(year: Int, month: Int, day: Int) : this(YMD(year, month, day))
+
+    constructor(year: Int, month: Month, day: Int) : this(YMD(year, month.m, day))
 
     constructor(ymd: YMD) : this(
             daysSinceEpoch = ymd.daysSinceEpoch
