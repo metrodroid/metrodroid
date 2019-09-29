@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.io.charsets.Charsets
 import kotlinx.io.core.String
+import kotlinx.serialization.json.JsonException
 import kotlin.test.*
 
 class ImportKeysTest : BaseInstrumentedTest() {
@@ -219,14 +220,9 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     @Test
     fun testInvalidJSON() {
-        try {
-            val card = loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN)
-        } catch (e: Exception) {
-            assertTrue(true, "got expected JSON throw")
-            return
+        assertFailsWith(JsonException::class) {
+            loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN)
         }
-
-        fail("Expected JSONException")
     }
 
     @Test
