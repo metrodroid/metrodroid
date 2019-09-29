@@ -876,8 +876,8 @@
     <string name="umarsh_student">Student</string>
     <string name="umarsh_adult">Volwassene</string>
     <plurals name="remaining_day_count">
-        <item quantity="one">Geen resterende dagen</item>
-        <item quantity="other">1 resterende dag</item>
+        <item quantity="one">1 dag resterend</item>
+        <item quantity="other">%d dagen resterend</item>
     </plurals>
     <string name="mfc_rwid">Uitgelezen: %1$s, weggeschreven: %2$s, verhoging: %3$s, verlaging: %4$s</string>
     <string name="mfc_key_never">nooit</string>
@@ -1152,4 +1152,7 @@
     </plurals>
     <string name="lisboaviva_engraved_serial">Gegraveerd getal</string>
     <string name="lisboaviva_sub_navegante_lisboa">Navegante Lissabon</string>
+    <string name="app_logo_description">Metrodroid-logo</string>
+    <string name="closed_arrow">Ingeklapte lijst</string>
+    <string name="open_arrow">Geopende lijst</string>
 </resources>
