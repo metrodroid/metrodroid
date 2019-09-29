@@ -6,7 +6,7 @@ AMAT_URL = "https://www.amat-mi.it/it/downloads/data/gtfs/current/Export_OpenDat
 all: ricaricami.mdst ricaricami.csv
 
 ricaricami.mdst: mapping.csv amat_gtfs.zip mdst
-	python3 $(MDST)/compile_stops_from_gtfs.py amat_gtfs.zip -m mapping.csv -l it-IT -o $@
+	python3 $(MDST)/compile_stops_from_gtfs.py amat_gtfs.zip -x stations.csv -m mapping.csv -l it-IT -o $@
 
 amat_gtfs.zip:
 	curl -o $@ -z $@ $(AMAT_URL)
