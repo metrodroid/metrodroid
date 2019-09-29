@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.pm.PackageInfoCompat
 
 import au.id.micolous.metrodroid.util.Utils
 
@@ -47,8 +48,8 @@ class AboutActivity : MetrodroidActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun onWebsiteClick(view: View) {
         val b = Uri.parse("https://micolous.github.io/metrodroid/").buildUpon()
-        val version: Int = try {
-            packageManager.getPackageInfo(packageName, 0).versionCode
+        val version: Long = try {
+            PackageInfoCompat.getLongVersionCode(packageManager.getPackageInfo(packageName, 0))
         } catch (ex: PackageManager.NameNotFoundException) {
             // Shouldn't hit this...
             -1
