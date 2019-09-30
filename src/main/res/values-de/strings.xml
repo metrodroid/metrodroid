@@ -808,4 +808,186 @@
     <string name="large_file_yes">Trotzdem laden (Absturzrisiko)</string>
     <string name="large_file_no">Abbrechen (sicher)</string>
     <string name="large_file_warning">Die ausgewählte Datei ist groß (%s) und kann die Anwendung zum Absturz bringen. Möchten Sie fortfahren\?</string>
+    <string name="obfuscation_times_desc">Verzerren und die Auflösung von Zeitstempeln bei Reisen, Abonnements und Scans reduzieren</string>
+    <string name="mfc_have_key">Benutzerschlüssel für Sektor %d wird versucht…</string>
+    <string name="mfc_other_key">Alternative Benutzerschlüssel für Sektor %d werden versucht…</string>
+    <string name="mfc_default_key">Bekannte Schlüssel für Sektor %d werden versucht…</string>
+    <string name="mfd_unlocking">Entsperren von <xliff:g id="card_name" example="Leap">%s</xliff:g> Karte…</string>
+    <string name="iso7816_probing">Sondierung der ISO/IEC 7816-Karte..…</string>
+    <string name="card_partial_read_desc">Die Karte hat beim Lesen den Bereich verlassen.
+\n
+\nEinige Daten wurden gelesen, aber es reicht möglicherweise nicht aus, um nützliche Daten abzurufen.
+\n
+\nDicke Gehäuse und Metall können den NFC-Betrieb beeinträchtigen. Ein Fehler kann auch darauf hinweisen, dass die Karte oder die NFC-Antenne Ihres Geräts beschädigt ist.</string>
+    <string name="pref_theme">Theme</string>
+    <string name="pref_theme_desc">Erscheinungsbild</string>
+    <string name="pref_show_local_and_english_desc">"Zeigt sowohl lokale als auch englische Namen unabhängig von der Sprache an. Falls  ausgeschaltet: die am besten geeignete Variante wird verwendet."</string>
+    <string name="select_acknowledge">SAK (Auswahl Bestätigung)</string>
+    <string name="answer_to_request">ATQA (Antwort auf Anfrage)</string>
+    <string name="desfire_challenge">Herausforderung</string>
+    <string name="desfire_response">Antwort</string>
+    <string name="desfire_confirmation">Bestätigung</string>
+    <string name="desfire_keyex">Schlüsselaustausch</string>
+    <plurals name="troika_rides">
+        <item quantity="one">Einzelfahrt</item>
+        <item quantity="other">%d Fahrten</item>
+    </plurals>
+    <string name="cepas_debit_options">Debitoptionen</string>
+    <string name="cepas_logfile_record_count">Anzahl der Logfile-Einträge</string>
+    <string name="felica_idm">Herstellung-ID (IDm)</string>
+    <string name="felica_terminal_ticket_office_green">Ticketschalter (Grünes Fenster)</string>
+    <string name="felica_process_payment_thirdparty">Zahlung (Dritter)</string>
+    <string name="felica_process_admission_thirdparty">Eintrittszahlung (Dritter)</string>
+    <string name="kmt_agency">Kereta Commuter Indonesia</string>
+    <string name="card_name_shanghai">Shanghai-Karte für öffentliche Verkehrsmittel</string>
+    <string name="erg_agency_id">Agentur-ID</string>
+    <string name="ovc_autocharge_limit">Autoladelimit</string>
+    <string name="ovc_autocharge">Automatische Aufladung</string>
+    <string name="date_of_birth">Geburtsdatum</string>
+    <string name="software_information">Software-Info</string>
+    <string name="clipboard_error">Konnte nicht auf die Zwischenablage zugreifen</string>
+    <string name="convert_timezones">Zeitzonen konvertieren</string>
+    <string name="convert_timezones_summary_off">Die Fahrzeiten werden in der lokalen Zeitzone der Verkehrsbetriebe angezeigt.</string>
+    <string name="convert_timezones_summary_on">Die Fahrzeiten werden in Ihre aktuelle Zeitzone umgerechnet.</string>
+    <string name="seller_agency">Verkaufsagentur</string>
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d Fahrt bleibt am %2$s</item>
+        <item quantity="other">%1$d Fahrten bleiben am %2$s</item>
+    </plurals>
+    <plurals name="remaining_day_count">
+        <item quantity="one">1 Tag bleibt</item>
+        <item quantity="other">%d Tagen bleiben</item>
+    </plurals>
+    <plurals name="travel_zones">
+        <item quantity="one">%d Zone</item>
+        <item quantity="other">%d Zonen</item>
+    </plurals>
+    <string name="payment_method_transit_card">Transitkarte</string>
+    <string name="troika_unformatted">Diese Troika ist nicht richtig formatiert. Es muss am Ticketschalter nachgefüllt werden, bevor es verwendet werden kann.</string>
+    <string name="strelka_long_serial">Lange Seriennummer von Strelka</string>
+    <string name="podorozhnik_gate">Tor %s</string>
+    <string name="agency_card_serial_number">Agenturseriennummer der Karte</string>
+    <string name="discretionary_data">Diskretionäre Daten</string>
+    <string name="cardtype_header">Zahlungsbedingungen der Karte</string>
+    <string name="cardtype_prepaid">Vorausbezahlt</string>
+    <string name="cardtype_postpay">Nachbezahlt</string>
+    <string name="crypto_algo_header">Verschlüsselungsalgorithmus</string>
+    <string name="crypto_algo_seed">SEED</string>
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <string name="tmoney_issuer_cardnet">Cardnet</string>
+    <string name="tmoney_disrate_disabled_basic">Behinderte, Basis</string>
+    <string name="tmoney_disrate_disabled_companion">Behinderte, Begleiter</string>
+    <string name="none">Keiner</string>
+    <string name="tmoney_tcode_lg">LG U+</string>
+    <string name="financial_institution_name">Name des Finanzinstituts</string>
+    <string name="card_name_snapper">Snapper</string>
+    <string name="charlie_2nd_card_number">Zweite Seriennummer</string>
+    <string name="emv_icc_public_key_certificate">Zertifikat für öffentliche Schlüssel der ICC</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">Verbleibender PIN-Versuch</item>
+        <item quantity="other">Verbleibende PIN-Versuche</item>
+    </plurals>
+    <string name="emv_application_priority_indicator">Anwendungsprioritätsindikator</string>
+    <string name="emv_application_cryptogram">Anwendungskryptogramm</string>
+    <string name="emv_cryptogram_information_data">Kryptogramm-Informationsdaten</string>
+    <string name="emv_application_transaction_counter">Anwendungstransaktionszähler</string>
+    <string name="no_data_in_clipboard">Keine Daten in der Zwischenablage.</string>
+    <string name="app_version">Version: %s</string>
+    <string name="device_model">Modell: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
+    <string name="device_manufacturer">Hersteller: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
+    <string name="nfc_enabled">NFC: Ein</string>
+    <string name="nfc_disabled">NFC: Aus</string>
+    <string name="nfc_not_available">NFC: Nicht verfügbar</string>
+    <string name="mfc_supported">MIFARE Classic: Unterstützt</string>
+    <string name="mfc_not_supported">MIFARE Classic: Nicht unterstützt</string>
+    <string name="balances_and_subscriptions">Fahrkarten</string>
+    <string name="card_number">Kartennummer</string>
+    <string name="pref_show_raw_station_ids">Rohe Stations- &amp; Routen-IDs anzeigen</string>
+    <string name="pref_show_raw_station_ids_desc_on">Stations- und Routen-IDs werden zusätzlich zu ihren Namen angezeigt</string>
+    <string name="pref_show_raw_station_ids_desc_off">Stations- und Routen-IDs werden ausgeblendet, sofern die Namen bekannt sind</string>
+    <string name="station_database">Stationsdatenbank</string>
+    <string name="nfc_options_desc">Fallback-Leser für MIFARE Classic, Einstellungen der physischen Kartenschnittstelle…</string>
+    <string name="card_format_ndef">NDEF</string>
+    <string name="felica_system_common">Gemeinsamer Bereich (FeliCa Networks)</string>
+    <string name="leap_retrieve_keys">Schlüssel für Leap-Karten abrufen</string>
+    <string name="leap_retrieve_keys_longdesc">Teilt Ihre Kartendaten mit Transport for Ireland, um auf die Authentifizierungsaufforderung der Leap-Karte zu antworten. TFI wird wissen, dass Sie Metrodroid auf dieser Karte verwendet haben. Die Karte kann ohne diesen Schlüssel nicht gelesen werden.</string>
+    <string name="locked_leap">Gesperrter Leap</string>
+    <string name="leap_period_start">Periodenanfang</string>
+    <string name="leap_accumulator_region">Gebiet</string>
+    <string name="leap_accumulator_total">Gesamtausgaben</string>
+    <string name="leap_accumulator_agency">Gesamtausgaben bei %s</string>
+    <string name="leap_daily_accumulators">Tagespreisobergrenzen</string>
+    <string name="leap_weekly_accumulators">Wöchentliche Tarifobergrenzen</string>
+    <string name="initialisation_date">Initialisierungsdatum</string>
+    <string name="leap_locked_warning">Diese Karte wurde nicht entsperrt. Bitte aktivieren Sie \"Schlüssel für Leap-Karten abrufen\" in den NFC-Einstellungen.</string>
+    <string name="card_note_leap">Erfordert das abrufen von Schlüsseln aus TFI, die eingeschaltet sein muss, in den NFC-Einstellungen.</string>
+    <string name="card_note_kiev">Nur Karten vor 2016. Es kann nur das Fahrtenbuch gelesen werden.</string>
+    <string name="deduplicate_cards">Karten deduplizieren</string>
+    <string name="amiibo_type_figure">Figurine</string>
+    <string name="raw_level">Anzahl der Rohinformationen</string>
+    <string name="raw_level_desc">Wie viele Rohdaten in analysierten Daten angezeigt werden sollen. Nicht alle Parser unterstützen diese Option</string>
+    <string name="hardware">Hardware</string>
+    <string name="ovc_banned">Gesperrt</string>
+    <string name="russia_region_04_altai_republic">Republik Altai</string>
+    <string name="russia_region_11_komi">Republik Komi</string>
+    <string name="russia_region_12_mari_el">Republik Mari El</string>
+    <string name="russia_region_18_udmurt">Udmurtien</string>
+    <string name="russia_region_22_altai">Region Altai</string>
+    <string name="russia_region_23_krasnodar">Region Krasnodar</string>
+    <string name="russia_region_25_primorsky">Region Primorje</string>
+    <string name="russia_region_27_khabarovsk">Region Chabarowsk</string>
+    <string name="russia_region_41_kamchatka">Region Kamtschatka</string>
+    <string name="desfire_batch_number">Chargennummer</string>
+    <string name="tmoney_balance">T-Money-Saldo</string>
+    <string name="china_balance">%d. Saldo</string>
+    <string name="unsupported_tag_message">Dieses Tag wird derzeit von Metrodroid nicht unterstützt.
+\n Tag-ID: %1$s
+\n Unterstützte Technologien:
+\n %2$s</string>
+    <string name="hsl_region_seutu">Gebiet (Helsinki+Espoo-Vantaa)</string>
+    <string name="hsl_region_lahiseutu_2">Umgebungsland 2 (ESP+VAN+KIR+KER+SIP)</string>
+    <string name="hsl_region_lahiseutu_3">Umgebungsland 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
+    <string name="show_debug_spans">Debugfarbe für LocaleSpans anzeigen</string>
+    <string name="show_debug_spans_desc">Standardsprache in Grün, Englisch in Gelb und Lokale Sprache blau markieren</string>
+    <string name="compass_sub_four_zone_wce_one_way">Vier Zonen WCE (einfache Fahrt)</string>
+    <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela nach Lissabon + Metropolregion</string>
+    <string name="mobib_airport_bus">Einzelfahrt Bus Flughafen</string>
+    <string name="rkf_stockholm_30_days">Stockholm 30-Tageskarte</string>
+    <string name="ricaricami_single_urban">Stadtticket</string>
+    <string name="venezia_ticket_24h">24-Stunden-Ticket</string>
+    <string name="venezia_rete_unica_75min">75-Minuten Rete Unica</string>
+    <string name="venezia_rete_unica_100min">100-Minuten Rete Unica</string>
+    <string name="pisa_abb_trim_pers_pisa">Trimestriales Abo für Pisa</string>
+    <string name="ios_version">iOS-Version: <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    </string>
+    <string name="ios_main_screen_back">Empfang</string>
+    <string name="ios_scan_card">Karte scannen</string>
+    <string name="ios_nfc_usage">App zur Anzeige des Saldos auf Transitkarten</string>
+    <string name="ios_menu_button">Mehr</string>
+    <string name="ios_menu_title">Menü</string>
+    <string name="ios_menu_cancel">Abbrechen</string>
+    <string name="ios_error_ok">OK</string>
+    <string name="ios_nfcreader_connection_error">Verbindungsfehler: %s</string>
+    <string name="ios_nfcreader_connecting">Verbinden mit %s</string>
+    <string name="ios_nfcreader_reading">Lesen von %s</string>
+    <string name="ios_nfcreader_tap">Halten Sie die Karte am Telefon</string>
+    <string name="ios_nfcreader_exception">Ausnahme: %s</string>
+    <string name="ios_unknown_mifare">Unbekannte Mifare: %s</string>
+    <string name="ios_unknown_tag">Unbekannter Tag-Typ: %s</string>
+    <string name="ovc_autocharge_information">Informationen zum automatischen Aufladen</string>
+    <string name="rkf_stockholm_7_days">Stockholm 7-Tageskarte</string>
+    <string name="rkf_stockholm_72_hours">Stockholm 72-Stunden-Ticket</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_light">Hell</string>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d Karte</item>
+        <item quantity="other">%d Karten</item>
+    </plurals>
+    <string name="lisboaviva_engraved_serial">Gravierte Nummer</string>
+    <string name="lisboaviva_sub_navegante_lisboa">Navegante Lissabon</string>
+    <string name="app_logo_description">Logo von Metrodroid</string>
+    <string name="closed_arrow">Reduzierte Liste</string>
+    <string name="open_arrow">Erweiterte Liste</string>
 </resources>
