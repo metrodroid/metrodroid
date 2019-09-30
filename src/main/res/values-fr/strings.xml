@@ -1083,4 +1083,7 @@
         <item quantity="one">%d carte</item>
         <item quantity="other">%d cartes</item>
     </plurals>
+    <string name="agency_card_serial_number">Numéro de série de la carte d\'agence</string>
+    <string name="lisboaviva_engraved_serial">Numéro gravé</string>
+    <string name="app_logo_description">Logo de Metrodroid</string>
 </resources>
