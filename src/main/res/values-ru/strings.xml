@@ -1131,4 +1131,8 @@
         <item quantity="few">%d карты</item>
         <item quantity="many">%d карт</item>
     </plurals>
+    <string name="ios_nfcreader_exception">Исключение: %s</string>
+    <string name="app_logo_description">Логотип Метродроида</string>
+    <string name="closed_arrow">Свернутый список</string>
+    <string name="open_arrow">Развёрнутый список</string>
 </resources>
