@@ -253,8 +253,8 @@
     <string name="opal_vehicle_rail">Ferrovia</string>
     <string name="opal_action_none">Nessuna (carta nuova, mai utilizzata)</string>
     <string name="opal_action_new_journey">Nuovo viaggio</string>
-    <string name="opal_action_transfer_same_mode">Trasferimento (dalla stessa modalità)</string>
-    <string name="opal_action_transfer_diff_mode">Trasferimento (da modalità diversa)</string>
+    <string name="opal_action_transfer_same_mode">Coincidenza (dalla stessa modalità)</string>
+    <string name="opal_action_transfer_diff_mode">Coincidenza (da modalità diversa)</string>
     <string name="opal_action_journey_completed_distance">Viaggio completato (tariffa a distanza)</string>
     <string name="opal_action_journey_completed_flat_rate">Viaggio completato (tariffa forfettaria)</string>
     <string name="seqgo_refill_manual">Ricarica manuale</string>
@@ -793,4 +793,199 @@
     <string name="large_file_yes">Carica comunque (rischio di crash)</string>
     <string name="large_file_no">Annulla (sicuro)</string>
     <string name="large_file_warning">Il file che hai scelto è grande (%s) e potrebbe causare l\'arresto anomalo dell\'applicazione. Vuoi procedere\?</string>
+    <string name="scanned_at_format">Scansione a %1$s il %2$s</string>
+    <string name="rejected">Rifiutato</string>
+    <string name="add_key_directions">Salva un dump binario delle chiavi come file con estensione .farebotkeys, inviarlo per e-mail come allegato a se stessi, quindi aprirlo su questo dispositivo.</string>
+    <string name="map_tiles_url">URL dei riquadri della mappa</string>
+    <string name="map_tiles_url_summary">Utilizzare un server di riquadri personalizzato per le mappe, utilizzando la sintassi Leaflet TileLayer.</string>
+    <string name="map_tiles_subdomains">Sottodomini dei riquadri della mappa</string>
+    <string name="map_tiles_subdomains_summary">Se usi {s} negli URL delle mappe, un elenco di sottodomini separato da virgole o un elenco di sottodomini a carattere singolo.</string>
+    <string name="map_tiles_help">Visualizza la documentazione di Leaflet TileLayer</string>
+    <string name="map_tiles_help_summary">Per informazioni sull\'utilizzo degli URL dei riquadri della mappa, vedere la documentazione online di Leaflet (disponibile solo in inglese).</string>
+    <string name="mfc_have_key">Prova chiave fornita dall\'utente per il settore %d…</string>
+    <string name="mfc_other_key">Prova di chiavi alternative per il settore %d…</string>
+    <string name="iso14a_detect">Rilevamento del tipo di carta ISO 14443…</string>
+    <string name="mfu_detect">Rilevamento del tipo di carta MIFARE Ultralight…</string>
+    <string name="mfd_unlocking">Sblocco della carta <xliff:g id="card_name" example="Leap">%s</xliff:g> …</string>
+    <string name="iso7816_probing">Sondare carta ISO/IEC 7816…</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+    </plurals>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Dati della chiave nascosti (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="other">Dati della chiave nascosti (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
+    </plurals>
+    <string name="key_data">Dati delle chiavi</string>
+    <string name="pref_show_local_and_english_desc">Mostra i nomi locali e inglesi indipendentemente dalle impostazioni locali. Se disattivata: usa la variante più appropriata quando.</string>
+    <string name="select_acknowledge">SAK (Conferma di selezione)</string>
+    <string name="answer_to_request">ATQA (Risposta alla richiesta)</string>
+    <string name="desfire_challenge">Sfida</string>
+    <string name="desfire_response">Risposta</string>
+    <string name="desfire_confirmation">Conferma</string>
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Tipo: %1$s, lunghezza: %2$s byte</item>
+        <item quantity="other">Tipo: %1$s, lunghezza: %2$s byte</item>
+    </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d viaggio rimanente da %d</item>
+        <item quantity="other">%d viaggi rimanente da %d</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="one">Singola corsa</item>
+        <item quantity="other">%d corse</item>
+    </plurals>
+    <string name="hardware_information">Informazioni sull\'hardware</string>
+    <string name="enabled">Acceso</string>
+    <string name="disabled">Spento</string>
+    <string name="cepas_autoload_amount">Quantità di autocarico</string>
+    <string name="cepas_debit_options">Opzioni di debito</string>
+    <string name="cepas_other_purse_info">Altre informazioni sulla borsa</string>
+    <string name="felica_idm">ID di fabbricazione (IDm)</string>
+    <string name="felica_pmm">Parametro di fabbricazione (PMm)</string>
+    <string name="mode_ferry">Traghetto</string>
+    <string name="mode_ticket_machine">Biglietteria automatica</string>
+    <string name="mode_vending_machine">Distributore automatico</string>
+    <string name="free_transfers_until">Coincidenze gratuiti fino a</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_retail_purchase">Acquisto al dettaglio</string>
+    <string name="felica_terminal_portable">Terminale portatile</string>
+    <string name="felica_terminal_vehicle">Terminal del veicolo (in autobus)</string>
+    <string name="felica_terminal_ticket">Biglietteria automatica</string>
+    <string name="felica_terminal_deposit_quick_charge">Macchina di ricarica rapida</string>
+    <string name="felica_terminal_tvm_tokyo_monorail">Biglietteria automatica di Tokyo Monorail</string>
+    <string name="felica_terminal_tvm_etc">Biglietteria automatica, etc.</string>
+    <string name="felica_terminal_turnstile">Tornello</string>
+    <string name="felica_terminal_ticket_validator">Validatore di biglietti</string>
+    <string name="felica_terminal_ticket_booth">Biglietteria</string>
+    <string name="felica_terminal_ticket_office_green">Biglietteria (finestra verde)</string>
+    <string name="felica_terminal_mobile_phone">Cellulare</string>
+    <string name="felica_terminal_simple_deposit">Macchina a deposito semplice</string>
+    <string name="felica_terminal_pos">Terminale del punto vendita</string>
+    <string name="felica_terminal_vending">Distributore automatico</string>
+    <string name="felica_process_fare_exit_gate">Tornello di uscita</string>
+    <string name="felica_process_charge">Ricarica</string>
+    <string name="felica_process_bus_pitapa">Autobus (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Autobus (IruCa)</string>
+    <string name="felica_process_reissue">Riemissione</string>
+    <string name="felica_process_payment_shinkansen">Pagamento di Shinkansen</string>
+    <string name="felica_process_merchandise_purchase">Acquisto di merce</string>
+    <string name="kmt_agency">Kereta Commuter Indonesia</string>
+    <string name="hsl_balance_ticket">Biglietto di valore</string>
+    <string name="hsl_pass_ticket">Abbonamento</string>
+    <string name="hsl_mins_format">%s minuti</string>
+    <string name="orca_topup">Ricarica</string>
+    <string name="card_note_adelaide">Possono essere letti solo il numero di serie, i viaggi e gli abbonamenti</string>
+    <string name="seqgo_ticket_type_concession">Concessione</string>
+    <string name="seqgo_ticket_type_senior">Anziano</string>
+    <string name="ovc_autocharge_amount">Carica automatica</string>
+    <string name="date_of_birth">Data di nascita</string>
+    <string name="software_information">Informazioni sul software</string>
+    <plurals name="remaining_day_count">
+        <item quantity="one">1 giorno rimane</item>
+        <item quantity="other">%d giorni rimanano</item>
+    </plurals>
+    <string name="ravkav_agency_topup_app">Ricarica mobile di Rav-Kav</string>
+    <string name="troika_unformatted">Questa Troika non è formattata correttamente. Deve essere ricaricato alla biglietteria prima di poter utilizzarlo.</string>
+    <string name="discretionary_data">Dati discrezionali</string>
+    <string name="cardtype_header">Termini di pagamento con carta</string>
+    <string name="cardtype_mobile_postpay">Mobile post-pagato</string>
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <string name="tmoney_issuer_cardnet">Cardnet</string>
+    <string name="tmoney_usercode_test">Prova</string>
+    <string name="tmoney_usercode_inactive">Inattivo</string>
+    <string name="discount_type">Tipo di sconto</string>
+    <string name="tmoney_disrate_none">Nessun sconto</string>
+    <string name="tmoney_tcode_lg">LG U+</string>
+    <string name="financial_institution_name">Nome dell\'istituto finanziario</string>
+    <string name="card_name_snapper">Snapper</string>
+    <string name="charlie_2nd_card_number">Secondo numero</string>
+    <string name="emv_name_1">Nome 1</string>
+    <string name="emv_name_2">Nome 2</string>
+    <string name="emv_track_1">Traccia 1</string>
+    <string name="emv_track_2">Traccia 2</string>
+    <string name="emv_track_2_equiv">Dati equivalenti alla traccia 2</string>
+    <string name="emv_track_3_equiv">Dati equivalenti alla traccia 3</string>
+    <string name="issuer_country">Paese dell\'emittente</string>
+    <string name="emv_language_preference">Lingue preferite</string>
+    <string name="emv_issuer_public_key_certificate">Certificato di chiave pubblica dell\'emittente</string>
+    <string name="emv_issuer_public_key_modulus">Modulo di chiave pubblica dell\'emittente</string>
+    <string name="emv_issuer_public_key_exponent">Esponente della chiave pubblica dell\'emittente</string>
+    <string name="emv_icc_public_key_certificate">Certificato di chiave pubblica del\'ICC</string>
+    <string name="emv_icc_public_key_modulus">Modulo di chiave pubblica del\'ICC</string>
+    <string name="emv_icc_public_key_exponent">Esponente di chiave pubblica del\'ICC</string>
+    <string name="emv_application_currency">Valuta dell\'applicazione</string>
+    <string name="emv_application_currency_exponent">Esponente della valuta dell\'applicazione</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">Tentativo PIN rimanente</item>
+        <item quantity="other">Tentativi PIN rimanenti</item>
+    </plurals>
+    <string name="emv_pan_sequence_number">Numero di sequenza di PAN</string>
+    <string name="emv_application_priority_indicator">Indicatore di priorità dell\'applicazione</string>
+    <string name="emv_ca_public_key_index">Indice chiave pubblica dell\'autorità di certificazione</string>
+    <string name="emv_application_cryptogram">Crittogramma dell\'applicazione</string>
+    <string name="emv_cryptogram_information_data">Dati di informazioni sul crittogramma</string>
+    <string name="emv_service_code">Codice di servizio</string>
+    <string name="pref_show_raw_station_ids">Mostra gli ID grezzi della stazione e del percorso</string>
+    <string name="leap_retrieve_keys_longdesc">Condivide i dettagli della tua carta con Transport for Ireland, al fine di rispondere alla sfida di autenticazione della carta Leap. TFI saprà che hai usato Metrodroid su questa scheda. La carta non può essere letta senza questo tasto.</string>
+    <string name="about_key_formats">Informazioni sui formati dei chiavi…</string>
+    <string name="invalid_json">JSON non valido</string>
+    <string name="invalid_key_file">File di chiave non valido</string>
+    <string name="key_file_empty">File di chiave vuoto!</string>
+    <string name="untitled_key_group">Gruppo di chiavi senza nome</string>
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d chiave per MIFARE Classic</item>
+        <item quantity="other">%d chiavi per MIFARE Classic</item>
+    </plurals>
+    <plurals name="keytype_mfc_static">
+        <item quantity="one">%d chiave statica per MIFARE Classic</item>
+        <item quantity="other">%d chiavi statiche per MIFARE Classic</item>
+    </plurals>
+    <string name="no_static_key_assignment">Le chiavi statiche non possono essere assegnate a una singola carta.</string>
+    <string name="vehicle_number">Veicolo %s</string>
+    <string name="card_note_kiev">Solo carte pre-2016. È possibile leggere solo ka storia dei viaggi.</string>
+    <string name="transfer">Coincidenza</string>
+    <string name="raw_level">Quantità dei dati grezzi</string>
+    <string name="raw_level_desc">Quante informazioni grezze da mostrare nei dati analizzati. Non tutti i parser supportano questa opzione</string>
+    <string name="hardware">Hardware</string>
+    <string name="russia_region_22_altai">Krai di Altai</string>
+    <string name="desfire_vendor_id">ID del venditore</string>
+    <string name="tmoney_balance">Saldo di T-Money</string>
+    <string name="china_balance">Saldo numero %d</string>
+    <string name="card_name_emv_long">EMV (carte di credito e di debito)</string>
+    <string name="card_reading_emv">Lettura di EMV (carta di credito o di debito)…</string>
+    <string name="hsl_period">Periodo di validità</string>
+    <plurals name="hsl_valid_days_24h">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d giorno di calendario</item>
+        <item quantity="other">%d giorni di calendario</item>
+    </plurals>
+    <plurals name="hsl_valid_hours">
+        <item quantity="one">%d ora</item>
+        <item quantity="other">%d ore</item>
+    </plurals>
+    <string name="hsl_transport_lautta">Traghetto</string>
+    <string name="show_debug_spans">Mostra il colore di debug per gli intervalli di LocaleSpan</string>
+    <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Linea metro CP - Rio de Mouro/Meleças</string>
+    <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus da Palmela a Lisbona + Area metropolitana</string>
+    <string name="ios_scan_card">Scannare una carta</string>
+    <string name="ios_nfc_usage">App per mostrare il saldo sulle carte di transito</string>
+    <string name="ovc_autocharge_information">Informazioni sul autocarico</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="theme_light">Chiaro</string>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d carta</item>
+        <item quantity="other">%d carte</item>
+    </plurals>
+    <string name="lisboaviva_engraved_serial">Numero inciso</string>
+    <string name="lisboaviva_sub_navegante_lisboa">Navegante Lisbona</string>
+    <string name="app_logo_description">Logo di Metrodroid</string>
+    <string name="closed_arrow">Lista raggruppata</string>
+    <string name="open_arrow">Lista espansa</string>
 </resources>
