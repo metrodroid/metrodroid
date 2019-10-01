@@ -15,9 +15,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <attr name="ButtonBarButtonStyle" format="reference" />
-    <attr name="ButtonBarStyle" format="reference" />
-    <attr name="BorderlessButtonStyle" format="reference" />
+    <attr name="ButtonStyle" format="reference" />
     <attr name="MainActivityTheme" format="reference" />
     <attr name="LockImage" format="reference" />
     <attr name="LockImageUnlocked" format="reference" />
