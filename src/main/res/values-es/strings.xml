@@ -959,4 +959,56 @@
     <string name="app_logo_description">Logotipo de Metrodroid</string>
     <string name="closed_arrow">Lista contraída</string>
     <string name="open_arrow">Lista abierta</string>
+    <string name="felica_response_time_variable">Comando Request Service (1 nodo)</string>
+    <string name="felica_response_time_fixed">Comandos de tiempo de respuesta fijos</string>
+    <string name="felica_response_time_auth1">Comando Authentication1 (1 nodo)</string>
+    <string name="felica_response_time_auth2">Comando Authentication2</string>
+    <string name="felica_response_time_read">Comando de lectura (1 bloque)</string>
+    <string name="felica_response_time_write">Comando de escritura (1 bloque)</string>
+    <string name="felica_response_time_other">Comandos de emisión</string>
+    <string name="mode_banned">Prohibido</string>
+    <string name="clipper_single">Viaje sencillo (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Ida y vuelta (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="felica_terminal_portable">Terminal portátil</string>
+    <string name="felica_terminal_vehicle">Terminal del vehículo (en autobús)</string>
+    <string name="felica_terminal_mobile_phone">Teléfono móvil</string>
+    <string name="felica_terminal_simple_deposit">Máquina de depósito simple</string>
+    <string name="felica_terminal_pos">Terminal de punto de venta</string>
+    <string name="felica_terminal_vending">Máquina expendedora</string>
+    <string name="felica_process_charge">Recarga</string>
+    <string name="felica_process_purchase_magnetic">Boleto magnético</string>
+    <string name="felica_process_admission_payment">Pago de admisión</string>
+    <string name="felica_process_issue_new">Nueva emisión</string>
+    <string name="felica_process_bus_pitapa">Autobús (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Autobús (IruCa)</string>
+    <string name="felica_process_reissue">Reemisión</string>
+    <string name="felica_process_payment_shinkansen">Pago de Shinkansen</string>
+    <string name="felica_process_purchase_special_ticket">Boleto (bus especial / tranvía)</string>
+    <string name="felica_process_merchandise_purchase">Compra de mercancías</string>
+    <string name="felica_process_merchandise_admission">Mercancía/admisión</string>
+    <string name="felica_process_merchandise_purchase_cash">Compra de mercancías (parcialmente con efectivo)</string>
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="app_fci">FCI de la aplicación</string>
+    <string name="edy_file_history">Historia de Edy</string>
+    <string name="edy_file_id">Identidad de Edy</string>
+    <string name="edy_file_purse_balance">Saldo de monedero Edy</string>
+    <string name="felica_lite_read_only">Datos de solo lectura</string>
+    <string name="felica_lite_read_write">Datos reescribibles</string>
+    <string name="agency_card_serial_number">Número de serie de agencia de la tarjeta</string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">Intento de PIN restante</item>
+        <item quantity="other">Intentos de PIN restantes</item>
+    </plurals>
+    <string name="emv_application_interchange_profile">Perfil de intercambio de aplicacion</string>
+    <string name="emv_application_file_locator">Localizador de archivos de aplicación</string>
+    <string name="emv_track_1_discretionary_data">Datos discrecionales de la pista 1</string>
+    <string name="emv_track_2_equiv">Datos equivalentes a pista 2</string>
+    <string name="emv_track_3_equiv">Datos equivalentes a pista 3</string>
+    <string name="cepas_can">Número de aplicación de tarjeta (CAN)</string>
+    <string name="iso7816_sfi">Identificador de archivo corto (SFI) %s</string>
+    <string name="compass_sub_daypass">Pase de un día (DayPass)</string>
+    <string name="compass_sub_daypass_with_yvr">Pase de un día (DayPass) con aeropuerto (YVR)</string>
+    <string name="lisboaviva_sub_passe_mts">Passe MTS</string>
+    <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
 </resources>
