@@ -122,4 +122,5 @@
     <string name="nol_red">Κόκκινο</string>
     <string name="mobib_jump_1_trip">Jump 1 ταξίδι</string>
     <string name="mobib_jump_10_trips">Jump 10 ταξίδια</string>
+    <string name="title_activity_license">Άδειες Ανοιχτού Κώδικα</string>
 </resources>
