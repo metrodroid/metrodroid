@@ -692,8 +692,8 @@
     <string name="cardtype_postpay">Постоплата</string>
     <string name="cardtype_mobile_postpay">Мобильная постоплата</string>
     <string name="tmoney_usercode_test">Тест</string>
-    <string name="emv_track_2_equiv">Эквивалентные данные дорожки 2</string>
-    <string name="emv_track_3_equiv">Эквивалентные данные дорожки 3</string>
+    <string name="emv_track_2_equiv">Данные эквивалентные дорожке 2</string>
+    <string name="emv_track_3_equiv">Данные эквивалентные дорожке 3</string>
     <string name="location_barnaul">Барнаул, Россия</string>
     <string name="card_holders_id">Идентификационный номер владельца карты</string>
     <string name="location_santiago_chile">Сантьяго-де-Чили, Чили</string>
