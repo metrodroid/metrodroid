@@ -159,7 +159,7 @@
     <string name="felica_process_deposit_bus">Dépôt de bus</string>
     <string name="felica_process_purchase_special_ticket">Billet (bus spécial/tramway)</string>
     <string name="felica_process_merchandise_purchase">Achat de marchandises</string>
-    <string name="felica_process_bonus_charge">Bonus de charge</string>
+    <string name="felica_process_bonus_charge">Recharge en bonus</string>
     <string name="felica_process_register_deposit">Enregistrement de dépôt</string>
     <string name="felica_process_merchandise_cancel">Annullation de la vente de la marchandise</string>
     <string name="felica_process_merchandise_admission">Marchandises/admission</string>
@@ -497,7 +497,7 @@
     <string name="city_union_city">Ville</string>
     <string name="erg_agency_id">Numéro d\'agence</string>
     <string name="ovc_autocharge_limit">Limite de recharge automatique</string>
-    <string name="ovc_autocharge_amount">Frais de recharge automatique</string>
+    <string name="ovc_autocharge_amount">Montant de la recharge automatique</string>
     <string name="ovc_autocharge">Recharge automatique</string>
     <string name="date_of_birth">Date de naissance</string>
     <string name="software_information">Informations sur le logiciel</string>
@@ -808,7 +808,7 @@
     <string name="mfc_key_b">clé B</string>
     <string name="mfc_key_ab">clé A|B</string>
     <string name="amiibo_type">Type</string>
-    <string name="amiibo_type_figure">Figure</string>
+    <string name="amiibo_type_figure">Figurine</string>
     <string name="amiibo_type_card">Carte</string>
     <string name="amiibo_character">Personnage</string>
     <string name="amiibo_character_variant">Variante de personnage</string>
@@ -1064,7 +1064,7 @@
     <string name="lisboaviva_sub_vermelho_a1">Rouge A1</string>
     <string name="lisboaviva_sub_metro_cp_r_mouro_melecas">Ligne de métro CP - Rio de Mouro/Meleças</string>
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela à Lisbonne + Zone métropolitaine</string>
-    <string name="ios_version">Version iOS : <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    <string name="ios_version">Version de l\'iOS : <xliff:g id="version" example="10.3">%1$s</xliff:g>
     </string>
     <string name="ios_nfc_usage">Application pour afficher le solde sur les cartes de transport en commun</string>
     <string name="ios_nfcreader_exception">Exception : %s</string>
@@ -1086,4 +1086,26 @@
     <string name="agency_card_serial_number">Numéro de série de la carte d\'agence</string>
     <string name="lisboaviva_engraved_serial">Numéro gravé</string>
     <string name="app_logo_description">Logo de Metrodroid</string>
+    <string name="tmoney_issuer_korail">Réseaux KORAIL</string>
+    <string name="balance_command">Commande de la requête du solde</string>
+    <string name="discretionary_data">Données discrétionnaires</string>
+    <string name="emv_application_interchange_profile">Profil d\'échange de l\'application</string>
+    <string name="emv_issuer_code_table_index">Index de la table de codage de l\'émetteur</string>
+    <string name="emv_cryptogram_information_data">Données d\'informations de la cryptogramme</string>
+    <string name="siticard_aerial_tramway">Téléphérique</string>
+    <string name="amiibo_type_yarn">Peluche</string>
+    <string name="iso7816_sfi">Identifiant de fichier court (SFI) %s</string>
+    <string name="show_debug_spans">Afficher la couleur de débogage pour les LocaleSpans</string>
+    <string name="show_debug_spans_desc">Surligner la langue par défaut en vert, l\'anglais en jaune et la langue locale en bleu</string>
+    <string name="ovc_sub_ov_jaarkaart">Abonnement réseau personnel annuel</string>
+    <string name="ovc_sub_ov_bijkaart_1e_klas">Abonnement supplémentaire optionnel, première classe</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Voyage sur le solde, première classe</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Voyage sur le solde, deuxième classe</string>
+    <string name="ovc_sub_daluren_oost_nederland">Rabais hors pointe Est</string>
+    <string name="ovc_sub_student_week_korting">Rabais pour étudiants en semaine</string>
+    <string name="ovc_sub_student_weekend_korting">Rabais de fin de semaine pour les étudiants</string>
+    <string name="hotel_checkin">Arrivée</string>
+    <string name="hotel_checkout">Départ</string>
+    <string name="closed_arrow">Liste pliée</string>
+    <string name="open_arrow">Liste étendue</string>
 </resources>
