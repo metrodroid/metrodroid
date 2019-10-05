@@ -184,10 +184,6 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.cards_menu, menu)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            menu.findItem(R.id.import_mct_file)?.isVisible = false
-            menu.findItem(R.id.import_mfc_file)?.isVisible = false
-        }
         val searchItem = menu.findItem(R.id.search)
         val searchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(this)
@@ -209,15 +205,10 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         try {
-            val clipboard: ClipboardManager?
-            val xml: String
-            val i: Intent
-            val uri: Uri
-
             when (item.itemId) {
                 R.id.import_clipboard -> {
                     run {
-                        clipboard = activity?.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
+                        val clipboard = activity?.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
                         if (clipboard == null) {
                             Toast.makeText(activity, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
                             return true
@@ -228,7 +219,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                             Toast.makeText(activity, R.string.no_data_in_clipboard, Toast.LENGTH_SHORT).show()
                         } else {
                             val ci = d.getItemAt(0)
-                            xml = ci.coerceToText(activity).toString()
+                            val xml = ci.coerceToText(activity).toString()
 
                             val uris = ExportHelper.importCards(xml, XmlOrJsonCardFormat(), activity!!)
 
@@ -241,57 +232,21 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 }
 
                 R.id.import_mct_file -> {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                        return true
-                    }
-                    uri = Uri.fromFile(Environment.getExternalStorageDirectory())
-                    i = Intent(Intent.ACTION_GET_CONTENT)
-                    i.putExtra(Intent.EXTRA_STREAM, uri)
-                    i.type = "*/*"
-                    val mctMimetypes = arrayOf("text/plain",
-                            // Fallback for cases where we didn't get a good mime type from the
-                            // OS, this allows most "other" files to be selected.
-                            "application/octet-stream")
-                    i.putExtra(Intent.EXTRA_MIME_TYPES, mctMimetypes)
-                    startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT)
+                    startActivityForResult(Utils.getContentIntent(listOf("text/plain")), REQUEST_SELECT_FILE_MCT)
                     return true
                 }
 
                 R.id.import_mfc_file -> {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                        return true
-                    }
-                    uri = Uri.fromFile(Environment.getExternalStorageDirectory())
-                    i = Intent(Intent.ACTION_GET_CONTENT)
-                    i.putExtra(Intent.EXTRA_STREAM, uri)
-                    i.type = "*/*"
-                    val mfcMimetypes = arrayOf(
-                            // Fallback for cases where we didn't get a good mime type from the
-                            // OS, this allows most "other" files to be selected.
-                            "application/octet-stream")
-                    i.putExtra(Intent.EXTRA_MIME_TYPES, mfcMimetypes)
-                    startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MFC)
+                    startActivityForResult(Utils.getContentIntent(listOf()), REQUEST_SELECT_FILE_MFC)
                     return true
                 }
 
                 R.id.import_file -> {
                     // Some files are text/xml, some are application/xml.
-                    // In Android 4.4 and later, we can say the right thing!
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        uri = Uri.fromFile(Environment.getExternalStorageDirectory())
-                        i = Intent(Intent.ACTION_GET_CONTENT)
-                        i.putExtra(Intent.EXTRA_STREAM, uri)
-                        i.type = "*/*"
-                        val mimetypes = arrayOf("application/xml", "application/json", "text/xml", "text/json", "text/plain", "application/zip",
-                                // Fallback for cases where we didn't get a good mime type from the
-                                // OS, this allows most "other" files to be selected.
-                                "application/octet-stream")
-                        i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
-                        startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.select_file)), REQUEST_SELECT_FILE)
-                    } else {
-                        // Failsafe, used in the emulator for local files
-                        ReadTask(this).execute(Uri.fromFile(File(SD_IMPORT_PATH)))
-                    }
+                    val i = Utils.getContentIntent(
+                            listOf("application/xml", "application/json", "text/xml", "text/json", "text/plain", "application/zip")
+                    )
+                    startActivityForResult(i, REQUEST_SELECT_FILE)
                     return true
                 }
 
@@ -307,7 +262,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
                 R.id.save_xml -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        i = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                        val i = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         i.addCategory(Intent.CATEGORY_OPENABLE)
                         i.type = "application/zip"
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME)
@@ -660,9 +615,6 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         @NonNls
         private const val STD_EXPORT_FILENAME = "Metrodroid-Export.zip"
         private val SD_EXPORT_PATH = Environment.getExternalStorageDirectory().toString() + "/" + STD_EXPORT_FILENAME
-        @NonNls
-        private const val STD_IMPORT_FILENAME = "Metrodroid-Import.zip"
-        private val SD_IMPORT_PATH = Environment.getExternalStorageDirectory().toString() + "/" + STD_IMPORT_FILENAME
 
         private fun onCardsImported(ctx: Context, uriCount: Int, firstUri: Uri?) {
             Toast.makeText(ctx, Localizer.localizePlural(

@@ -31,7 +31,6 @@ import android.database.MergeCursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -199,23 +198,8 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_key) {
-            val uri = Uri.fromFile(Environment.getExternalStorageDirectory())
-            val i = Intent(Intent.ACTION_GET_CONTENT)
-            i.putExtra(Intent.EXTRA_STREAM, uri)
-
-            // In Android 4.4 and later, we can say the right thing!
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                i.type = "*/*"
-                val mimetypes = arrayOf("application/json", "application/octet-stream", "application/x-extension-bin")
-                i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
-            } else {
-                // Failsafe, used in the emulator for local files
-                i.type = "application/octet-stream"
-            }
-
-            if (item.itemId == R.id.add_key)
-                startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.select_file)),
-                        REQUEST_SELECT_FILE)
+            val i = Utils.getContentIntent(listOf("application/json", "application/x-extension-bin"))
+            startActivityForResult(i, REQUEST_SELECT_FILE)
             return true
         } else if (item.itemId == R.id.key_more_info) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/key_formats")))

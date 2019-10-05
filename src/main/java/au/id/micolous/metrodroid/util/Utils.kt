@@ -29,6 +29,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -241,5 +242,23 @@ object Utils {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun getContentIntent(mimeTypes: List<String>): Intent {
+        val uri = Uri.fromFile(Environment.getExternalStorageDirectory())
+        val i = Intent(Intent.ACTION_GET_CONTENT)
+        i.putExtra(Intent.EXTRA_STREAM, uri)
+        // In Android 4.4 and later, we can say the right thing!
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            i.type = "*/*"
+            i.putExtra(Intent.EXTRA_MIME_TYPES, (mimeTypes + listOf(
+                // Fallback for cases where we didn't get a good mime type from the
+                // OS, this allows most "other" files to be selected.
+                "application/octet-stream")).toTypedArray())
+        } else {
+            // Failsafe, used in the emulator for local files
+            i.type = "application/octet-stream"
+        }
+        return Intent.createChooser(i, Localizer.localizeString(R.string.select_file))
     }
 }
