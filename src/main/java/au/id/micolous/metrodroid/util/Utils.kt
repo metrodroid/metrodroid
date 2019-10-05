@@ -31,7 +31,10 @@ import android.nfc.NfcAdapter
 import android.os.Build
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -261,5 +264,14 @@ object Utils {
             i.type = "application/octet-stream"
         }
         return Intent.createChooser(i, Localizer.localizeString(R.string.select_file))
+    }
+
+    fun loadMultiReuse(reuseView: View?, inflater: LayoutInflater, resource: Int,
+                       root: ViewGroup?, attachToRoot: Boolean, tag: String = resource.toString(16)): View {
+        if (reuseView != null && reuseView.tag == tag)
+            return reuseView
+        val v = inflater.inflate(resource, root, attachToRoot)
+        v.tag = tag
+        return v
     }
 }
