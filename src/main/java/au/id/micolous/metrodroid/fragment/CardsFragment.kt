@@ -268,7 +268,8 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME)
                         startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
                     } else {
-                        val file = File(SD_EXPORT_PATH)
+                        @Suppress("DEPRECATION")
+                        val file = File(Environment.getExternalStorageDirectory().toString() + "/" + STD_EXPORT_FILENAME)
                         ExportHelper.exportCardsZip(file.outputStream(), activity!!)
                         Toast.makeText(activity, R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show()
                     }
@@ -614,7 +615,6 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         private const val REQUEST_SELECT_FILE_MFC = 4
         @NonNls
         private const val STD_EXPORT_FILENAME = "Metrodroid-Export.zip"
-        private val SD_EXPORT_PATH = Environment.getExternalStorageDirectory().toString() + "/" + STD_EXPORT_FILENAME
 
         private fun onCardsImported(ctx: Context, uriCount: Int, firstUri: Uri?) {
             Toast.makeText(ctx, Localizer.localizePlural(
