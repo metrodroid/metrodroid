@@ -97,7 +97,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
 
             for (block in 0 until blockCount - 1) {
                 assertFalse (read[idx, block].isUnauthorized, "$addMsg: Sector $idx, block $block should be ok but isn't")
-                val actual = read[idx, block].data!!
+                val actual = read[idx, block].data
                 val expected = raw.copyOfRange(blockOffset * 16,
                         (blockOffset + 1) * 16)
                 assertTrue (

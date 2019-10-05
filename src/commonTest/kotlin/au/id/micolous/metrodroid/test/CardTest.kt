@@ -129,7 +129,6 @@ class CardTest : BaseInstrumentedTest() {
     fun testUnauthorizedClassic() {
         val e = ImmutableByteArray.ofB(0x6d, 0x65, 0x74, 0x72, 0x6f, 0x64, 0x72, 0x6f, 0x69, 0x64, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69)
         val k = ImmutableByteArray(6)
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
 
         val l = (0..15).map { UnauthorizedClassicSector() }.toMutableList<ClassicSector>()
 
@@ -162,7 +161,6 @@ class CardTest : BaseInstrumentedTest() {
         val otherBytes = ImmutableByteArray(16) { i -> (i + 1).toByte() }
 
         val k = ImmutableByteArray(6)
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
 
         val all00Blocks = List(4) { all00Bytes }
         val allFFBlocks = List(4) { allFFBytes }
@@ -189,8 +187,6 @@ class CardTest : BaseInstrumentedTest() {
 
     @Test
     fun testUnauthorizedDesfire() {
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
-
         // Card with no files at all.
         val c1 = DesfireCard(ImmutableByteArray.empty(), emptyMap())
 
