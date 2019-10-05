@@ -1011,4 +1011,10 @@
     <string name="compass_sub_daypass_with_yvr">Pase de un día (DayPass) con aeropuerto (YVR)</string>
     <string name="lisboaviva_sub_passe_mts">Passe MTS</string>
     <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d clave para MIFARE Classic</item>
+        <item quantity="other">%d claves para MIFARE Classic</item>
+    </plurals>
+    <string name="rkf_status_ok">OK, habilitado</string>
+    <string name="rkf_status_action_pending">Acción pendiente</string>
 </resources>
