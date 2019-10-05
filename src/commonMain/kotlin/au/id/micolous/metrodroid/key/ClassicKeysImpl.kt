@@ -140,7 +140,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
             return keys
         }
 
-        private const val KEY_BUNDLE = "bundle"
+        const val KEY_BUNDLE = "bundle"
         private const val KEY_LEN = 6
 
         private fun classicFromJSON(json: JsonObject, defaultBundle: String): ClassicSectorAlgoKey? {
