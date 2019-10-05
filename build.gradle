@@ -550,7 +550,6 @@ android {
             applicationIdSuffix '.dev'
             minifyEnabled true
             shrinkResources true
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
             matchingFallbacks = ['debug']
@@ -558,7 +557,6 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
         }
