@@ -623,6 +623,7 @@ android {
 kotlin.sourceSets.all {
     languageSettings {
         useExperimentalAnnotation('kotlin.ExperimentalUnsignedTypes')
+        useExperimentalAnnotation('kotlin.Experimental')
     }
 }
 
