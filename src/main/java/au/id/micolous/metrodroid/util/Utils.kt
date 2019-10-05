@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
 import java.util.*
 import android.content.pm.PackageManager.GET_META_DATA
+import androidx.core.content.pm.PackageInfoCompat
 
 fun AlertDialog.Builder.safeShow() {
     try {
@@ -98,7 +99,7 @@ object Utils {
     private val versionString: String
         get() {
             val info = packageInfo
-            return "${info.versionName} (${info.versionCode})"
+            return "${info.versionName} (${PackageInfoCompat.getLongVersionCode(info)})"
         }
 
     private val packageInfo: PackageInfo
