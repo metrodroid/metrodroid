@@ -89,6 +89,7 @@ object RicaricaMiLookup : En1545LookupSTR("ricaricami") {
             TARIFF_DAILY_URBAN to R.string.ricaricami_daily_urban,
             TARIFF_URBAN_2X6 to R.string.ricaricami_urban_2x6,
             TARIFF_YEARLY_URBAN to R.string.ricaricami_yearly_urban,
-            TARIFF_MONTHLY_URBAN to R.string.ricaricami_monthly_urban
+            TARIFF_MONTHLY_URBAN to R.string.ricaricami_monthly_urban,
+            7095 to R.string.ricaricami_m1_3_ord_single
     )
 }
