@@ -33,6 +33,9 @@ env:
     - AVDMANAGER_OPTS="--add-modules java.se.ee"
     - SDKMANAGER_OPTS="--add-modules java.se.ee"
 
+    # Limit RAM usage. Travis has a 4GB limit, we tend to flake otherwise.
+    - JVM_OPTS="-Xms1536M -Xmx1536M -XX:MaxMetaspaceSize=768M -XX:+HeapDumpOnOutOfMemoryError"
+
 jobs:
   include:
     # This only runs "assemble", which compiles the code and runs non-Android unit tests. This is
