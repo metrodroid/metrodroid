@@ -69,8 +69,19 @@ object FelicaReader {
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
+    /**
+     * Dumps a FeliCa (JIS X 6319-4) tag.
+     *
+     * Reference: https://github.com/metrodroid/metrodroid/wiki/FeliCa
+     *
+     * @param tag [FelicaTransceiver] to communicate with the card on
+     * @param feedbackInterface [TagReaderFeedbackInterface] to communicate with the UI on
+     * @param onlyFirst If true, only read the first service code on the card. If not set (false),
+     * read all service codes.
+     */
     suspend fun dumpTag(tag: FelicaTransceiver,
-                        feedbackInterface: TagReaderFeedbackInterface):
+                        feedbackInterface: TagReaderFeedbackInterface,
+                        onlyFirst: Boolean = false):
             FelicaCard {
         var magic = false
         var liteMagic = false
@@ -129,6 +140,15 @@ object FelicaReader {
                 if (systemCode == 0) continue
 
                 val services = mutableMapOf<Int, FelicaService>()
+
+                if (onlyFirst && systemNumber > 0) {
+                    // Instead, insert a dummy service with no service codes.
+                    Log.d(TAG, "Not reading system code ${systemCode.hexString}: " +
+                        "onlyFirst = true and systemNumber ($systemNumber) > 0")
+
+                    systems[systemCode] = FelicaSystem(services)
+                    continue
+                }
 
                 var serviceCodes = when {
                     magic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS -> {
