@@ -38,7 +38,20 @@ object FelicaCardReaderIOS {
         Log.d(TAG, "Start dump ${xfer.uid}")
         runBlocking {
             Log.d(TAG, "Start async")
-            val df = FelicaReader.dumpTag(xfer, feedback)
+
+            /*
+             * onlyFirst = true is an iOS-specific hack to work around
+             * https://github.com/metrodroid/metrodroid/issues/613
+             *
+             * _NFReaderSession._validateFelicaCommand asserts that you're talking to the exact
+             * IDm that the system discovered -- including the upper 4 bits (which indicate the
+             * system number).
+             *
+             * Tell FelicaReader to only dump the first service.
+             *
+             * Once iOS fixes this, do an iOS version check instead.
+             */
+            val df = FelicaReader.dumpTag(xfer, feedback, onlyFirst = true)
             Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), felica = df)
         }
