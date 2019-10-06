@@ -1986,6 +1986,8 @@
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
+    <!-- Translators: type of card media (フェリカ / Felicity Card) -->
+    <string name="card_media_felica">FeliCa</string>
     <!-- Translators: type of card media, variant of FeliCa (フェリカ / Felicity Card) -->
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="felica_lite_read_only">Read-only data</string>
@@ -1995,6 +1997,28 @@
     <!-- Translators: area of card storage shared by Suica and Edy,
          possibly othewr systems as well. -->
     <string name="felica_system_common">Common Area (FeliCa Networks)</string>
+    <!--
+    Translators:
+    Used as a preference title. FeliCa divides cards into "systems" (~applications) and "services"
+    (~files). A single card may have more than one "system".
+
+    By default, this preference is disabled: Metrodroid reads all systems from a FeliCa card.
+
+    When this preference is enabled, Metrodroid will only read the first system on a FeliCa card.
+    -->
+    <string name="felica_first_system_pref">Only read first system</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is disabled (default).
+    -->
+    <string name="felica_first_system_pref_summary_off">Metrodroid will read all systems on FeliCa cards. This is the default.</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is enabled.
+    -->
+    <string name="felica_first_system_pref_summary_on">Metrodroid will read only the first system on FeliCa cards. This simulates a workaround for a bug in iOS. Reads of multi-system FeliCa cards will be incomplete!</string>
 
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>

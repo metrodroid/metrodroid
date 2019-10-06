@@ -38,6 +38,7 @@ actual object Preferences {
     const val PREF_LAST_READ_AT = "last_read_at"
     private const val PREF_MFC_AUTHRETRY = "pref_mfc_authretry"
     private const val PREF_MFC_FALLBACK = "pref_mfc_fallback"
+    private const val PREF_FELICA_ONLY_FIRST = "pref_felica_only_first"
     private const val PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys"
 
     private const val PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers"
@@ -176,6 +177,8 @@ actual object Preferences {
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
 
     val overrideLang get() = getStringPreference(PREF_LANG_OVERRIDE, "")
+
+    val felicaOnlyFirst get() = getBooleanPref(PREF_FELICA_ONLY_FIRST, false)
 
     actual val metrodroidVersion: String
         get() = BuildConfig.VERSION_NAME
