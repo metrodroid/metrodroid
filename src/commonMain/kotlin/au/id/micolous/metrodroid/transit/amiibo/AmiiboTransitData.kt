@@ -18,29 +18,13 @@
  */
 package au.id.micolous.metrodroid.transit.amiibo
 
-import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
-
-private const val NAME = "Amiibo"
-
-private val CARD_INFO = CardInfo(
-        name = NAME,
-        cardType = CardType.MifareUltralight,
-        locationId = R.string.location_worldwide,
-        imageId = R.drawable.amiibo,
-        region = TransitRegion.WORLDWIDE
-)
 
 /**
  * Reader for Nintendo Amiibo tags.
@@ -68,6 +52,7 @@ data class AmiiboTransitData internal constructor(
     override val cardName get() = NAME
 
     companion object {
+        const val NAME = "Amiibo"
         private const val AMIIBO_STR = "amiibo"
         private val figureTypes = mapOf(
                 0 to R.string.amiibo_type_figure,
@@ -82,22 +67,5 @@ data class AmiiboTransitData internal constructor(
                 series = ultralightCard.getPage(0x16).data.getBitsFromBuffer(16, 8)
                 )
     }
-}
-
-object AmiiboTransitFactory : UltralightCardTransitFactory {
-    override fun check(card: UltralightCard) = (card.cardModel == "NTAG215" || card.pages.size == 136) &&
-            // Amiibos are always locked and configured in the same way
-            card.readPages(2,3).sliceOffLen(2, 7) == ImmutableByteArray.fromHex("0fe0f110ffeea5") &&
-            card.getPage(0x16).data[3] == 2.toByte() &&
-            card.getPage(0x82).data.byteArrayToInt(0,3) == 0x01000f &&
-            card.readPages(0x83,2) == ImmutableByteArray.fromHex("000000045f000000")
-
-
-    override fun parseTransitData(card: UltralightCard) = AmiiboTransitData.parse(card)
-
-    override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, null)
-
-    override val allCards: List<CardInfo>
-        get() = listOf(CARD_INFO)
 }
 
