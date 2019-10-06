@@ -16,6 +16,8 @@ Some vector glyphs used in Metrodroid are derived from [Noto Emoji][0]:
 
 * `metro`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f687.svg
 
+* `monorail`: https://github.com/googlefonts/noto-emoji/blob/master/svg/emoji_u1f69d.svg
+
 * `train`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f686.svg
 
   This was modified to remove the radial gradient, and replace it with a solid colour, `#E0E0E0`, as
