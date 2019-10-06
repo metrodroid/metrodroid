@@ -21,24 +21,26 @@ package au.id.micolous.metrodroid.util
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.os.AsyncTask
 import android.util.Log
+import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
+import java.lang.ref.WeakReference
 
-abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val mActivity: Activity, showLoading: Boolean = true, loadingText: String? = null, private val mFinishOnError: Boolean = false) : AsyncTask<Void, ProgressBar, BetterAsyncTask.TaskResult<Result>>() {
+abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activity, showLoading: Boolean = true, loadingText: String? = null, private val mFinishOnError: Boolean = false) : AsyncTask<Void, ProgressBar, BetterAsyncTask.TaskResult<Result>>() {
 
-    private var mProgressDialog: ProgressDialog? = null
+    private val mProgressBar: ProgressBar? = activity.findViewById(R.id.progressbar)
+    private val mProgressText: TextView? = activity.findViewById(R.id.progresstext)
+    protected val mWeakActivity: WeakReference<Activity> = WeakReference(activity)
 
     constructor(activity: Activity, showLoading: Boolean, finishOnError: Boolean) : this(activity, showLoading, null, finishOnError)
 
     init {
         if (showLoading) {
-            mProgressDialog = ProgressDialog(mActivity).also {
-                it.setCancelable(false)
-                it.isIndeterminate = true
-            }
+            mProgressBar?.isIndeterminate = true
             setLoadingText(loadingText)
         }
     }
@@ -48,14 +50,12 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
             super.cancel(true)
         }
 
-        mProgressDialog?.also {
-            it.dismiss()
-            mProgressDialog = null
-        }
+        mProgressBar?.visibility = View.GONE
+        mProgressText?.visibility = View.GONE
     }
 
     private fun setLoadingText(text: String?) {
-        mProgressDialog?.setMessage(text?.ifEmpty { null } ?: mActivity.getString(R.string.loading))
+        mProgressText?.text = text?.ifEmpty { null } ?: Localizer.localizeString(R.string.loading)
     }
 
     override fun doInBackground(vararg unused: Void): TaskResult<Result> {
@@ -70,11 +70,13 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
 
     override fun onPreExecute() {
         super.onPreExecute()
-        mProgressDialog?.show()
+        mProgressBar?.visibility = View.VISIBLE
+        mProgressText?.visibility = View.VISIBLE
     }
 
     override fun onPostExecute(result: TaskResult<Result>) {
-        mProgressDialog?.dismiss()
+        mProgressBar?.visibility = View.GONE
+        mProgressText?.visibility = View.GONE
         result.exception?.also {
             onError(it)
             return
@@ -84,13 +86,14 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(protected val m
     }
 
     private fun onError(ex: Exception) {
-        val dialog = AlertDialog.Builder(mActivity)
+        val activity = mWeakActivity.get() ?: return
+        val dialog = AlertDialog.Builder(activity)
                 .setTitle(R.string.error)
                 .setMessage(ex.toString())
                 .setPositiveButton(android.R.string.ok, null)
                 .create()
         if (mFinishOnError) {
-            dialog.setOnDismissListener { mActivity.finish() }
+            dialog.setOnDismissListener { activity.finish() }
         }
         dialog.show()
     }

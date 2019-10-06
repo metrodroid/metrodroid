@@ -32,6 +32,32 @@
     android:baselineAligned="false"
     android:gravity="center_horizontal">
 
+    <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:max="100"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="-7dp"/>
+
+    <TextView
+            android:text="@string/loading"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progresstext"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/progressbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+    />
+
     <TextView
         android:id="@+id/textView3"
         style="?android:attr/listSeparatorTextViewStyle"
@@ -45,7 +71,7 @@
         android:text="@string/card_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/progresstext" />
 
     <TextView
         android:id="@+id/card_type"

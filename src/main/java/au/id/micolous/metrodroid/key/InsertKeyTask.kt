@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.key
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.BetterAsyncTask
@@ -37,15 +38,16 @@ class InsertKeyTask(activity: Activity, private val mKeys: CardKeys)
         values.put(KeysTableColumns.CARD_TYPE, mKeys.type)
         values.put(KeysTableColumns.KEY_DATA, mKeys.toJSON().toString())
 
-        mActivity.contentResolver.insert(CardKeyProvider.CONTENT_URI, values)
+        MetrodroidApplication.instance.contentResolver.insert(CardKeyProvider.CONTENT_URI, values)
 
         return null
     }
 
     override fun onResult(result: Void?) {
-        val intent = Intent(mActivity, mActivity.javaClass)
+        val activity = mWeakActivity.get() ?: return
+        val intent = Intent(activity, activity.javaClass)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        mActivity.startActivity(intent)
-        mActivity.finish()
+        activity.startActivity(intent)
+        activity.finish()
     }
 }
