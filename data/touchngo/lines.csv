@@ -1,0 +1,11 @@
+id,name,mode,code,comment
+1,Seremban,TRAIN,KB/KC
+2,Port Klang,TRAIN,KA/KD
+3,Ampang,METRO,AG,
+4,Sri Petaling,METRO,SP,
+5,Kelana Jaya,METRO,KJ,
+6,KLIA Ekspres,TRAIN,KE,Airport express service
+7,KLIA Transit,TRAIN,KT,Airport local service
+8,KL Monorail,MONORAIL,MR
+9,Sungai Buloh-Kajang,METRO,SBK
+10,Skypark Link,TRAIN,KS,Airport express service
