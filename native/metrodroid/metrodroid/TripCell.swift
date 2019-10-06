@@ -76,7 +76,9 @@ class TripCell : UITableViewCell {
         "cashier_yen",
         "unknown",
         "banned",
-        "trolleybus"
+        "trolleybus",
+        "car", // TOLL_ROAD
+        "monorail"
     ]
     
     func renderTrip(trip: Trip) {
