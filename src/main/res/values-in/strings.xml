@@ -111,7 +111,7 @@
     <string name="map_tiles_subdomains">Subdomain petak peta</string>
     <string name="map_tiles_subdomains_summary">Jika menggunakan {s} pada URLs peta, list subdomain dipisahkan dengan koma, atau dengan list subdomain dengan satu karakter.</string>
     <string name="online_services">Pelayanan online</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Ulang autentikasi</string>
     <string name="auth_retries_summary">Jumlah berapa kali percobaan autentikasi di tiap sektor</string>
 

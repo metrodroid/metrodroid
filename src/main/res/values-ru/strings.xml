@@ -172,7 +172,7 @@
     <string name="saved_xml_custom">Файл XML записан на USB носитель.</string>
     <string name="about_card_format">Об этом формате карт</string>
     <string name="online_services">Онлайн сервисы</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Количество попыток аутентификации</string>
     <string name="auth_retries_summary">Количество попыток аутентификации для каждого сектора</string>
     <string name="mfc_fallback_desc">На картах некоторых транспортных компаний нету идентификатора. Чтобы их прочитать вам нужно выбрать транспортную компанию явно.</string>
@@ -414,7 +414,7 @@
     <string name="card_name_troika_strelka_hybrid">Тройка+Стрелка</string>
     <string name="trip_counter">Счетчик поездок</string>
     <string name="refill_counter">Счётчик пополнений</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Скачать ключи для карты Leap</string>
     <string name="leap_retrieve_keys_longdesc">При этом данные вашей карты будут переданы в Transport for Ireland для того, чтобы разблокировать карту Leap. TFI сможет узнать, что вы использовали Metrodroid на этой карте. Карточка не сможет быть прочитана без этого ключа.</string>
     <string name="leap_period_start">Начало периода</string>

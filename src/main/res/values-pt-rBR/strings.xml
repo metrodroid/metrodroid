@@ -120,7 +120,7 @@
     <string name="file_exported">Arquivo exportado.</string>
     <string name="about_card_format">Sobre este formato de cartão</string>
     <string name="online_services">Serviços online</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Tentativas de autenticação</string>
     <string name="auth_retries_summary">Número de vezes para tentar autenticação para cada setor</string>
     <string name="requires_android_17">Requer o Android 4.2 ou posterior.</string>

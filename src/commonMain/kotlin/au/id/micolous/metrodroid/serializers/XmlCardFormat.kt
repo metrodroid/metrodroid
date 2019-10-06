@@ -539,7 +539,7 @@ fun readCardXML(root: NodeWrapper): Card = logAndSwiftWrap("XmlCardFormat", "XML
     if (root.nodeName != "card")
         throw Exception("Invalid root ${root.nodeName}")
     val cardType = root.attributes["type"] ?: throw Exception("type attribute not found")
-    val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
+    val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.value,
             ignore = setOf("type", "id", "scanned_at", "label"),
             skippable = setOf("ultralightType", "idm"))
     val tagId = ImmutableByteArray.fromHex(root.attributes.getValue("id"))
@@ -547,22 +547,22 @@ fun readCardXML(root: NodeWrapper): Card = logAndSwiftWrap("XmlCardFormat", "XML
             tz = MetroTimeZone.LOCAL)
     val label = root.attributes["label"]
     when (cardType.toInt()) {
-        CardType.MifareClassic.toInteger() -> Card(
+        CardType.MifareClassic.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareClassic = xi.decode(ClassicCard.serializer()))
-        CardType.MifareUltralight.toInteger() -> Card(
+        CardType.MifareUltralight.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareUltralight = xi.decode(UltralightCard.serializer()))
-        CardType.MifareDesfire.toInteger() -> Card(
+        CardType.MifareDesfire.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareDesfire = xi.decode(DesfireCard.serializer()))
-        CardType.CEPAS.toInteger() -> Card(
+        CardType.CEPAS.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 cepasCompat = xi.decode(CEPASCard.serializer()))
-        CardType.FeliCa.toInteger() -> Card(
+        CardType.FeliCa.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 felica = xi.decode(FelicaCard.serializer()))
-        CardType.ISO7816.toInteger() -> Card(
+        CardType.ISO7816.value -> Card(
                 tagId = tagId, scannedAt = scannedAt, label = label,
                 iso7816 = xi.decode(ISO7816Card.serializer()))
         else -> throw Exception("Unknown card type $cardType")

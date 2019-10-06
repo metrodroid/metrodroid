@@ -197,4 +197,17 @@ class Utils {
             return "-"
         }
     }
+    
+    /**
+     Returns a localized string describing a card's media and serial number.
+
+     - Parameter card: The card to describe. If `nil`, then a localized "Unknown card" string is returned.
+     - Returns: Localized string. If `Preferences.hideCardNumbers == true`, the serial number is omitted from the output.
+     */
+    class func cardMediaDescription(_ card: Card?) -> String {
+        let cardType = Utils.localizeString(card?.cardType.label ?? CardType.unknown.label)
+        let cardSerial = Preferences.init().hideCardNumbers ? nil : card?.tagId.getHexString()
+        return (cardSerial == nil ? cardType :
+            Utils.localizeString(RKt.R.string.card_media_placeholder, cardType, card))
+    }
 }

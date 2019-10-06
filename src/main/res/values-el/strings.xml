@@ -115,7 +115,7 @@
     <string name="classic_key_format_a">Κλειδί (Α): %s</string>
     <string name="classic_key_format_b">Κλειδί (B): %s</string>
     <string name="classic_key_format">Κλειδί: %s</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="card_format_ndef">NDEF</string>
     <string name="unknown_date_title">Άγνωστη ημερομηνία</string>

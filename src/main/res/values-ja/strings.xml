@@ -177,7 +177,7 @@
     <string name="map_tiles_subdomains_summary">地図 URL に {s} を使用する場合は、カンマで区切られたサブドメインのリストか、サブドメインの 1 文字のリスト。</string>
     <string name="about_card_format">このカードフォーマットについて</string>
     <string name="online_services">オンライン サービス</string>
-    <string name="mifare_classic">MIFARE クラシック</string>
+    <string name="card_media_mfc">MIFARE クラシック</string>
     <string name="auth_retries">認証の再試行</string>
     <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
     <string name="valid_to_format">%1$s まで有効</string>

@@ -94,7 +94,7 @@
     <string name="map_tiles_subdomains_summary">Als je {s} gebruikt in kaartURL\'s, een kommagescheiden lijst van subdomeinen of een losse tekenlijst van subdomeinen.</string>
     <string name="about_card_format">Over dit kaartformaat</string>
     <string name="online_services">Online diensten</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Authentiecatiepogingen</string>
     <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
     <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
@@ -490,7 +490,7 @@
     <string name="desfire_keyex">Sleuteluitwisseling</string>
     <string name="desfire_key_number">Sleutel %s</string>
     <string name="location_ireland">Ierland</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Sleutels ophalen voor Leap-kaarten</string>
     <string name="leap_retrieve_keys_longdesc">Dit deelt je kaartgegevens met Transport for Ireland, zodat er kan worden geantwoord op de authenticatie-uitdaging van de Leap-kaart. TfI zal te weten komen dat je Metrodroid hebt gebruikt. Zonder deze sleutel is de kaart onleesbaar.</string>
     <string name="locked_leap">Vergrendelde Leap-kaart</string>

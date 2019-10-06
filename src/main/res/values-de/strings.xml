@@ -123,7 +123,7 @@
     <string name="binary_title_format">Binärdaten</string>
     <string name="need_stations_submit">Melden</string>
     <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="obfuscation_card_numbers">Kartennummern ausblenden</string>
     <string name="obfuscation_card_numbers_desc">Kartennummern nirgendwo anzeigen</string>
     <string name="accessibility">Bedienungshilfen</string>
@@ -429,7 +429,7 @@
     <string name="classic_key_format">Schlüssel: %s</string>
     <string name="trip_counter">Fahrtenzähler</string>
     <string name="refill_counter">Nachfüllzähler</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="raw_header">Rohfelder</string>
     <string name="android_nfc_settings">Android NFC-Einstellungen</string>

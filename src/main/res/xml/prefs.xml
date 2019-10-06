@@ -97,7 +97,7 @@
                     android:title="@string/android_nfc_settings" />
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/mifare_classic">
+            <PreferenceCategory android:title="@string/card_media_mfc">
                 <au.id.micolous.metrodroid.ui.NumberPickerPreference
                     android:title="@string/auth_retries"
                     android:summary="@string/auth_retries_summary"
@@ -116,7 +116,7 @@
                     />
             </PreferenceCategory>
 	    
-	        <PreferenceCategory android:title="@string/mifare_desfire">
+	        <PreferenceCategory android:title="@string/card_media_mfd">
                 <CheckBoxPreference
                     android:title="@string/leap_retrieve_keys"
                     android:summary="@string/leap_retrieve_keys_longdesc"

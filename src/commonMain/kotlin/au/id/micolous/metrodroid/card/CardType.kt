@@ -2,7 +2,7 @@
  * CardType.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015, 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,36 +19,25 @@
  */
 package au.id.micolous.metrodroid.card
 
-enum class CardType constructor(private val mValue: Int) {
-    MifareClassic(0),
-    MifareUltralight(1),
-    MifareDesfire(2),
-    CEPAS(3),
-    FeliCa(4),
-    ISO7816(5),
-    MultiProtocol(7),
-    Vicinity(8),
-    MifarePlus(9),
-    Unknown(65535);
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 
-    fun toInteger() = mValue
+enum class CardType(
+    val value: Int,
+    val label: StringResource) {
 
-    override fun toString() = when (mValue) {
-        0 -> "MIFARE Classic"
-        1 -> "MIFARE Ultralight"
-        2 -> "MIFARE DESFire"
-        3 -> "CEPAS"
-        4 -> "FeliCa"
-        5 -> "ISO7816"
-        6 -> "Calypso"
-        7 -> "Multi-protocol"
-        8 -> "Vicinity"
-        9 -> "MIFARE Plus"
-        65535 -> "Unknown"
-        else -> "Unknown"
-    }
+    MifareClassic(0, R.string.card_media_mfc),
+    MifareUltralight(1, R.string.card_media_mfu),
+    MifareDesfire(2, R.string.card_media_mfd),
+    CEPAS(3, R.string.card_media_cepas),
+    FeliCa(4, R.string.card_media_felica),
+    ISO7816(5, R.string.card_media_iso7816),
+    MultiProtocol(7, R.string.card_media_multi_protocol),
+    Vicinity(8, R.string.card_media_vicinity),
+    MifarePlus(9, R.string.card_media_mfp),
+    Unknown(65535, R.string.unknown_card);
 
     companion object {
-        fun parseValue(value: Int): CardType? = values().find { it.mValue == value }
+        fun parseValue(value: Int) = values().find { it.value == value } ?: Unknown
     }
 }

@@ -2,7 +2,7 @@
  * ExportHelper.kt
  *
  * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ object ExportHelper {
     private fun importCard(c: Card,
                            context: Context): Uri? {
         val cv = ContentValues()
-        cv.put(CardsTableColumns.TYPE, c.cardType.toInteger())
+        cv.put(CardsTableColumns.TYPE, c.cardType.value)
         cv.put(CardsTableColumns.TAG_SERIAL, c.tagId.toHexString())
         cv.put(CardsTableColumns.DATA, CardSerializer.toPersist(c))
         cv.put(CardsTableColumns.SCANNED_AT, c.scannedAt.timeInMillis)

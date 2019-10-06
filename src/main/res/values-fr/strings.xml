@@ -94,7 +94,7 @@
     <string name="map_tiles_subdomains_summary">Si vous utilisez {s} dans les URL des cartes, une liste de sous-domaine séparés par une virgule, une liste de sous-domaines à caractère unique.</string>
     <string name="about_card_format">À propos de ce format de carte</string>
     <string name="online_services">Services en ligne</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Tentatives d\'authentification</string>
     <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
     <string name="mfc_fallback_desc">Certaines agences n\'ont pas de système d\'identification sur leur carte. Pour les lire, vous devez sélectionner explicitement une agence.</string>
@@ -625,7 +625,7 @@
     <string name="classic_key_format">Clé : %s</string>
     <string name="trip_counter">Compteur de trajets</string>
     <string name="refill_counter">Compteur de recharges</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Récupération de clés pour les cartes Leap</string>
     <string name="leap_retrieve_keys_longdesc">Ceci partagera vos détails de carte avec Transport pour l’Irlande (TFI), afin de répondre à une requête d’authentification de la carte Leap. TFI sera en mesure de savoir que vous avez utilisé Metrodroid sur cette carte. La carte n’est pas lisible sans cette clé.</string>
     <string name="locked_leap">Leap verrouillé</string>

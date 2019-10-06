@@ -101,7 +101,7 @@
     <string name="map_tiles_subdomains">Kartflis-underdomener</string>
     <string name="map_tiles_help">Vis Leaflet TileLayer-dokumentasjon</string>
     <string name="about_card_format">Om dette kortformatet</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
     <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
@@ -487,7 +487,7 @@
     <string name="desfire_key_number">Nøkkel %s</string>
     <string name="location_ireland">Irland</string>
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="leap_retrieve_keys">Hent nøkler for Leap-kort</string>
     <string name="leap_retrieve_keys_longdesc">Dette vil dele dine kortdetaljer med Transport for Irland, for å kunne besvare Leap-kortets identitetsbekreftelsesutfordring. TFI vil kunne vite at du brukte Metrodroid på dette kortet. Kortet er ikke lesbart uten denne nøkkelen.</string>
     <string name="locked_leap">Låst Leap</string>

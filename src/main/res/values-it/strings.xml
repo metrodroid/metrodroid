@@ -112,7 +112,7 @@
     <string name="file_exported">File esportato.</string>
     <string name="about_card_format">Informazioni su questo formato della carta</string>
     <string name="online_services">Servizi online</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="requires_android_17">Richiede Android 4.2 o successivo.</string>
     <string name="requires_android_21">Richiede Android 5.0 o successivo.</string>
     <string name="card_reading_type">Lettura di <xliff:g id="card_name" example="Opal">%s</xliff:g>..…</string>
@@ -338,7 +338,7 @@
     <string name="classic_key_format">Chiave: %s</string>
     <string name="trip_counter">Contatore di viaggi</string>
     <string name="refill_counter">Contatore di ricarica</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="felica_lite_read_only">Dati di sola lettura</string>
     <string name="felica_lite_read_write">Dati riscrivibili</string>

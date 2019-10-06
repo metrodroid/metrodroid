@@ -121,7 +121,7 @@
     <string name="need_stations_submit">Reportar</string>
     <string name="about_card_format">Sobre este formato de tarjeta</string>
     <string name="online_services">Servicios en línea</string>
-    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="card_media_mfc">MIFARE Classic</string>
     <string name="auth_retries">Reintentos de autenticación</string>
     <string name="auth_retries_summary">Número de veces para intentar la autenticación para cada sector</string>
     <string name="requires_android_17">Requiere Android 4.2 o posterior.</string>
@@ -576,7 +576,7 @@
     <string name="classic_key_format">Clave: %s</string>
     <string name="trip_counter">Contador de viajes</string>
     <string name="refill_counter">Contador de recargas</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+    <string name="card_media_mfd">MIFARE DESFire</string>
     <string name="leap_period_start">Inicio del período</string>
     <string name="leap_accumulator_region">Región</string>
     <string name="leap_daily_accumulators">Límites de las tarifas diarias</string>

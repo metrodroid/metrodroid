@@ -71,12 +71,8 @@ class AdvancedCardViewController: UITabBarController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        var hiddenSerial: String? = nil
-        if (Preferences.init().hideCardNumbers) {
-            hiddenSerial = Utils.localizeString(RKt.R.string.hidden_card_number)
-        }
-        let unknown = Utils.localizeString(RKt.R.string.unknown)
-        title = "\(card?.cardType.name ?? unknown) - \(hiddenSerial ?? card?.tagId.toHexString() ?? unknown)"
+        title = Utils.cardMediaDescription(card)
+
         self.viewControllers = self.viewControllers?.filter { v in
             ((v as? CardViewProtocol)?.setTransitData(card: card!, transitData: nil) ?? false)
         }

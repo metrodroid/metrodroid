@@ -2,7 +2,7 @@
  * CardsFragment.kt
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -579,10 +579,13 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 }
             } else {
                 textView1.setText(R.string.unknown_card)
-                if (Preferences.hideCardNumbers) {
-                    textView2.text = CardType.parseValue(type).toString()
+                val cardType = CardType.parseValue(type)
+                if (Preferences.hideCardNumbers || serial.isEmpty()) {
+                    textView2.setText(cardType.label)
                 } else {
-                    textView2.text = "${CardType.parseValue(type)} - $serial"
+                    textView2.text = Localizer.localizeString(
+                        R.string.card_media_placeholder,
+                        Localizer.localizeString(cardType.label), serial)
                 }
             }
             return convertView

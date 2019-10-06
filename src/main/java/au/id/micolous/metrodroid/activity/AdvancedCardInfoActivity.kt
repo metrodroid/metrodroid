@@ -2,7 +2,7 @@
  * AdvancedCardInfoActivity.kt
  *
  * Copyright (C) 2011 Eric Butler
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,10 +84,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
 
         setDisplayHomeAsUpEnabled(true)
 
-        if (Preferences.hideCardNumbers) {
-            supportActionBar?.title = card.cardType.toString()
+        val tagId = card.tagId
+        if (Preferences.hideCardNumbers || tagId.isEmpty()) {
+            supportActionBar?.setTitle(card.cardType.label)
         } else {
-            supportActionBar?.title = card.cardType.toString() + " " + card.tagId.toHexString()
+            supportActionBar?.title = Localizer.localizeString(
+                R.string.card_media_placeholder, card.cardType.label, tagId.getHexString())
         }
 
         var scannedAt = card.scannedAt

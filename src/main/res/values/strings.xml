@@ -235,7 +235,6 @@
     <string name="map_tiles_help_summary">For help on using map tile URLs, see Leaflet\'s online documentation (only available in English).</string>
     <string name="about_card_format">About this card format</string>
     <string name="online_services">Online services</string>
-    <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
 
@@ -1983,11 +1982,37 @@
     <string name="classic_key_format">Key: %s</string>
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
-    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <!-- Card media types -->
+
+    <!--
+    Translators:
+    Used to describe a card media type in a list of cards.
+    %1$s is replaced with the type of card media (card_media_*)
+    %2$s is replaced with the serial number of the card
+    -->
+    <string name="card_media_placeholder" translatable="false"><xliff:g id="card_media" example="FeliCa">%1$s</xliff:g> - <xliff:g id="serial_number" example="A1B2C3D4">%2$s</xliff:g></string>
+    <!-- Type of card media; "Contactless e-Purse Application Specification" -->
+    <string name="card_media_cepas">CEPAS</string>
     <!-- Translators: type of card media (フェリカ / Felicity Card) -->
     <string name="card_media_felica">FeliCa</string>
     <!-- Translators: type of card media, variant of FeliCa (フェリカ / Felicity Card) -->
     <string name="card_media_felica_lite">FeliCa Lite</string>
+    <!-- Card protocol -->
+    <string name="card_media_iso7816">ISO/IEC 7816</string>
+    <!-- Type of card media -->
+    <string name="card_media_mfc">MIFARE Classic</string>
+    <!-- Type of card media -->
+    <string name="card_media_mfd">MIFARE DESFire</string>
+    <!-- Type of card media -->
+    <string name="card_media_mfp">MIFARE Plus</string>
+    <!-- Type of card media -->
+    <string name="card_media_mfu">MIFARE Ultralight</string>
+    <!-- Used to describe a card that communicates with multiple protocols -->
+    <string name="card_media_multi_protocol">Multi-protocol</string>
+    <!-- Type of card media; ISO 15693 "Vicinity" (do not literally translate) -->
+    <string name="card_media_vicinity">Vicinity</string>
+
     <string name="felica_lite_read_only">Read-only data</string>
     <string name="felica_lite_read_write">Re-writable data</string>
     <!-- Translators: NDEF = NFC Data Exchange Format -->
