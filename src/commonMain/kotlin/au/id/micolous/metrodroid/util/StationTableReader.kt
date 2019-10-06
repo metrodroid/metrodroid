@@ -87,13 +87,15 @@ interface StationTableReader {
             return m
         }
 
-        fun getLineName(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): FormattedString? {
+        fun getLineNameNoFallback(reader: String?, id: Int): FormattedString? {
             if (reader == null)
-                return fallbackName(humanReadableId)
+                return null
 
-            val str = StationTableReaderGetSTR(reader) ?: return fallbackName(humanReadableId)
-            return str.getLineName (id)?.selectBestName(false) ?: return fallbackName(humanReadableId)
+            return StationTableReaderGetSTR(reader)?.getLineName (id)?.selectBestName(false)
         }
+
+        fun getLineName(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): FormattedString =
+                getLineNameNoFallback(reader, id) ?: fallbackName(humanReadableId)
 
         fun getLineMode(reader: String?, id: Int): Trip.Mode? {
             val str = StationTableReaderGetSTR(reader ?: return null) ?: return null
