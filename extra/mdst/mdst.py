@@ -3,7 +3,7 @@
 """
 mdst.py - Helper for writing MdST files
 
-Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -172,5 +172,21 @@ def read_operators_from_csv(csv_f):
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
 
-
   return operators
+
+def read_lines_from_csv(csv_f):
+  lines = {}
+  lineread = csv.DictReader(csv_f)
+
+  for line in lineread:
+    linepb = Line()
+    linepb.name.english = line['name']
+    if 'short_name' in line and line['short_name']:
+      linepb.name.english_short = line['short_name']
+    if 'local_name' in line and line['local_name']:
+      linepb.name.local = line['local_name']
+    if 'mode' in line and line['mode']:
+      linepb.transport = TransportType.Value(line['mode'])
+    lines[int(line['id'], 0)] = linepb
+
+  return lines
