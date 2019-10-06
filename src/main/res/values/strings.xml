@@ -2118,6 +2118,12 @@
     <!-- Translators: Menu item to remove scans of the same card with identical data. -->
     <string name="deduplicate_cards">Deduplicate cards</string>
 
+    <string name="card_name_yargor">Yaroslavl Municipal Transport (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Weekday tram subscription</string>
+    <string name="yargor_sub_weekday_trolley">Weekday trolleybus subscription</string>
+    <string name="yargor_sub_allday_all">All-day all-transport subscription</string>
+    <string name="yargor_transports_valid">Valid for following transports</string>
+
     <!-- Translators: Zolotaya Korona (Russian: Золотая Корона, lit: Golden Crown) is a Russian
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>

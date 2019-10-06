@@ -479,6 +479,12 @@
     <string name="serial_only_card_description_locked">Эта карта заблокирована, и только серийный номер может быть прочитан. Её баланс и история могут храниться на ней, но недоступны.</string>
     <string name="serial_only_card_description_more_research">Поддержка этой карты находится в разработке, и в настоящее время только серийный номер может быть прочитан.</string>
     <string name="full_serial_number">Полный серийный номер</string>
+
+    <string name="card_name_yargor">ЯрГорТранс</string>
+    <string name="yargor_sub_weekday_tram">Проездной рабочего дня на трамвай</string>
+    <string name="yargor_sub_weekday_trolley">Проездной рабочего дня на троллейбус</string>
+    <string name="yargor_sub_allday_all">Проездной всех дней на все виды транспорта</string>
+
     <string name="card_name_zolotaya_korona">Золотая Корона</string>
     <string name="zolotaya_korona_region">Регион</string>
     <string name="card_name_krasnodar_etk">Краснодарская ЕТК</string>
