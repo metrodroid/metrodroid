@@ -1135,4 +1135,26 @@
     <string name="app_logo_description">Логотип Метродроида</string>
     <string name="closed_arrow">Свернутый список</string>
     <string name="open_arrow">Развёрнутый список</string>
+    <string name="ovc_sub_ov_bijkaart_1e_klas">Дополнительный проездной (Bijabonnement), первый класс</string>
+    <string name="ovc_sub_daluren_oost_nederland">Внепиковая скидка на востоке</string>
+    <string name="ovc_sub_student_week_korting">Скидка по будням для студентов</string>
+    <string name="ovc_sub_student_weekend_korting">Скидка по выходным для студентов</string>
+    <string name="compass_sub_four_zone_wce_one_way">Четыре зоны WCE (в одну сторону)</string>
+    <string name="compass_sub_bulk_daypass">Оптовый дневной проездной на все зоны (DayPass)</string>
+    <string name="compass_sub_bulk_one_zone">Оптовый на одну зону</string>
+    <string name="compass_sub_bulk_two_zone">Оптовый на две зоны</string>
+    <string name="compass_sub_bulk_three_zone">Оптовый на три зоны</string>
+    <string name="compass_sub_gradpass">Выпускной летний проездной (GradPass)</string>
+    <string name="lisboaviva_sub_navegante_urbano">Городской проездной «Навеганте» (Navegante urbano)</string>
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Фертагус из Пальмелы в Лиссабон + Городская зона</string>
+    <string name="venezia_carnet_traghetto">Пакет билетов на паром</string>
+    <string name="pisa_carnet_10_bgl_70_min_pisa">Пакет из 10 билетов за 70 минут</string>
+    <string name="pisa_abb_trim_pers_pisa">Триместровый проездной на Пизу</string>
+    <string name="ovc_autocharge_information">Информация об автопополнении</string>
+    <string name="waltti_city_zone">%1$s, зона %2$s</string>
+    <string name="waltti_city_zones">%1$s, зоны %2$s</string>
+    <string name="lisboaviva_engraved_serial">Выгравированный номер</string>
+    <string name="lisboaviva_sub_navegante_lisboa">Проездной «Навеганте» для Лиссабона (Navegante Lisboa)</string>
+    <string name="ricaricami_m1_3_ord_single">Обыкновенный Nr.1 на 3 зоны Ми1-Ми3</string>
+    <string name="mode_monorail">Монорельс</string>
 </resources>
