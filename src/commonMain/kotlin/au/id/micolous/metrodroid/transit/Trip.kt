@@ -206,6 +206,7 @@ abstract class Trip : Parcelable {
         BANNED(9, R.string.mode_banned),
         TROLLEYBUS(10, R.string.mode_trolleybus),
         TOLL_ROAD(11, R.string.mode_toll_road),
+        MONORAIL(12, R.string.mode_monorail),
     }
 
     class Comparator : kotlin.Comparator<Trip> {
