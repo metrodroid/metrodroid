@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Μετρόδροειδ</string>
     <string name="license">Άδειες</string>
     <string name="directions">Αγγίξτε μια κάρτα.</string>
     <string name="reading_card">Ανάγνωση κάρτας…</string>
