@@ -1,5 +1,5 @@
 id,name,mode,comment
-0x32303031,RapidKL,TRAIN,Used by gates
-0x32303231,RapidKL,OTHER,Used by refill locations
+0x32303031,Rapid KL,METRO,Used by gates
+0x32303231,Rapid KL,TICKET_MACHINE,Used by refill locations
 0x38363035,Watsons,OTHER,
-0x38363231,Retail,POS,Used by myNews and family mart. Maybe others.
+0x38363231,Retail,POS,Used by myNews and FamilyMart. Maybe others.

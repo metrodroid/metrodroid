@@ -4,7 +4,7 @@
 csv2pb.py
 Compiles MdST stop database from CSV data.
 
-Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
 Copyright 2018 Google
 
 This program is free software: you can redistribute it and/or modify
@@ -44,16 +44,8 @@ def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None
 
   if lines_f is not None:
     lines_f = codecs.getreader('utf-8-sig')(lines_f)
-    lineread = csv.DictReader(lines_f)
-
-    for line in lineread:
-        linepb = Line()
-        linepb.name.english = line['name']
-        if 'short_name' in line and line['short_name']:
-          linepb.name.english_short = line['short_name']
-        if 'local_name' in line and line['local_name']:
-          linepb.name.local = line['local_name']
-        lines[int(line['id'], 0)] = linepb
+    lines = mdst.read_lines_from_csv(lines_f)
+    lines_f.close()
 
   db = mdst.MdstWriter(
     fh=open(output_f, 'wb'),
