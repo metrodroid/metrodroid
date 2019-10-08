@@ -586,7 +586,7 @@
     <string name="podorozhnik_gate">porte %s</string>
     <string name="led_bus">Bus de Saint-Pétersbourg</string>
     <string name="led_metro">Métro de Saint-Pétersbourg</string>
-    <string name="led_shared_taxi">Taxi partagé de Saint-Pétersbourg</string>
+    <string name="led_shared_taxi">Taxi collectif de Saint-Pétersbourg</string>
     <string name="blank_mfu_card">Carte MIFARE Ultralight vierge</string>
     <string name="blank_mfc_card">Carte MIFARE Classic vierge</string>
     <string name="fully_blank_desc">Cette carte paraît être complètement vierge. Elle est formatée mais sans aucune donnée écrite dessus. Elle possède toujours un numéro de série par lequel elle peut être identifiée de façon unique et liée à une base de données, mais la carte elle-même ne contient pas d\'autres données.</string>
