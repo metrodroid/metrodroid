@@ -76,8 +76,8 @@ object FelicaReader {
      *
      * @param tag [FelicaTransceiver] to communicate with the card on
      * @param feedbackInterface [TagReaderFeedbackInterface] to communicate with the UI on
-     * @param onlyFirst If true, only read the first service code on the card. If not set (false),
-     * read all service codes.
+     * @param onlyFirst If true, only read the first system code on the card. If not set (false),
+     * read all system codes.
      */
     suspend fun dumpTag(tag: FelicaTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface,
@@ -143,10 +143,10 @@ object FelicaReader {
 
                 if (onlyFirst && systemNumber > 0) {
                     // Instead, insert a dummy service with no service codes.
-                    Log.d(TAG, "Not reading system code ${systemCode.hexString}: " +
+                    Log.i(TAG, "Not reading system code ${systemCode.hexString}: " +
                         "onlyFirst = true and systemNumber ($systemNumber) > 0")
 
-                    systems[systemCode] = FelicaSystem(services)
+                    systems[systemCode] = FelicaSystem(skipped = true)
                     continue
                 }
 
@@ -180,6 +180,11 @@ object FelicaReader {
                     Log.d(TAG, "- Excluding ${excludedCodes.size} codes in system " +
                             "${systemCode.hexString} which require authentication: " +
                             excludedCodes.joinToString(limit = 50, transform = Int::hexString))
+
+                    for (serviceCode in excludedCodes) {
+                        services[serviceCode] = FelicaService(skipped = true)
+                    }
+
                     serviceCodes = serviceCodes.filter { it and 0x01 == 1 }.toIntArray()
                 }
 
@@ -211,9 +216,8 @@ object FelicaReader {
 
                     Log.d(TAG, "- Service code ${serviceCode.hexString} has ${blocks.size} blocks")
 
-                    if (blocks.isNotEmpty()) { // Most service codes appear to be empty...
-                        services[serviceCode] = FelicaService(blocks)
-                    }
+                    services[serviceCode] = FelicaService(blocks)
+
                     if (partialRead)
                         break
                 }

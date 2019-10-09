@@ -2,6 +2,8 @@
  * FelicaSystem.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +22,7 @@ package au.id.micolous.metrodroid.card.felica
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
@@ -27,12 +30,32 @@ import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FelicaSystem(@XMLListIdx("code")
-                        val services: Map<Int, FelicaService>) {
+data class FelicaSystem(
+    /** Service codes that are present in this System */
+    @XMLListIdx("code") val services: Map<Int, FelicaService> = emptyMap(),
+    /** When reading, did we skip trying to read the contents of this system? */
+    @XMLId("skipped") val skipped: Boolean = false) {
     fun getService(serviceCode: Int) = services[serviceCode]
 
-    fun rawData(systemCode: Int): List<ListItem> =
-            services.map { (serviceCode, service) ->
+    /** Shows raw data for all Services within this System */
+    fun rawData(systemCode: Int): List<ListItem> {
+        val emptyServices = services.filterValues { it.blocks.isEmpty() }
+        val skippedServiceIds = emptyServices.filterValues { it.skipped }.keys
+        val emptyServiceIds = emptyServices.filterValues { !it.skipped }.keys
+
+        return listOfNotNull(
+            if (emptyServiceIds.isEmpty()) { null } else {
+                ListItem("${emptyServiceIds.size} empty service codes",
+                    emptyServiceIds.joinToString { it.hexString })
+            },
+            if (skippedServiceIds.isEmpty()) { null } else {
+                ListItem("${skippedServiceIds.size} skipped service codes",
+                    skippedServiceIds.joinToString { it.hexString })
+            }
+        ) + services.mapNotNull { (serviceCode, service) ->
+            if (service.blocks.isEmpty()) {
+                null
+            } else {
                 ListItemRecursive(
                         Localizer.localizeString(R.string.felica_service_title_format,
                                 serviceCode.hexString,
@@ -42,4 +65,6 @@ data class FelicaSystem(@XMLListIdx("code")
                         Localizer.localizePlural(R.plurals.block_count,
                                 service.blocks.size, service.blocks.size), service.rawData)
             }
+        }
+    }
 }
