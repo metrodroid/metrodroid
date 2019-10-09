@@ -34,7 +34,7 @@ internal class TroikaTrip (override val startTimestamp: Timestamp?,
             null -> Trip.Mode.OTHER
             TroikaBlock.TroikaTransportType.NONE, TroikaBlock.TroikaTransportType.UNKNOWN -> Trip.Mode.OTHER
             TroikaBlock.TroikaTransportType.SUBWAY -> Trip.Mode.METRO
-            TroikaBlock.TroikaTransportType.MONORAIL -> Trip.Mode.TRAIN
+            TroikaBlock.TroikaTransportType.MONORAIL -> Trip.Mode.MONORAIL
             TroikaBlock.TroikaTransportType.GROUND -> Trip.Mode.BUS
             TroikaBlock.TroikaTransportType.MCC -> Trip.Mode.TRAIN
         }
