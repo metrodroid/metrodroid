@@ -376,8 +376,6 @@ kotlin {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinserial_version"
-                implementation 'commons-io:commons-io:2.5'
-                implementation 'org.apache.commons:commons-lang3:3.5'
                 implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
                 implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
                 implementation 'com.github.ajalt:clikt:2.1.0'
