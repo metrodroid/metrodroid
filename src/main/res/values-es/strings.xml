@@ -1066,4 +1066,70 @@
     <string name="large_file_yes">Carga de todos modos (riesgo de bloqueo)</string>
     <string name="ricaricami_m1_3_ord_single">Ordinario Nr.1 3 zonas Mi1-Mi3</string>
     <string name="mode_monorail">Monorraíl</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> ofuscación activada</item>
+        <item quantity="other">
+            <xliff:g id="count" example="1">%d</xliff:g> ofuscaciónes activadas</item>
+    </plurals>
+    <string name="cepas_credit_header">Encabezado de crédito</string>
+    <string name="ez_bus_refund">Reembolso del autobús</string>
+    <string name="ez_service_charge">Tasa de servicio</string>
+    <string name="felica_terminal_fare_adjustment">Máquina de ajuste de tarifas</string>
+    <string name="felica_terminal_connection_adjustment">Máquina de ajuste de conexión</string>
+    <string name="felica_terminal_transfer_adjustment">Máquina de ajuste de trasbordos</string>
+    <string name="felica_process_fare_adjustment">Ajuste de tarifas</string>
+    <string name="felica_process_booth_exit">Salida de la cabina del jefe de estación</string>
+    <string name="felica_process_entry_a_autocharge">Entrada A (recarga automática)</string>
+    <string name="felica_process_exit_a_autocharge">Salida A (recarga automática)</string>
+    <string name="felica_process_deposit_bus">Depósito de autobús</string>
+    <string name="felica_process_bonus_charge">Recarga extra</string>
+    <string name="felica_process_merchandise_cancel">Cancelo de la compra de mercancías</string>
+    <string name="opal_action_journey_completed_auto_off">Viaje completado (no se ha realizado la toca de salida)</string>
+    <string name="opal_action_journey_completed_auto_on">Viaje completado (no se ha realizado la toca de entrada)</string>
+    <string name="opal_action_tap_on_reversal">Cancelación de toque de entrada</string>
+    <string name="opal_action_tap_on_rejected">Toque de entrada rechazado</string>
+    <string name="opal_agency_tfnsw">Transporte para NSW (TfNSW)</string>
+    <string name="card_name_beijing">Tarjeta de transporte público de Beijing</string>
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d viaje restante al %2$s</item>
+        <item quantity="other">%1$d viajes restantes al %2$s</item>
+    </plurals>
+    <plurals name="remaining_day_count">
+        <item quantity="one">1 día restante</item>
+        <item quantity="other">%d días restantes</item>
+    </plurals>
+    <string name="troika_layout">Disposición de la troika</string>
+    <string name="serial_only_card_header">Solo número de serie</string>
+    <string name="tmoney_issuer_kec">Corporación coreana de autopistas (KEC)</string>
+    <string name="tmoney_issuer_kscc">Corporación coreana de smartcard (KSCC)</string>
+    <string name="tmoney_issuer_eb">Corporación de tarjetas EB</string>
+    <string name="tmoney_issuer_seoul_bus">Asociación de transporte para autobuses de Seúl</string>
+    <string name="tmoney_ccode_hyundai">Servicios De Capital de Hyundai</string>
+    <string name="snapper_issuer_snapper">Servicios Snapper Ltd.</string>
+    <string name="seqgo_ticket_type_adult_explore">Explore/seeQ adulto</string>
+    <string name="card_type_provider_specific">Específico del proveedor</string>
+    <string name="card_name_samara_garden_dacha">Tarjeta garden-dacha de Samara</string>
+    <string name="siticard_edinyj_16_trips">Edinyj (boleto unificado) para 16 viajes</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (boleto unificado) para 30 viajes</string>
+    <string name="siticard_edinyj_3_days">Edinyj (boleto unificado) para 3 días</string>
+    <string name="emv_gpo_response">Respuesta al Get Processing Options (GPO)</string>
+    <string name="emv_data_response">Respuesta al Get Data %s</string>
+    <string name="unsupported_tag_message">Esta tarjeta actualmente no es compatible con Metrodroid.
+\nIdentificador de tarjeta: %1$s
+\nTecnologías soportadas:
+\n%2$s</string>
+    <string name="unknown_ultralight_message">Tarjeta Mifare Ultralight desconocida</string>
+    <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, Viaje con saldo</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Viaje con saldo (2-1 Día)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Viaje con saldo (1-2 Día)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Viaje con saldo (2-1 Descuento)</string>
+    <string name="ovc_sub_daluren_oost_nederland">Descuento fuera de las horas punta Este</string>
+    <string name="compass_sub_bulk_daypass">Pase de un día de volumen (Bulk DayPass)</string>
+    <string name="compass_sub_bulk_one_zone">"Una zona  de volumen (Bulk One Zone)"</string>
+    <string name="compass_sub_bulk_two_zone">"Dos zonas  de volumen (Bulk Two Zones)"</string>
+    <string name="compass_sub_bulk_three_zone">"Tres zonas  de volumen (Bulk Three Zones)"</string>
+    <string name="ios_unknown_tag">Tipo de tarjeta desconocido: %s</string>
+    <string name="hotel_checkin">Fecha de entrada</string>
+    <string name="hotel_checkout">Fecha de salida</string>
 </resources>
