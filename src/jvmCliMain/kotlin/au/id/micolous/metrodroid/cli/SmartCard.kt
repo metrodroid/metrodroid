@@ -70,6 +70,10 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
     private val noUID: Boolean by option("-U", "--no-uid",
         help="Skip requesting the card's UID. Required for contact card readers. Breaks " +
             "communication with FeliCa and several contactless cards.").flag(default=false)
+    private val felicaOnlyFirst: Boolean by option("--felica-only-first",
+        help="Only read the first system code of FeliCa cards, simulating a work-around for an " +
+            "iOS bug. This will result in incomplete data being read from the " +
+            "card!").flag(default=false)
 
     private val outFile: File? by option("-o", "--output", metavar = "FILE_OR_DIR",
         help="Specify a path that does not exist to create a new file with this name. " +
@@ -197,7 +201,7 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
 
                 CardType.FeliCa -> {
                     val t = JavaFeliCaTransceiver.wrap(it)
-                    val f = FelicaReader.dumpTag(t, feedbackInterface)
+                    val f = FelicaReader.dumpTag(t, feedbackInterface, onlyFirst = felicaOnlyFirst)
                     return Card(tagId = tagId, scannedAt = scannedAt, felica = f)
                 }
 
