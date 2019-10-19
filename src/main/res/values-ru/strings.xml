@@ -817,8 +817,8 @@
     <string name="felica_process_fare_adjustment">Корректировка тарифа</string>
     <string name="felica_process_admission_payment">Входная плата</string>
     <string name="felica_process_issue_new">Выдача карты</string>
-    <string name="felica_process_entry_a_autocharge">Вход A (автооплата)</string>
-    <string name="felica_process_exit_a_autocharge">Выход A (автооплата)</string>
+    <string name="felica_process_entry_a_autocharge">Вход A (автопополнение)</string>
+    <string name="felica_process_exit_a_autocharge">Выход A (автопополнение)</string>
     <string name="felica_process_deposit_bus">Автобусный депозит</string>
     <string name="felica_process_purchase_special_ticket">Билет (специальный автобус/трамвай)</string>
     <string name="felica_process_merchandise_purchase">Покупка товаров</string>
@@ -1051,8 +1051,8 @@
     <string name="show_debug_spans">Показывать отладочный цвет для индикаций языка</string>
     <string name="show_debug_spans_desc">Пометить язык по умолчанию зеленым, английский желтым и местный язык синим</string>
     <string name="ovc_sub_ov_jaarkaart">Личный годовой проездной</string>
-    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Путешествие на балансе, первый класс</string>
-    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Путешествие на балансе, второй класс</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Поездка на остатке, первый класс</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Поездка на остатке, второй класс</string>
     <string name="compass_sub_daypass">Дневной проездной на все зоны (DayPass)</string>
     <string name="compass_sub_one_zone">Одна зона</string>
     <string name="compass_sub_two_zone">Две зоны</string>
@@ -1144,7 +1144,7 @@
     <string name="compass_sub_bulk_one_zone">Оптовый на одну зону</string>
     <string name="compass_sub_bulk_two_zone">Оптовый на две зоны</string>
     <string name="compass_sub_bulk_three_zone">Оптовый на три зоны</string>
-    <string name="compass_sub_gradpass">Выпускной летний проездной (GradPass)</string>
+    <string name="compass_sub_gradpass">Выпускной 2-дневный билет (GradPass)</string>
     <string name="lisboaviva_sub_navegante_urbano">Городской проездной «Навеганте» (Navegante urbano)</string>
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Фертагус из Пальмелы в Лиссабон + Городская зона</string>
     <string name="venezia_carnet_traghetto">Пакет билетов на паром</string>
@@ -1157,4 +1157,9 @@
     <string name="lisboaviva_sub_navegante_lisboa">Проездной «Навеганте» для Лиссабона (Navegante Lisboa)</string>
     <string name="ricaricami_m1_3_ord_single">Обыкновенный Nr.1 на 3 зоны Ми1-Ми3</string>
     <string name="mode_monorail">Монорельс</string>
+    <string name="felica_process_booth_exit">Выход из кабинки менеджера станции</string>
+    <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, поездка на остатке</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Поездка на остатке (2-1 день)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Поездка на остатке (1-2 день)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Поездка на остатке (2-1 скидка)</string>
 </resources>
