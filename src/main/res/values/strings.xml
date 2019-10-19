@@ -2175,9 +2175,9 @@
     <!-- Translators: Sarov is a city in Russia. This is balance usable
          for travelling in Sarov. -->
     <string name="siticard_purse_sarov">Sarov e-wallet</string>
-    <string name="siticard_edinyj_16_trips">Edinyj 16 trips</string>
-    <string name="siticard_edinyj_30_trips">Edinyj 30 trips</string>
-    <string name="siticard_edinyj_3_days">Edinyj 3 days</string>
+    <string name="siticard_edinyj_16_trips">Edinyj (unified ticket) 16 trips</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (unified ticket) 30 trips</string>
+    <string name="siticard_edinyj_3_days">Edinyj (unified ticket) 3 days</string>
     <!-- Translators: transit card for intercity trolleybus operating in
          Crimea. -->
     <string name="card_name_crimea_trolleybus">Crimea Trolleybus Card</string>
