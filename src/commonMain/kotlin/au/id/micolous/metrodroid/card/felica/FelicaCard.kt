@@ -2,7 +2,7 @@
  * FelicaCard.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -168,13 +168,27 @@ data class FelicaCard(
     @Transient
     override val rawData: List<ListItem>
         get() = systems.map { (systemCode, system) ->
-            ListItemRecursive(
-                    Localizer.localizeString(R.string.felica_system_title_format,
-                            systemCode.hexString,
-                            Localizer.localizeString(
-                                    FelicaUtils.getFriendlySystemName(systemCode))),
-                    Localizer.localizePlural(R.plurals.felica_service_count,
-                            system.services.size, system.services.size), system.rawData(systemCode))
+            val title = Localizer.localizeString(R.string.felica_system_title_format,
+                systemCode.hexString,
+                Localizer.localizeString(
+                    FelicaUtils.getFriendlySystemName(systemCode)))
+
+            if (system.services.isEmpty()) {
+                ListItem(title, Localizer.localizeString(if (system.skipped) {
+                    R.string.felica_skipped_system
+                } else {
+                    R.string.felica_empty_system
+                }))
+            } else {
+                ListItemRecursive(
+                    title,
+                    Localizer.localizePlural(
+                        R.plurals.felica_service_count,
+                        system.services.size, system.services.size
+                    ),
+                    system.rawData(systemCode)
+                )
+            }
         }
 
     /**

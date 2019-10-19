@@ -54,7 +54,9 @@ class SupportedCardsViewCell: UICollectionViewCell {
     
     func getNoteText(_ ci: CardInfo) -> String? {
         var notes = ""
-        if let li = ci.resourceExtraNote {
+        if let li = ci.iOSExtraNote {
+            notes += Utils.localizeString(li)
+        } else if let li = ci.resourceExtraNote {
             notes += Utils.localizeString(li)
         }
         if (ci.preview) {

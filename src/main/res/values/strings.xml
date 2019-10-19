@@ -1363,7 +1363,13 @@
     <string name="card_name_szt">Shenzhen Tong</string>
     <!-- Translators: Transit card in Hong Kong. Chinese: 八達通. -->
     <string name="card_name_octopus">Octopus</string>
+    <!-- Translators: Transit card in Hong Kong and Shenzhen. Chinese: 互通行 -->
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+    <!--
+    Translators: Hu Tong Xing (Chinese: 互通行) is a transit card used in Hong Kong and Shenzhen.
+    This note is only displayed on iOS: https://github.com/metrodroid/metrodroid/issues/613
+    -->
+    <string name="card_note_octopus_ios">Hu Tong Xing not supported.</string>
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
@@ -1986,6 +1992,8 @@
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
+    <!-- Translators: type of card media (フェリカ / Felicity Card) -->
+    <string name="card_media_felica">FeliCa</string>
     <!-- Translators: type of card media, variant of FeliCa (フェリカ / Felicity Card) -->
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="felica_lite_read_only">Read-only data</string>
@@ -1995,6 +2003,74 @@
     <!-- Translators: area of card storage shared by Suica and Edy,
          possibly othewr systems as well. -->
     <string name="felica_system_common">Common Area (FeliCa Networks)</string>
+    <!--
+    Translators:
+    Used as a preference title. FeliCa divides cards into "systems" (~applications) and "services"
+    (~files). A single card may have more than one "system".
+
+    By default, this preference is disabled: Metrodroid reads all systems from a FeliCa card.
+
+    When this preference is enabled, Metrodroid will only read the first system on a FeliCa card.
+    -->
+    <string name="felica_first_system_pref">Only read first system</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is disabled (default).
+    -->
+    <string name="felica_first_system_pref_summary_off">Metrodroid will read all systems on FeliCa cards. This is the default.</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is enabled.
+    -->
+    <string name="felica_first_system_pref_summary_on">Metrodroid will read only the first system on FeliCa cards. This simulates a workaround for a bug in iOS. Reads of multi-system FeliCa cards will be incomplete!</string>
+
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which does
+    not contain any services (~files).
+    -->
+    <string name="felica_empty_system">Empty system</string>
+
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which was not
+    read. This is because of a work-around for an iOS bug.
+    -->
+    <string name="felica_skipped_system">Skipped reading system</string>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that either contain 0 blocks, or all blocks contain null bytes.
+    -->
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d empty service code</item>
+        <item quantity="other">%d empty service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that were never read from the original card. This can be because the
+    service codes were locked, or because of a software bug.
+    -->
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d skipped service code</item>
+        <item quantity="other">%d skipped service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    This notice is shown on the main screen whenever "felica_first_system_pref" is enabled on
+    Android. Enabling that setting may lead to an incomplete data read, and we don't want it left
+    on accidentally.
+
+    This is shown on the main window, instead of the "directions" string; and may be
+    in addition to the "obfuscation_mode_notice".
+    -->
+    <string name="felica_first_system_notice">FeliCa reads will be incomplete.</string>
 
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>

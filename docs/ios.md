@@ -60,9 +60,22 @@ Metrodroid for iOS **does not support**:
 
 * **EMV cards**: the EMV protocol requires dynamic AID selection, which is not allowed on iOS.
 
-* **FeliCa cards with more than one system not supported**: [this appears to be an iOS
-  bug][ios-felica]. This impacts Hu Tong Xing (互通行) cards, as well as some Hayakaken, PASMO and
-  Suica cards. ICOCA and nimoca cards both appear fine.
+* **FeliCa cards that use system codes other than the first**: [due to a bug in iOS][ios-felica],
+  Metrodroid on iOS can only read the _first_ system code on a card. Metrodroid on iOS will
+  instead leave empty placeholder system(s) for other system codes -- whereas Metrodroid on Android
+  will try to read the contents of other system codes.
+
+  * **Single-system FeliCa cards** (such as KMT, ICOCA, nimoca and Octopus) are _not_ impacted.
+
+  * **Multi-system [Japan IC][] cards** (such as Hayakaken, PASMO and Suica) will only read system
+    code `0x3`. This is where the payment and ticketing data is stored, so _most users will not see
+    any difference_.
+
+    The FeliCa Networks Common Area (`0xfe00`), and other miscellaneous system codes will not be
+    read; but these cannot be parsed by Metrodroid anyway.
+
+  * **Hu Tong Xing (互通行)** (untested) will probably _only_ read the Octopus (HKD) purse balance,
+    and not the Shenzhen Tong (CNY) purse balance.
 
 * **Leap**: unlocking Leap cards is not implemented.
 
@@ -199,6 +212,7 @@ changes have been removed from `native/metrodroid/metrodroid.xcodeproj/project.p
 [dev-caps]: https://help.apple.com/developer-account/#/dev21218dfd6
 [ios-felica]: https://github.com/metrodroid/metrodroid/issues/613
 [ios-issue]: https://github.com/metrodroid/metrodroid/issues/new?assignees=&labels=bug&template=bug.md&title=%5BBUG%5D
+[Japan IC]: https://github.com/metrodroid/metrodroid/wiki/IC-%28Japan%29
 [signing-workflow]: https://help.apple.com/xcode/mac/current/#/dev60b6fbbc7
 [TestFlight]: https://developer.apple.com/testflight/
 [xcode-setup]: https://help.apple.com/xcode/mac/current/#/devaf282080a

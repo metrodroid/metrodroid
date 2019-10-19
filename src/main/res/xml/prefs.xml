@@ -202,6 +202,15 @@
                 android:key="pref_obfuscate_trip_fares"
                 android:defaultValue="false" />
         </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/card_media_felica">
+            <CheckBoxPreference
+                android:title="@string/felica_first_system_pref"
+                android:summaryOff="@string/felica_first_system_pref_summary_off"
+                android:summaryOn="@string/felica_first_system_pref_summary_on"
+                android:key="pref_felica_only_first"
+                android:defaultValue="false" />
+        </PreferenceCategory>
     </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -16,6 +16,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardReader
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReaderA
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.toImmutable
 
 
@@ -64,7 +65,8 @@ object CardReader {
             val transceiver = AndroidFelicaTransceiver(tag)
 
             transceiver.connect()
-            val c = FelicaReader.dumpTag(transceiver, feedbackInterface)
+            val c = FelicaReader.dumpTag(
+                transceiver, feedbackInterface, onlyFirst = Preferences.felicaOnlyFirst)
             transceiver.close()
             return Card(tagId = tagId, scannedAt = TimestampFull.now(), felica = c)
 
