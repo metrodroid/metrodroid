@@ -1119,8 +1119,8 @@
     <string name="snapper_issuer_snapper">Servizi Snapper Ltd.</string>
     <string name="serial_only_card_header">Solo numero di serie</string>
     <string name="card_name_samara_garden_dacha">Carta giardino-dacia di Samara</string>
-    <string name="siticard_edinyj_16_trips">Edinyj (biglietto unificato) di 16 viaggi</string>
-    <string name="siticard_edinyj_30_trips">Edinyj (biglietto unificato) di 30 viaggi</string>
+    <string name="siticard_edinyj_16_trips">Edinyj (biglietto unificato) per 16 viaggi</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (biglietto unificato) per 30 viaggi</string>
     <string name="siticard_edinyj_3_days">Edinyj (biglietto unificato) per 3 giorni</string>
     <string name="ovc_sub_ov_jaarkaart">Abbonamento personale annuale</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, Viaggio con saldo</string>
@@ -1132,4 +1132,5 @@
     <string name="compass_sub_bulk_one_zone">Biglietto di massa (bulk) per una zona</string>
     <string name="compass_sub_bulk_two_zone">Biglietto di massa (bulk) per due zone</string>
     <string name="compass_sub_bulk_three_zone">Biglietto di massa (bulk) per tre zone</string>
+    <string name="compass_sub_gradpass">Biglietto per 2 giorni per la laurea (GradPass)</string>
 </resources>
