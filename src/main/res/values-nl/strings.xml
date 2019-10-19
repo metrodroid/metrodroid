@@ -866,9 +866,9 @@
     <string name="siticard_aerial_tramway">Kabelbaan</string>
     <string name="siticard_adult_60min_xfer_purse">Overstapkaart - 60 minuten (volwassene)</string>
     <string name="siticard_adult_90min_xfer_purse">Overstapkaart - 90 minuten (volwassene)</string>
-    <string name="siticard_edinyj_16_trips">Edinyj - 16 ritten</string>
-    <string name="siticard_edinyj_30_trips">Edinyj - 30 ritten</string>
-    <string name="siticard_edinyj_3_days">Edinyj - 3 dagen</string>
+    <string name="siticard_edinyj_16_trips">Edinyj (één kaartje) - 16 ritten</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (één kaartje) - 30 ritten</string>
+    <string name="siticard_edinyj_3_days">Edinyj (één kaartje) - 3 dagen</string>
     <string name="card_name_crimea_trolleybus">Krim-trolleybuskaart</string>
     <string name="card_name_crimea_parus_school">Parus-scholierenkaart</string>
     <string name="card_name_yoshkar_ola">Josjkar-Ola-vervoerskaart</string>
@@ -1157,4 +1157,20 @@
     <string name="open_arrow">Geopende lijst</string>
     <string name="ricaricami_m1_3_ord_single">Reguliere Nr.1 3 zones Mi1-Mi3</string>
     <string name="mode_monorail">Monorail</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing wordt niet ondersteund.</string>
+    <string name="card_media_felica">FeliCa</string>
+    <string name="felica_first_system_pref">Alleen eerste systeem uitlezen</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid leest standaard alle systemen uit op FeliCa-kaarten.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid leest alleen het eerste systeem uit op FeliCa-kaarten. Dit simuleert een tussenoplossing voor een iOS-bug. FeliCa-kaarten met meerdere systemen worden slechts deels uitgelezen!</string>
+    <string name="felica_empty_system">Leeg systeem</string>
+    <string name="felica_skipped_system">Systeem overgeslagen</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d lege dienstcode</item>
+        <item quantity="other">%d lege dienstcodes</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d overgeslagen dienstcode</item>
+        <item quantity="other">%d overgeslagen dienstcodes</item>
+    </plurals>
+    <string name="felica_first_system_notice">FeliCa-kaarten worden slechts deels uitgelezen.</string>
 </resources>
