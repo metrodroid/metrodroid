@@ -1132,4 +1132,5 @@
     <string name="ios_unknown_tag">Tipo de tarjeta desconocido: %s</string>
     <string name="hotel_checkin">Fecha de entrada</string>
     <string name="hotel_checkout">Fecha de salida</string>
+    <string name="compass_sub_gradpass">Boleto de dos días por la graduación (GradPass)</string>
 </resources>
