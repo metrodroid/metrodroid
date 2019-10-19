@@ -1,2 +1,3 @@
-reader_id,stop_name
-0x05011a35,Adelaide (station gates)
+reader_id,stop_name,stop_lat,stop_lon
+0x05011a35,Adelaide (station gates),-34.92112,138.59686
+
