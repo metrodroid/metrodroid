@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.card.felica
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
@@ -34,7 +33,7 @@ data class FelicaSystem(
     /** Service codes that are present in this System */
     @XMLListIdx("code") val services: Map<Int, FelicaService> = emptyMap(),
     /** When reading, did we skip trying to read the contents of this system? */
-    @XMLId("skipped") val skipped: Boolean = false) {
+    val skipped: Boolean = false) {
     fun getService(serviceCode: Int) = services[serviceCode]
 
     /** Shows raw data for all Services within this System */

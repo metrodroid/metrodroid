@@ -22,7 +22,6 @@
 package au.id.micolous.metrodroid.card.felica
 
 import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
@@ -33,7 +32,7 @@ data class FelicaService(
     /** Blocks that are part of this Service */
     @XMLListIdx("address") val blocks: List<FelicaBlock> = emptyList(),
     /** When reading, did we skip trying to read the contents of this system? */
-    @XMLId("skipped") val skipped: Boolean = false
+    val skipped: Boolean = false
 ) {
     fun getBlock(idx: Int) = blocks[idx]
 
