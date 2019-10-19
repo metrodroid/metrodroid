@@ -92,6 +92,7 @@ class OctopusTransitData private constructor(private val mOctopusBalance: Int?,
                 name = R.string.card_name_octopus,
                 locationId = R.string.location_hong_kong,
                 region = TransitRegion.HONG_KONG,
+                iOSExtraNote = R.string.card_note_octopus_ios,
                 cardType = CardType.FeliCa)
 
         val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory {

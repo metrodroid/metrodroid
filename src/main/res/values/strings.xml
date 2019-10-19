@@ -1363,7 +1363,13 @@
     <string name="card_name_szt">Shenzhen Tong</string>
     <!-- Translators: Transit card in Hong Kong. Chinese: 八達通. -->
     <string name="card_name_octopus">Octopus</string>
+    <!-- Translators: Transit card in Hong Kong and Shenzhen. Chinese: 互通行 -->
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+    <!--
+    Translators: Hu Tong Xing (Chinese: 互通行) is a transit card used in Hong Kong and Shenzhen.
+    This note is only displayed on iOS: https://github.com/metrodroid/metrodroid/issues/613
+    -->
+    <string name="card_note_octopus_ios">Hu Tong Xing not supported.</string>
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
