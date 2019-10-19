@@ -45,11 +45,13 @@ data class FelicaSystem(
 
         return listOfNotNull(
             if (emptyServiceIds.isEmpty()) { null } else {
-                ListItem("${emptyServiceIds.size} empty service codes",
+                ListItem(Localizer.localizePlural(R.plurals.felica_empty_service_codes,
+                    emptyServiceIds.size, emptyServiceIds.size),
                     emptyServiceIds.joinToString { it.hexString })
             },
             if (skippedServiceIds.isEmpty()) { null } else {
-                ListItem("${skippedServiceIds.size} skipped service codes",
+                ListItem(Localizer.localizePlural(R.plurals.felica_skipped_service_codes,
+                    skippedServiceIds.size, skippedServiceIds.size),
                     skippedServiceIds.joinToString { it.hexString })
             }
         ) + services.mapNotNull { (serviceCode, service) ->

@@ -2020,6 +2020,52 @@
     -->
     <string name="felica_first_system_pref_summary_on">Metrodroid will read only the first system on FeliCa cards. This simulates a workaround for a bug in iOS. Reads of multi-system FeliCa cards will be incomplete!</string>
 
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which does
+    not contain any services (~files).
+    -->
+    <string name="felica_empty_system">Empty system</string>
+
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which was not
+    read. This is because of a work-around for an iOS bug.
+    -->
+    <string name="felica_skipped_system">Skipped reading system</string>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that either contain 0 blocks, or all blocks contain null bytes.
+    -->
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d empty service code</item>
+        <item quantity="other">%d empty service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that were never read from the original card. This can be because the
+    service codes were locked, or because of a software bug.
+    -->
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d skipped service code</item>
+        <item quantity="other">%d skipped service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    This notice is shown on the main screen whenever "felica_first_system_pref" is enabled on
+    Android. Enabling that setting may lead to an incomplete data read, and we don't want it left
+    on accidentally.
+
+    This is shown on the main window, instead of the "directions" string; and may be
+    in addition to the "obfuscation_mode_notice".
+    -->
+    <string name="felica_first_system_notice">FeliCa reads will be incomplete.</string>
+
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
     <string name="leap_retrieve_keys_longdesc">Shares your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will know you used Metrodroid on this card. The card can not be read without this key.</string>

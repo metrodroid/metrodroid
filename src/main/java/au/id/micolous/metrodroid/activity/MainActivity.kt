@@ -1,10 +1,9 @@
 /*
  * MainActivity.kt
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +41,7 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.util.ifTrue
 
 class MainActivity : MetrodroidActivity() {
     private var mNfcAdapter: NfcAdapter? = null
@@ -97,10 +97,15 @@ class MainActivity : MetrodroidActivity() {
                 if (Preferences.obfuscateTripTimes) 1 else 0
 
         val directions = findViewById<TextView>(R.id.directions)
+        val felicaNote = Preferences.felicaOnlyFirst.ifTrue { R.string.felica_first_system_notice }
 
         if (obfuscationFlagsOn > 0) {
-            directions.text = Localizer.localizePlural(R.plurals.obfuscation_mode_notice,
-                    obfuscationFlagsOn, obfuscationFlagsOn)
+            val flagsNote = Localizer.localizePlural(
+                R.plurals.obfuscation_mode_notice, obfuscationFlagsOn, obfuscationFlagsOn)
+            directions.text = felicaNote?.let {
+                "${Localizer.localizeString(it)} $flagsNote" } ?: flagsNote
+        } else if (felicaNote != null) {
+            directions.setText(felicaNote)
         } else if (!hasNfc) {
             directions.setText(R.string.nfc_unavailable)
         } else {

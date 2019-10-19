@@ -76,8 +76,9 @@ object FelicaReader {
      *
      * @param tag [FelicaTransceiver] to communicate with the card on
      * @param feedbackInterface [TagReaderFeedbackInterface] to communicate with the UI on
-     * @param onlyFirst If true, only read the first system code on the card. If not set (false),
-     * read all system codes.
+     * @param onlyFirst If `true`, only read the first system code on the card. If not set
+     * (`false`), read all system codes. Setting this to `true` will result in an incomplete
+     * read, but is needed to work around a bug in iOS.
      */
     suspend fun dumpTag(tag: FelicaTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface,
@@ -139,16 +140,17 @@ object FelicaReader {
                 // We can get System Code 0 from DEEP_SYSTEM_CODES -- drop this.
                 if (systemCode == 0) continue
 
-                val services = mutableMapOf<Int, FelicaService>()
-
                 if (onlyFirst && systemNumber > 0) {
-                    // Instead, insert a dummy service with no service codes.
+                    // We aren't going to read secondary system codes. Instead, insert a dummy
+                    // service with no service codes.
                     Log.i(TAG, "Not reading system code ${systemCode.hexString}: " +
                         "onlyFirst = true and systemNumber ($systemNumber) > 0")
 
                     systems[systemCode] = FelicaSystem(skipped = true)
                     continue
                 }
+
+                val services = mutableMapOf<Int, FelicaService>()
 
                 var serviceCodes = when {
                     magic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS -> {

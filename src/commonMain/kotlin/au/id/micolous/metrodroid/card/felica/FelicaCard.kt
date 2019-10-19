@@ -174,8 +174,11 @@ data class FelicaCard(
                     FelicaUtils.getFriendlySystemName(systemCode)))
 
             if (system.services.isEmpty()) {
-                ListItem(title, if (system.skipped) {
-                    "Skipped reading system" } else { "Empty system" })
+                ListItem(title, Localizer.localizeString(if (system.skipped) {
+                    R.string.felica_skipped_system
+                } else {
+                    R.string.felica_empty_system
+                }))
             } else {
                 ListItemRecursive(
                     title,
