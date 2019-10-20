@@ -26,7 +26,8 @@ HERMETIC_TARGETS := \
 	tisseo \
 	touchngo \
 	troika \
-       waltti
+	waltti \
+	yargor
 
 # All targets that need to fetch some data from the internet, so may not always
 # return the same result.

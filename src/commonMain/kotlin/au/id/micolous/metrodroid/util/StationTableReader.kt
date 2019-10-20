@@ -25,11 +25,10 @@ interface StationTableReader {
     fun getLineMode(id: Int): Trip.Mode?
 
     companion object {
-        private fun fallbackName(id: Int): FormattedString =
-            Localizer.localizeFormatted(R.string.unknown_format, NumberUtils.intToHex(id))
-
         private fun fallbackName(humanReadableId: String): FormattedString =
             Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
+
+        private fun getSTR(reader: String?): StationTableReader? = reader?.let { StationTableReaderGetSTR(it) }
 
         private fun fromProto(humanReadableID: String, ps: ProtoStation,
                               operatorName: TransitName?, pl: Map<Int, TransitName?>?): Station {
@@ -60,7 +59,7 @@ interface StationTableReader {
 
         fun getStationNoFallback(reader: String?, id: Int,
                                  humanReadableId: String = NumberUtils.intToHex(id)): Station? {
-            val str = StationTableReaderGetSTR(reader ?: return null) ?: return null
+            val str = getSTR(reader) ?: return null
             try {
                 val ps = str.getStationById(id, humanReadableId) ?: return null
                 val lines = mutableMapOf<Int, TransitName?>()
@@ -75,42 +74,30 @@ interface StationTableReader {
             }
         }
 
-        fun getStation(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): Station {
-            return getStationNoFallback(reader, id, humanReadableId) ?: return Station.unknown(humanReadableId)
-        }
+        fun getStation(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): Station =
+                getStationNoFallback(reader, id, humanReadableId) ?: Station.unknown(humanReadableId)
 
-        fun getOperatorDefaultMode(reader: String?, id: Int): Trip.Mode {
-            if (reader == null)
-                return Trip.Mode.OTHER
-            val str = StationTableReaderGetSTR(reader) ?: return Trip.Mode.OTHER
-            val m = str.getOperatorDefaultMode(id) ?: return Trip.Mode.OTHER
-            return m
-        }
+        fun getOperatorDefaultMode(reader: String?, id: Int): Trip.Mode =
+                getSTR(reader)?.getOperatorDefaultMode(id) ?: Trip.Mode.OTHER
 
-        fun getLineName(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): FormattedString? {
-            if (reader == null)
-                return fallbackName(humanReadableId)
+        fun getLineNameNoFallback(reader: String?, id: Int): FormattedString? =
+                getSTR(reader)?.getLineName (id)?.selectBestName(false)
 
-            val str = StationTableReaderGetSTR(reader) ?: return fallbackName(humanReadableId)
-            return str.getLineName (id)?.selectBestName(false) ?: return fallbackName(humanReadableId)
-        }
+        fun getLineName(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): FormattedString =
+                getLineNameNoFallback(reader, id) ?: fallbackName(humanReadableId)
 
-        fun getLineMode(reader: String?, id: Int): Trip.Mode? {
-            val str = StationTableReaderGetSTR(reader ?: return null) ?: return null
-            return str.getLineMode(id)
-        }
+        fun getLineMode(reader: String?, id: Int): Trip.Mode?
+                = getSTR(reader)?.getLineMode(id)
 
         fun getOperatorName(reader: String?, id: Int, isShort: Boolean,
-                            humanReadableId: String = NumberUtils.intToHex(id)): FormattedString? {
-            val str = StationTableReaderGetSTR(reader ?: return fallbackName(humanReadableId)) ?: return fallbackName(humanReadableId)
-            return str.getOperatorName(id)?.selectBestName(isShort) ?: fallbackName(humanReadableId)
-        }
+                            humanReadableId: String = NumberUtils.intToHex(id)): FormattedString? =
+                getSTR(reader)?.getOperatorName(id)?.selectBestName(isShort) ?: fallbackName(humanReadableId)
 
         /**
          * Gets a licensing notice that applies to a particular MdST file.
          * @param reader Station database to read from.
          * @return String containing license notice, or null if not available.
          */
-        fun getNotice(reader: String?): String? = reader?.let { StationTableReaderGetSTR(it) }?.notice
+        fun getNotice(reader: String?): String? = getSTR(reader)?.notice
     }
 }
