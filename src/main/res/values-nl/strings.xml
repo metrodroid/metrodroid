@@ -1173,4 +1173,9 @@
         <item quantity="other">%d overgeslagen dienstcodes</item>
     </plurals>
     <string name="felica_first_system_notice">FeliCa-kaarten worden slechts deels uitgelezen.</string>
+    <string name="card_name_yargor">Jaroslavl Gemeentelijk Vervoer (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Tramabonnement - Weekdagen</string>
+    <string name="yargor_sub_weekday_trolley">Trolleybusabonnement - Weekdagen</string>
+    <string name="yargor_sub_allday_all">Onbeperkt abonnement</string>
+    <string name="yargor_transports_valid">Geldig op de volgende vervoersmiddelen</string>
 </resources>
