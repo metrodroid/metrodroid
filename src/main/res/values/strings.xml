@@ -2204,6 +2204,10 @@
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="zolotaya_korona_region">Region</string>
+    <string name="zolotaya_korona_discount">Discount</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% for municipal, 0%% for railroad, 0%% for water transport</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% for municipal, 0%% for railroad, 0%% for water transport</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% for municipal, 50%% for railroad, 50%% for water transport</string>
     <!-- Translators: ETK = Electronic ticket, Yaroslavl (Ярославль) is a city in Russia -->
     <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
     <!-- Translators: ETK = Electronic ticket, Krasnodar (Краснодар) is a city in Russia -->
