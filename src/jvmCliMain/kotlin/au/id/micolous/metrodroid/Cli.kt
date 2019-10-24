@@ -106,6 +106,8 @@ class Parse: CliktCommand(
                 trip.startTimestamp?.let { println("      departure ${it.format().unformatted}") }
                 trip.endTimestamp?.let { println("      arrival ${it.format().unformatted}") }
                 println("      mode ${trip.mode}")
+                trip.getAgencyName(false)?.let {
+                    println("      agency $it (${trip.getAgencyName(true) ?: ""})") }
                 trip.routeName?.let { println("      route $it") }
                 trip.startStation?.let { println("      from ${it.stationName}") }
                 trip.endStation?.let { println("      to ${it.stationName}") }
