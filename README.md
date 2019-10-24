@@ -83,6 +83,7 @@ Card / Agency | Location | Notes
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
 [Carta Mobile][pisa] | :it: Pisa, Italy | :new: `IOS`
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
+Cifial | :earth_africa: _worldwide_ | :new: `MFC`
 City Union | :cn: Mainland China | :new: `IOS`
 [Clipper][clipper] | :us: San Francisco, CA, USA | `IOS`
 [Compass][compass] | :canada: Vancouver, BC, Canada | :new: :one: `IOS`
@@ -101,7 +102,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hafilat][] | :united_arab_emirates: Abu Dhabi, UAE | :new: `IOS`
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: :id: `IOS`
-[HSL][hsl], [Matkakortti][matka] | :finland: Finland | `IOS`
+[HSL][hsl], [Matkakortti][matka], [Waltti][] | :finland: Finland | `IOS`
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id: `IOS`
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT` `IOS`
 [Kazan transport card][kazan] | :ru: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
@@ -149,10 +150,11 @@ Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new: `IOS`
 [Tartu Bus][tartu] | :estonia: Tartu, Estonia | :new: :id: `MFC`
 [T-Money][tmoney] | :kr: South Korea | :new: `IOS`
-T-Union | :cn: Mainland China | :new: `IOS`
+[TPF card][tpf] | :switzerland: Fribourg, Switzerland | :new: :id:
 [TransGironde][gironde] | :fr: Gironde, France | :new: `IOS`
 [Transit Access Pass][laxtap] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][troika] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
+T-Union | :cn: Mainland China | :new: `IOS`
 [Umarsh][umarsh] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 [Ventra][ventra] | :us: Chicago, IL, USA | :new: :one: `IOS`
 [Warszawska Karta Miejska][warsaw] | :poland: Warsaw, Poland | :new: :id: :closed_lock_with_key: `MFC`
@@ -327,9 +329,11 @@ This software and it's authors are not associated with any public transit agency
 [tartu]: https://www.tartu.ee/en/tartu-bus-card
 [tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
 [tmoney]: https://www.t-money.co.kr/
+[tpf]: https://www.tpf.ch/abonnements-billets/tpf-card
 [troika]: http://troika.mos.ru/
 [umarsh]: https://umarsh.com/
 [ventra]: https://www.ventrachicago.com/
+[waltti]: https://waltti.fi/en/
 [warsaw]: https://www.ztm.waw.pl/?c=557&l=1
 [wuhan]: http://www.whcst.com/
 [yaroslavl]: https://t-karta.ru/Cards/Yaroslavl
