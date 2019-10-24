@@ -111,6 +111,17 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
+        33 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_siticard_vladimir,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_vladimir,
+                        imageId = R.drawable.siticard_vladimir,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        region = TransitRegion.RUSSIA,
+                        preview = true)
+        ),
         43 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_kirov,
