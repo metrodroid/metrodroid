@@ -59,6 +59,11 @@ def mct_to_mfc(input_f, output_f):
       else:
         line = DUMMY_TRAILER_BLOCK
 
+    if '--' in line:
+      line = line.replace('--', '00')
+      print("Replaced placeholder bytes at sector %d block %d with NULL" % (
+        sector, block))
+
     line = b16decode(line)
     output_f.write(line)
     block += 1
