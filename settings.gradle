@@ -6,3 +6,5 @@ project(':material-design-icons').projectDir = new File('third_party/material-de
 include ':jvmcli'
 include ':proto'
 enableFeaturePreview('GRADLE_METADATA')
+include 'smartcardio-framework'
+project(':smartcardio-framework').projectDir = new File('third_party/openjavacard-smartcardio/framework')

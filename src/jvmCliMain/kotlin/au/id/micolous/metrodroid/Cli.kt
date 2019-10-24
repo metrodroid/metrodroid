@@ -1,9 +1,30 @@
+/*
+ * Cli.kt
+ *
+ * Copyright 2019 Google
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package au.id.micolous.metrodroid
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.cli.SmartCard
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.format
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
@@ -17,7 +38,14 @@ import java.io.File
 
 class Cli: CliktCommand() {
     init {
-        subcommands(Identify(), Parse(), Unrecognized(), Supported(), MakeJson())
+        subcommands(
+            Identify(),
+            Parse(),
+            Unrecognized(),
+            Supported(),
+            MakeJson(),
+            SmartCard()
+        )
     }
 
     override fun run() = Unit
@@ -63,74 +91,78 @@ class Parse: CliktCommand(
 
     override fun run() {
         for (card in loadCards(fname) ?: return) {
-            println("card UID = ${card.tagId}")
-            val td = try {
-                card.parseTransitData()
-            } catch (e: Exception) {
-                println("   exception = $e")
-                null
-            }
-            println("   name = ${td?.cardName}")
-            println("   serial = ${td?.serialNumber}")
-            val balances = td?.balances
-            when (balances?.size) {
-                0, null -> {}
-                1 -> printBalance(balances[0], null)
-                else -> balances.forEachIndexed { idx, balance -> printBalance(balance, idx) }
-            }
-            for ((idx, sub) in td?.subscriptions.orEmpty().withIndex()) {
-                println("   subscription $idx: ${sub.subscriptionName}")
-                sub.validFrom?.let { println("      from ${it.format().unformatted}") }
-                sub.validTo?.let { println("      to ${it.format().unformatted}") }
-                val infos = sub.info.orEmpty()
-                if (infos.isNotEmpty()) {
-                    println("      info")
-                }
-
-                for (info in infos) {
-                    println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-                }
-
-                
-                val raw = sub.getRawFields(TransitData.RawLevel.ALL).orEmpty()
-                if (raw.isNotEmpty()) {
-                    println("      raw")
-                }
-
-                for (info in raw) {
-                    println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-                }
-            }
-            for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
-                println("   trip $idx")
-                trip.startTimestamp?.let { println("      departure ${it.format().unformatted}") }
-                trip.endTimestamp?.let { println("      arrival ${it.format().unformatted}") }
-                println("      mode ${trip.mode}")
-                trip.routeName?.let { println("      route $it") }
-                trip.startStation?.let { println("      from ${it.stationName}") }
-                trip.endStation?.let { println("      to ${it.stationName}") }
-                trip.fare?.let { println("      fare ${it.formatCurrencyString(false).unformatted}") }
-                trip.vehicleID?.let { println("      vehicle $it") }
-                trip.getRawFields(TransitData.RawLevel.ALL)?.let { println("      raw $it") }
-            }
-            val infos = td?.info.orEmpty()
-            if (infos.isNotEmpty()) {
-                println("   info")
-            }
-
-            for (info in infos) {
-                println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-            }
-
-            val raw = td?.getRawFields(TransitData.RawLevel.ALL).orEmpty()
-            if (raw.isNotEmpty()) {
-                println("   raw")
-            }
-
-            for (info in raw) {
-                println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-            }
+            printCard(card)
         }
+    }
+}
+
+fun printCard(card: Card) {
+    println("card UID = ${card.tagId}")
+    val td = try {
+        card.parseTransitData()
+    } catch (e: Exception) {
+        println("   exception = $e")
+        null
+    }
+    println("   name = ${td?.cardName}")
+    println("   serial = ${td?.serialNumber}")
+    val balances = td?.balances
+    when (balances?.size) {
+        0, null -> {}
+        1 -> printBalance(balances[0], null)
+        else -> balances.forEachIndexed { idx, balance -> printBalance(balance, idx) }
+    }
+    for ((idx, sub) in td?.subscriptions.orEmpty().withIndex()) {
+        println("   subscription $idx: ${sub.subscriptionName}")
+        sub.validFrom?.let { println("      from ${it.format().unformatted}") }
+        sub.validTo?.let { println("      to ${it.format().unformatted}") }
+        val infos = sub.info.orEmpty()
+        if (infos.isNotEmpty()) {
+            println("      info")
+        }
+
+        for (info in infos) {
+            println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+        }
+
+        val raw = sub.getRawFields(TransitData.RawLevel.ALL).orEmpty()
+        if (raw.isNotEmpty()) {
+            println("      raw")
+        }
+
+        for (info in raw) {
+            println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+        }
+    }
+    for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
+        println("   trip $idx")
+        trip.startTimestamp?.let { println("      departure ${it.format().unformatted}") }
+        trip.endTimestamp?.let { println("      arrival ${it.format().unformatted}") }
+        println("      mode ${trip.mode}")
+        trip.getAgencyName(false)?.let { println("      agency ${it.format().unformatted}") }
+        trip.routeName?.let { println("      route $it") }
+        trip.startStation?.let { println("      from ${it.stationName}") }
+        trip.endStation?.let { println("      to ${it.stationName}") }
+        trip.fare?.let { println("      fare ${it.formatCurrencyString(false).unformatted}") }
+        trip.vehicleID?.let { println("      vehicle $it") }
+        trip.getRawFields(TransitData.RawLevel.ALL)?.let { println("      raw $it") }
+    }
+    val infos = td?.info.orEmpty()
+    if (infos.isNotEmpty()) {
+        println("   info")
+    }
+
+    for (info in infos) {
+        println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+    }
+
+    val raw = td?.getRawFields(TransitData.RawLevel.ALL).orEmpty()
+    if (raw.isNotEmpty()) {
+        println("   raw")
+    }
+
+    for (info in raw) {
+        println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
     }
 }
 

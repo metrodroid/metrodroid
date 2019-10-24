@@ -1,5 +1,5 @@
 /*
- * TLVTest.kt
+ * BERTLVTest.kt
  *
  * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
@@ -24,7 +24,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class TLVTest {
+class BERTLVTest {
     @Test
     fun testFindDefiniteShort() {
         // tag 50 (parent, definite short)

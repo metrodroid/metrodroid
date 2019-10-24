@@ -142,7 +142,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                 R.id.save_xml -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         // Metrodroid-1234abcd-20001231-235900.xml
-                        val filename = ExportHelper.makeFilename(mCard!!)
+                        val filename = makeFilename(mCard!!)
 
                         i = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         i.addCategory(Intent.CATEGORY_OPENABLE)

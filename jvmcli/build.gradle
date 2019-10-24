@@ -12,6 +12,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
@@ -45,7 +48,7 @@ repositories {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         freeCompilerArgs = ["-Xjvm-default=enable"]
-        jvmTarget = "1.8"
+        jvmTarget = "9"
     }
 }
 
