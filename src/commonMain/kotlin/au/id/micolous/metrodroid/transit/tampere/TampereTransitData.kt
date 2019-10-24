@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -44,7 +45,8 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
                   private val mTransport: Int,
                   private val mA: Int, // 0x8b for first trip in a day, 0xb otherwise, 0 for refills
                   private val mB: Int, // Always 4
-                  private val mC: Int, // Probably bus number, terminal number or bus route
+                  private val mC: Int, // Always 0
+                  private val mRoute: Int,
                   private val mEventCode: Int, // 3 = topup, 5 = first tap, 11 = transfer
                   private val mFlags: Int
                   ): Trip() {
@@ -54,7 +56,7 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
         get() = TransitCurrency.EUR(mFare)
     override val mode: Mode
         get() = when (mTransport) {
-            0xba -> Mode.BUS // ba = bus
+            0xba, 0xde -> Mode.BUS // ba = bus. de = ?? (used for subscriptions)
             0x4c -> Mode.TICKET_MACHINE // 4c is ASCII for 'L' from Finnish "lataa" = "top-up"
             else -> Mode.OTHER
         }
@@ -62,8 +64,12 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
     override val isTransfer: Boolean
         get() = (mFlags and 0x40000) != 0
 
+    override val humanReadableRouteID get() = mRoute.toString()
+
+    override val routeName get() = TampereTransitData.getRouteName(mRoute)
+
     override fun getRawFields(level: TransitData.RawLevel) = "A=0x${mA.toString(16)}/B=$mB/C=$mC" +
-            (if (level != TransitData.RawLevel.UNKNOWN_ONLY) "/EventCode=$mEventCode/flags=0x${mFlags.toString(16)}/sinceFirstStamp=$mMinutesSinceFirstStamp" else "")
+            (if (level != TransitData.RawLevel.UNKNOWN_ONLY) "/EventCode=$mEventCode/flags=0x${mFlags.toString(16)}/sinceFirstStamp=$mMinutesSinceFirstStamp/transport=0x${mTransport.toString(16)}" else "")
 
     companion object {
         fun parse(raw: ImmutableByteArray): TampereTrip? {
@@ -75,6 +81,7 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
                     it
             }
             val minuteField = raw.byteArrayToIntReversed(6, 2)
+            val cField = raw.byteArrayToIntReversed(10, 2)
             return TampereTrip(mDay = raw.byteArrayToIntReversed(0, 2),
                     mMinute = minuteField shr 5,
                     mFare = fare,
@@ -82,7 +89,8 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
                     mTransport = type,
                     mA = raw.byteArrayToIntReversed(3, 1),
                     mB = raw.byteArrayToIntReversed(5, 1),
-                    mC = raw.byteArrayToIntReversed(10, 2),
+                    mC = cField and 3,
+                    mRoute = cField shr 2,
                     mEventCode = minuteField and 0x1f,
                     mFlags = raw.byteArrayToIntReversed(12, 3)
             // Last byte: CRC-8-maxim checksum of the record
@@ -144,6 +152,8 @@ class TampereTransitData (
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 region = TransitRegion.FINLAND,
                 cardType = CardType.MifareDesfire)
+
+        fun getRouteName(routeNumber: Int) = FormattedString("${routeNumber/100}/${routeNumber%100}")
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override val allCards: List<CardInfo>
