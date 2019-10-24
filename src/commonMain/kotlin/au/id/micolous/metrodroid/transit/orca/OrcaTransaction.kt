@@ -2,6 +2,7 @@
  * OrcaTransaction.kt
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * Thanks to:
  * Karl Koscher <supersat@cs.washington.edu>
@@ -29,13 +30,8 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.util.*
 
 @Parcelize
 class OrcaTransaction (private val mTimestamp: Long,
@@ -153,6 +149,19 @@ class OrcaTransaction (private val mTimestamp: Long,
     override fun isSameTrip(other: Transaction): Boolean {
         return other is OrcaTransaction && mAgency == other.mAgency
     }
+
+    override fun getRawFields(level: TransitData.RawLevel) =
+        (level == TransitData.RawLevel.ALL).ifTrue {
+            (if (mIsTopup) "topup, " else "") +
+                mapOf(
+                    "agency" to mAgency,
+                    "type" to mTransType,
+                    "ftp" to mFtpType,
+                    "coach" to mCoachNum,
+                    "fare" to mFare,
+                    "newBal" to mNewBalance
+                ).map { "${it.key} = ${it.value.hexString}" }.joinToString()
+        }
 
     companion object {
         private const val ORCA_STR = "orca"
