@@ -57,7 +57,8 @@ jobs:
 
     # This runs the full test suite, including using the Android emulator.
     - stage: test
-      env: EMULATOR_API=16 EMULATOR_ARCH=armeabi-v7a
+      env: EMULATOR_API=14 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=16 EMULATOR_ARCH=armeabi-v7a
     - env: EMULATOR_API=16 EMULATOR_ARCH=x86
     - env: EMULATOR_API=18 EMULATOR_ARCH=armeabi-v7a
     # Disabled due to https://issuetracker.google.com/issues/134845202
