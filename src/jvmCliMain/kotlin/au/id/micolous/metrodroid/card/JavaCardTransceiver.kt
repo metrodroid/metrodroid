@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.card
 
+import au.id.micolous.kotlin.pcsc.*
+import au.id.micolous.kotlin.pcsc.Card
 import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.getErrorMessage
@@ -25,13 +27,11 @@ import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.coroutines.runBlocking
 import kotlinx.io.core.Closeable
-import javax.smartcardio.*
-import javax.smartcardio.Card
 
 fun <T> wrapJavaExceptions(f: () -> T): T {
     try {
         return f()
-    } catch (e: CardException) {
+    } catch (e: PCSCError) {
         throw CardTransceiveException(getErrorMessage(e), e)
     }
 }
@@ -40,7 +40,8 @@ fun <T> wrapJavaExceptions(f: () -> T): T {
  * Implements a wrapper for JSR 268 (javax.smartcardio) API to [CardTransceiver].
  */
 open class JavaCardTransceiver(
-    private val terminal: CardTerminal,
+    private val context: Context,
+    private val terminal: String,
     private val printTrace: Boolean = false,
     // TODO: fix bugs that necessitate this
     private val skipGetUID: Boolean = false
@@ -50,7 +51,6 @@ open class JavaCardTransceiver(
         private set
 
     private var card : Card? = null
-    private var channel : CardChannel? = null
     var atr: Atr? = null
         private set
     var cardType: CardType = CardType.Unknown
@@ -60,17 +60,12 @@ open class JavaCardTransceiver(
 
         val card = wrapJavaExceptions {
             // TODO: protocol
-            val card = terminal.connect("*") ?: throw CardProtocolUnsupportedException("ISO14443")
-
-            // TODO: some cards don't like using the basic channel, but only throw an error on
-            //  transceive later.
-            channel = card.basicChannel ?: throw CardProtocolUnsupportedException(
-                "ISO14443 channel")
-            card
+            context.connect(terminal, ShareMode.Shared, Protocol.Any)
         }
 
         this.card = card
-        val atr = Atr.parseAtr(card.atr.bytes.toImmutable())
+        val status = card.status()
+        val atr = Atr.parseAtr(status.atr.toImmutable())
 
         val pcscAtr = atr?.pcscAtr
 
@@ -115,19 +110,16 @@ open class JavaCardTransceiver(
     override fun close() {
         val card = this.card
         this.card = null
-        this.channel = null
         this.uid = null
 
-        try {
-            card?.disconnect(false)
-        } catch (e: CardException) {}
+        card?.disconnect(DisconnectDisposition.Reset)
     }
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         if (printTrace) println(">>> ${data.getHexString()}")
 
         val r = wrapJavaExceptions {
-            channel!!.transmit(CommandAPDU(data.dataCopy)).bytes
+            card!!.transmit(data.dataCopy)
         }.toImmutable()
 
         if (printTrace) println("<<< ${r.getHexString()}")

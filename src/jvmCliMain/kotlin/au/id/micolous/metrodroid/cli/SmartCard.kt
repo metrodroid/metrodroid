@@ -18,6 +18,9 @@
  */
 package au.id.micolous.metrodroid.cli
 
+import au.id.micolous.kotlin.pcsc.Context
+import au.id.micolous.kotlin.pcsc.ReaderState
+import au.id.micolous.kotlin.pcsc.getAllReaderStatus
 import au.id.micolous.metrodroid.card.*
 import au.id.micolous.metrodroid.card.desfire.DesfireCardReader
 import au.id.micolous.metrodroid.card.felica.FelicaReader
@@ -37,15 +40,14 @@ import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Paths
 import java.util.*
-import javax.smartcardio.CardTerminal
 
 
 /**
  * Ignore certain CCID readers
  */
-val CardTerminal.ignored : Boolean
+val ReaderState.ignored : Boolean
     get() {
-        val iname = name.toLowerCase(Locale.ENGLISH)
+        val iname = reader.toLowerCase(Locale.ENGLISH)
 
         // Yubikey CCID
         return iname.contains("yubi")
@@ -74,6 +76,14 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
         help="Only read the first system code of FeliCa cards, simulating a work-around for an " +
             "iOS bug. This will result in incomplete data being read from the " +
             "card!").flag(default=false)
+    private val waitForCard: Boolean by option(
+        "--wait-for-card",
+        help="If set, wait for a card to be in the field of a connected reader. Requires --reader."
+    ).flag(default=false).validate {
+        require(!it || reader != null) {
+            "--wait-for-card requires --reader is also set."
+        }
+    }
 
     private val outFile: File? by option("-o", "--output", metavar = "FILE_OR_DIR",
         help="Specify a path that does not exist to create a new file with this name. " +
@@ -90,8 +100,8 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
 
     override fun run() {
         val o = Object()
-        val factory = jnasmartcardio.Smartcardio.JnaTerminalFactorySpi(o)
-        val allTerminals = factory.engineTerminals().list()
+        val context = Context.establish()
+        val allTerminals = context.getAllReaderStatus()
         val outFile : File? = outFile
 
         if (listReaders) {
@@ -99,8 +109,15 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
             return
         }
 
-        val terminal = if (reader == null) {
-            val usableTerminals = allTerminals.filter { !it.ignored && it.isCardPresent }
+        var terminal = if (reader == null) {
+            if (waitForCard) {
+                printTerminals(allTerminals)
+                println("Can only wait for a card if a specific reader is selected.")
+                return
+            }
+
+            val usableTerminals = allTerminals.filter {
+                !it.ignored && it.eventState.present }
 
             if (usableTerminals.count() != 1) {
                 printTerminals(allTerminals)
@@ -110,7 +127,7 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
 
             usableTerminals.getOrNull(0)
         } else {
-            allTerminals.filter { it.name == reader }.getOrNull(0)
+            allTerminals.filter { it.reader == reader }.getOrNull(0)
         }
 
         if (terminal == null) {
@@ -119,14 +136,24 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
             return
         }
 
-        println("Terminal: ${terminal.name}")
+        println("Terminal: ${terminal.reader}")
 
-        if (!terminal.isCardPresent) {
-            println("Card not present, insert into / move in range of ${terminal.name}")
-            return
+        if (!terminal.eventState.present) {
+            if (!waitForCard) {
+                println("Card not present, insert into / move in range of ${terminal.reader}")
+                return
+            }
+
+            println("Waiting for card insertion...")
+            do {
+                terminal = runBlocking{
+                    context.getStatusChange(au.id.micolous.kotlin.pcsc.LONG_TIMEOUT,
+                        listOf(terminal!!.update())).first()
+                }
+            } while (!terminal!!.eventState.present)
         }
 
-        val card = runBlocking { dumpTag(terminal) }
+        val card = runBlocking { dumpTag(context, terminal.reader) }
 
         if (outFile != null) {
             val fn = if (outFile.isDirectory) {
@@ -151,13 +178,13 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
     }
 
     /** Prints a list of connected terminals. */
-    private fun printTerminals(terminals: List<CardTerminal>) {
+    private fun printTerminals(terminals: List<ReaderState>) {
         println("Found ${terminals.count()} card terminal(s):")
-        terminals.forEachIndexed { index, cardTerminal ->
+        terminals.forEachIndexed { index, r ->
             println(
-                "#$index: ${cardTerminal.name} (card ${
-                if (cardTerminal.isCardPresent) { "present" } else { "missing" } }) ${
-                if (cardTerminal.ignored) { "(ignored)" } else { "" }}")
+                "#$index: ${r.reader} (card ${
+                if (r.eventState.present) { "present" } else { "missing" } }) ${
+                if (r.ignored) { "(ignored)" } else { "" }}")
         }
     }
 
@@ -180,8 +207,8 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
         }
     }
 
-    private suspend fun dumpTag(terminal: CardTerminal) : Card {
-        JavaCardTransceiver(terminal, traces, noUID).use {
+    private suspend fun dumpTag(context: Context, terminal: String) : Card {
+        JavaCardTransceiver(context, terminal, traces, noUID).use {
             it.connect()
 
             // TODO
