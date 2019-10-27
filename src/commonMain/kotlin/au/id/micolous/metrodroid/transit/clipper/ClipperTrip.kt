@@ -25,6 +25,7 @@
  */
 package au.id.micolous.metrodroid.transit.clipper
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.time.Timestamp
@@ -52,7 +53,7 @@ class ClipperTrip (private val mTimestamp: Long,
         get() = ClipperTransitData.clipperTimestampToCalendar(mExitTimestamp)
 
     // Bus doesn't record line
-    override val routeName
+    override val routeName: FormattedString?
         get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
             ClipperData.GG_FERRY_ROUTES[mRoute]
         } else {

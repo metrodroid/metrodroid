@@ -37,6 +37,8 @@ internal object ClipperData {
     const val AGENCY_BAY_FERRY = 0x1b
 
     val GG_FERRY_ROUTES = mapOf(
+            0x01 to FormattedString.language("San Francisco", "en-US"),
+            0x02 to FormattedString.language("Sausalito", "en-US"),
             0x03 to FormattedString.language("Larkspur", "en-US"),
             0x04 to FormattedString.language("San Francisco", "en-US"))
 
@@ -56,10 +58,11 @@ internal object ClipperData {
         if (s != null)
             return s
 
-        if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
+        if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN || agency == ClipperData.AGENCY_GG_FERRY) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Localizer.localizeString(R.string.clipper_end_of_line))
-            return Station.nameOnly(Localizer.localizeString(R.string.clipper_zone_number, stationId.toString()))
+            if (agency != ClipperData.AGENCY_GG_FERRY)
+                return Station.nameOnly(Localizer.localizeString(R.string.clipper_zone_number, stationId.toString()))
         }
 
         // Placeholders
