@@ -1133,4 +1133,24 @@
     <string name="compass_sub_bulk_two_zone">Biglietto di massa (bulk) per due zone</string>
     <string name="compass_sub_bulk_three_zone">Biglietto di massa (bulk) per tre zone</string>
     <string name="compass_sub_gradpass">Biglietto per 2 giorni per la laurea (GradPass)</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing non è supportato.</string>
+    <string name="felica_first_system_pref">Leggere solo il primo sistema</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid leggerà tutti i sistemi sulle schede FeliCa. Questo è il valore predefinito.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid leggerà solo il primo sistema sulle schede FeliCa. Questo simula una soluzione per un bug in iOS. Le letture di schede FeliCa multisistema saranno incomplete!</string>
+    <string name="felica_empty_system">Sistema vuoto</string>
+    <string name="felica_skipped_system">Sistema saltata</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d codice di servizio vuoto</item>
+        <item quantity="other">%d codici di servizio vuoti</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d codice di servizio saltato</item>
+        <item quantity="other">%d codici di servizio saltati</item>
+    </plurals>
+    <string name="felica_first_system_notice">Le letture di FeliCa saranno incomplete.</string>
+    <string name="card_name_yargor">Trasporto municipale di Yaroslavl (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Abbonamento tram nei giorni feriali</string>
+    <string name="yargor_sub_weekday_trolley">Abbonamento filobus nei giorni feriali</string>
+    <string name="yargor_sub_allday_all">Abbonamento per tutti i giorni per tutti i mezzi di trasporto</string>
+    <string name="yargor_transports_valid">Valido per i seguenti trasporti</string>
 </resources>
