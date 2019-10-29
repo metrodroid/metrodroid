@@ -479,12 +479,10 @@
     <string name="serial_only_card_description_locked">Эта карта заблокирована, и только серийный номер может быть прочитан. Её баланс и история могут храниться на ней, но недоступны.</string>
     <string name="serial_only_card_description_more_research">Поддержка этой карты находится в разработке, и в настоящее время только серийный номер может быть прочитан.</string>
     <string name="full_serial_number">Полный серийный номер</string>
-
     <string name="card_name_yargor">ЯрГорТранс</string>
     <string name="yargor_sub_weekday_tram">Проездной рабочего дня на трамвай</string>
     <string name="yargor_sub_weekday_trolley">Проездной рабочего дня на троллейбус</string>
     <string name="yargor_sub_allday_all">Проездной всех дней на все виды транспорта</string>
-
     <string name="card_name_zolotaya_korona">Золотая Корона</string>
     <string name="zolotaya_korona_region">Регион</string>
     <string name="card_name_krasnodar_etk">Краснодарская ЕТК</string>
@@ -1168,4 +1166,12 @@
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Поездка на остатке (2-1 день)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Поездка на остатке (1-2 день)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Поездка на остатке (2-1 скидка)</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing не поддерживается.</string>
+    <string name="felica_first_system_pref">Читайть только первую систему</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid будет читать все системы на картах FeliCa. Это значение по умолчанию.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid будет читать только первую систему на картах FeliCa. Это моделирует обход ошибки в iOS. Чтение мультисистемных карт FeliCa будет неполным!</string>
+    <string name="felica_empty_system">Пустая система</string>
+    <string name="felica_skipped_system">Пропущенная система</string>
+    <string name="felica_first_system_notice">Чтения FeliCa будут неполными.</string>
+    <string name="yargor_transports_valid">Действительно для следующих видов транспорта</string>
 </resources>
