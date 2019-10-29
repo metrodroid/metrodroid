@@ -1133,4 +1133,24 @@
     <string name="hotel_checkin">Fecha de entrada</string>
     <string name="hotel_checkout">Fecha de salida</string>
     <string name="compass_sub_gradpass">Boleto de dos días por la graduación (GradPass)</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing no es compatible.</string>
+    <string name="felica_first_system_pref">Sólo leer el primer sistema</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid leerá todos los sistemas de las tarjetas FeliCa. Este es el valor predeterminado.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid leerá sólo el primer sistema en las tarjetas FeliCa. Esto simula una solución alternativa para un error en iOS. ¡Las lecturas de las tarjetas FeliCa multisistema estarán incompletas!</string>
+    <string name="felica_empty_system">Sistema vacío</string>
+    <string name="felica_skipped_system">Sistema omitida</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d código de servicio vacío</item>
+        <item quantity="other">%d códigos de servicio vacíos</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d código de servicio omitido</item>
+        <item quantity="other">%d códigos de servicio omitidos</item>
+    </plurals>
+    <string name="felica_first_system_notice">Las lecturas de FeliCa estarán incompletas.</string>
+    <string name="card_name_yargor">Transporte municipal de Yaroslavl (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Abono a los tranvías los días laborables</string>
+    <string name="yargor_sub_weekday_trolley">Abono a los trolebús los días laborables</string>
+    <string name="yargor_sub_allday_all">Abono para todos los transportes para todos los días</string>
+    <string name="yargor_transports_valid">Válido para los siguientes transportes</string>
 </resources>
