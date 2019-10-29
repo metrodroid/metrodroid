@@ -1134,4 +1134,24 @@
     <string name="venezia_carnet_traghetto">Mehrfahrkarte für die Fähre (Carnet Traghetto)</string>
     <string name="ricaricami_m1_3_ord_single">Ordentliche Nr.1 3 Zonen Mi1-Mi3</string>
     <string name="compass_sub_gradpass">Zweitageskarte zum Hochschulabschluss (GradPass)</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing wird nicht unterstützt.</string>
+    <string name="felica_first_system_pref">Nur das erste System lesen</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid liest alle Systeme auf FeliCa-Karten. Dies ist die Standardeinstellung.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid liest nur das erste System auf FeliCa-Karten. Dies simuliert eine Problemumgehung für einen Fehler in iOS. Die Lesevorgänge von FeliCa-Karten mit mehreren Systemen sind unvollständig!</string>
+    <string name="felica_empty_system">Leeres System</string>
+    <string name="felica_skipped_system">Übersprungenes System</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d leerer Servicecode</item>
+        <item quantity="other">%d leere Servicecodes</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d übersprungener Servicecode</item>
+        <item quantity="other">%d übersprungene Servicecodes</item>
+    </plurals>
+    <string name="felica_first_system_notice">Die FeliCa-Lesungen werden unvollständig sein.</string>
+    <string name="card_name_yargor">Stadtverkehr Jaroslawl (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Wochentag Straßenbahn-Abonnement</string>
+    <string name="yargor_sub_weekday_trolley">Wochentag Obus-Abonnement</string>
+    <string name="yargor_sub_allday_all">Abonnement für den gesamten Transport für alle Tagen</string>
+    <string name="yargor_transports_valid">Gültig für folgende Transporte</string>
 </resources>
