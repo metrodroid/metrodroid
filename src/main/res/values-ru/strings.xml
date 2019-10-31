@@ -1174,4 +1174,15 @@
     <string name="felica_skipped_system">Пропущенная система</string>
     <string name="felica_first_system_notice">Чтения FeliCa будут неполными.</string>
     <string name="yargor_transports_valid">Действительно для следующих видов транспорта</string>
+    <string name="card_media_felica">FeliCa</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d пустой сервисный код</item>
+        <item quantity="few">%d пустых сервисных кода</item>
+        <item quantity="many">%d пустых сервисных кодов</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d пропущенный сервисный код</item>
+        <item quantity="few">%d пропущенных сервисных кода</item>
+        <item quantity="many">%d пропущенных сервисных кодов</item>
+    </plurals>
 </resources>
