@@ -1154,4 +1154,5 @@
     <string name="yargor_sub_weekday_trolley">Wochentag Obus-Abonnement</string>
     <string name="yargor_sub_allday_all">Abonnement für den gesamten Transport für alle Tagen</string>
     <string name="yargor_transports_valid">Gültig für folgende Transporte</string>
+    <string name="card_media_felica">FeliCa</string>
 </resources>
