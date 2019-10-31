@@ -1158,4 +1158,5 @@
     <string name="yargor_sub_weekday_trolley">Abonnement trolleybus en semaine</string>
     <string name="yargor_sub_allday_all">Abonnement à l\'ensemble des transports pour tous les jours</string>
     <string name="yargor_transports_valid">Valable pour les transports suivants</string>
+    <string name="card_media_felica">FeliCa</string>
 </resources>
