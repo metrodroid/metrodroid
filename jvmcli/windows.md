@@ -10,34 +10,37 @@ start the `Smart Card` service.
 
 ## Character sets
 
-Metrodroid internally uses UTF-8 encoding, but Windows `cmd.exe` uses ASCII. A symptom of this issue
-is that some station or line names may appear as squares or question marks.
+Metrodroid internally uses the same encoding as Java (UTF-16), but [Java doesn't support Unicode
+console output properly on Windows out-of-the-box][jwin-unicode]. A symptom of this issue is that
+some station or line names may appear as squares or question marks.
 
-If you want to render station names with non-ASCII character sets, you'll need to do some tweaking:
+If you want to render station names with non-ASCII character sets:
 
-1. [Install Language Packs][win-language-pack] appropriate for the cards you want to read.  You only
-   need to install the Supplemental Fonts (if available) and Language Pack itself.
+1. Press <kbd>Start</kbd> and type `Font settings`
 
-   For example, if you want to see Japanese-language station names for Suica/IC cards, you'll need
-   to install the Japanese (日本語) pack.
+   (also available via <kbd>Settings</kbd> -> <kbd>Personalization</kbd> -> <kbd>Fonts</kbd>)
 
-2. Change the active code page in `cmd.exe`: `chcp 65001`
+2. Click <kbd>Download fonts for all languages</kbd>.  You'll get a confirmation message saying it
+   will take some time and disk space to download: click <kbd>OK</kbd>.
 
-   This changes the active code page to `UTF-8`.
+3. Change the active code page to `UTF-8`: `chcp 65001`
 
-Then, provided you're using `installShadowJar` and the (generated) `metrodroid-cli.bat` launcher
-script:
+4. Change Java's codepage setting for Metrodroid:
 
-1. Change Java's codepage setting: `set METRODROID_CLI_OPTS="-Dfile.encoding=UTF-8"`
+   * In `cmd`: `set METRODROID_CLI_OPTS="-Dfile.encoding=UTF-8"`
+   * In PowerShell: `$ENV:METRODROID_CLI_OPTS="-Dfile.encoding=UTF-8"`
+   * In System control panel: <kbd>Advanced</kbd> tab, <kbd>Environment Variables</kbd>,
+     <kbd>System Variables</kbd>, <kbd>New...</kbd>: `METRODROID_CLI_OPTS` = `-Dfile.encoding=UTF-8`
 
-2. Read a card with Metrodroid (`metrodroid-cli parse ...` or `metrodroid-cli smartcard`)
+5. Read a card with Metrodroid (`metrodroid-cli parse ...` or `metrodroid-cli smartcard`)
 
-3. Adjust the font in `cmd.exe` to one that has the needed characters.
+6. Adjust the font to one that has the needed characters. (not required for the
+   [new Windows Terminal][new-terminal])
 
    For example, `MS Gothic` has appropriate characters for Japanese.
 
 Note: Switching the console language may display `¥` (yen) or `₩` (won) instead of backslash, eg:
 `C:¥Users¥me>`. Continue to use the <kbd>\\</kbd> key as you normally would.
 
-[win-language-pack]: https://support.microsoft.com/en-us/help/14236/language-packs
-
+[jwin-unicode]: https://bugs.openjdk.java.net/browse/JDK-4153167
+[new-terminal]: https://www.microsoft.com/en-us/p/windows-terminal-preview/9n0dx20hk701
