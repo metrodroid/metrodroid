@@ -9,7 +9,7 @@
 <a href="https://github.com/metrodroid/metrodroid/releases/latest">Direct APK download</a>
 <a href="https://www.metrodroid.org/metrodroid/ios">iOS version coming soon!</a>
 
-Version: 3.0.xx
+Version: 3.0.0
 
 View remaining balance, recent trips, and other info from contactless public transit
 cards using NFC on Android and [iOS (coming soon)][ios].
