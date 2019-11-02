@@ -20,4 +20,5 @@
 	shallow = true
 [submodule "third_party/openjavacard-smartcardio"]
 	path = third_party/openjavacard-smartcardio
-	url = https://github.com/OpenJavaCard/openjavacard-smartcardio.git
+	url = https://github.com/micolous/openjavacard-smartcardio.git
+	shallow = true
