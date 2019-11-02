@@ -2,6 +2,7 @@
  * OrcaTransaction.kt
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * Thanks to:
  * Karl Koscher <supersat@cs.washington.edu>
@@ -29,13 +30,8 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.util.*
 
 @Parcelize
 class OrcaTransaction (private val mTimestamp: Long,
@@ -63,10 +59,11 @@ class OrcaTransaction (private val mTimestamp: Long,
             isLink -> listOf(FormattedString.english("Link Light Rail"))
             isSounder -> listOf(FormattedString.english("Sounder Train"))
             mAgency == OrcaTransitData.AGENCY_ST -> listOf(FormattedString.english("Express Bus"))
+            isMonorail -> listOf(FormattedString.english("Seattle Monorail"))
+            isWaterTaxi -> listOf(FormattedString.english("Water Taxi"))
             mAgency == OrcaTransitData.AGENCY_KCM -> {
                 when (mFtpType) {
                     FTP_TYPE_BUS -> listOf(FormattedString.english("Bus"))
-                    FTP_TYPE_WATER_TAXI -> listOf(FormattedString.english("Water Taxi"))
                     FTP_TYPE_BRT -> listOf(FormattedString.english("BRT"))
                     else -> emptyList()
                 }
@@ -101,17 +98,24 @@ class OrcaTransaction (private val mTimestamp: Long,
     override val vehicleID: String?
         get() = when {
                 mIsTopup -> mCoachNum.toString()
-                isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF || isSeattleStreetcar || isSwift || isRapidRide -> null
+                isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF ||
+                    isSeattleStreetcar || isSwift || isRapidRide ||
+                    isMonorail -> null
                 else -> mCoachNum.toString()
             }
 
     override val mode: Trip.Mode
-        get() = if (mIsTopup) Trip.Mode.TICKET_MACHINE else when (mFtpType) {
-            FTP_TYPE_LINK -> Trip.Mode.METRO
-            FTP_TYPE_SOUNDER -> Trip.Mode.TRAIN
-            FTP_TYPE_FERRY, FTP_TYPE_WATER_TAXI -> Trip.Mode.FERRY
-            FTP_TYPE_STREETCAR -> Trip.Mode.TRAM
-            else -> Trip.Mode.BUS
+        get() = when {
+            mIsTopup -> Trip.Mode.TICKET_MACHINE
+            isMonorail -> Trip.Mode.MONORAIL
+            isWaterTaxi -> Trip.Mode.FERRY
+            else -> when (mFtpType) {
+                FTP_TYPE_LINK -> Trip.Mode.METRO
+                FTP_TYPE_SOUNDER -> Trip.Mode.TRAIN
+                FTP_TYPE_FERRY -> Trip.Mode.FERRY
+                FTP_TYPE_STREETCAR -> Trip.Mode.TRAM
+                else -> Trip.Mode.BUS
+            }
         }
 
     override val isTapOn: Boolean
@@ -125,6 +129,15 @@ class OrcaTransaction (private val mTimestamp: Long,
 
     private val isSeattleStreetcar: Boolean
         get() = mFtpType == FTP_TYPE_STREETCAR //TODO: Find agency ID
+
+    private val isMonorail: Boolean
+        get() = (mAgency == OrcaTransitData.AGENCY_KCM &&
+            mFtpType == FTP_TYPE_PURSE_DEBIT && mCoachNum == COACH_NUM_MONORAIL)
+
+    // TODO: Determine if CoachID is used for Water Taxis
+    private val isWaterTaxi: Boolean
+        get() = (mAgency == OrcaTransitData.AGENCY_KCM &&
+            mFtpType == FTP_TYPE_PURSE_DEBIT && mCoachNum != COACH_NUM_MONORAIL)
 
     private val isRapidRide: Boolean
         get() = mAgency == OrcaTransitData.AGENCY_KCM && mFtpType == FTP_TYPE_BRT
@@ -142,17 +155,34 @@ class OrcaTransaction (private val mTimestamp: Long,
         mTransType = useData.getBitsFromBuffer(136, 8),
         mNewBalance = useData.getBitsFromBuffer(272, 16))
 
-    override fun getAgencyName(isShort: Boolean): FormattedString? {
-        if (mAgency == OrcaTransitData.AGENCY_KCM && mFtpType == FTP_TYPE_WATER_TAXI) {
-            // The King County Water Taxi is now a separate agency but uses KCM's agency ID
-            return FormattedString.language("KCWT", "en-US")
-        }
-        return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort)
+    override fun getAgencyName(isShort: Boolean) = when {
+        isMonorail -> // Seattle Monorail Services uses KCM's agency ID.
+            FormattedString.language("SMS", "en-US")
+
+        isWaterTaxi ->
+            // The King County Water Taxi is now a separate agency but uses
+            // KCM's agency ID
+            FormattedString.language("KCWT", "en-US")
+
+        else -> StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort)
     }
 
     override fun isSameTrip(other: Transaction): Boolean {
         return other is OrcaTransaction && mAgency == other.mAgency
     }
+
+    override fun getRawFields(level: TransitData.RawLevel) =
+        (level == TransitData.RawLevel.ALL).ifTrue {
+            (if (mIsTopup) "topup, " else "") +
+                mapOf(
+                    "agency" to mAgency,
+                    "type" to mTransType,
+                    "ftp" to mFtpType,
+                    "coach" to mCoachNum,
+                    "fare" to mFare,
+                    "newBal" to mNewBalance
+                ).map { "${it.key} = ${it.value.hexString}" }.joinToString()
+        }
 
     companion object {
         private const val ORCA_STR = "orca"
@@ -172,6 +202,9 @@ class OrcaTransaction (private val mTimestamp: Long,
         private const val FTP_TYPE_STREETCAR = 0xF9
         private const val FTP_TYPE_BRT = 0xFA //May also apply to future hardwired bus readers
         private const val FTP_TYPE_LINK = 0xFB
-        private const val FTP_TYPE_WATER_TAXI = 0xFE
+        // Used by Monorail and Water Taxi services
+        private const val FTP_TYPE_PURSE_DEBIT = 0xFE
+
+        private const val COACH_NUM_MONORAIL = 0x3
     }
 }
