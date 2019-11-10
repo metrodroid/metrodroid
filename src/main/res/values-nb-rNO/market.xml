@@ -178,9 +178,9 @@
 \n* Mange usynlige endringer.
 \n
 \nFlere detaljer og kjente feil: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_43">• Støtte for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh, Santiago bip, og Warsawa -kort\\n
-\n• Forbedringer og fikser for Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go og Troika -kort\\n
-\n• Fiks av noen feil som kræsjet Metrodroid, og noen feil med MIFARE Classic-kort\\n
-\n\\n
-\nFlere detaljer og kjente feil: https://github.com/micolous/metrodroid/wiki/Changelog\\n</string>
+    <string name="market_changelog_43">• Støtte for Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh, Santiago bip, og Warsawa -kort
+\n• Forbedringer og fikser for Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go og Troika -kort
+\n• Fiks av noen feil som kræsjet Metrodroid, og noen feil med MIFARE Classic-kort
+\n
+\nFlere detaljer og kjente feil: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
