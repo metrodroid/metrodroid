@@ -29,7 +29,8 @@ import kotlin.random.Random
 
 @Parcelize
 data class HSLArvo(override val parsed: En1545Parsed,
-                   val lastTransaction: HSLTransaction?): En1545Subscription() {
+                   val lastTransaction: HSLTransaction?,
+                   private val ultralightCity: Int? = null): En1545Subscription() {
     override val lookup: En1545Lookup
         get() = HSLLookup
 
@@ -80,7 +81,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
     override val subscriptionName: String?
         get() = Localizer.localizeString(R.string.hsl_arvo_format,
                 HSLLookup.getArea(parsed, prefix = CONTRACT_PREFIX,
-                        isValidity = true))
+                        isValidity = true, ultralightCity = ultralightCity))
 
     companion object {
         private const val CONTRACT_PERIOD_UNITS = "ContractPeriodUnits"
@@ -236,16 +237,16 @@ data class HSLArvo(override val parsed: En1545Parsed,
                 HSLTransaction.parseEmbed(raw = raw, version = version, offset = offset,
                                           walttiArvoRegion = parsed.getInt(HSLLookup.contractWalttiRegionName(CONTRACT_PREFIX))))
         }
-        fun parseUL(raw: ImmutableByteArray, version: Int): HSLArvo?  {
+        fun parseUL(raw: ImmutableByteArray, version: Int, city: Int): HSLArvo?  {
             if (raw.isAllZero())
                 return null
             if (version == 2)
                 return HSLArvo(En1545Parser.parse(raw, FIELDS_V2_UL),
                         HSLTransaction.parseEmbed(raw = raw, version = HSLTransitData.Variant.HSL_V2,
-                                offset = 264))
+                                offset = 264, ultralightCity=city), ultralightCity=city)
             return HSLArvo(En1545Parser.parse(raw, FIELDS_V1_UL),
                     HSLTransaction.parseEmbed(raw = raw, version = HSLTransitData.Variant.HSL_V1,
-                            offset = 264))
+                            offset = 264, ultralightCity=city), ultralightCity=city)
         }
 
         fun formatHour(hour: Int?): FormattedString? {
