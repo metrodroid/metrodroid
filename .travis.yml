@@ -49,11 +49,11 @@ jobs:
         - ./gradlew :jvmcli:installShadowDist jvmCliTest --stacktrace
         - ./.travis/jvmcli_test.sh
     - env: TARGET=android
-      script: ./gradlew assembleDebug testDebugUnitTest --stacktrace
+      script: ./gradlew assembleDebug lintDebug testDebugUnitTest --stacktrace -PLINT_FATAL=1
     - env: TARGET=android
-      script: ./gradlew assembleDev testDevUnitTest --stacktrace
+      script: ./gradlew assembleDev lintDev testDevUnitTest --stacktrace -PLINT_FATAL=1
     - env: TARGET=android
-      script: ./gradlew assembleRelease testReleaseUnitTest --stacktrace
+      script: ./gradlew assembleRelease lintRelease testReleaseUnitTest --stacktrace -PLINT_FATAL=1
 
     # This runs the full test suite, including using the Android emulator.
     - stage: test

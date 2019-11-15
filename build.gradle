@@ -609,8 +609,32 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError (project.hasProperty('LINT_FATAL'))
+        warningsAsErrors (project.hasProperty('LINT_FATAL'))
         disable 'MissingTranslation'
+        // Lint doesn't understand our multiplatform setup
+        disable 'UnusedResources'
+        // We make a link from valuen-en to values and hence
+        // all untranslatable strings are considered as "translated"
+        disable 'Untranslatable'
+        // We link between id<->in and he <-> iw so usage of in/he
+        // is of no issue
+        disable 'LocaleFolder'
+        // We use vector images for card images mainly to decrease size
+        // and improve the look
+        disable 'VectorPath'
+        disable 'VectorRaster'
+        // We don't want translations to make lint fail
+        disable 'ImpliedQuantity'
+        disable 'Typos'
+        disable 'TypographyDashes'
+        // Disable following temporarily until we get them in order
+        disable 'ObsoleteLintCustomCheck'
+        disable 'IconDensities'
+        disable 'IconMissingDensityFolder'
+        disable 'StaticFieldLeak'
+        disable 'AppLinkUrlError'
+        disable 'RelativeOverlap'
     }
 
     testOptions {
