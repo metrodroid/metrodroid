@@ -1178,4 +1178,8 @@
     <string name="yargor_sub_weekday_trolley">Trolleybusabonnement - Weekdagen</string>
     <string name="yargor_sub_allday_all">Onbeperkt abonnement</string>
     <string name="yargor_transports_valid">Geldig op de volgende vervoersmiddelen</string>
+    <string name="zolotaya_korona_discount">Korting</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% op gemeentelijk vervoer, 0%% op de trein, 0%% op vervoer per boot</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% op gemeentelijk vervoer, 0%% op de trein, 0%% op vervoer per boot</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% op gemeentelijk vervoer, 50%% op de trein, 50%% op vervoer per boot</string>
 </resources>
