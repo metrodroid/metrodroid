@@ -962,4 +962,10 @@
     </plurals>
     <string name="lisboaviva_engraved_serial">Inngravert nummer</string>
     <string name="app_logo_description">Metrodroid-logo</string>
+    <string name="rkf_stockholm_30_days">Stockholm 30-dagersbillett</string>
+    <string name="ricaricami_daily_urban">Urban dagsbillett</string>
+    <string name="venezia_bus_ticket_75min">75-minutters bussbillett</string>
+    <string name="venezia_airport_bus_ticket">Flybussbillett</string>
+    <string name="large_file_yes">Last inn uansett (fare for kræsj)</string>
+    <string name="large_file_no">Avbryt (trygt)</string>
 </resources>
