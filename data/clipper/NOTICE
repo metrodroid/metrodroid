@@ -22,11 +22,13 @@ You can obtain a copy of the raw data and its license at:
 
    http://www.vta.org/getting-around/gtfs-info/data-file
 
-4. San Francisco Bay Ferry (SFBF) station locations are derived from SFBF's GTFS feed, make available under the 511 Data Disseminator Agreement.
+4. San Francisco Bay Ferry (SFBF) station locations and Golden Gate Transit (GGT) station names and locations are derived from SFBF's and GGT's GTFS feeds, respectively. These are made available under the 511 Data Disseminator Agreement.
 
 You can obtain a copy of the raw data and its license at:
 
-   https://511.org/developers/list/data/
+   https://511.org/open-data/transit
+
+   https://511.org/sites/default/files/pdfs/511_Data_Agreement_Final.pdf
 
 5. Station, stop and agency ID mappings for Clipper card are not provided by the aforementioned agencies. This information is available in Metrodroid's source repository, and is subject to the same license terms as Metrodroid.
 
@@ -47,3 +49,4 @@ Mapping data is contributed by:
  * Vladimir Serbinenko
  * Michael Farrell
  * Robbie Trencheny
+ * Eric J Nguyen
