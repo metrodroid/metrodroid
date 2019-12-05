@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="copyright">Авторські права © 2015 – 2019 Міхаель Фарел</string>
+    <string name="license">Ліцензія</string>
+    <string name="title_activity_license">Ліцензії з відкритим сирцевим кодом</string>
+    <string name="directions">Прикладіть картку.</string>
+    <string name="reading_card">Карта зчитується…</string>
+    <string name="dont_move">Не рухайте карткою</string>
+    <string name="advanced_info">Докладні відомості</string>
+    <string name="delete_card">Видалити картку</string>
+    <string name="unknown_card">Невідома картка</string>
+    <string name="locked_mfc_card">Заблокована картка MIFARE Classic</string>
+    <string name="locked_mfu_card">Блокована картка MIFARE Ultralight</string>
+</resources>
