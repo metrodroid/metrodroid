@@ -1,2 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="market_short_desc">Metrodroid зчитує відомості з деяких смарт-карт NFC для громадського транспорту.</string>
+    <string name="market_long_desc">Metrodroid читає деякі смарт-карти NFC для громадського транспорту.
+\n
+\nПідтримувані картки:
+\n• Amiibo 🆕
+\n• AT HOP - Окленд, Нова Зеландія 🆕🆔
+\n• Beijing Municipal Card, Shenzhen Tong, T-Union, Wuhan Tong - Китай🆕
+\n• Bilhete Único - Сан-Паулу, Бразилія📜🗝
+\n• bip! - Сантьяго, Чилі🆕📜🗝
+\n• BUS-IT -Великий Гамільтон (Вайкато), Нова Зеландія 🆕📜🗝
+\n• Carta Mobile - Піза, Італія 🆕
+\n• CEPAS (EZ-Link, NETS Flashpay) - Сингапур 🇸🇬
+\n• CharlieCard - Бостон, Масачусетс, США🆕📜🗝
+\n• Cifial 🆕📜
+\n• City Union, T-Union -Материковий Китай 🆕
+\n• Clipper - San Francisco, Каліфорнія, США
+\n• Compass (single-use tickets) - Ванкувер, Британська Колумбія, Канада🆕
+\n• Кримські тролейбуси 🆕📜🗝
+\n• EasyCard - Тайбей📜🗝
+\n• EMV bank cards 🆕
+\n• Go card - Брісбан, Квінсленд, Австралія🆕📜🗝
+\n• GoCard - Отаго (Дунедін і Квінстаун), Нова Зеландія 🆕📜
+\n• Go-to Card - Міннеаполіс-Св. Пол, Мінесота, США🆕📜🗝
+\n• Hafilat - Абудабі, Об\'єднані Арабські Емірати🆕
+\n• Hop Fastpass - Портленд, Орегон, США🆕🆔
+\n• HSL, Matkakortti, Waltti - Фінляндія
+\n• IC (Suica, ICOCA, PASMO), Edy - Японія
+\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Франція
+\n• IstanbulKart - Турція🆕🆔
+\n• Kartu Multi Trip - Джакарта, Індонезія
+\n• Київське метро - Україна🆕📜🗝
+\n• KomuterLink - Малайзія🆕📜🗝
+\n• Leap - Ірландія🆕🇮🇪
+\n• Lisboa Viva - Лісабон, Португалія🆕
+\n• Manly Fast Ferry - Сідней, Новий Південний Уельс. Австралія 🆕📜🗝
+\n• metroCARD - Аделаїда, Австралія🆕
+\n• Metrocard (1st-gen) - Крайстчерч, Нова Зеландія 🆕📜🗝
+\n• Metromoney - Тбілісі, Грузія 🆕📜🗝
+\n• Mobib - Брюсель, Бельгія 🆕
+\n• Myki - Melbourne, VIC, Австралія🆕🆔
+\n• MyWay - Canberra, ACT, Австралія🆕📜🗝
+\n• Nol - Дубаї, Об🆕🆔
+\n• Octopus - Hong Kong 🆕
+\n• Opal - Sydney, NSW, Australia 🆕
+\n• Opus - Québec, Canada 🆕
+\n• ORCA - Сіетл, WA, USA
+\n• OV-chipkaart - Netherlands 📜🗝
+\n• Oyster (1st-gen) - London, UK 🆕📜🗝
+\n• Podorozhnik - Санкт-Петербург - Росія 🆕📜🗝
+\n• Rav-Kav - Israel 🆕
+\n• Rejsekort - Denmark 🆕📜🗝
+\n• RicaricaMi - Milan, Italy 🆕
+\n• Selecta - France 🆕
+\n• SLAccess - Stockholm, Sweden 🆕📜🗝
+\n• Smartride - Rotorua, New Zealand 🆕📜
+\n• SmartRider - Perth, WA, Australia 🆕📜🗝
+\n• Snapper (plus) - Wellington, New Zealand 🆕
+\n• Strelka - Moscow, Russia 🆕📜🆔
+\n• SunCard - Orlando, FL, USA 🆕📜🗝🆔
+\n• Tartu Bus - Estonia 🆕📜🆔
+\n• T-Money - South Korea 🆕
+\n• Touch ’n Go - Malaysia 🆕📜🗝
+\n• TPF card - Fribourg, Switzerland 🆕🆔
+\n• Transit Access Pass - Los Angeles, CA, USA 🆕📜🗝
+\n• Troika - Moscow, Russia 🆕📜🗝
+\n• Umarsh (Electronic Barnaul, Kirov, Ekaterinburg Ekarta, Izhevsk Strizh, Nizhniy Novgorod Siticard, Penza, Yoshkar-Ola) - Russia 🆕📜🗝
+\n• Ventra (single-use tickets) - Chicago, IL, USA 🆕
+\n• Warszawska Karta Miejska - Warsaw, Poland 🆕📜🗝🆔
+\n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Russia 🆕📜🗝
+\n
+\n🆕 New in Metrodroid.
+\n📜 MIFARE Classic: not compatible with all devices - you need a device NXP NFC chipset to read this.
+\n🗝 Encryption keys are required to read this card.
+\n🇸🇬 CEPAS not compatible with all devices (ISO 14443-B).
+\n🆔 Only the card number can be read.
+\n🇮🇪 Encryption keys are downloaded from the operator.
+\n
+\nYou require a NFC-compatible device to read cards.
+\n
+\nSome agencies have encrypted cards. You need to acquire encryption keys to read them, which are generally unique to each card. Sorry, I can’t help you with this.
+\n
+\nMetrodroid and its authors are not affiliated with and public transit agency. Other agencies’ cards using Cubic Nextfare or ERG on MIFARE Classic may also work.
+\n
+\nFor more details about permissions required, please see the privacy policy.
+\n
+\nThis is a fork of Eric Butler’s Farebot, with support for additional cards and bug fixes.
+\n
+\nThis software is licensed under the GNU GPLv3+, source code is available at https://github.com/metrodroid/</string>
+</resources>
