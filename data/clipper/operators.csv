@@ -9,11 +9,17 @@ id,name,short_name,mode
 0x12,San Francisco Municipal,Muni,BUS
 0x19,Golden Gate Ferry,GG Ferry,FERRY
 0x1b,San Francisco Bay Ferry,SF Bay Ferry,FERRY
+0x3f,Clipper Customer Service,Clipper Customer Service,
+0x3d,Bay Crossings,Bay Crossings,
+0x155,UCSF Transportation Services (Parnassus),UCSF,
+0x156,UCSF Transportation Services (Mission Bay),UCSF,
 0x173,Caltrain 8-Rides,Caltrain,
 0x1bc,Walgreens,Walgreens,
 0x1be,Walgreens #7080 (105 El Camino Real),Walgreens,
 0x1db,Walgreens,Walgreens,
+0x1de,Walgreens #1297 (670 4th Street),Walgreens,
 0x1fe,Walgreens #6625 (Chestnut & Steiner),Walgreens,
 0x1ff,Walgreens #1403 (Lombard & Divisadero),Walgreens,
 0x248,San Francisco International Airport Info Booth,SFO info booth,
 0x2cf,Whole Foods,Whole Foods,
+0x2ab,Whole Foods SoMa,Whole Foods,
