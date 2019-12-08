@@ -39,6 +39,7 @@ package au.id.micolous.metrodroid.card.felica
 import au.id.micolous.metrodroid.card.*
 import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_POLLING
 import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_READ_WO_ENCRYPTION
+import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_REQUEST_SPECIFICATION_VERSION
 import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_REQUEST_SYSTEMCODE
 import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_RESET_MODE
 import au.id.micolous.metrodroid.card.felica.FelicaConsts.COMMAND_SEARCH_SERVICECODE
@@ -458,6 +459,42 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         // Process the response data
         return resp.sliceArray(12 until resp.size).chunked(16).withIndex().associate {
             Pair(blockNumbers[it.index], it.value)
+        }
+    }
+
+    /**
+     * Requests information from a card about supported communication protocols.
+     *
+     * If the command execution was successful (Status Flag 1 == 0), this returns the response data
+     * given by the card starting from Format Version. This structure is described in the FeliCa
+     * specification, s4.4.15 (and parsed in [FelicaCard]).
+     *
+     * Otherwise, this will return null.
+     *
+     * Cards that do not support this command will not respond -- this method will automatically
+     * swallow a [CardLostException].
+     *
+     * @param systemNumber The system number to use for communication with the card.
+     * @return On success, a Request Specification Version structure, starting from Format Version.
+     */
+    suspend fun requestSpecificationVersion(systemNumber: Int): ImmutableByteArray? {
+        val r = ImmutableByteArray.empty(2)
+
+        // Older cards don't respond to the request, rather than returning an error.
+        val resp = try {
+            sendRequest(COMMAND_REQUEST_SPECIFICATION_VERSION, systemNumber, r)
+        } catch (e: CardLostException) {
+            Log.d(TAG, "requestSpecificationVersion: Swallowing CardLostException")
+            return null
+        }
+
+        return if (resp.size < 12 || resp[9].toInt() != 0) {
+            // Expect at least 12 bytes (response code + idm + status flags + format version)
+            // Status flag 1 must be 0
+            null
+        } else {
+            // Start at Format Version
+            resp.sliceArray(11 until resp.size)
         }
     }
 

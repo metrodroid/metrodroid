@@ -47,6 +47,7 @@ data class FelicaCard(
         val pMm: ImmutableByteArray?,
         @XMLListIdx("code")
         val systems: Map<Int, FelicaSystem>,
+        val specificationVersion: ImmutableByteArray? = null,
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
     /**
@@ -114,6 +115,47 @@ data class FelicaCard(
     private val maximumResponseTime: Long?
         get() = pMm?.byteArrayToLong(2, 6)
 
+    private fun checkSpecificationVersionFormat(s: ImmutableByteArray): Boolean = (
+        // Format Version (1 byte) + Basic Version (2 bytes) + Number of Options (1 byte)
+        s.size >= 4 &&
+        // Format Version
+        s[0].toInt() == 0)
+
+    private fun getVersion(b: ImmutableByteArray, off: Int): Int? {
+        val s =  b.sliceOffLenSafe(off, 2) ?: return null
+        return s.reverseBuffer().convertBCDtoInteger() % 1000
+    }
+
+    /**
+     * Gets the basic specification version supported by the card.
+     */
+    val basicVersion: Int?
+        get() {
+            val s = specificationVersion ?: return null
+            if (!checkSpecificationVersionFormat(s)) return null
+            return getVersion(s, 1)
+        }
+
+    /**
+     * Gets optional specification versions supported by the card.
+     *
+     * This is only populated on cards that support DES.
+     */
+    val optionVersions: List<Int>?
+        get() {
+            val s = specificationVersion ?: return null
+            if (!checkSpecificationVersionFormat(s)) return null
+            val count = s[3].toInt()
+            // 2 bytes per record
+            if (s.size < (2 * count) + 4) {
+                return null
+            }
+
+            return 0.rangeTo(count).mapNotNull { i ->
+                getVersion(s, (2 * i) + 4)
+            }.toList()
+        }
+
     @Transient
     override val manufacturingInfo: List<ListItem>
         get() {
@@ -162,12 +204,28 @@ data class FelicaCard(
                 items.add(ListItem(R.string.felica_response_time_other,
                 Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
             }
+
+            if (specificationVersion != null) {
+                items.add(HeaderListItem(R.string.felica_specification_version))
+                items.add(ListItem(R.string.felica_basic_version, basicVersion?.toString()))
+                val versions = optionVersions
+                if (!versions.isNullOrEmpty()) {
+                    items.add(ListItem(R.string.felica_option_version_list,
+                        versions.joinToString()))
+                }
+            }
+
             return items
         }
 
     @Transient
     override val rawData: List<ListItem>
-        get() = systems.map { (systemCode, system) ->
+        get() =
+            listOfNotNull(
+                pMm?.let { ListItem(R.string.felica_pmm, it.toHexDump()) },
+                specificationVersion?.let {
+                    ListItem(R.string.felica_specification_version, it.toHexDump()) }
+            ) + systems.map { (systemCode, system) ->
             val title = Localizer.localizeString(R.string.felica_system_title_format,
                 systemCode.hexString,
                 Localizer.localizeString(

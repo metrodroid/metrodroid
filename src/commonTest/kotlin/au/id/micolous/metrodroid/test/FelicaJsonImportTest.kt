@@ -62,7 +62,9 @@ class FelicaJsonImportTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat)  {
      */
     @Test
     fun testIdm() {
-        checkLoadCard("felica/felica-idm.json")
+        val felica = checkLoadCard("felica/felica-idm.json")
+        assertNull(felica.basicVersion)
+        assertNull(felica.optionVersions)
     }
 
     /**
@@ -70,7 +72,33 @@ class FelicaJsonImportTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat)  {
      */
     @Test
     fun testNoIdm() {
-        checkLoadCard("felica/felica-no-idm.json")
+        val felica = checkLoadCard("felica/felica-no-idm.json")
+        assertNull(felica.basicVersion)
+        assertNull(felica.optionVersions)
+    }
+
+    /**
+     * Test reading a FeliCa JSON dump with specificationVersion tag (like >= v3.1.0)
+     *
+     * This card does not have any optional version data (AES-only card).
+     */
+    @Test
+    fun testSpecificationVersionAESOnly() {
+        val felica = checkLoadCard("felica/felica-spec-version-aes-only.json")
+        assertEquals(500, felica.basicVersion)
+        assertEquals(emptyList(), felica.optionVersions)
+    }
+
+    /**
+     * Test reading a FeliCa JSON dump with specificationVersion tag (like >= v3.1.0)
+     *
+     * This card has optional version data (so supports DES).
+     */
+    @Test
+    fun testSpecificationVersionDES() {
+        val felica = checkLoadCard("felica/felica-spec-version-des.json")
+        assertEquals(500, felica.basicVersion)
+        assertEquals(listOf(500), felica.optionVersions)
     }
 
     /**
