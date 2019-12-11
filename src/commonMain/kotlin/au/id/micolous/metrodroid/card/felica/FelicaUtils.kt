@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData
+import au.id.micolous.metrodroid.transit.mrtj.MRTJTransitData
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData
 
@@ -100,6 +101,12 @@ object FelicaUtils {
                 KMTTransitData.SERVICE_KMT_ID -> R.string.kmt_file_id
                 KMTTransitData.SERVICE_KMT_BALANCE -> R.string.kmt_file_purse_balance
                 KMTTransitData.SERVICE_KMT_HISTORY -> R.string.kmt_file_history
+                else -> R.string.unknown
+            }
+
+            MRTJTransitData.SYSTEMCODE_MRTJ -> when (serviceCode) {
+                MRTJTransitData.SERVICE_MRTJ_ID -> R.string.mrtj_file_id
+                MRTJTransitData.SERVICE_MRTJ_BALANCE -> R.string.mrtj_file_purse_balance
                 else -> R.string.unknown
             }
 
