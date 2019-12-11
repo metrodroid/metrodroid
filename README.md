@@ -39,7 +39,7 @@ linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.b
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
-* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, COMMET)
+* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, MRT Jakarta)
 
 ## Translated by
 
@@ -117,6 +117,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
 [Mobib][mobib] | :belgium: Brussels, Belgium | :new: `IOS`
+[MRT Jakarta][mrtj] | :indonesia: Jakarta, Indonesia | :new:
 [Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: :id: `IOS`
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [Navigo][navigo] | :fr: Paris, France | :new: `IOS`
@@ -224,7 +225,7 @@ This software and it's authors are not associated with any public transit agency
    ```
    $ git clone --recursive https://github.com/metrodroid/metrodroid.git
    ```
-   
+
    [If you get an error from Gradle about `:material-design-icons` not being available, then your
    clone doesn't have the submodules.](https://github.com/metrodroid/metrodroid/issues/32)
 
@@ -290,6 +291,7 @@ This software and it's authors are not associated with any public transit agency
 [manly]: http://www.manlyfastferry.com.au/
 [matka]: http://www.hsl.fi/EN/passengersguide/travelcard/Pages/default.aspx
 [mobib]: https://mobib.be/
+[mrtj]: https://www.jakartamrt.co.id/
 [mspgoto]: https://www.metrotransit.org/go-to-card
 [myki]: http://ptv.vic.gov.au/
 [myway]: https://www.transport.act.gov.au/myway-and-fares
