@@ -157,4 +157,8 @@
     <string name="pref_hide_unsupported_ribbon_desc_off">Bu cihaz tarafından okunamayan kartların resimlerinin üzerinde kırmızı bir \'desteklenmiyor\' uyarısı olacaktır</string>
     <string name="pref_hide_unsupported_ribbon_desc_on">Desteklenmeyen kartların resimlerinin üzerinde herhangi bir şey olmayacaktır</string>
     <string name="last_refill">Son doldurma</string>
+    <string name="localise_places">Yer isimlerine dil ipuçları ekle</string>
+    <string name="localise_places_desc">İstasyon, durak, hat ve rota adları gibi yer isimlerine dil ipuçları (LocaleSpan) ekler. Bu, ekran okuyucular ve diğer erişilebilirlik yazılımları tarafından kullanılan telaffuzu değiştirir.</string>
+    <string name="localise_places_longdesc_button">Dil ipuçları hakkında…</string>
+    <string name="localise_places_longdesc_title">Dil ipuçları hakkında</string>
 </resources>
