@@ -66,7 +66,13 @@ class ClipperTrip (private val mTimestamp: Long,
         } else null
 
     override val vehicleID: String?
-        get() = if (mVehicleNum != 0 && mVehicleNum != 0xffff) mVehicleNum.toString() else null
+        get() = when (mVehicleNum) {
+            0, 0xffff -> null
+            in 1..9999 -> mVehicleNum.toString()
+            // For LRV4 Muni vehicles with newer Clipper readers, it stores a 4-digit vehicle number followed
+            // by a letter. For example 0d20461 is vehicle number 2046A, 0d20462 is 2046B, and so on.
+            else -> (mVehicleNum / 10).toString() + Integer.toHexString((mVehicleNum % 10) + 9).toString().toUpperCase()
+        }
 
     override val fare: TransitCurrency?
         get() = TransitCurrency.USD(mFare)
