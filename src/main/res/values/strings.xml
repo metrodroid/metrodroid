@@ -1181,6 +1181,11 @@
     <!-- Translators: Name of a transit card in Indonesia. -->
     <string name="card_name_kmt">Kartu Multi Trip</string>
 
+    <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
+    <string name="mrtj_extra_note">Balance and last transaction info.</string>
+    <string name="mrtj_file_id">MRTJ Identity</string>
+    <string name="mrtj_file_purse_balance">MRTJ purse balance</string>
+
     <!-- HSL -->
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
