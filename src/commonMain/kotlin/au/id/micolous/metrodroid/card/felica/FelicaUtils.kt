@@ -49,6 +49,7 @@ object FelicaUtils {
             OctopusTransitData.SYSTEMCODE_OCTOPUS -> R.string.card_name_octopus
             OctopusTransitData.SYSTEMCODE_SZT -> R.string.card_name_szt
             KMTTransitData.SYSTEMCODE_KMT -> R.string.card_name_kmt
+            MRTJTransitData.SYSTEMCODE_MRTJ -> R.string.card_name_mrtj
             FelicaConsts.SYSTEMCODE_NDEF -> R.string.card_format_ndef
             else -> R.string.unknown
         }
