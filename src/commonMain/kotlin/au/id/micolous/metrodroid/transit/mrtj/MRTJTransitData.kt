@@ -62,7 +62,11 @@ class MRTJTransitData(
         const val SYSTEMCODE_MRTJ = 0x9373
         // TODO:
         // - Figure out what is content of 0x100B, assumed it is the card ID (encrypted or encoded)
-        // - Figure out how to decode/decrypt card ID
+        //
+        //   Content of 0x100B: 28010101 264a0001 00000000 00000000
+        //   Printed Card Num : MJ01 1190 2100 3733
+        //   S.N              : JK0247709483
+        //
 
         const val SERVICE_MRTJ_ID = 0x100B
 
