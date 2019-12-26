@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
+import au.id.micolous.metrodroid.transit.clipper.ClipperTrip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 
@@ -103,6 +104,17 @@ class ClipperTest : BaseInstrumentedTest() {
         assertEquals("Dublin/Pleasanton", trips[0].endStation!!.getStationName(true).unformatted)
         assertNear(37.70169, trips[0].endStation!!.latitude!!.toDouble(), 0.00001)
         assertNear(-121.89918, trips[0].endStation!!.longitude!!.toDouble(), 0.00001)
+    }
+
+    @Test
+    fun testVehicleNumbers() {
+        assertEquals(null, ClipperTrip(ImmutableByteArray.fromHex("0000000000000000000000000000000000000000000000000000000000000000")).vehicleID)
+        assertEquals(null, ClipperTrip(ImmutableByteArray.fromHex("00000000000000000000ffff0000000000000000000000000000000000000000")).vehicleID)
+        // These trips below were extracted from an actual clipper card
+        assertEquals("1058", ClipperTrip(ImmutableByteArray.fromHex("10000012000000fa008a0422e1a11e84000000000000ffffff00000000010061")).vehicleID)
+        assertEquals("2010A", ClipperTrip(ImmutableByteArray.fromHex("10000012000000fa008a4e85e1a0ff9a000000000000ffff0000000000010075")).vehicleID)
+        assertEquals("2061B", ClipperTrip(ImmutableByteArray.fromHex("10000012000000fa008a5084e19ce9c1000000000000ffff0000000000010075")).vehicleID)
+        assertEquals("1525", ClipperTrip(ImmutableByteArray.fromHex("10000012000000fa008a05f5e1a01426000000000000ffffff00000000010061")).vehicleID)
     }
 
     companion object {
