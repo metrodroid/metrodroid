@@ -27,7 +27,8 @@
     <string name="export_all">Tümünü dışa aktar</string>
     <string name="about">Hakkında</string>
     <string name="preferences">Tercihler</string>
-    <string name="balance_speech">Bakiye <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Bakiye <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">Yükleniyor…</string>
     <string name="scanned_at_format">%1$s Tarihinde %2$s Tarandı</string>
     <string name="supported_cards">Desteklenen kartlar</string>
@@ -133,7 +134,8 @@
     <string name="binary_title_format">İkili veri</string>
     <string name="sector_title_format_empty">Sektör: %s (boş)</string>
     <string name="delete_key_confirm_title">Anahtarı gerçekten sil\?</string>
-    <string name="delete_key_confirm_message"><xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> anahtar dosyası (<xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g> içeren) sonsuza kadar yok olacak.</string>
+    <string name="delete_key_confirm_message">
+        <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> anahtar dosyası (<xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g> içeren) sonsuza kadar yok olacak.</string>
     <string name="cant_delete_with_obfuscation">Anahtar silme şu anda kullanılamıyor</string>
     <string name="cant_delete_with_obfuscation_message">Güvenlik nedeniyle, kart numarası gizleme etkinken anahtarları silemezsiniz. Anahtarları silmek istiyorsanız onu kapatın.</string>
     <string name="file_exported">Dosya dışa aktarıldı.</string>
@@ -161,4 +163,11 @@
     <string name="localise_places_desc">İstasyon, durak, hat ve rota adları gibi yer isimlerine dil ipuçları (LocaleSpan) ekler. Bu, ekran okuyucular ve diğer erişilebilirlik yazılımları tarafından kullanılan telaffuzu değiştirir.</string>
     <string name="localise_places_longdesc_button">Dil ipuçları hakkında…</string>
     <string name="localise_places_longdesc_title">Dil ipuçları hakkında</string>
+    <string name="unsupported_tag">Desteklenmeyen NFC kart ortamı</string>
+    <string name="saving_card">Kart kaydediliyor…</string>
+    <string name="mfc_reading">MIFARE Classic kartı okunuyor…</string>
+    <string name="mfp_reading">MIFARE Plus kartı okunuyor…</string>
+    <string name="lang_override">Uygulama dili</string>
+    <string name="lang_override_desc">Uygulama dilini değiştir. Geçerli olması için uygulamanın yeniden başlatılması gerekmektedir</string>
+    <string name="lang_default">Sistem varsayılanı</string>
 </resources>
