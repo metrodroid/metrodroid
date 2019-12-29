@@ -170,4 +170,33 @@
     <string name="lang_override">Uygulama dili</string>
     <string name="lang_override_desc">Uygulama dilini değiştir. Geçerli olması için uygulamanın yeniden başlatılması gerekmektedir</string>
     <string name="lang_default">Sistem varsayılanı</string>
+    <string name="localise_places_longdesc">Metinden-konuşmaya sesleri normalde yalnızca bir dil için iyi çalışır.
+\n
+\nLocaleSpan ipuçları, metni farklı bir dilde olarak işaretlemek için kullanılır. Bir istasyona, durağa, hatta veya rota adına uygulandığında, bu ipuçlarını destekleyen bir ekran okuyucu, Android\'i kullanmak için yapılandırdığınız dil yerine, o yerin ana dilinden sentezlenmiş sesler kullanarak ismi telaffuz edecektir.
+\n
+\nBu seçeneğin etkinleştirilmesi, genellikle uluslararası üne sahip olmayan yabancı yer adlarının telaffuzunu iyileştirir, ancak anlaşılması size daha zor gelebilir.
+\n
+\nBu normalde yer adlarının ekran görüntüsünü değiştirmez, ancak bazı cihazlar farklı bir yazı tipi kullanabilir.
+\n
+\nBu, LocaleSpan API\'sini (Google TalkBack gibi) destekleyen erişilebilirlik yazılımı ve uygun seslerin yüklü olmasını gerektirir.</string>
+    <string name="mfc_have_key">%d sektörü için kullanıcı tarafından sağlanan anahtar deneniyor…</string>
+    <string name="mfc_other_key">%d sektörü için kullanıcı tarafından sağlanan alternatif anahtarlar deneniyor…</string>
+    <string name="mfc_default_key">%d sektörü için iyi bilinen anahtarlar deneniyor…</string>
+    <string name="mfc_reading_blocks">%d sektörü okunuyor…</string>
+    <string name="iso14a_detect">ISO 14443 kart türü algılanıyor…</string>
+    <string name="mfd_reading">MIFARE DESFire kartı okunuyor…</string>
+    <string name="card_reading_type">
+        <xliff:g id="card_name" example="Opal">%s</xliff:g> okunuyor…</string>
+    <string name="mfu_detect">MIFARE Ultralight kart türü algılanıyor…</string>
+    <string name="mfu_reading">MIFARE Ultralight kartı okunuyor…</string>
+    <string name="calypso_reading">Calypso kartı okunuyor…</string>
+    <string name="card_partial_read_title">Kart kısmen okundu!</string>
+    <string name="mfd_unlocking">
+        <xliff:g id="card_name" example="Leap">%s</xliff:g> kartının kilidi açılıyor…</string>
+    <string name="vicinity_reading">Vicinity kartı okunuyor…</string>
+    <string name="mfc_rwid">Oku: %1$s, yaz: %2$s, arttır: %3$s, azalt: %4$s</string>
+    <string name="mfc_key_never">asla</string>
+    <string name="mfc_key_a">A anahtarı</string>
+    <string name="mfc_key_b">B anahtarı</string>
+    <string name="mfc_key_ab">A|B anahtarı</string>
 </resources>
