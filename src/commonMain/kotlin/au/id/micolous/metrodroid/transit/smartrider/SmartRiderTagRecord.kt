@@ -60,7 +60,10 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
     // There is also a bus with route number 300, but it is a free service.
     override val mode: Trip.Mode
         get() = when (mCardType) {
-            SmartRiderTransitData.CardType.MYWAY -> Trip.Mode.BUS
+            SmartRiderTransitData.CardType.MYWAY -> when {
+                "RAIL".equals(mRoute.unformatted, ignoreCase = true) -> Trip.Mode.TRAM
+                else -> Trip.Mode.BUS
+            }
 
             SmartRiderTransitData.CardType.SMARTRIDER -> when {
                 "RAIL".equals(mRoute.unformatted, ignoreCase = true) -> Trip.Mode.TRAIN
