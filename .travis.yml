@@ -54,6 +54,12 @@ jobs:
       script: ./gradlew assembleDev lintDev testDevUnitTest --stacktrace -PLINT_FATAL=1
     - env: TARGET=android
       script: ./gradlew assembleRelease lintRelease testReleaseUnitTest --stacktrace -PLINT_FATAL=1
+    # This runs a build where third_party/protobuf has been deleted because F-Droid
+    # https://github.com/metrodroid/metrodroid/issues/640#issuecomment-574491810
+    - env: TARGET=android
+      script:
+        - rm -rf ./third_party/protobuf
+        - ./gradlew assembleRelease lintRelease testReleaseUnitTest --stacktrace -PLINT_FATAL=1
 
     # This runs the full test suite, including using the Android emulator.
     - stage: test
