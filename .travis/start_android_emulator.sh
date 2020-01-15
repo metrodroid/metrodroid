@@ -9,8 +9,7 @@ fi
 echo "** Starting emulator in background..."
 if [[ "${EMULATOR_ARCH}" =~ "x86" ]]
 then
-    EMULATOR="${EMULATOR}-headless"
-    EMULATOR_ARGS="${EMULATOR_ARGS} -no-accel"
+    EMULATOR_ARGS="${EMULATOR_ARGS} -no-accel -no-window"
 fi
 
 ${EMULATOR} -avd "emu" \
