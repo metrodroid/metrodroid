@@ -104,17 +104,37 @@ reader_id,stop_code,stop_id,comment
 0x32c9,010790,,
 0x32ca,010787,,
 0x32cb,010788,,
+0x32e6,300008,,
+0x333e,300050,,
 0x3bab,000043,,
 0x3bac,000044,,
 0x3bc3,000470,,
+0x40d9,319476,,
 0x4c39,319743,,
 0x4ce4,010796,,
 0x5131,,place_UQLAKE,todo: change to platform number
+0x5999,000020,,
 0x5a86,003944,,
 0x5a88,003947,,
-0x5999,000020,,
+0x5ee6,319667,,
 0x6e7b,,place_intsta,Ticket machine for pass sales
 0x7007,019050,,
 0x7187,011328,,"11328-2: Toombul bus interchange, route 590 (both directions)"
 0x722e,061017,,
 0x722f,061018,,
+0x7241,600830,,unconfirmed
+0x7242,600828,,unconfirmed
+0x7243,600826,,unconfirmed
+0x7244,600824,,unconfirmed
+0x7245,600822,,unconfirmed
+0x7246,600820,,unconfirmed
+0x7247,600818,,unconfirmed
+0x7248,600816,,unconfirmed
+0x7249,600814,,unconfirmed
+0x724a,600812,,
+0x724b,600810,,
+0x724c,600808,,
+0x724d,600806,,unconfirmed
+0x724e,600804,,unconfirmed
+0x724f,600802,,
+0x7250,600800,,

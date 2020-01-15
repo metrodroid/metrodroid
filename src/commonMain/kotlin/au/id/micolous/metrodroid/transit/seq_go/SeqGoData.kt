@@ -30,6 +30,7 @@ object SeqGoData {
     const val SEQ_GO_STR = "seq_go"
 
     internal const val VEHICLE_RAIL = 5
+    internal const val VEHICLE_GLINK = 32
 
     /* Airtrain */
     @VisibleForTesting

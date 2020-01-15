@@ -5,8 +5,15 @@ SEQ_URL = "https://gtfsrt.api.translink.com.au/GTFS/SEQ_GTFS.zip"
 
 all: seq_go.mdst seq_go.csv
 
-seq_go.mdst: mapping.csv operators.csv seq_gtfs.zip mdst
-	python3 $(MDST)/compile_stops_from_gtfs.py seq_gtfs.zip -m mapping.csv -p operators.csv -l en-AU -n NOTICE -o $@
+seq_go.mdst: mapping.csv operators.csv stations.csv seq_gtfs.zip mdst
+	python3 $(MDST)/compile_stops_from_gtfs.py \
+		seq_gtfs.zip \
+		-m mapping.csv \
+		-p operators.csv \
+		-x stations.csv \
+		-l en-AU \
+		-n NOTICE \
+		-o $@
 
 seq_gtfs.zip:
 	curl -o $@ -z $@ $(SEQ_URL)

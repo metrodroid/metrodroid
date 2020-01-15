@@ -152,7 +152,11 @@ Rail network additions since Go card rolled out (2008):
 
 ### Tram / G:link
 
-Probably sequential, but don't have any data to support this yet.
+Likely sequential; appears to be reverse of GTFS ordering.
+
+Only stage 1 (Broadbeach South - Gold Coast University Hospital) of the line has been entered as "unconfirmed".
+
+We always use the south-bound stops (which have lower stop IDs), because `stops.txt` doesn't have a parent station (like trains), and _some_ of the stops have island platforms (where readers from either direction could be used).
 
 ### Buses
 
