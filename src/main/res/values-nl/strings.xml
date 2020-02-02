@@ -1186,4 +1186,7 @@
     <string name="mrtj_extra_note">Saldo en recenste transactie-informatie.</string>
     <string name="mrtj_file_id">MRTJ-identiteit</string>
     <string name="mrtj_file_purse_balance">MRTJ-kaartsaldo</string>
+    <string name="felica_specification_version">Specificatieversie</string>
+    <string name="felica_basic_version">Basis-specificatieversie</string>
+    <string name="felica_option_version_list">Optionele versielijst</string>
 </resources>
