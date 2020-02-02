@@ -638,6 +638,10 @@
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
 
+    <string name="felica_specification_version">Specification version</string>
+    <string name="felica_basic_version">Basic specification version</string>
+    <string name="felica_option_version_list">Optional version list</string>
+
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
     <string name="calypso_manufacture_country">Country of manufacture</string>

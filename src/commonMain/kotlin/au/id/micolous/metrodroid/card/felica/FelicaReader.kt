@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 
 
@@ -97,6 +98,7 @@ object FelicaReader {
         var actionsDone = 0
         var totalActions = 1
         feedbackInterface.updateProgressBar(actionsDone, totalActions)
+        var specificationVersion: ImmutableByteArray? = null
 
         try {
             var codes = fp.getSystemCodeList().toMutableList()
@@ -133,6 +135,9 @@ object FelicaReader {
                 feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type, i.name))
                 feedbackInterface.showCardType(i)
             }
+
+            // Some cards don't support this, we just swallow the exception and move on.
+            specificationVersion = fp.requestSpecificationVersion(0)
 
             for ((systemNumber, systemCode) in codes.withIndex()) {
                 Log.d(TAG, "System code #$systemNumber: ${systemCode.hexString}")
@@ -237,6 +242,6 @@ object FelicaReader {
             Log.w(TAG, "Could not detect any systems on the card!")
         }
 
-        return FelicaCard(pmm, systems, isPartialRead = partialRead)
+        return FelicaCard(pmm, systems, specificationVersion, isPartialRead = partialRead)
     }
 }

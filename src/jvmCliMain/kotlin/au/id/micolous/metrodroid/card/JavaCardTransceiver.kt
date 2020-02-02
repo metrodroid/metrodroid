@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.card
 import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.getErrorMessage
+import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.coroutines.runBlocking
 import kotlinx.io.core.Closeable
@@ -151,11 +152,22 @@ class JavaFeliCaTransceiver private constructor(
 
         val ret = transceiver.transceive(p)
 
-        if (!ret.startsWith(ImmutableByteArray.fromHex("d54100"))) {
+        if (!ret.startsWith(ImmutableByteArray.fromHex("d541"))) {
+            // Malformed protocol response
             throw CardTransceiveException("Unexpected response: ${ret.getHexString()}")
         }
 
-        return ret.sliceOffLen(3, ret.count() - 5)
+        // TODO: PN532/ACR122-specific code
+        return when (ret[2].toInt() and 0xff) {
+            // Error codes are listed in UM0701-02 s7.1 (Error handling)
+            0 -> ret.sliceOffLen(3, ret.count() - 5)
+
+            // Timeout
+            1 -> throw CardLostException("timeout")
+
+            // TODO: Handle this better.
+            else -> throw CardTransceiveException("PN532 returned error: ${ret.getHexString()}")
+        }
     }
 
     override val defaultSystemCode: Int? = null // TODO
