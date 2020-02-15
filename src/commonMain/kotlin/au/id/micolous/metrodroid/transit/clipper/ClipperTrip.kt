@@ -90,6 +90,7 @@ class ClipperTrip (private val mTimestamp: Long,
             }
             0x6f -> Trip.Mode.METRO
             0x61, 0x75 -> Trip.Mode.BUS
+            0x73 -> Trip.Mode.FERRY
             else -> Trip.Mode.OTHER
         }
 
