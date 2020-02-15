@@ -26,6 +26,7 @@ clipper.mdst: $(MAPPING_FILES) $(ZIP_FILES) mdst
 	    -m mapping_ggt.csv \
 	    -l en-US \
 	    -p operators.csv \
+	    -r lines.csv \
 	    -x stations.csv \
 	    -n NOTICE \
 	    -o $@
