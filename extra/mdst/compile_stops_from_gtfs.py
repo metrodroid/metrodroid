@@ -36,7 +36,7 @@ def massage_name(name, suffixes):
   for suffix in suffixes:
     if name.lower().endswith(suffix):
       name = name[:-len(suffix)].strip()
-  
+
   return name
 
 def empty(s):
@@ -227,7 +227,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
 
 def main():
   parser = ArgumentParser()
-  
+
   parser.add_argument('-o', '--output',
     required=True,
     help='Output data file (MdST)'
@@ -237,7 +237,7 @@ def main():
     nargs='+',
     type=FileType('rb'),
     help='Path to GTFS ZIP file to extract data from.')
-  
+
   parser.add_argument('-m', '--matching',
     required=False,
     action='append',
