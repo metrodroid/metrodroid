@@ -88,7 +88,7 @@ class ClipperTrip (private val mTimestamp: Long,
             0x62 -> {
                 when (mAgency) {
                     ClipperData.AGENCY_BAY_FERRY, ClipperData.AGENCY_GG_FERRY -> Trip.Mode.FERRY
-                    ClipperData.AGENCY_CALTRAIN -> Trip.Mode.TRAIN
+                    ClipperData.AGENCY_CALTRAIN, ClipperData.AGENCY_SMART -> Trip.Mode.TRAIN
                     else -> Trip.Mode.TRAM
                 }
             }
