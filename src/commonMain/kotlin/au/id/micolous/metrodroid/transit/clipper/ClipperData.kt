@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.util.StationTableReader
 internal object ClipperData {
     const val AGENCY_CALTRAIN = 0x06
     private const val AGENCY_GGT = 0x0b
+    const val AGENCY_SMART = 0x0c
     const val AGENCY_MUNI = 0x12
     const val AGENCY_GG_FERRY = 0x19
     const val AGENCY_BAY_FERRY = 0x1b
@@ -58,7 +59,10 @@ internal object ClipperData {
         if (s != null)
             return s
 
-        if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN || agency == ClipperData.AGENCY_GG_FERRY) {
+        if (agency == ClipperData.AGENCY_GGT
+                || agency == ClipperData.AGENCY_CALTRAIN
+                || agency == ClipperData.AGENCY_GG_FERRY
+                || agency == ClipperData.AGENCY_SMART) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Localizer.localizeString(R.string.clipper_end_of_line))
             if (agency != ClipperData.AGENCY_GG_FERRY)
