@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import print_function
 from argparse import ArgumentParser, FileType
-from datetime import datetime, timedelta
-from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station, Operator, TransportType, Line
+from datetime import datetime
+from gtfstools import Gtfs
+from stations_pb2 import Station, Line
 import mdst
 import codecs, csv
 
