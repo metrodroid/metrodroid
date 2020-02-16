@@ -30,7 +30,7 @@ SCHEMA_VER = 1
 
 def delimited_value(msg):
   # Emits a writeDelimited compatible Protobuf message
-  o = msg.SerializeToString()
+  o = msg.SerializeToString(deterministic=True)
   d = encoder._VarintBytes(len(o))
   return d + o
 
