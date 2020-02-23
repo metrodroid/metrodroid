@@ -1,2 +1,10 @@
 reader_id,stop_id,stop_code,short_name,comment
+0x120005,6992,,Embarcadero,
+0x120006,6994,,Montgomery,
+0x120007,5417,,Powell,
 0x120008,5727,,Civic Center,
+0x120009,5419,,Van Ness,
+0x12000a,5726,,Church,
+0x12000b,5728,,Castro,
+0x12000c,5730,,Forest Hill,
+0x12000d,6739,,West Portal,
