@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import print_function
 from argparse import ArgumentParser, FileType
-from datetime import datetime, timedelta
-from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station, Operator, TransportType, Line
+from datetime import datetime
+from gtfstools import Gtfs
+from stations_pb2 import Station, Line
 import mdst
 import codecs, csv
 
@@ -36,7 +36,7 @@ def massage_name(name, suffixes):
   for suffix in suffixes:
     if name.lower().endswith(suffix):
       name = name[:-len(suffix)].strip()
-  
+
   return name
 
 def empty(s):
@@ -164,7 +164,6 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
         used = False
 
         # Insert rows where a stop_id is specified for the reader_id
-        stop_rows = []
         for reader_id in stop_ids.get(stop.get('stop_id', 'stop_id_absent'), []):
           s = Station()
           s.id = int(reader_id, 0)
@@ -182,7 +181,6 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
           used = True
 
         # Insert rows where a stop_code is specified for the reader_id
-        stop_rows = []
         for reader_id in stop_codes.get(stop.get('stop_code', 'stop_code_absent'), []):
           s = Station()
           s.id = int(reader_id, 0)
@@ -229,7 +227,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
 
 def main():
   parser = ArgumentParser()
-  
+
   parser.add_argument('-o', '--output',
     required=True,
     help='Output data file (MdST)'
@@ -239,7 +237,7 @@ def main():
     nargs='+',
     type=FileType('rb'),
     help='Path to GTFS ZIP file to extract data from.')
-  
+
   parser.add_argument('-m', '--matching',
     required=False,
     action='append',
