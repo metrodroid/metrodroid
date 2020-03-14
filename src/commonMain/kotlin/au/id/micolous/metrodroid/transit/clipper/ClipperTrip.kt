@@ -54,11 +54,7 @@ class ClipperTrip (private val mTimestamp: Long,
 
     // Bus doesn't record line
     override val routeName: FormattedString?
-        get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
-            ClipperData.GG_FERRY_ROUTES[mRoute]
-        } else {
-            null
-        }
+        get() = ClipperData.getRouteName(mAgency, mRoute)
 
     override val humanReadableRouteID: String?
         get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
@@ -94,6 +90,7 @@ class ClipperTrip (private val mTimestamp: Long,
             }
             0x6f -> Trip.Mode.METRO
             0x61, 0x75 -> Trip.Mode.BUS
+            0x73 -> Trip.Mode.FERRY
             else -> Trip.Mode.OTHER
         }
 

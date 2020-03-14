@@ -36,12 +36,6 @@ internal object ClipperData {
     const val AGENCY_GG_FERRY = 0x19
     const val AGENCY_BAY_FERRY = 0x1b
 
-    val GG_FERRY_ROUTES = mapOf(
-            0x01 to FormattedString.language("San Francisco", "en-US"),
-            0x02 to FormattedString.language("Sausalito", "en-US"),
-            0x03 to FormattedString.language("Larkspur", "en-US"),
-            0x04 to FormattedString.language("San Francisco", "en-US"))
-
     const val CLIPPER_STR = "clipper"
 
     fun getMode(agency: Int): Trip.Mode {
@@ -50,6 +44,9 @@ internal object ClipperData {
 
     fun getAgencyName(agency: Int, isShort: Boolean) =
         StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort)
+
+    fun getRouteName(agency: Int, routeId: Int) =
+        StationTableReader.getLineNameNoFallback(CLIPPER_STR, agency shl 16 or routeId)
 
     fun getStation(agency: Int, stationId: Int, isEnd: Boolean): Station? {
         val humanReadableId = NumberUtils.intToHex(agency) + "/" + NumberUtils.intToHex(stationId)
