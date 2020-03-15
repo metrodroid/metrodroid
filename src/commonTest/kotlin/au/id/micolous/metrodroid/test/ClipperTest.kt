@@ -95,15 +95,15 @@ class ClipperTest : BaseInstrumentedTest() {
         assertNull(trips[0].routeName)
         assertEquals(Trip.Mode.METRO, trips[0].mode)
         assertNotNull(trips[0].startStation)
-        assertEquals("Powell St.", trips[0].startStation!!.getStationName(false).unformatted)
-        assertEquals("Powell St.", trips[0].startStation!!.getStationName(true).unformatted)
-        assertNear(37.78447, trips[0].startStation!!.latitude!!.toDouble(), 0.00001)
-        assertNear(-122.40797, trips[0].startStation!!.longitude!!.toDouble(), 0.00001)
+        assertEquals("Powell Street", trips[0].startStation!!.getStationName(false).unformatted)
+        assertEquals("Powell Street", trips[0].startStation!!.getStationName(true).unformatted)
+        assertNear(37.78447, trips[0].startStation!!.latitude!!.toDouble(), 0.001)
+        assertNear(-122.40797, trips[0].startStation!!.longitude!!.toDouble(), 0.001)
         assertNotNull(trips[0].endStation)
-        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.getStationName(false).unformatted)
-        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.getStationName(true).unformatted)
-        assertNear(37.70169, trips[0].endStation!!.latitude!!.toDouble(), 0.00001)
-        assertNear(-121.89918, trips[0].endStation!!.longitude!!.toDouble(), 0.00001)
+        assertEquals("Dublin / Pleasanton", trips[0].endStation!!.getStationName(false).unformatted)
+        assertEquals("Dublin / Pleasanton", trips[0].endStation!!.getStationName(true).unformatted)
+        assertNear(37.70169, trips[0].endStation!!.latitude!!.toDouble(), 0.001)
+        assertNear(-121.89918, trips[0].endStation!!.longitude!!.toDouble(), 0.001)
     }
 
     @Test
