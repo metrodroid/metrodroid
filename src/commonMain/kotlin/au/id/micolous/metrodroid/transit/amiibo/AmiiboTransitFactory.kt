@@ -31,7 +31,12 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 object AmiiboTransitFactory : UltralightCardTransitFactory {
     override fun check(card: UltralightCard) = (card.cardModel == "NTAG215" || card.pages.size == 136) &&
             // Amiibos are always locked and configured in the same way
-            card.readPages(2,3).sliceOffLen(2, 7) == ImmutableByteArray.fromHex("0fe0f110ffeea5") &&
+            card.readPages(2,2).sliceOffLen(2, 6) == ImmutableByteArray.fromHex("0fe0f110ffee") &&
+            (
+                // https://github.com/metrodroid/metrodroid/issues/718
+                card.getPage(0x4).data[0] == 0xa5.toByte() || // used
+                card.getPage(0x4).data.isAllZero() // unused
+            ) &&
             card.getPage(0x16).data[3] == 2.toByte() &&
             card.getPage(0x82).data.byteArrayToInt(0,3) == 0x01000f &&
             card.readPages(0x83,2) == ImmutableByteArray.fromHex("000000045f000000")
