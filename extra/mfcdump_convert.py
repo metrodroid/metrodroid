@@ -224,12 +224,14 @@ def read_mfc_dump(input_f, writer):
   card_data = input_f.read()
 
   # Card data should be 1K or 4K
-  assert len(card_data) in (1024, 4096)
+  assert len(card_data) in (1024, 2048, 4096)
 
   if len(card_data) == 1024:
     sector_count = 16
   elif len(card_data) == 4096:
     sector_count = 40
+  elif len(card_data) == 2048:
+    sector_count = 32
 
   # Lets make some XML.
   sectors = []
