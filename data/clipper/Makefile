@@ -22,7 +22,7 @@ clipper.mdst: $(MAPPING_FILES) $(ZIP_FILES) mdst
 	    -m mapping_bart.csv \
 	    -m mapping_vta.csv \
 	    -m mapping_muni.csv \
-           -m mapping_sfbf.csv \
+	    -m mapping_sfbf.csv \
 	    -m mapping_ggt.csv \
 	    -l en-US \
 	    -p operators.csv \
