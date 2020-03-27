@@ -1073,7 +1073,7 @@
     <string name="siticard_adult_90min_xfer_purse">Geldbörse mit 90-Minuten Umsteigen (Erwachsener)</string>
     <string name="amiibo_type_yarn">Aus Wolle</string>
     <string name="iso7816_sfi">Kurzdateikennung (SFI) %s</string>
-    <string name="ovc_sub_ov_jaarkaart">Persönlicher Netzabo Jährlich</string>
+    <string name="ovc_sub_ov_jaarkaart">Persönliches Netzabo Jährlich</string>
     <string name="ovc_sub_ov_bijkaart_1e_klas">Optionales Zusatzabo, Erste Klasse</string>
     <string name="compass_sub_free_sea_island">Sea Island Gratis Eintritt</string>
     <string name="compass_sub_bulk_daypass">Massen-Tageskarte</string>
@@ -1155,4 +1155,8 @@
     <string name="yargor_sub_allday_all">Abonnement für den gesamten Transport für alle Tagen</string>
     <string name="yargor_transports_valid">Gültig für folgende Transporte</string>
     <string name="card_media_felica">FeliCa</string>
+    <string name="felica_option_version_list">Optionale Versionsliste</string>
+    <string name="felica_basic_version">Version der Grundspezifikation</string>
+    <string name="felica_specification_version">Version der Spezifikation</string>
+    <string name="mrtj_extra_note">Saldo und Informationen zur letzten Transaktion.</string>
 </resources>
