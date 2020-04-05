@@ -1185,4 +1185,5 @@
         <item quantity="few">%d пропущенных сервисных кода</item>
         <item quantity="many">%d пропущенных сервисных кодов</item>
     </plurals>
+    <string name="felica_specification_version">Версия спецификации</string>
 </resources>
