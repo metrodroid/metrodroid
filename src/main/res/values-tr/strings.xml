@@ -38,7 +38,7 @@
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>
     <string name="unknown_more_info">Daha fazla bilgi</string>
     <string name="unknown_more_info_desc">Bu kartın Metrodroid desteği hakkında daha fazla bilgi için dokunun.</string>
-    <string name="lawyercats">Metrodroid ve yaratıcılarının herhangi bir toplu taşıma kurumuyla ilişiği yoktur.</string>
+    <string name="lawyercats">Metrodroid ve yazarları herhangi bir toplu taşıma acentası ile ilişkili değildir.</string>
     <string name="scanned_cards">Geçmiş</string>
     <string name="no_scanned_cards">Henüz herhangi bir kart okutmadınız.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -110,7 +110,7 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Kimlik doğrulama yeniden denemeleri</string>
     <string name="auth_retries_summary">Her sektör için kimlik doğrulama girişiminde bulunma sayısı</string>
-    <string name="mfc_fallback_desc">Bazı kurumların kartlarında kendilerini tanıtıcı bir özellik yoktur. Bunları okumak için, açıkça bir kurum seçmeniz gerekmektedir.</string>
+    <string name="mfc_fallback_desc">Bazı acentaların kartlarında kendilerini tanıtıcı bir özellik yoktur. Bunları okumak için, açıkça bir acenta seçmeniz gerekmektedir.</string>
     <string name="mfc_fallback">Yedek okuyucu</string>
     <string name="obfuscation_title">Gizleme</string>
     <string name="obfuscation_card_numbers">Kart numaralarını gizle</string>
