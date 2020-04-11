@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity_license">مجوز های متن باز</string>
+    <string name="title_activity_license">مجوزهای متن‌باز</string>
     <string name="reading_card">در حال خواندن کارت…</string>
     <string name="dont_move">کارت را تکان ندهید</string>
     <string name="advanced_info">اطلاعات پیشرفته</string>
