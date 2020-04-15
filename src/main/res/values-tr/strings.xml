@@ -64,7 +64,7 @@
     <string name="keys">Anahtarlar</string>
     <string name="delete">Sil</string>
     <string name="no_keys">Anahtar yok.</string>
-    <string name="nfc_unavailable">NFC mevcut değil</string>
+    <string name="nfc_unavailable">NFC kullanılamıyor</string>
     <string name="general">Genel</string>
     <string name="launch_from_background">Arka planda aç</string>
     <string name="checksum">Sağlama</string>
@@ -97,14 +97,14 @@
 \n 
 \nKartınız Metrodroid tarafından desteklenmemektedir ve anahtarı deşifre edilmedikçe, desteklenmesi olası değildir. 
 \n 
-\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık dokümantasyon bile sağlamaktadır!</string>
+\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık belgelendirme bile sağlamaktadır!</string>
     <string name="add_key_directions">Anahtarlarınızın ikili dökümünü .farebotkeys uzantılı bir dosya olarak kaydedin, kendinize e-posta eki ile gönderin ve ardından bu cihazda açın.</string>
     <string name="card_type">Kart türü</string>
     <string name="map_tiles_url_summary">Leaflet TileLayer sözdizimini kullanarak gömülü haritalar için özel bir döşeme sunucusu kullan.</string>
     <string name="map_tiles_subdomains">Harita döşemesi alt alan adları</string>
     <string name="map_tiles_subdomains_summary">Harita URL\'lerinde {s} kullanılıyorsa, virgülle ayrılmış bir alt alan adı listesi veya alt alan adlarının tek karakterli bir listesi.</string>
-    <string name="map_tiles_help">Leaflet TileLayer dokümantasyonunu görüntüle</string>
-    <string name="map_tiles_help_summary">Harita döşemesi URL\'lerini kullanma konusunda yardım için, Leaflet\'in çevrim içi dokümantasyonuna bakın (sadece İngilizce olarak mevcut).</string>
+    <string name="map_tiles_help">Leaflet TileLayer belgelendirmesini görüntüle</string>
+    <string name="map_tiles_help_summary">Harita döşemesi URL\'lerini kullanma konusunda yardım için, Leaflet\'in çevrim içi belgelendirmesine bakın (sadece İngilizce).</string>
     <string name="about_card_format">Bu kart biçimi hakkında</string>
     <string name="online_services">Çevrim içi hizmetler</string>
     <string name="mifare_classic">MIFARE Classic</string>
@@ -142,9 +142,9 @@
     <string name="rejected">Reddedildi</string>
     <string name="fully_locked_desc_unlockable">Bu kartın herhangi bir kısmı anahtarsız serbestçe okunamıyor. Yüklü bir geçerli anahtarınız yok. 
 \n  
-\nAnahtarlar yüklendikten sonra kart çalışacaktır. Bunlar genellikle her kart için farklıdır. Anahtarı alma ve yükleme hakkında daha fazla bilgi dokümantasyonda bulunabilir. 
+\nAnahtarlar yüklendikten sonra kart çalışacaktır. Bunlar genellikle her kart için farklıdır. Anahtarı alma ve yükleme hakkında daha fazla bilgi belgelendirmede bulunabilir. 
 \n  
-\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık dokümantasyon bile sağlamaktadır!</string>
+\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık belgelendirme bile sağlamaktadır!</string>
     <string name="requires_android_17">Android 4.2 veya üstü gerektirir.</string>
     <string name="block_title_format_unauthorized">Blok: %s (yetkisiz)</string>
     <string name="mfc_aid_title_format">MIFARE Classic uygulama kimliği: %1$s #%2$d</string>
