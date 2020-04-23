@@ -56,9 +56,7 @@
     <string name="trip_description">(Из )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (в )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="trip_description_unknown_start">До %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
-    </string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
@@ -283,12 +281,10 @@
     <string name="localise_places_longdesc_button">О индикациях языка…</string>
     <string name="localise_places_longdesc_title">О индикациях языка</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> мс</item>
-        <item quantity="few">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
-        <item quantity="many">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> мс</item>
+        <item quantity="few"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="many"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
     </plurals>
     <plurals name="desfire_standard_format">
         <item quantity="one">Тип: %1$s, длина: %2$s байт</item>
