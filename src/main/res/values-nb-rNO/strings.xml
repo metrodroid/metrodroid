@@ -968,4 +968,9 @@
     <string name="venezia_airport_bus_ticket">Flybussbillett</string>
     <string name="large_file_yes">Last inn uansett (fare for kræsj)</string>
     <string name="large_file_no">Avbryt (trygt)</string>
+    <string name="zolotaya_korona_discount">Rabatt</string>
+    <string name="ios_version">iOS-versjon: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
+    <string name="mode_monorail">Énskinnebane</string>
+    <string name="cepas_csn">Kortserienummer (CSN)</string>
+    <string name="cepas_can">Kortanvendelsesnummer (CAN)</string>
 </resources>
