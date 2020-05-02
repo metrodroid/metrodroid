@@ -1126,7 +1126,7 @@
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Viaje con saldo (2-1 Descuento)</string>
     <string name="ovc_sub_daluren_oost_nederland">Descuento fuera de las horas punta Este</string>
     <string name="compass_sub_bulk_daypass">Pase de un día de volumen (Bulk DayPass)</string>
-    <string name="compass_sub_bulk_one_zone">"Una zona  de volumen (Bulk One Zone)"</string>
+    <string name="compass_sub_bulk_one_zone">Una zona de volumen (Bulk One Zone)</string>
     <string name="compass_sub_bulk_two_zone">"Dos zonas  de volumen (Bulk Two Zones)"</string>
     <string name="compass_sub_bulk_three_zone">"Tres zonas  de volumen (Bulk Three Zones)"</string>
     <string name="ios_unknown_tag">Tipo de tarjeta desconocido: %s</string>
