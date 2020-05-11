@@ -78,13 +78,20 @@
 \n* Opal: 不明なステータス 0xc の処理。
 \n
 \n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_generic">バグ修正、新機能とデータを追加。
-\n
-\n詳細は (英文): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic">バグ修正、新機能とデータを追加。 
+\n 
+\n詳細と既知の問題は (英文): https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_37">* アデレード メトロカード、多くの中国 (PRC) カード、クリッパー シングル チケット、キエフ地下鉄、オーランド SunCard、Rejsekort、SLAccess、Selecta、タルトゥ バスと複数の Zolotaya コロナ カードのサポートを追加。
 \n* OV Chipkaart リーダーを修正。
 \n* AT-HOP のシリアル番号の読み取り。
 \n* 多くの内部の変更。
 \n
 \n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_300">• Cifial、Fribourg TPF、Waltti、blue HSL カードのサポートを追加しました。
+\n• Amiibo、SLaccess、Troika、Viva のバグ修正
+\n• アデレードメトロカード、Bonobus、Compass、Gautrain、Rav-Kav、RicaricaMi、ORCA、OURA、Touch ’n Go、Viva 用の新しいデータ。
+\n• 履歴検索、MIFARE Plus のサポートを追加
+\n• Android 4.3 以前のバグ修正
+\n
+\n詳細と既知の問題 (英語): https://www.metrodroid.org/changelog</string>
 </resources>
