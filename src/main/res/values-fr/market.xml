@@ -4,12 +4,12 @@
     <string name="market_short_desc">Metrodroid lit les informations des cartes NFC pour les transports publics.</string>
     <string name="market_long_desc">Metrodroid lit les informations des cartes NFC pour les transports publics.
 \n
-\nCartes supportées :
+\nCartes prises en charge :
 \n• Amiibo 🆕
 \n• AT HOP — Auckland, Nouvelle-Zélande 🆕🆔
 \n• Carte municipale de Beijing, Shenzhen Tong, T-Union, Wuhan Tong — Chine 🆕
 \n• Bilhete Único — São Paulo, Brésil 📜🗝
-\n• bip! — Santiago, Chili 🆕📜🗝
+\n• bip ! — Santiago, Chili 🆕📜🗝
 \n• BUS-IT — Greater Hamilton (Waikato), Nouvelle-Zélande 🆕📜🗝
 \n• Carta Mobile — Pise, Italie 🆕
 \n• CEPAS (EZ-Link, NETS Flashpay) — Singapour 🇸🇬
@@ -72,9 +72,9 @@
 \n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) — Russie 🆕📜🗝
 \n
 \n🆕 Nouveau dans Metrodroid.
-\n📜 MIFARE Classic : Non compatible avec tous les appareils — vous devez avoir un appareil avec un chipset NXP NFC pour pouvoir lire ces cartes.
+\n📜 MIFARE Classic : Non compatible avec tous les appareils — vous devez avoir un appareil avec un chipset NXP NFC pour pouvoir lire ces cartes.
 \n🗝 Clés de chiffrement nécessaires pour lire ces cartes.
-\n🇸🇬 CEPAS : Non compatible avec tous les appareils (ISO 14443-B).
+\n🇸🇬 CEPAS : Non compatible avec tous les appareils (ISO 14443-B).
 \n🆔 Seul le numéro de carte peut être lu.
 \n🇮🇪 Clés de chiffrement à télécharger auprès de l’opérateur.
 \n
@@ -88,7 +88,7 @@
 \n
 \nCeci est un fork de Farebot par Éric Butler, avec une compatibilité pour des cartes supplémentaires et des corrections de bogues.
 \n
-\nCe logiciel est sous licence GNU GPLv3+, le code source est disponible à https://github.com/metrodroid/.</string>
+\nCe logiciel est sous licence GNU GPLv3+, le code source est disponible à https ://github.com/metrodroid/.</string>
     <string name="market_changelog_30">* Corrections multiples pour les cartes Cubic Nextfare.
 * Les cartes Fudan FM11RF08 ne sont plus faussement détectées comme Bilhete Único.
 * Ajout d\\\'un support expérimental pour MyWay (ACT, Australie).
@@ -127,7 +127,7 @@ Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 * Correction de bugs mineurs.
 
 Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_generic">Correction de bogues, ajout de nouvelles fonctionnalités et données. 
+    <string name="market_changelog_generic">Correction de bugs, ajout de nouvelles fonctionnalités et données. 
 \n 
 \nPlus de détails et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_37">* Ajout du support pour les cartes Adelaide Metrocard, plusieurs cartes chinoises (RPC), billets à usage unique Clipper, métro de Kiev, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus et plusieurs cartes basées sur Zolotaya Korona.
@@ -175,10 +175,15 @@ Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n
 \nPlus de détails : https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_300">• Ajout des cartes Cifial, Fribourg TPF, Waltti et HSL bleues
-\n• Corrections de bogues pour Amiibo, SLaccess, Troika et Viva
+\n• Corrections de bugs pour Amiibo, SLaccess, Troika et Viva
 \n• Nouvelles données pour Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go et Viva
 \n• Ajout d’une fonction de recherche dans l’historique et compatibilité avec MIFARE Plus
-\n• Corrections de bogues sur Android 4.3 et plus ancien
+\n• Corrections de bugs sur Android 4.3 et plus ancien
 \n
-\nPlus de détails et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
+\nPlus d\'informations et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_43">• Ajout de la prise en charge pour Amiibo, les trolleybus de Crimée, Kazan, Umarsh Russe, Santiago bip et carte de Varsovie
+\n• Améliorations et corrections pour les cartes Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go et Troika 
+\n• Corrections de certains bugs qui faisaient planter Metrodroid, et certains bugs avec les cartes MIFARE Classic
+\n
+\nPlus d\'informations et problèmes connus (en anglais) : https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
