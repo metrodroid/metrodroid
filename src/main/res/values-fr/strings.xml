@@ -320,8 +320,8 @@
         <item quantity="other">Type : 1$s, taille : %2$s octets</item>
     </plurals>
     <plurals name="desfire_record_format">
-        <item quantity="one">"Type : 1$s,  %2$d enregistrement (%3$d maximum), Taille de l\'enregistrement : %4$d"</item>
-        <item quantity="other">"Type : 1$s,  %2$d enregistrements (%3$d maximum), Taille de l\'enregistrement : %4$d"</item>
+        <item quantity="one">Type : 1$s, %2$d enregistrement (%3$d maximum), Taille de l\'enregistrement : %4$d</item>
+        <item quantity="other">Type : 1$s, %2$d enregistrements (%3$d maximum), Taille de l\'enregistrement : %4$d</item>
     </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d voyage restant</item>
