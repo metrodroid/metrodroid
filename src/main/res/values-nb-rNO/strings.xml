@@ -148,13 +148,13 @@
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
-    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses ut på vanlig måte uten en nøkkel. Du har ingen gyldig nøkkel installert for det.
+    <string name="fully_locked_desc">Ingen del av dette kortet kan leses ut på vanlig måte uten en nøkkel. Du har ingen gyldig nøkkel installert for det.
 \n
-\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer info om hvordan du får tak i disse finnes i dokumentasjonen.
+\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert. Mer info om hvordan du får tak i disse finnes i dokumentasjonen.
 \n
 \nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er dechiffrert.
 \n
-\nTa kontakt med ditt kommunale kollektivtransportetat for prøve å få et visst nivå av åpen datatilgang for de utstedte kortene.  Det er mulig å tilby lesetilgang på en trygg måte med moderne smartkortteknologi. Nonen byråer dokumenterer faktisk også dataformatet!"</string>
+\nTa kontakt med ditt kommunale kollektivtransportetat for prøve å få et visst nivå av åpen datatilgang for de utstedte kortene. Det er mulig å tilby lesetilgang på en trygg måte med moderne smartkortteknologi. Nonen byråer dokumenterer faktisk også dataformatet!</string>
     <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et e-postvedlegg til deg selv og åpne filen på denne enheten.</string>
     <string name="location_helsinki_finland">Helsingfors, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
