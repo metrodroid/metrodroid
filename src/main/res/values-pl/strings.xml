@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="copyright">Prawa autorskie © 2015 – 2019 Michael Farrell</string>
     <string name="license">Licencje</string>
     <string name="title_activity_license">Licencje open source</string>
-    <string name="reading_card">Czytanie karty...</string>
+    <string name="reading_card">Czytam kartę…</string>
     <string name="directions">Stuknij kartę.</string>
+    <string name="nfc_settings">Ustawienia NFC</string>
+    <string name="turn_on_nfc">Włącz NFC, aby odczytać informacje o karcie.</string>
+    <string name="nfc_off_error">NFC wyłączone</string>
+    <string name="fully_locked_desc">Żadna część tej karty nie jest czytelna bez klucza i obecnie ten format nie ma praktycznych luk w zabezpieczeniach.
+\n
+\n Twoja karta nie jest obsługiwana przez Metrodroid i jest mało prawdopodobne, że kiedykolwiek będzie, chyba że klucz do niej zostanie odszyfrowany.
+\n
+\n Prosimy, aby wystawca karty zezwolił na otwarty dostęp do danych na wydanych kartach. Bezpieczne jest zezwolenie na otwarty, tylko do odczytu dostęp do danych dzięki nowoczesnej technologii kart chipowych. Niektóre agencje udostępniają nawet otwartą dokumentację dotyczącą formatu danych!</string>
+    <string name="supported_cards">Obsługiwane karty</string>
+    <string name="scanned_at_format">Zeskanowane w %1$s na %2$s</string>
+    <string name="loading">Ładowanie…</string>
+    <string name="balance_speech">Bilans <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="preferences">Preferencje</string>
+    <string name="about">O aplikacji</string>
+    <string name="export_all">Eksportuj wszystko</string>
+    <string name="export">Eksportuj</string>
+    <string name="import_xml">Importuj</string>
+    <string name="import_file">Importuj z pliku</string>
+    <string name="import_clipboard">Wklej ze schowka</string>
+    <string name="no_trip_data">Nie znaleziono żadnych wycieczek. Czy ta karta została użyta\?</string>
+    <string name="history">Historia</string>
+    <string name="save_xml">Zapisz w pliku</string>
+    <string name="share_xml">Udostępnij</string>
+    <string name="copy_xml">Kopiuj</string>
+    <string name="unknown_card">Nieznana karta</string>
+    <string name="delete_card">Usuń kartę</string>
+    <string name="advanced_info">Informacje zaawansowane</string>
 </resources>
