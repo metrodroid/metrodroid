@@ -3,4 +3,6 @@
     <string name="copyright">Prawa autorskie © 2015 – 2019 Michael Farrell</string>
     <string name="license">Licencje</string>
     <string name="title_activity_license">Licencje open source</string>
+    <string name="reading_card">Czytanie karty...</string>
+    <string name="directions">Stuknij kartę.</string>
 </resources>
