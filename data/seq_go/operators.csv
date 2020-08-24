@@ -1,7 +1,10 @@
 id,name,short_name,mode
 1,Ticket Machine,Ticket Machine,TICKET_MACHINE
 2,Ticket Machine,Ticket Machine,TICKET_MACHINE
-4,Translink,Translink,BUS
+4,Brisbane Transport,Brisbane Transport,BUS
 5,Queensland Rail,Queensland Rail,TRAIN
+14,Surfside Buslines,Surfside Buslines,BUS
 18,Transdev Brisbane Ferries,Transdev Brisbane Ferries,FERRY
 23,Ticket Machine,Ticket Machine,TICKET_MACHINE
+28,Translink Transit Authority,Translink Transit Authority,TICKET_MACHINE
+32,Keolis Downer,Keolis Downer,TRAM
