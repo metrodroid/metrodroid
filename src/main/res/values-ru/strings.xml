@@ -7,7 +7,7 @@
     <string name="dont_move">Не двигайте карту</string>
     <string name="delete_card">Удалить карту</string>
     <string name="unknown_card">Неизвестная карта</string>
-    <string name="copy_xml">Скопировать</string>
+    <string name="copy_xml">Копировать</string>
     <string name="share_xml">Поделиться</string>
     <string name="save_xml">Сохранить в файл</string>
     <string name="history">История</string>
