@@ -83,7 +83,7 @@
 \n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Rússia 🆕📜🗝 
 \n 
 \n🆕 Novo no Metrodroid. 
-\n📜 MIFARE Classic: não compatível com todos aparelhos - você precisa de um aparelho com chip NFC da NXP para ler. 
+\n📜 MIFARE Classic: não compatível com todos os aparelhos - precisa de um aparelho com chip NFC da NXP para ler. 
 \n🗝 Chaves de criptografia são necessárias para ler este cartão. 
 \n🇸🇬 CEPAS não compatível com todos aparelhos (ISO 14443-B). 
 \n🆔 Somente o número do cartão pode ser lido. 
@@ -93,12 +93,12 @@
 \n 
 \nAlgumas agências possuem cartões criptografados. Precisa adquirir chaves de criptografia para lê-las, que geralmente são exclusivas para cada cartão. Desculpe, não posso ajudá-lo com isso. 
 \n 
-\nMetrodroid e seus autores não são afiliados a uma agência de transporte público. Os cartões de outras agências que usam o Cubic Nextfare ou ERG no MIFARE Classic também podem funcionar. 
+\nMetrodroid e os seus autores não são afiliados a uma agência de transporte público. Os cartões de outras agências que usam o Cubic Nextfare ou ERG no MIFARE Classic também podem funcionar. 
 \n 
 \nPara mais detalhes sobre as permissões necessárias, consulte a política de privacidade. 
 \n 
-\nEste é um fork do Farebot de Eric Butler, com suporte para cartões adicionais e correções de bugs. 
+\nEste é uma bifurcação do Farebot de Eric Butler, com suporte para cartões adicionais e correções de bugs. 
 \n 
-\nEste software está licenciado sob a licença GNU GPLv3+, o código fonte está disponível em https://github.com/micolous/metrodroid/</string>
+\nEste software está licenciado sob a licença GNU GPLv3+, o código-fonte está disponível em https://github.com/micolous/metrodroid/</string>
     <string name="market_short_desc">Metrodroid faz a leitura de alguns cartões inteligentes para transporte público.</string>
 </resources>
