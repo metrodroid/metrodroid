@@ -76,10 +76,8 @@
     <string name="saved_xml_custom">Skrev XML til USB-lagring.</string>
     <string name="online_services">Nettbaserte tjenester</string>
     <plurals name="cards_imported">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> kort importert!</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> kort importert!</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; kort importert.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; kort importert.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d blokk</item>
@@ -118,10 +116,8 @@
         <item quantity="other">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
     </plurals>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> tilsløringsflagg på</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> tilsløringsflagg på</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; tilsløringsflagg på</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; tilsløringsflagg på</item>
     </plurals>
     <string name="location_singapore">Singapore</string>
     <string name="location_tokyo">Tokyo, Japan</string>
@@ -340,10 +336,8 @@
 \n Tykke beholdere og metall kan ha innvirkning på NFC. Det bør også indikere om kortet eller din enhets NFC-antenne er skadet.</string>
     <string name="show_partial_data">Vis ukomplett data</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
     </plurals>
     <string name="felica_manufacturer_code">Fabrikatkode</string>
     <string name="felica_card_identification_number">Kortidentifikasjonsnummer</string>
@@ -377,8 +371,7 @@
         <item quantity="other">%-tur</item>
     </plurals>
     <string name="trip_description_unknown_start">til %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;<xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
     </string>
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
