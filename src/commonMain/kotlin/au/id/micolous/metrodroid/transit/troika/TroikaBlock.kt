@@ -2,12 +2,10 @@ package au.id.micolous.metrodroid.transit.troika
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.*
-import au.id.micolous.metrodroid.transit.Subscription
-import au.id.micolous.metrodroid.transit.TransitBalance
-import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -78,6 +76,16 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
     open val info: List<ListItem>?
         get() = null
 
+    @Parcelize
+    internal class TroikaRefill (override val startTimestamp: Timestamp?): Trip() {
+        override val fare: TransitCurrency?
+            get() = null
+        override val mode: Mode
+            get() = Mode.TICKET_MACHINE
+    }
+
+    open val lastRefillTime: Timestamp? get() = null
+
     val trips: List<Trip>
         get() {
             val t = mutableListOf<Trip>()
@@ -89,6 +97,10 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                     t.add(TroikaTrip(mLastValidationTime, getTransportType(false), null, rawTransport, mFareDesc))
                 } else
                     t.add(TroikaTrip(mLastValidationTime, getTransportType(true), mLastValidator, rawTransport, mFareDesc))
+            }
+
+            lastRefillTime?.let {
+                t.add(TroikaRefill(it))
             }
             return t
         }
@@ -186,6 +198,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
 
         private val TROIKA_EPOCH_1992 = Epoch.local(1992, MetroTimeZone.MOSCOW)
         private val TROIKA_EPOCH_2016 = Epoch.local(2016, MetroTimeZone.MOSCOW)
+        private val TROIKA_EPOCH_2019 = Epoch.local(2019, MetroTimeZone.MOSCOW)
 
         fun convertDateTime1992(days: Int, mins: Int): TimestampFull? {
             if (days == 0 && mins == 0)
@@ -197,6 +210,18 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             if (days == 0)
                 return null
             return TROIKA_EPOCH_1992.days(days - 1)
+        }
+
+        fun convertDate2019(days: Int): Daystamp? {
+            if (days == 0)
+                return null
+            return TROIKA_EPOCH_2019.days(days - 1)
+        }
+
+        fun convertDateTime2019(days: Int, mins: Int): TimestampFull? {
+            if (days == 0 && mins == 0)
+                return null
+            return TROIKA_EPOCH_2019.dayMinute(days - 1, mins)
         }
 
         fun convertDateTime2016(days: Int, mins: Int): TimestampFull? {
@@ -261,6 +286,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                     when (sublayout) {
                         2 -> return TroikaLayoutE(rawData)
                         3 -> return TroikaPurseE3(rawData)
+                        5 -> return TroikaPurseE5(rawData)
                     }
                 }
             }
