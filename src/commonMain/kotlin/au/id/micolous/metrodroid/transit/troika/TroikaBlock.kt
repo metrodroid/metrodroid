@@ -260,7 +260,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                     val sublayout = rawData.getBitsFromBuffer(56, 5)
                     when (sublayout) {
                         2 -> return TroikaLayoutE(rawData)
-                        3 -> return TroikaPurse(rawData)
+                        3 -> return TroikaPurseE3(rawData)
                     }
                 }
             }

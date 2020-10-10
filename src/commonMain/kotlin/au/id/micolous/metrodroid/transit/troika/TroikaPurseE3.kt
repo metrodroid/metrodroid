@@ -11,7 +11,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 // This is e-purse layout
 @Parcelize
-internal class TroikaPurse(val rawData: ImmutableByteArray) : TroikaBlock(
+internal class TroikaPurseE3(val rawData: ImmutableByteArray) : TroikaBlock(
         rawData,
         mExpiryDate = convertDateTime1992(rawData.getBitsFromBuffer(61, 16), 0),
         // 10 bits unknown
