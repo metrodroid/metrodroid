@@ -98,7 +98,7 @@
     <string name="location_santiago_chile">圣地亚哥，智利</string>
     <string name="location_warsaw">华沙，波兰</string>
     <string name="history">历史</string>
-    <string name="scanned_cards">历史</string>
+    <string name="scanned_cards">历史记录</string>
     <string name="binary_title_format">二进制资料</string>
     <string name="error">错误</string>
     <string name="delete">删除</string>
@@ -117,4 +117,71 @@
     <string name="card_name_kiev">基辅地铁</string>
     <string name="card_name_penza">奔萨</string>
     <string name="card_name_kirov">基洛夫</string>
+    <string name="sector_title_format_empty">扇区: %s (空白)</string>
+    <string name="unauthorized_sector_title_format">扇区: %s (未授权)</string>
+    <string name="sector_title_format">扇区: %s</string>
+    <string name="nfcv_system_info">系统信息</string>
+    <string name="unauthorized_page_title_format">页: %s (未授权)</string>
+    <string name="page_title_format_empty">页: %s (空白)</string>
+    <string name="page_title_format">页: %s</string>
+    <string name="invalid_file_title_format">文件: %1$s (无效的: %2$s)</string>
+    <string name="unauthorized_file_title_format">文件: %s (未授权)</string>
+    <string name="file_title_format">文件: %s</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="application_title_format">应用程序: %s</string>
+    <string name="block_title_format_unauthorized">区块: %s (未授权)</string>
+    <string name="block_title_format">区块: %s</string>
+    <string name="no_scanned_cards">你没有扫描过任何卡片。</string>
+    <string name="lawyercats">Metrodroid及其作者与任何公共交通机构都没有关联。</string>
+    <string name="unknown_more_info_desc">点击此卡获取更多支持Metrodroid的信息。</string>
+    <string name="unknown_more_info">更多信息</string>
+    <string name="unknown_card_description">Metrodroid还不支持此卡。只能显示原始数据。</string>
+    <string name="unknown_card_header">不支持的卡格式</string>
+    <string name="last_refill">最近一次充值</string>
+    <string name="machine_id">机器ID</string>
+    <string name="machine_id_format">机器 ID %s</string>
+    <string name="turn_on_nfc">请开启NFC功能来读取卡信息。</string>
+    <string name="nfc_off_error">NCF功能未开启</string>
+    <string name="fully_locked_title">完全锁卡。</string>
+    <string name="balance_speech">余额 &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="fully_locked_desc_unlockable">没有密钥，这张卡的任何部分都不能自由读取。您没有为它安装有效的密钥。
+\n
+\n一旦为卡安装了钥匙，卡就可以工作。这些通常是不同的卡片。关于获取和安装密钥的更多信息可以在文档中找到。
+\n
+\n请咨询发卡机构允许公开访问已发行卡上的数据。它是安全的允许开放的，只读访问的数据与现代智能卡技术。一些机构甚至提供关于数据格式的开放文档!</string>
+    <string name="fully_locked_desc">这张卡的任何部分没有密钥是自由可读的，目前这种格式没有实际的缺陷。
+\n
+\nMetrodroid不支持您的卡，也不太可能支持，除非它的密钥被破译。
+\n
+\n请咨询发卡机构允许公开访问已发行卡上的数据。它是安全的允许开放的，只读访问的数据与现代智能卡技术。一些机构甚至提供关于数据格式的开放文档!</string>
+    <string name="transaction_counter">交易记录</string>
+    <string name="supported_cards">支持的卡片列表</string>
+    <string name="scanned_at_format">已扫描 %1$s 之 %2$s</string>
+    <string name="loading">载入中…</string>
+    <string name="preferences">首选项</string>
+    <string name="about">关于</string>
+    <string name="export_all">导出所有</string>
+    <string name="export_filename">导出文件名</string>
+    <string name="export">导出</string>
+    <string name="import_file">从文件导入</string>
+    <string name="import_clipboard">从粘贴板粘贴</string>
+    <string name="import_xml">导入</string>
+    <string name="no_trip_data">没有更多发现，这张卡用过了吗\?</string>
+    <string name="save_xml">保存到文件</string>
+    <string name="share_xml">分享</string>
+    <string name="copy_xml">复制</string>
+    <string name="data">原始数据</string>
+    <string name="hw_detail">制造商信息</string>
+    <string name="locked_mfd_card">锁住的M-DES卡片</string>
+    <string name="locked_mfu_card">锁住的MU卡片</string>
+    <string name="locked_mfc_card">锁住的MC卡片</string>
+    <string name="unknown_card">未知卡片</string>
+    <string name="delete_card">删除卡片</string>
+    <string name="advanced_info">高级设置</string>
+    <string name="dont_move">请勿移动卡片</string>
+    <string name="reading_card">读取中…</string>
+    <string name="directions">拍上卡片。</string>
+    <string name="title_activity_license">开源证书</string>
+    <string name="license">证书</string>
+    <string name="copyright">版权所有© 2015 – 2020 Michael Farrell</string>
 </resources>
