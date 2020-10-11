@@ -23,7 +23,7 @@
     <string name="export_all">Alles exportieren</string>
     <string name="about">Über</string>
     <string name="preferences">Einstellungen</string>
-    <string name="balance_speech">Guthaben <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    <string name="balance_speech">Guthaben &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="balance" example="$13.37">%s</xliff:g>
     </string>
     <string name="loading">Wird geladen …</string>
     <string name="scanned_at_format">Gescannt am %1$s um %2$s</string>
@@ -144,8 +144,7 @@
     <string name="mfc_key_ab">Schlüssel A| B</string>
     <string name="iso14a_detect">Erkennung von ISO 14443 Kartentypen..…</string>
     <string name="mfd_reading">MIFARE DESFire-Karte wird gelesen…</string>
-    <string name="card_reading_type">
-        <xliff:g id="card_name" example="Opal">%s</xliff:g> wird gelesen…</string>
+    <string name="card_reading_type">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Opal\"&gt;%s&lt;/xliff:g&gt; wird gelesen…<xliff:g id="card_name" example="Opal">%s</xliff:g> wird gelesen…</string>
     <string name="mfu_detect">Erkennung des MIFARE Ultralight-Kartentyps…</string>
     <string name="mfu_reading">MIFARE Ultralight Karte wird gelesen…</string>
     <string name="vicinity_reading">Vicinity-Karte wird gelesen…</string>
@@ -153,10 +152,8 @@
     <string name="card_partial_read_title">Karte teilweise gelesen!</string>
     <string name="show_partial_data">Unvollständige Daten anzeigen</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
     </plurals>
     <string name="hidden_card_number">Ausgeblendete Kartennummer</string>
     <plurals name="hidden_key_data">
@@ -166,10 +163,8 @@
     <string name="key_data">Schlüsseldaten</string>
     <string name="pref_show_local_and_english_title">Sowohl lokale als auch englische Ortsnamen anzeigen</string>
     <plurals name="cards_imported">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> Karte importiert.</item>
-        <item quantity="other">
-            <xliff:g id="count" example="1">%d</xliff:g> Karten importiert.</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; Karte importiert.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; Karten importiert.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d Block</item>
@@ -403,10 +398,9 @@
     <string name="trip_description">(Von )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (nach )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="trip_description_unknown_start">nach %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;<xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
     </string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    <string name="time_from_unknown_to">\?\?:\?\? → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="location_worldwide">Weltweit</string>
     <string name="location_abu_dhabi">Abu Dhabi, VAE</string>
@@ -821,7 +815,7 @@
 \nDicke Gehäuse und Metall können den NFC-Betrieb beeinträchtigen. Ein Fehler kann auch darauf hinweisen, dass die Karte oder die NFC-Antenne Ihres Geräts beschädigt ist.</string>
     <string name="pref_theme">Theme</string>
     <string name="pref_theme_desc">Erscheinungsbild</string>
-    <string name="pref_show_local_and_english_desc">"Zeigt sowohl lokale als auch englische Namen unabhängig von der Sprache an. Falls  ausgeschaltet: die am besten geeignete Variante wird verwendet."</string>
+    <string name="pref_show_local_and_english_desc">Zeigt sowohl lokale als auch englische Namen unabhängig von der Sprache an. Falls ausgeschaltet: die am besten geeignete Variante wird verwendet.</string>
     <string name="select_acknowledge">SAK (Auswahl Bestätigung)</string>
     <string name="answer_to_request">ATQA (Antwort auf Anfrage)</string>
     <string name="desfire_challenge">Herausforderung</string>
@@ -960,7 +954,7 @@
     <string name="venezia_rete_unica_75min">75-Minuten Rete Unica</string>
     <string name="venezia_rete_unica_100min">100-Minuten Rete Unica</string>
     <string name="pisa_abb_trim_pers_pisa">Trimestriales Abo für Pisa</string>
-    <string name="ios_version">iOS-Version: <xliff:g id="version" example="10.3">%1$s</xliff:g>
+    <string name="ios_version">iOS-Version: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;<xliff:g id="version" example="10.3">%1$s</xliff:g>
     </string>
     <string name="ios_main_screen_back">Empfang</string>
     <string name="ios_scan_card">Karte scannen</string>
@@ -1081,16 +1075,14 @@
     <string name="mode_monorail">Einschienenbahn</string>
     <string name="copyright">Urheberrecht © 2015 - 2019 Michael Farrell</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> Verschleierung ein</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> Verschleierungen ein</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; Verschleierung ein</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; Verschleierungen ein</item>
     </plurals>
     <string name="cepas_credit_header">Kreditkopf</string>
     <string name="felica_terminal_fare_adjustment">Tarifanpassungsmaschine</string>
     <string name="felica_terminal_ticket_validator">Fahrkartenvalidator</string>
     <string name="felica_process_booth_exit">Ausgang aus der Stationshauptschalter</string>
-    <string name="felica_process_deposit_bus">Busdepot</string>
+    <string name="felica_process_deposit_bus">Buspfand</string>
     <string name="opal_action_journey_completed_auto_off">Abgeschlossener Fahrt (nicht abgetippt)</string>
     <string name="opal_action_journey_completed_auto_on">Abgeschlossener Fahrt (nicht angetippt)</string>
     <string name="opal_action_tap_on_reversal">Antippungstornierung</string>
@@ -1159,4 +1151,5 @@
     <string name="felica_basic_version">Version der Grundspezifikation</string>
     <string name="felica_specification_version">Version der Spezifikation</string>
     <string name="mrtj_extra_note">Saldo und Informationen zur letzten Transaktion.</string>
+    <string name="felica_process_register_deposit">Pfandregistrierung</string>
 </resources>
