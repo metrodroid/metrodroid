@@ -1152,4 +1152,19 @@
     <string name="felica_specification_version">Version der Spezifikation</string>
     <string name="mrtj_extra_note">Saldo und Informationen zur letzten Transaktion.</string>
     <string name="felica_process_register_deposit">Pfandregistrierung</string>
+    <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkarte Korting für Arbeitstagen (2009)</string>
+    <string name="ovc_sub_student_week_vrij">Vrij für Studenten für Arbeitstagen</string>
+    <string name="ovc_sub_student_weekend_vrij">Vrij für Studenten für Wochenende</string>
+    <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkarte Korting für Wochenende (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-Chipkaart für Wochenende (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-Chipkaart für Wochentage (2009)</string>
+    <string name="ovc_sub_fietssupplement">Abo OV-fiets</string>
+    <string name="ovc_sub_ns_businesscard">Karte NS-Business</string>
+    <string name="zolotaya_korona_discount_111">111: 50 % für den kommunalen, 50 % für den Eisenbahn- und 50 % für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% für den kommunalen, 0%% für den Eisenbahn- und 0% für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% für den kommunalen, 0%% für den Eisenbahn- und 0% für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount">Ermäßigung</string>
+    <string name="mrtj_file_purse_balance">MRTJ Saldo</string>
+    <string name="mrtj_file_id">MRTJ Identität</string>
+    <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
 </resources>
