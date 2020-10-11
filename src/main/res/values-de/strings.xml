@@ -1151,7 +1151,7 @@
     <string name="felica_basic_version">Version der Grundspezifikation</string>
     <string name="felica_specification_version">Version der Spezifikation</string>
     <string name="mrtj_extra_note">Saldo und Informationen zur letzten Transaktion.</string>
-    <string name="felica_process_register_deposit">Pfandregistrierung</string>
+    <string name="felica_process_register_deposit">Nachfüllung an der Kasse</string>
     <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkarte Korting für Arbeitstagen (2009)</string>
     <string name="ovc_sub_student_week_vrij">Vrij für Studenten für Arbeitstagen</string>
     <string name="ovc_sub_student_weekend_vrij">Vrij für Studenten für Wochenende</string>
@@ -1167,4 +1167,9 @@
     <string name="mrtj_file_purse_balance">MRTJ Saldo</string>
     <string name="mrtj_file_id">MRTJ Identität</string>
     <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
+    <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
+    <string name="ovc_sub_dalkorting">Dal Korting</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% Rabatt außerhalb Stoßzeiten)</string>
+    <string name="felica_terminal_ticket_gate_terminal">Einlass-Gate-Terminal</string>
+    <string name="felica_process_booth_deduction">Bezahlung am Schalter</string>
 </resources>
