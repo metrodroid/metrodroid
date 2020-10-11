@@ -64,7 +64,9 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                                                /**
                             * Text description of last fare.
                             */
-                                               private val mFareDesc: String?) : Parcelable {
+                                               private val mFareDesc: String?,
+
+                                               private val mCheckSum: String?) : Parcelable {
 
     val serialNumber: String
         get() = formatSerial(mSerial)
@@ -75,6 +77,13 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
 
     open val info: List<ListItem>?
         get() = null
+
+    open val debug: List<ListItem>
+        get() = listOf(
+                ListItem("Layout", "0x" + mLayout.toString(16)),
+                ListItem("TicketType", "0x" + mTicketType.toString(16)),
+                ListItem("Checksum", "0x" + mCheckSum)
+        )
 
     @Parcelize
     internal class TroikaRefill (override val startTimestamp: Timestamp?): Trip() {
@@ -123,7 +132,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                 mValidityEnd: Timestamp? = null,
                 mRemainingTrips: Int? = null,
                 mLastTransfer: Int? = null,
-                mFareDesc: String? = null) : this(
+                mFareDesc: String? = null,
+                mCheckSum: String? = null) : this(
             mSerial = getSerial(rawData),
             mLayout = getLayout(rawData),
             mTicketType = getTicketType(rawData),
@@ -138,7 +148,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             mValidityEnd = mValidityEnd,
             mRemainingTrips = mRemainingTrips,
             mLastTransfer = mLastTransfer,
-            mFareDesc = mFareDesc
+            mFareDesc = mFareDesc,
+            mCheckSum = mCheckSum
     )
 
     internal enum class TroikaTransportType {
