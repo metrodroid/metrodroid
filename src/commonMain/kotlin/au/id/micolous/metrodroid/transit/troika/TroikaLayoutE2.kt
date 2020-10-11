@@ -6,10 +6,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 // This layout is found on some newer multi-ride passes
 @Suppress("CanBeParameter")
 @Parcelize
-internal class TroikaLayoutE(val rawData: ImmutableByteArray,
-                             private val mTransportCode: Int = rawData.getBitsFromBuffer(163, 2),
-                             private val validityLengthMinutes : Int = rawData.getBitsFromBuffer(131, 20),
-                             private val validityStart : Int = rawData.getBitsFromBuffer(97, 16)) :
+internal class TroikaLayoutE2(val rawData: ImmutableByteArray,
+                              private val mTransportCode: Int = rawData.getBitsFromBuffer(163, 2),
+                              private val validityLengthMinutes : Int = rawData.getBitsFromBuffer(131, 20),
+                              private val validityStart : Int = rawData.getBitsFromBuffer(97, 16)) :
         TroikaBlock(
                 rawData,
                 mExpiryDate = convertDateTime1992(rawData.getBitsFromBuffer(71, 16), 0),

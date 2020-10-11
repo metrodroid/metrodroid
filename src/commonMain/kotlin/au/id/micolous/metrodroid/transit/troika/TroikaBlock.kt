@@ -283,7 +283,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             0xa -> TroikaLayoutA(rawData)
             0xd -> TroikaLayoutD(rawData)
             0xe -> when (rawData.getBitsFromBuffer(56, 5)) {
-                2 -> TroikaLayoutE(rawData)
+                2 -> TroikaLayoutE2(rawData)
                 3 -> TroikaPurseE3(rawData)
                 5 -> TroikaPurseE5(rawData)
                 else -> TroikaUnknownBlock(rawData)
