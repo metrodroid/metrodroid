@@ -1132,7 +1132,6 @@
     <string name="felica_process_purchase_special_ticket">Ticket (special bus/streetcar)</string>
     <string name="felica_process_merchandise_purchase">Merchandise purchase</string>
     <string name="felica_process_bonus_charge">Bonus refill</string>
-    <!-- TODO: what is this? -->
     <string name="felica_process_register_deposit">Refill at cash register</string>
     <string name="felica_process_merchandise_cancel">Cancel merchandise</string>
     <string name="felica_process_merchandise_admission">Merchandise/admission</string>
