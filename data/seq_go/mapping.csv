@@ -24,7 +24,7 @@ reader_id,stop_code,stop_id,comment
 0x5e,,place_cppsta,unconfirmed
 0x5f,,place_bansta,unconfirmed
 0x60,,place_sunsta,unconfirmed
-0x61,,place_altsta,unconfirmed
+0x61,,place_altsta,
 0x62,,place_runsta,unconfirmed
 0x63,,place_frusta,unconfirmed
 0x64,,place_kursta,unconfirmed
@@ -110,9 +110,11 @@ reader_id,stop_code,stop_id,comment
 0x3bac,000044,,
 0x3bc3,000470,,
 0x40d9,319476,,
+0x45e3,005603,,
 0x4c39,319743,,
+0x4ce3,010795,,
 0x4ce4,010796,,
-0x5131,,place_UQLAKE,todo: change to platform number
+0x5131,001882,,UQ Lakes Arrivals. Also used for departures.
 0x5999,000020,,
 0x5a86,003944,,
 0x5a88,003947,,
