@@ -1425,7 +1425,7 @@
     <!-- Translators: Dutch "NS-Business Card" -->
     <string name="ovc_sub_ns_businesscard">NS-Business Card</string>
     <!-- Translators: Dutch "Dal Voordeel" -->
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% off-peak discount)</string>
     <!-- Translators: Dutch "Reizen op saldo bij NS, 1e klasse" -->
     <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Travel on Credit, First Class</string>
     <!-- Translators: Dutch "Reizen op saldo bij NS, 2de klasse" -->
