@@ -140,9 +140,9 @@
 \n* Mange endringer under panseret.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_generic">Feilrettinger, nye funksjoner og data.
-\n
-\nFlere detaljer (på engelsk): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic">Feilrettinger, nye funksjoner og data. 
+\n 
+\nFlere detaljer (på engelsk): https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_36">* Støtte for CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Frankrike), IstanbulKart-, Mobib-, Leap-, RicaciraMi- og Strelka -kort.
 \n* HSL-leseren virker.
 \n* Nye stoppesteder for Clipper og Kartu Multi Trip.
@@ -183,4 +183,11 @@
 \n• Fiks av noen feil som kræsjet Metrodroid, og noen feil med MIFARE Classic-kort
 \n
 \nFlere detaljer og kjente feil: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_300">• Støtte for Cifal, Fribourg TPF, Waltti og blå HSL-kort
+\n• Feilrettinger for Amiibo, SLaccess, Troika og Viva
+\n• Ny data for Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go og Viva
+\n• Tillagt historikksøk, MIFARE Plus-støtte
+\n• Feilrettinger på Android 4.3 og eldre
+\n
+\nFlere detaljer og kjente feil (på engelsk): https://www.metrodroid.org/changelog</string>
 </resources>
