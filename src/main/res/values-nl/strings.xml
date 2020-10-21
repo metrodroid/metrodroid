@@ -149,7 +149,7 @@
     <string name="felica_process_admission_payment">Toelatingsbetaling</string>
     <string name="felica_process_booth_exit">Stationschefbalie-uitgang</string>
     <string name="felica_process_issue_new">Nieuwe uitgifte</string>
-    <string name="felica_process_booth_deduction">Balie-aftrek</string>
+    <string name="felica_process_booth_deduction">Betaling bij kassa</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Heruitgave</string>
@@ -160,7 +160,7 @@
     <string name="felica_process_purchase_special_ticket">Kaart (speciale bus/tram)</string>
     <string name="felica_process_merchandise_purchase">Handelswaar-aankoop</string>
     <string name="felica_process_bonus_charge">Bonus bij opladen</string>
-    <string name="felica_process_register_deposit">Storting vastleggen</string>
+    <string name="felica_process_register_deposit">Storting bij geldautomaat</string>
     <string name="felica_process_merchandise_cancel">Handelswaar annuleren</string>
     <string name="felica_process_merchandise_admission">Handelswaar/Toelating</string>
     <string name="felica_process_merchandise_purchase_cash">Handelswaar-aankoop (deels met contant geld)</string>
