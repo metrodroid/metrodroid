@@ -14,7 +14,7 @@
 \nMais detalhes e problemas conhecidos: https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_generic">Correção de bugs, novas funcionalidades e dados. 
 \n 
-\nMais detalhes e problemas conhecidos (em Inglês): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+\nMais detalhes e problemas conhecidos (em Inglês): https://www.metrodroid.org/changelog</string>
     <string name="market_long_desc">Metrodroid faz leitura alguns cartões NFC para transporte público. 
 \n 
 \nCartões suportados: 
