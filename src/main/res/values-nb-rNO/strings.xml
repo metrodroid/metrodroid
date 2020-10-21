@@ -966,4 +966,13 @@
     <string name="mode_monorail">Énskinnebane</string>
     <string name="cepas_csn">Kortserienummer (CSN)</string>
     <string name="cepas_can">Kortanvendelsesnummer (CAN)</string>
+    <string name="card_media_felica">FeliCa</string>
+    <string name="iso7816_sfi">Kort filidentifikator (SFI) %s</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing støttes ikke.</string>
+    <string name="hsl_kausi_format">PeriodPass for %s</string>
+    <string name="hsl_arvo_format">eTicket for %s</string>
+    <string name="mrtj_file_id">MRTJ-identitet</string>
+    <string name="mrtj_extra_note">Saldo og info om siste transaksjon.</string>
+    <string name="felica_basic_version">Grunnleggende spesifikasjonsversjon</string>
+    <string name="felica_specification_version">Spesifikasjonsversjon</string>
 </resources>
