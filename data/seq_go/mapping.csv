@@ -39,7 +39,7 @@ reader_id,stop_code,stop_id,comment
 0x7f,,place_winsta,
 0x83,,place_gaysta,
 0xaa,,place_brdsta,unconfirmed
-0xab,,place_coosta,unconfirmed
+0xab,,place_coosta,
 0xac,,place_npksta,unconfirmed
 0xad,,place_mgssta,
 0xae,,place_cansta,
