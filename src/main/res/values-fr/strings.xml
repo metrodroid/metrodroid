@@ -146,7 +146,7 @@
     <string name="felica_process_admission_payment">Paiement de l’admission</string>
     <string name="felica_process_booth_exit">Sortie du guichet principal de la station</string>
     <string name="felica_process_issue_new">Émission de la carte</string>
-    <string name="felica_process_booth_deduction">Réduction de guichet</string>
+    <string name="felica_process_booth_deduction">Paiement au guichet</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Ré-édition</string>
@@ -157,7 +157,7 @@
     <string name="felica_process_purchase_special_ticket">Billet (bus spécial/tramway)</string>
     <string name="felica_process_merchandise_purchase">Achat de marchandises</string>
     <string name="felica_process_bonus_charge">Recharge en bonus</string>
-    <string name="felica_process_register_deposit">Enregistrement de dépôt</string>
+    <string name="felica_process_register_deposit">Recharge à la caisse</string>
     <string name="felica_process_merchandise_cancel">Annulation de la vente de la marchandise</string>
     <string name="felica_process_merchandise_admission">Marchandises/admission</string>
     <string name="felica_process_merchandise_purchase_cash">Achat de marchandises (partiellement en espèces)</string>
