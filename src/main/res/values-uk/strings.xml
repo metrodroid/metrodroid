@@ -225,4 +225,20 @@
     <string name="data">Необроблені дані</string>
     <string name="hw_detail">Інформація про виробництво</string>
     <string name="locked_mfd_card">Заблокована картка MIFARE DESFire</string>
+    <string name="hidden_card_number">Прихований номер картки</string>
+    <string name="show_partial_data">Показати неповні дані</string>
+    <string name="iso14a_detect">Визначення типу картки ISO 14443…</string>
+    <string name="visit_website">Відвідати веб-сайт</string>
+    <string name="need_stations_submit">Повідомити</string>
+    <string name="delete_key_confirm_title">Дійсно видалити ключ\?</string>
+    <string name="delete">Видалити</string>
+    <string name="keys">Ключі</string>
+    <string name="error">Помилка</string>
+    <string name="add_key">Додати ключ</string>
+    <string name="card_keys_not_supported">Метродроїд не підтримує ключі для цього типу карт.</string>
+    <string name="unknown_format">Невідомий (%s)</string>
+    <string name="binary_title_format">Двійкові дані</string>
+    <string name="lawyercats">Метродроїд і його автори не пов\'язані з жодним агентством громадського транспорту.</string>
+    <string name="machine_id">Ідентифікатор машини</string>
+    <string name="machine_id_format">Ідентифікатор машини %s</string>
 </resources>
