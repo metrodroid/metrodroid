@@ -1221,4 +1221,6 @@
     <string name="desfire_batch_number">מספר סדרה</string>
     <string name="desfire_general_info">פרטים כלליים</string>
     <string name="desfire_protocol">פרוטוקול</string>
+    <string name="tap_for_more_info">יש לגעת למידע נוסף…</string>
+    <string name="ovc_sub_fietssupplement">כרטיס עונתי ל־OV-fiets</string>
 </resources>
