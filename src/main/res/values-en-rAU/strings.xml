@@ -1,12 +1,14 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   The English (Australia) translation is intended to simplify names of Australian places.
--->
-<resources>
+--><resources>
     <string name="location_sydney_australia">Sydney</string>
     <string name="location_brisbane_seq_australia">Brisbane &amp; South East Queensland</string>
     <string name="location_victoria_australia">Victoria</string>
     <string name="location_act_australia">Australian Capital Territory</string>
     <string name="location_wa_australia">Western Australia</string>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="touchngo_cardno">Alternative number (‘CardNo’)</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on ‘Retrieve keys for Leap cards’ in the NFC preferences.</string>
+    <string name="show_debug_spans">Show debug colour for locale spans</string>
 </resources>
