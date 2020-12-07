@@ -127,7 +127,7 @@ Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 * Correction de bugs mineurs.
 
 Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-    <string name="market_changelog_generic">Correction de bugs, ajout de nouvelles fonctionnalités et données. 
+    <string name="market_changelog_generic">Correction d’erreurs, ajout de nouvelles fonctionnalités et données. 
 \n 
 \nPlus de détails et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_37">* Ajout du support pour les cartes Adelaide Metrocard, plusieurs cartes chinoises (RPC), billets à usage unique Clipper, métro de Kiev, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus et plusieurs cartes basées sur Zolotaya Korona.
@@ -175,12 +175,12 @@ Plus de détails: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n
 \nPlus de détails : https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_300">• Ajout des cartes Cifial, Fribourg TPF, Waltti et HSL bleues
-\n• Corrections de bugs pour Amiibo, SLaccess, Troika et Viva
+\n• Corrections d’erreurs pour Amiibo, SLaccess, Troika et Viva
 \n• Nouvelles données pour Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go et Viva
 \n• Ajout d’une fonction de recherche dans l’historique et compatibilité avec MIFARE Plus
 \n• Corrections de bugs sur Android 4.3 et plus ancien
 \n
-\nPlus d\'informations et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
+\nPlus d’informations et problèmes connus (en anglais) : https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_43">• Ajout de la prise en charge pour Amiibo, les trolleybus de Crimée, Kazan, Umarsh Russe, Santiago bip et carte de Varsovie
 \n• Améliorations et corrections pour les cartes Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go et Troika 
 \n• Corrections de certains bugs qui faisaient planter Metrodroid, et certains bugs avec les cartes MIFARE Classic
