@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on ‘Retrieve keys for Leap cards’ in the NFC preferences.</string>
+    <string name="touchngo_cardno">Alternative number (‘CardNo’)</string>
+    <string name="show_debug_spans">Show debug colour for locale spans</string>
 </resources>
