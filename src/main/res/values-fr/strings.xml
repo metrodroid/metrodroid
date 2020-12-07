@@ -3,7 +3,7 @@
     <string name="app_name">Metrodroid</string>
     <string name="copyright">Copyright 2015 – 2019 Michael Farrell</string>
     <string name="license">Licences</string>
-    <string name="title_activity_license">Licences open source</string>
+    <string name="title_activity_license">Licences à code source ouvert</string>
     <string name="directions">Approchez une carte.</string>
     <string name="reading_card">Lecture de la carte…</string>
     <string name="dont_move">Ne bougez pas la carte</string>
@@ -16,7 +16,7 @@
     <string name="share_xml">Partager</string>
     <string name="save_xml">Enregistrer dans un fichier</string>
     <string name="history">Historique</string>
-    <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée \?</string>
+    <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée \?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Coller depuis le presse-papiers</string>
     <string name="import_file">Importer depuis un fichier</string>
@@ -38,8 +38,8 @@
 \n 
 \nVeuillez faire pression auprès de l\'émetteur de la carte pour qu\'il autorise l\'accès libre aux données des cartes émises. Il est sûr de permettre un accès ouvert et en lecture seule aux données grâce à la technologie moderne des cartes à puce. Certaines agences fournissent même une documentation ouverte sur le format des données !</string>
     <string name="fully_locked_title">Carte entièrement verrouillée.</string>
-    <string name="nfc_off_error">NFC désactivé</string>
-    <string name="turn_on_nfc">Veuillez activer le NFC pour lire les informations de la carte.</string>
+    <string name="nfc_off_error">CCP désactivé</string>
+    <string name="turn_on_nfc">Veuillez activer le CCP pour lire les informations de la carte.</string>
     <string name="unknown_card_header">Format de carte non supporté</string>
     <string name="unknown_card_description">Cette carte n\'est pas encore prise en charge par Metrodroid. Seules les données brutes peuvent être affichées.</string>
     <string name="unknown_more_info">Plus d\'informations</string>
@@ -64,9 +64,9 @@
     <string name="error">Erreur</string>
     <string name="keys">Clés</string>
     <string name="delete">Supprimer</string>
-    <string name="add_key_directions">Sauvegardez un cliché binaire de vos clés sous la forme d\'un fichier avec une extension .farebotkeys, envoyez-le par e-mail en pièce jointe à vous-même, puis ouvrez-le sur cet appareil.</string>
+    <string name="add_key_directions">Sauvegardez un cliché binaire de vos clés sous la forme d\'un fichier avec une extension .farebotkeys, envoyez-le par courriel en pièce jointe à vous-même, puis ouvrez-le sur cet appareil.</string>
     <string name="no_keys">Aucune clé.</string>
-    <string name="nfc_unavailable">NFC indisponible</string>
+    <string name="nfc_unavailable">CCP indisponible</string>
     <string name="general">Général</string>
     <string name="launch_from_background">Démarrer en arrière plan</string>
     <string name="checksum">Somme de contrôle</string>
@@ -252,7 +252,7 @@
 \nNormalement, cela ne change pas l\'affichage des noms de lieux à l\'écran, mais certains appareils peuvent utiliser une police de caractères différente.
 \n
 \nPour ce faire, vous devez disposer d\'un logiciel d\'accessibilité prenant en charge l\'API LocaleSpan (telle que Google TalkBack) et avoir installé les voix appropriées.</string>
-    <string name="unsupported_tag">Support de carte NFC non pris en charge</string>
+    <string name="unsupported_tag">Carte CCP non prise en charge</string>
     <string name="saving_card">Enregistrement de la carte…</string>
     <string name="mfc_reading">Lecture de la carte MIFARE Classic..…</string>
     <string name="mfc_have_key">Essai de la clé fournie par l\'utilisateur pour le secteur %d…</string>
@@ -272,7 +272,7 @@
 \n
 \nCertaines données ont été lues, mais ce n\'est peut-être pas suffisant pour obtenir des données utiles.
 \n
-\nLes boîtiers épais et le métal peuvent interférer avec le fonctionnement du NFC. Une défaillance peut également indiquer que la carte ou l\'antenne NFC de votre appareil est endommagée.</string>
+\nLes boîtiers épais et le métal peuvent interférer avec le fonctionnement de la communication en champ proche (CCP). Une défaillance peut également indiquer que la carte ou l\'antenne CCP de votre appareil est endommagée.</string>
     <string name="show_partial_data">Afficher les données incomplètes</string>
     <plurals name="milliseconds_short">
         <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
@@ -316,12 +316,12 @@
     <string name="desfire_keyex">Échange de clés</string>
     <string name="desfire_key_number">Clé %s</string>
     <plurals name="desfire_standard_format">
-        <item quantity="one">Type : 1$s, taille : %2$s octet</item>
-        <item quantity="other">Type : 1$s, taille : %2$s octets</item>
+        <item quantity="one">Type : %1$s, taille : %2$s octet</item>
+        <item quantity="other">Type : %1$s, taille : %2$s octets</item>
     </plurals>
     <plurals name="desfire_record_format">
-        <item quantity="one">Type : 1$s, %2$d enregistrement (%3$d maximum), Taille de l\'enregistrement : %4$d</item>
-        <item quantity="other">Type : 1$s, %2$d enregistrements (%3$d maximum), Taille de l\'enregistrement : %4$d</item>
+        <item quantity="one">Type : %1$s, %2$d enregistrement (%3$d maximum), taille de l\'enregistrement : %4$d</item>
+        <item quantity="other">Type : %1$s, %2$d enregistrements (%3$d maximum), taille de l\'enregistrement : %4$d</item>
     </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d voyage restant</item>
@@ -390,7 +390,7 @@
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
     <string name="location_adelaide">Adelaide, Australie</string>
     <string name="location_auckland">Auckland, Nouvelle-Zélande</string>
-    <string name="location_beijing">Pékin, Chine</string>
+    <string name="location_beijing">Beijing, Chine</string>
     <string name="location_brussels">Bruxelles, Belgique</string>
     <string name="location_boston">Boston, MA, États-Unis</string>
     <string name="location_chicago">Chicago, IL, États-Unis</string>
@@ -588,9 +588,9 @@
     <string name="device_model">Modèle : <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
     <string name="device_manufacturer">Fabricant : <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
     <string name="android_os">Version d\'Android : <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
-    <string name="nfc_enabled">NFC : Activé</string>
-    <string name="nfc_disabled">NFC : Désactivé</string>
-    <string name="nfc_not_available">NFC : Indisponible</string>
+    <string name="nfc_enabled">CCP : Activé</string>
+    <string name="nfc_disabled">CCP : Désactivé</string>
+    <string name="nfc_not_available">CCP : Indisponible</string>
     <string name="mfc_supported">MIFARE Classic : Pris en charge</string>
     <string name="mfc_not_supported">MIFARE Classic : Non pris en charge</string>
     <string name="balances_and_subscriptions">Billets</string>
@@ -602,7 +602,7 @@
     <string name="advanced_options">Options avancées</string>
     <string name="developer_options">Options pour les développeurs</string>
     <string name="developer_options_desc">Utilisation de la base de données des stations, des options de masquage…</string>
-    <string name="nfc">Communication en champ proche (NFC)</string>
+    <string name="nfc">Communication en champ proche (CCP)</string>
     <string name="istanbulkart_2nd_card_number">Numéro de série secondaire</string>
     <string name="nfc_options_desc">Lecteur de secours pour MIFARE Classic, paramètres de l’interface physique de carte…</string>
     <string name="file_fci">FCI du fichier</string>
@@ -627,8 +627,8 @@
     <string name="leap_weekly_accumulators">Plafonds tarifaires hebdomadaires</string>
     <string name="initialisation_date">Date d’initialisation</string>
     <string name="issue_date">Date d’émission</string>
-    <string name="leap_locked_warning">Cette carte n\'a pas été déverrouillée. Veuillez activer la « Récupération de clés pour les cartes Leap » dans l\'écran des préférences NFC.</string>
-    <string name="card_note_leap">Requiert la récupération des clés depuis TFI, cela doit être activé dans l\'écran des préférences NFC.</string>
+    <string name="leap_locked_warning">Cette carte n\'a pas été déverrouillée. Veuillez activer la « Récupération de clés pour les cartes Leap » dans l\'écran des préférences CCP.</string>
+    <string name="card_note_leap">Requiert la récupération des clés depuis TFI, ce qui doit être activé dans l\'écran des préférences CCP.</string>
     <string name="lisboaviva_unknown_period">Validité inconnue %1$x/%2$x</string>
     <string name="about_key_formats">À propos des formats de clé…</string>
     <string name="invalid_json">JSON invalide</string>
@@ -684,7 +684,7 @@
     <string name="location_cadiz">Cadix, Espagne</string>
     <string name="location_tampere">Tampere, Finlande</string>
     <string name="location_gauteng">Gauteng, Afrique du Sud</string>
-    <string name="nfc_settings">Paramètres NFC</string>
+    <string name="nfc_settings">Paramètres CCP</string>
     <string name="location_germany">Allemagne</string>
     <string name="location_germany_and_switzerland">Allemagne et Suisse</string>
     <string name="location_pisa">Pise, Italie</string>
@@ -715,7 +715,7 @@
     <string name="location_warsaw">Varsovie, Pologne</string>
     <string name="mode_toll_road">Route à péage</string>
     <string name="hardware">Matériel</string>
-    <string name="android_nfc_settings">Paramètres NFC d\'Android</string>
+    <string name="android_nfc_settings">Paramètres CCP d\'Android</string>
     <string name="exported_at">Exporté par Metrodroid vers %s</string>
     <string name="last_refill">Dernière recharge</string>
     <string name="russia_region_04_altai_republic">République de l\'Altaï</string>
@@ -744,8 +744,8 @@
     <string name="umarsh_91_crimea">Crimée</string>
     <string name="desfire_batch_number">Numéro de lot</string>
     <string name="cepas_trp">Pointeur de transaction (TRP)</string>
-    <string name="touchngo_cardno">Numéro alternatif (« CardNo )</string>
-    <string name="nfc_connection_failed">Échec de la connexion NFC en %s</string>
+    <string name="touchngo_cardno">Numéro alternatif (« CardNo »)</string>
+    <string name="nfc_connection_failed">Échec de la connexion CCP en %s</string>
     <string name="unknown_date_title">Date inconnue</string>
     <string name="card_name_metromoney">Metromoney</string>
     <string name="card_name_hafilat">Hafilat</string>
@@ -1098,8 +1098,8 @@
     <string name="closed_arrow">Liste pliée</string>
     <string name="open_arrow">Liste étendue</string>
     <string name="tmoney_issuer_kftci">Institut coréen de compensation et de télécommunications financières (KFTCI)</string>
-    <string name="tmoney_issuer_kec">Société coréeenne des autoroutes (KEC)</string>
-    <string name="tmoney_issuer_kscc">Société coréeenne des cartes à puce (KSCC)</string>
+    <string name="tmoney_issuer_kec">Société coréenne des autoroutes (KEC)</string>
+    <string name="tmoney_issuer_kscc">Société coréenne des cartes à puce (KSCC)</string>
     <string name="tmoney_issuer_eb">Société des cartes EB</string>
     <string name="tmoney_ccode_exchange">Banque de change de Corée (KEB)</string>
     <string name="tmoney_ccode_hyundai">Services des capitaux de Hyundai</string>
@@ -1112,8 +1112,8 @@
     <string name="siticard_edinyj_16_trips">Edinyj (billet unifié) pour 16 voyages</string>
     <string name="siticard_edinyj_30_trips">Edinyj (billet unifié) pour 30 voyages</string>
     <string name="siticard_edinyj_3_days">Edinyj (billet unifié) pour 3 jours</string>
-    <string name="emv_gpo_response">Réponse à « obtenir les options de traitement » (Get Processing Options, GPO)</string>
-    <string name="emv_data_response">Réponse à « obtenir les données %1$s » (Get Data %1$s)</string>
+    <string name="emv_gpo_response">Réponse à « obtenir les options de traitement » (Get Processing Options, GPO)</string>
+    <string name="emv_data_response">Réponse à obtenir les données %s</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, voyage sur solde</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Voyage sur solde (2-1 jour)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Voyage sur solde (1-2 jour)</string>
