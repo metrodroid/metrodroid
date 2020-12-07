@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="license">Licenze</string>
-    <string name="title_activity_license">Licenze Open Source</string>
+    <string name="title_activity_license">Licenze open source</string>
     <string name="directions">Tocca una carta.</string>
     <string name="reading_card">Lettura della carta..…</string>
     <string name="dont_move">Non spostare la carta</string>
@@ -24,8 +24,7 @@
     <string name="export_all">Esporta tutto</string>
     <string name="about">A proposito</string>
     <string name="preferences">Preferenze</string>
-    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Saldo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="loading">Caricamento…</string>
     <string name="supported_cards">Tessere supportate</string>
     <string name="transaction_counter">Contatore delle transazioni</string>
@@ -200,10 +199,8 @@
     <string name="last_refill">Ultima ricarica</string>
     <string name="pref_theme_desc">Scegli l\'aspetto grafico</string>
     <plurals name="cards_imported">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> carta importata.</item>
-        <item quantity="other">
-            <xliff:g id="count" example="1">%d</xliff:g> carte importate.</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; carta importata.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; carte importate.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d blocco</item>
@@ -351,7 +348,7 @@
     <string name="leap_weekly_accumulators">Limiti tariffari settimanali</string>
     <string name="initialisation_date">Data di inizializzazione</string>
     <string name="issue_date">Data di emissione</string>
-    <string name="leap_locked_warning">Questa scheda non è stata sbloccata. Si prega attivare \"Recuperare le chiavi per le carte Leap\" nelle preferenze NFC.</string>
+    <string name="leap_locked_warning">Questa scheda non è stata sbloccata. Si prega attivare «Recuperare le chiavi per le carte Leap» nelle preferenze NFC.</string>
     <string name="card_note_leap">Richiede il recupero di chiavi da TFI, che deve essere attivato nelle preferenze NFC.</string>
     <string name="card_note_oyster">Sono supportate solo le tessere di prima generazione (MIFARE Classic). Le tessere della generazione attuale (che hanno una D stampata nell\'angolo in basso a sinistra) sono carte DESFire completamente bloccate e quindi non supportate.</string>
     <string name="lisboaviva_unknown_period">Validità sconosciuta %1$x/%2$x</string>
@@ -569,13 +566,9 @@
     <string name="felica_response_time_write">Comando di scrittura (1 blocco)</string>
     <string name="felica_response_time_other">Comandi di emissione</string>
     <string name="calypso_serial_number">Numero di serie</string>
-    <string name="trip_description">(Da )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (a )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
-    </string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
-    </string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
-    </string>
+    <string name="trip_description">(Da )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_station\" example=\"Tokyo\"&gt;%1$s&lt;/xliff:g&gt; [→] (a )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_station\" example=\"Osaka\"&gt;%2$s&lt;/xliff:g&gt;</string>
+    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;</string>
+    <string name="time_from_unknown_to">\?\?:\?\? → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="location_china_mainland">Cina continentale</string>
     <string name="location_gironde">Gironda, Francia</string>
     <string name="location_grenoble">Grenoble, Francia</string>
@@ -698,7 +691,7 @@
     <string name="cepas_csn">Numero di serie della scheda (CSN)</string>
     <string name="cepas_trp">Puntatore di transazione (TRP)</string>
     <string name="cepas_credit_trp">Puntatore di transazione di credito (TRP)</string>
-    <string name="touchngo_cardno">Numero alternativo (\"CardNo\")</string>
+    <string name="touchngo_cardno">Numero alternativo («CardNo»)</string>
     <plurals name="hsl_valid_mins">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minuti</item>
@@ -757,7 +750,7 @@
     <string name="station_database">Database delle stazioni</string>
     <string name="advanced_options">Opzioni avanzate</string>
     <string name="developer_options">Opzioni di sviluppo</string>
-    <string name="nfc">comunicazione in prossimità (NFC)</string>
+    <string name="nfc">Comunicazione in prossimità (NFC)</string>
     <string name="istanbulkart_2nd_card_number">Numero di serie secondario</string>
     <string name="locked_leap">Leap bloccato</string>
     <string name="leap_accumulator_total">Spesa totale</string>
@@ -783,8 +776,7 @@
     <string name="venezia_ticket_24h">Biglietto di 24 ore</string>
     <string name="venezia_bus_ticket_75min">Biglietto autobus da 75 minuti</string>
     <string name="venezia_airport_bus_ticket">Biglietto dell\'autobus per l\'aeroporto</string>
-    <string name="ios_version">Versione di iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g>
-    </string>
+    <string name="ios_version">Versione di iOS: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;</string>
     <string name="ios_nfcreader_exception">Eccezione: %s</string>
     <string name="ios_unknown_mifare">Mifare sconosciuto: %s</string>
     <string name="ios_unknown_tag">Tipo di tag sconosciuto: %s</string>
@@ -809,10 +801,8 @@
     <string name="mfd_unlocking">Sblocco della carta <xliff:g id="card_name" example="Leap">%s</xliff:g> …</string>
     <string name="iso7816_probing">Sondare carta ISO/IEC 7816…</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
     </plurals>
     <plurals name="hidden_key_data">
         <item quantity="one">Dati della chiave nascosti (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
@@ -1067,7 +1057,7 @@
     <string name="siticard_adult_60min_xfer_purse">Borsa con coincidenza di 60 minuti (adulto)</string>
     <string name="siticard_adult_90min_xfer_purse">Borsa con coincidenza di 90 minuti (adulto)</string>
     <string name="emv_gpo_response">Risposta alla richiesta GPO (ottenere le opzioni di trattamento)</string>
-    <string name="emv_data_response">Risposta alla richiesta Get Data %1$s (ottenere i dati %1$s)</string>
+    <string name="emv_data_response">Risposta ottieni dati %s</string>
     <string name="nol_silver">Colore argento</string>
     <string name="ovc_sub_ov_bijkaart_1e_klas">Abbonamento opzionale aggiuntivo, prima classe</string>
     <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Viaggio con saldo, prima classe</string>
@@ -1080,10 +1070,8 @@
     <string name="mode_monorail">Monorotaia</string>
     <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> offuscamento attivato</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> o offuscamenti attivati</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; offuscamento attivato</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; o offuscamenti attivati</item>
     </plurals>
     <string name="desfire_standard_file">File standard</string>
     <string name="desfire_backup_file">File di backup</string>
