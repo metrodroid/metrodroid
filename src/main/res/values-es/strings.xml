@@ -30,7 +30,7 @@
     <string name="loading">Cargando…</string>
     <string name="scanned_at_format">Escaneado al %1$s on %2$s</string>
     <string name="supported_cards">Tarjetas soportadas</string>
-    <string name="transaction_counter">"Contador de transacciones "</string>
+    <string name="transaction_counter">Contador de transacciones</string>
     <string name="fully_locked_desc">Tu tarjeta no puede ser leída sin una clave y actualmente este formato no cuenta con vulnerabilidades.
 \n
 \nTu tarjeta no es soportada por Metrodroid y es difícil que alguna vez lo sea, a no ser que encuentres la clave.
@@ -96,8 +96,7 @@
     <string name="vehicle_type">Tipo de vehículo</string>
     <string name="transaction_type">Tipo de transacción</string>
     <string name="card_not_supported_on_device">Esta tarjeta no es soportada por tu dispositivo.</string>
-    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Saldo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="valid_format">Válido desde %1$s hasta %2$s</string>
     <string name="need_stations">Algunos nombres de estaciones son desconocidos.</string>
     <string name="card_preview_reader">Versión beta del lector de tarjetas.</string>
@@ -413,10 +412,8 @@
     <string name="pref_show_local_and_english_title">Mostrar los nombres de las estaciones locales y las inglesas</string>
     <string name="pref_show_local_and_english_desc">Mostrar los nombres locales y los ingleses independientemente de la localización. Utilizar la variante más apropiada cuando esté desactivada.</string>
     <plurals name="cards_imported">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> tarjeta importada.</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> tarjetas importadas.</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; tarjeta importada.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; tarjetas importadas.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d bloque</item>
@@ -518,9 +515,7 @@
     <string name="trip_description">(De )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (a )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="trip_description_unknown_start">a %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
-    </string>
+    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;</string>
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="location_adelaide">Adelaida, Australia</string>
@@ -951,8 +946,8 @@
     <string name="theme_dark">Oscuro</string>
     <string name="theme_light">Claro</string>
     <plurals name="supported_cards_format">
-        <item quantity="one">% d tarjeta</item>
-        <item quantity="other">% d tarjetas</item>
+        <item quantity="one">%d tarjeta</item>
+        <item quantity="other">%d tarjetas</item>
     </plurals>
     <string name="lisboaviva_engraved_serial">Número grabado</string>
     <string name="lisboaviva_sub_navegante_lisboa">Navegante Lisboa</string>
@@ -1067,10 +1062,8 @@
     <string name="ricaricami_m1_3_ord_single">Ordinario Nr.1 3 zonas Mi1-Mi3</string>
     <string name="mode_monorail">Monorraíl</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> ofuscación activada</item>
-        <item quantity="other">
-            <xliff:g id="count" example="1">%d</xliff:g> ofuscaciónes activadas</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; ofuscación activada</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; ofuscaciónes activadas</item>
     </plurals>
     <string name="cepas_credit_header">Encabezado de crédito</string>
     <string name="ez_bus_refund">Reembolso del autobús</string>
