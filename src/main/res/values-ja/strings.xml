@@ -23,8 +23,7 @@
     <string name="accessibility">アクセシビリティ</string>
     <string name="speak_balance">残高を大きく読み上げ</string>
     <string name="speak_balance_summary">カードをスキャンするとき、残高を自動的に読み上げます。これは、他の音声合成のソフトウェアが利用できない場合でも機能します。</string>
-    <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">残高 &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
@@ -94,7 +93,7 @@
     <string name="unauthorized_sector_title_format">セクター: %s (未承認)</string>
     <string name="invalid_sector_title_format">セクター: %1$s (無効: %2$s)</string>
     <string name="info">情報</string>
-    <string name="valid_format">有効な %1$s %2$s へ</string>
+    <string name="valid_format">%1$s から %2$s まで有効</string>
     <string name="unknown_format">不明 (%s)</string>
     <string name="keys_required">このカードを読み取るために、暗号化鍵が必要です。</string>
     <string name="load_keys">鍵をロード</string>
@@ -306,4 +305,9 @@
     <string name="felica_service_title_format">サービス: %1$s (%2$s)</string>
     <string name="record_title_format">レコード: %s</string>
     <string name="binary_title_format">バイナリデータ</string>
+    <string name="valid_from_format">%1$s から有効</string>
+    <string name="nfcv_system_info">システム情報</string>
+    <string name="page_title_format_empty">ページ: %s(空)</string>
+    <string name="block_title_format_unauthorized">ブロック: %s(認証が必要)</string>
+    <string name="nfc_settings">NFC 設定</string>
 </resources>
