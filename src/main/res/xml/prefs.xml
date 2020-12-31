@@ -4,7 +4,7 @@
   prefs.xml
 
   Copyright 2011 Eric Butler <eric@codebutler.com>
-  Copyright 2016-2019 Michael Farrell <mioolous+git@gmail.com>
+  Copyright 2016-2020 Michael Farrell <mioolous+git@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,19 +21,24 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:npp="http://micolous.github.io/metrodroid/schemas/number-picker-preference">
-    <PreferenceCategory android:title="@string/general">
+    <PreferenceCategory
+        android:title="@string/general"
+        app:singleLineTitle="false">
         <CheckBoxPreference
             android:key="pref_launch_from_background"
             android:persistent="false"
-            android:title="@string/launch_from_background" />
+            android:title="@string/launch_from_background"
+            app:singleLineTitle="false" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_convert_timezones"
             android:summaryOff="@string/convert_timezones_summary_off"
             android:summaryOn="@string/convert_timezones_summary_on"
-            android:title="@string/convert_timezones" />
+            android:title="@string/convert_timezones"
+            app:singleLineTitle="false" />
 
         <ListPreference
             android:defaultValue="dark"
@@ -41,27 +46,33 @@
             android:entryValues="@array/theme_values"
             android:key="pref_theme"
             android:summary="@string/pref_theme_desc"
-            android:title="@string/pref_theme" />
+            android:title="@string/pref_theme"
+            app:singleLineTitle="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/accessibility">
+    <PreferenceCategory
+        android:title="@string/accessibility"
+        app:singleLineTitle="false">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_localise_places"
             android:summary="@string/localise_places_desc"
-            android:title="@string/localise_places" />
+            android:title="@string/localise_places"
+            app:singleLineTitle="false" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_speak_balance"
             android:summary="@string/speak_balance_summary"
-            android:title="@string/speak_balance" />
+            android:title="@string/speak_balance"
+            app:singleLineTitle="false" />
 
         <au.id.micolous.metrodroid.ui.AlertDialogPreference
             android:dialogMessage="@string/localise_places_longdesc"
             android:dialogTitle="@string/localise_places_longdesc_title"
             android:key="pref_localise_places_help"
-            android:title="@string/localise_places_longdesc_button" />
+            android:title="@string/localise_places_longdesc_button"
+            app:singleLineTitle="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/maps">
@@ -69,16 +80,19 @@
             android:defaultValue="@string/default_map_tile_url"
             android:key="pref_map_tile_url"
             android:summary="@string/map_tiles_url_summary"
-            android:title="@string/map_tiles_url" />
+            android:title="@string/map_tiles_url"
+            app:singleLineTitle="false" />
         <EditTextPreference
             android:defaultValue="@string/default_map_tile_subdomains"
             android:key="pref_map_tile_subdomains"
             android:summary="@string/map_tiles_subdomains_summary"
-            android:title="@string/map_tiles_subdomains" />
+            android:title="@string/map_tiles_subdomains"
+            app:singleLineTitle="false" />
         <PreferenceScreen
             android:key="pref_map_tilelayer_docs"
             android:summary="@string/map_tiles_help_summary"
-            android:title="@string/map_tiles_help">
+            android:title="@string/map_tiles_help"
+            app:singleLineTitle="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://leafletjs.com/reference-1.3.4.html#tilelayer" />
@@ -89,73 +103,93 @@
         <PreferenceScreen
             android:key="pref_nfc_screen"
             android:summary="@string/nfc_options_desc"
-            android:title="@string/nfc">
-            <PreferenceCategory android:title="@string/hardware">
+            android:title="@string/nfc"
+            app:singleLineTitle="false">
+            <PreferenceCategory
+                android:title="@string/hardware"
+                app:singleLineTitle="false">
                 <au.id.micolous.metrodroid.ui.NfcSettingsPreference
                     android:key="pref_android_nfc"
-                    android:title="@string/android_nfc_settings" />
+                    android:title="@string/android_nfc_settings"
+                    app:singleLineTitle="false" />
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/mifare_classic">
+            <PreferenceCategory
+                android:title="@string/mifare_classic"
+                app:singleLineTitle="false">
                 <ListPreference
                     android:defaultValue="null"
                     android:entries="@array/mfc_fallbacks"
                     android:entryValues="@array/mfc_fallback_values"
                     android:key="pref_mfc_fallback"
                     android:summary="@string/mfc_fallback_desc"
-                    android:title="@string/mfc_fallback" />
+                    android:title="@string/mfc_fallback"
+                    app:singleLineTitle="false" />
 
                 <au.id.micolous.metrodroid.ui.NumberPickerPreference
                     android:defaultValue="5"
                     android:key="pref_mfc_authretry"
                     android:summary="@string/auth_retries_summary"
                     android:title="@string/auth_retries"
+                    app:singleLineTitle="false"
                     npp:maxValue="20"
                     npp:minValue="1" />
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/mifare_desfire">
+            <PreferenceCategory
+                android:title="@string/mifare_desfire"
+                app:singleLineTitle="false">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_retrieve_leap_keys"
                     android:summary="@string/leap_retrieve_keys_longdesc"
-                    android:title="@string/leap_retrieve_keys" />
+                    android:title="@string/leap_retrieve_keys"
+                    app:singleLineTitle="false" />
             </PreferenceCategory>
         </PreferenceScreen>
 
         <PreferenceScreen
             android:key="pref_dev_screen"
             android:summary="@string/developer_options_desc"
-            android:title="@string/developer_options">
-            <PreferenceCategory android:title="@string/supported_cards">
+            android:title="@string/developer_options"
+            app:singleLineTitle="false">
+            <PreferenceCategory
+                android:title="@string/supported_cards"
+                app:singleLineTitle="false">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_hide_unsupported_ribbon"
                     android:summaryOff="@string/pref_hide_unsupported_ribbon_desc_off"
                     android:summaryOn="@string/pref_hide_unsupported_ribbon_desc_on"
-                    android:title="@string/pref_hide_unsupported_ribbon" />
+                    android:title="@string/pref_hide_unsupported_ribbon"
+                    app:singleLineTitle="false" />
 
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/station_database">
+            <PreferenceCategory
+                android:title="@string/station_database"
+                app:singleLineTitle="false">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_show_local_and_english"
                     android:summary="@string/pref_show_local_and_english_desc"
-                    android:title="@string/pref_show_local_and_english_title" />
+                    android:title="@string/pref_show_local_and_english_title"
+                    app:singleLineTitle="false" />
 
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_show_raw_ids"
                     android:summaryOff="@string/pref_show_raw_station_ids_desc_off"
                     android:summaryOn="@string/pref_show_raw_station_ids_desc_on"
-                    android:title="@string/pref_show_raw_station_ids" />
+                    android:title="@string/pref_show_raw_station_ids"
+                    app:singleLineTitle="false" />
 
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_debug_spans"
                     android:summary="@string/show_debug_spans_desc"
-                    android:title="@string/show_debug_spans" />
+                    android:title="@string/show_debug_spans"
+                    app:singleLineTitle="false" />
 
                 <ListPreference
                     android:defaultValue="0"
@@ -163,49 +197,61 @@
                     android:entryValues="@array/raw_levels_values"
                     android:key="pref_raw_level"
                     android:summary="@string/raw_level_desc"
-                    android:title="@string/raw_level" />
+                    android:title="@string/raw_level"
+                    app:singleLineTitle="false" />
 
                 <ListPreference
                     android:key="pref_lang_override"
                     android:summary="@string/lang_override_desc"
-                    android:title="@string/lang_override" />
+                    android:title="@string/lang_override"
+                    app:singleLineTitle="false" />
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/obfuscation_title">
+            <PreferenceCategory
+                android:title="@string/obfuscation_title"
+                app:singleLineTitle="false">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_hide_card_numbers"
                     android:summary="@string/obfuscation_card_numbers_desc"
-                    android:title="@string/obfuscation_card_numbers" />
+                    android:title="@string/obfuscation_card_numbers"
+                    app:singleLineTitle="false" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_obfuscate_balance"
                     android:summary="@string/obfuscation_balance_desc"
-                    android:title="@string/obfuscation_balance" />
+                    android:title="@string/obfuscation_balance"
+                    app:singleLineTitle="false" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_obfuscate_trip_dates"
                     android:summary="@string/obfuscation_dates_desc"
-                    android:title="@string/obfuscation_dates" />
+                    android:title="@string/obfuscation_dates"
+                    app:singleLineTitle="false" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_obfuscate_trip_times"
                     android:summary="@string/obfuscation_times_desc"
-                    android:title="@string/obfuscation_times" />
+                    android:title="@string/obfuscation_times"
+                    app:singleLineTitle="false" />
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_obfuscate_trip_fares"
                     android:summary="@string/obfuscation_fares_desc"
-                    android:title="@string/obfuscation_fares" />
+                    android:title="@string/obfuscation_fares"
+                    app:singleLineTitle="false" />
             </PreferenceCategory>
 
-            <PreferenceCategory android:title="@string/card_media_felica">
+            <PreferenceCategory
+                android:title="@string/card_media_felica"
+                app:singleLineTitle="false">
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:key="pref_felica_only_first"
                     android:summaryOff="@string/felica_first_system_pref_summary_off"
                     android:summaryOn="@string/felica_first_system_pref_summary_on"
-                    android:title="@string/felica_first_system_pref" />
+                    android:title="@string/felica_first_system_pref"
+                    app:singleLineTitle="false" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
