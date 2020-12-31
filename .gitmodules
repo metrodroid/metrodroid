@@ -18,7 +18,6 @@
 	path = third_party/protobuf
 	url = https://github.com/protocolbuffers/protobuf.git
 	shallow = true
-[submodule "third_party/openjavacard-smartcardio"]
-	path = third_party/openjavacard-smartcardio
-	url = https://github.com/micolous/openjavacard-smartcardio.git
-	shallow = true
+[submodule "third_party/kotlin-pcsc"]
+	path = third_party/kotlin-pcsc
+	url = https://github.com/micolous/kotlin-pcsc.git
