@@ -103,6 +103,7 @@ def iOSUnsupportedImages = [
         'selecta',
         'seqgo_card',
         'siticard',
+        'siticard_vladimir',
         'smartrider_card',
         'strelka_card',
         'strizh',
