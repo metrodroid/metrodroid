@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   The English (New Zealand) translation is intended to simplify names of New Zealand places.
---><resources>
+
+  Please see the Metrodroid wiki for style and translation guidance:
+  https://github.com/metrodroid/metrodroid/wiki/Translating
+
+  For English dialect usage details, please see:
+  https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
+-->
+<resources>
     <string name="location_auckland">Auckland</string>
     <string name="location_christchurch_nz">Christchurch</string>
     <string name="payment_method_cheque">Cheque</string>
-    <string name="touchngo_cardno">Alternative number (‘CardNo’)</string>
-    <string name="leap_locked_warning">This card was not unlocked. Please turn on ‘Retrieve keys for Leap cards’ in the NFC preferences.</string>
     <string name="show_debug_spans">Show debug colour for locale spans</string>
+    <string name="license">Licences</string>
+    <string name="title_activity_license">Open source licences</string>
 </resources>

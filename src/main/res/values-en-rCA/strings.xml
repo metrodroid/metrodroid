@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   The English (Canada) translation is intended to simplify names of Canadian places.
---><resources>
-    <string name="location_vancouver">Vancouver, BC, Canada</string>
+
+  Please see the Metrodroid wiki for style and translation guidance:
+  https://github.com/metrodroid/metrodroid/wiki/Translating
+
+  For English dialect usage details, please see:
+  https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
+-->
+<resources>
     <string name="payment_method_cheque">Cheque</string>
-    <string name="leap_retrieve_keys_longdesc">Shares your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will know you used Metrodroid on this card. The card cannot be read without this key.</string>
-    <string name="location_ireland">Ireland</string>
-    <string name="obfuscation_dates">Obfuscate dates</string>
-    <string name="date">Date</string>
-    <string name="tmoney_ccode_exchange">Korea Exchange Bank</string>
-    <string name="tmoney_ccode_citi">Citibank Korea</string>
-    <string name="tmoney_tcode_kt">Korea Telecom</string>
-    <string name="tmoney_issuer_kscc">Korea Smart Card Corporation</string>
-    <string name="tmoney_issuer_kec">Korea Expressway Corporation</string>
-    <string name="tmoney_issuer_mondex">Mondex Korea</string>
-    <string name="tmoney_issuer_kftci">Korea Financial Telecommunications and Clearings Institute</string>
-    <string name="location_seoul">Seoul, Korea</string>
-    <string name="location_tokyo">Tokyo, Japan</string>
-    <string name="location_kansai">Kansai, Japan</string>
-    <string name="location_quebec">Québec, Canada</string>
-    <string name="touchngo_cardno">Alternative number (“CardNo”)</string>
-    <string name="leap_locked_warning">This card was not unlocked. Please turn on “Retrieve keys for Leap cards” in the NFC preferences.</string>
     <string name="title_activity_license">Open source licences</string>
     <string name="license">Licences</string>
     <string name="show_debug_spans">Show debug colour for locale spans</string>

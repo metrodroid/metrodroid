@@ -21,6 +21,12 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+  Please see the Metrodroid wiki for style and translation guidance:
+  https://github.com/metrodroid/metrodroid/wiki/Translating
+
+  For English dialect usage details, please see:
+  https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
@@ -30,8 +36,8 @@
     <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
 
     <!-- General application strings -->
-    <string name="license">Licenses</string>
-    <string name="title_activity_license">Open source licenses</string>
+    <string name="license">Licences</string>
+    <string name="title_activity_license">Open source licences</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading card…</string>
     <string name="dont_move">Do not move card</string>
@@ -2081,7 +2087,16 @@
     <string name="felica_first_system_notice">FeliCa reads will be incomplete.</string>
 
     <!-- TFI Leap -->
+    <!--
+    Translators: keys = encryption keys, "Leap" is a transit card.
+    -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
+    <!--
+    Translators:
+    * Leap is a transit card.
+    * Transport for Ireland (TFI) is the operator of public transport services in Ireland.
+    * key = encryption key
+    -->
     <string name="leap_retrieve_keys_longdesc">Shares your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will know you used Metrodroid on this card. The card can not be read without this key.</string>
 
     <string name="locked_leap">Locked Leap</string>
@@ -2101,12 +2116,13 @@
 
     <!--
     Translators:
-    keys = encryption keys
+    * keys = encryption keys
+    * The setting referenced is in the string [leap_retrieve_keys]
 
-    Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
+    Shown when the user has scanned a Leap card (Irish transit card) and don't have the needed
     encryption keys.
     -->
-    <string name="leap_locked_warning">This card was not unlocked. Please turn on \"Retrieve keys for Leap cards\" in the NFC preferences.</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on “Retrieve keys for Leap cards” in the NFC preferences.</string>
     <!--
     Translators:
     - Shown in "supported cards" list.
@@ -2392,8 +2408,8 @@
     <string name="umarsh_91_crimea">Crimea</string>
 
     <!-- Translators:  this number isn't anywhere on the card but is
-         printed on the refill receipt as "CardNo". -->
-    <string name="touchngo_cardno">Alternative number (\"CardNo\")</string>
+         printed on the refill receipt as “CardNo”. -->
+    <string name="touchngo_cardno">Alternative number (“CardNo”)</string>
     <string name="unsupported_tag_message">This tag is currently unsupported by Metrodroid.\n
         Tag identifier: %1$s\n
         Supported technologies:\n
@@ -2444,7 +2460,7 @@
     The card is labelled in both Chinese and English.
     -->
     <string name="card_name_easycard">EasyCard</string>
-    <string name="show_debug_spans">Show debug color for locale spans</string>
+    <string name="show_debug_spans">Show debug colour for locale spans</string>
     <string name="show_debug_spans_desc">Highlight default language in green, english in yellow and local language in
         blue
     </string>
