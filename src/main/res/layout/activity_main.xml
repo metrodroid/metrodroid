@@ -57,16 +57,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_gravity="center"
-            android:gravity="center"
-            tools:ignore="ButtonStyle">
-            <!-- This is not a ButtonBar. -->
+            android:gravity="center">
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:insetLeft="4dp"
+                android:insetRight="4dp"
                 android:layout_weight="1"
                 android:onClick="onSupportedCardsClick"
+                style="?attr/ButtonStyle"
                 android:text="@string/supported_cards" />
 
             <Button
@@ -74,7 +75,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:insetLeft="4dp"
+                android:insetRight="4dp"
                 android:onClick="onHistoryClick"
+                style="?attr/ButtonStyle"
                 android:text="@string/scanned_cards" />
         </LinearLayout>
     </LinearLayout>
