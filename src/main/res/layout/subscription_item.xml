@@ -91,7 +91,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
             android:layout_width="0dp"
-            android:layout_height="76dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="5"
             android:paddingBottom="4dp"
