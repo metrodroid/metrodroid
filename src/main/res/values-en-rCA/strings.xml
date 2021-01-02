@@ -23,6 +23,5 @@
     <string name="leap_locked_warning">This card was not unlocked. Please turn on “Retrieve keys for Leap cards” in the NFC preferences.</string>
     <string name="title_activity_license">Open source licences</string>
     <string name="license">Licences</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
     <string name="show_debug_spans">Show debug colour for locale spans</string>
 </resources>

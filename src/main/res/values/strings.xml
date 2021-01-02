@@ -3,7 +3,7 @@
   strings.xml
 
   Copyright 2011-2013 Eric Butler
-  Copyright 2015-2019 Michael Farrell
+  Copyright 2015-2021 Michael Farrell
 
   Authors:
   Eric Butler <eric@codebutler.com>
@@ -26,8 +26,8 @@
 
     <string name="app_name" translatable="false">Metrodroid</string>
 
-    <!-- Additional names now noted in the license screen -->
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <!-- Additional names now noted in the license/licence screen -->
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
 
     <!-- General application strings -->
     <string name="license">Licenses</string>

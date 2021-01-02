@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
-    <string name="copyright">Direitos Reservados © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Direitos Reservados © 2015 – 2021 Michael Farrell</string>
     <string name="license">Licenças</string>
     <string name="title_activity_license">Licenças de código aberto</string>
     <string name="directions">Encoste um cartão.</string>

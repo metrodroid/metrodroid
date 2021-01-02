@@ -360,7 +360,7 @@
     <string name="hsl_transport_u_linja">U-línea</string>
     <string name="ravkav_generic_trips">Viajes</string>
     <string name="cepas_csn">Número de serie de la tarjeta (CSN)</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
     <string name="card_epoch">Tarjeta Epoch</string>
     <string name="map_tiles_url">Mapa web en mosaico</string>
     <string name="map_tiles_url_summary">Usar un servidor personalizado para mapas incrustados utilizando la sintaxis de Leaflet TileLayer.</string>

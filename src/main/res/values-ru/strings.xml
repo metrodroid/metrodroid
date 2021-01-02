@@ -377,7 +377,7 @@
     <string name="location_dubai">Дубай, ОАЭ</string>
     <string name="keys_loaded">Ключи шифрования для этой карты загружены.</string>
     <string name="mode_trolleybus">Троллейбус</string>
-    <string name="copyright">Авторские права © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Авторские права © 2015 – 2021 Michael Farrell</string>
     <string name="locked_mfc_card">Заблокированная карта MIFARE Classic</string>
     <string name="locked_mfu_card">Заблокированная карта MIFARE Ultralight</string>
     <string name="locked_mfd_card">Заблокированная карта MIFARE DESFire</string>

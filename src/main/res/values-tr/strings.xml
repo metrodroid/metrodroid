@@ -88,7 +88,7 @@
     <string name="map_tiles_url">Harita kaynağı URL</string>
     <string name="cepas_logfile_record_count">Log dosyası kayıt sayısı</string>
     <string name="location_taipei">Taipei</string>
-    <string name="copyright">Telif Hakkı © 2015 - 2019 Michael Farrell</string>
+    <string name="copyright">Telif Hakkı © 2015 - 2021 Michael Farrell</string>
     <string name="machine_id">Makine Kimliği</string>
     <string name="transaction_counter">İşlem sayacı</string>
     <string name="machine_id_format">Makine Kimliği %s</string>

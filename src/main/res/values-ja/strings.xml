@@ -78,7 +78,7 @@
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="fully_locked_desc">このカードには鍵がなくても自由に読み取りできる部分はありません。現在この形式には実用的な脆弱性はありません。

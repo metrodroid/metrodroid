@@ -30,7 +30,7 @@
     <string name="loading">Memuat…</string>
     <string name="supported_cards">Kartu yang didukung</string>
     <string name="turn_on_nfc">Silakan aktifkan NFC untuk membaca kartu.</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
 
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="scanned_at_format">Discan pada %1$s di %2$s</string>

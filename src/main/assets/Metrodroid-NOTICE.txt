@@ -1,7 +1,7 @@
 Metrodroid
 Based on FareBot
 
-Copyright 2015-2019 Michael Farrell <micolous@gmail.com> and contributors
+Copyright 2015-2021 Michael Farrell <micolous@gmail.com> and contributors
 Copyright 2011-2017 Eric Butler <eric@codebutler.com> and contributors
 Copyright 2011 "an anonymous contributor", Chris Hundt, David Hoover, Devin Carraway, Kazzz, Sean Cross
 Copyright 2012 Jason Hsu, Sebastian Oliva, Shayan Guha, Toby Bonang, Victor Heng

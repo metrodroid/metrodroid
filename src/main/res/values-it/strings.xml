@@ -1068,7 +1068,7 @@
     <string name="lisboaviva_sub_passe_mts">Abbonamento MTS (passe)</string>
     <string name="ricaricami_m1_3_ord_single">Ordinario Nr.1 3 zone Mi1-Mi3</string>
     <string name="mode_monorail">Monorotaia</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
     <plurals name="obfuscation_mode_notice">
         <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; offuscamento attivato</item>
         <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; o offuscamenti attivati</item>
