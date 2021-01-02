@@ -40,7 +40,7 @@
 \nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
-    <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
+    <string name="turn_on_nfc">Schakel nfc in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid; er kunnen alleen onbewerkte gegevens worden getoond.</string>
     <string name="unknown_more_info">Meer informatie</string>
@@ -249,7 +249,7 @@
     <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
     <string name="enabled">Aan</string>
     <string name="disabled">Uit</string>
-    <string name="unsupported_tag">Niet-ondersteunde NFC-kaartmedia</string>
+    <string name="unsupported_tag">Niet-ondersteunde nfc-kaartmedia</string>
     <string name="saving_card">Bezig met opslaan van kaart…</string>
     <string name="mfc_reading">Bezig met lezen van MIFARE Classic-kaart…</string>
     <string name="mfc_have_key">Bezig met proberen van gebruikerssleutel voor sector %d…</string>
@@ -338,9 +338,9 @@
     <string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
     <string name="card_partial_read_desc">De kaart is buiten het bereik gekomen tijdens het uitlezen.
 \n
-\nSommige gegevens zijn gelezen, maar het is waarschijnlijk onvoldoende.
+\nSommige gegevens zijn uitgelezen, maar waarschijnlijk onvoldoende.
 \n
-\nDikke hoesjes en metaal kunnen het NFC-signaal verstoren. Het kan ook zijn dat de NFC-antenne van je kaart of apparaat beschadigd is.</string>
+\nDikke hoesjes en metaal kunnen het nfc-signaal verstoren. Het kan ook zijn dat de nfc-antenne van je kaart of apparaat beschadigd is.</string>
     <string name="show_partial_data">Gedeeltelijke gegevens tonen</string>
     <plurals name="milliseconds_short">
         <item quantity="one">
@@ -502,7 +502,7 @@
     <string name="leap_weekly_accumulators">Wekelijkse tariefbeperkingen</string>
     <string name="initialisation_date">Initialisatiedatum</string>
     <string name="issue_date">Uitgavedatum</string>
-    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de NFC-instellingen.</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld - schakel ophalen van Leap-sleutels in in de nfc-instellingen.</string>
     <string name="location_minneapolis">Minneapolis, MN, VS</string>
     <string name="invalid_json">Ongeldige JSON</string>
     <plurals name="passengers">
@@ -533,7 +533,7 @@
     <string name="no_static_key_assignment">Statistische sleutels kunnen niet worden toegewezen aan een losse kaart.</string>
     <string name="card_id">Kaart-ID</string>
     <string name="vehicle_number">Voertuig %s</string>
-    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
+    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de nfc-instellingen.</string>
     <string name="machine_id">Automaat-ID</string>
     <string name="valid_from_format">Geldig vanaf %1$s</string>
     <string name="location_brussels">Brussel, België</string>
@@ -835,10 +835,10 @@
     <string name="unknown_tags">Onbekende labels</string>
     <string name="card_note_oyster">Er is alleen ondersteuning voor de eerste generatie kaarten (MIFARE Classic). De huidige generatie (die met een D in de linker benedenhoek) is volledig versleuteld (DESFire) en kan dus niet worden ondersteund.</string>
     <string name="location_kazan">Kazan, Rusland</string>
-    <string name="card_name_kazan">Kazan OV-kaart</string>
+    <string name="card_name_kazan">Kazan ov-kaart</string>
     <string name="kazan_blank">Leeg</string>
     <string name="location_shanghai">Shanghai, China</string>
-    <string name="card_name_shanghai">Shanghai OV-kaart</string>
+    <string name="card_name_shanghai">Shanghai ov-kaart</string>
     <string name="valid_origin_destination">Geldig van %1$s tot %2$s</string>
     <string name="valid_origin_destination_via">Geldig van %1$s tot %2$s, via %3$s</string>
     <string name="pref_hide_unsupported_ribbon">Melding \'niet ondersteund\' verbergen</string>
@@ -905,7 +905,7 @@
     <string name="warsaw_90_days">90-dagenkaart</string>
     <string name="mode_toll_road">Tolweg</string>
     <string name="hardware">Hardware</string>
-    <string name="android_nfc_settings">Android NFC-instellingen</string>
+    <string name="android_nfc_settings">Android nfc-instellingen</string>
     <string name="exported_at">Door Metrodroid geëxporteerd naar %s</string>
     <string name="last_refill">Laatste keer opgeladen</string>
     <string name="ovc_banned">Geblokkeerd</string>
@@ -1002,7 +1002,7 @@
 \n Ondersteund:
 \n %2$s</string>
     <string name="unknown_ultralight_message">Onbekend Mifare Ultralight-label</string>
-    <string name="nfc_connection_failed">De NFC-verbinding met \'%s\' is mislukt</string>
+    <string name="nfc_connection_failed">De nfc-verbinding met \'%s\' is mislukt</string>
     <string name="unknown_date_title">Onbekende datum</string>
     <string name="card_name_emv_long">EMV (credit- en bankkaarten)</string>
     <string name="card_reading_emv">Bezig met uitlezen van EMV (credit- of bankkaart)…</string>
@@ -1054,8 +1054,8 @@
     <string name="ovc_sub_student_weekend_korting">Student weekend-korting</string>
     <string name="ovc_sub_fietssupplement">OV-fietsabonnement</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
-    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
-    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-chipkaart weekend (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten ov-chipkaart week (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten ov-chipkaart weekend (2009)</string>
     <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkaart korting week (2009)</string>
     <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkaart korting weekend (2009)</string>
     <string name="compass_sub_daypass">Dagkaart</string>
@@ -1114,7 +1114,7 @@
     </string>
     <string name="ios_main_screen_back">Overzicht</string>
     <string name="ios_scan_card">Scan kaart</string>
-    <string name="ios_nfc_usage">App die het saldo van je OV-kaarten toont</string>
+    <string name="ios_nfc_usage">App die het saldo van je ov-kaarten toont</string>
     <string name="ios_menu_button">Meer</string>
     <string name="ios_menu_title">Menu</string>
     <string name="ios_menu_cancel">Annuleer</string>
