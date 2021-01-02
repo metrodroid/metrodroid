@@ -74,7 +74,7 @@
     <string name="vehicle_type">Araç türü</string>
     <string name="transaction_type">İşlem türü</string>
     <string name="card_epoch">Kart Dönemi</string>
-    <string name="card_not_supported_on_device">Bu kart cihazınız tarafından desteklenmemektedir.</string>
+    <string name="card_not_supported_on_device">Bu kart aygıtınız tarafından desteklenmiyor.</string>
     <string name="need_stations">Bazı durak isimleri bilinmemektedir.</string>
     <string name="need_stations_submit">Raporla</string>
     <string name="card_preview_reader">Kart okuyucusunun beta sürümü.</string>
@@ -98,7 +98,7 @@
 \nKartınız Metrodroid tarafından desteklenmemektedir ve anahtarı deşifre edilmedikçe, desteklenmesi olası değildir. 
 \n 
 \nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık belgelendirme bile sağlamaktadır!</string>
-    <string name="add_key_directions">Anahtarlarınızın ikili dökümünü .farebotkeys uzantılı bir dosya olarak kaydedin, kendinize e-posta eki ile gönderin ve ardından bu cihazda açın.</string>
+    <string name="add_key_directions">Anahtarlarınızın ikili dökümünü .farebotkeys uzantılı bir dosya olarak kaydedin, kendinize e-posta eki ile gönderin ve ardından bu aygıtta açın.</string>
     <string name="card_type">Kart türü</string>
     <string name="map_tiles_url_summary">Leaflet TileLayer sözdizimini kullanarak gömülü haritalar için özel bir döşeme sunucusu kullan.</string>
     <string name="map_tiles_subdomains">Harita döşemesi alt alan adları</string>
@@ -154,7 +154,7 @@
     <string name="valid_origin_destination">%1$s - %2$s arasında geçerli</string>
     <string name="valid_origin_destination_via">%1$s - %2$s arasında %3$s üzerinden geçerli</string>
     <string name="pref_hide_unsupported_ribbon">\'Desteklenmiyor\' şeridini gizle</string>
-    <string name="pref_hide_unsupported_ribbon_desc_off">Bu cihaz tarafından okunamayan kartların resimlerinin üzerinde kırmızı bir \'desteklenmiyor\' uyarısı olacaktır</string>
+    <string name="pref_hide_unsupported_ribbon_desc_off">Bu aygıt tarafından okunamayan kartların resimlerinin üzerinde kırmızı bir \'desteklenmiyor\' uyarısı olacaktır</string>
     <string name="pref_hide_unsupported_ribbon_desc_on">Desteklenmeyen kartların resimlerinin üzerinde herhangi bir şey olmayacaktır</string>
     <string name="last_refill">Son doldurma</string>
     <string name="localise_places">Yer isimlerine dil ipuçları ekle</string>
@@ -174,9 +174,9 @@
 \n
 \nBu seçeneğin etkinleştirilmesi, genellikle uluslararası üne sahip olmayan yabancı yer adlarının telaffuzunu iyileştirir, ancak anlaşılması size daha zor gelebilir.
 \n
-\nBu normalde yer adlarının ekran görüntüsünü değiştirmez, ancak bazı cihazlar farklı bir yazı tipi kullanabilir.
+\nBu normalde yer adlarının ekran görüntüsünü değiştirmez, ancak bazı aygıtlar farklı bir yazı tipi kullanabilir.
 \n
-\nBu, LocaleSpan API\'sini (Google TalkBack gibi) destekleyen erişilebilirlik yazılımı ve uygun seslerin yüklü olmasını gerektirir.</string>
+\nBu, LocaleSpan API\'sini (Google TalkBack gibi) destekleyen erişilebilirlik yazılımı ve uygun seslerin kurulu olmasını gerektirir.</string>
     <string name="mfc_have_key">%d sektörü için kullanıcı tarafından sağlanan anahtar deneniyor…</string>
     <string name="mfc_other_key">%d sektörü için kullanıcı tarafından sağlanan alternatif anahtarlar deneniyor…</string>
     <string name="mfc_default_key">%d sektörü için iyi bilinen anahtarlar deneniyor…</string>
@@ -196,4 +196,68 @@
     <string name="mfc_key_b">B anahtarı</string>
     <string name="mfc_key_ab">A|B anahtarı</string>
     <string name="show_partial_data">Eksik verileri göster</string>
+    <string name="desfire_unknown_file">Bilinmeyen dosya türü</string>
+    <string name="desfire_cyclic_record">Döngüsel kayıt</string>
+    <string name="desfire_linear_record">Doğrusal kayıt</string>
+    <string name="desfire_value_file">Değer dosyası</string>
+    <string name="desfire_backup_file">Yedekleme dosyası</string>
+    <string name="desfire_standard_file">Standart dosya</string>
+    <string name="mfc_uid_mode">UID uzunluğu</string>
+    <plurals name="bytes">
+        <item quantity="one">%d bayt</item>
+        <item quantity="other">%d bayt</item>
+    </plurals>
+    <string name="answer_to_request">ATQA (İsteğe Cevap)</string>
+    <string name="select_acknowledge">SAK (Onay Seç)</string>
+    <string name="manufacture_year">Üretim yılı</string>
+    <string name="manufacture_week">Üretim haftası</string>
+    <plurals name="passengers">
+        <item quantity="one">yolcu</item>
+        <item quantity="other">yolcular</item>
+    </plurals>
+    <plurals name="felica_service_count">
+        <item quantity="one">%d hizmet</item>
+        <item quantity="other">%d hizmet</item>
+    </plurals>
+    <plurals name="record_count">
+        <item quantity="one">%d kayıt</item>
+        <item quantity="other">%d kayıt</item>
+    </plurals>
+    <plurals name="block_count">
+        <item quantity="one">%d blok</item>
+        <item quantity="other">%d blok</item>
+    </plurals>
+    <plurals name="cards_imported">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
+    </plurals>
+    <string name="pref_show_local_and_english_desc">Yerel ayardan bağımsız olarak hem yerel hem de İngilizce adları, kapalıyken en uygun çeşidini kullanarak gösterir.</string>
+    <string name="pref_show_local_and_english_title">Hem yerel hem de İngilizce istasyon adlarını göster</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="pref_theme_desc">Görünüm ve izlenimi seçin</string>
+    <string name="pref_theme">Tema</string>
+    <string name="raw_level_all">Tüm alanlar</string>
+    <string name="raw_level_unknown_only">Yalnızca bilinmeyen alanlar</string>
+    <string name="raw_level_none">Yok (devre dışı)</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
+    </plurals>
+    <string name="key_data">Anahtar verileri</string>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
+        <item quantity="other">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
+    </plurals>
+    <string name="hidden_card_number">Gizli kart numarası</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
+    </plurals>
+    <string name="card_partial_read_desc">Okurken kart aralık dışına çıktı.
+\n
+\n Bazı veriler okundu, ancak faydalı veriler almak için yeterli olmayabilir.
+\n
+\n Kalın kasalar ve metal, NFC\'nin çalışmasını engelleyebilir. Hata, kartın veya aygıtınızın NFC anteninin hasar gördüğü anlamına da gelebilir.</string>
+    <string name="iso7816_probing">ISO/IEC 7816 kartı sorgulanıyor…</string>
 </resources>
