@@ -1,3 +1,4 @@
 headers = Stations.pbobjc.h
 package = au.id.micolous.metrodroid.proto.stations
 language = Objective-C
+headerFilter = Stations.pbobjc.h

@@ -69,7 +69,8 @@ operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     return null
 }
 
-fun GPBUInt32Array.toList(): List<UInt> = List(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
+fun GPBUInt32Array.toList(): List<UInt> = List(this.count().toInt()) {
+    this.valueAtIndex(it.toULong()) }
 
 private const val MAX_VARINT = 10
 
