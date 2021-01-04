@@ -37,7 +37,7 @@ fun <T> wrapJavaExceptions(f: () -> T): T {
 }
 
 /**
- * Implements a wrapper for JSR 268 (javax.smartcardio) API to [CardTransceiver].
+ * Implements a wrapper for kotlin-pcsc API to [CardTransceiver].
  */
 open class JavaCardTransceiver(
     private val context: Context,
