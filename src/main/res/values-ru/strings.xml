@@ -193,7 +193,7 @@
     <string name="calypso_reading">Считываем карту Calypso…</string>
     <string name="card_partial_read_title">Частично считанная карта!</string>
     <string name="show_partial_data">Показать неполные данные</string>
-    <string name="pref_theme">Скин</string>
+    <string name="pref_theme">Тема</string>
     <string name="pref_theme_desc">Выберите внешний вид приложения</string>
     <plurals name="cards_imported">
         <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта.</item>
