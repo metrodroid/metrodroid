@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">מטרו-דרואיד</string>
-    <string name="copyright">כל הזכויות שמורות © 2015 - 2019 מייקל פארל</string>
+    <string name="copyright">כל הזכויות שמורות © 2015 - 2021 מייקל פארל</string>
     <string name="license">רישיונות</string>
     <string name="title_activity_license">רישיונות קוד פתוח</string>
     <string name="directions">נא להצמיד כרטיס.</string>
@@ -1223,4 +1223,11 @@
     <string name="desfire_protocol">פרוטוקול</string>
     <string name="tap_for_more_info">יש לגעת למידע נוסף…</string>
     <string name="ovc_sub_fietssupplement">כרטיס עונתי ל־OV-fiets</string>
+    <string name="card_name_hayakaken">היאקקן (Hayakaken)</string>
+    <string name="card_name_japan_ic">IC יפן</string>
+    <string name="card_name_edy">Edy</string>
+    <string name="location_vladimir">ולדימיר, רוסיה</string>
+    <string name="location_nagoya">נגויה, יפן</string>
+    <string name="location_fukuoka_prefecture">פוקואוקה, יפן</string>
+    <string name="location_fukuoka_city">פוקואוקה, יפן</string>
 </resources>
