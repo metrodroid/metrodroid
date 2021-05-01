@@ -39,8 +39,7 @@
     <string name="fully_locked_title">כרטיס נעול לחלוטין.</string>
     <string name="nfc_off_error">NFC כבוי</string>
     <string name="turn_on_nfc">נא להפעיל NFC כדי לקרוא את פרטי הכרטיס.</string>
-    <string name="balance_speech">מאזן &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">יתרה <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="unknown_card_header">תצורת הכרטיס אינה נתמכת</string>
     <string name="unknown_card_description">כרטיס זה עדיין אינו נתמך על ידי Metrodroid. ניתן להציג נתונים גולמיים בלבד.</string>
     <string name="unknown_more_info">מידע נוסף</string>
@@ -83,7 +82,7 @@
     <string name="location_pisa">פיזה, איטליה</string>
     <string name="location_shanghai">שנגחאי, סין</string>
     <string name="location_crimea">קרים</string>
-    <string name="trip_description">(מוצא )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_station\" example=\"Tokyo\"&gt;%1$s&lt;/xliff:g&gt; [←] (יעד )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_station\" example=\"Osaka\"&gt;%2$s&lt;/xliff:g&gt;<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g>\nל <xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <string name="trip_description">(מוצא )<xliff:g id="start_station" example="טוקיו">%1$s</xliff:g> [→] (יעד )<xliff:g id="end_station" example="אוסאקה">%2$s</xliff:g></string>
     <string name="time_from_to">‏<xliff:g id="start_time" example="12:35">%1$s</xliff:g> ← <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
     <string name="time_from_unknown_to">‏\??:?? ← <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
     <string name="card_note_oyster">יש תמיכה בכרטיסים מהדור הראשון בלבד (MIFARE Classic). כרטיסים מהדור הנוכחי (שמודפס עליהם D בפינה השמאלית התחתונה) הם כרטיסי DESFire נעולים לחלוטין ולכן אינם נתמכים.</string>
@@ -459,7 +458,7 @@
     <string name="nol_red">אדום</string>
     <string name="card_name_nol">נול (نول)</string>
     <string name="card_name_hafilat">חאפילאת (حافلات)</string>
-    <string name="card_name_tampere">כרטיס נסיעה Tampere</string>
+    <string name="card_name_tampere">כרטיס נסיעה Tampere ‏(matkakortti)</string>
     <string name="card_name_metromoney">מטרומאני (Metromoney)</string>
     <string name="unknown_date_title">תאריך לא ידוע</string>
     <string name="nfc_connection_failed">חיבור ה־NFC אל %s נכשל</string>
@@ -514,7 +513,7 @@
 \n
 \nמגנים עבים ומתכת יכולים להפריע לפעולת ה־NFC. כשלון יכול גם לציין שהכרטיס או אנטנת ה־NFC של המכשיר שלך פגומים.</string>
     <string name="card_partial_read_title">הכרטיס נקרא חלקית!</string>
-    <string name="mfd_unlocking">נעילת הכרטיס &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Leap\"&gt;%s&lt;/xliff:g&gt; משוחררת…<xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
+    <string name="mfd_unlocking">נעילת הכרטיס <xliff:g id="card_name" example="Leap">%s</xliff:g> משוחררת…</string>
     <string name="vicinity_reading">כרטיס Vicinity (קירבה) נקרא…</string>
     <string name="mfu_reading">כרטיס MIFARE Ultralight נקרא…</string>
     <string name="mfu_detect">סוג כרטיס ה־MIFARE Ultralight מזוהה…</string>
@@ -569,7 +568,7 @@
     <string name="lisboaviva_sub_ass_pal_lis">פלמלה לליסבון</string>
     <string name="lisboaviva_engraved_serial">מספר מוטבע</string>
     <string name="lisboaviva_unknown_period">תוקף לא ידוע %1$x/%2$x</string>
-    <string name="card_reading_type">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Opal\"&gt;%s&lt;/xliff:g&gt; נקרא…<xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+    <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> נקרא…</string>
     <string name="mfd_reading">כרטיס MIFARE DESFire נקרא…</string>
     <string name="mfc_key_ab">מפתח A|B</string>
     <string name="mfc_key_b">מפתח B</string>
@@ -1047,10 +1046,10 @@
     <string name="felica_terminal_vehicle">מסוף על כלי רכב (באוטובוס)</string>
     <string name="felica_terminal_portable">מסוף נייד</string>
     <string name="felica_terminal_fare_adjustment">מכונת התאמת עמלה</string>
-    <string name="card_name_pasmo">פסמו</string>
-    <string name="card_name_icoca">איקוקה</string>
-    <string name="card_name_suica">סויקה</string>
-    <string name="edy_file_purse_balance">מאזן ארנק Edy</string>
+    <string name="card_name_pasmo">פסמו (PASMO)</string>
+    <string name="card_name_icoca">איקוקה (ICOCA)</string>
+    <string name="card_name_suica">סויקה (Suica)</string>
+    <string name="edy_file_purse_balance">יתרת ארנק Edy</string>
     <string name="edy_file_id">זהות Edy</string>
     <string name="edy_file_history">היסטוריית Edy</string>
     <string name="ez_service_charge">חיוב שירות</string>
@@ -1230,4 +1229,19 @@
     <string name="location_nagoya">נגויה, יפן</string>
     <string name="location_fukuoka_prefecture">פוקואוקה, יפן</string>
     <string name="location_fukuoka_city">פוקואוקה, יפן</string>
+    <string name="russia_region_33_vladimir">מחוז ולדימיר</string>
+    <string name="card_name_siticard_vladimir">סיטיקארד - ולדימיר (Ситикард - Владимир)</string>
+    <string name="felica_system_cybernet">IC יפן (סייברנט)</string>
+    <string name="opal_action_tap_on_rejected">סליקת הכניסה נדחתה</string>
+    <string name="opal_action_tap_on_reversal">סליקה לשינוי כיוון</string>
+    <string name="opal_action_journey_completed_auto_on">מסע הושלם (סליקת כניסה נכשלה)</string>
+    <string name="opal_action_journey_completed_auto_off">מסע הושלם (סליקת יציאה נכשלה)</string>
+    <string name="suica_file_admission">נסיעות בסויקה</string>
+    <string name="suica_file_id">זהות סויקה</string>
+    <string name="card_name_toica">טויקה (TOICA)</string>
+    <string name="card_name_sugoca">סוגוקה (SUGOCA)</string>
+    <string name="card_name_pitapa">פיטאפה (PiTaPa)</string>
+    <string name="card_name_nimoca">נימוקה (nimoca)</string>
+    <string name="card_name_manaca">מנאקה (manaca)</string>
+    <string name="card_name_kitaca">קיטאקה (Kitaca)</string>
 </resources>
