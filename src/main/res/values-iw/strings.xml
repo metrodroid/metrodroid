@@ -5,7 +5,7 @@
     <string name="license">רישיונות</string>
     <string name="title_activity_license">רישיונות קוד פתוח</string>
     <string name="directions">נא להצמיד כרטיס.</string>
-    <string name="reading_card">הכרטיס נקרא…</string>
+    <string name="reading_card">קורא כרטיס…</string>
     <string name="dont_move">אין להזיז את הכרטיס</string>
     <string name="advanced_info">מידע מתקדם</string>
     <string name="delete_card">מחיקת כרטיס</string>
@@ -1244,4 +1244,8 @@
     <string name="card_name_nimoca">נימוקה (nimoca)</string>
     <string name="card_name_manaca">מנאקה (manaca)</string>
     <string name="card_name_kitaca">קיטאקה (Kitaca)</string>
+    <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkaart korting weekend (2009)</string>
+    <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkaart korting week (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-chipkaart weekend (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
 </resources>
