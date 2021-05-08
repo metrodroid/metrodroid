@@ -5,7 +5,7 @@
     <string name="license">רישיונות</string>
     <string name="title_activity_license">רישיונות קוד פתוח</string>
     <string name="directions">נא להצמיד כרטיס.</string>
-    <string name="reading_card">קורא כרטיס…</string>
+    <string name="reading_card">הכרטיס נקרא…</string>
     <string name="dont_move">אין להזיז את הכרטיס</string>
     <string name="advanced_info">מידע מתקדם</string>
     <string name="delete_card">מחיקת כרטיס</string>
