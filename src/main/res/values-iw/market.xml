@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="market_changelog_300">• נוספה תמיכה ב־ Cifial,‏ Fribourg TPF,‏ Waltti וכרטיסי HSL כחולים
+\n• תוקנו תקלות עם Amiibo,‏ SLaccess,‏ Troika ו־Viva
+\n• נתונים חדשים עבור Adelaide Metrocard,‏ Bonobus,‏ Compass,‏ Gautrain,‏ רב־קו, RicaricaMi,‏ ORCA,‏ OùRA,‏ Touch ’n Go ו־Viva
+\n• נוסף חיפוש בהיסטוריה, תמיכה ב־MIFARE Plus
+\n• תוקנו תקלות ב־Android 4.3 ומטה
+\n
+\nלפרטים נוספים ותקלות מוכרות (באנגלית): https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_generic">תוקנו באגים, נוספו יכולות ונתונים חדשים.
+\n
+\nלמידע נוסף ותקלות מוכרות (באנגלית): https://www.metrodroid.org/changelog</string>
+    <string name="market_long_desc">Metrodroid קורא מגוון כרטיסי קירבה לתחבורה ציבורית.
+\n
+\nכרטיסים נתמכים:
+\n• Amiibo 🆕
+\n• AT HOP - אוקלנד, ניו זילנד 🆕🆔
+\n• Beijing Municipal Card, Shenzhen Tong, T-Union, Wuhan Tong - סין 🆕
+\n• Bilhete Único - סאו פאולו, ברזיל 📜🗝
+\n• bip! - סנטיאגו, צ׳ילה 🆕📜🗝
+\n• BUS-IT - המילטון רבתי (ואיקטו), ניו זילנד 🆕📜🗝
+\n• Carta Mobile - פיזה, איטליה 🆕
+\n• CEPAS (EZ-Link, NETS Flashpay) - סינגפור 🇸🇬
+\n• CharlieCard - בוסטון, מסצ׳וסטס, ארה״ב 🆕📜🗝
+\n• Cifial 🆕📜
+\n• City Union, T-Union - סין 🆕
+\n• Clipper - סן פרנסיסקו, קליפורניה, ארה״ב
+\n• Compass (כרטיסים לשימוש חד־פעמי) - ונקובר, קולומביה הבריטית, קנדה 🆕
+\n• Crimea Trolleybus 🆕 - הטרוליבוס של קרים📜🗝
+\n• EasyCard - טאיפיי 📜🗝
+\n• כרטיסי EMV בנקאיים 🆕
+\n• Go card - בריסביין, קווינסלנד, אוסטרליה 🆕📜🗝
+\n• GoCard - אוטגו (דנידין וקווינסטאון), ניו זילנד 🆕📜
+\n• Go-to Card - מיניאפוליס-סיינט פול, מינסוטה, ארה״ב 🆕📜🗝
+\n• Hafilat - אבו דבי, איחוד האמירויות 🆕
+\n• Hop Fastpass - פורטלנד, אורגון, ארה״ב 🆕🆔
+\n• HSL, Matkakortti, Waltti - פינלנד
+\n• IC (Suica, ICOCA, PASMO), Edy - יפן
+\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - צרפת
+\n• IstanbulKart - טורקיה 🆕🆔
+\n• Kartu Multi Trip - Jakarta, Indonesia
+\n• Kiev Metro - אוקראינה 🆕📜🗝
+\n• KomuterLink - מלזיה 🆕📜🗝
+\n• Leap - אירלנד 🆕🇮🇪
+\n• Lisboa Viva - ליסבון, פורטוגל 🆕
+\n• Manly Fast Ferry - סידני, ניו סאות׳ ויילס, אוסטרליה 🆕📜🗝
+\n• metroCARD - אדלייד, אוסטרליה 🆕
+\n• Metrocard (הדור הראשון) - Christchurch, New Zealand 🆕📜🗝
+\n• Metromoney - Tbilisi, Georgia 🆕📜🗝
+\n• Mobib - Brussels, Belgium 🆕
+\n• Myki - Melbourne, VIC, Australia 🆕🆔
+\n• MyWay - Canberra, ACT, Australia 🆕📜🗝
+\n• Nol - Dubai, UAE 🆕🆔
+\n• Octopus - Hong Kong 🆕
+\n• Opal - Sydney, NSW, Australia 🆕
+\n• Opus - Québec, Canada 🆕
+\n• ORCA - Seattle, WA, USA
+\n• OV-chipkaart - Netherlands 📜🗝
+\n• Oyster (1st-gen) - London, UK 🆕📜🗝
+\n• Podorozhnik - Saint Petersburg, Russia 🆕📜🗝
+\n• Rav-Kav - Israel 🆕
+\n• Rejsekort - Denmark 🆕📜🗝
+\n• RicaricaMi - Milan, Italy 🆕
+\n• Selecta - France 🆕
+\n• SLAccess - Stockholm, Sweden 🆕📜🗝
+\n• Smartride - Rotorua, New Zealand 🆕📜
+\n• SmartRider - Perth, WA, Australia 🆕📜🗝
+\n• Snapper (plus) - Wellington, New Zealand 🆕
+\n• Strelka - Moscow, Russia 🆕📜🆔
+\n• SunCard - Orlando, FL, USA 🆕📜🗝🆔
+\n• Tartu Bus - Estonia 🆕📜🆔
+\n• T-Money - South Korea 🆕
+\n• Touch ’n Go - Malaysia 🆕📜🗝
+\n• TPF card - Fribourg, Switzerland 🆕🆔
+\n• Transit Access Pass - Los Angeles, CA, USA 🆕📜🗝
+\n• Troika - Moscow, Russia 🆕📜🗝
+\n• Umarsh (Electronic Barnaul, Kirov, Ekaterinburg Ekarta, Izhevsk Strizh, Nizhniy Novgorod Siticard, Penza, Yoshkar-Ola) - Russia 🆕📜🗝
+\n• Ventra (single-use tickets) - Chicago, IL, USA 🆕
+\n• Warszawska Karta Miejska - Warsaw, Poland 🆕📜🗝🆔
+\n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Russia 🆕📜🗝
+\n
+\n🆕 חדש ב Metrodroid.
+\n📜 MIFARE Classic: not compatible with all devices - you need a device NXP NFC chipset to read this.
+\n🗝 Encryption keys are required to read this card.
+\n🇸🇬 CEPAS not compatible with all devices (ISO 14443-B).
+\n🆔 Only the card number can be read.
+\n🇮🇪 Encryption keys are downloaded from the operator.
+\n
+\nYou require a NFC-compatible device to read cards.
+\n
+\nSome agencies have encrypted cards. You need to acquire encryption keys to read them, which are generally unique to each card. Sorry, I can’t help you with this.
+\n
+\nMetrodroid and its authors are not affiliated with and public transit agency. Other agencies’ cards using Cubic Nextfare or ERG on MIFARE Classic may also work.
+\n
+\nFor more details about permissions required, please see the privacy policy.
+\n
+\nThis is a fork of Eric Butler’s Farebot, with support for additional cards and bug fixes.
+\n
+\nThis software is licensed under the GNU GPLv3+, source code is available at https://github.com/metrodroid/</string>
+    <string name="market_short_desc">Metrodroid קורא מידע מכל מיני כרטיסי קירבה לתחבורה ציבורית.</string>
+</resources>
