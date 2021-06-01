@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Metrodroid</string>
     <string name="license">Lisensi</string>
     <string name="title_activity_license">Lisensi Open Source</string>
     <string name="directions">Tempelkan kartu.</string>
@@ -31,7 +31,6 @@
     <string name="supported_cards">Kartu yang didukung</string>
     <string name="turn_on_nfc">Silakan aktifkan NFC untuk membaca kartu.</string>
     <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
-
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="scanned_at_format">Discan pada %1$s di %2$s</string>
     <string name="fully_locked_desc">Tidak ada bagian dari kartu yang tidak dapat dibaca tanpa kunci. Anda tidak memiliki kunci yang terpasang.
@@ -44,16 +43,11 @@
     <string name="fully_locked_title">Kartu terkunci semua.</string>
     <string name="nfc_off_error">NFC mati</string>
     <string name="machine_id_format">ID Mesin %s</string>
-
     <string name="unknown_card_header">Format kartu tidak diketahui</string>
     <string name="unknown_card_description">Kartu ini belum disupport oleh Metrodroid. Hanya raw data yang dapat ditampilkan.</string>
-
     <string name="unknown_more_info">Info tambahan</string>
     <string name="unknown_more_info_desc">Tekan untuk melihat support Metrodroid terhadap kartu ini.</string>
-
     <string name="lawyercats">Metrodroid dan para pembuatnya tidak berhubungan dengan perusahaan penyedia layanan.</string>
-
-
     <string name="scanned_cards">Riwayat</string>
     <string name="no_scanned_cards">Anda belum melakukan pembacaan kartu.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -114,40 +108,27 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Ulang autentikasi</string>
     <string name="auth_retries_summary">Jumlah berapa kali percobaan autentikasi di tiap sektor</string>
-
     <string name="mfc_fallback_desc">Beberapa agensi tidak memiliki kode khusus dalam kartunya. Untuk membacanya, anda harus memilih agensi secara khusus.</string>
     <string name="mfc_fallback">Fallback reader</string>
     <string name="requires_android_21">Membutuhkan Android 5.0 keatas.</string>
-
     <string name="obfuscation_title">Obfuscation</string>
     <string name="obfuscation_card_numbers">Sembunyikan nomor kartu</string>
     <string name="obfuscation_card_numbers_desc">Jangan tampilkan nomor kartu di manapun</string>
-
     <string name="obfuscation_balance">Obfuscate saldo</string>
     <string name="obfuscation_balance_desc">Ganti nilai saldo yang tampil dengan nilai acak</string>
-
     <string name="obfuscation_dates">Obfuscate tanggal</string>
     <string name="obfuscation_dates_desc">Tunjukan perjalanan, langganan, kadaluarsa dan tanggal scan dengan nilai lain</string>
-
     <string name="obfuscation_times">Obfuscate waktu</string>
     <string name="obfuscation_times_desc">Kaburkan resolusi dari data waktu pada perjalanan, pendaftara, dan pembacaan</string>
-
     <string name="obfuscation_fares">Obfuscate biaya</string>
     <string name="obfuscation_fares_desc">Ganti biaya yang ditampilkan dengan nilai acak</string>
-
     <string name="accessibility">Aksesibilitas</string>
-
     <string name="speak_balance">Ucapkan nilai saldo</string>
     <string name="speak_balance_summary">Ketika anda menyekan kartu, nilai saldo akan secara otomatis dibacakan dengan keras. Walaupun screen reader tidak aktif.</string>
-
     <string name="localise_places">Tambahkan petunjuk pada nama kota</string>
-
     <string name="localise_places_desc">Adds language hints (LocaleSpan) to place names, such as station, stop, line and route names. This alters the pronunciation used by screen readers and other accessibility software.</string>
-
     <string name="localise_places_longdesc_button">Tentang petunjuk bahasa…</string>
-
     <string name="localise_places_longdesc_title">Tentang petunjuk bahasa</string>
-
     <string name="map_tiles_help">Lihat dokumentasi Leaflet TileLayer</string>
     <string name="map_tiles_help_summary">Untuk bantuan bagaimana menggunakan Map tile URLs, lihat dokumentasi Leaflet (hanya dalam Bahasa Inggris).</string>
     <string name="about_card_format">Tentang format kartu ini</string>
@@ -157,40 +138,31 @@
 \n
 \nTempat kartu yang tebal dan bahan metal dapat mengganggu NFC. Kegagalan juga bisa mengindikasikan bahwa kartu atau antena handset anda bermasalah.</string>
     <string name="show_partial_data">Lihat data yang belum lengkap</string>
-
     <string name="pref_show_local_and_english_title">Tampilkan nama stasiun dalam bahasa lokal serta dalam bahasa Inggris</string>
     <string name="pref_show_local_and_english_desc">Jika diaktifkan, kedua bahasa lokal dan Inggris akan ditampilkan. Jika dinonaktifkan, varian yang paling cocok akan dipilih.</string>
-
     <plurals name="cards_imported">
-	<item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
-</plurals>
-
+        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
+    </plurals>
     <plurals name="block_count">
-	<item quantity="other">%d blok</item>
-</plurals>
-
+        <item quantity="other">%d blok</item>
+    </plurals>
     <plurals name="record_count">
-	<item quantity="other">%d record</item>
-</plurals>
-
+        <item quantity="other">%d record</item>
+    </plurals>
     <plurals name="felica_service_count">
-	<item quantity="other">%d servis</item>
-</plurals>
-
+        <item quantity="other">%d servis</item>
+    </plurals>
     <string name="desfire_standard_file">File standard</string>
     <string name="desfire_backup_file">File backup</string>
     <string name="desfire_value_file">Value file</string>
     <string name="desfire_unknown_file">Tipe file tidak dikenal</string>
     <plurals name="desfire_standard_format">
-	<item quantity="other">Type: %1$s, Length: %2$s byte</item>
-</plurals>
-
+        <item quantity="other">Type: %1$s, Length: %2$s byte</item>
+    </plurals>
     <plurals name="desfire_record_format">
-	<item quantity="other">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
-</plurals>
-
+        <item quantity="other">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
+    </plurals>
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Hanya untuk kartu FeliCa baru.</string>
-
-
-    </resources>
+    <string name="theme_dark">Thema Malam</string>
+</resources>
