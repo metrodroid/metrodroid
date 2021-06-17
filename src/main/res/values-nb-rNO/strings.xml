@@ -975,4 +975,6 @@
     <string name="mrtj_extra_note">Saldo og info om siste transaksjon.</string>
     <string name="felica_basic_version">Grunnleggende spesifikasjonsversjon</string>
     <string name="felica_specification_version">Spesifikasjonsversjon</string>
+    <string name="ovc_autocharge_information">Autotrekks-info</string>
+    <string name="suica_file_id">Suica-identitet</string>
 </resources>
