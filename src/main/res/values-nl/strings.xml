@@ -984,7 +984,7 @@
 \n Labelidentificatie: %1$s
 \n Ondersteund:
 \n %2$s</string>
-    <string name="unknown_ultralight_message">Onbekend Mifare Ultralight-label</string>
+    <string name="unknown_ultralight_message">Onbekend MIFARE Ultralight-label</string>
     <string name="nfc_connection_failed">De nfc-verbinding met \'%s\' is mislukt</string>
     <string name="unknown_date_title">Onbekende datum</string>
     <string name="card_name_emv_long">EMV (credit- en bankkaarten)</string>
@@ -1106,7 +1106,7 @@
     <string name="ios_nfcreader_reading">Bezig met uitlezen van %s</string>
     <string name="ios_nfcreader_tap">Scan je kaart</string>
     <string name="ios_nfcreader_exception">Uitzondering: %s</string>
-    <string name="ios_unknown_mifare">Onbekende Mifare: %s</string>
+    <string name="ios_unknown_mifare">Onbekende MIFARE: %s</string>
     <string name="ios_unknown_tag">Onbekend label: %s</string>
     <string name="ovc_autocharge_information">Informatie over automatisch opladen</string>
     <string name="rkf_stockholm_7_days">Stockholm 7-dagenkaart</string>
