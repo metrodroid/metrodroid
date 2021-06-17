@@ -370,7 +370,7 @@
     <string name="desfire_protocol">Protokoll</string>
     <string name="desfire_general_info">Allgemeine Informationen</string>
     <string name="touchngo_cardno">Alternative Nummer („CardNo“)</string>
-    <string name="unknown_ultralight_message">Unbekannter Mifare Ultralight-Tag</string>
+    <string name="unknown_ultralight_message">Unbekannter MIFARE Ultralight-Tag</string>
     <string name="nfc_connection_failed">NFC-Verbindung zu %s fehlgeschlagen</string>
     <string name="unknown_date_title">Unbekanntes Datum</string>
     <string name="card_name_metromoney">Metromoney</string>
@@ -963,7 +963,7 @@
     <string name="ios_nfcreader_reading">Lesen von %s</string>
     <string name="ios_nfcreader_tap">Halten Sie die Karte am Telefon</string>
     <string name="ios_nfcreader_exception">Ausnahme: %s</string>
-    <string name="ios_unknown_mifare">Unbekannte Mifare: %s</string>
+    <string name="ios_unknown_mifare">Unbekannte MIFARE: %s</string>
     <string name="ios_unknown_tag">Unbekannter Tag-Typ: %s</string>
     <string name="ovc_autocharge_information">Informationen zum automatischen Aufladen</string>
     <string name="rkf_stockholm_7_days">Stockholm 7-Tageskarte</string>
