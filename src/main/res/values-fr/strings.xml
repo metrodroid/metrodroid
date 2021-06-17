@@ -921,7 +921,7 @@
     <string name="ios_nfcreader_connecting">Connexion à %s</string>
     <string name="ios_nfcreader_reading">Lecture de %s</string>
     <string name="ios_nfcreader_tap">Approchez votre carte</string>
-    <string name="ios_unknown_mifare">Mifare inconnu : %s</string>
+    <string name="ios_unknown_mifare">MIFARE inconnu : %s</string>
     <string name="rkf_stockholm_7_days">Billet de 7 jours pour Stockholm</string>
     <string name="rkf_stockholm_72_hours">Billet de 72 heures pour Stockholm</string>
     <string name="location_finland">Finlande</string>
@@ -1028,7 +1028,7 @@
 \n Identifiant de balise : %1$s 
 \n Technologies prises en charge : 
 \n %2$s</string>
-    <string name="unknown_ultralight_message">Balise Mifare Ultralight inconnue</string>
+    <string name="unknown_ultralight_message">Balise MIFARE Ultralight inconnue</string>
     <string name="card_name_emv_long">EMV (Cartes de crédit et de débit)</string>
     <string name="card_reading_emv">Lecture d\'EMV (carte de crédit ou de débit)…</string>
     <plurals name="hsl_valid_days_calendar">
