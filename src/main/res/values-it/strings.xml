@@ -761,7 +761,7 @@
 \n Identificatore del tag: %1$s
 \n Tecnologie supportate:
 \n %2$s</string>
-    <string name="unknown_ultralight_message">Tag Mifare Ultralight sconosciuto</string>
+    <string name="unknown_ultralight_message">Tag MIFARE Ultralight sconosciuto</string>
     <string name="nfc_connection_failed">Connessione NFC a %s non riuscita</string>
     <string name="unknown_date_title">Data sconosciuta</string>
     <string name="card_name_metromoney">Metromoney</string>
@@ -778,7 +778,7 @@
     <string name="venezia_airport_bus_ticket">Biglietto dell\'autobus per l\'aeroporto</string>
     <string name="ios_version">Versione di iOS: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;</string>
     <string name="ios_nfcreader_exception">Eccezione: %s</string>
-    <string name="ios_unknown_mifare">Mifare sconosciuto: %s</string>
+    <string name="ios_unknown_mifare">MIFARE sconosciuto: %s</string>
     <string name="ios_unknown_tag">Tipo di tag sconosciuto: %s</string>
     <string name="rkf_stockholm_7_days">Biglietto di 7 giorni per Stoccolma</string>
     <string name="rkf_stockholm_72_hours">Biglietto di 72 ore per Stoccolma</string>
