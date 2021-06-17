@@ -462,7 +462,7 @@
     <string name="card_name_metromoney">מטרומאני (Metromoney)</string>
     <string name="unknown_date_title">תאריך לא ידוע</string>
     <string name="nfc_connection_failed">חיבור ה־NFC אל %s נכשל</string>
-    <string name="unknown_ultralight_message">תג Mifare Ultralight בלתי ידוע</string>
+    <string name="unknown_ultralight_message">תג MIFARE Ultralight בלתי ידוע</string>
     <string name="unsupported_tag_message">תג זה אינו נתמך ב־Metrodroid נכון לעכשיו.
 \n מזהה תג: %1$s
 \n טכנולוגיות נתמכות:
@@ -1165,7 +1165,7 @@
     <string name="emv_application_currency_exponent">מעריך מטבע היישומון</string>
     <string name="emv_application_currency">מטבע היישומון</string>
     <string name="ios_unknown_tag">סוג התג לא ידוע: %s</string>
-    <string name="ios_unknown_mifare">Mifare לא ידוע: %s</string>
+    <string name="ios_unknown_mifare">MIFARE לא ידוע: %s</string>
     <string name="ios_nfcreader_exception">התקבלה חריגה: %s</string>
     <string name="ios_nfcreader_tap">נא להצמיד את הכרטיס שלך</string>
     <string name="ios_nfcreader_reading">%s נקרא</string>
