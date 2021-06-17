@@ -976,7 +976,7 @@
     <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid. 
 \nИдентификатор тега:%1$s
 \nПоддерживаемые технологии:%2$s</string>
-    <string name="unknown_ultralight_message">Неизвестный тег Mifare Ultralight</string>
+    <string name="unknown_ultralight_message">Неизвестный тег MIFARE Ultralight</string>
     <string name="nfc_connection_failed">NFC подключение к %s не удалось</string>
     <string name="unknown_date_title">Неизвестная дата</string>
     <string name="card_name_emv_long">EMV (Кредитные и дебетовые карты)</string>
@@ -1123,7 +1123,7 @@
     <string name="large_file_yes">Всё равно загрузить (риск сбоя)</string>
     <string name="large_file_no">Отменить (безопасно)</string>
     <string name="large_file_warning">Файл, который вы выбрали, имеет большой размер (%s) и может привести к сбою приложения. Вы хотите продолжить\?</string>
-    <string name="ios_unknown_mifare">Неизвестный Mifare: %s</string>
+    <string name="ios_unknown_mifare">Неизвестный MIFARE: %s</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_light">Светлая</string>
     <plurals name="supported_cards_format">
