@@ -767,7 +767,7 @@
     <string name="ios_nfcreader_connection_error">Error de conexión: %s</string>
     <string name="ios_nfcreader_connecting">Conexión a %s</string>
     <string name="ios_nfcreader_reading">Lectura de %s</string>
-    <string name="ios_unknown_mifare">Mifare desconocido: %s</string>
+    <string name="ios_unknown_mifare">MIFARE desconocido: %s</string>
     <string name="ovc_autocharge_information">Información de autocarga</string>
     <string name="rkf_stockholm_7_days">Boleto de 7 días para Estocolmo</string>
     <string name="rkf_stockholm_72_hours">Boleto de 72 horas para Estocolmo</string>
@@ -1112,7 +1112,7 @@
 \nIdentificador de tarjeta: %1$s
 \nTecnologías soportadas:
 \n%2$s</string>
-    <string name="unknown_ultralight_message">Tarjeta Mifare Ultralight desconocida</string>
+    <string name="unknown_ultralight_message">Tarjeta MIFARE Ultralight desconocida</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, Viaje con saldo</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Viaje con saldo (2-1 Día)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Viaje con saldo (1-2 Día)</string>
