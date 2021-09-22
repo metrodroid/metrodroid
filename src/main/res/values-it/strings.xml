@@ -590,7 +590,7 @@
     <string name="clipper_zone_number">Zona #%s</string>
     <string name="clipper_ticket_type_adult">Adulto</string>
     <string name="clipper_ticket_type_senior">Anziano</string>
-    <string name="clipper_ticket_type_youth">Giovani</string>
+    <string name="clipper_ticket_type_youth">Gioventù</string>
     <string name="clipper_single">Corsa singola (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
     <string name="card_note_clipper">Supporta sia carte Clipper in plastica (ricaricabili) che carta (carte monouso emesse da Golden Gate Ferry e Muni).</string>
     <string name="felica_process_payment_thirdparty">Pagamento (terzi)</string>
@@ -1167,4 +1167,12 @@
     <string name="mrtj_file_purse_balance">Saldo della borsa MRTJ</string>
     <string name="mrtj_file_id">Identità MRTJ</string>
     <string name="mrtj_extra_note">Saldo e informazioni sull\'ultima transazione.</string>
+    <string name="card_name_hayakaken">Hayakaken</string>
+    <string name="card_name_pitapa">PiTaPa</string>
+    <string name="card_name_japan_ic">Giappone</string>
+    <string name="card_name_edy">Edy</string>
+    <string name="location_vladimir">Vladimir</string>
+    <string name="location_nagoya">Nagoya, Giappone</string>
+    <string name="location_fukuoka_prefecture">Fukuoka, Giappone</string>
+    <string name="location_fukuoka_city">Fukuoka, Giappone</string>
 </resources>
