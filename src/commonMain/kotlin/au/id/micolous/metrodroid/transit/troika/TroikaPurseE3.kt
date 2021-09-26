@@ -19,7 +19,7 @@ internal class TroikaPurseE3(val rawData: ImmutableByteArray) : TroikaBlock(
         mLastValidator = rawData.getBitsFromBuffer(128, 16),
         mLastValidationTime = convertDateTime2016(0, rawData.getBitsFromBuffer(144, 23)),
         // 4 bits zero
-        mLastTransfer = rawData.getBitsFromBuffer(171, 7),
+        mTransfers = listOf(rawData.getBitsFromBuffer(171, 7)),
         mLastTransportLeadingCode = rawData.getBitsFromBuffer(178, 2),
         mLastTransportLongCode = rawData.getBitsFromBuffer(180, 8),
         mFareDesc = when (rawData.getBitsFromBuffer(210, 2)) {

@@ -14,7 +14,7 @@ class TroikaLayoutA(val rawData: ImmutableByteArray,
                 // 1 bit unknown
                 mLastValidationTime = convertDateTime2016(validityStart, rawData.getBitsFromBuffer(96, 19)),
                 // 4 bits unknown
-                mLastTransfer = rawData.getBitsFromBuffer(119, 7),
+                mTransfers = listOf(rawData.getBitsFromBuffer(119, 7)),
                 mRemainingTrips = rawData.getBitsFromBuffer(128, 8),
                 mLastValidator = rawData.getBitsFromBuffer(136, 16),
                 mLastTransportLeadingCode = rawData.getBitsFromBuffer(126, 2),

@@ -18,7 +18,6 @@ internal class TroikaPurseE5(val rawData: ImmutableByteArray) : TroikaBlock(
         mLastValidationTime = convertDateTime2019(0, rawData.getBitsFromBuffer(128, 23)),
         mLastValidator = rawData.getBitsFromBuffer(186, 16),
 
-        mLastTransfer = null,
         mLastTransportLeadingCode = null,
         mLastTransportLongCode = null,
         mFareDesc = null,

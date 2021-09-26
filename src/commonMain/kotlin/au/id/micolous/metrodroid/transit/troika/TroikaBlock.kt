@@ -59,7 +59,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                                                /**
                                                 * Last transfer in minutes after validation
                                                 */
-                                               protected val mLastTransfer: Int?,
+                                               protected val mTransfers: List<Int>,
 
                                                /**
                                                 * Text description of last fare.
@@ -102,12 +102,15 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                     ?: (mLastTransportLeadingCode?.shl(8)?.or(mLastTransportLongCode
                             ?: 0))?.toString(16)
             if (mLastValidationTime != null) {
-                if (mLastTransfer != null && mLastTransfer != 0) {
-                    val lastTransfer = mLastValidationTime.plus(Duration.mins(mLastTransfer))
-                    t.add(TroikaTrip(lastTransfer, getTransportType(true), mLastValidator, rawTransport, mFareDesc))
-                    t.add(TroikaTrip(mLastValidationTime, getTransportType(false), null, rawTransport, mFareDesc))
-                } else
-                    t.add(TroikaTrip(mLastValidationTime, getTransportType(true), mLastValidator, rawTransport, mFareDesc))
+                var isLast = true
+                for (transfer in mTransfers.filter { it != 0 }.sortedBy { -it } + listOf(0)) {
+                    val transferTime = mLastValidationTime.plus(Duration.mins(transfer))
+                    if (isLast)
+                        t += TroikaTrip(transferTime, getTransportType(true), mLastValidator, rawTransport, mFareDesc)
+                    else
+                        t += TroikaTrip(transferTime, getTransportType(false), null, rawTransport, mFareDesc)
+                    isLast = false
+                }
             }
 
             lastRefillTime?.let {
@@ -133,7 +136,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                 mValidityStart: Timestamp? = null,
                 mValidityEnd: Timestamp? = null,
                 mRemainingTrips: Int? = null,
-                mLastTransfer: Int? = null,
+                mTransfers: List<Int> = listOf(),
                 mFareDesc: String? = null,
                 mCheckSum: String? = null) : this(
             mSerial = getSerial(rawData),
@@ -149,7 +152,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             mValidityStart = mValidityStart,
             mValidityEnd = mValidityEnd,
             mRemainingTrips = mRemainingTrips,
-            mLastTransfer = mLastTransfer,
+            mTransfers = mTransfers,
             mFareDesc = mFareDesc,
             mCheckSum = mCheckSum
     )

@@ -12,7 +12,7 @@ class TroikaLayoutD(val rawData: ImmutableByteArray) : TroikaBlock(rawData,
         mValidityStart = convertDateTime1992(rawData.getBitsFromBuffer(128, 16)),
         mValidityLengthMinutes = rawData.getBitsFromBuffer(144, 8) * 60 * 24,
         //3 bits unknown
-        mLastTransfer = rawData.getBitsFromBuffer(155, 5) * 5,
+        mTransfers = listOf(rawData.getBitsFromBuffer(155, 5) * 5),
         mLastTransportLeadingCode = rawData.getBitsFromBuffer(160, 2),
         mLastTransportLongCode = rawData.getBitsFromBuffer(251, 2),
         //4 bits unknown
