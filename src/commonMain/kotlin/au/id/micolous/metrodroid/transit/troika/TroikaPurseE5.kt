@@ -15,20 +15,22 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 internal class TroikaPurseE5(val rawData: ImmutableByteArray) : TroikaBlock(
         rawData,
         mExpiryDate = convertDate2019(rawData.getBitsFromBuffer(61, 13)),
+        // 10 bits Ticket Type 2
+        // 84-107: lastRefillTime
+        // 107-117: refillCounter
+        // 117-128: unknown (B)
         mLastValidationTime = convertDateTime2019(0, rawData.getBitsFromBuffer(128, 23)),
+        mTransfers = listOf(rawData.getBitsFromBuffer(151, 7),
+                            rawData.getBitsFromBuffer(158, 7)),
+        // 2 bits unknown
+        // 19 bits balance
         mLastValidator = rawData.getBitsFromBuffer(186, 16),
-
+        // 202-216: unknown (D)
+        // 216-223: tripsOnPurse
+        // 224: unknown (E)
         mLastTransportLeadingCode = null,
         mLastTransportLongCode = null,
         mFareDesc = null,
-//        mLastTransfer = rawData.getBitsFromBuffer(171, 7),
- //       mLastTransportLeadingCode = rawData.getBitsFromBuffer(178, 2),
-   //     mLastTransportLongCode = rawData.getBitsFromBuffer(180, 8),
-     //   mFareDesc = when (rawData.getBitsFromBuffer(210, 2)) {
-       //     1 -> Localizer.localizeString(R.string.troika_fare_single)
-      //      2 -> Localizer.localizeString(R.string.troika_fare_90mins)
-      //      else -> null
-      //  }
         mCheckSum = rawData.getHexString(28, 4)
 ) {
 
@@ -50,15 +52,18 @@ internal class TroikaPurseE5(val rawData: ImmutableByteArray) : TroikaBlock(
 
     override val debug get() = super.debug + listOf(
             ListItem("Ticket Type 2", "0x" + rawData.getBitsFromBuffer(74, 10).toString(16)),
-            ListItem("refillCounter", refillCounter.toString()),
-            ListItem("groundTransactionCounter", groundTransactionCounter.toString()),
             ListItem("B", "0x" + rawData.getBitsFromBuffer(117, 11).toString(16)),
-            ListItem("C", "0x" + rawData.getBitsFromBuffer(151, 16).toString(16)),
             ListItem("D", "0x" + rawData.getBitsFromBuffer(202, 14).toString(16)),
             ListItem("E", "0x" + rawData.getBitsFromBuffer(223, 1).toString(16))
     )
 
-    val refillCounter get() = rawData.getBitsFromBuffer(107, 10)
-    val groundTransactionCounter get() = rawData.getBitsFromBuffer(216, 7)
+    override val info: List<ListItem>
+        get() = super.info.orEmpty() + listOf(
+                ListItem(R.string.refill_counter, refillCounter.toString()),
+                ListItem(R.string.purse_ride_counter, tripsOnPurse.toString())
+        )
+
+    private val refillCounter get() = rawData.getBitsFromBuffer(107, 10)
+    private val tripsOnPurse get() = rawData.getBitsFromBuffer(216, 7)
     val checksum get() = rawData.getHexString(28, 4)
 }
