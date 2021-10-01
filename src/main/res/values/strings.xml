@@ -1737,6 +1737,7 @@
     <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
     <!-- Translators: Druzhinnik is a member of Russian Neighbourhood Watch -->
     <string name="troika_druzhinnik_card">Druzhinnik card</string>
+    <string name="purse_ride_counter">Counter of rides using purse</string>
 
     <!-- Translators: This is a list item header, and under it is a number.
     (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->

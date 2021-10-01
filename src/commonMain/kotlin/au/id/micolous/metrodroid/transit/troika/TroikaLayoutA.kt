@@ -14,13 +14,13 @@ class TroikaLayoutA(val rawData: ImmutableByteArray,
                 // 1 bit unknown
                 mLastValidationTime = convertDateTime2016(validityStart, rawData.getBitsFromBuffer(96, 19)),
                 // 4 bits unknown
-                mLastTransfer = rawData.getBitsFromBuffer(119, 7),
+                mTransfers = listOf(rawData.getBitsFromBuffer(119, 7)),
                 mRemainingTrips = rawData.getBitsFromBuffer(128, 8),
                 mLastValidator = rawData.getBitsFromBuffer(136, 16),
                 mLastTransportLeadingCode = rawData.getBitsFromBuffer(126, 2),
                 mLastTransportLongCode = rawData.getBitsFromBuffer(152, 8),
                 // 32 bits zero
-                // 32 bits checksum
+                mCheckSum = rawData.getHexString(8, 5).substring(1, 4),
                 mValidityEnd = convertDateTime2016(validityStart, rawData.getBitsFromBuffer(76, 19) - 1),
                 mValidityStart = convertDateTime2016(validityStart, 0)
                 // missing: expiry date
