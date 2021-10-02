@@ -6,8 +6,8 @@
     <string name="directions">Tempelkan kartu.</string>
     <string name="reading_card">Membaca kartu…</string>
     <string name="dont_move">Kartu jangan dipindah</string>
-    <string name="advanced_info">Info Tambahan</string>
-    <string name="delete_card">Hapus Kartu</string>
+    <string name="advanced_info">Info tambahan</string>
+    <string name="delete_card">Hapus kartu</string>
     <string name="unknown_card">Kartu tidak dikenal</string>
     <string name="locked_mfc_card">Kartu MIFARE Classic terkunci</string>
     <string name="locked_mfu_card">Kartu MIFARE Ultralight terkunci</string>
@@ -20,11 +20,11 @@
     <string name="history">List Transaksi</string>
     <string name="no_trip_data">Data perjalanan tidak ada. Apakah kartu pernah dipergunakan?</string>
     <string name="import_xml">Impor</string>
-    <string name="import_clipboard">Salin dari Clipboard</string>
-    <string name="import_file">Impor dari File</string>
+    <string name="import_clipboard">Salin dari papan klip</string>
+    <string name="import_file">Impor dari berkas</string>
     <string name="export">Ekspor</string>
-    <string name="export_filename">Nama file Ekspor</string>
-    <string name="export_all">Ekspor Semua</string>
+    <string name="export_filename">Nama berkas yang diekspor</string>
+    <string name="export_all">Ekspor semua</string>
     <string name="about">Tentang</string>
     <string name="preferences">Pengaturan</string>
     <string name="loading">Memuat…</string>
