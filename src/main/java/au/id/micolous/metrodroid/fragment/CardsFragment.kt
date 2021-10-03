@@ -570,17 +570,21 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
             if (identity != null) {
                 textView1.text = identity.name
-                if (label?.isEmpty() == false) {
-                    // This is used for imported cards from mfcdump_to_farebotxml.py
-                    // Used for development and testing. We should always show this.
-                    textView2.text = label
-                } else if (Preferences.hideCardNumbers) {
-                    textView2.text = ""
-                    textView2.visibility = View.GONE
-                    // User doesn't want to show any card numbers.
-                } else {
-                    // User wants to show card numbers (default).
-                    textView2.text = Utils.weakLTR(identity.serialNumber ?: serial)
+                when {
+                    label?.isEmpty() == false -> {
+                        // This is used for imported cards from mfcdump_to_farebotxml.py
+                        // Used for development and testing. We should always show this.
+                        textView2.text = label
+                    }
+                    Preferences.hideCardNumbers -> {
+                        textView2.text = ""
+                        textView2.visibility = View.GONE
+                        // User doesn't want to show any card numbers.
+                    }
+                    else -> {
+                        // User wants to show card numbers (default).
+                        textView2.text = Utils.weakLTR(identity.serialNumber ?: serial)
+                    }
                 }
             } else {
                 textView1.setText(R.string.unknown_card)
