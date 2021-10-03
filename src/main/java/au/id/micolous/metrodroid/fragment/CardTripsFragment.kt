@@ -57,7 +57,7 @@ class CardTripsFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,7 +66,7 @@ class CardTripsFragment : ListFragment() {
         val trips = mTransitData?.prepareTrips().orEmpty()
 
         if (trips.isNotEmpty()) {
-            listAdapter = UseLogListAdapter(activity!!, trips.toTypedArray())
+            listAdapter = UseLogListAdapter(requireActivity(), trips.toTypedArray())
         } else {
             view.findViewById<View>(android.R.id.list).visibility = View.GONE
             view.findViewById<View>(R.id.error_text).visibility = View.VISIBLE

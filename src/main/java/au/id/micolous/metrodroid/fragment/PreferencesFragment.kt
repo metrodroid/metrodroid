@@ -47,14 +47,14 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
     private var isLaunchFromBgEnabled: Boolean
         get() {
-            val componentName = ComponentName(context!!, BackgroundTagActivity::class.java)
-            val packageManager = context!!.packageManager
+            val componentName = ComponentName(requireContext(), BackgroundTagActivity::class.java)
+            val packageManager = requireContext().packageManager
             val componentEnabledSetting = packageManager.getComponentEnabledSetting(componentName)
             return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
         }
         set(enabled) {
-            val componentName = ComponentName(context!!, BackgroundTagActivity::class.java)
-            val packageManager = context!!.packageManager
+            val componentName = ComponentName(requireContext(), BackgroundTagActivity::class.java)
+            val packageManager = requireContext().packageManager
             val newState = if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             packageManager.setComponentEnabledSetting(componentName, newState, PackageManager.DONT_KILL_APP)
         }

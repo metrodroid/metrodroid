@@ -77,7 +77,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         searchText = query
         Log.d(TAG, "search submit $query")
-        (view!!.findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
+        (requireView().findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
         return true
 
     }
@@ -85,13 +85,13 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         searchText = newText
         Log.d(TAG, "search change $newText")
-        (view!!.findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
+        (requireView().findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).filter(searchText)
         return true
     }
 
     private val mLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
         override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor> {
-            return CursorLoader(activity!!, CardProvider.CONTENT_URI_CARD,
+            return CursorLoader(requireActivity(), CardProvider.CONTENT_URI_CARD,
                     CardDBHelper.PROJECTION,
                     null, null,
                     "${CardsTableColumns.SCANNED_AT} DESC, ${CardsTableColumns._ID} DESC")
@@ -119,7 +119,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             }
 
             Log.d(TAG, "creating adapter " + cards.size)
-            listAdapter = CardsAdapter(activity!!, scans, cards, reverseCards)
+            listAdapter = CardsAdapter(requireActivity(), scans, cards, reverseCards)
             setListShown(true)
             setEmptyText(getString(R.string.no_scanned_cards))
         }
@@ -199,7 +199,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         if (item.itemId == R.id.delete_card) {
             val id = (item.menuInfo as ExpandableListView.ExpandableListContextMenuInfo).id
             val uri = ContentUris.withAppendedId(CardProvider.CONTENT_URI_CARD, id)
-            activity!!.contentResolver.delete(uri, null, null)
+            requireActivity().contentResolver.delete(uri, null, null)
             return true
         }
         return false
@@ -223,11 +223,11 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                             val ci = d.getItemAt(0)
                             val xml = ci.coerceToText(activity).toString()
 
-                            val uris = ExportHelper.importCards(xml, XmlOrJsonCardFormat(), activity!!)
+                            val uris = ExportHelper.importCards(xml, XmlOrJsonCardFormat(), requireActivity())
 
                             updateListView()
                             val it = uris.iterator()
-                            onCardsImported(activity!!, uris.size, if (it.hasNext()) it.next() else null)
+                            onCardsImported(requireActivity(), uris.size, if (it.hasNext()) it.next() else null)
                         }
                     }
                     return true
@@ -253,12 +253,12 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 }
 
                 R.id.share_xml -> {
-                    ShareTask(activity!!).execute()
+                    ShareTask(requireActivity()).execute()
                     return true
                 }
 
                 R.id.deduplicate_cards -> {
-                    DedupTask(activity!!).execute()
+                    DedupTask(requireActivity()).execute()
                     return true
                 }
 
@@ -272,14 +272,14 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                     } else {
                         @Suppress("DEPRECATION")
                         val file = File(Environment.getExternalStorageDirectory().toString() + "/" + STD_EXPORT_FILENAME)
-                        ExportHelper.exportCardsZip(file.outputStream(), activity!!)
+                        ExportHelper.exportCardsZip(file.outputStream(), requireActivity())
                         Toast.makeText(activity, R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show()
                     }
                     return true
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity!!, ex)
+            Utils.showError(requireActivity(), ex)
         }
 
         return false
@@ -388,7 +388,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
                                                                private val mCardImporter: CardMultiImporter,
                                                                val uri: Uri) : BetterAsyncTask<Pair<String?, Collection<Uri>?>?>(
-            cardsFragment.activity!!) {
+            cardsFragment.requireActivity()) {
         private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
 
         open fun verifyStream(stream: InputStream): InputStream = stream
@@ -426,7 +426,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             if (err == null && uris != null) {
                 cf.updateListView()
                 val it = uris.iterator()
-                onCardsImported(cf.activity!!, uris.size, if (it.hasNext()) it.next() else null)
+                onCardsImported(cf.requireActivity(), uris.size, if (it.hasNext()) it.next() else null)
                 return
             }
             AlertDialog.Builder(cf.activity)
@@ -496,18 +496,18 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                     REQUEST_SAVE_FILE -> {
                         uri = data?.data!!
                         Log.d(TAG, "REQUEST_SAVE_FILE")
-                        SaveTask(activity!!, uri).execute()
+                        SaveTask(requireActivity(), uri).execute()
                     }
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity!!, ex)
+            Utils.showError(requireActivity(), ex)
         }
 
     }
 
     private fun updateListView() {
-        (view!!.findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).notifyDataSetChanged()
+        (requireView().findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).notifyDataSetChanged()
     }
 
     private class CardsAdapter internal constructor(ctxt: Context,

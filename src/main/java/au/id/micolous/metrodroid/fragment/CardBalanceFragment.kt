@@ -42,7 +42,7 @@ class CardBalanceFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class CardBalanceFragment : ListFragment() {
         val subscriptions = mTransitData!!.subscriptions
         if (subscriptions != null)
             combined.addAll(subscriptions)
-        listAdapter = BalancesAdapter(activity!!, combined)
+        listAdapter = BalancesAdapter(requireActivity(), combined)
     }
 
     private inner class BalancesAdapter internal constructor(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
@@ -236,7 +236,7 @@ class CardBalanceFragment : ListFragment() {
             tv.visibility = View.GONE
             lv.visibility = View.INVISIBLE
 
-            val a = ListItemAdapter(activity!!, infos)
+            val a = ListItemAdapter(requireActivity(), infos)
             lv.adapter = a
 
             // Calculate correct height

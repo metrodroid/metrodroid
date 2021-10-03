@@ -100,10 +100,10 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                         .setTitle(R.string.delete_key_confirm_title)
                         .setMessage(deleteMessage)
                         .setPositiveButton(R.string.delete) { dialog, _ ->
-                            object : BetterAsyncTask<Void?>(activity!!, false, false) {
+                            object : BetterAsyncTask<Void?>(requireActivity(), false, false) {
                                 override fun doInBackground(): Void? {
                                     val uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId.toLong())
-                                    activity!!.contentResolver.delete(uri, null, null)
+                                    requireActivity().contentResolver.delete(uri, null, null)
                                     return null
                                 }
 
@@ -180,7 +180,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         super.onViewCreated(view, savedInstanceState)
         setEmptyText(getString(R.string.no_keys))
         listView.onItemLongClickListener = this
-        listAdapter = KeysAdapter(activity!!)
+        listAdapter = KeysAdapter(requireActivity())
         loaderManager.initLoader(0, null, mLoaderCallbacks)
     }
 
@@ -188,7 +188,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         val cursor = listAdapter?.getItem(position) as Cursor
 
         mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
-        mActionMode = activity!!.startActionMode(mActionModeCallback)
+        mActionMode = requireActivity().startActionMode(mActionModeCallback)
 
         return true
     }
@@ -215,18 +215,18 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             if (resultCode == Activity.RESULT_OK && uri != null) {
                 when (requestCode) {
                     REQUEST_SELECT_FILE -> {
-                        val type = activity!!.contentResolver.getType(uri)
+                        val type = requireActivity().contentResolver.getType(uri)
 
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = $type")
 
-                        val f: KeyFormat = Utils.detectKeyFormat(activity!!, uri)
+                        val f: KeyFormat = Utils.detectKeyFormat(requireActivity(), uri)
 
                         Log.d(TAG, "Detected file format: " + f.name)
 
                         when (f) {
                             KeyFormat.JSON_MFC_STATIC -> {
                                 // Static keys can't be prompted
-                                @StringRes val err = importKeysFromStaticJSON(activity!!, uri)
+                                @StringRes val err = importKeysFromStaticJSON(requireActivity(), uri)
                                 if (err != 0) {
                                     Toast.makeText(activity, err, Toast.LENGTH_SHORT).show()
                                 }
@@ -241,7 +241,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     REQUEST_SAVE_FILE -> {
                         Log.d(TAG, "REQUEST_SAVE_FILE")
 
-                        object : BetterAsyncTask<Void?>(activity!!, false, false) {
+                        object : BetterAsyncTask<Void?>(requireActivity(), false, false) {
                             override fun doInBackground(): Void? {
                                 val ctxt = MetrodroidApplication.instance
                                 val os = ctxt.contentResolver.openOutputStream(uri)!!
@@ -264,7 +264,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                 }
             }
         } catch (ex: Exception) {
-            Utils.showError(activity!!, ex)
+            Utils.showError(requireActivity(), ex)
         }
 
     }
