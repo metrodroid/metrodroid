@@ -39,8 +39,8 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
         get() = if (!isZapping || counter == null) null else TransitCurrency.EUR(counter)
 
     private val isZapping: Boolean
-        get() = parsed.getIntOrZero(En1545Subscription.CONTRACT_TARIFF) == LisboaVivaLookup.ZAPPING_TARIFF &&
-                parsed.getIntOrZero(En1545Subscription.CONTRACT_PROVIDER) == LisboaVivaLookup.INTERAGENCY31_AGENCY
+        get() = parsed.getIntOrZero(CONTRACT_TARIFF) == LisboaVivaLookup.ZAPPING_TARIFF &&
+                parsed.getIntOrZero(CONTRACT_PROVIDER) == LisboaVivaLookup.INTERAGENCY31_AGENCY
 
     override val lookup: En1545Lookup
         get() = LisboaVivaLookup
@@ -91,16 +91,16 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
         private const val CONTRACT_PERIOD_UNITS = "ContractPeriodUnits"
         private const val CONTRACT_PERIOD = "ContractPeriod"
         private val SUB_FIELDS = En1545Container(
-                En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 7),
-                En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 16),
-                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 2),
-                En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
-                En1545FixedInteger(En1545Subscription.CONTRACT_SALE_AGENT, 5),
-                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_B, 19),
+                En1545FixedInteger(CONTRACT_PROVIDER, 7),
+                En1545FixedInteger(CONTRACT_TARIFF, 16),
+                En1545FixedInteger(CONTRACT_UNKNOWN_A, 2),
+                En1545FixedInteger.date(CONTRACT_START),
+                En1545FixedInteger(CONTRACT_SALE_AGENT, 5),
+                En1545FixedInteger(CONTRACT_UNKNOWN_B, 19),
                 En1545FixedInteger(CONTRACT_PERIOD_UNITS, 16),
-                En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
+                En1545FixedInteger.date(CONTRACT_END),
                 En1545FixedInteger(CONTRACT_PERIOD, 7),
-                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_C, 38)
+                En1545FixedHex(CONTRACT_UNKNOWN_C, 38)
         )
     }
 }

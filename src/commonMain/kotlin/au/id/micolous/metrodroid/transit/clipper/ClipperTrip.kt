@@ -79,19 +79,19 @@ class ClipperTrip (private val mTimestamp: Long,
     override val endStation: Station?
         get() = ClipperData.getStation(mAgency, mTo, true)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mTransportCode) {
             0x62 -> {
                 when (mAgency) {
-                    ClipperData.AGENCY_BAY_FERRY, ClipperData.AGENCY_GG_FERRY -> Trip.Mode.FERRY
-                    ClipperData.AGENCY_CALTRAIN, ClipperData.AGENCY_SMART -> Trip.Mode.TRAIN
-                    else -> Trip.Mode.TRAM
+                    ClipperData.AGENCY_BAY_FERRY, ClipperData.AGENCY_GG_FERRY -> Mode.FERRY
+                    ClipperData.AGENCY_CALTRAIN, ClipperData.AGENCY_SMART -> Mode.TRAIN
+                    else -> Mode.TRAM
                 }
             }
-            0x6f -> Trip.Mode.METRO
-            0x61, 0x75 -> Trip.Mode.BUS
-            0x73 -> Trip.Mode.FERRY
-            else -> Trip.Mode.OTHER
+            0x6f -> Mode.METRO
+            0x61, 0x75 -> Mode.BUS
+            0x73 -> Mode.FERRY
+            else -> Mode.OTHER
         }
 
     internal constructor(useData: ImmutableByteArray): this(

@@ -394,7 +394,7 @@ abstract class Subscription : Parcelable {
                 subscriptionName = subscriptionName,
                 validity = formatValidity(),
                 remainingTrips = formatRemainingTrips(),
-                info = Subscription.mergeInfo(this),
+                info = mergeInfo(this),
                 subscriptionState = subscriptionState,
                 remainingDayCount = remainingDayCount,
                 passengerCount = passengerCount

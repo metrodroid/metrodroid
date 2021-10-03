@@ -37,7 +37,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
     override val cardName: String
         get() = NAME
 
-    private constructor(card: CalypsoApplication) : this(Calypso1545TransitData.parse(
+    private constructor(card: CalypsoApplication) : this(parse(
             card, ticketEnvFields, contractListFields, getSerial(card),
             { data, counter, _, _ -> if (counter == null) null else OpusSubscription(data, counter) },
             { data -> OpusTransaction(data) }, null,
@@ -53,16 +53,16 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
 
         private val contractListFields = En1545Repeat(4,
                 En1545Bitmap(
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_PROVIDER, 8),
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_TARIFF, 16),
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_UNKNOWN_A, 4),
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_POINTER, 5)
+                        En1545FixedInteger(CONTRACTS_PROVIDER, 8),
+                        En1545FixedInteger(CONTRACTS_TARIFF, 16),
+                        En1545FixedInteger(CONTRACTS_UNKNOWN_A, 4),
+                        En1545FixedInteger(CONTRACTS_POINTER, 5)
                 )
         )
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.opus_card,
-                name = OpusTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_quebec,
                 cardType = CardType.ISO7816,
                 region = TransitRegion.CANADA,
@@ -72,14 +72,14 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
                 IntercodeTransitData.TICKET_ENV_FIELDS,
                 En1545Bitmap(
                         En1545Container(
-                                En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_A, 3),
-                                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
-                                En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_B, 13),
-                                En1545FixedInteger.date(En1545TransitData.HOLDER_PROFILE),
-                                En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_C, 8)
+                                En1545FixedInteger(HOLDER_UNKNOWN_A, 3),
+                                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
+                                En1545FixedInteger(HOLDER_UNKNOWN_B, 13),
+                                En1545FixedInteger.date(HOLDER_PROFILE),
+                                En1545FixedInteger(HOLDER_UNKNOWN_C, 8)
                         ),
                         // Possibly part of HolderUnknownB or HolderUnknownC
-                        En1545FixedInteger(En1545TransitData.HOLDER_UNKNOWN_D, 8)
+                        En1545FixedInteger(HOLDER_UNKNOWN_D, 8)
                 )
         )
 

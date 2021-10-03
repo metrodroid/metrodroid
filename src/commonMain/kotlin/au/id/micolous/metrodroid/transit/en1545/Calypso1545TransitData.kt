@@ -136,7 +136,7 @@ abstract class Calypso1545TransitData constructor (
                 contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST)
                         ?.getRecord(1) ?: ImmutableByteArray.empty(), contractListFields)
                 for (i in 0..15) {
-                    val ptr = contractList.getInt(En1545TransitData.CONTRACTS_POINTER, i)
+                    val ptr = contractList.getInt(CONTRACTS_POINTER, i)
                             ?: continue
                     if (ptr == 0)
                         continue

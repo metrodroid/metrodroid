@@ -56,13 +56,13 @@ internal object ClipperData {
         if (s != null)
             return s
 
-        if (agency == ClipperData.AGENCY_GGT
-                || agency == ClipperData.AGENCY_CALTRAIN
-                || agency == ClipperData.AGENCY_GG_FERRY
-                || agency == ClipperData.AGENCY_SMART) {
+        if (agency == AGENCY_GGT
+                || agency == AGENCY_CALTRAIN
+                || agency == AGENCY_GG_FERRY
+                || agency == AGENCY_SMART) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Localizer.localizeString(R.string.clipper_end_of_line))
-            if (agency != ClipperData.AGENCY_GG_FERRY)
+            if (agency != AGENCY_GG_FERRY)
                 return Station.nameOnly(Localizer.localizeString(R.string.clipper_zone_number, stationId.toString()))
         }
 

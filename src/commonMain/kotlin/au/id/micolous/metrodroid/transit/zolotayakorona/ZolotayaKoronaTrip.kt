@@ -62,7 +62,7 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
         return TransitCurrency.RUB(estimatedFare ?: return null)
     }
 
-    override val mode get() = Trip.Mode.BUS
+    override val mode get() = Mode.BUS
 
     override fun getRawFields(level: TransitData.RawLevel): String? = "A=${mA.hexString}/B=${mB.hexString}/C=${mC.hexString}" +
             if (level == TransitData.RawLevel.ALL) "/trackNumber=$mTrackNumber/previousBalance=$mPreviousBalance" else ""

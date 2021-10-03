@@ -35,7 +35,7 @@ internal class ObfuscatedTrip (
         override val endTimestamp: Timestamp?,
         override val routeName: FormattedString?,
         override val startStation: Station?,
-        override val mode: Trip.Mode,
+        override val mode: Mode,
         override val endStation: Station?,
         override val fare: TransitCurrency?,
         override val humanReadableRouteID: String?,

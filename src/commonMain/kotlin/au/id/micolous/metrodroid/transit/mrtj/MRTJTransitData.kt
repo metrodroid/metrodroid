@@ -87,7 +87,7 @@ class MRTJTransitData(
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.mrtj_card,
-                name = MRTJTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_jakarta,
                 cardType = CardType.FeliCa,
                 region = TransitRegion.INDONESIA,

@@ -21,8 +21,8 @@ internal class PodorozhnikTopup (private val mTimestamp: Int,
     override val fare: TransitCurrency?
         get() = TransitCurrency.RUB(-mFare)
 
-    override val mode: Trip.Mode
-        get() = Trip.Mode.TICKET_MACHINE
+    override val mode: Mode
+        get() = Mode.TICKET_MACHINE
 
     override val machineID: String?
         get() = mTopupMachine.toString()

@@ -42,7 +42,7 @@ class CompassUltralightTransitData (override val capsule: NextfareUltralightTran
 
     override fun makeCurrency(value: Int) = TransitCurrency.CAD(value)
 
-    private constructor(card: UltralightCard) : this(NextfareUltralightTransitData.parse(card) {
+    private constructor(card: UltralightCard) : this(parse(card) {
         raw, baseDate -> CompassUltralightTransaction(raw, baseDate) })
 
     override fun getProductName(productCode: Int): String? = productCodes[productCode]?.let { Localizer.localizeString(it) }

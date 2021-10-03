@@ -31,10 +31,10 @@ data class OVChipSubscription internal constructor(override val parsed: En1545Pa
                                                    private val mType1: Int,
                                                    private val mUsed: Int) : En1545Subscription() {
 
-    override val subscriptionState get(): Subscription.SubscriptionState =
+    override val subscriptionState get(): SubscriptionState =
             if (mType1 != 0) {
-                if (mUsed != 0) Subscription.SubscriptionState.USED else Subscription.SubscriptionState.STARTED
-            } else Subscription.SubscriptionState.INACTIVE
+                if (mUsed != 0) SubscriptionState.USED else SubscriptionState.STARTED
+            } else SubscriptionState.INACTIVE
 
     override val lookup get() = OvcLookup
 
@@ -46,11 +46,11 @@ data class OVChipSubscription internal constructor(override val parsed: En1545Pa
         fun fields(reversed: Boolean = false) = En1545Container(
                 En1545Bitmap(
                         neverSeenField(1),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 16),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 16),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_SERIAL_NUMBER, 32),
+                        En1545FixedInteger(CONTRACT_PROVIDER, 16),
+                        En1545FixedInteger(CONTRACT_TARIFF, 16),
+                        En1545FixedInteger(CONTRACT_SERIAL_NUMBER, 32),
                         neverSeenField(5),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 10),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_A, 10),
                         neverSeenField(7),
                         neverSeenField(8),
                         neverSeenField(9),
@@ -59,19 +59,19 @@ data class OVChipSubscription internal constructor(override val parsed: En1545Pa
                         neverSeenField(12),
                         neverSeenField(13),
                         En1545Bitmap(
-                                En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
-                                En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_START),
-                                En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
-                                En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_END),
-                                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_C, 53),
+                                En1545FixedInteger.date(CONTRACT_START),
+                                En1545FixedInteger.timeLocal(CONTRACT_START),
+                                En1545FixedInteger.date(CONTRACT_END),
+                                En1545FixedInteger.timeLocal(CONTRACT_END),
+                                En1545FixedHex(CONTRACT_UNKNOWN_C, 53),
                                 En1545FixedInteger("NeverSeenB", 8),
                                 En1545FixedInteger("NeverSeenC", 8),
                                 En1545FixedInteger("NeverSeenD", 8),
                                 En1545FixedInteger("NeverSeenE", 8),
                                 reversed = reversed
                         ),
-                        En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_D, 40),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 24),
+                        En1545FixedHex(CONTRACT_UNKNOWN_D, 40),
+                        En1545FixedInteger(CONTRACT_SALE_DEVICE, 24),
                         neverSeenField(16),
                         neverSeenField(17),
                         neverSeenField(18),

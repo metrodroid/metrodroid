@@ -36,13 +36,13 @@ internal class BilheteUnicoSPFirstTap (private val mDay: Int,
     override val fare: TransitCurrency?
         get() = null
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             when (mLine shr 5) {
-                1 -> return Trip.Mode.BUS
-                2 -> return Trip.Mode.TRAM
+                1 -> return Mode.BUS
+                2 -> return Mode.TRAM
             }
-            return Trip.Mode.OTHER
+            return Mode.OTHER
         }
 
     override val routeName: FormattedString?

@@ -29,7 +29,7 @@ import android.text.style.*
 import au.id.micolous.metrodroid.ui.HiddenSpan
 import java.util.Locale
 
-actual class FormattedString (val spanned: android.text.Spanned): Parcelable {
+actual class FormattedString (val spanned: Spanned): Parcelable {
     actual val unformatted: String
         get() = spanned.toString()
     actual constructor(input: String): this(SpannableString(input))

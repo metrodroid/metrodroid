@@ -35,6 +35,6 @@ internal class BilheteUnicoSPRefill (private val mDay: Int,
     override val fare: TransitCurrency?
         get() = TransitCurrency.BRL(-mAmount)
 
-    override val mode: Trip.Mode
-        get() = Trip.Mode.TICKET_MACHINE
+    override val mode: Mode
+        get() = Mode.TICKET_MACHINE
 }

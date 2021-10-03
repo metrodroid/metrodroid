@@ -63,7 +63,7 @@ data class ChinaCard(
 
         val FACTORY: ISO7816ApplicationFactory = object : ISO7816ApplicationFactory {
             override val typeMap: Map<String, KSerializer<out ISO7816Application>>
-                get() = mapOf(TYPE to ChinaCard.serializer() )
+                get() = mapOf(TYPE to serializer() )
             override val applicationNames: Collection<ImmutableByteArray>
                 get() = ChinaRegistry.allFactories.flatMap { it.appNames }
 

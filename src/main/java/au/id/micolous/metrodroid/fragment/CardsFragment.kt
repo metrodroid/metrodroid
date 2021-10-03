@@ -195,7 +195,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         requireActivity().menuInflater.inflate(R.menu.card_context_menu, menu)
     }
 
-    override fun onContextItemSelected(item: android.view.MenuItem): Boolean {
+    override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_card) {
             val id = (item.menuInfo as ExpandableListView.ExpandableListContextMenuInfo).id
             val uri = ContentUris.withAppendedId(CardProvider.CONTENT_URI_CARD, id)

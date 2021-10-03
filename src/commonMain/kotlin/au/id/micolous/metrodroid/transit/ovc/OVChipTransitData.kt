@@ -56,7 +56,7 @@ data class OVChipTransitData(
     public override val balance get() =
             TransitBalanceStored(TransitCurrency.EUR(mCredit),
                     Localizer.localizeString(if (mType == 2) R.string.card_type_personal else R.string.card_type_anonymous),
-                    OVChipTransitData.convertDate(mExpdate))
+                    convertDate(mExpdate))
 
     override val serialNumber get(): String? = null
 
@@ -103,13 +103,13 @@ data class OVChipTransitData(
                     card[if (index.recentInfoSlot) 23 else 22].readBlocks(0, 3),
                     En1545Container(
                             En1545FixedHex("EnvUnknown1", 48),
-                            En1545FixedInteger(En1545TransitData.ENV_APPLICATION_ISSUER_ID, 5), // Could be 4 bits though
-                            En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
+                            En1545FixedInteger(ENV_APPLICATION_ISSUER_ID, 5), // Could be 4 bits though
+                            En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
                             En1545FixedHex("EnvUnknown2", 43),
                             En1545Bitmap(
                                     En1545FixedHex("NeverSeen1", 8),
                                     En1545Container(
-                                            En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
+                                            En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
                                             En1545FixedHex("EnvUnknown3", 32),
                                             En1545FixedInteger(AUTOCHARGE_ACTIVE, 3),
                                             En1545FixedInteger(AUTOCHARGE_LIMIT, 16),

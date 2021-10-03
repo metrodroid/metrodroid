@@ -55,8 +55,8 @@ data class TrimetHopTransitData(private val mSerial: Int?,
         get() = mIssueDate?.let { listOf(ListItem(R.string.issue_date,
                 TimestampFormatter.dateTimeFormat(parseTime(mIssueDate)))) }
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.NOT_STORED
+    override val reason: Reason
+        get() = Reason.NOT_STORED
 
     override val cardName get() = NAME
 

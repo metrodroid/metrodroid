@@ -41,7 +41,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
     override val serialNumber get() = formatSerial(mSerial)
 
     override val reason
-        get() = SerialOnlyTransitData.Reason.NOT_STORED
+        get() = Reason.NOT_STORED
 
     override val cardName get() = NAME
 

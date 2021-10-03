@@ -41,10 +41,10 @@ data class RkfTicket(override val parsed: En1545Parsed, override val lookup: Rkf
                     STATUS_FIELD)
             0x96 -> En1545Container(
                     ID_FIELD, // verified
-                    En1545FixedInteger.date(En1545Subscription.CONTRACT_START), // verified
-                    En1545FixedInteger.timePacked16(En1545Subscription.CONTRACT_START), // verified
-                    En1545FixedInteger.date(En1545Subscription.CONTRACT_END), // verified
-                    En1545FixedInteger.timePacked16(En1545Subscription.CONTRACT_END), // verified
+                    En1545FixedInteger.date(CONTRACT_START), // verified
+                    En1545FixedInteger.timePacked16(CONTRACT_START), // verified
+                    En1545FixedInteger.date(CONTRACT_END), // verified
+                    En1545FixedInteger.timePacked16(CONTRACT_END), // verified
                     En1545FixedInteger(CONTRACT_DURATION, 8),  // verified, days
                     En1545FixedInteger.date("Limit"),
                     En1545FixedInteger("PeriodJourneys", 8),

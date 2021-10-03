@@ -42,14 +42,14 @@ class NewShenzhenTrip (override val capsule: ChinaTripCapsule): ChinaTripAbstrac
             else -> null
         }
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             if (isTopup)
-                return Trip.Mode.TICKET_MACHINE
+                return Mode.TICKET_MACHINE
             return when (transport) {
-                SZT_METRO -> Trip.Mode.METRO
-                SZT_BUS -> Trip.Mode.BUS
-                else -> Trip.Mode.OTHER
+                SZT_METRO -> Mode.METRO
+                SZT_BUS -> Mode.BUS
+                else -> Mode.OTHER
             }
         }
 

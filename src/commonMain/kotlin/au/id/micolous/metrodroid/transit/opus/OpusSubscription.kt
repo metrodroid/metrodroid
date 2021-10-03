@@ -30,28 +30,28 @@ internal data class OpusSubscription(override val parsed: En1545Parsed,
         get() = OpusLookup
 
     override val remainingTripCount: Int?
-        get() = if (parsed.getIntOrZero(En1545FixedInteger.dateName(En1545Subscription.CONTRACT_END)) == 0)
+        get() = if (parsed.getIntOrZero(En1545FixedInteger.dateName(CONTRACT_END)) == 0)
             ctr else null
 
     constructor(data: ImmutableByteArray, ctr: Int?) : this(En1545Parser.parse(data, FIELDS), ctr)
 
     companion object {
         private val FIELDS = En1545Container(
-                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 3),
+                En1545FixedInteger(CONTRACT_UNKNOWN_A, 3),
                 En1545Bitmap(
-                        En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 8),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 16),
+                        En1545FixedInteger(CONTRACT_PROVIDER, 8),
+                        En1545FixedInteger(CONTRACT_TARIFF, 16),
                         En1545Bitmap(
-                                En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
-                                En1545FixedInteger.date(En1545Subscription.CONTRACT_END)
+                                En1545FixedInteger.date(CONTRACT_START),
+                                En1545FixedInteger.date(CONTRACT_END)
                         ),
                         En1545Container(
-                                En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_B, 17),
-                                En1545FixedInteger.date(En1545Subscription.CONTRACT_SALE),
-                                En1545FixedInteger.timeLocal(En1545Subscription.CONTRACT_SALE),
-                                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_C, 36),
-                                En1545FixedInteger(En1545Subscription.CONTRACT_STATUS, 8),
-                                En1545FixedHex(En1545Subscription.CONTRACT_UNKNOWN_D, 36)
+                                En1545FixedInteger(CONTRACT_UNKNOWN_B, 17),
+                                En1545FixedInteger.date(CONTRACT_SALE),
+                                En1545FixedInteger.timeLocal(CONTRACT_SALE),
+                                En1545FixedHex(CONTRACT_UNKNOWN_C, 36),
+                                En1545FixedInteger(CONTRACT_STATUS, 8),
+                                En1545FixedHex(CONTRACT_UNKNOWN_D, 36)
                         )
                 )
         )

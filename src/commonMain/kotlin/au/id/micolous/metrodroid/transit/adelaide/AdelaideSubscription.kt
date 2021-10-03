@@ -33,14 +33,14 @@ class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscripti
 
     override val info: List<ListItem>?
         get() = super.info.orEmpty() +
-                parsed.getInfo(setOf(En1545Subscription.CONTRACT_TARIFF,
-                        En1545FixedInteger.dateName(En1545Subscription.CONTRACT_SALE),
-                        En1545Subscription.CONTRACT_SALE_DEVICE,
-                        En1545Subscription.CONTRACT_PRICE_AMOUNT,
-                        En1545Subscription.CONTRACT_SALE_AGENT,
-                        En1545Subscription.CONTRACT_SERIAL_NUMBER,
-                        En1545Subscription.CONTRACT_PROVIDER,
-                        En1545Subscription.CONTRACT_STATUS)
+                parsed.getInfo(setOf(CONTRACT_TARIFF,
+                        En1545FixedInteger.dateName(CONTRACT_SALE),
+                        CONTRACT_SALE_DEVICE,
+                        CONTRACT_PRICE_AMOUNT,
+                        CONTRACT_SALE_AGENT,
+                        CONTRACT_SERIAL_NUMBER,
+                        CONTRACT_PROVIDER,
+                        CONTRACT_STATUS)
                 )
 
     val isPurse: Boolean

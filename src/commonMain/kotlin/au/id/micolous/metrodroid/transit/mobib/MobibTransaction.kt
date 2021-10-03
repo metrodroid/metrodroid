@@ -30,9 +30,9 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 internal class MobibTransaction(override val parsed: En1545Parsed) : En1545Transaction() {
     override val station: Station?
         get() {
-            val agency = parsed.getIntOrZero(En1545Transaction.EVENT_SERVICE_PROVIDER)
+            val agency = parsed.getIntOrZero(EVENT_SERVICE_PROVIDER)
             return if (agency == MobibLookup.BUS || agency == MobibLookup.TRAM) StationTableReader.getStation(MOBIB_STR,
-                    parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER) shl 13
+                    parsed.getIntOrZero(EVENT_ROUTE_NUMBER) shl 13
                             or parsed.getIntOrZero(EVENT_LOCATION_ID_BUS) or (agency shl 22)) else super.station
         }
 

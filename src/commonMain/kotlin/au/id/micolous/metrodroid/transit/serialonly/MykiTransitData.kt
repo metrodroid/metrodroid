@@ -43,8 +43,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val cardName get() = NAME
 
@@ -63,7 +63,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.myki_card,
-                name = MykiTransitData.NAME,
+                name = NAME,
                 cardType = CardType.MifareDesfire,
                 locationId = R.string.location_victoria_australia,
                 region = TransitRegion.AUSTRALIA,

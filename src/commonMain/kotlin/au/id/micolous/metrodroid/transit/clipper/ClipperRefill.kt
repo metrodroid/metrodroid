@@ -33,8 +33,8 @@ class ClipperRefill (override val startTimestamp: TimestampFull?,
     override val fare: TransitCurrency?
         get() = TransitCurrency.USD(-mAmount)
 
-    override val mode: Trip.Mode
-        get() = Trip.Mode.TICKET_MACHINE
+    override val mode: Mode
+        get() = Mode.TICKET_MACHINE
 
     override fun getAgencyName(isShort: Boolean) =
             ClipperData.getAgencyName(mAgency, isShort)

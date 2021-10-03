@@ -37,8 +37,8 @@ import au.id.micolous.metrodroid.util.NumberUtils
 @Parcelize
 data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData() {
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val serialNumber get() = formatSerial(mSerial)
 

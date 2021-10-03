@@ -85,8 +85,8 @@ object TartuTransitFactory : ClassicCardTransitFactory {
         override val extraInfo: List<ListItem>
             get() = listOf(ListItem(R.string.full_serial_number, mSerial))
 
-        override val reason: SerialOnlyTransitData.Reason
-            get() = SerialOnlyTransitData.Reason.NOT_STORED
+        override val reason: Reason
+            get() = Reason.NOT_STORED
 
         override val serialNumber get() = mSerial.substring(8)
 

@@ -44,10 +44,10 @@ enum class KeyFormat {
     JSON_MFC_STATIC;
 
     val isJSON: Boolean
-        get() = (this == KeyFormat.JSON
-                || this == KeyFormat.JSON_MFC
-                || this == KeyFormat.JSON_MFC_NO_UID
-                || this == KeyFormat.JSON_MFC_STATIC)
+        get() = (this == JSON
+                || this == JSON_MFC
+                || this == JSON_MFC_NO_UID
+                || this == JSON_MFC_STATIC)
 
     companion object {
         const val TAG = "KeyFormat"
@@ -60,7 +60,7 @@ enum class KeyFormat {
                     length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2
         }
 
-        private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
+        private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) RAW_MFC else UNKNOWN
 
         @UseExperimental(ExperimentalStdlibApi::class)
         fun detectKeyFormat(data: ByteArray): KeyFormat {
@@ -87,7 +87,7 @@ enum class KeyFormat {
 
                 // This isn't a JSON file.
                 Log.d(TAG, "couldn't find ending }")
-                return if (isRawMifareClassicKeyFileLength(data.size)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
+                return if (isRawMifareClassicKeyFileLength(data.size)) RAW_MFC else UNKNOWN
             }
 
             // Now see if it actually parses.

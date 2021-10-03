@@ -40,13 +40,13 @@ class CharlieCardTrip (private val mFare: Int,
     override val fare: TransitCurrency?
         get() = TransitCurrency.USD(mFare)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             when (mValidator and 7) {
-                0 -> return Trip.Mode.TICKET_MACHINE
-                1 -> return Trip.Mode.BUS
+                0 -> return Mode.TICKET_MACHINE
+                1 -> return Mode.BUS
             }
-            return Trip.Mode.OTHER
+            return Mode.OTHER
         }
 
     constructor(data: ImmutableByteArray, off: Int): this(

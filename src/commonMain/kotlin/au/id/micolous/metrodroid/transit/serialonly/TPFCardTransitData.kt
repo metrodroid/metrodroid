@@ -31,8 +31,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 data class TPFCardTransitData (private val mSerial: ImmutableByteArray): SerialOnlyTransitData() {
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val serialNumber get() = formatSerial(mSerial)
 
