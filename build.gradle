@@ -563,9 +563,12 @@ android {
                 'third_party/vpereira_bilhete/',
                 'third_party/RejsekortReader/dumps/'
         ]
+        androidTest.java.srcDirs += ['src/jvmCommonTest/kotlin']
+        androidTest.java.srcDirs += ['src/androidCommonTest/kotlin']
         main.assets.srcDirs += ['build/assets', 'mdst']
         main.res.srcDirs += ['cardimages/android']
-        test.kotlin.srcDirs += ['src/androidUnitTest/kotlin']
+        test.java.srcDirs += ['src/androidUnitTest/kotlin']
+        test.java.srcDirs += ['src/androidCommonTest/kotlin']
         test.resources.srcDirs += [
                     'src/commonTest/assets',
                     'third_party/vpereira_bilhete/',
