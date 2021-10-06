@@ -49,7 +49,6 @@ data class UltralightCard constructor(
         @XMLListIdx("index")
         val pages: List<UltralightPage>,
         override val isPartialRead: Boolean = false) : CardProtocol() {
-    @Transient
     override val rawData: List<ListItem>
         get() = pages.mapIndexed { idx, sector ->
             val pageIndexString = idx.hexString

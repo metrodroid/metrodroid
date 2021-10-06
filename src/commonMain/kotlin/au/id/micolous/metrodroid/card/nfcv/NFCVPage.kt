@@ -35,7 +35,6 @@ data class NFCVPage(
         val dataRaw: ImmutableByteArray = ImmutableByteArray.empty(),
         @XMLId("unauthorized")
         val isUnauthorized: Boolean = false) {
-    @Transient
     val data: ImmutableByteArray
         get() {
             if (isUnauthorized)

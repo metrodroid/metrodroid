@@ -41,7 +41,6 @@ data class ISO7816File internal constructor(
         @XMLListIdx("index")
         private val records: Map<Int, ImmutableByteArray> = emptyMap(),
         val fci: ImmutableByteArray? = null) {
-    @Transient
     val recordList get() = records.entries.sortedBy { it.key }.map { it.value }.toList()
 
     /**

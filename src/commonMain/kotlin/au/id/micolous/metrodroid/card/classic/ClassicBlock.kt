@@ -28,11 +28,9 @@ import kotlinx.serialization.Transient
 
 @Serializable
 class ClassicBlock(@SerialName("data") private val mData: ImmutableByteArray) {
-    @Transient
     val isUnauthorized: Boolean
         get() = mData == ImmutableByteArray.of(0x04) || mData.isEmpty()
 
-    @Transient
     val data: ImmutableByteArray
         get() {
             if (isUnauthorized)
@@ -40,7 +38,6 @@ class ClassicBlock(@SerialName("data") private val mData: ImmutableByteArray) {
             return mData
         }
 
-    @Transient
     val isEmpty: Boolean
         get() {
             if (isUnauthorized)

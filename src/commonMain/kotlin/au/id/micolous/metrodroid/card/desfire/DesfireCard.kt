@@ -46,11 +46,9 @@ data class DesfireCard constructor(
         override val isPartialRead: Boolean = false,
         val appListLocked: Boolean = false) : CardProtocol() {
 
-    @Transient
     override val manufacturingInfo: List<ListItem>
         get() = DesfireManufacturingData(manufacturingData).info
 
-    @Transient
     override val rawData: List<ListItem>
         get() = applications.map { (id,app) ->
                 ListItemRecursive(makeName(id),

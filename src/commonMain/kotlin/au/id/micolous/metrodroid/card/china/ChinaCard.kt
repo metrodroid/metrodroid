@@ -38,7 +38,6 @@ data class ChinaCard(
         override val generic: ISO7816ApplicationCapsule,
         val balances: Map<Int, ImmutableByteArray>) : ISO7816Application() {
 
-    @Transient
     override val rawData: List<ListItem>?
         get() = balances.map { (idx, data) -> ListItemRecursive.collapsedValue(
             Localizer.localizeString(R.string.china_balance, idx),
@@ -52,7 +51,6 @@ data class ChinaCard(
 
     fun getBalance(idx: Int): ImmutableByteArray? = balances[idx]
 
-    @Transient
     override val type: String
         get() = TYPE
 

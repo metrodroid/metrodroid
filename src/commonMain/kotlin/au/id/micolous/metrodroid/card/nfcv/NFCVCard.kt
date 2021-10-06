@@ -44,7 +44,6 @@ data class NFCVCard constructor(
         @XMLListIdx("index")
         val pages: List<NFCVPage>,
         override val isPartialRead: Boolean = false) : CardProtocol() {
-    @Transient
     override val rawData: List<ListItem>
         get() = listOf(ListItem(R.string.nfcv_system_info, sysInfo?.toHexDump())) +pages.mapIndexed { idx, sector ->
             val pageIndexString = idx.hexString

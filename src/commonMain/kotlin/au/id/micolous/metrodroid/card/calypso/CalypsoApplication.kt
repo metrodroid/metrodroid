@@ -55,10 +55,8 @@ import kotlinx.serialization.Transient
 @Serializable
 data class CalypsoApplication (
         override val generic: ISO7816ApplicationCapsule): ISO7816Application() {
-    @Transient
     override val type: String
         get() = TYPE
-    @Transient
     val ticketEnv: ImmutableByteArray?
         get() = try {
             getFile(File.TICKETING_ENVIRONMENT)?.getRecord(1)
@@ -71,7 +69,6 @@ data class CalypsoApplication (
     // This shows a country name if it's known, or "unknown (number)" if not.
     // Actually it uses manufacturer time zone but as it's only a day anyway,
     // and we don't know the manufacturer time zone, this is good enough
-    @Transient
     override val manufacturingInfo: List<ListItem>?
         get() {
             val iccFile = getFile(File.ICC)

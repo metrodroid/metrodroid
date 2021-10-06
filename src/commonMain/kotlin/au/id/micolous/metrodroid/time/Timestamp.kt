@@ -452,7 +452,6 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
 
     override fun toDaystamp() = Daystamp(dhm.days)
 
-    @Transient
     val dhm get() = getDaysFromMillis(timeInMillis, tz)
 
     override fun compareTo(other: TimestampFull): Int = timeInMillis.compareTo(other = other.timeInMillis)

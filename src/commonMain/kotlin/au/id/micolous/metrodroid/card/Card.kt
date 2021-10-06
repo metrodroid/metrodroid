@@ -94,20 +94,15 @@ class Card(
         val iso7816: ISO7816Card? = null,
         val vicinity: NFCVCard? = null
 ) {
-    @Transient
     val allProtocols: List<CardProtocol>
         get() = listOfNotNull(mifareClassic, mifareDesfire, mifareUltralight, cepasCompat,
                 felica, iso7816, vicinity)
-    @Transient
     val manufacturingInfo: List<ListItem>?
         get() = allProtocols.mapNotNull { it.manufacturingInfo }.flatten().ifEmpty { null }
-    @Transient
     val rawData: List<ListItem>?
         get() = allProtocols.mapNotNull { it.rawData }.flatten().ifEmpty { null }
-    @Transient
     val isPartialRead: Boolean
         get() = allProtocols.any { it.isPartialRead }
-    @Transient
     val cardType: CardType
         get () = when {
             allProtocols.size > 1 -> CardType.MultiProtocol

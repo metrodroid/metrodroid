@@ -42,72 +42,55 @@ import kotlinx.serialization.Transient
 @Parcelize
 class KSX6924PurseInfo constructor(val purseInfoData: ImmutableByteArray) : Parcelable {
 
-    @Transient
     val cardType : Byte
         get() = purseInfoData[0]
 
-    @Transient
     val alg : Byte
         get() = purseInfoData[1]
 
-    @Transient
     val vk : Byte
         get() = purseInfoData[2]
 
-    @Transient
     val idCenter : Byte
         get() = purseInfoData[3]
 
-    @Transient
     val csn : String
         get() = purseInfoData.getHexString(4, 8)
 
-    @Transient
     val idtr : Long
         get() = purseInfoData.convertBCDtoLong(12, 5)
 
-    @Transient
     val issueDate : Daystamp?
         get() = parseHexDate(purseInfoData.byteArrayToLong(17, 4))
 
-    @Transient
     val expiryDate : Daystamp?
         get() = parseHexDate(purseInfoData.byteArrayToLong(21, 4))
 
-    @Transient
     val userCode : Byte
         get() = purseInfoData[26]
 
-    @Transient
     val disRate : Byte
         get() = purseInfoData[27]
 
-    @Transient
     val balMax : Long
         get() = purseInfoData.byteArrayToLong(27, 4)
 
-    @Transient
     val bra : Int
         get() = purseInfoData.convertBCDtoInteger(31, 2)
 
-    @Transient
     val mmax : Long
         get() = purseInfoData.byteArrayToLong(33, 4)
 
-    @Transient
     val tcode : Byte
         get() = purseInfoData[37]
 
-    @Transient
     val ccode : Byte
         get() = purseInfoData[38]
 
-    @Transient
     val rfu : ImmutableByteArray
         get() = purseInfoData.sliceOffLen(39, 8)
 
     // Convenience functionality
-    @Transient
     val serial : String
         get() = NumberUtils.groupString(csn, " ", 4, 4, 4)
 

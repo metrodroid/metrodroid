@@ -36,7 +36,6 @@ data class CEPASCompatTransaction(
         private val date2: Long,
         @SerialName("user-data")
         val userData: String) : Parcelable {
-    @Transient
     val unixDate: Long
         get() =
         // Compatibility for Metrodroid <= 2.9.34
