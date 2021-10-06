@@ -166,6 +166,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         try {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {

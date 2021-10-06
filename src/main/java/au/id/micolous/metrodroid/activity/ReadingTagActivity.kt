@@ -123,6 +123,7 @@ class ReadingTagActivity : MetrodroidActivity(), TagReaderFeedbackInterface {
     }
 
     public override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         resolveIntent(intent)
     }
 

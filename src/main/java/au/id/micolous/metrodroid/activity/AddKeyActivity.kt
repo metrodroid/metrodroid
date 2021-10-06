@@ -234,6 +234,7 @@ class AddKeyActivity : MetrodroidActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         val tag = intent.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
         val tagId = tag?.id
 
