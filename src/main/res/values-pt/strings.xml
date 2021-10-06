@@ -169,11 +169,11 @@
     <string name="card_partial_read_title">Cartão parcialmente lido!</string>
     <string name="calypso_reading">Lendo cartão Calypso…</string>
     <string name="iso7816_probing">Examinando cartão ISO/IEC 7816…</string>
-    <string name="mfd_unlocking">Desbloqueando o cartão &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Leap\"&gt;%s&lt;/xliff:g&gt;…<xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
+    <string name="mfd_unlocking">Desbloqueando o cartão <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
     <string name="vicinity_reading">Lendo o cartão Vicinity…</string>
     <string name="mfu_reading">Lendo cartão MIFARE Ultralight…</string>
     <string name="mfu_detect">Detectando o tipo de cartão MIFARE Ultralight…</string>
-    <string name="card_reading_type">Lendo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Opal\"&gt;%s&lt;/xliff:g&gt;…<xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+    <string name="card_reading_type">Lendo <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
     <string name="mfd_reading">Lendo cartão MIFARE DESFire…</string>
     <string name="iso14a_detect">Detectando o tipo de cartão ISO 14443…</string>
     <string name="mfc_key_ab">chave A|B</string>
@@ -301,7 +301,7 @@
     <string name="supported_cards">Cartões suportados</string>
     <string name="scanned_at_format">Escaneado no %1$s em %2$s</string>
     <string name="loading">Carregando…</string>
-    <string name="balance_speech">"Saldo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"R$13.37\"&gt;%s&lt;/xliff:g&gt; "<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="preferences">Preferências</string>
     <string name="about">Sobre</string>
     <string name="export_all">Exportar todos</string>
