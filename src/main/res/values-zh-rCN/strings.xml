@@ -143,7 +143,7 @@
     <string name="turn_on_nfc">请开启NFC功能来读取卡信息。</string>
     <string name="nfc_off_error">NCF功能未开启</string>
     <string name="fully_locked_title">完全锁卡。</string>
-    <string name="balance_speech">余额 &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">余额 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="fully_locked_desc_unlockable">没有密钥，这张卡的任何部分都不能自由读取。您没有为它安装有效的密钥。
 \n
 \n一旦为卡安装了钥匙，卡就可以工作。这些通常是不同的卡片。关于获取和安装密钥的更多信息可以在文档中找到。
