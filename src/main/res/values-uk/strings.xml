@@ -209,7 +209,7 @@
     <string name="transaction_counter">Лічильник транзакцій</string>
     <string name="supported_cards">Підтримувані картки</string>
     <string name="loading">Завантаження…</string>
-    <string name="balance_speech">Баланс &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Баланс <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="preferences">Налаштування</string>
     <string name="export_all">Експортувати все</string>
     <string name="export_filename">Iм’я файлу для експорту</string>
