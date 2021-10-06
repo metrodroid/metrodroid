@@ -1155,9 +1155,9 @@
     <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-Chipkaart für Wochentage (2009)</string>
     <string name="ovc_sub_fietssupplement">Abo OV-fiets</string>
     <string name="ovc_sub_ns_businesscard">Karte NS-Business</string>
-    <string name="zolotaya_korona_discount_111">111: 50 % für den kommunalen, 50 % für den Eisenbahn- und 50 % für den Wasserverkehr</string>
-    <string name="zolotaya_korona_discount_100">100: 50%% für den kommunalen, 0%% für den Eisenbahn- und 0% für den Wasserverkehr</string>
-    <string name="zolotaya_korona_discount_200">200: 100%% für den kommunalen, 0%% für den Eisenbahn- und 0% für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% für den kommunalen, 50%% für den Eisenbahn- und 50%% für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% für den kommunalen, 0%% für den Eisenbahn- und 0%% für den Wasserverkehr</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% für den kommunalen, 0%% für den Eisenbahn- und 0%% für den Wasserverkehr</string>
     <string name="zolotaya_korona_discount">Ermäßigung</string>
     <string name="mrtj_file_purse_balance">MRTJ Saldo</string>
     <string name="mrtj_file_id">MRTJ Identität</string>
