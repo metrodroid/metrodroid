@@ -3,7 +3,7 @@ import au.id.micolous.metrodroid.LocalizeGenerator
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
@@ -11,7 +11,7 @@ allprojects {
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }

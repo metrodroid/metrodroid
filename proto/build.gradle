@@ -1,7 +1,7 @@
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
@@ -9,7 +9,7 @@ allprojects {
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
