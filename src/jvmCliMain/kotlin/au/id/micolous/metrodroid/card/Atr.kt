@@ -124,10 +124,10 @@ data class Atr(
 
             if (t1.count() > 2) {
                 ISO7816TLV.compactTlvIterate(t1.sliceOffLen(1, t1.count() - 1)).forEach {
-                    when {
-                        it.first == 0x3 -> cardServiceDataByte = it.second.byteArrayToInt() and 0xff
-                        it.first == 0x6 -> preIssuingData = it.second
-                        it.first == 0x8 -> statusIndicator = it.second
+                    when (it.first) {
+                        0x3 -> cardServiceDataByte = it.second.byteArrayToInt() and 0xff
+                        0x6 -> preIssuingData = it.second
+                        0x8 -> statusIndicator = it.second
                     }
                 }
             }
