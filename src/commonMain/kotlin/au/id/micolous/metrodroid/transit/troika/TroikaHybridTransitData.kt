@@ -64,7 +64,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
 
             val troikaItems = mTroika.info
 
-            if (troikaItems != null && !troikaItems.isEmpty()) {
+            if (troikaItems != null && troikaItems.isNotEmpty()) {
                 items.add(HeaderListItem(R.string.card_name_troika))
                 items.addAll(troikaItems)
             }

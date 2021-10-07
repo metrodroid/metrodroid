@@ -87,7 +87,7 @@ data class ChinaCard(
                             if (capsule.appName?.contentEquals(transitAppName) == true) {
                                 val cl = f.allCards
 
-                                if (!cl.isEmpty()) {
+                                if (cl.isNotEmpty()) {
                                     val ci = cl[0]
 
                                     feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,

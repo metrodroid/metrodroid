@@ -41,7 +41,7 @@ class SuicaTransitData (
 
     public override val balance: TransitBalance?
         get() {
-            if (!trips.isEmpty()) {
+            if (trips.isNotEmpty()) {
                 val expiry = (trips[0].endTimestamp ?: trips[0].startTimestamp)?.plus(Duration.yearsLocal(10))
                 return TransitBalanceStored(TransitCurrency.JPY(trips[0].balance), null, expiry)
             }
