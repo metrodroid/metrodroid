@@ -66,7 +66,7 @@
                 android:insetLeft="4dp"
                 android:insetRight="4dp"
                 android:layout_weight="1"
-                android:onClick="onSupportedCardsClick"
+                android:id="@+id/supported_cards_button"
                 style="?attr/ButtonStyle"
                 android:text="@string/supported_cards" />
 
@@ -77,7 +77,7 @@
                 android:layout_weight="1"
                 android:insetLeft="4dp"
                 android:insetRight="4dp"
-                android:onClick="onHistoryClick"
+                android:id="@+id/history_button"
                 style="?attr/ButtonStyle"
                 android:text="@string/scanned_cards" />
         </LinearLayout>

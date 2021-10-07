@@ -24,6 +24,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.pm.PackageInfoCompat
 
@@ -43,6 +44,12 @@ class AboutActivity : MetrodroidActivity() {
         setDisplayHomeAsUpEnabled(true)
 
         this.findViewById<TextView>(R.id.lblDebugText).text = Utils.deviceInfoString
+        this.findViewById<Button>(R.id.btnLicense).setOnClickListener {
+            onLicenseClick(it)
+        }
+        this.findViewById<Button>(R.id.btnWebsite).setOnClickListener {
+            onWebsiteClick(it)
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")

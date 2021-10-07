@@ -35,6 +35,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 
 import au.id.micolous.metrodroid.multi.Localizer
@@ -79,6 +80,12 @@ class MainActivity : MetrodroidActivity() {
         }
 
         updateObfuscationNotice(mNfcAdapter != null)
+        findViewById<Button>(R.id.history_button).setOnClickListener {
+            onHistoryClick(it)
+        }
+        findViewById<Button>(R.id.supported_cards_button).setOnClickListener {
+            onSupportedCardsClick(it)
+        }
     }
 
     override fun onResume() {

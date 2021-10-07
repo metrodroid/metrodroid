@@ -65,7 +65,6 @@
                 android:id="@+id/btnWebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onWebsiteClick"
                 android:text="@string/visit_website"
                 style="?attr/ButtonStyle" />
 
@@ -78,7 +77,6 @@
                 android:id="@+id/btnLicense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onLicenseClick"
                 android:text="@string/license"
                 style="?attr/ButtonStyle" />
         </LinearLayout>
