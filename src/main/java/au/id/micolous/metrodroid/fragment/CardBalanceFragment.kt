@@ -214,7 +214,7 @@ class CardBalanceFragment : ListFragment() {
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
 
         Log.d(TAG, "Clicked $id $position")
-        val item = listAdapter.getItem(position) ?: return
+        val item = listAdapter?.getItem(position) ?: return
 
         if (item is TransitBalance) {
             return

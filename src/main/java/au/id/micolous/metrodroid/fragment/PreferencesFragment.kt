@@ -82,7 +82,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             for (prefKey in Preferences.PREFS_ANDROID_17) {
-                val pref = findPreference(prefKey) ?: continue
+                val pref = findPreference<Preference?>(prefKey) ?: continue
                 pref.isEnabled = false
                 pref.setSummary(R.string.requires_android_17)
             }
@@ -90,7 +90,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             for (prefKey in Preferences.PREFS_ANDROID_21) {
-                val pref = findPreference(prefKey) ?: continue
+                val pref = findPreference<Preference?>(prefKey) ?: continue
                 pref.isEnabled = false
                 pref.setSummary(R.string.requires_android_21)
             }
@@ -131,7 +131,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
         b.putString("key", preference.key)
         dialogFragment.arguments = b
         dialogFragment.setTargetFragment(this, 0)
-        dialogFragment.show(fragmentManager,
+        dialogFragment.show(requireFragmentManager(),
                 "androidx.preference.PreferenceFragment.DIALOG")
     }
 }

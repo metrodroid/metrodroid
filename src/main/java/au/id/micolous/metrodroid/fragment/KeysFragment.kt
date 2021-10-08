@@ -185,7 +185,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     }
 
     override fun onItemLongClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Boolean {
-        val cursor = listAdapter.getItem(position) as Cursor
+        val cursor = listAdapter?.getItem(position) as Cursor
 
         mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
         mActionMode = activity!!.startActionMode(mActionModeCallback)

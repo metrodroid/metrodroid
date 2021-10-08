@@ -330,7 +330,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
         return false
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo) {}
+    override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo?) {}
 
     fun onContentChanged() {
         val emptyView = view!!.findViewById<View>(android.R.id.empty)

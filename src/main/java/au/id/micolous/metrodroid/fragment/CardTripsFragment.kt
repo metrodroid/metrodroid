@@ -80,7 +80,7 @@ class CardTripsFragment : ListFragment() {
             return
         }
 
-        val trip = listAdapter.getItem(position) as? Trip?
+        val trip = listAdapter?.getItem(position) as? Trip?
         if (trip == null || !trip.hasLocation()) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could")
             return

@@ -55,7 +55,8 @@
             android:name="au.id.micolous.metrodroid.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/Metrodroid.Dark">
+            android:theme="@style/Metrodroid.Dark"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,6 +82,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:enabled="false"
             android:launchMode="singleTop"
+            android:exported="false"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
@@ -95,7 +97,8 @@
         </activity>
         <activity
             android:name="au.id.micolous.metrodroid.activity.CardInfoActivity"
-            android:configChanges="keyboardHidden|orientation" >
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
@@ -126,7 +129,8 @@
             android:label="@string/keys" />
         <activity
             android:name="au.id.micolous.metrodroid.activity.AddKeyActivity"
-            android:label="@string/add_key">
+            android:label="@string/add_key"
+            android:exported="true">
             <intent-filter android:priority="1">
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -36,6 +36,7 @@ import android.nfc.tech.IsoDep
 import android.nfc.tech.MifareClassic
 import android.nfc.tech.MifareUltralight
 import android.nfc.tech.NfcF
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -102,7 +103,12 @@ class AddKeyActivity : MetrodroidActivity() {
 
         val intent = intent
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingFlags =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                PendingIntent.FLAG_MUTABLE
+            else
+                0
+        mPendingIntent = PendingIntent.getActivity(this, 0, intent, pendingFlags)
 
         if (intent.action != null &&
                 intent.action == Intent.ACTION_VIEW &&
