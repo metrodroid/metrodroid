@@ -3,9 +3,13 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.serializers.CardImporter
+import au.id.micolous.metrodroid.serializers.CardMultiImporter
 import au.id.micolous.metrodroid.transit.TransitData
+import java.io.InputStream
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+
+expect fun loadAssetStream(path: String): InputStream?
 
 /**
  * Base class for building tests that need Assets data.
@@ -13,8 +17,8 @@ import kotlin.test.assertTrue
  * @param C A [Card] subclass for the type of media to accept.
  * @param importer A reference to a [CardImporter] which produces [C].
  */
-abstract class CardReaderWithAssetDumpsTest<I : CardImporter>(
-        val importer: I
+abstract class CardMultiReaderWithAssetDumpsTest<I : CardMultiImporter>(
+    val importer: I
 ) : BaseInstrumentedTest() {
     /**
      * Parses a card and checks that it was the correct reader.
@@ -23,7 +27,7 @@ abstract class CardReaderWithAssetDumpsTest<I : CardImporter>(
         val d = c.parseTransitData()
         assertNotNull(d, "Transit data not parsed. Card $c")
         assertTrue(d is TD,
-                "Transit data is not of right type")
+            "Transit data is not of right type")
         return d
     }
 
@@ -41,8 +45,13 @@ abstract class CardReaderWithAssetDumpsTest<I : CardImporter>(
      * @return Parsed [C] from the file.
      */
     inline fun <reified C: CardProtocol>loadCard(path: String): Card {
-        val card = importer.readCard(loadAsset(path))
-        assertNotNull(card)
+        val asset = loadAssetStream(path)
+        assertNotNull(asset)
+        val cards = importer.readCards(asset)
+        assertNotNull(cards)
+        assert(cards.hasNext())
+        val card = cards.next()
+        assert(!cards.hasNext())
         val protocol = card.allProtocols[0]
         assertTrue(protocol is C)
         return card

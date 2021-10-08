@@ -33,7 +33,7 @@ import kotlin.test.assertNull
  * This test uses a EasyCard dump based on the one shown at:
  * http://www.fuzzysecurity.com/tutorials/rfid/4.html
  */
-class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
+class EasyCardTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImporter()) {
 
     @Test
     fun testdeadbeefEnglish() {

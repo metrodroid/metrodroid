@@ -22,8 +22,6 @@ import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.charsets.Charsets
-import kotlinx.io.core.String
 import kotlinx.serialization.json.JsonException
 import kotlin.test.*
 
@@ -32,13 +30,14 @@ class ImportKeysTest : BaseInstrumentedTest() {
         return loadSmallAssetBytes("keyTests/$path")
     }
 
+    @UseExperimental(ExperimentalStdlibApi::class)
     private fun loadTestJSON(path: String, expectedFormat: KeyFormat?): Pair<String, KeyFormat> {
         val d = loadTestFile(path)
         val f = KeyFormat.detectKeyFormat(d)
         if (expectedFormat != null) {
             assertEquals(expectedFormat, f)
         }
-        return Pair(String(d, 0, d.size, Charsets.UTF_8), f)
+        return Pair(d.decodeToString(), f)
     }
 
     private fun loadClassicCardRawKeys(path: String): ClassicCardKeys {

@@ -4,12 +4,12 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
-import kotlinx.io.InputStream
+import au.id.micolous.metrodroid.util.Input
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
 object CardSerializer {
-    fun load(importer: CardImporter, stream: InputStream): Card? {
+    fun load(importer: CardImporter, stream: Input): Card? {
         try {
             return importer.readCard(stream)
         } catch (ex: Exception) {
@@ -24,7 +24,7 @@ object CardSerializer {
 
     @NativeThrows
     fun fromAutoJson(json: String): Iterator<Card> = logAndSwiftWrap ("Card", "Failed to deserialize") {
-        AutoJsonFormat.readCards(json)
+        AutoJsonFormat.readCardList(json).iterator()
     }
 
     @NativeThrows

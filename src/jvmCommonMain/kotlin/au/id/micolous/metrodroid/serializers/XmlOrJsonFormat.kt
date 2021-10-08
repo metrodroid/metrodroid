@@ -1,30 +1,30 @@
+@file:UseExperimental(ExperimentalStdlibApi::class)
+
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
+import au.id.micolous.metrodroid.util.JavaStreamInput
 import au.id.micolous.metrodroid.util.peekAndSkipSpace
-import kotlinx.io.InputStream
-import kotlinx.io.charsets.Charsets
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 import java.io.PushbackInputStream
 import java.util.zip.ZipInputStream
 
-class XmlCardFormat : CardImporter {
-    override fun readCard(stream: InputStream): Card = readCardXML(stream)
-
-    override fun readCards(stream: InputStream): Iterator<Card> {
-        return iterateXmlCards(stream) { readCard(it) }
-    }
+class XmlCardFormat : CardMultiImporter {
+    override fun readCards(stream: InputStream): Iterator<Card>
+        = iterateXmlCards(stream) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
 }
 
-class XmlOrJsonCardFormat : CardImporter {
+class XmlOrJsonCardFormat : CardMultiImporter {
     private val mfcFormat = MfcCardImporter()
 
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
         when (pb.peekAndSkipSpace().toChar()) {
-            '<' -> return iterateXmlCards(pb) { readCard(it) }
-            '[', '{' -> return AutoJsonFormat.readCards(pb)
+            '<' -> return iterateXmlCards(pb) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
+            '[', '{' -> return AutoJsonFormat.readCardList(pb.readBytes().decodeToString()).iterator()
             'P' -> return readZip(pb).iterator()
             else -> return null
         }
@@ -39,32 +39,23 @@ class XmlOrJsonCardFormat : CardImporter {
             when {
                 ze.name.endsWith(".json") -> m += AutoJsonFormat.readCardList(zi.bufferedReader().readText())
                 ze.name.endsWith(".xml") -> m += readCardXML(zi)
-                ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(zi)
+                ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(JavaStreamInput(zi))
             }
         }
         return m
     }
 
-    override fun readCard(stream: InputStream): Card? {
-        val pb = PushbackInputStream(stream)
-        if (pb.peekAndSkipSpace() == '<'.toByte())
-            return readCardXML(pb)
-        return AutoJsonFormat.readCard(pb.bufferedReader().readText())
-    }
-
-    override fun readCard(input: String): Card? {
-        val trimmed = input.trim()
-        if (trimmed[0] == '<')
-            return readCardXML(trimmed.byteInputStream(Charsets.UTF_8))
-        return AutoJsonFormat.readCard(trimmed)
-    }
-
     companion object {
         private val xmlFormat = XmlCardFormat()
 
-        fun parseString(xml: String) = try {
+        fun parseString(xml: String): Card? = try {
             when (xml.find { it !in listOf('\n', '\r', '\t', ' ') }) {
-                '<' -> xmlFormat.readCard(xml)
+                '<' -> xmlFormat.readCards(xml.byteInputStream()).let {
+                    if (it.hasNext())
+                        null
+                    else
+                        it.next()
+                }
                 '{', '[' -> AutoJsonFormat.readCard(xml)
                 else -> null
             }

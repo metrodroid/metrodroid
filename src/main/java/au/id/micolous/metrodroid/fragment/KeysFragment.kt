@@ -1,3 +1,4 @@
+@file:UseExperimental(ExperimentalStdlibApi::class)
 /*
  * CardKeysFragment.kt
  *
@@ -53,7 +54,6 @@ import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.toUtf8Bytes
 import org.jetbrains.annotations.NonNls
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
@@ -248,7 +248,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
                                 val json = keys.toJSON().toString()
 
-                                os.write(json.toUtf8Bytes())
+                                os.write(json.encodeToByteArray())
                                 os.close()
                                 return null
 

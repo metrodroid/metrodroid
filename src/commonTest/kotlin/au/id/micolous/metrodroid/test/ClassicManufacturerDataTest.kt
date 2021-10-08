@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
-class ClassicManufacturerDataTest: CardReaderWithAssetDumpsTest(MfcCardImporter()) {
+class ClassicManufacturerDataTest: CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImporter()) {
     @Test
     fun testFudan() {
         // Dump is from Bilhete Unico tests

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.printCard
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.util.JavaStreamOutput
 import au.id.micolous.metrodroid.util.makeFilename
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.flag
@@ -166,7 +167,7 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
             }
 
             FileOutputStream(fn).use {
-                JsonKotlinFormat.writeCard(it, card)
+                JsonKotlinFormat.writeCard(JavaStreamOutput(it), card)
                 println("Wrote card data to: ${fn.path}")
             }
         }

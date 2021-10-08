@@ -21,7 +21,6 @@
 package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.multi.Log
-import kotlinx.io.charsets.Charsets
 import kotlinx.serialization.json.Json
 
 /**
@@ -61,6 +60,7 @@ enum class KeyFormat {
 
         private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
 
+        @UseExperimental(ExperimentalStdlibApi::class)
         fun detectKeyFormat(data: ByteArray): KeyFormat {
             if (data[0] != '{'.toByte()) {
                 // This isn't a JSON file.
@@ -91,8 +91,7 @@ enum class KeyFormat {
 
             // Now see if it actually parses.
             try {
-                val o = CardKeys.jsonParser.parseJson(kotlinx.io.core.String(bytes = data,
-                        charset = Charsets.UTF_8)).jsonObject
+                val o = CardKeys.jsonParser.parseJson(data.decodeToString()).jsonObject
                 val type = o.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
                 when(type) {
                     CardKeys.TYPE_MFC ->

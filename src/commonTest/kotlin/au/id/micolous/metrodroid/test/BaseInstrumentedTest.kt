@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.test
 
-import kotlinx.io.IOException
-import kotlinx.io.InputStream
+import au.id.micolous.metrodroid.util.Input
 import kotlin.test.assertNotNull
 
 expect fun <T> runAsync(block: suspend () -> T)
@@ -10,23 +9,19 @@ expect abstract class BaseInstrumentedTestPlatform() {
     fun setLocale(languageTag: String)
     fun showRawStationIds(state: Boolean)
     fun showLocalAndEnglish(state: Boolean)
-    fun loadAssetSafe(path: String) : InputStream?
+    fun loadAssetSafe(path: String) : Input?
     fun listAsset(path: String) : List <String>?
 }
 
 abstract class BaseInstrumentedTest : BaseInstrumentedTestPlatform() {
     fun loadSmallAssetBytesSafe(path: String): ByteArray? {
         val s = loadAssetSafe(path) ?: return null
-        val length = s.available()
-        if (length > 1048576 || length <= 0) {
-            throw IOException("Expected 0 - 1048576 bytes")
+        val out = s.readBytes(MAX_SMALL_SIZE + 1)
+        if (out.size > MAX_SMALL_SIZE) {
+            throw Exception("Expected 0 - $MAX_SMALL_SIZE bytes")
         }
 
-        val out = ByteArray(length)
-        val realLen = s.read(out)
-
-        // Return truncated buffer
-        return out.sliceArray(0 until realLen)
+        return out
     }
 
     fun loadSmallAssetBytes(path: String): ByteArray {
@@ -35,9 +30,13 @@ abstract class BaseInstrumentedTest : BaseInstrumentedTestPlatform() {
         return res
     }
 
-    fun loadAsset(path: String) : InputStream {
+    fun loadAsset(path: String) : Input {
         val stream = loadAssetSafe(path)
         assertNotNull(stream, "File $path not found")
         return stream
+    }
+
+    companion object {
+        const val MAX_SMALL_SIZE = 1048576
     }
 }

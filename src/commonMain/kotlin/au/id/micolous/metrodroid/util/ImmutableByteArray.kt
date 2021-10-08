@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.util
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import kotlinx.io.OutputStream
 import kotlinx.serialization.*
 import kotlin.experimental.xor
 
@@ -206,11 +205,11 @@ class ImmutableByteArray private constructor(
             elements.all { mData.contains(it) }
     override fun iterator(): Iterator<Byte> = mData.iterator()
 
-    fun writeTo(os: OutputStream) {
+    fun writeTo(os: Output) {
         os.write(mData)
     }
 
-    fun writeTo(os: OutputStream, offset: Int, length: Int) {
+    fun writeTo(os: Output, offset: Int, length: Int) {
         os.write(mData, offset, length)
     }
 
@@ -343,7 +342,8 @@ class ImmutableByteArray private constructor(
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
 
-        fun fromUTF8(s: String) = ImmutableByteArray(mData = s.toUtf8Bytes())
+        @UseExperimental(ExperimentalStdlibApi::class)
+        fun fromUTF8(s: String) = ImmutableByteArray(mData = s.encodeToByteArray())
 
         override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
             encoder.encodeString(obj.toHexString())

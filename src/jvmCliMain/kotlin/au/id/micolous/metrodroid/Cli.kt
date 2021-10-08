@@ -1,3 +1,4 @@
+@file:UseExperimental(ExperimentalStdlibApi::class)
 /*
  * Cli.kt
  *
@@ -79,7 +80,7 @@ class MakeJson: CliktCommand(
         for (card in loadCards(fname) ?: return) {
             val json = CardSerializer.toJson(card)
             val by = File(output).outputStream()
-            by.write(json.toByteArray(charset = Charsets.UTF_8))
+            by.write(json.encodeToByteArray())
             by.close()
         }
     }

@@ -30,10 +30,12 @@ import kotlin.test.assertEquals
 /**
  * Contains tests for the Farebot Json format.
  */
-class FarebotJsonTest : CardReaderWithAssetDumpsTest(AutoJsonFormat) {
+class FarebotJsonTest : CardReaderWithAssetDumpsTest<AutoJsonFormat>(AutoJsonFormat) {
     @Test
+    @UseExperimental(ExperimentalStdlibApi::class)
     fun testFarebotJson() {
-        val cards = importer.readCards(loadAsset("farebot/farebot.json"))
+        val cards = importer.readCardList(loadSmallAssetBytes("farebot/farebot.json")
+            .decodeToString())
         var ctr = 0
         for (card in cards!!) {
             val json = JsonKotlinFormat.writeCard(card)

@@ -5,7 +5,7 @@ import au.id.micolous.metrodroid.serializers.classic.MctCardImporter
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import kotlin.test.Test
 
-class MctTest: CardReaderWithAssetDumpsTest(MctCardImporter()) {
+class MctTest: CardReaderWithAssetDumpsTest<MctCardImporter>(MctCardImporter()) {
     @Test
     fun testExampleDumpFile() {
         val c = loadCard<ClassicCard>("mct/example-dump-file.txt")

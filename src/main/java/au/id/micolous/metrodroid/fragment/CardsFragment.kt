@@ -44,12 +44,15 @@ import androidx.loader.content.Loader
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.activity.CardInfoActivity
+import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.CardDBHelper
 import au.id.micolous.metrodroid.provider.CardProvider
 import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardImporter
+import au.id.micolous.metrodroid.serializers.CardMultiImportAdapter
+import au.id.micolous.metrodroid.serializers.CardMultiImporter
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
 import au.id.micolous.metrodroid.serializers.classic.MctCardImporter
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
@@ -383,7 +386,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     class UserCancelledException : Exception()
 
     private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
-                                                               private val mCardImporter: CardImporter,
+                                                               private val mCardImporter: CardMultiImporter,
                                                                val uri: Uri) : BetterAsyncTask<Pair<String?, Collection<Uri>?>?>(
             cardsFragment.activity!!) {
         private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
@@ -464,9 +467,11 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class MCTReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri) : CommonReadTask(cardsFragment, MctCardImporter(), uri)
+    private class MCTReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri)
+        : CommonReadTask(cardsFragment, CardMultiImportAdapter (MctCardImporter()), uri)
 
-    private class MFCReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri) : CommonReadTask(cardsFragment, MfcCardImporter(), uri)
+    private class MFCReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri)
+        : CommonReadTask(cardsFragment, CardMultiImportAdapter (MfcCardImporter()), uri)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val uri: Uri?

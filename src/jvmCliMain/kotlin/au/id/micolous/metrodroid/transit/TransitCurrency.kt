@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.multi.FormattedString
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.abs
 
 /**
  * - Some currency formatters return too many or too few fractional amounts. (issue #34)

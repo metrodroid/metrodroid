@@ -26,16 +26,14 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.forEachLine
-import kotlinx.io.InputStream
-import kotlinx.io.charsets.Charsets
-import kotlinx.io.core.String
 
 /**
  * Class to read files built by MIFARE Classic Tool.
  */
 class MctCardImporter : CardImporter {
-    override fun readCard(stream: InputStream): Card? {
+    override fun readCard(stream: Input): Card? {
         val sectors = mutableListOf<ClassicSector>()
         var curSector = -1
         var maxSector = -1
@@ -44,7 +42,7 @@ class MctCardImporter : CardImporter {
         // Largest MFC is 4K. hex brings it up to 8K. Newlines and +Sector
         // Add less than 2x. So 16K chars is the most we are interested in
         // It should be ASCII, but let's be safe and allocate 32K
-        stream.forEachLine(maxSize=32768) { lineRaw ->
+        stream.forEachLine { lineRaw ->
             val line = lineRaw.trim()
             if (line.startsWith("+Sector:")) {
                 flushSector(sectors, curSector, curBlocks, lastBlock)

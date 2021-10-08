@@ -38,26 +38,18 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightPage
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.decodeBase64
-import au.id.micolous.metrodroid.util.readToString
-import kotlinx.io.InputStream
+import au.id.micolous.metrodroid.util.Input
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.json.JsonElement
 
 abstract class CardImporterString : CardImporter {
-    override fun readCard(stream: InputStream): Card? =
+    override fun readCard(stream: Input): Card? =
             readCardList(stream.readToString()).firstOrNull()
 
     override fun readCard(input: String): Card? =
             readCardList(input).firstOrNull()
-
-    override fun readCards(stream: InputStream) =
-            readCardList(stream.readToString()).iterator()
-
-    override fun readCards(s: String): Iterator<Card> =
-            readCardList(s).iterator()
 
     abstract fun readCardList(input: String): List<Card>
 } 

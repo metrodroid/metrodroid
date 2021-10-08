@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 
-class FelicaJsonImportTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat)  {
+class FelicaJsonImportTest: CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotlinFormat)  {
 
     private fun checkLoadCard(path: String): FelicaCard {
         val c = loadCard<FelicaCard>(path)

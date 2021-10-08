@@ -20,9 +20,8 @@
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.util.readToString
-import kotlinx.io.InputStream
-import kotlinx.io.OutputStream
+import au.id.micolous.metrodroid.util.Input
+import au.id.micolous.metrodroid.util.Output
 import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_ALL
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
@@ -32,12 +31,14 @@ import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.json.JsonElement
 
 object JsonKotlinFormat : CardExporter, CardImporter {
-    override fun writeCard(s: OutputStream, card: Card) {
-        s.write(writeCard(card).toUtf8Bytes())
+    @UseExperimental(ExperimentalStdlibApi::class)
+    override fun writeCard(s: Output, card: Card) {
+        val b = writeCard(card).encodeToByteArray()
+        s.write(b)
     }
     fun writeCard(card: Card) = Json(JsonConfiguration.Stable.copy(prettyPrint = true, encodeDefaults = false)).stringify(Card.serializer(), card)
 
-    override fun readCard(stream: InputStream) =
+    override fun readCard(stream: Input) =
             readCard(stream.readToString())
 
     // This intentionally runs in non-strict mode.

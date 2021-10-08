@@ -1,7 +1,7 @@
 /*
- * StreamUtils.kt
+ * ByteArrayInput.kt
  *
- * Copyright (C) 2019 Google
+ * Copyright (C) 2021 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,22 @@
 
 package au.id.micolous.metrodroid.util
 
-fun Input.forEachLine(function: (String) -> Unit) {
-    this.readToString().split('\n', '\r').filter { it.isNotEmpty() }.forEach(function)
+import kotlin.math.min
+
+class ByteArrayInput (private val ba: ByteArray): Input {
+    private var offset: Int = 0
+
+    val available get() = ba.size - offset
+
+    private fun realRead(sz: Int): ByteArray {
+        val off = offset
+        offset += sz
+        return ba.sliceArray(off..(off+sz))
+    }
+
+    override fun readBytes(sz: Int): ByteArray = realRead(
+        min(sz, available))
+
+    @UseExperimental(ExperimentalStdlibApi::class)
+    override fun readToString(): String = realRead(available).decodeToString()
 }

@@ -7,63 +7,51 @@ import au.id.micolous.metrodroid.card.classic.ClassicSectorRaw
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.util.ByteArrayInput
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.ByteArrayInputStream
-import kotlinx.io.IOException
-import kotlinx.io.InputStream
 
 class MfcCardImporter : CardImporter {
-    fun readCard(bin: ByteArray): Card = readCard(stream=ByteArrayInputStream(bin))
-    override fun readCard(stream: InputStream): Card {
+    fun readCard(bin: ByteArray): Card = readCard(stream=ByteArrayInput(bin))
+    override fun readCard(stream: Input): Card {
         // Read the blocks of the card.
         val sectors = mutableListOf<ClassicSector>()
         var uid: ImmutableByteArray? = null
         var maxSector = 0
 
-        sectorloop@ for (sectorNum in 0 until MAX_SECTORS) {
-            val blocks = mutableListOf<ImmutableByteArray>()
-            var keyA: ByteArray? = null
-            var keyB: ByteArray? = null
+        for (sectorNum in 0 until MAX_SECTORS) {
+            val blockCount =
+                if (sectorNum >= 32)
+                    16
+                else
+                    4
 
-            var blockCount = 4
-            if (sectorNum >= 32) {
-                blockCount = 16
+            val sectorData = stream.readBytes(16 * blockCount)
+            if (sectorData.isEmpty() && sectorNum != 0) {
+                 // We got to the end of the file.
+                 break
             }
 
-            for (blockNum in 0 until blockCount) {
-                val blockData = ByteArray(16)
-                var readBytes = 0
-                while(readBytes < blockData.size){
-                    val buf = if (readBytes == 0) blockData else ByteArray(blockData.size - readBytes)
-                    val r = stream.read(buf)
-                    if (r <= 0 && blockNum == 0) {
-                        // We got to the end of the file.
-                        break@sectorloop
-                    }
-                    if (r <= 0) {
-                        throw IOException("Incomplete MFC read at sector $sectorNum block $blockNum ($readBytes bytes)")
-                    }
-
-                    if (buf != blockData)
-                        buf.copyInto(blockData, readBytes, 0, r)
-
-                    readBytes += r
-                }
-
-                if (sectorNum == 0 && blockNum == 0) {
-                    // Manufacturer data
-                    uid = block0ToUid(blockData.toImmutable())
-                } else if (blockNum == blockCount - 1) {
-                    keyA = blockData.sliceArray(0..5)
-                    keyB = blockData.sliceArray(10..15)
-                }
-                blocks.add(blockData.toImmutable())
-
+            if (sectorData.size != 16 * blockCount) {
+                throw Exception("Incomplete MFC read at sector $sectorNum (${sectorData.size} bytes)")
             }
 
-            val raw = ClassicSectorRaw(blocks, keyA?.toImmutable(),
-                    keyB?.toImmutable(), false, null)
+            if (sectorNum == 0) {
+                // Manufacturer data
+                uid = block0ToUid(sectorData.sliceArray(0..15).toImmutable())
+            }
+
+            val lbOffset = 16 * (blockCount - 1)
+            val keyA = sectorData.sliceArray((lbOffset+0)..(lbOffset+5)).toImmutable()
+            val keyB = sectorData.sliceArray((lbOffset+10)..(lbOffset+15)).toImmutable()
+            val blocks =
+                (0 until blockCount).map {
+                    sectorData.sliceArray((it*16)..(it*16+15)).toImmutable()
+                }
+
+            val raw = ClassicSectorRaw(blocks, keyA,
+                    keyB, false, null)
             sectors.add(ClassicSector.create(raw))
             maxSector = sectorNum
         }

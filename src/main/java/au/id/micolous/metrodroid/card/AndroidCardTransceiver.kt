@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.getErrorMessage
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.core.Closeable
+import java.io.Closeable
 import java.io.IOException
 
 fun <T>wrapAndroidExceptions(f: () -> T): T {
