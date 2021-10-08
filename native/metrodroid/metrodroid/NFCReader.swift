@@ -107,7 +107,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
 
     func postDump(card: Card) {
         do {
-            let json = try CardSerializer.init().toJson(card: card)
+            let json = try CardSerializer.init().toPersist(card: card)
             print ("json=\(json)")
             let url = try CardPersister.persistCard(card: card, json: json)
             if Preferences.init().speakBalance {

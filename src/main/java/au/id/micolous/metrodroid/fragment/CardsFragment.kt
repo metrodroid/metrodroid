@@ -440,7 +440,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         : CommonReadTask(cardsFragment, XmlOrJsonCardFormat(), uri) {
         override fun verifyStream(stream: InputStream): InputStream {
             val pb = PushbackInputStream(stream)
-            if (pb.peek() == 'P'.toByte()) { // ZIP
+            if (pb.peek() == 'P'.code.toByte()) { // ZIP
                 return pb
             }
             val l = stream.available()

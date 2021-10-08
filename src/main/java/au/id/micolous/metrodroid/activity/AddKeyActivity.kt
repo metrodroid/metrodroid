@@ -54,6 +54,7 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import java.io.IOException
 
 /**
@@ -133,7 +134,7 @@ class AddKeyActivity : MetrodroidActivity() {
                 mKeyFormat.isJSON -> {
                     val o: JsonObject
                     try {
-                        o = CardSerializer.jsonPlainStable.parseJson(String(keyData, Charsets.UTF_8)).jsonObject
+                        o = CardSerializer.jsonPlainStable.parseToJsonElement(String(keyData, Charsets.UTF_8)).jsonObject
                     } catch (e: Exception) {
                         // Invalid JSON, grumble.
                         Utils.showErrorAndFinish(this, e)

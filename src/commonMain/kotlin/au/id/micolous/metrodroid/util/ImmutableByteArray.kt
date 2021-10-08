@@ -24,6 +24,8 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.serialization.*
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlin.experimental.xor
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
@@ -222,6 +224,7 @@ class ImmutableByteArray private constructor(
         mData[it] xor other[it]
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = ImmutableByteArray::class)
     companion object : KSerializer<ImmutableByteArray> {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
@@ -340,13 +343,13 @@ class ImmutableByteArray private constructor(
             return value
         }
 
-        fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
+        fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.code.toByte() }.toByteArray())
 
         @UseExperimental(ExperimentalStdlibApi::class)
         fun fromUTF8(s: String) = ImmutableByteArray(mData = s.encodeToByteArray())
 
-        override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
-            encoder.encodeString(obj.toHexString())
+        override fun serialize(encoder: Encoder, value: ImmutableByteArray) {
+            encoder.encodeString(value.toHexString())
         }
 
         override fun deserialize(decoder: Decoder): ImmutableByteArray {

@@ -21,9 +21,9 @@
 package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.serializers.CardSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.json.JsonObject
+import au.id.micolous.metrodroid.serializers.jsonObjectOrNull
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
+import kotlinx.serialization.json.*
 
 interface CardKeys {
 
@@ -52,17 +52,20 @@ interface CardKeys {
          * See https://github.com/micolous/metrodroid/wiki/Importing-MIFARE-Classic-keys#json
          */
         fun fromJSON(keyJSON: JsonObject, cardType: String, defaultBundle: String): CardKeys? = when (cardType) {
-            CardKeys.TYPE_MFC -> ClassicCardKeys.fromJSON(keyJSON, defaultBundle)
-            CardKeys.TYPE_MFC_STATIC -> ClassicStaticKeys.fromJSON(keyJSON, defaultBundle)
+            TYPE_MFC -> ClassicCardKeys.fromJSON(keyJSON, defaultBundle)
+            TYPE_MFC_STATIC -> ClassicStaticKeys.fromJSON(keyJSON, defaultBundle)
             else -> throw IllegalArgumentException("Unknown card type for key: $cardType")
         }
 
-        fun fromJSON(keyJSON: JsonObject, defaultBundle: String): CardKeys? = fromJSON(keyJSON,
-                keyJSON[CardKeys.JSON_KEY_TYPE_KEY]!!.primitive.content, defaultBundle)
+        fun fromJSON(keyJSON: JsonObject, defaultBundle: String): CardKeys? = fromJSON(
+            keyJSON,
+            keyJSON[JSON_KEY_TYPE_KEY]?.jsonPrimitiveOrNull?.contentOrNull ?: "",
+            defaultBundle)
 
         val jsonParser get() = CardSerializer.jsonPlainStable
 
-        fun fromJSON(keyJSON: String, defaultBundle: String) = fromJSON(
-                jsonParser.parseJson(keyJSON).jsonObject, defaultBundle)
+        fun fromJsonString(keyJSON: String, defaultBundle: String): CardKeys?
+            = jsonParser.parseToJsonElement(keyJSON).jsonObjectOrNull?.let { it ->
+                fromJSON(it, defaultBundle) }
     }
 }

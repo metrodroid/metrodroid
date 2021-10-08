@@ -80,7 +80,7 @@ class MakeJson: CliktCommand(
         for (card in loadCards(fname) ?: return) {
             val json = CardSerializer.toJson(card)
             val by = File(output).outputStream()
-            by.write(json.encodeToByteArray())
+            by.write(json.toString().encodeToByteArray())
             by.close()
         }
     }

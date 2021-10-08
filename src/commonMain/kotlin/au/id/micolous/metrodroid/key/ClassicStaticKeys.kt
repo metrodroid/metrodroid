@@ -23,7 +23,10 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.json
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.buildJsonObject
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
+import kotlinx.serialization.json.JsonPrimitive
 
 /**
  * Helper for access to static MIFARE Classic keys. This can be used for keys that should be
@@ -48,8 +51,8 @@ class ClassicStaticKeys private constructor(override val description: String?,
     override fun toJSON(): JsonObject {
         if (description == null)
             return baseJson
-        return JsonObject(baseJson + json {
-            JSON_TAG_ID_DESC to description
+        return JsonObject(baseJson + buildJsonObject {
+            put(JSON_TAG_ID_DESC, JsonPrimitive(description))
         })
     }
 
@@ -81,8 +84,8 @@ class ClassicStaticKeys private constructor(override val description: String?,
 
         fun fromJSON(jsonRoot: JsonObject, defaultBundle: String) = try {
             ClassicStaticKeys(
-                    description = jsonRoot.getPrimitiveOrNull(JSON_TAG_ID_DESC)?.contentOrNull,
-                    keys = ClassicKeysImpl.keysFromJSON(jsonRoot, false, defaultBundle),
+                    description = jsonRoot[JSON_TAG_ID_DESC]?.jsonPrimitiveOrNull?.contentOrNull,
+                    keys = keysFromJSON(jsonRoot, false, defaultBundle),
                     sourceDataLength = jsonRoot.toString().length)
         } catch (e: Exception) {
             Log.e("ClassicStaticKeys", "parsing failed", e)

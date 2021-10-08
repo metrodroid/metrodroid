@@ -59,7 +59,7 @@ class CardPersister {
     }
     
     class func persistCard(card: Card) throws -> URL {
-        return try persistCard(card: card, json: CardSerializer.init().toJson(card: card))
+        return try persistCard(card: card, json: CardSerializer.init().toPersist(card: card))
     }
     
     class Entry :NSObject {

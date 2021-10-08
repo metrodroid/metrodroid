@@ -12,7 +12,7 @@ data class RkfTicket(override val parsed: En1545Parsed, override val lookup: Rkf
         fun parse (record: RkfTctoRecord, lookup: RkfLookup): RkfTicket {
             Log.d("RkfTicket", "TCCO = ${record.chunks}")
             val version = record.chunks[0][0].getBitsFromBufferLeBits(8, 6)
-            val maxTxn = record.chunks.filter { it[0][0] == 0x88.toByte() }.map { it[0].getBitsFromBufferLeBits(8, 12) }.max()
+            val maxTxn = record.chunks.filter { it[0][0] == 0x88.toByte() }.map { it[0].getBitsFromBufferLeBits(8, 12) }.maxOrNull()
             val flat = record.chunks.filter { it[0][0] != 0x88.toByte() || it[0].getBitsFromBufferLeBits(8, 12) == maxTxn }.flatten()
             val parsed = En1545Parsed()
             for (tag in flat) {

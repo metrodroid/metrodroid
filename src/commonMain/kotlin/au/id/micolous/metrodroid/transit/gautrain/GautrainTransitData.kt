@@ -79,7 +79,7 @@ data class GautrainTransitData(private val mSerial: Long,
     override val cardName get() = NAME
 
     override val balance: TransitBalance?
-        get() = TransitBalanceStored(GautrainLookup.parseCurrency(mBalances.maxBy { it.mTxn }?.mBalance ?: 0),
+        get() = TransitBalanceStored(GautrainLookup.parseCurrency(mBalances.maxByOrNull { it.mTxn }?.mBalance ?: 0),
                 En1545FixedInteger.parseDate(mExpdate, GautrainLookup.timeZone))
 
     override fun getRawFields(level: RawLevel): List<ListItem>? = mBalances.mapIndexed {

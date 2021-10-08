@@ -54,6 +54,7 @@ import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
 import org.jetbrains.annotations.NonNls
 
 class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
@@ -284,7 +285,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     var fileType: String? = null
                     try {
                         val k = ClassicStaticKeys.fromJSON(
-                                CardSerializer.jsonPlainStable.parseJson(keyData).jsonObject,
+                                CardSerializer.jsonPlainStable.parseToJsonElement(keyData).jsonObject,
                                 "cursor/$id")
                         desc = k!!.description
                         fileType = k.fileType
@@ -309,7 +310,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                     try {
                         val k = ClassicCardKeys.fromJSON(
-                                CardSerializer.jsonPlainStable.parseJson(keyData).jsonObject,
+                                CardSerializer.jsonPlainStable.parseToJsonElement(keyData).jsonObject,
                                 "cursor/$id")
                         fileType = k.fileType
                     } catch (ignored: Exception) {
@@ -350,7 +351,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
             val keyData = stream.readBytes()
 
             try {
-                val json = CardSerializer.jsonPlainStable.parseJson(String(keyData, Charsets.UTF_8))
+                val json = CardSerializer.jsonPlainStable.parseToJsonElement(String(keyData, Charsets.UTF_8))
                 Log.d(TAG, "inserting key")
 
                 // Test that we can deserialise this

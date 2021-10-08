@@ -195,7 +195,7 @@ class MobibTransitData(
             val extHolderParsed = holder?.let { En1545Parser.parse(it, extHolderFields) }
             val purchase = card.getFile(CalypsoApplication.File.EP_LOAD_LOG, trySfi = false)
                     ?.getRecord(1)?.getBitsFromBuffer(2, 14) ?: 0
-            val totalTrips = transactions.map { it.transactionNumber }.max() ?: 0
+            val totalTrips = transactions.map { it.transactionNumber }.maxOrNull() ?: 0
             return MobibTransitData(balances = if (balances.isNotEmpty()) balances else null,
                     subscriptions = subscriptions,
                     trips = trips,

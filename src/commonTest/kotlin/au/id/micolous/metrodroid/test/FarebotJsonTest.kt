@@ -18,12 +18,9 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.serializers.AutoJsonFormat
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -34,17 +31,15 @@ class FarebotJsonTest : CardReaderWithAssetDumpsTest<AutoJsonFormat>(AutoJsonFor
     @Test
     @UseExperimental(ExperimentalStdlibApi::class)
     fun testFarebotJson() {
-        val cards = importer.readCardList(loadSmallAssetBytes("farebot/farebot.json")
-            .decodeToString())
-        var ctr = 0
-        for (card in cards!!) {
-            val json = JsonKotlinFormat.writeCard(card)
-            Log.d("FarebotJsonTest", "reserial[$ctr] = " + json)
+        val cards = importer.readCardList(
+            loadAsset("farebot/farebot.json").readToString())
+        for ((ctr, card) in cards.withIndex()) {
+            val json = JsonKotlinFormat.makeCardString(card)
+            Log.d("FarebotJsonTest", "reserial[$ctr] = $json")
             val expected = loadSmallAssetBytes("farebot/metrodroid_$ctr.json")
-            assertEquals<String>(expected = String(expected).trim(),
-                         actual = json.toString().trim(),
+            assertEquals(expected = expected.decodeToString().trim(),
+                         actual = json.trim(),
                          message = "Wrong reserialization for card $ctr")
-            ctr++
         }
     }
 }

@@ -21,7 +21,9 @@
 package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.multi.Log
-import kotlinx.serialization.json.Json
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
 
 /**
  * Used by [au.id.micolous.metrodroid.util.Utils.detectKeyFormat] to return the format of a key contained within a
@@ -62,7 +64,7 @@ enum class KeyFormat {
 
         @UseExperimental(ExperimentalStdlibApi::class)
         fun detectKeyFormat(data: ByteArray): KeyFormat {
-            if (data[0] != '{'.toByte()) {
+            if (data[0] != '{'.code.toByte()) {
                 // This isn't a JSON file.
                 Log.d(TAG, "couldn't find starting {")
                 return rawFormat(data.size)
@@ -75,12 +77,11 @@ enum class KeyFormat {
                     Log.d(TAG, "unsupported encoding at byte $i")
                     return rawFormat(data.size)
                 }
-                if (c in listOf('\n'.toByte(), '\r'.toByte(), '\t'.toByte(),
-                                ' '.toByte())) {
+                if (c in listOf('\n', '\r', '\t', ' ').map { it.code.toByte() }) {
                     continue
                 }
 
-                if (c == '}'.toByte()) {
+                if (c == '}'.code.toByte()) {
                     break
                 }
 
@@ -91,21 +92,23 @@ enum class KeyFormat {
 
             // Now see if it actually parses.
             try {
-                val o = CardKeys.jsonParser.parseJson(data.decodeToString()).jsonObject
-                val type = o.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
+                val o = CardKeys.jsonParser.parseToJsonElement(
+                    data.decodeToString()
+                ).jsonObject
+                val type = o[CardKeys.JSON_KEY_TYPE_KEY]?.jsonPrimitiveOrNull?.contentOrNull
                 when(type) {
                     CardKeys.TYPE_MFC ->
-                        return if (o.getPrimitiveOrNull(CardKeys.JSON_TAG_ID_KEY)?.contentOrNull?.isEmpty() != false) {
-                            KeyFormat.JSON_MFC_NO_UID
+                        return if (o[CardKeys.JSON_TAG_ID_KEY]?.jsonPrimitiveOrNull?.contentOrNull?.isEmpty() != false) {
+                            JSON_MFC_NO_UID
                         } else {
-                            KeyFormat.JSON_MFC
+                            JSON_MFC
                         }
 
-                    CardKeys.TYPE_MFC_STATIC -> return KeyFormat.JSON_MFC_STATIC
+                    CardKeys.TYPE_MFC_STATIC -> return JSON_MFC_STATIC
                 }
 
                 // Unhandled JSON format
-                return KeyFormat.JSON
+                return JSON
             } catch (e: Exception) {
                 Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e)
             }
