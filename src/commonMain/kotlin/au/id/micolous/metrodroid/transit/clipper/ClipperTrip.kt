@@ -70,7 +70,7 @@ class ClipperTrip (private val mTimestamp: Long,
             else -> (mVehicleNum / 10).toString() + ((mVehicleNum % 10) + 9).toString(16).uppercase()
         }
 
-    override val fare: TransitCurrency?
+    override val fare: TransitCurrency
         get() = TransitCurrency.USD(mFare)
 
     override val startStation: Station?

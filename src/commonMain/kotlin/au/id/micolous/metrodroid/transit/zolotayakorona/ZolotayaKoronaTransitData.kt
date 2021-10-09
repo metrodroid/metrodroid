@@ -92,7 +92,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = listOf(
+    override fun getRawFields(level: RawLevel): List<ListItem> = listOf(
             // Unsure about next 2 fields, hence they are hidden in raw fields
             ListItem("Status", mStatus.toString()),
             ListItem("Issue seqno", mSequenceCtr.toString()),

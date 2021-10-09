@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class IstanbulKartTransitData (private val mSerial: String,
                                private val mSerial2: String): SerialOnlyTransitData() {
 
-    public override val extraInfo: List<ListItem>?
+    public override val extraInfo: List<ListItem>
         get() = listOf(ListItem(R.string.istanbulkart_2nd_card_number, mSerial2))
 
     override val reason: Reason
