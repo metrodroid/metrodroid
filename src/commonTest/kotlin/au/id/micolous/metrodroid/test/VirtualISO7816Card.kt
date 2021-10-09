@@ -153,7 +153,7 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
                     continue
                 }
 
-                val truncatedName = appName.sliceArray(0 until params.size)
+                val truncatedName = appName.sliceArray(params.indices)
 
                 if (params.contentEquals(truncatedName)) {
                     // we have an app!

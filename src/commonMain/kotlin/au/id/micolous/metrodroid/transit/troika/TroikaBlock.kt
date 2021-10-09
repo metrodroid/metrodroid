@@ -82,7 +82,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
         get() = listOf(
                 ListItem("Layout", "0x" + mLayout.toString(16)),
                 ListItem("TicketType", "0x" + mTicketType.toString(16)),
-                ListItem("Checksum", "0x" + mCheckSum)
+                ListItem("Checksum", "0x$mCheckSum")
         )
 
     @Parcelize

@@ -7,7 +7,7 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitName
 import au.id.micolous.metrodroid.transit.Trip
 
-expect internal fun StationTableReaderGetSTR(name: String): StationTableReader?
+internal expect fun StationTableReaderGetSTR(name: String): StationTableReader?
 
 data class ProtoStation(val operatorId: Int?, val name: TransitName, val latitude: Float, val longitude: Float, val lineIdList: List<Int>)
 

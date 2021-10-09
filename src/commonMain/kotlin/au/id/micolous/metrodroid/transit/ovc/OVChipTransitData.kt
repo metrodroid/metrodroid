@@ -184,7 +184,7 @@ data class OVChipTransitData(
                 val subData = card[32 + subscriptionAddress / 5].readBlocks(subscriptionAddress % 5 * 3, 3)
 
                 factory(subData, type1, used)
-            }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })
+            }.sortedWith { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) }
         }
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {

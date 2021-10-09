@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.proto.stations.*
 import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.addressOf
 
-actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)
 
 private const val TAG = "StationTableReaderIOS"

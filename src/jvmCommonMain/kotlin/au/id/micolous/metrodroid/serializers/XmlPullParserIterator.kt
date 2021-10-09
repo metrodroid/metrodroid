@@ -136,11 +136,11 @@ private class XmlPullParserIterator(
                 // Ignore other events.
             } else if (mSerializer == null) {
                 when (eventType) {
-                    XmlPullParser.START_TAG -> if (isCard(mxpp.getName())) {
+                    XmlPullParser.START_TAG -> if (isCard(mxpp.name)) {
                         newCard()
                     } else {
                         // Unexpected start tag
-                        throw XmlPullParserException("Unexpected start tag: " + mxpp.getName())
+                        throw XmlPullParserException("Unexpected start tag: " + mxpp.name)
                     }
 
                     XmlPullParser.END_TAG -> {

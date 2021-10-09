@@ -40,7 +40,7 @@ internal actual fun formatCurrency(value: Int, divisor: Int, currencyCode: Strin
     if (!isBalance && value < 0) {
         // Top-ups and refunds get an explicit "positive" marker added, as this list shows
         // debits.
-        return FormattedString("+ " + currencyFormatter.format(Math.abs(amount)))
+        return FormattedString("+ " + currencyFormatter.format(abs(amount)))
     } else {
         return FormattedString(currencyFormatter.format(amount))
     }

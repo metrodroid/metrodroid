@@ -177,7 +177,7 @@ class CardBalanceFragment : ListFragment() {
 
         private fun getBalanceView(convertView: View?,
                                    parent: ViewGroup, balance: TransitBalance): View {
-            var view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
+            val view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
 
             val validView = view.findViewById<TextView>(R.id.valid)
             val validity = TransitBalance.formatValidity(balance)

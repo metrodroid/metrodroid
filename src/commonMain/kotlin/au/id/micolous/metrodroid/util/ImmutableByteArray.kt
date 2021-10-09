@@ -122,7 +122,7 @@ class ImmutableByteArray private constructor(
     fun contentEquals(other: ByteArray) = mData.contentEquals(other)
     fun startsWith(other: ByteArray) =
             mData.size >= other.size &&
-            mData.sliceArray(0 until other.size).contentEquals(other)
+            mData.sliceArray(other.indices).contentEquals(other)
     fun startsWith(other: ImmutableByteArray) = startsWith(other.mData)
 
     /**
@@ -294,7 +294,7 @@ class ImmutableByteArray private constructor(
 
             var uRet = (buffer[iSByte].toInt() shr iSBit) and (0xFF shr iSBit)
 
-            for (i in (iSByte + 1)..(iEByte - 1)) {
+            for (i in (iSByte + 1) until iEByte) {
                 val t = ((buffer[i].toInt() and 0xFF) shl (((i - iSByte) * 8) - iSBit))
                 uRet = uRet or t
             }
@@ -320,7 +320,7 @@ class ImmutableByteArray private constructor(
 
             var uRet = (buffer[iSByte].toInt() and (0xFF shr iSBit)) shl (((iEByte - iSByte - 1) * 8) + (iEBit + 1))
 
-            for (i in (iSByte + 1)..(iEByte - 1)) {
+            for (i in (iSByte + 1) until iEByte) {
                 val t = (buffer[i].toInt() and 0xFF) shl (((iEByte - i - 1) * 8) + (iEBit + 1))
                 uRet = uRet or t
             }

@@ -44,7 +44,8 @@ class CardKeysDB (private val context: Context): CardKeysRetriever {
      */
     override fun forID(id: Int) = if (id >= 0)
         fromCursor(fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI,
-                Integer.toString(id))))
+            id.toString()
+        )))
     else
         null
 
