@@ -10,8 +10,7 @@ import kotlin.test.assertTrue
 /**
  * Base class for building tests that need Assets data.
  *
- * @param C A [Card] subclass for the type of media to accept.
- * @param importer A reference to a [CardImporter] which produces [C].
+ * @param importer A reference to a [CardImporter].
  */
 abstract class CardReaderWithAssetDumpsTest<I : CardImporter>(
         val importer: I

@@ -7,7 +7,7 @@ import au.id.micolous.metrodroid.util.Input
 /**
  * Interface for writing card data importers.
  *
- * By default, this adopts a binary-based ([InputStream]) model.
+ * By default, this adopts a binary-based ([Input]) model.
  */
 interface CardImporter {
     /**

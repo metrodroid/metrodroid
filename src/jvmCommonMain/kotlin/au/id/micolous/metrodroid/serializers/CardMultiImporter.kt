@@ -10,9 +10,6 @@ interface CardMultiImporter {
      *
      * Implementations should read the file incrementally (lazy), to save memory.
      *
-     * By default, this tries to read one card (using [readCard]), and returns a
-     * singleton iterator.
-     *
      * @param stream Stream to read the card content from.
      */
     fun readCards(stream: InputStream): Iterator<Card>?
