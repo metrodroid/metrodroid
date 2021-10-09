@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Represents a page of data on a NFC Vicinity card

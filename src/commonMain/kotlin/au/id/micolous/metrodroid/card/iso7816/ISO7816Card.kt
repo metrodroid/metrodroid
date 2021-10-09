@@ -50,7 +50,6 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
  */
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
     private val klasses =

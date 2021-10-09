@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Utility class for reading NfcV / Vicinity /  ISO 15693

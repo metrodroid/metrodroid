@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 class InvalidClassicSector constructor(override val raw: ClassicSectorRaw) : ClassicSector() {

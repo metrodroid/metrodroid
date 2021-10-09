@@ -41,7 +41,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 private const val LOG_FORMAT = 0x9f4f
 private const val PIN_RETRY = 0x9f17

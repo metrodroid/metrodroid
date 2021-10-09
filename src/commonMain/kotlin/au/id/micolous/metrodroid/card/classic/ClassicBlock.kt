@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 class ClassicBlock(@SerialName("data") private val mData: ImmutableByteArray) {
