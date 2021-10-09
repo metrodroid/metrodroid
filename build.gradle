@@ -527,6 +527,9 @@ android {
         debug {
             pseudoLocalesEnabled true
             buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\""+androidLanguageList.join("\", \"")+"\", \"en-rXA\", \"ar-rXB\"}"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard.cfg'
         }
         dev.initWith(buildTypes.debug)
         dev {
