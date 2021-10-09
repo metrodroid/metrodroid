@@ -39,9 +39,6 @@ class MctCardImporter : CardImporter {
         var maxSector = -1
         var curBlocks = mutableListOf<ImmutableByteArray>()
         var lastBlock: String? = null
-        // Largest MFC is 4K. hex brings it up to 8K. Newlines and +Sector
-        // Add less than 2x. So 16K chars is the most we are interested in
-        // It should be ASCII, but let's be safe and allocate 32K
         stream.forEachLine { lineRaw ->
             val line = lineRaw.trim()
             if (line.startsWith("+Sector:")) {
