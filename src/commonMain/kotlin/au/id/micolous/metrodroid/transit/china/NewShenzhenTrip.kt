@@ -35,7 +35,7 @@ class NewShenzhenTrip (override val capsule: ChinaTripCapsule): ChinaTripAbstrac
     override val endStation: Station?
         get() = when (transport) {
             SZT_METRO -> StationTableReader.getStation(SHENZHEN_STR,
-                    (mStation and 0xff.inv()).toInt(),
+                    (mStation and 0xffffff00).toInt(),
                     (mStation shr 8).toString(16)).addAttribute(
                     Localizer.localizeString(R.string.szt_station_gate,
                             (mStation and 0xff).toString(16)))
