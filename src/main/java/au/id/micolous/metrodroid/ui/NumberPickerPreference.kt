@@ -58,19 +58,14 @@ class NumberPickerPreference : DialogPreference {
     }
 
     /**
-     * Gets the text from the [SharedPreferences].
+     * The current preference value.
      *
-     * @return The current preference value.
+     * The text is saved to the [SharedPreferences]
      */
-    /**
-     * Saves the text to the [SharedPreferences].
-     *
-     * @param value The text to save
-     */
-    // Always persist/notify the first time.
     var value = 0
         set(value) {
             val changed = field != value
+            // Always persist/notify the first time.
             if (changed || !mValueSet) {
                 field = value
                 mValueSet = true
