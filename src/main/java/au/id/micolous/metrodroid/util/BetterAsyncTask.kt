@@ -58,15 +58,13 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activ
         mProgressText?.text = text?.ifEmpty { null } ?: Localizer.localizeString(R.string.loading)
     }
 
-    override fun doInBackground(vararg unused: Void): TaskResult<Result> {
+    override fun doInBackground(vararg unused: Void): TaskResult<Result> =
         try {
-            return TaskResult(doInBackground())
+            TaskResult(doInBackground())
         } catch (e: Exception) {
             Log.e(TAG, "Error in task:", e)
-            return TaskResult(e)
+            TaskResult(e)
         }
-
-    }
 
     override fun onPreExecute() {
         super.onPreExecute()
