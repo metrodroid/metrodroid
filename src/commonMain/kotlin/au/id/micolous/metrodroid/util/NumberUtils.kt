@@ -65,13 +65,13 @@ object NumberUtils {
         val cand = value.toString()
         if (cand.length >= minDigits)
             return cand
-        return String(CharArray(minDigits - cand.length) { '0' }) + cand
+        return CharArray(minDigits - cand.length) { '0' }.concatToString() + cand
     }
     fun zeroPad(value: Long, minDigits: Int): String {
         val cand = value.toString()
         if (cand.length >= minDigits)
             return cand
-        return String(CharArray(minDigits - cand.length) { '0' }) + cand
+        return CharArray(minDigits - cand.length) { '0' }.concatToString() + cand
     }
 
     fun groupString(value: String, separator: String, vararg groups: Int): String {
@@ -120,7 +120,8 @@ object NumberUtils {
         return digitsOf(integer.toString())
     }
 
-    private fun digitsOf(integer: String): IntArray = integer.map { String(charArrayOf(it)).toInt() }.toIntArray()
+    private fun digitsOf(integer: String): IntArray = integer.map { charArrayOf(it).concatToString()
+        .toInt() }.toIntArray()
 
     private fun luhnChecksum(cardNumber: String): Int {
         val checksum = digitsOf(cardNumber).reversed().withIndex().sumOf { (i, dig) ->

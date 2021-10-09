@@ -36,7 +36,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
         get() = mParsed.getIntOrZero(VALIDATION_STATUS) == 1 && mParsed.getIntOrZero(VALIDATION_MODEL) == 1
 
     private val passengerCount: Int
-        get() = (1..3).sumBy { mParsed.getIntOrZero(passengerTotal(it)) }
+        get() = (1..3).sumOf { mParsed.getIntOrZero(passengerTotal(it)) }
 
     val startTimestamp
         get() = parseDateTime(mParsed.getIntOrZero(START_TIME), mLookup.timeZone)

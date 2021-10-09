@@ -187,7 +187,8 @@ class ImmutableByteArray private constructor(
     override fun isEmpty() = mData.isEmpty()
     fun addSlice(other: ImmutableByteArray, start: Int, len: Int) = this + other.sliceOffLen(start, len)
     fun readASCII() = readLatin1() // ASCII is subset of Latin-1
-    fun readLatin1() = String(mData.map { (it.toInt() and 0xff).toChar() }.filter { it != 0.toChar() }.toCharArray())
+    fun readLatin1() = mData.map { (it.toInt() and 0xff).toChar() }.filter { it != 0.toChar() }.toCharArray()
+        .concatToString()
     fun sliceOffLenSafe(off: Int, len: Int): ImmutableByteArray? {
         if (off < 0 || len < 0 || off >= size)
             return null
