@@ -60,7 +60,7 @@
 
 package au.id.micolous.metrodroid.util
 
-@UseExperimental(ExperimentalUnsignedTypes::class)
+@OptIn(ExperimentalUnsignedTypes::class)
 class MD5State() {
     /**
      * 128-byte state
@@ -92,7 +92,7 @@ class MD5State() {
  * @author    Santeri Paavolainen <sjpaavol></sjpaavol>@cc.helsinki.fi>
  */
 
-@UseExperimental(ExperimentalUnsignedTypes::class)
+@OptIn(ExperimentalUnsignedTypes::class)
 class MD5Ctx {
     /**
      * MD5 state
