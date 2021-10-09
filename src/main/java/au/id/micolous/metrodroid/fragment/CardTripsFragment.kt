@@ -112,8 +112,6 @@ class CardTripsFragment : ListFragment() {
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
                 headerText.text = headerDate.spanned
-
-                (listHeader.findViewById<View>(android.R.id.text1) as TextView).text = if (date != null) TimestampFormatter.longDateFormat(date).spanned else null
             } else {
                 listHeader.visibility = View.GONE
             }
