@@ -91,7 +91,6 @@ abstract class MultiTypeSerializer<T> : KSerializer<T> {
 
     @Suppress("UNCHECKED_CAST")
     override fun serialize(encoder: Encoder, value: T) {
-        @Suppress("NAME_SHADOWING")
         val output = encoder.beginStructure(descriptor)
         val (str, serializer) = obj2serializer(value)
         output.encodeStringElement(descriptor, 0, str)
@@ -106,7 +105,6 @@ abstract class MultiTypeSerializer<T> : KSerializer<T> {
     @OptIn(ExperimentalSerializationApi::class)
     @Suppress("UNCHECKED_CAST")
     override fun deserialize(decoder: Decoder): T {
-        @Suppress("NAME_SHADOWING")
         val input = decoder.beginStructure(descriptor)
         if (input.decodeSequentially()) {
             val klassName = input.decodeStringElement(descriptor, 0)
