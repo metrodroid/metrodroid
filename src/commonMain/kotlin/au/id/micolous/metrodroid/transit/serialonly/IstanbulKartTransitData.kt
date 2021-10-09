@@ -69,7 +69,8 @@ class IstanbulKartTransitData (private val mSerial: String,
                 val serial = parseSerial(metadata) ?: return null
                 return IstanbulKartTransitData(
                         mSerial = serial,
-                        mSerial2 = card.tagId.toHexString().toUpperCase())
+                        mSerial2 = card.tagId.toHexString().uppercase()
+                )
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
             }

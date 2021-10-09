@@ -151,7 +151,7 @@ actual object Preferences {
 
     val themePreference get() = getStringPreference(PREF_THEME, "dark")
 
-    actual val mfcFallbackReader get() = getStringPreference(PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US)
+    actual val mfcFallbackReader get() = getStringPreference(PREF_MFC_FALLBACK, "null").lowercase(Locale.US)
 
     actual val language: String get() = Locale.getDefault().language
 
@@ -162,15 +162,15 @@ actual object Preferences {
                 tm.phoneType == TelephonyManager.PHONE_TYPE_CDMA)) {
             val netCountry = tm.networkCountryIso
             if (netCountry != null && netCountry.length == 2)
-                return netCountry.toUpperCase(Locale.US)
+                return netCountry.uppercase(Locale.US)
 
             val simCountry = tm.simCountryIso
             if (simCountry != null && simCountry.length == 2)
-                return simCountry.toUpperCase(Locale.US)
+                return simCountry.uppercase(Locale.US)
         }
 
         // Fall back to using the Locale settings
-        return Locale.getDefault().country.toUpperCase(Locale.US)
+        return Locale.getDefault().country.uppercase(Locale.US)
     }
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,

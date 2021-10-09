@@ -212,7 +212,8 @@ internal constructor(dbName: String) : StationTableReader {
         private val MAGIC = ImmutableByteArray.of(0x4d, 0x64, 0x53, 0x54)
         private const val VERSION = 1
 
-        private fun squash(input: String): String = input.substringAfter("TransportType").replace("_", "", ignoreCase = true).toLowerCase()
+        private fun squash(input: String): String =
+            input.substringAfter("TransportType").replace("_", "", ignoreCase = true).lowercase()
 
         private fun convertTransportType(input : TransportType): Trip.Mode? {
             if (input == TransportType_Unknown)

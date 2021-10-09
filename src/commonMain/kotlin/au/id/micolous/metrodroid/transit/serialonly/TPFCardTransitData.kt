@@ -52,7 +52,7 @@ data class TPFCardTransitData (private val mSerial: ImmutableByteArray): SerialO
         private fun getSerial(card: DesfireCard) =
                 card.tagId.reverseBuffer()
 
-        private fun formatSerial(serial: ImmutableByteArray) = serial.toHexString().toUpperCase()
+        private fun formatSerial(serial: ImmutableByteArray) = serial.toHexString().uppercase()
     }
 
     object Factory : DesfireCardTransitFactory {

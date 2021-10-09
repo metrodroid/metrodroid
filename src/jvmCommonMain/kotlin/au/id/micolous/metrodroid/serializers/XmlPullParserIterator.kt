@@ -111,7 +111,7 @@ private class XmlPullParserIterator(
         mSerializer!!.text(filterBadXMLChars(mxpp.text))
     }
 
-    private fun isCard(s: String) = s.toLowerCase() == "card"
+    private fun isCard(s: String) = s.lowercase(Locale.US) == "card"
 
     @SuppressWarnings("CallToSuspiciousStringMethod")
     private fun prepareMore(): Boolean {
@@ -123,7 +123,7 @@ private class XmlPullParserIterator(
                     // We have an root tag!
                     mRootTag = mxpp.name
 
-                    when (mRootTag?.toLowerCase()) {
+                    when (mRootTag?.lowercase(Locale.US)) {
                         "card" -> newCard()
                         "cards" -> {}
                         else -> {

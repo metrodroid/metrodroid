@@ -88,7 +88,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 ListItem(R.string.zolotaya_korona_discount, discountMap[mDiscountCode]?.let {
                     Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, mDiscountCode.toString(16))),
                 // Printed in hex on the receipt
-                ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()),
+                ListItem(R.string.card_serial_number, mCardSerial.uppercase()),
                 ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
 
