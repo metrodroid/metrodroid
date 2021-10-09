@@ -80,7 +80,7 @@ class AddKeyActivity : MetrodroidActivity() {
         findViewById<View>(R.id.add).setOnClickListener findViewById@{
             val keyData = mKeyData
             if (keyData?.uid == null) return@findViewById
-            val keyType = if ((findViewById<View>(R.id.is_key_a) as RadioButton).isChecked)
+            val keyType = if (findViewById<RadioButton>(R.id.is_key_a).isChecked)
                 ClassicSectorKey.KeyType.A
             else
                 ClassicSectorKey.KeyType.B
@@ -89,7 +89,7 @@ class AddKeyActivity : MetrodroidActivity() {
             InsertKeyTask(this@AddKeyActivity, keyData).execute()
         }
 
-        (findViewById<View>(R.id.keys_radio) as RadioGroup).setOnCheckedChangeListener { _, checkedId ->
+        findViewById<RadioGroup>(R.id.keys_radio).setOnCheckedChangeListener { _, checkedId ->
             mKeyData?.setAllKeyTypes(if (checkedId == R.id.is_key_a)
                 ClassicSectorKey.KeyType.A
             else
@@ -183,17 +183,18 @@ class AddKeyActivity : MetrodroidActivity() {
     }
 
     private fun drawUI() {
+        val cardText = findViewById<TextView>(R.id.card_id)
         if (Preferences.hideCardNumbers) {
             if (mKeyData?.uid != null) {
-                (findViewById<View>(R.id.card_id) as TextView).setText(R.string.hidden_card_number)
+                cardText.setText(R.string.hidden_card_number)
             }
 
-            (findViewById<View>(R.id.key_data) as TextView).text = Localizer.localizePlural(R.plurals.hidden_key_data,
+            findViewById<TextView>(R.id.key_data).text = Localizer.localizePlural(R.plurals.hidden_key_data,
                     mKeyData?.sourceDataLength ?: 0,
                     mKeyData?.sourceDataLength ?: 0)
         } else {
             if (mKeyData?.uid != null) {
-                (findViewById<View>(R.id.card_id) as TextView).text = mKeyData?.uid
+                cardText.text = mKeyData?.uid
             }
 
             // FIXME: Display keys better.
@@ -204,7 +205,7 @@ class AddKeyActivity : MetrodroidActivity() {
                 ""
             }
 
-            (findViewById<View>(R.id.key_data) as TextView).text = j
+            findViewById<TextView>(R.id.key_data).text = j
         }
 
         val kt = mKeyData?.keyType
@@ -216,19 +217,19 @@ class AddKeyActivity : MetrodroidActivity() {
             findViewById<View>(R.id.keys_radio).visibility = View.VISIBLE
 
             if (kt === ClassicSectorKey.KeyType.A) {
-                (findViewById<View>(R.id.is_key_a) as RadioButton).isChecked = true
+                findViewById<RadioButton>(R.id.is_key_a).isChecked = true
             } else if (kt === ClassicSectorKey.KeyType.B) {
-                (findViewById<View>(R.id.is_key_b) as RadioButton).isChecked = true
+                findViewById<RadioButton>(R.id.is_key_b).isChecked = true
             }
         }
 
         if (mKeyData?.uid != null) {
             findViewById<View>(R.id.directions).visibility = View.GONE
-            findViewById<View>(R.id.card_id).visibility = View.VISIBLE
+            cardText.visibility = View.VISIBLE
             findViewById<View>(R.id.add).isEnabled = true
         } else {
             findViewById<View>(R.id.directions).visibility = View.VISIBLE
-            findViewById<View>(R.id.card_id).visibility = View.GONE
+            cardText.visibility = View.GONE
             findViewById<View>(R.id.add).isEnabled = false
         }
     }
