@@ -177,7 +177,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         return try {
             pollForSystemCode(SYSTEMCODE_FELICA_LITE) != null
         } catch (e: CardLostException) {
-            Log.d(TAG, "Swallowing TagLostExecption", e)
+            Log.d(TAG, "Swallowing TagLostException", e)
             false
         }
     }

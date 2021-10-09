@@ -212,7 +212,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 return null
             val tz = RussiaTaxCodes.BCDToTimeZone(cardType shr 16)
             val epoch = Epoch.local(1970, tz)
-            // This is pseudo unix time with local day alwayscoerced to 86400 seconds
+            // This is pseudo unix time with local day always coerced to 86400 seconds
             return epoch.daySecond(time / 86400, time % 86400)
         }
 

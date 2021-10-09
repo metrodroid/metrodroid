@@ -2,7 +2,7 @@
 # -*- mode: python; indent-tabs-mode: nil; tab-width: 2 -*-
 """
 amiibo2pb.py
-Downloads information about Ambiibos from AmiiboAPI.
+Downloads information about Amiibos from AmiiboAPI.
 
 Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
 Copyright 2018-2019 Google

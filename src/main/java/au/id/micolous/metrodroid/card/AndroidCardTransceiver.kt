@@ -137,7 +137,7 @@ class AndroidIsoTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
         this.isoDep = null
 
 
-        // Android can declare IOExecption here but we really don't care.
+        // Android can declare IOException here but we really don't care.
         try {
             isoDep?.close()
         } catch (e: IOException) {
