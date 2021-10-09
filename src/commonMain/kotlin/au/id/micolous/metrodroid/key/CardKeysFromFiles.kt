@@ -104,8 +104,7 @@ class CardKeysFromFiles(private val fileReader: CardKeysFileReader) : CardKeysRe
                         ctr--
                         val b = fileReader.readFile("$dir/$it") ?: continue
                         val k = CardKeys.jsonParser.parseToJsonElement(b).jsonObjectOrNull
-                        if (k == null)
-                            continue
+                            ?: continue
                         val type = k[CardKeys.JSON_KEY_TYPE_KEY]?.jsonPrimitiveOrNull?.contentOrNull
                         val tagId = when (type) {
                             CardKeys.TYPE_MFC_STATIC -> CardKeys.CLASSIC_STATIC_TAG_ID
