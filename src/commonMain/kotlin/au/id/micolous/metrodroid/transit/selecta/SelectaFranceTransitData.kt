@@ -1,5 +1,5 @@
 /*
- * SelectaFRanceTransitData.kt
+ * SelectaFranceTransitData.kt
  *
  * Copyright 2018 Google
  *

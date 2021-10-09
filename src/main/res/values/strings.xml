@@ -435,7 +435,7 @@
     <string name="theme_dark">Dark</string>
     <!-- Translators: It's about light theme. -->
     <string name="theme_light">Light</string>
-    <!-- Translators: It's about theme that mimicks FareBot appearence. -->
+    <!-- Translators: It's about theme that mimics FareBot appearence. -->
     <string name="theme_farebot" translatable="false">FareBot</string>
 
     <!-- Translators: do not translate -->
@@ -548,7 +548,7 @@
         <item quantity="one">%d trip remaining out of %d</item>
         <item quantity="other">%d trips remaining out of %d</item>
     </plurals>
-    <!-- Translarors: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
+    <!-- Translators: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
@@ -1251,7 +1251,7 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
-    <!-- Translators: it's a day from mindight to next midnight. -->
+    <!-- Translators: it's a day from midnight to next midnight. -->
     <plurals name="hsl_valid_days_calendar">
         <item quantity="one">%d calendar day</item>
         <item quantity="other">%d calendar days</item>

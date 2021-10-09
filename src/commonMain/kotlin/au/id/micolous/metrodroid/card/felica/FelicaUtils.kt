@@ -39,7 +39,7 @@ object FelicaUtils {
      * a particular system operator's data.
      *
      * @param systemCode FeliCa system code to translate.
-     * @return StringRes for what corresponds to that system ocde.
+     * @return StringRes for what corresponds to that system code.
      */
     fun getFriendlySystemName(systemCode: Int): StringResource {
         return when (systemCode) {

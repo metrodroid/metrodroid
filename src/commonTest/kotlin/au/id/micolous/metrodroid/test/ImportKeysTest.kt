@@ -102,7 +102,7 @@ class ImportKeysTest : BaseInstrumentedTest() {
     }
 
     @Test
-    fun testSectorKeySerialiser() {
+    fun testSectorKeySerializer() {
         val k0 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyA\", \"key\": \"010203040506\"}", "test") as ClassicSectorKey
         val k1 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyB\", \"key\": \"102030405060\"}", "test") as ClassicSectorKey
 

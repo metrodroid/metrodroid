@@ -95,7 +95,7 @@ private constructor(dbName: String) : StationTableReader {
         mStationDb = Stations.StationDb.parseDelimitedFrom(mTable)
 
         // Mark where the start of the station list is.
-        // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
+        // AssetInputStream allows unlimited seeking, no need to specify a read limit.
         mTable.mark(0)
     }
 

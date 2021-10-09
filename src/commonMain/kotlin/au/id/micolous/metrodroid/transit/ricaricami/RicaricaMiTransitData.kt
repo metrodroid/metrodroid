@@ -148,12 +148,12 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
                         card.getSector(5).getBlock(1).data,
                         card.getSector(5).getBlock(2).data))
             }
-            val constractList1 = En1545Parser.parse(card[14,2].data, CONTRACT_LIST_FIELDS)
-            val constractList2 = En1545Parser.parse(card[15,2].data, CONTRACT_LIST_FIELDS)
+            val contractList1 = En1545Parser.parse(card[14,2].data, CONTRACT_LIST_FIELDS)
+            val contractList2 = En1545Parser.parse(card[15,2].data, CONTRACT_LIST_FIELDS)
             return RicaricaMiTransitData(ticketEnvParsed = ticketEnvParsed,
                     mTrips = mergedTrips, mSubscriptions = subscriptions,
-                    contractList1 = constractList1,
-                    contractList2 = constractList2)
+                    contractList1 = contractList1,
+                    contractList2 = contractList2)
         }
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {

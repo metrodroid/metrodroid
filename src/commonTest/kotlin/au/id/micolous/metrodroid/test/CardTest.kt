@@ -52,7 +52,7 @@ import kotlin.test.assertTrue
  */
 class CardTest : BaseInstrumentedTest() {
     @Test
-    fun testJsonSerialiser() {
+    fun testJsonSerializer() {
         val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
 
         val c1 = Card(ImmutableByteArray.fromHex("00123456"),
