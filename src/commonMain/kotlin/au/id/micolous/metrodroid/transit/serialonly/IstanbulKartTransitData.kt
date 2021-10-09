@@ -51,8 +51,8 @@ class IstanbulKartTransitData (private val mSerial: String,
     public override val extraInfo: List<ListItem>?
         get() = listOf(ListItem(R.string.istanbulkart_2nd_card_number, mSerial2))
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val cardName get() = NAME
 
