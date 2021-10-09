@@ -366,6 +366,7 @@ kotlin {
                 implementation group: 'xmlpull', name: 'xmlpull', version: '1.1.3.4a'
                 implementation project(':proto')
                 implementation 'au.id.micolous:kotlin-pcsc'
+                implementation group: 'net.sf.kxml', name: 'kxml2', version: '2.3.0'
             }
             kotlin.srcDirs += new File(generatedLocalizeDir, 'jvmCliMain/kotlin')
             resources.srcDirs += new File("$projectDir/mdst")
