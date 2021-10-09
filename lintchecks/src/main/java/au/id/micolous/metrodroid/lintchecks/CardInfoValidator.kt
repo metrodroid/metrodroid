@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 package au.id.micolous.metrodroid.lintchecks
 
 import com.android.tools.lint.detector.api.*
