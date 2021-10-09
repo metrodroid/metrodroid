@@ -32,6 +32,7 @@ class FarebotJsonTest : CardReaderWithAssetDumpsTest<AutoJsonFormat>(AutoJsonFor
     fun testFarebotJson() {
         val cards = importer.readCardList(
             loadAsset("farebot/farebot.json").readToString())
+        assertEquals(7, cards.size)
         for ((ctr, card) in cards.withIndex()) {
             val json = JsonKotlinFormat.makeCardString(card)
             Log.d("FarebotJsonTest", "reserial[$ctr] = $json")
