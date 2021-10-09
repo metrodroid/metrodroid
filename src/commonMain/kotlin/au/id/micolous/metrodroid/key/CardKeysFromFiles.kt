@@ -132,7 +132,7 @@ class CardKeysFromFiles(private val fileReader: CardKeysFileReader) : CardKeysRe
 class CardKeysDummy : CardKeysRetriever {
     override fun forClassicStatic(): ClassicStaticKeys? = null
 
-    override fun forID(id: Int) = null
+    override fun forID(id: Int): CardKeys? = null
 
     override fun forTagID(tagID: ImmutableByteArray): CardKeys? = null
 }
