@@ -345,7 +345,6 @@ class ImmutableByteArray private constructor(
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.code.toByte() }.toByteArray())
 
-        @UseExperimental(ExperimentalStdlibApi::class)
         fun fromUTF8(s: String) = ImmutableByteArray(mData = s.encodeToByteArray())
 
         override fun serialize(encoder: Encoder, value: ImmutableByteArray) {

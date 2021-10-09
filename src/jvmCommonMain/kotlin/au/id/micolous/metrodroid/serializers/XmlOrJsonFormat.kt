@@ -1,5 +1,3 @@
-@file:UseExperimental(ExperimentalStdlibApi::class)
-
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card

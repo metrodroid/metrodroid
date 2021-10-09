@@ -19,7 +19,6 @@ interface CardImporter {
      */
     fun readCard(stream: Input): Card?
 
-    @UseExperimental(ExperimentalStdlibApi::class)
     fun readCard(input: String): Card?
         = readCard(ByteArrayInput(input.encodeToByteArray()))
 }

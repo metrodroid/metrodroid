@@ -31,7 +31,6 @@ class ImportKeysTest : BaseInstrumentedTest() {
         return loadSmallAssetBytes("keyTests/$path")
     }
 
-    @UseExperimental(ExperimentalStdlibApi::class)
     private fun loadTestJSON(path: String, expectedFormat: KeyFormat?): Pair<String, KeyFormat> {
         val d = loadTestFile(path)
         val f = KeyFormat.detectKeyFormat(d)

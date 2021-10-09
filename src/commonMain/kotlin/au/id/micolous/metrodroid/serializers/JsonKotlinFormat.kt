@@ -39,7 +39,6 @@ internal val JsonElement.jsonObjectOrNull: JsonObject?
     get() = this as? JsonObject
 
 object JsonKotlinFormat : CardExporter, CardImporter {
-    @UseExperimental(ExperimentalStdlibApi::class)
     override fun writeCard(s: Output, card: Card) {
         val b = makeCardString(card).encodeToByteArray()
         s.write(b)

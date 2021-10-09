@@ -39,7 +39,6 @@ class ClassicReaderTest : BaseInstrumentedTest() {
     private fun keyReader(path: String): CardKeysFileReader = object : CardKeysFileReader {
         override fun listFiles(dir: String): List<String>? = listAsset("$path/keys/$dir")
 
-        @UseExperimental(ExperimentalStdlibApi::class)
         override fun readFile(fileName: String): String?
             = loadSmallAssetBytesSafe("$path/keys/$fileName")?.decodeToString()
     }

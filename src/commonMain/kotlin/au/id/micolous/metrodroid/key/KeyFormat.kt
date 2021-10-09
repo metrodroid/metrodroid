@@ -62,7 +62,6 @@ enum class KeyFormat {
 
         private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) RAW_MFC else UNKNOWN
 
-        @UseExperimental(ExperimentalStdlibApi::class)
         fun detectKeyFormat(data: ByteArray): KeyFormat {
             if (data[0] != '{'.code.toByte()) {
                 // This isn't a JSON file.

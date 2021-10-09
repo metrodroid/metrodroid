@@ -35,6 +35,5 @@ class ByteArrayInput (private val ba: ByteArray): Input {
     override fun readBytes(sz: Int): ByteArray = realRead(
         min(sz, available))
 
-    @UseExperimental(ExperimentalStdlibApi::class)
     override fun readToString(): String = realRead(available).decodeToString()
 }

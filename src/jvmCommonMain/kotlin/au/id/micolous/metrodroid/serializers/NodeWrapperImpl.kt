@@ -23,7 +23,6 @@ class NodeWrapperImpl(val node: Node): NodeWrapper {
         get() = node.nodeValue ?: node.textContent
 
     companion object {
-        @ExperimentalStdlibApi
         fun read(stream: InputStream): NodeWrapper {
             val dbFactory = DocumentBuilderFactory.newInstance()
             val dBuilder = dbFactory.newDocumentBuilder()
@@ -36,5 +35,4 @@ class NodeWrapperImpl(val node: Node): NodeWrapper {
     }
 }
 
-@ExperimentalStdlibApi
 fun readCardXML(reader: InputStream): Card = readCardXML(NodeWrapperImpl.read(reader))
