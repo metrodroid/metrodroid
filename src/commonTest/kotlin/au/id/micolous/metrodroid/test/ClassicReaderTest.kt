@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.key.CardKeysFileReader
 import au.id.micolous.metrodroid.key.CardKeysFromFiles
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlin.test.Test
@@ -57,15 +56,15 @@ class ClassicReaderTest : BaseInstrumentedTest() {
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)
             val blockCount = raw.size / 16
-            val maxReads = blockCount
             val maxAuths = 4 * card.sectorCount + 8
 
             val actualReads = card.readCounter
             val actualAuths = card.authCounter
             Log.d(TAG, "$addMsg reads/auths/sectors = $actualReads/$actualAuths/${card.sectorCount}")
             assertTrue(
-                    message = "$addMsg: Made $actualReads reads which is more than $maxReads",
-                    actual = actualReads <= maxReads)
+                message = "$addMsg: Made $actualReads reads which is more than $blockCount",
+                actual = actualReads <= blockCount
+            )
             assertTrue(
                     message = "$addMsg: Made $actualAuths auths which is more than $maxAuths",
                     actual = actualAuths <= maxAuths)
