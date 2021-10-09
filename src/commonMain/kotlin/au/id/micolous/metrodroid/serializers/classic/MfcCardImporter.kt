@@ -63,8 +63,6 @@ class MfcCardImporter : CardImporter {
             maxSector <= 39 -> maxSector = 39 // 4K
         }
 
-            // Fill missing sectors as "unauthorised".
-
         // Fill missing sectors as "unauthorised".
         while (sectors.size <= maxSector) {
             sectors.add(UnauthorizedClassicSector())
