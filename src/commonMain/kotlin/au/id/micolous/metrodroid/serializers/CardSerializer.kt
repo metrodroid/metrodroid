@@ -39,5 +39,6 @@ object CardSerializer {
 
     val jsonPlainStable get() = Json {
         useArrayPolymorphism = true
+        isLenient = true
     }
 }
