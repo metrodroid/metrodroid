@@ -28,10 +28,8 @@ import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
 class MRTJTransitData(

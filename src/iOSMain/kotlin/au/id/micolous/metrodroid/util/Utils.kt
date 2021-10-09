@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.util
 
 import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.readBytes
 import kotlinx.cinterop.toCValues
 import platform.Foundation.NSData
 import platform.Foundation.dataWithBytes

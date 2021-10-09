@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 
@@ -8,7 +7,6 @@ import au.id.micolous.metrodroid.transit.adelaide.AdelaideTransaction
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil
 import au.id.micolous.metrodroid.util.StationTableReader
 

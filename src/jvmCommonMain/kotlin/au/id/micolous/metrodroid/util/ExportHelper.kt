@@ -21,8 +21,6 @@ package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.time.TimestampFull
-import java.util.zip.ZipEntry
-import java.util.zip.ZipOutputStream
 
 
 /**

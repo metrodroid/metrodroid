@@ -52,7 +52,6 @@ import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import org.jetbrains.annotations.NonNls
 

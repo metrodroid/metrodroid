@@ -26,8 +26,8 @@ import au.id.micolous.metrodroid.util.StationTableReaderImpl.InvalidHeaderExcept
 import platform.Foundation.NSBundle
 
 import au.id.micolous.metrodroid.proto.stations.*
-import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.usePinned
 
 internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)

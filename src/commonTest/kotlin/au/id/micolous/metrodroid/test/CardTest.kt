@@ -39,7 +39,6 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.longOrNull
 import kotlin.test.Test
 import kotlin.test.assertEquals

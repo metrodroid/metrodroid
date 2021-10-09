@@ -29,7 +29,6 @@ import java.util.UUID
 
 import au.id.micolous.metrodroid.card.desfire.DesfireAuthLog
 import au.id.micolous.metrodroid.card.desfire.DesfireUnlocker
-import au.id.micolous.metrodroid.card.desfire.DesfireManufacturingData
 import au.id.micolous.metrodroid.card.desfire.DesfireProtocol
 import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.multi.Log

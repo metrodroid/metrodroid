@@ -2,7 +2,6 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardProtocol
-import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.serializers.CardMultiImporter
 import au.id.micolous.metrodroid.transit.TransitData
 import java.io.InputStream

@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray

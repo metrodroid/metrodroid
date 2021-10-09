@@ -32,7 +32,6 @@ import android.os.Build
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager

@@ -22,7 +22,6 @@
 package au.id.micolous.metrodroid.transit.gautrain
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.transit.ovc.OVChipSubscription
 import au.id.micolous.metrodroid.util.ImmutableByteArray

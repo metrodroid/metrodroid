@@ -30,7 +30,6 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.hsl.HSLArvo
 import au.id.micolous.metrodroid.transit.hsl.HSLKausi
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 

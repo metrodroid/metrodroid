@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid
 
-import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.io.File
 import java.io.OutputStreamWriter

@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.opal.OpalData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData

@@ -44,13 +44,11 @@ import androidx.loader.content.Loader
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.activity.CardInfoActivity
-import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.CardDBHelper
 import au.id.micolous.metrodroid.provider.CardProvider
 import au.id.micolous.metrodroid.provider.CardsTableColumns
-import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.serializers.CardMultiImportAdapter
 import au.id.micolous.metrodroid.serializers.CardMultiImporter
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat

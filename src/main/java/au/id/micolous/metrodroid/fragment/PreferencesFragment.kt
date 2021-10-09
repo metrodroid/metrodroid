@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.ui.AlertDialogPreference
 import au.id.micolous.metrodroid.ui.NumberPickerPreference
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.collatedBy
-import java.util.*
 
 class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
     private var mPreferenceLaunchFromBackground: CheckBoxPreference? = null

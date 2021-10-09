@@ -23,7 +23,6 @@ import au.id.micolous.kotlin.pcsc.Card
 import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.getErrorMessage
-import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.coroutines.runBlocking
 import java.io.Closeable

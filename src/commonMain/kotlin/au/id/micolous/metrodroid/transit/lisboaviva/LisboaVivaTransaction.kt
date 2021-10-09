@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 

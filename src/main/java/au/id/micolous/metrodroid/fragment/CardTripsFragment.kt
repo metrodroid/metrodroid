@@ -26,12 +26,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.LocaleSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater

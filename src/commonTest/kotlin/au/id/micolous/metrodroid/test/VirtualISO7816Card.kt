@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card

@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlin.Comparator
 
 @Parcelize
 data class OVChipTransitData(

@@ -26,15 +26,12 @@ import android.graphics.drawable.Drawable
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import androidx.appcompat.content.res.AppCompatResources
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
-import android.widget.ListView
 import android.widget.TextView
 
 import au.id.micolous.farebot.R
@@ -43,7 +40,6 @@ import au.id.micolous.metrodroid.activity.MainActivity
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.DrawableUtils
 import au.id.micolous.metrodroid.util.Preferences

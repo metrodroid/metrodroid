@@ -22,8 +22,6 @@ import au.id.micolous.metrodroid.time.getYMD
 import au.id.micolous.metrodroid.time.yearToDays
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import java.util.*
 
 /**
