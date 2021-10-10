@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.util.StationTableReader
  */
 
 object SuicaDBUtil {
-    private const val TAG = "SuicaUtil"
     private const val SUICA_BUS_STR = "suica_bus"
     private const val SUICA_RAIL_STR = "suica_rail"
 

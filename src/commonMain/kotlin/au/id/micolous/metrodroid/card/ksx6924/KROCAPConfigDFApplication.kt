@@ -60,12 +60,9 @@ data class KROCAPConfigDFApplication (
 
 
     companion object {
-        private const val TAG = "KROCAPConfigDFApplication"
-
         val APP_NAME = listOf(ImmutableByteArray.fromHex("a0000004520001"))
 
         private const val TYPE = "kr_ocap_configdf"
-
 
         val FACTORY: ISO7816ApplicationFactory = object : ISO7816ApplicationFactory {
             override val typeMap: Map<String, KSerializer<out ISO7816Application>>

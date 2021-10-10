@@ -102,8 +102,6 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
 
         private val TIME_ZONE = MetroTimeZone.BRISBANE
 
-        private const val TAG = "SeqGoTransitData"
-
         val FACTORY: ClassicCardTransitFactory = object : NextfareTransitData.NextFareTransitFactory() {
 
             override val allCards: List<CardInfo>

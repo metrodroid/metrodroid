@@ -248,8 +248,6 @@ abstract class En1545Transaction : Transaction() {
         private const val TRANSPORT_TAXI = 9
         private const val TRANSPORT_TOPUP = 11
 
-        private const val TAG = "En1545Transaction"
-
         private fun getTransport(eventCode: Int): Int {
             return eventCode shr 4
         }
