@@ -100,7 +100,7 @@
     <string name="calypso_reading">Читання картки Calypso…</string>
     <string name="mfu_reading">Читання картки MIFARE Ultralight…</string>
     <string name="mfu_detect">Виявлення типу MIFARE Ultralight…</string>
-    <string name="card_reading_type">Читання &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Opal\"&gt; %s &lt;/xliff:g&gt;…<xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+    <string name="card_reading_type">Читання <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
     <string name="mfd_reading">Читання картки MIFARE DESFire…</string>
     <string name="mfc_key_ab">ключ A|B</string>
     <string name="mfc_key_b">ключ B</string>
