@@ -30,7 +30,7 @@ import java.io.InputStream
 import java.util.*
 
 expect fun openMdstFile(dbName: String): InputStream?
-internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
 
 /**
