@@ -415,7 +415,7 @@ def androidLanguageList = iOSLanguageList + [
                 'in'
                 ]
 
-def mapAndroidLanguageToIOS(String alang) {
+static def mapAndroidLanguageToIOS(String alang) {
     if (alang == "nb-rNO")
         return "nb"
     if (alang == "zh-rCN")
