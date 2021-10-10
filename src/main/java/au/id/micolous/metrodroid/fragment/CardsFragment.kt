@@ -536,14 +536,14 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
 
         override fun getGroupCount(): Int {
-            Log.d(TAG, "getgroupcount " + effectiveCards.size)
+            Log.d(TAG, "getGroupCount " + effectiveCards.size)
             return effectiveCards.size
         }
 
         override fun getChildrenCount(i: Int): Int = mScans.getValue(effectiveCards[i]).size
 
         override fun getGroup(i: Int): Any? {
-            Log.d(TAG, "getgroup $i")
+            Log.d(TAG, "getGroup $i")
             return mScans[effectiveCards[i]]
         }
 
