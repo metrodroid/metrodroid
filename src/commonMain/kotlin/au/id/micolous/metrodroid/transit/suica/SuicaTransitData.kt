@@ -69,7 +69,7 @@ class SuicaTransitData (
             // Read blocks oldest-to-newest to calculate fare.
             val blocks = service?.blocks ?: return null
             var tapBlocks: List<FelicaBlock>? = tapService?.blocks
-            for (i in 0 until blocks.size) {
+            for (i in blocks.indices) {
                 val block = blocks[i]
 
                 var previousBalance = -1
@@ -92,7 +92,7 @@ class SuicaTransitData (
                 */
 
                 if (tapBlocks != null && trip.consoleTypeInt == 0x16) {
-                    for (matchingTap in 0 until tapBlocks.size) {
+                    for (matchingTap in tapBlocks.indices) {
                         if (matchedTaps.contains(matchingTap)) continue
                         val tapBlock = tapBlocks[matchingTap].data
 
