@@ -140,6 +140,7 @@ class Card(
     }
 
     // Convenience for Swift interop
+    @Suppress("unused")
     val safeBalance : TransitCurrency? by lazy {
         try {
             parseTransitData()?.balances?.first()?.balance
@@ -149,6 +150,7 @@ class Card(
     }
 
     // Convenience for Swift interop
+    @Suppress("unused")
     val safeTransitIdentity: TransitIdentity? by lazy {
         try {
             parseTransitIdentity()

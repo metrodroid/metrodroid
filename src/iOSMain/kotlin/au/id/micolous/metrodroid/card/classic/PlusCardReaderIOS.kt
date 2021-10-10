@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
+@Suppress("unused") // Used from Swift
 object PlusCardReaderIOS {
     @Throws(Throwable::class)
     fun dump(wrapper: UltralightTransceiverIOS.SwiftWrapper,

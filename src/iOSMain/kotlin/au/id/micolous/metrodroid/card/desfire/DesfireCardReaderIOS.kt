@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
+@Suppress("unused") // Used from Swift
 object DesfireCardReaderIOS {
     @Throws(Throwable::class)
     fun dump(wrapper: ISO7816Transceiver.SwiftWrapper,

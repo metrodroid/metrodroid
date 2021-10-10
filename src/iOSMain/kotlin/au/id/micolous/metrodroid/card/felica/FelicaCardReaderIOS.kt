@@ -28,6 +28,7 @@ import kotlinx.coroutines.runBlocking
 
 import platform.Foundation.*
 
+@Suppress("unused") // Used from Swift
 object FelicaCardReaderIOS {
     @Throws(Throwable::class)
     fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,

@@ -112,6 +112,7 @@ actual object TimestampFormatter {
             }
 
     actual fun dateTimeFormat(ts: TimestampFull) = FormattedString(dateTimeFormat(makeCalendar(ts)))
+    @Suppress("unused") // Used from Swift
     fun dateFormat(ts: Timestamp) = FormattedString(dateFormat(makeDateCalendar(ts)))
     actual fun timeFormat(ts: TimestampFull) = FormattedString(timeFormat(makeDateCalendar(ts)))
 

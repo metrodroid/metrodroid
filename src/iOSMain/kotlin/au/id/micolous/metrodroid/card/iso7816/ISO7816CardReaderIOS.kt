@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.coroutines.runBlocking
 
+@Suppress("unused") // Used from Swift
 object ISO7816CardReaderIOS {
     @Throws(Throwable::class)
     fun dump(wrapper: ISO7816Transceiver.SwiftWrapper,

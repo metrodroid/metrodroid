@@ -22,6 +22,7 @@ object CardSerializer {
     }
 
     @Throws(Throwable::class)
+    @Suppress("unused") // Used from Swift
     fun fromAutoJson(json: String): Iterator<Card> = logAndSwiftWrap ("Card", "Failed to deserialize") {
         AutoJsonFormat.readCardList(json).iterator()
     }

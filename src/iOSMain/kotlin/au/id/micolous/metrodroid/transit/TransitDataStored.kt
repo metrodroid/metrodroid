@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.ui.ListItem
 
 @Parcelize
+@Suppress("unused") // Used from Swift
 data class TransitDataStored internal constructor(
     override val balances: List<TransitBalance>?,
     override val serialNumber: String?,
