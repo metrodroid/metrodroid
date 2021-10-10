@@ -27,6 +27,8 @@ import androidx.preference.DialogPreference
  * Simple preference for an alert dialog with no other controls.
  */
 
+// Used from XML
+@Suppress("unused")
 class AlertDialogPreference : DialogPreference {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)

@@ -35,6 +35,8 @@ import au.id.micolous.farebot.R
  * Implements a preference which allows the user to pick a number.
  */
 
+// Used from XML
+@Suppress("unused")
 class NumberPickerPreference : DialogPreference {
     val minValue: Int
     val maxValue: Int

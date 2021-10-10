@@ -27,6 +27,8 @@ import androidx.annotation.RequiresApi
 import androidx.preference.Preference
 import au.id.micolous.metrodroid.util.Utils
 
+// Used from XML
+@Suppress("unused")
 class NfcSettingsPreference : Preference {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) :
