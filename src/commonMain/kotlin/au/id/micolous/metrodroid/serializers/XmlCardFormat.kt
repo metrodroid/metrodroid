@@ -514,6 +514,7 @@ class ISO7816ApplicationXmlAdapter(
         private val histories: Map<Int, ImmutableByteArray> = emptyMap(),
         @XMLHex
         @XMLId("gpo-response")
+        @Suppress("unused") // Kept for the deserialization
         private val gpoResponse: ImmutableByteArray? = null
 ) {
     private fun makeCapsule() = ISO7816ApplicationCapsule(
