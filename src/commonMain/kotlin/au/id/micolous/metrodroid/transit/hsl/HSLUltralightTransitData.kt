@@ -27,9 +27,6 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils.zeroPad
 
-private const val NAME_HSL_UL = "HSL Ultralight"
-private const val NAME_TAMPERE_UL = "Tampere Ultralight"
-
 private fun getNameUL(city: Int) = if (city == HSLLookup.CITY_UL_TAMPERE) "Tampere Ultralight" else "HSL Ultralight"
 
 @Parcelize
