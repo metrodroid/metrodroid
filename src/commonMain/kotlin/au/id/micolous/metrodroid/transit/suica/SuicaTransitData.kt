@@ -132,7 +132,7 @@ class SuicaTransitData (
                         matchedTaps.add(matchingTap)
                         break
                     }
-                    for (matchingTap in 0 until tapBlocks.size) {
+                    for (matchingTap in tapBlocks.indices) {
                         if (matchedTaps.contains(matchingTap)) continue
                         val tapBlock = tapBlocks[matchingTap].data
 
