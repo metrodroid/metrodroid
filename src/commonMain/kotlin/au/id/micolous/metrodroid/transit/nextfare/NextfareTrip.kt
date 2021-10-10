@@ -21,11 +21,8 @@ package au.id.micolous.metrodroid.transit.nextfare
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
-import au.id.micolous.metrodroid.transit.TransitCurrencyRef
-import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord
 import au.id.micolous.metrodroid.util.StationTableReader
 
@@ -75,6 +72,8 @@ abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
 
     override val mode: Mode
         get() = if (capsule.isTopup) Mode.TICKET_MACHINE else lookupMode()
+
+    override fun getRawFields(level: TransitData.RawLevel): String = "mJourneyId=${capsule.mJourneyId}"
 
     protected open fun getStation(stationId: Int): Station? {
         return StationTableReader.getStation(str, stationId)

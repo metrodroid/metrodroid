@@ -81,6 +81,9 @@ private abstract class TouchnGoTripCommon : Trip(), Parcelable {
     override val fare: TransitCurrency?
         get() = TransitCurrency.MYR(amount)
 
+    override fun getRawFields(level: TransitData.RawLevel): String =
+        "transactionId=$transactionId,newBalance=$newBalance"
+
     override fun getAgencyName(isShort: Boolean) = StationTableReader.getOperatorName(
                 TNG_STR,
                 agencyRaw.byteArrayToInt(),

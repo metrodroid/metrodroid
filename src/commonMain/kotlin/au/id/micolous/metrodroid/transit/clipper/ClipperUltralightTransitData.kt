@@ -54,6 +54,12 @@ class ClipperUltralightTransitData private constructor(private val mSerial: Long
                 }
         )
 
+    override fun getRawFields(level: RawLevel): List<ListItem> = listOf(
+        ListItem(R.string.clipper_base_date,
+            ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 1440L * 60L)
+                ?.format())
+    )
+
     companion object {
         private const val NAME = "Clipper Ultralight"
 
