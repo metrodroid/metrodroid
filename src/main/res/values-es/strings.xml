@@ -1147,7 +1147,7 @@
     <string name="yargor_sub_allday_all">Abono para todos los transportes para todos los días</string>
     <string name="yargor_transports_valid">Válido para los siguientes transportes</string>
     <string name="card_media_felica">FeliCa</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% descuento fuera de la hora punta)</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% descuento fuera de la hora punta)</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
     <string name="ovc_sub_dalkorting">Dal Korting</string>
     <string name="felica_terminal_ticket_gate_terminal">Terminal de la puerta de entrada</string>
