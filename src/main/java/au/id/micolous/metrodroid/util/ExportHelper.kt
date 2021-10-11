@@ -171,9 +171,6 @@ object ExportHelper {
 
     private fun readCardDataFromCursor(cursor: Cursor): String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
 
-    private fun readCardsXml(cursor: Cursor): Iterator<String> =
-            IteratorTransformer(CursorIterator(cursor), this::readCardDataFromCursor)
-
     fun deleteSet(context: Context, tf: Iterable<Long>): Int {
         @NonNls val s = "(" + tf.joinToString(", ") + ")"
         return context.contentResolver.delete(CardProvider.CONTENT_URI_CARD,
