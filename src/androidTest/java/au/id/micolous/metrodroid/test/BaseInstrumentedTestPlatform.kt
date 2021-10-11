@@ -98,6 +98,4 @@ actual abstract class BaseInstrumentedTestPlatform {
     }
 
     actual fun listAsset(path: String) : List <String>? = context.assets.list(path)?.toList()
-
-    val isUnitTest get() = false
 }

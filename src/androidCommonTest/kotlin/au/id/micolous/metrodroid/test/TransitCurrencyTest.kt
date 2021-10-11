@@ -78,12 +78,12 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         // May be "$12.34", "U$12.34" or "US$12.34".
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
-        checkSpanned(usd, listOf("$12.34", "U$12.34", "US$12.34"), "USD12.34")
+        checkSpanned(usd, listOf("$12.34", "U$12.34", "US$12.34"))
         assertTtsMarkers("USD", "12", "34", usd)
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
-        checkSpanned(aud, listOf("A$12.34", "AU$12.34"), "AUD12.34")
+        checkSpanned(aud, listOf("A$12.34", "AU$12.34"))
         assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
@@ -92,7 +92,7 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         // May be "¥1,234" or "JP¥1,234".
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
-        checkSpanned(jpy, listOf("¥1,234", "JP¥1,234"), "JPY1,234")
+        checkSpanned(jpy, listOf("¥1,234", "JP¥1,234"))
         assertTtsMarkers("JPY", "1234", null, jpy)
     }
 
@@ -110,16 +110,16 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
-        checkSpanned(aud, listOf("A$12.34", "AU$12.34"), "AUD12.34")
+        checkSpanned(aud, listOf("A$12.34", "AU$12.34"))
         assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
-        checkSpanned(gbp, "£12.34", "GBP12.34")
+        checkSpanned(gbp, "£12.34")
         assertTtsMarkers("GBP", "12", "34", gbp)
 
         // May be "¥1,234" or "JP¥1,234".
         val jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).spanned
-        checkSpanned(jpy, "¥1,234", "JPY1,234")
+        checkSpanned(jpy, "¥1,234")
         assertTtsMarkers("JPY", "1234", null, jpy)
     }
 
@@ -135,16 +135,16 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
 
         // May be "$12.34", "U$12.34" or "US$12.34".
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
-        checkSpanned(usd, listOf("$12.34", "U$12.34", "US$12.34"), "USD12.34")
+        checkSpanned(usd, listOf("$12.34", "U$12.34", "US$12.34"))
         assertTtsMarkers("USD", "12", "34", usd)
 
         // May be "A$12.34" or "AU$12.34".
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
-        checkSpanned(aud, listOf("A$12.34", "AU$12.34"), "AUD12.34")
+        checkSpanned(aud, listOf("A$12.34", "AU$12.34"))
         assertTtsMarkers("AUD", "12", "34", aud)
 
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
-        checkSpanned(gbp, "£12.34", "GBP12.34")
+        checkSpanned(gbp, "£12.34")
         assertTtsMarkers("GBP", "12", "34", gbp)
 
 
@@ -163,16 +163,16 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
         setLocale("fr-FR")
 
         val usd = TransitCurrency.USD(1234).formatCurrencyString(true).spanned
-        checkSpanned(usd, "12,34 \$US", "12,34 USD")
+        checkSpanned(usd, "12,34 \$US")
         assertTtsMarkers("USD", "12", "34", usd)
 
         val aud = TransitCurrency.AUD(1234).formatCurrencyString(true).spanned
-        checkSpanned(aud, "12,34 \$AU", "12,34 AUD")
+        checkSpanned(aud, "12,34 \$AU")
         assertTtsMarkers("AUD", "12", "34", aud)
 
         // Allow not qualifying the country code.
         val gbp = TransitCurrency(1234, "GBP").formatCurrencyString(true).spanned
-        checkSpanned(gbp, listOf("12,34 £", "12,34 £GB", "12,34 £UK"), "12,34 GBP")
+        checkSpanned(gbp, listOf("12,34 £", "12,34 £GB", "12,34 £UK"))
         assertTtsMarkers("GBP", "12", "34", gbp)
 
         // This may not have a proper symbol
@@ -205,14 +205,13 @@ class TransitCurrencyTest : BaseInstrumentedTest() {
         assertEquals(fraction, bundle.getString(TtsSpan.ARG_FRACTIONAL_PART))
     }
 
-    fun checkSpanned(actual: Spanned, android: Collection<String>, robolectric: String? = null) {
+    private fun checkSpanned(actual: Spanned, expected: Collection<String>) {
         // nbsp -> sp
         val actualString = actual.toString().replace(' ', ' ').replace('\u202F', ' ')
-        val expected = if (isUnitTest) android + listOfNotNull(robolectric) else android
         assertTrue (actual = actualString in expected, message = "Expected one of $expected, got $actualString")
     }
 
-    fun checkSpanned(actual: Spanned, android: String, robolectric: String? = null) {
-        checkSpanned(actual, listOf(android), robolectric)
+    private fun checkSpanned(actual: Spanned, expected: String) {
+        checkSpanned(actual, listOf(expected))
     }
 }

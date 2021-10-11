@@ -47,8 +47,6 @@ actual abstract class BaseInstrumentedTestPlatform {
     val context : Context
         get() = MetrodroidApplication.instance
 
-    val isUnitTest get() = true
-
     actual fun setLocale(languageTag: String) {
         LocaleTools.setLocale(languageTag, context.resources)
     }
