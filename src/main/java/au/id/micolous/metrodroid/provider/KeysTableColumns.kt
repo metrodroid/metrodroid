@@ -35,5 +35,6 @@ object KeysTableColumns {
     const val KEY_DATA = "key_data"
     @NonNls
     const val CREATED_AT = "created_at"
+    @Suppress("ObjectPropertyName")
     const val _ID = BaseColumns._ID
 }

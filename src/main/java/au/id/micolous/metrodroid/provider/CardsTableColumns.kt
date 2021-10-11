@@ -32,5 +32,6 @@ object CardsTableColumns {
     @NonNls
     const val SCANNED_AT = "scanned_at"
     const val LABEL = "label"
+    @Suppress("ObjectPropertyName")
     const val _ID = BaseColumns._ID
 }
