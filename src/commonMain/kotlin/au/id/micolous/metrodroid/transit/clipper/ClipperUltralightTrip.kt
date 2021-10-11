@@ -51,7 +51,7 @@ class ClipperUltralightTrip (private val mTime: Int,
     override val fare: TransitCurrency?
         get() = null
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = ClipperData.getMode(mAgency)
 
     constructor(transaction: ImmutableByteArray, baseDate: Int) : this (

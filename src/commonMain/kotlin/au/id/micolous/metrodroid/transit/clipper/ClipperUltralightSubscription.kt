@@ -57,12 +57,12 @@ internal class ClipperUltralightSubscription (private val mProduct: Int,
     override val remainingTripCount: Int?
         get() = if (mTripsRemaining == -1) null else mTripsRemaining
 
-    override val subscriptionState: Subscription.SubscriptionState
+    override val subscriptionState: SubscriptionState
         get() = when {
-            mTripsRemaining == -1 -> Subscription.SubscriptionState.UNUSED
-            mTripsRemaining == 0 -> Subscription.SubscriptionState.USED
-            mTripsRemaining > 0 -> Subscription.SubscriptionState.STARTED
-            else -> Subscription.SubscriptionState.UNKNOWN
+            mTripsRemaining == -1 -> SubscriptionState.UNUSED
+            mTripsRemaining == 0 -> SubscriptionState.USED
+            mTripsRemaining > 0 -> SubscriptionState.STARTED
+            else -> SubscriptionState.UNKNOWN
         }
 
     override val transferEndTimestamp: Timestamp?

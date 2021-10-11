@@ -37,7 +37,7 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
 
     override val fare get() = TransitCurrency.RUB(-mAmount)
 
-    override val mode get() = Trip.Mode.TICKET_MACHINE
+    override val mode get() = Mode.TICKET_MACHINE
 
     companion object {
         fun parse(block: ImmutableByteArray, cardType: Int): ZolotayaKoronaRefill? {

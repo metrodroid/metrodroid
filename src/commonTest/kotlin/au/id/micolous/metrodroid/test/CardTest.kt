@@ -29,6 +29,8 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.serializers.jsonObjectOrNull
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitData
@@ -36,6 +38,9 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.longOrNull
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -54,10 +59,18 @@ class CardTest : BaseInstrumentedTest() {
                 d,
                 mifareClassic = ClassicCard(emptyList<ClassicSectorRaw>()))
 
-        val json = JsonKotlinFormat.writeCard(c1)
+        val json = JsonKotlinFormat.makeCardElement(c1)
+        val jsonString = JsonKotlinFormat.makeCardString(c1)
 
-        assertTrue(json.contains("\"timeInMillis\": 1264982400000"))
-        assertTrue(json.contains("\"tagId\": \"00123456\""))
+        assertEquals(
+            1264982400000,
+            json.jsonObjectOrNull?.get("scannedAt")?.jsonObjectOrNull?.get("timeInMillis")?.jsonPrimitiveOrNull?.longOrNull,
+        "Unexpected Json: $json")
+        assertEquals(
+            "00123456",
+            json.jsonObjectOrNull?.get("tagId")?.jsonPrimitiveOrNull?.contentOrNull)
+        assertTrue(jsonString.contains("\"timeInMillis\": 1264982400000"))
+        assertTrue(jsonString.contains("\"tagId\": \"00123456\""))
         Log.d("CardTest", "JSON serialized to $json")
 
         val c2 = JsonKotlinFormat.readCard(json)

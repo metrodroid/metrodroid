@@ -66,8 +66,8 @@ abstract class ChinaTripAbstract: Trip() {
         get() = mCost != 0 || mTime != 0L
 
     // Should be overridden if anything is known about transports
-    override val mode: Trip.Mode
-        get() = if (isTopup) Trip.Mode.TICKET_MACHINE else Trip.Mode.OTHER
+    override val mode: Mode
+        get() = if (isTopup) Mode.TICKET_MACHINE else Mode.OTHER
 
     // Should be overridden if anything is known about transports
     override val routeName: FormattedString?

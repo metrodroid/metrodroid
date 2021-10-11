@@ -38,7 +38,7 @@ class RavKavSubscription (override val parsed: En1545Parsed,
 
     private val ctrUse: Int
         get() {
-            val tariffType = parsed.getIntOrZero(En1545Subscription.CONTRACT_TARIFF)
+            val tariffType = parsed.getIntOrZero(CONTRACT_TARIFF)
             return tariffType shr 6 and 0x7
         }
 
@@ -49,23 +49,23 @@ class RavKavSubscription (override val parsed: En1545Parsed,
     companion object {
         private val SUB_FIELDS = En1545Container(
                 En1545FixedInteger("Version", 3),
-                En1545FixedInteger.date(En1545Subscription.CONTRACT_START),
-                En1545FixedInteger(En1545Subscription.CONTRACT_PROVIDER, 8),
-                En1545FixedInteger(En1545Subscription.CONTRACT_TARIFF, 11),
-                En1545FixedInteger.date(En1545Subscription.CONTRACT_SALE),
-                En1545FixedInteger(En1545Subscription.CONTRACT_SALE_DEVICE, 12),
+                En1545FixedInteger.date(CONTRACT_START),
+                En1545FixedInteger(CONTRACT_PROVIDER, 8),
+                En1545FixedInteger(CONTRACT_TARIFF, 11),
+                En1545FixedInteger.date(CONTRACT_SALE),
+                En1545FixedInteger(CONTRACT_SALE_DEVICE, 12),
                 En1545FixedInteger("ContractSaleNumber", 10),
-                En1545FixedInteger(En1545Subscription.CONTRACT_INTERCHANGE, 1),
+                En1545FixedInteger(CONTRACT_INTERCHANGE, 1),
                 En1545Bitmap(
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_A, 5),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_RESTRICT_CODE, 5),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_A, 5),
+                        En1545FixedInteger(CONTRACT_RESTRICT_CODE, 5),
                         En1545FixedInteger("ContractRestrictDuration", 6),
-                        En1545FixedInteger.date(En1545Subscription.CONTRACT_END),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_DURATION, 8),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_B, 32),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_C, 6),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_D, 32),
-                        En1545FixedInteger(En1545Subscription.CONTRACT_UNKNOWN_E, 32)
+                        En1545FixedInteger.date(CONTRACT_END),
+                        En1545FixedInteger(CONTRACT_DURATION, 8),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_B, 32),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_C, 6),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_D, 32),
+                        En1545FixedInteger(CONTRACT_UNKNOWN_E, 32)
                 )
                 // TODO: parse locations?
         )

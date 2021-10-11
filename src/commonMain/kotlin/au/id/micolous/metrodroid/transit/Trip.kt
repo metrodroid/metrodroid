@@ -284,7 +284,7 @@ abstract class Trip : Parcelable {
 
             // Method 3: get the intersection of the two list of candidate stations
             val lines = startLines.toSet() intersect endLines.toSet()
-            if (!lines.isEmpty()) {
+            if (lines.isNotEmpty()) {
                 // There is exactly 1 common line -- return it
                 if (lines.size == 1) {
                     return lines.iterator().next()

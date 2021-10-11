@@ -1,27 +1,33 @@
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
-import kotlinx.io.IOException
-import kotlinx.io.InputStream
-import kotlinx.io.StringWriter
-import kotlinx.io.charsets.Charsets
+import au.id.micolous.metrodroid.multi.Log
 
 import org.jetbrains.annotations.NonNls
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
 import org.xmlpull.v1.XmlSerializer
+import java.io.IOException
+import java.io.InputStream
+import java.io.StringWriter
+import java.util.*
 
-import java.util.NoSuchElementException
-
-private object XmlPullFactory {
-    private val factory: XmlPullParserFactory = XmlPullParserFactory.newInstance()
-    init {
-        factory.isNamespaceAware = true
+object XmlPullFactory {
+    private val factory: XmlPullParserFactory? by lazy {
+        try {
+            XmlPullParserFactory.newInstance()
+                ?.also {
+                    it.isNamespaceAware = true
+                }
+        } catch (e: Exception) {
+            Log.e("XMLPullParser", "Error initing XmlPullParserFactory: $e")
+            null
+        }
     }
 
-    fun newPullParser(): XmlPullParser = factory.newPullParser()
-    fun newSerializer(): XmlSerializer = factory.newSerializer()
+    fun newPullParser(): XmlPullParser = factory!!.newPullParser()
+    fun newSerializer(): XmlSerializer = factory!!.newSerializer()
 }
 
 internal fun iterateXmlCards(stream: InputStream, iter: (String) -> Card?): Iterator<Card> {
@@ -105,7 +111,7 @@ private class XmlPullParserIterator(
         mSerializer!!.text(filterBadXMLChars(mxpp.text))
     }
 
-    private fun isCard(s: String) = s.toLowerCase() == "card"
+    private fun isCard(s: String) = s.lowercase(Locale.US) == "card"
 
     @SuppressWarnings("CallToSuspiciousStringMethod")
     private fun prepareMore(): Boolean {
@@ -117,7 +123,7 @@ private class XmlPullParserIterator(
                     // We have an root tag!
                     mRootTag = mxpp.name
 
-                    when (mRootTag?.toLowerCase()) {
+                    when (mRootTag?.lowercase(Locale.US)) {
                         "card" -> newCard()
                         "cards" -> {}
                         else -> {
@@ -130,11 +136,11 @@ private class XmlPullParserIterator(
                 // Ignore other events.
             } else if (mSerializer == null) {
                 when (eventType) {
-                    XmlPullParser.START_TAG -> if (isCard(mxpp.getName())) {
+                    XmlPullParser.START_TAG -> if (isCard(mxpp.name)) {
                         newCard()
                     } else {
                         // Unexpected start tag
-                        throw XmlPullParserException("Unexpected start tag: " + mxpp.getName())
+                        throw XmlPullParserException("Unexpected start tag: " + mxpp.name)
                     }
 
                     XmlPullParser.END_TAG -> {

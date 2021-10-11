@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.proto.stations.*
 import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.addressOf
 
-actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)
 
 private const val TAG = "StationTableReaderIOS"
@@ -212,7 +212,8 @@ internal constructor(dbName: String) : StationTableReader {
         private val MAGIC = ImmutableByteArray.of(0x4d, 0x64, 0x53, 0x54)
         private const val VERSION = 1
 
-        private fun squash(input: String): String = input.substringAfter("TransportType").replace("_", "", ignoreCase = true).toLowerCase()
+        private fun squash(input: String): String =
+            input.substringAfter("TransportType").replace("_", "", ignoreCase = true).lowercase()
 
         private fun convertTransportType(input : TransportType): Trip.Mode? {
             if (input == TransportType_Unknown)

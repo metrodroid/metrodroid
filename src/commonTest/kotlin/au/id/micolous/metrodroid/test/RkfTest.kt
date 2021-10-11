@@ -9,7 +9,7 @@ import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class RkfTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
+class RkfTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImporter()) {
 
     /*
      * This test is based on dumps from https://github.com/mchro/RejsekortReader

@@ -32,7 +32,6 @@ class InvalidClassicSector constructor(override val raw: ClassicSectorRaw) : Cla
     constructor(error: String?) : this(ClassicSectorRaw(blocks = emptyList(),
             keyA = null, keyB = null, error = error ?: "No message", isUnauthorized = false))
 
-    @Transient
     override val blocks: List<ClassicBlock>
         get() = throw IndexOutOfBoundsException("InvalidClassicSector has no blocks")
 

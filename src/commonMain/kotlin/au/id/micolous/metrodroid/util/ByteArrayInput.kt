@@ -1,7 +1,7 @@
 /*
- * Misc.kt
+ * ByteArrayInput.kt
  *
- * Copyright (C) 2019 Google
+ * Copyright (C) 2021 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.multi
+package au.id.micolous.metrodroid.util
 
-actual annotation class NativeThrows actual constructor (actual vararg val exceptionClasses: kotlin.reflect.KClass<out kotlin.Throwable>)
+import kotlin.math.min
+
+class ByteArrayInput (private val ba: ByteArray): Input {
+    private var offset: Int = 0
+
+    val available get() = ba.size - offset
+
+    private fun realRead(sz: Int): ByteArray {
+        val off = offset
+        offset += sz
+        return ba.sliceArray(off..(off+sz))
+    }
+
+    override fun readBytes(sz: Int): ByteArray = realRead(
+        min(sz, available))
+
+    override fun readToString(): String = realRead(available).decodeToString()
+}

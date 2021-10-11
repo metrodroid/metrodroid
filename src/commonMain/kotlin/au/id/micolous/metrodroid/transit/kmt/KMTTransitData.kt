@@ -108,7 +108,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.kmt_card,
-                name = KMTTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_jakarta,
                 cardType = CardType.FeliCa,
                 region = TransitRegion.INDONESIA,

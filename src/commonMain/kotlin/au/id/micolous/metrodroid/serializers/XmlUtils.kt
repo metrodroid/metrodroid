@@ -19,28 +19,7 @@
 
 package au.id.micolous.metrodroid.serializers
 
-import kotlinx.serialization.toUtf8Bytes
-
 object XmlUtils {
-    private val CARDS_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n".toUtf8Bytes()
-    private val CARDS_FOOTER = "</cards>\n".toUtf8Bytes()
-    private val CARDS_SEPARATOR = byteArrayOf(10) //  \n
-
-    fun concatCardsFromString(cards: Iterator<String>): String {
-        val os = StringBuilder()
-        os.append(CARDS_HEADER)
-
-        while (cards.hasNext()) {
-            val s = cards.next()
-            os.append(cutXmlDef(s))
-            os.append(CARDS_SEPARATOR)
-        }
-
-        os.append(CARDS_FOOTER)
-
-        return os.toString()
-    }
-
     fun cutXmlDef(data: String): String {
         return if (!data.startsWith("<?")) data else data.substring(data.indexOf("?>") + 2)
     }

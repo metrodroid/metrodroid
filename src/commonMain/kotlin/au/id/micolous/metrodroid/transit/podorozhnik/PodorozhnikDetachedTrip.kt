@@ -32,6 +32,6 @@ internal class PodorozhnikDetachedTrip (private val mTimestamp: Int): Trip() {
     override val fare: TransitCurrency?
         get() = null
 
-    override val mode: Trip.Mode
-        get() = Trip.Mode.OTHER
+    override val mode: Mode
+        get() = Mode.OTHER
 }

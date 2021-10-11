@@ -95,7 +95,7 @@ class MobibTransitData(
         private const val EXT_HOLDER_NAME = "ExtHolderName"
 
         private val CARD_INFO = CardInfo(
-                name = MobibTransitData.NAME,
+                name = NAME,
                 cardType = CardType.ISO7816,
                 imageId = R.drawable.mobib_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
@@ -107,29 +107,29 @@ class MobibTransitData(
         private fun ticketEnvFields(version: Int) = when {
                 version <= 2 -> En1545Container(
                         En1545FixedInteger(ENV_VERSION_NUMBER, 6),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_A, 7),
-                        En1545FixedInteger(En1545TransitData.ENV_NETWORK_ID, 24),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_B, 9),
-                        En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 6),
-                        En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
-                        En1545FixedHex(En1545TransitData.ENV_CARD_SERIAL, 76),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_D, 5),
-                        En1545FixedInteger(En1545TransitData.HOLDER_INT_POSTAL_CODE, 14),
-                        En1545FixedHex(En1545TransitData.ENV_UNKNOWN_E, 34)
+                        En1545FixedInteger(ENV_UNKNOWN_A, 7),
+                        En1545FixedInteger(ENV_NETWORK_ID, 24),
+                        En1545FixedInteger(ENV_UNKNOWN_B, 9),
+                        En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
+                        En1545FixedInteger(ENV_UNKNOWN_C, 6),
+                        En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
+                        En1545FixedHex(ENV_CARD_SERIAL, 76),
+                        En1545FixedInteger(ENV_UNKNOWN_D, 5),
+                        En1545FixedInteger(HOLDER_INT_POSTAL_CODE, 14),
+                        En1545FixedHex(ENV_UNKNOWN_E, 34)
                 )
                 else -> En1545Container(
                         En1545FixedInteger(ENV_VERSION_NUMBER, 6),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_A, 7),
-                        En1545FixedInteger(En1545TransitData.ENV_NETWORK_ID, 24),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_B, 5),
-                        En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 10),
-                        En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
-                        En1545FixedHex(En1545TransitData.ENV_CARD_SERIAL, 76),
-                        En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_D, 5),
-                        En1545FixedInteger(En1545TransitData.HOLDER_INT_POSTAL_CODE, 14),
-                        En1545FixedHex(En1545TransitData.ENV_UNKNOWN_E, 34)
+                        En1545FixedInteger(ENV_UNKNOWN_A, 7),
+                        En1545FixedInteger(ENV_NETWORK_ID, 24),
+                        En1545FixedInteger(ENV_UNKNOWN_B, 5),
+                        En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
+                        En1545FixedInteger(ENV_UNKNOWN_C, 10),
+                        En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
+                        En1545FixedHex(ENV_CARD_SERIAL, 76),
+                        En1545FixedInteger(ENV_UNKNOWN_D, 5),
+                        En1545FixedInteger(HOLDER_INT_POSTAL_CODE, 14),
+                        En1545FixedHex(ENV_UNKNOWN_E, 34)
                 )
         }
         private const val EXT_HOLDER_GENDER = "ExtHolderGender"
@@ -195,7 +195,7 @@ class MobibTransitData(
             val extHolderParsed = holder?.let { En1545Parser.parse(it, extHolderFields) }
             val purchase = card.getFile(CalypsoApplication.File.EP_LOAD_LOG, trySfi = false)
                     ?.getRecord(1)?.getBitsFromBuffer(2, 14) ?: 0
-            val totalTrips = transactions.map { it.transactionNumber }.max() ?: 0
+            val totalTrips = transactions.map { it.transactionNumber }.maxOrNull() ?: 0
             return MobibTransitData(balances = if (balances.isNotEmpty()) balances else null,
                     subscriptions = subscriptions,
                     trips = trips,

@@ -59,7 +59,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Manufacturer code.
      */
-    @Transient
     private val manufacturerCode: Int
         get() = tagId.byteArrayToInt(0, 2)
 
@@ -69,7 +68,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Card identification number.
      */
-    @Transient
     private val cardIdentificationNumber: Long
         get() = tagId.byteArrayToLong(2, 6)
 
@@ -79,7 +77,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return ROM type
      */
-    @Transient
     private val romType: Int?
         get() = pMm?.byteArrayToInt(0, 1)
 
@@ -89,19 +86,15 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return IC type
      */
-    @Transient
     private val icType: Int?
         get() = pMm?.byteArrayToInt(1, 1)
 
-    @Transient
     private val fixedResponseTime: Double?
         get() = calculateMaximumResponseTime(1, 0)
 
-    @Transient
     private val mutualAuthentication2Time: Double?
         get() = getMutualAuthentication1Time(0)
 
-    @Transient
     private val otherCommandsTime: Double?
         get() = calculateMaximumResponseTime(5, 0)
 
@@ -111,7 +104,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Maximum response time
      */
-    @Transient
     private val maximumResponseTime: Long?
         get() = pMm?.byteArrayToLong(2, 6)
 
@@ -156,7 +148,6 @@ data class FelicaCard(
             }.toList()
         }
 
-    @Transient
     override val manufacturingInfo: List<ListItem>
         get() {
             val items = mutableListOf<ListItem>()
@@ -218,7 +209,6 @@ data class FelicaCard(
             return items
         }
 
-    @Transient
     override val rawData: List<ListItem>
         get() =
             listOfNotNull(

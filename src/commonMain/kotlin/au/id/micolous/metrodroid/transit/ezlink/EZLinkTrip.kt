@@ -89,7 +89,7 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
     override val endStation: Station?
         get() = EZUserData.parse(mTransaction.userData, mTransaction.type).endStation
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = getMode(mTransaction.type)
 
     override fun getAgencyName(isShort: Boolean) =
@@ -98,11 +98,11 @@ class EZLinkTrip (private val mTransaction: CEPASTransaction,
     companion object {
         fun getMode(type: CEPASTransaction.TransactionType) =
                 when (type) {
-                    CEPASTransaction.TransactionType.BUS, CEPASTransaction.TransactionType.BUS_REFUND -> Trip.Mode.BUS
-                    CEPASTransaction.TransactionType.MRT -> Trip.Mode.METRO
-                    CEPASTransaction.TransactionType.TOP_UP -> Trip.Mode.TICKET_MACHINE
-                    CEPASTransaction.TransactionType.RETAIL, CEPASTransaction.TransactionType.SERVICE -> Trip.Mode.POS
-                    else -> Trip.Mode.OTHER
+                    CEPASTransaction.TransactionType.BUS, CEPASTransaction.TransactionType.BUS_REFUND -> Mode.BUS
+                    CEPASTransaction.TransactionType.MRT -> Mode.METRO
+                    CEPASTransaction.TransactionType.TOP_UP -> Mode.TICKET_MACHINE
+                    CEPASTransaction.TransactionType.RETAIL, CEPASTransaction.TransactionType.SERVICE -> Mode.POS
+                    else -> Mode.OTHER
                 }
 
         fun getAgencyName(type: CEPASTransaction.TransactionType, cardName: String, isShort: Boolean) = FormattedString.english(

@@ -29,6 +29,8 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlinx.serialization.*
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlin.native.concurrent.SharedImmutable
 
 @Parcelize
@@ -36,10 +38,11 @@ import kotlin.native.concurrent.SharedImmutable
 data class MetroTimeZone(val olson: String): Parcelable {
     override fun toString(): String = olson
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = MetroTimeZone::class)
     companion object : KSerializer<MetroTimeZone> {
-        override fun serialize(encoder: Encoder, obj: MetroTimeZone) {
-            encoder.encodeString(obj.olson)
+        override fun serialize(encoder: Encoder, value: MetroTimeZone) {
+            encoder.encodeString(value.olson)
         }
 
         override fun deserialize(decoder: Decoder) = MetroTimeZone(decoder.decodeString())
@@ -449,7 +452,6 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
 
     override fun toDaystamp() = Daystamp(dhm.days)
 
-    @Transient
     val dhm get() = getDaysFromMillis(timeInMillis, tz)
 
     override fun compareTo(other: TimestampFull): Int = timeInMillis.compareTo(other = other.timeInMillis)

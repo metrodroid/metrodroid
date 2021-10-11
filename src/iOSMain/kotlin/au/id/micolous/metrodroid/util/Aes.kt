@@ -7,7 +7,7 @@ import platform.CoreCrypto.*
 actual object Aes {
     private fun aesOp(mode: CCOperation, input: ImmutableByteArray, key: ImmutableByteArray, iv: ImmutableByteArray) : ImmutableByteArray {
         if (key.size != 16 || iv.size != 16 || input.size % 16 != 0)
-            throw IllegalArgumentException("Invalid crypro argument size")
+            throw IllegalArgumentException("Invalid crypto argument size")
         val output = ByteArray(input.size) { 0.toByte() }
         val outputSize = ULongArray(1) { 0u }
         key.dataCopy.usePinned { keyPinned ->

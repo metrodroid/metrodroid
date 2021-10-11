@@ -22,13 +22,12 @@ package au.id.micolous.metrodroid.card.ultralight
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
 object UltralightCardReaderIOS {
-    @NativeThrows
+    @Throws(Throwable::class)
     fun dump(wrapper: UltralightTransceiverIOS.SwiftWrapper,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
         val xfer = UltralightTransceiverIOS(wrapper)

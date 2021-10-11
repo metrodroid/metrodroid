@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
 class LeapTrip internal constructor(private val mAgency: Int,
-                                    private var mMode: Trip.Mode?,
+                                    private var mMode: Mode?,
                                     private var mStart: LeapTripPoint?,
                                     private var mEnd: LeapTripPoint?) : Trip(), Comparable<LeapTrip> {
 
@@ -63,7 +63,7 @@ class LeapTrip internal constructor(private val mAgency: Int,
             return TransitCurrency.EUR(amount)
         }
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = mMode ?: guessMode(mAgency)
 
     override fun compareTo(other: LeapTrip): Int {
@@ -87,7 +87,7 @@ class LeapTrip internal constructor(private val mAgency: Int,
     }
 
     companion object {
-        private fun guessMode(anum: Int): Trip.Mode {
+        private fun guessMode(anum: Int): Mode {
             return StationTableReader.getOperatorDefaultMode(LeapTransitData.LEAP_STR, anum)
         }
 
@@ -106,7 +106,7 @@ class LeapTrip internal constructor(private val mAgency: Int,
             // 2 bytes unknown
             // 1 byte counter
             val amount = LeapTransitData.parseBalance(file, offset + 0xe)
-            return if (amount == 0) null else LeapTrip(agency, Trip.Mode.TICKET_MACHINE,
+            return if (amount == 0) null else LeapTrip(agency, Mode.TICKET_MACHINE,
                     LeapTripPoint(c, -amount, -1, null), null)
             // 3 bytes amount after topup: we have currently no way to represent it
         }
@@ -152,12 +152,12 @@ class LeapTrip internal constructor(private val mAgency: Int,
             // 0x10 bytes unknown
             val startTime = LeapTransitData.parseDate(file, offset + 0x56)
             // 0x27 bytes unknown
-            var mode: Trip.Mode? = null
+            var mode: Mode? = null
             val start: LeapTripPoint
             var end: LeapTripPoint? = null
             when (eventCode2) {
                 0x04 -> {
-                    mode = Trip.Mode.TICKET_MACHINE
+                    mode = Mode.TICKET_MACHINE
                     start = LeapTripPoint(eventTime, -amount, -1, if (from == 0) null else from)
                 }
                 0xce -> {

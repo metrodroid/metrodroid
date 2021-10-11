@@ -71,7 +71,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
 
         private fun parse(card: CalypsoApplication) =
                 LisboaVivaTransitData(
-                        capsule = Calypso1545TransitData.parse(
+                        capsule = parse(
                                 card, TICKETING_ENV_FIELDS, null, getSerial(card),
                                 { data, ctr, _, _ -> LisboaVivaSubscription(data, ctr) },
                                 { data -> LisboaVivaTransaction(data) }),
@@ -80,16 +80,16 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                         holderName = card.getFile(CalypsoApplication.File.ID)?.getRecord(1)?.readLatin1())
 
         private val TICKETING_ENV_FIELDS = En1545Container(
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_A, 13),
+                En1545FixedInteger(ENV_UNKNOWN_A, 13),
                 En1545FixedInteger("EnvNetworkCountry", 12),
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_B, 5),
+                En1545FixedInteger(ENV_UNKNOWN_B, 5),
                 En1545FixedInteger("CardSerialPrefix", 8),
-                En1545FixedInteger(En1545TransitData.ENV_CARD_SERIAL, 24),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_ISSUE),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 15),
-                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
-                En1545FixedHex(En1545TransitData.ENV_UNKNOWN_D, 95)
+                En1545FixedInteger(ENV_CARD_SERIAL, 24),
+                En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
+                En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
+                En1545FixedInteger(ENV_UNKNOWN_C, 15),
+                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
+                En1545FixedHex(ENV_UNKNOWN_D, 95)
         )
 
         private fun getSerial(card: CalypsoApplication): String {

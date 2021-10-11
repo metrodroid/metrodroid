@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.util.getErrorMessage
 import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.coroutines.runBlocking
-import kotlinx.io.core.Closeable
+import java.io.Closeable
 
 fun <T> wrapJavaExceptions(f: () -> T): T {
     try {

@@ -27,7 +27,7 @@ import android.os.Parcelable
 import androidx.preference.DialogPreference
 import android.util.AttributeSet
 import androidx.annotation.RequiresApi
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.farebot.R
 
 

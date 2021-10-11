@@ -1,8 +1,8 @@
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
-import kotlinx.io.OutputStream
+import au.id.micolous.metrodroid.util.Output
 
 interface CardExporter {
-    fun writeCard(s: OutputStream, card: Card)
+    fun writeCard(s: Output, card: Card)
 }

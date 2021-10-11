@@ -79,7 +79,7 @@ private constructor(dbName: String) : StationTableReader {
             throw InvalidHeaderException()
         }
 
-        if (!Arrays.equals(header, MAGIC)) {
+        if (!header.contentEquals(MAGIC)) {
             throw InvalidHeaderException()
         }
 

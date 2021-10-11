@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
-class FelicaXmlImportTest: CardReaderWithAssetDumpsTest(XmlCardFormat())  {
+class FelicaXmlImportTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat())  {
     private fun checkLoadCard(path: String): FelicaCard {
         val c = loadCard<FelicaCard>(path)
         assertEquals(ImmutableByteArray.fromHex("0101010101010101"), c.tagId)

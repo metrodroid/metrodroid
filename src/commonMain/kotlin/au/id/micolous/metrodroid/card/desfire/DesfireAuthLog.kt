@@ -37,7 +37,6 @@ data class DesfireAuthLog(
         private val challenge: ImmutableByteArray,
         private val response: ImmutableByteArray,
         private val confirm: ImmutableByteArray) {
-    @Transient
     val rawData: ListItem
         get() =
             ListItemRecursive(R.string.desfire_keyex, Localizer.localizeString(R.string.desfire_key_number,

@@ -3,7 +3,7 @@
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2013 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
- * Copryight 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ class CardTripsFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,7 +66,7 @@ class CardTripsFragment : ListFragment() {
         val trips = mTransitData?.prepareTrips().orEmpty()
 
         if (trips.isNotEmpty()) {
-            listAdapter = UseLogListAdapter(activity!!, trips.toTypedArray())
+            listAdapter = UseLogListAdapter(requireActivity(), trips.toTypedArray())
         } else {
             view.findViewById<View>(android.R.id.list).visibility = View.GONE
             view.findViewById<View>(R.id.error_text).visibility = View.VISIBLE
@@ -80,7 +80,7 @@ class CardTripsFragment : ListFragment() {
             return
         }
 
-        val trip = listAdapter.getItem(position) as? Trip?
+        val trip = listAdapter?.getItem(position) as? Trip?
         if (trip == null || !trip.hasLocation()) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could")
             return
@@ -112,8 +112,6 @@ class CardTripsFragment : ListFragment() {
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
                 headerText.text = headerDate.spanned
-
-                (listHeader.findViewById<View>(android.R.id.text1) as TextView).text = if (date != null) TimestampFormatter.longDateFormat(date).spanned else null
             } else {
                 listHeader.visibility = View.GONE
             }

@@ -24,6 +24,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,11 +48,11 @@
             android:id="@+id/directions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/logo"
             android:drawablePadding="16dp"
             android:text="@string/directions"
             android:textSize="45sp"
-            android:gravity="center" />
+            android:gravity="center"
+            app:drawableTopCompat="@drawable/logo" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +67,7 @@
                 android:insetLeft="4dp"
                 android:insetRight="4dp"
                 android:layout_weight="1"
-                android:onClick="onSupportedCardsClick"
+                android:id="@+id/supported_cards_button"
                 style="?attr/ButtonStyle"
                 android:text="@string/supported_cards" />
 
@@ -77,7 +78,7 @@
                 android:layout_weight="1"
                 android:insetLeft="4dp"
                 android:insetRight="4dp"
-                android:onClick="onHistoryClick"
+                android:id="@+id/history_button"
                 style="?attr/ButtonStyle"
                 android:text="@string/scanned_cards" />
         </LinearLayout>

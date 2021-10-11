@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.getErrorMessage
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.core.Closeable
+import java.io.Closeable
 import java.io.IOException
 
 fun <T>wrapAndroidExceptions(f: () -> T): T {
@@ -137,7 +137,7 @@ class AndroidIsoTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
         this.isoDep = null
 
 
-        // Android can declare IOExecption here but we really don't care.
+        // Android can declare IOException here but we really don't care.
         try {
             isoDep?.close()
         } catch (e: IOException) {

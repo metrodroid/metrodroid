@@ -33,7 +33,6 @@ class UnauthorizedClassicSector (override val raw: ClassicSectorRaw): ClassicSec
     constructor() : this(ClassicSectorRaw(blocks = emptyList(),
             keyA = null, keyB = null, error = "Unauthorized", isUnauthorized = true))
 
-    @Transient
     override val blocks: List<ClassicBlock>
         get() = throw UnauthorizedException()
 

@@ -57,7 +57,6 @@ class ClassicCard constructor(
     @Transient
     val sectors: List<ClassicSector> = sectorsRaw.map { ClassicSector.create(it) }
 
-    @Transient
     override val manufacturingInfo: List<ListItem>? get() {
         val sector0 = sectorsRaw[0]
         if (sector0.isUnauthorized || sector0.blocks.isEmpty() || sector0.blocks[0].size < 16)
@@ -129,6 +128,5 @@ class ClassicCard constructor(
     // For kotlin []
     operator fun get(secidx: Int, blockidx: Int) = getSector(secidx).getBlock(blockidx)
 
-    @Transient
     override val rawData get() = sectors.mapIndexed { idx, sector -> sector.getRawData(idx) }
 }

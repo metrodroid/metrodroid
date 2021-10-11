@@ -31,8 +31,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 data class TPFCardTransitData (private val mSerial: ImmutableByteArray): SerialOnlyTransitData() {
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val serialNumber get() = formatSerial(mSerial)
 
@@ -52,7 +52,7 @@ data class TPFCardTransitData (private val mSerial: ImmutableByteArray): SerialO
         private fun getSerial(card: DesfireCard) =
                 card.tagId.reverseBuffer()
 
-        private fun formatSerial(serial: ImmutableByteArray) = serial.toHexString().toUpperCase()
+        private fun formatSerial(serial: ImmutableByteArray) = serial.toHexString().uppercase()
     }
 
     object Factory : DesfireCardTransitFactory {

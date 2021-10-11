@@ -38,7 +38,6 @@ data class ChinaCard(
         override val generic: ISO7816ApplicationCapsule,
         val balances: Map<Int, ImmutableByteArray>) : ISO7816Application() {
 
-    @Transient
     override val rawData: List<ListItem>?
         get() = balances.map { (idx, data) -> ListItemRecursive.collapsedValue(
             Localizer.localizeString(R.string.china_balance, idx),
@@ -52,7 +51,6 @@ data class ChinaCard(
 
     fun getBalance(idx: Int): ImmutableByteArray? = balances[idx]
 
-    @Transient
     override val type: String
         get() = TYPE
 
@@ -65,7 +63,7 @@ data class ChinaCard(
 
         val FACTORY: ISO7816ApplicationFactory = object : ISO7816ApplicationFactory {
             override val typeMap: Map<String, KSerializer<out ISO7816Application>>
-                get() = mapOf(TYPE to ChinaCard.serializer() )
+                get() = mapOf(TYPE to serializer() )
             override val applicationNames: Collection<ImmutableByteArray>
                 get() = ChinaRegistry.allFactories.flatMap { it.appNames }
 
@@ -89,7 +87,7 @@ data class ChinaCard(
                             if (capsule.appName?.contentEquals(transitAppName) == true) {
                                 val cl = f.allCards
 
-                                if (!cl.isEmpty()) {
+                                if (cl.isNotEmpty()) {
                                     val ci = cl[0]
 
                                     feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,

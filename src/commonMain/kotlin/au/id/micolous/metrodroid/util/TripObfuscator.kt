@@ -80,7 +80,6 @@ object TripObfuscator {
             dhm = dhm.copy(min = (dhm.min + 2) / 5 * 5)
 
             // Add a deviation of up to 350 minutes (5.5 hours) earlier or later.
-            dhm.copy()
             off = Random.nextInt(700) - 350
         }
 

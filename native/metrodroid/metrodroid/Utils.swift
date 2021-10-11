@@ -87,25 +87,25 @@ class Utils {
     
     class func localizeString(_ res: StringResource, _ args: Any?...) -> String {
         return Localizer.init().localizeString(res: res, v: KotlinArray.init(size: Int32(args.count), init: {
-            args[Int(truncating: $0)]
+            args[Int(truncating: $0)] as AnyObject
         }))
     }
     
     class func englishString(_ res: StringResource, _ args: Any?...) -> String {
         return Localizer.init().englishString(res: res, v: KotlinArray.init(size: Int32(args.count), init: {
-            args[Int(truncating: $0)]
+            args[Int(truncating: $0)] as AnyObject
         }))
     }
     
     class func localizeFormatted(_ res: StringResource, _ args: Any?...) -> FormattedString {
         return Localizer.init().localizeFormatted(res: res, v: KotlinArray.init(size: Int32(args.count), init: {
-            args[Int(truncating: $0)]
+            args[Int(truncating: $0)] as AnyObject
         }))
     }
     
     class func localizePlural(_ res: PluralsResource, _ plural: Int, _ args: Any?...) -> String {
         return Localizer.init().localizePlural(res: res, count: Int32(plural), v: KotlinArray.init(size: Int32(args.count), init: {
-            args[Int(truncating: $0)]
+            args[Int(truncating: $0)] as AnyObject
         }))
     }
     

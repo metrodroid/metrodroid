@@ -108,12 +108,12 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
                 }
                 let card = try CardSerializer.init().fromPersist(input: t)
                 let url = try CardPersister.persistCard(card: card)
-                let json = try CardSerializer.init().toJson(card: card)
+                let jsonString = try CardSerializer.init().toPersist(card: card)
                 DispatchQueue.main.async {
                     self.reload()
                     let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(RKt.R.plurals.cards_imported, 1, 1))
                     self.navigationController?.present(alert, animated: true) {
-                        let cr = CardViewController.create(json: json, url: url)
+                        let cr = CardViewController.create(json: jsonString, url: url)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             self.navigationController?.pushViewController(cr, animated: true)
                         }
@@ -160,7 +160,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
                 }
                 let json: String?
                 if card != nil {
-                    json = try CardSerializer.init().toJson(card: card!)
+                    json = try CardSerializer.init().toPersist(card: card!)
                 } else {
                     json = nil
                 }
@@ -273,7 +273,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         
         // Configure the cell’s contents.
         let el = effectiveHistory[indexPath.section].entries[indexPath.item]
-        let scanTime = TimestampKt_.date2Timestamp(date: el.date)
+        let scanTime = TimestampKt.date2Timestamp(date: el.date)
         cell.textLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
                                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
                                                                 TimestampFormatter.init().dateFormat(ts: scanTime)).attributed

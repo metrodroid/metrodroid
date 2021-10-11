@@ -73,16 +73,16 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
         )
 
         private val BLOCK_1_0_FIELDS = En1545Container(
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_A, 9),
-                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
-                En1545FixedHex(En1545TransitData.ENV_UNKNOWN_B, 47),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
-                En1545FixedInteger(En1545TransitData.ENV_UNKNOWN_C, 26)
+                En1545FixedInteger(ENV_UNKNOWN_A, 9),
+                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
+                En1545FixedHex(ENV_UNKNOWN_B, 47),
+                En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
+                En1545FixedInteger(ENV_UNKNOWN_C, 26)
         )
         private val BLOCK_1_1_FIELDS = En1545Container(
-                En1545FixedHex(En1545TransitData.ENV_UNKNOWN_D, 64),
-                En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_ISSUE),
-                En1545FixedHex(En1545TransitData.ENV_UNKNOWN_E, 49)
+                En1545FixedHex(ENV_UNKNOWN_D, 64),
+                En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
+                En1545FixedHex(ENV_UNKNOWN_E, 49)
         )
 
         private fun selectSubData(subData0: ImmutableByteArray, subData1: ImmutableByteArray): Int {

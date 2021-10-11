@@ -46,7 +46,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
         get() = listOf(ListItem(R.string.strelka_long_serial, mSerial))
 
     override val reason
-        get() = SerialOnlyTransitData.Reason.MORE_RESEARCH_NEEDED
+        get() = Reason.MORE_RESEARCH_NEEDED
 
     override val cardName get() = Localizer.localizeString(R.string.card_name_strelka)
 

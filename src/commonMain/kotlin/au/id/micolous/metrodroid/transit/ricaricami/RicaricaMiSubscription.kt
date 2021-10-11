@@ -36,8 +36,8 @@ data class RicaricaMiSubscription(override val parsed: En1545Parsed, private val
         get() = parsed.getIntOrZero(CONTRACT_VALIDATIONS_IN_DAY)
 
     override val validTo get(): Timestamp? {
-        if (contractTariff == RicaricaMiLookup.TARIFF_URBAN_2X6 && parsed.getIntOrZero(En1545FixedInteger.dateName(En1545Subscription.CONTRACT_START)) != 0) {
-            val end = parsed.getTimeStamp(En1545Subscription.CONTRACT_START,
+        if (contractTariff == RicaricaMiLookup.TARIFF_URBAN_2X6 && parsed.getIntOrZero(En1545FixedInteger.dateName(CONTRACT_START)) != 0) {
+            val end = parsed.getTimeStamp(CONTRACT_START,
                     RicaricaMiLookup.TZ) ?: return super.validTo
             return end + Duration.daysLocal(6)
         }

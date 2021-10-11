@@ -88,11 +88,11 @@ data class ZolotayaKoronaTransitData internal constructor(
                 ListItem(R.string.zolotaya_korona_discount, discountMap[mDiscountCode]?.let {
                     Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, mDiscountCode.toString(16))),
                 // Printed in hex on the receipt
-                ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()),
+                ListItem(R.string.card_serial_number, mCardSerial.uppercase()),
                 ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = listOf(
+    override fun getRawFields(level: RawLevel): List<ListItem> = listOf(
             // Unsure about next 2 fields, hence they are hidden in raw fields
             ListItem("Status", mStatus.toString()),
             ListItem("Issue seqno", mSequenceCtr.toString()),
@@ -212,7 +212,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 return null
             val tz = RussiaTaxCodes.BCDToTimeZone(cardType shr 16)
             val epoch = Epoch.local(1970, tz)
-            // This is pseudo unix time with local day alwayscoerced to 86400 seconds
+            // This is pseudo unix time with local day always coerced to 86400 seconds
             return epoch.daySecond(time / 86400, time % 86400)
         }
 

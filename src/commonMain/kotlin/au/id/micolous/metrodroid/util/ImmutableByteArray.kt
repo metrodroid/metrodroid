@@ -23,8 +23,9 @@ package au.id.micolous.metrodroid.util
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import kotlinx.io.OutputStream
 import kotlinx.serialization.*
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlin.experimental.xor
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
@@ -121,7 +122,7 @@ class ImmutableByteArray private constructor(
     fun contentEquals(other: ByteArray) = mData.contentEquals(other)
     fun startsWith(other: ByteArray) =
             mData.size >= other.size &&
-            mData.sliceArray(0 until other.size).contentEquals(other)
+            mData.sliceArray(other.indices).contentEquals(other)
     fun startsWith(other: ImmutableByteArray) = startsWith(other.mData)
 
     /**
@@ -186,7 +187,8 @@ class ImmutableByteArray private constructor(
     override fun isEmpty() = mData.isEmpty()
     fun addSlice(other: ImmutableByteArray, start: Int, len: Int) = this + other.sliceOffLen(start, len)
     fun readASCII() = readLatin1() // ASCII is subset of Latin-1
-    fun readLatin1() = String(mData.map { (it.toInt() and 0xff).toChar() }.filter { it != 0.toChar() }.toCharArray())
+    fun readLatin1() = mData.map { (it.toInt() and 0xff).toChar() }.filter { it != 0.toChar() }.toCharArray()
+        .concatToString()
     fun sliceOffLenSafe(off: Int, len: Int): ImmutableByteArray? {
         if (off < 0 || len < 0 || off >= size)
             return null
@@ -206,11 +208,11 @@ class ImmutableByteArray private constructor(
             elements.all { mData.contains(it) }
     override fun iterator(): Iterator<Byte> = mData.iterator()
 
-    fun writeTo(os: OutputStream) {
+    fun writeTo(os: Output) {
         os.write(mData)
     }
 
-    fun writeTo(os: OutputStream, offset: Int, length: Int) {
+    fun writeTo(os: Output, offset: Int, length: Int) {
         os.write(mData, offset, length)
     }
 
@@ -223,6 +225,7 @@ class ImmutableByteArray private constructor(
         mData[it] xor other[it]
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = ImmutableByteArray::class)
     companion object : KSerializer<ImmutableByteArray> {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
@@ -292,7 +295,7 @@ class ImmutableByteArray private constructor(
 
             var uRet = (buffer[iSByte].toInt() shr iSBit) and (0xFF shr iSBit)
 
-            for (i in (iSByte + 1)..(iEByte - 1)) {
+            for (i in (iSByte + 1) until iEByte) {
                 val t = ((buffer[i].toInt() and 0xFF) shl (((i - iSByte) * 8) - iSBit))
                 uRet = uRet or t
             }
@@ -318,7 +321,7 @@ class ImmutableByteArray private constructor(
 
             var uRet = (buffer[iSByte].toInt() and (0xFF shr iSBit)) shl (((iEByte - iSByte - 1) * 8) + (iEBit + 1))
 
-            for (i in (iSByte + 1)..(iEByte - 1)) {
+            for (i in (iSByte + 1) until iEByte) {
                 val t = (buffer[i].toInt() and 0xFF) shl (((iEByte - i - 1) * 8) + (iEBit + 1))
                 uRet = uRet or t
             }
@@ -341,12 +344,12 @@ class ImmutableByteArray private constructor(
             return value
         }
 
-        fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
+        fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.code.toByte() }.toByteArray())
 
-        fun fromUTF8(s: String) = ImmutableByteArray(mData = s.toUtf8Bytes())
+        fun fromUTF8(s: String) = ImmutableByteArray(mData = s.encodeToByteArray())
 
-        override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
-            encoder.encodeString(obj.toHexString())
+        override fun serialize(encoder: Encoder, value: ImmutableByteArray) {
+            encoder.encodeString(value.toHexString())
         }
 
         override fun deserialize(decoder: Decoder): ImmutableByteArray {

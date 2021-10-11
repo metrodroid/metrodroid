@@ -1,10 +1,9 @@
 package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
-import kotlinx.io.ByteArrayInputStream
-import kotlinx.io.InputStream
-import kotlinx.serialization.toUtf8Bytes
 import org.w3c.dom.Node
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 
 class NodeWrapperImpl(val node: Node): NodeWrapper {
@@ -27,8 +26,10 @@ class NodeWrapperImpl(val node: Node): NodeWrapper {
         fun read(stream: InputStream): NodeWrapper {
             val dbFactory = DocumentBuilderFactory.newInstance()
             val dBuilder = dbFactory.newDocumentBuilder()
-            val doc = dBuilder.parse(ByteArrayInputStream(
-                    filterBadXMLChars(stream.bufferedReader().readText()).toUtf8Bytes()))
+            val doc = dBuilder.parse(
+                ByteArrayInputStream(
+                    filterBadXMLChars(stream.bufferedReader().readText()).encodeToByteArray())
+            )
             return NodeWrapperImpl(doc.documentElement)
         }
     }

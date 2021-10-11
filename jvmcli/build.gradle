@@ -3,7 +3,7 @@ import au.id.micolous.metrodroid.LocalizeGenerator
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
@@ -11,7 +11,7 @@ allprojects {
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -32,10 +32,10 @@ apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile rootProject
-    compile group: 'xmlpull', name: 'xmlpull', version: '1.1.3.4a'
-    compile group: 'net.sf.kxml', name: 'kxml2', version: '2.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation rootProject
+    implementation group: 'xmlpull', name: 'xmlpull', version: '1.1.3.4a'
+    implementation group: 'net.sf.kxml', name: 'kxml2', version: '2.3.0'
 }
 
 mainClassName = 'au.id.micolous.metrodroid.CliKt'
@@ -60,4 +60,9 @@ configurations {
 tasks.withType(AbstractArchiveTask) {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

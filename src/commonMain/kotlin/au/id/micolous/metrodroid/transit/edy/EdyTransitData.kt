@@ -46,7 +46,8 @@ class EdyTransitData (override val trips: List<EdyTrip>,
         get() {
             if (mSerialNumber == null)
                 return null
-            return NumberUtils.groupString(mSerialNumber.toHexString().toUpperCase(),
+            return NumberUtils.groupString(
+                mSerialNumber.toHexString().uppercase(),
                     " ", 4, 4, 4)
         }
 

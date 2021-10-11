@@ -52,8 +52,7 @@ class CardKeyProvider : BetterContentProvider(KeysDBHelper::class.java,
 
     private fun sanitize(value: String): String {
         val ret = StringBuilder()
-        for (i in 0 until value.length) {
-            val c = value[i]
+        for (c in value) {
             if (c in '0'..'9' || c in 'a'..'z' || c in 'A'..'Z')
                 ret.append(c)
         }

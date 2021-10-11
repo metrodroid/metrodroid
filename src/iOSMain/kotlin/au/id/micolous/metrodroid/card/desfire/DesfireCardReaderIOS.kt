@@ -23,13 +23,12 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Transceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
 object DesfireCardReaderIOS {
-    @NativeThrows
+    @Throws(Throwable::class)
     fun dump(wrapper: ISO7816Transceiver.SwiftWrapper,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
         val xfer = ISO7816Transceiver(wrapper)

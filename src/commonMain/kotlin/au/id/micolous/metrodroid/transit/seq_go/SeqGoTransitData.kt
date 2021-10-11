@@ -116,7 +116,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val sector0 = sectors[0]
                 val blockData = sector0.getBlock(1).data
-                if (!blockData.copyOfRange(1, 9).contentEquals(NextfareTransitData.MANUFACTURER)) {
+                if (!blockData.copyOfRange(1, 9).contentEquals(MANUFACTURER)) {
                     return false
                 }
 

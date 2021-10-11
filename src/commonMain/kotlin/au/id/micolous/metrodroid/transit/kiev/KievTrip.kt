@@ -45,8 +45,8 @@ class KievTrip (
     override val fare: TransitCurrency?
         get() = null
 
-    override val mode: Trip.Mode
-        get() = if (mTransactionType == "84/04/40/53") Trip.Mode.METRO else Trip.Mode.OTHER
+    override val mode: Mode
+        get() = if (mTransactionType == "84/04/40/53") Mode.METRO else Mode.OTHER
 
     internal constructor(data: ImmutableByteArray) : this(
         startTimestamp = parseTimestamp(data),

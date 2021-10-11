@@ -30,10 +30,12 @@ import android.nfc.tech.MifareUltralight
 import android.nfc.tech.NfcA
 import android.nfc.tech.NfcF
 import android.nfc.tech.NfcV
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 
 import au.id.micolous.metrodroid.multi.Localizer
@@ -69,10 +71,21 @@ class MainActivity : MetrodroidActivity() {
 
             val intent = Intent(this, ReadingTagActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
-            mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+            val pendingFlags =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    PendingIntent.FLAG_MUTABLE
+                else
+                    0
+            mPendingIntent = PendingIntent.getActivity(this, 0, intent, pendingFlags)
         }
 
         updateObfuscationNotice(mNfcAdapter != null)
+        findViewById<Button>(R.id.history_button).setOnClickListener {
+            onHistoryClick(it)
+        }
+        findViewById<Button>(R.id.supported_cards_button).setOnClickListener {
+            onSupportedCardsClick(it)
+        }
     }
 
     override fun onResume() {

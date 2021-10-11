@@ -23,14 +23,13 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.coroutines.runBlocking
 
 import platform.Foundation.*
 
 object FelicaCardReaderIOS {
-    @NativeThrows
+    @Throws(Throwable::class)
     fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,
              defaultSysCode: NSData,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){

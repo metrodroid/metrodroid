@@ -113,7 +113,7 @@ object ClassicReader {
                 }
 
                 feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_reading_blocks, sectorIndex))
-                var sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKey))
+                var sector = ClassicSector.create(readSectorWithKey(tech, sectorIndex, correctKey))
 
                 // If we used keyA and it wasn't enough try finding B
                 if (sector.keyA?.type == ClassicSectorKey.KeyType.A
@@ -124,7 +124,7 @@ object ClassicReader {
                             ClassicSectorKey.KeyType.B) ?: false,
                             ClassicSectorKey.KeyType.B)
                     if (correctKeyB != null)
-                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyB, extraKey = correctKey))
+                        sector = ClassicSector.create(readSectorWithKey(tech, sectorIndex, correctKeyB, extraKey = correctKey))
                     // In cases of readable keyB, tag shouldn't succeed auth at all
                     // yet some clones succeed auth but then fail to read any blocks.
                 } else if (sector.keyB?.type == ClassicSectorKey.KeyType.B
@@ -135,7 +135,7 @@ object ClassicReader {
                             ClassicSectorKey.KeyType.A) ?: false,
                             ClassicSectorKey.KeyType.A)
                     if (correctKeyA != null)
-                        sector = ClassicSector.create(ClassicReader.readSectorWithKey(tech, sectorIndex, correctKeyA, extraKey = correctKey))
+                        sector = ClassicSector.create(readSectorWithKey(tech, sectorIndex, correctKeyA, extraKey = correctKey))
                 }
 
                 sectors.add(sector)

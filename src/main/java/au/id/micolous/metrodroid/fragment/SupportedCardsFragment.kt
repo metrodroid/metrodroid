@@ -57,7 +57,7 @@ class SupportedCardsFragment : ExpandableListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listAdapter = CardsAdapter(context!!)
+        listAdapter = CardsAdapter(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

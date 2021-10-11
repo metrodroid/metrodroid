@@ -29,7 +29,7 @@ import kotlin.test.assertNotNull
 /**
  * Tests for Bilhete Unico.
  */
-class BilheteUnicoTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
+class BilheteUnicoTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImporter()) {
 
     private fun balanceTest(path: String, expectedBalance: TransitCurrency) {
         // We don't have much info on these cards. Most of these tests are the same.

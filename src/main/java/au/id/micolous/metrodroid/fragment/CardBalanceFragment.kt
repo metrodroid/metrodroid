@@ -42,7 +42,7 @@ class CardBalanceFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class CardBalanceFragment : ListFragment() {
         val subscriptions = mTransitData!!.subscriptions
         if (subscriptions != null)
             combined.addAll(subscriptions)
-        listAdapter = BalancesAdapter(activity!!, combined)
+        listAdapter = BalancesAdapter(requireActivity(), combined)
     }
 
     private inner class BalancesAdapter internal constructor(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
@@ -177,7 +177,7 @@ class CardBalanceFragment : ListFragment() {
 
         private fun getBalanceView(convertView: View?,
                                    parent: ViewGroup, balance: TransitBalance): View {
-            var view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
+            val view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
 
             val validView = view.findViewById<TextView>(R.id.valid)
             val validity = TransitBalance.formatValidity(balance)
@@ -214,7 +214,7 @@ class CardBalanceFragment : ListFragment() {
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
 
         Log.d(TAG, "Clicked $id $position")
-        val item = listAdapter.getItem(position) ?: return
+        val item = listAdapter?.getItem(position) ?: return
 
         if (item is TransitBalance) {
             return
@@ -236,7 +236,7 @@ class CardBalanceFragment : ListFragment() {
             tv.visibility = View.GONE
             lv.visibility = View.INVISIBLE
 
-            val a = ListItemAdapter(activity!!, infos)
+            val a = ListItemAdapter(requireActivity(), infos)
             lv.adapter = a
 
             // Calculate correct height

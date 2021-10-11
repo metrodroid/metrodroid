@@ -30,8 +30,6 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.charsets.Charsets
-import kotlinx.io.core.String
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -41,10 +39,8 @@ class ClassicReaderTest : BaseInstrumentedTest() {
     private fun keyReader(path: String): CardKeysFileReader = object : CardKeysFileReader {
         override fun listFiles(dir: String): List<String>? = listAsset("$path/keys/$dir")
 
-        override fun readFile(fileName: String): String? {
-            val b = loadSmallAssetBytesSafe("$path/keys/$fileName") ?: return null
-            return String(b, 0, b.size, Charsets.UTF_8)
-        }
+        override fun readFile(fileName: String): String?
+            = loadSmallAssetBytesSafe("$path/keys/$fileName")?.decodeToString()
     }
 
      /*   context, baseDir = "$path/keys"

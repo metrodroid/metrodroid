@@ -114,23 +114,15 @@ object CardReader {
         }
     }
 
-    private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? {
-        var card: UltralightCard? = null
-
+    private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? =
         AndroidNfcATransceiver(tag).use {
             it.connect()
-            card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
+            UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
-        return card
-    }
 
-    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? {
-        var card: NFCVCard? = null
-
+    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? =
         AndroidNfcVTransceiver(tag).use {
             it.connect()
-            card = NFCVCardReader.dumpTag(it, feedbackInterface)
+            NFCVCardReader.dumpTag(it, feedbackInterface)
         }
-        return card
-    }
 }

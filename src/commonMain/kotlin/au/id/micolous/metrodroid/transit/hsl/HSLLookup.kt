@@ -86,7 +86,7 @@ object HSLLookup : En1545LookupUnknown() {
     private fun mapWalttiZone(region: Int, id: Int): String = when (region) {
         WALTTI_OULU -> lahtiZones[id - 1]
         WALTTI_LAHTI -> ouluZones[id - 1]
-        else -> String(charArrayOf('A' + id - 1))
+        else -> charArrayOf('A' + id - 1).concatToString()
     }
 
     private fun walttiNameRegion(id: Int): String? = StationTableReader.getOperatorName("waltti_region", id, true)?.unformatted
@@ -118,10 +118,12 @@ object HSLLookup : En1545LookupUnknown() {
             if (isValidity) {
                 val to = value / 6
                 val num = to - from + 1
-                val zones = String((from..to).map { 'A' + it }.toCharArray())
+                val zones = (from..to).map { 'A' + it }.toCharArray().concatToString()
                 return Localizer.localizePlural(R.plurals.hsl_zones, num, zones, num)
             } else {
-                return Localizer.localizeString(R.string.hsl_zone_station, String(charArrayOf('A' + from)))
+                return Localizer.localizeString(R.string.hsl_zone_station,
+                    charArrayOf('A' + from).concatToString()
+                )
             }
         }
         if (type == 2) {
@@ -129,10 +131,12 @@ object HSLLookup : En1545LookupUnknown() {
             if (isValidity) {
                 val from = value shr 3
                 val num = to - from + 1
-                val zones = String((from..to).map { 'A' + it }.toCharArray())
+                val zones = (from..to).map { 'A' + it }.toCharArray().concatToString()
                 return Localizer.localizePlural(R.plurals.hsl_zones, num, zones, num)
             } else {
-                return Localizer.localizeString(R.string.hsl_zone_station, String(charArrayOf('A' + to)))
+                return Localizer.localizeString(R.string.hsl_zone_station,
+                    charArrayOf('A' + to).concatToString()
+                )
             }
         }
         return areaMap[Pair(type, value)]?.let {
