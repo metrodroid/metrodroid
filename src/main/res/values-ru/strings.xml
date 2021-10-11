@@ -1184,7 +1184,7 @@
     <string name="felica_specification_version">Версия спецификации</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
     <string name="ovc_sub_dalkorting">Dal Korting</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% скидка вне часа пик)</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% скидка вне часа пик)</string>
     <string name="felica_process_booth_deduction">Оплата на билетной кассе</string>
     <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Студенческий OV-chipkaart рабочего дня (2009)</string>
     <string name="ovc_sub_studentenkaart_korting_weekend_2009">Студенческая карточка korting выходного дня (2009)</string>
@@ -1204,4 +1204,10 @@
     <string name="mrtj_extra_note">Остаток и информация о последней транзакции.</string>
     <string name="felica_option_version_list">Необязательный список версий</string>
     <string name="felica_basic_version">Базовая версия спецификации</string>
+    <string name="location_fukuoka_prefecture">Фукуока, Япония</string>
+    <string name="location_nagoya">Нагоя, Япония</string>
+    <string name="location_vladimir">Владимир, Россия</string>
+    <string name="card_name_siticard_vladimir">СитиКард (Владимир)</string>
+    <string name="location_fukuoka_city">Фукуока, Япония</string>
+    <string name="russia_region_33_vladimir">Владимирская область</string>
 </resources>
