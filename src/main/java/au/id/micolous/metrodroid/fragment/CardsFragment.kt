@@ -446,7 +446,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             if (l < 4194304) {
                 return pb
             }
-            val s = runBlocking<Boolean> {
+            val s = runBlocking {
                 suspendCoroutine<Boolean> { cont ->
                     launch(Dispatchers.Main) {
                         AlertDialog.Builder(cardsFragment.activity)
