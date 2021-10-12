@@ -53,6 +53,7 @@ object ISO7816TLV {
         // bytes contain the tag number. Bit 8 is set when there (is/are) more byte(s) for the
         // tag number.
         var len = 1
+        @Suppress("ControlFlowWithEmptyBody")
         while (buf[p + len++].toInt() and 0x80 != 0);
         return len
     }

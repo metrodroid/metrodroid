@@ -271,6 +271,7 @@ abstract class NextfareTransitData : TransitData() {
 
                     // Peek at the next record and see if it is part of
                     // this journey
+                    @Suppress("ControlFlowWithEmptyBody")
                     if (shouldMergeJourneys && taps.size > i + 1 && tapsMergeable(tapOn, taps[i + 1])) {
                         // There is a tap off.  Lets put that data in
                         val tapOff = taps[i + 1]
