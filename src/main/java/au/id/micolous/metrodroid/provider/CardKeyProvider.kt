@@ -36,18 +36,14 @@ import au.id.micolous.farebot.BuildConfig
 class CardKeyProvider : BetterContentProvider(KeysDBHelper::class.java,
         KeysDBHelper.KEY_DIR_TYPE,
         KeysDBHelper.KEY_ITEM_TYPE,
-        KeysTableColumns.TABLE_NAME, CONTENT_URI) {
+        KeysTableColumns.TABLE_NAME, CONTENT_URI,
+        mUriMatcher = createUriMatcher(CONTENT_URI, CONTENT_URI.path!!.substring(1))
+) {
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         val now = GregorianCalendar.getInstance().timeInMillis
         values!!.put(KeysTableColumns.CREATED_AT, now)
         return super.insert(uri, values)
-    }
-
-    override fun createUriMatcher(contentUri: Uri, @NonNls basePath: String): UriMatcher {
-        val matcher = super.createUriMatcher(contentUri, basePath)
-        matcher.addURI(contentUri.authority, "$basePath/by-uid/*", KEY_BY_UID)
-        return matcher
     }
 
     private fun sanitize(value: String): String {
@@ -73,5 +69,10 @@ class CardKeyProvider : BetterContentProvider(KeysDBHelper::class.java,
         val CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY/keys")
         val CONTENT_BY_UID_URI: Uri = Uri.withAppendedPath(CONTENT_URI, "/by-uid")
         private const val KEY_BY_UID = 1000
+        fun createUriMatcher(contentUri: Uri, @NonNls basePath: String): UriMatcher {
+            val matcher = BetterContentProvider.createUriMatcher(contentUri, basePath)
+            matcher.addURI(contentUri.authority, "$basePath/by-uid/*", KEY_BY_UID)
+            return matcher
+        }
     }
 }
