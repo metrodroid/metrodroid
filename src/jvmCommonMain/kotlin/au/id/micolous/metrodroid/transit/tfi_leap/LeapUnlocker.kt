@@ -205,7 +205,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
         private const val TAG = "LeapUnlocker"
 
         @Throws(IOException::class)
-        private fun communicate(`in`: Leap.LeapMessage): Leap.LeapMessage {
+        private fun communicate(input: Leap.LeapMessage): Leap.LeapMessage {
             val url = URL(LEAP_API_URL)
             val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = "POST"
@@ -216,8 +216,8 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
             conn.setRequestProperty("User-Agent", "Metrodroid/" + Preferences.metrodroidVersion)
             val send = conn.outputStream
 
-            Log.d(TAG, "Sending $`in`")
-            `in`.writeTo(send)
+            Log.d(TAG, "Sending $input")
+            input.writeTo(send)
             val recv = conn.inputStream
             val reply = Leap.LeapMessage.parseFrom(recv)
 
