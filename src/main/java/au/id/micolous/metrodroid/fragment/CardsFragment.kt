@@ -20,6 +20,7 @@
 
 package au.id.micolous.metrodroid.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.*
@@ -589,6 +590,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 if (Preferences.hideCardNumbers) {
                     textView2.text = CardType.parseValue(type).toString()
                 } else {
+                    @SuppressLint("SetTextI18n")
                     textView2.text = "${CardType.parseValue(type)} - $serial"
                 }
             }
