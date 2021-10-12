@@ -1164,9 +1164,9 @@
     <string name="felica_option_version_list">Lista opcional de versiones</string>
     <string name="felica_basic_version">Versión de especificación básica</string>
     <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
-    <string name="zolotaya_korona_discount_111">111: 50% para el transporte municipal, 50% para el ferrocarril, 50% para el transporte fluvial</string>
-    <string name="zolotaya_korona_discount_100">100: 50% para el transporte municipal, 0% para el ferrocarril, 0% para el transporte fluvial</string>
-    <string name="zolotaya_korona_discount_200">200: 100% para el transporte municipal, 0% para el ferrocarril, 0% para el transporte fluvial</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% para el transporte municipal, 50%% para el ferrocarril, 50%% para el transporte fluvial</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% para el transporte municipal, 0%% para el ferrocarril, 0%% para el transporte fluvial</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% para el transporte municipal, 0%% para el ferrocarril, 0%% para el transporte fluvial</string>
     <string name="zolotaya_korona_discount">Descuento</string>
     <string name="mrtj_file_purse_balance">Saldo del monedero MRTJ</string>
     <string name="mrtj_file_id">Identidad de MRTJ</string>
