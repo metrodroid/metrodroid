@@ -1144,7 +1144,7 @@
     <string name="card_media_felica">FeliCa</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
     <string name="ovc_sub_dalkorting">Dal Korting</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% di sconto fuori delle ore di punta)</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% di sconto fuori delle ore di punta)</string>
     <string name="felica_terminal_ticket_gate_terminal">Terminal della porta di entrata</string>
     <string name="felica_process_register_deposit">Ricarica alla cassa</string>
     <string name="felica_process_booth_deduction">Pagamento in biglietteria</string>
