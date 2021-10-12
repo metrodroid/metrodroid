@@ -166,33 +166,20 @@ data class FelicaCard(
 
                 items.add(HeaderListItem(R.string.felica_maximum_response_time))
 
-                var d = getVariableResponseTime(1)
-                items.add(ListItem(R.string.felica_response_time_variable,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
+                val timings = listOf(
+                    Pair(R.string.felica_response_time_variable, getVariableResponseTime(1)),
+                    Pair(R.string.felica_response_time_fixed, fixedResponseTime),
+                    Pair(R.string.felica_response_time_auth1, getMutualAuthentication1Time(1)),
+                    Pair(R.string.felica_response_time_auth2, mutualAuthentication2Time),
+                    Pair(R.string.felica_response_time_read, getDataReadTime(1)),
+                    Pair(R.string.felica_response_time_write, getDataWriteTime(1)),
+                    Pair(R.string.felica_response_time_other, otherCommandsTime)
+                )
 
-                d = fixedResponseTime
-                items.add(ListItem(R.string.felica_response_time_fixed,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
-
-                d = getMutualAuthentication1Time(1)
-                items.add(ListItem(R.string.felica_response_time_auth1,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
-
-                d = mutualAuthentication2Time
-                items.add(ListItem(R.string.felica_response_time_auth2,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
-
-                d = getDataReadTime(1)
-                items.add(ListItem(R.string.felica_response_time_read,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
-
-                d = getDataWriteTime(1)
-                items.add(ListItem(R.string.felica_response_time_write,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
-
-                d = otherCommandsTime
-                items.add(ListItem(R.string.felica_response_time_other,
-                Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
+                for ((title, value) in timings) {
+                    items.add(ListItem(title,
+                        Localizer.localizePlural(R.plurals.milliseconds_short, value?.toInt() ?: 0, formatDouble(value))))
+                }
             }
 
             if (specificationVersion != null) {
