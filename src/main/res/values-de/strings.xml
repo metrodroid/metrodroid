@@ -1164,7 +1164,7 @@
     <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
     <string name="ovc_sub_dalkorting">Dal Korting</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% Rabatt außerhalb Stoßzeiten)</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% Rabatt außerhalb Stoßzeiten)</string>
     <string name="felica_terminal_ticket_gate_terminal">Einlass-Gate-Terminal</string>
     <string name="felica_process_booth_deduction">Bezahlung am Schalter</string>
 </resources>
