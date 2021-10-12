@@ -1022,7 +1022,7 @@
     <string name="ovc_sub_ov_jaarkaart">Netabonnement Particulier Jaar</string>
     <string name="ovc_sub_ov_bijkaart_1e_klas">Bijabonnement 1e klas</string>
     <string name="ovc_sub_ns_businesscard">NS-Business Card</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40% korting in de daluren)</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% korting in de daluren)</string>
     <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Reizen op saldo bij NS, 1e klasse</string>
     <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Reizen op saldo bij NS, 2e klasse</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel reizen op saldo</string>
