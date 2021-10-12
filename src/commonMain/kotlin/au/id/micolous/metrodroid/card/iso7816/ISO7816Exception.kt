@@ -2,8 +2,6 @@ package au.id.micolous.metrodroid.card.iso7816
 
 open class ISO7816Exception : Exception {
     internal constructor(s: String) : super(s)
-
-    internal constructor()
 }
 
 class ISOEOFException : ISO7816Exception("End of file")
