@@ -536,9 +536,3 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
         fun now() = makeNow()
     }
 }
-
-expect object TimestampFormatter {
-    fun longDateFormat(ts: Timestamp): FormattedString
-    fun dateTimeFormat(ts: TimestampFull): FormattedString
-    fun timeFormat(ts: TimestampFull): FormattedString
-}
