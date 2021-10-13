@@ -113,7 +113,7 @@ data class DHM(val days: Int, val hour: Int, val min: Int) {
 }
 
 internal expect fun makeNow(): TimestampFull
-internal expect fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: Int, hour: Int, min: Int): Long
+internal expect fun getMillisFromDays(tz: MetroTimeZone, dhm: DHM): Long
 internal expect fun getDaysFromMillis(millis: Long, tz: MetroTimeZone): DHM
 internal const val SEC = 1000L
 internal const val MIN = 60L * SEC
@@ -141,8 +141,8 @@ fun getYD(daysSinceEpoch: Int): YD {
     return YD(y, remainder1y)
 }
 
-fun getYMD(daysSinceEpoch: Int): YMD {
-    val (y, dy) = getYD(daysSinceEpoch)
+fun getYMD(yd: YD): YMD {
+    val (y, dy) = yd
     val correctionD = if (!isBisextile(y) && dy >= 31 + 28) 1 else 0
     val correctedDays = dy + correctionD
 
@@ -164,6 +164,8 @@ fun getYMD(daysSinceEpoch: Int): YMD {
     return YMD(year = y, month = m, day = d)
 }
 
+fun getYMD(daysSinceEpoch: Int): YMD = getYMD(getYD(daysSinceEpoch))
+
 fun yearToDays(year: Int): Int {
     val offYear = year - 1
     var days = offYear * 365
@@ -172,6 +174,9 @@ fun yearToDays(year: Int): Int {
     days += offYear / 400
     return days - 719162
 }
+
+fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: Int, hour: Int, min: Int): Long =
+    getMillisFromDays(tz, DHM(daysSinceEpoch, hour, min))
 
 @SharedImmutable
 private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,

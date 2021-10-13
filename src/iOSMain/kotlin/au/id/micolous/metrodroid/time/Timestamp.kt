@@ -56,15 +56,15 @@ private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
     return UTC
 }
 
-internal actual fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: Int, hour: Int, min: Int): Long {
+internal actual fun getMillisFromDays(tz: MetroTimeZone, dhm: DHM): Long {
     val dateComponents = NSDateComponents()
-    val ymd = getYMD(daysSinceEpoch)
+    val ymd = getYMD(dhm.yd)
     val nstz = metroTz2NS(tz)
     dateComponents.day = ymd.day.toLong()
     dateComponents.month = ymd.month.oneBasedIndex.toLong()
     dateComponents.year = ymd.year.toLong()
-    dateComponents.hour = hour.toLong()
-    dateComponents.minute = min.toLong()
+    dateComponents.hour = dhm.hour.toLong()
+    dateComponents.minute = dhm.min.toLong()
     dateComponents.second = 0.toLong()
     dateComponents.nanosecond = 0.toLong()
     dateComponents.timeZone = nstz
