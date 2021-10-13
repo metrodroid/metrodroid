@@ -31,30 +31,3 @@ internal fun makeTimezone(tz: MetroTimeZone) = when (tz) {
     MetroTimeZone.LOCAL -> TimeZone.getDefault()
     else -> TimeZone.getTimeZone(tz.olson)
 }
-
-internal actual fun getMillisFromDays(tz: MetroTimeZone, dhm: DHM): Long {
-    val g = GregorianCalendar(makeTimezone(tz))
-    g.set(Calendar.YEAR, dhm.yd.year)
-    g.set(Calendar.DAY_OF_YEAR, dhm.yd.dayOfYear+1)
-    g.set(Calendar.HOUR_OF_DAY, dhm.hour)
-    g.set(Calendar.MINUTE, dhm.min)
-    g.set(Calendar.SECOND, 0)
-    g.set(Calendar.MILLISECOND, 0)
-    return g.timeInMillis
-}
-
-internal actual fun getDaysFromMillis(millis: Long, tz: MetroTimeZone): DHM {
-    val g = GregorianCalendar(makeTimezone(tz))
-    g.timeInMillis = millis
-    val ymd = YMD(g.get(Calendar.YEAR),
-            g.get(Calendar.MONTH),
-            g.get(Calendar.DAY_OF_MONTH))
-    return DHM(ymd.daysSinceEpoch,
-            g.get(Calendar.HOUR_OF_DAY),
-            g.get(Calendar.MINUTE))
-}
-
-internal actual fun makeNow(): TimestampFull {
-    val c = GregorianCalendar.getInstance()
-    return TimestampFull(timeInMillis = c.timeInMillis, tz = MetroTimeZone(c.timeZone.id))
-}

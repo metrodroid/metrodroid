@@ -18,7 +18,7 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.time.getYMD
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.yearToDays
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,10 +45,10 @@ class DateTest {
     }
 
     @Test
-    fun testGetYMD() {
+    fun testDaystamp() {
         // years 1697 to 2517
         for (days in (-100000)..200000) {
-            val ymd = getYMD(days)
+            val ymd = Daystamp(days)
             val g = GregorianCalendar(TimeZone.getTimeZone("UTC"))
             g.timeInMillis = days * 86400L * 1000L
             val expectedY = g.get(Calendar.YEAR)
@@ -56,8 +56,8 @@ class DateTest {
             val expectedD = g.get(Calendar.DAY_OF_MONTH)
             assertEquals (ymd.year, expectedY,
                 "Wrong year for days $days: ${ymd.year} vs $expectedY")
-            assertEquals (ymd.month.zeroBasedIndex, expectedM,
-                "Wrong month for days $days: ${ymd.month} vs $expectedM")
+            assertEquals (ymd.monthNumberZeroBased, expectedM,
+                "Wrong month for days $days: ${ymd.monthNumberZeroBased} vs $expectedM")
             assertEquals (ymd.day, expectedD,
             "Wrong days for days $days: ${ymd.day} vs $expectedD")
         }
@@ -67,7 +67,7 @@ class DateTest {
     fun testRoundTrip() {
         // Cover over 4 years to check bisextile
         for (days in 0..2000) {
-            val ymd = getYMD(days)
+            val ymd = Daystamp(days)
             assertEquals (ymd.daysSinceEpoch, days,
                 "Wrong roundtrip $days vs ${ymd.daysSinceEpoch}")
         }
