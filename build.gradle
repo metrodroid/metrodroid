@@ -297,6 +297,7 @@ kotlin {
             dependencies {
                 api "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinserial_version"
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.0")
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'commonMain/kotlin')
