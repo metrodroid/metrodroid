@@ -1018,4 +1018,5 @@
     <string name="compass_sub_three_zone">Tre soner</string>
     <string name="compass_sub_two_zone">To soner</string>
     <string name="compass_sub_one_zone">Én sone</string>
+    <string name="location_nagoya">Nagoya, Japan</string>
 </resources>
