@@ -230,6 +230,7 @@ dependencies {
     implementation 'com.github.bmelnychuk:atv:1.2.9'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.multidex:multidex:2.0.1"
 
     androidTestUtil "androidx.test:orchestrator:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
@@ -522,6 +523,8 @@ android {
         // "pm clear" command after each test invocation. This command ensures
         // that the app's state is completely cleared between tests.
         testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        multiDexEnabled true
     }
 
     buildTypes {
