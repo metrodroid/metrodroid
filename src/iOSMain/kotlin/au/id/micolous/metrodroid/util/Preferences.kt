@@ -26,6 +26,7 @@ import platform.Foundation.NSUserDefaults
 import platform.Foundation.countryCode
 import platform.Foundation.currentLocale
 import platform.Foundation.preferredLanguages
+import kotlin.native.concurrent.AtomicReference
 import kotlin.reflect.KProperty
 
 actual object Preferences {
@@ -50,11 +51,15 @@ actual object Preferences {
     actual val debugSpans by BoolDelegate("pref_debug_spans")
     actual val localisePlaces by BoolDelegate("pref_localise_places")
 
-    actual var showRawStationIds by BoolDelegate("pref_show_raw_ids")
     actual val language: String
-        get() = NSLocale.preferredLanguages[0] as String
+        get() = languageOverrideForTest.value ?: NSLocale.preferredLanguages[0] as String
     actual val region: String?
-        get() = NSLocale.currentLocale.countryCode
+        get() = currentLocale.countryCode
+    val languageOverrideForTest: AtomicReference<String?> = AtomicReference<String?>(null)
+    val currentLocale: NSLocale get() = localeOverrideForTest.value ?: NSLocale.currentLocale
+    val localeOverrideForTest: AtomicReference<NSLocale?> = AtomicReference<NSLocale?>(null)
+
+    actual var showRawStationIds by BoolDelegate("pref_show_raw_ids")
     actual var showBothLocalAndEnglish by BoolDelegate("pref_show_local_and_english")
     actual val rawLevel: TransitData.RawLevel
         get() = readString("pref_raw_level")?.let {
