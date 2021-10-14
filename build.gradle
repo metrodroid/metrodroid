@@ -52,6 +52,11 @@ def relativeDrawableHdpiDir = "cardimages/android/drawable-hdpi"
 def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
 def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
 def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
+def testAssetsDirs = [
+                'src/commonTest/assets',
+                'third_party/vpereira_bilhete/',
+                'third_party/RejsekortReader/dumps/'
+        ]
 
 task generateLocalize {
     inputs.file stringsXmlFile
@@ -485,6 +490,31 @@ task packForXCode(type: Sync) {
 
 tasks.build.dependsOn packForXCode
 
+task copyTestAssetsIOS {
+    testAssetsDirs.each { 
+    	   inputs.dir new File(projectDir, it) 
+    }
+    inputs.dir new File(projectDir, "mdst")
+    outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+    doLast {
+    	def outBase = kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+       	testAssetsDirs.each { relativeDir ->
+       			       new File(projectDir, relativeDir).list().each { subDir -> 
+           def link = new File(outBase, subDir)
+           delete link
+           ant.symlink(resource: "../../../../" + relativeDir + "/" + subDir, link: link)
+        }
+	}
+
+           def link = new File(outBase, "mdst")
+           delete link
+           ant.symlink(resource: "../../../../mdst", link: link)
+    }
+}
+
+
+linkDebugTestIOS.dependsOn 'copyTestAssetsIOS'
+
 task iOSSimulatorTest {
     def device = project.findProperty("iosDevice")?.toString() ?: "iPhone 8"
     dependsOn 'linkDebugTestIOS'
@@ -559,22 +589,14 @@ android {
     preBuild.dependsOn copyThirdPartyNotices
 
     sourceSets {
-        androidTest.assets.srcDirs += [
-                'src/commonTest/assets',
-                'third_party/vpereira_bilhete/',
-                'third_party/RejsekortReader/dumps/'
-        ]
+        androidTest.assets.srcDirs += testAssetsDirs
         androidTest.java.srcDirs += ['src/jvmCommonTest/kotlin']
         androidTest.java.srcDirs += ['src/androidCommonTest/kotlin']
         main.assets.srcDirs += ['build/assets', 'mdst']
         main.res.srcDirs += ['cardimages/android']
         test.java.srcDirs += ['src/androidUnitTest/kotlin']
         test.java.srcDirs += ['src/androidCommonTest/kotlin']
-        test.resources.srcDirs += [
-                    'src/commonTest/assets',
-                    'third_party/vpereira_bilhete/',
-                    'third_party/RejsekortReader/dumps/'
-        ]
+        test.resources.srcDirs += testAssetsDirs
     }
 
     compileOptions {
