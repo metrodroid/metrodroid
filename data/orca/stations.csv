@@ -27,6 +27,9 @@ operator_id,reader_id,stop_name,short_name,stop_lat,stop_lon
 7,471956,Tukwila International Blvd,Tukwila,47.4642754,-122.288391
 7,471957,Seatac Airport,Sea-Tac,47.4445305,-122.297012
 7,473061,South Tacoma Station,South Tacoma,47.2038608,-122.4877278
+7,473768,Northgate,,47.7030545,-122.3283918
+7,473769,Roosevelt,,47.676595,-122.315976
+7,473770,U District,,47.6603545,-122.3141008
 8,534389,Seattle Terminal,Seattle,47.602722,-122.338512
 8,534391,Bainbridge Island Terminal,Bainbridge,47.62362,-122.51082
 8,534392,Fauntleroy Terminal,Seattle,47.5231,-122.39602
