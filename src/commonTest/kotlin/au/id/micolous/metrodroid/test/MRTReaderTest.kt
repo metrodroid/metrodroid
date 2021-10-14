@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,8 +32,8 @@ class MRTReaderTest : BaseInstrumentedTest() {
     @Test
     fun testGetStation() {
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         val s = EZLinkTransitData.getStation("CGA")
         assertEquals("Changi Airport", s.getStationName(false).unformatted)

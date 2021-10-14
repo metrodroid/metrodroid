@@ -6,6 +6,7 @@ import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,8 +27,8 @@ class RkfTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImporter())
          * The card has never been used.
          */
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         val c = loadAndParseCard<ClassicCard, RkfTransitData>("anonymt_dump-20120814.mfd")
         assertEquals("308430 000 027 859 5", c.serialNumber)

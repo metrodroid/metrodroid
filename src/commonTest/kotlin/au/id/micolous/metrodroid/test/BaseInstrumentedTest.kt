@@ -5,8 +5,6 @@ import kotlin.test.assertNotNull
 
 expect abstract class BaseInstrumentedTestPlatform() {
     fun setLocale(languageTag: String)
-    fun showRawStationIds(state: Boolean)
-    fun showLocalAndEnglish(state: Boolean)
     fun loadAssetSafe(path: String) : Input?
     fun listAsset(path: String) : List <String>?
 }

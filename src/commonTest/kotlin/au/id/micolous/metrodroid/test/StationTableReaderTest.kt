@@ -8,6 +8,7 @@ import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.StationTableReader
 
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.Companion.TRANSPORT_BUS
@@ -21,18 +22,18 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     @Test
     fun testSeqGoDatabase() {
         setLocale("en-US")
-        showRawStationIds(false)
+        Preferences.showRawStationIds = false
 
         var s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
         assertEquals("Domestic Airport", s.getStationName(false).unformatted)
 
         // Try when Raw Station IDs are enabled.
-        showRawStationIds(true)
+        Preferences.showRawStationIds = true
         s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
         assertEquals("Domestic Airport [0x9]", s.getStationName(false).unformatted)
 
         // Reset back to default
-        showRawStationIds(false)
+        Preferences.showRawStationIds = false
     }
 
     @Test
@@ -46,8 +47,8 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     fun testSuicaDatabase() {
         // Suica has localised station names. Make sure these come out correctly
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         // Test a station in English
         var s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
@@ -81,7 +82,7 @@ class StationTableReaderTest : BaseInstrumentedTest() {
 
         // Test showing both English and Japanese strings
         setLocale("en-US")
-        showLocalAndEnglish(true)
+        Preferences.showBothLocalAndEnglish = true
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
         assertEquals("Shinjuku (新宿)", s.getStationName(false).unformatted)
@@ -118,8 +119,8 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     @Test
     fun testEasyCardLineSelection() {
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         var trip: Trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19)
 
@@ -151,8 +152,8 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     @Test
     fun testAdelaideRouteNaming() {
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         val txn = MockAdelaideTransaction(0x16f, TRANSPORT_BUS)
         assertEquals(listOf("0x16f"), txn.humanReadableLineIDs)
@@ -181,7 +182,7 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         assertEquals("0xffff", tripUnknown.humanReadableRouteID)
 
         // Now test with the settings changed.
-        showRawStationIds(true)
+        Preferences.showRawStationIds = true
 
         // Display name should change
         assertTrue(Trip.getRouteDisplayName(trip)?.unformatted!!.contains("M44"))

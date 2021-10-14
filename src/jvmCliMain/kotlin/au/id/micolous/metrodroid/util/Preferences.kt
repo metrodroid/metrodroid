@@ -17,20 +17,14 @@ actual object Preferences {
     actual val localisePlaces: Boolean = false
 
     @VisibleForTesting
-    var showRawStationIdsActual = true
-    @VisibleForTesting
     var languageActual = "en"
-    @VisibleForTesting
-    var showLocalAndEnglishActual = true
 
-    actual val showRawStationIds: Boolean
-        get() = showRawStationIdsActual
+    actual var showRawStationIds = true
     actual val language: String
         get() = languageActual
     actual val region: String?
         get() = null
-    actual val showBothLocalAndEnglish: Boolean
-        get() = showLocalAndEnglishActual
+    actual var showBothLocalAndEnglish = true
     actual val rawLevel: TransitData.RawLevel
         get() = TransitData.RawLevel.UNKNOWN_ONLY
     actual val metrodroidVersion: String
