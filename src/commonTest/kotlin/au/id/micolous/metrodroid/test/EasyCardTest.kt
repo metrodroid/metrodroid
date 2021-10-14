@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -38,8 +39,8 @@ class EasyCardTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImport
     @Test
     fun testdeadbeefEnglish() {
         setLocale("en-US")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
@@ -82,8 +83,8 @@ class EasyCardTest : CardReaderWithAssetDumpsTest<MfcCardImporter>(MfcCardImport
     @Test
     fun testdeadbeefChineseTraditional() {
         setLocale("zh-TW")
-        showRawStationIds(false)
-        showLocalAndEnglish(false)
+        Preferences.showRawStationIds = false
+        Preferences.showBothLocalAndEnglish = false
 
         val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         val refill = c.trips.last()

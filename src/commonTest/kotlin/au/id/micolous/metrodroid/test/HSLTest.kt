@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.hsl.HSLArvo
 import au.id.micolous.metrodroid.transit.hsl.HSLKausi
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.*
 
 /**
@@ -77,7 +78,7 @@ class HSLTest : BaseInstrumentedTest() {
     @Test
     fun testDemoCard() {
         setLocale("en-US")
-        showRawStationIds(false)
+        Preferences.showRawStationIds = false
 
         // This is mocked-up data, probably has a wrong checksum.
         val c = constructHSLCardV2()

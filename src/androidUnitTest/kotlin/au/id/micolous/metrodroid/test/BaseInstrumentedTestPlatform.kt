@@ -53,26 +53,6 @@ actual abstract class BaseInstrumentedTestPlatform {
         LocaleTools.setLocale(languageTag, context.resources)
     }
 
-    /**
-     * Sets a boolean preference.
-     * @param preference Key to the preference
-     * @param value Desired state of the preference.
-     */
-    private fun setBooleanPref(preference: String, value: Boolean) {
-        val prefs = Preferences.getSharedPreferences()
-        prefs.edit()
-                .putBoolean(preference, value)
-                .apply()
-    }
-
-    actual fun showRawStationIds(state: Boolean) {
-        setBooleanPref(Preferences.PREF_SHOW_RAW_IDS, state)
-    }
-
-    actual fun showLocalAndEnglish(state: Boolean) {
-        setBooleanPref(Preferences.PREF_SHOW_LOCAL_AND_ENGLISH, state)
-    }
-
     actual fun loadAssetSafe(path: String) : Input? = loadAssetStream(path)?.let {
         JavaStreamInput(it)
     }

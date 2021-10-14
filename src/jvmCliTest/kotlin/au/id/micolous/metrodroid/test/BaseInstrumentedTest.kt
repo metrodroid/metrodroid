@@ -24,14 +24,6 @@ actual abstract class BaseInstrumentedTestPlatform actual constructor() {
         Locale.setDefault(Locale.forLanguageTag(languageTag))
     }
 
-    actual fun showRawStationIds(state: Boolean) {
-        Preferences.showRawStationIdsActual = state
-    }
-
-    actual fun showLocalAndEnglish(state: Boolean) {
-        Preferences.showLocalAndEnglishActual = state
-    }
-
     actual fun loadAssetSafe(path: String) : Input? =
         loadAssetStream(path)?.let {
             JavaStreamInput(it)
