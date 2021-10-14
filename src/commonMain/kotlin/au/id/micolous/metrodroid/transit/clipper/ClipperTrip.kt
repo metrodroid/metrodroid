@@ -25,6 +25,7 @@
  */
 package au.id.micolous.metrodroid.transit.clipper
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.time.Timestamp
@@ -52,12 +53,8 @@ class ClipperTrip (private val mTimestamp: Long,
         get() = ClipperTransitData.clipperTimestampToCalendar(mExitTimestamp)
 
     // Bus doesn't record line
-    override val routeName
-        get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
-            ClipperData.GG_FERRY_ROUTES[mRoute]
-        } else {
-            null
-        }
+    override val routeName: FormattedString?
+        get() = ClipperData.getRouteName(mAgency, mRoute)
 
     override val humanReadableRouteID: String?
         get() = if (mAgency == ClipperData.AGENCY_GG_FERRY) {
@@ -65,9 +62,15 @@ class ClipperTrip (private val mTimestamp: Long,
         } else null
 
     override val vehicleID: String?
-        get() = if (mVehicleNum != 0 && mVehicleNum != 0xffff) mVehicleNum.toString() else null
+        get() = when (mVehicleNum) {
+            0, 0xffff -> null
+            in 1..9999 -> mVehicleNum.toString()
+            // For LRV4 Muni vehicles with newer Clipper readers, it stores a 4-digit vehicle number followed
+            // by a letter. For example 0d20461 is vehicle number 2046A, 0d20462 is 2046B, and so on.
+            else -> (mVehicleNum / 10).toString() + ((mVehicleNum % 10) + 9).toString(16).uppercase()
+        }
 
-    override val fare: TransitCurrency?
+    override val fare: TransitCurrency
         get() = TransitCurrency.USD(mFare)
 
     override val startStation: Station?
@@ -76,18 +79,19 @@ class ClipperTrip (private val mTimestamp: Long,
     override val endStation: Station?
         get() = ClipperData.getStation(mAgency, mTo, true)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mTransportCode) {
             0x62 -> {
                 when (mAgency) {
-                    ClipperData.AGENCY_BAY_FERRY, ClipperData.AGENCY_GG_FERRY -> Trip.Mode.FERRY
-                    ClipperData.AGENCY_CALTRAIN -> Trip.Mode.TRAIN
-                    else -> Trip.Mode.TRAM
+                    ClipperData.AGENCY_BAY_FERRY, ClipperData.AGENCY_GG_FERRY -> Mode.FERRY
+                    ClipperData.AGENCY_CALTRAIN, ClipperData.AGENCY_SMART -> Mode.TRAIN
+                    else -> Mode.TRAM
                 }
             }
-            0x6f -> Trip.Mode.METRO
-            0x61, 0x75 -> Trip.Mode.BUS
-            else -> Trip.Mode.OTHER
+            0x6f -> Mode.METRO
+            0x61, 0x75 -> Mode.BUS
+            0x73 -> Mode.FERRY
+            else -> Mode.OTHER
         }
 
     internal constructor(useData: ImmutableByteArray): this(

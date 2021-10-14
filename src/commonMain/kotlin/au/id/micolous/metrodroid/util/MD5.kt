@@ -60,7 +60,7 @@
 
 package au.id.micolous.metrodroid.util
 
-@UseExperimental(ExperimentalUnsignedTypes::class)
+@OptIn(ExperimentalUnsignedTypes::class)
 class MD5State() {
     /**
      * 128-byte state
@@ -92,7 +92,7 @@ class MD5State() {
  * @author    Santeri Paavolainen <sjpaavol></sjpaavol>@cc.helsinki.fi>
  */
 
-@UseExperimental(ExperimentalUnsignedTypes::class)
+@OptIn(ExperimentalUnsignedTypes::class)
 class MD5Ctx {
     /**
      * MD5 state
@@ -102,19 +102,19 @@ class MD5Ctx {
     private fun rotate_left(x: UInt, n: Int): UInt = (x shl n) or (x.shr(32 - n))
 
     private fun FF(a: UInt, b: UInt, c: UInt, d: UInt, x: UInt, s: Int, ac: UInt) =
-            rotate_left(a + (b and c or (b.inv() and d)) + x + ac, s) + b
+        rotate_left(a + (b and c or (b.inv() and d)) + x + ac, s) + b
 
     private fun GG(a: UInt, b: UInt, c: UInt, d: UInt, x: UInt, s: Int, ac: UInt) =
-            rotate_left(a + (b and d or (c and d.inv())) + x + ac, s) + b
+        rotate_left(a + (b and d or (c and d.inv())) + x + ac, s) + b
 
     private fun HH(a: UInt, b: UInt, c: UInt, d: UInt, x: UInt, s: Int, ac: UInt) =
-            rotate_left(a + (b xor c xor d) + x + ac, s) + b
+        rotate_left(a + (b xor c xor d) + x + ac, s) + b
 
     private fun II(a: UInt, b: UInt, c: UInt, d: UInt, x: UInt, s: Int, ac: UInt) =
-            rotate_left(a + (c xor (b or d.inv())) + x + ac, s) + b
+        rotate_left(a + (c xor (b or d.inv())) + x + ac, s) + b
 
     private fun Decode(buffer: ImmutableByteArray, shift: Int) =
-            UIntArray(16) { buffer.byteArrayToIntReversed(shift + 4 * it, 4).toUInt() }
+        UIntArray(16) { buffer.byteArrayToIntReversed(shift + 4 * it, 4).toUInt() }
 
     private fun Transform(state: MD5State, buffer: ImmutableByteArray, shift: Int) {
         var a = state.state[0]
@@ -264,7 +264,7 @@ class MD5Ctx {
     }
 
     private fun Encode(input: UIntArray, len: Int) =
-            ImmutableByteArray(len) { (input[it / 4].shr(8 * (it % 4)) and 0xffU).toByte() }
+        ImmutableByteArray(len) { (input[it / 4].shr(8 * (it % 4)) and 0xffU).toByte() }
 
     /**
      * Returns array of bytes (16 bytes) representing hash as of the
@@ -290,6 +290,6 @@ class MD5Ctx {
         /**
          * Padding for Final()
          */
-        internal val padding = ImmutableByteArray (64) { if (it == 0) 0x80.toByte() else 0x00}
+        internal val padding = ImmutableByteArray(64) { if (it == 0) 0x80.toByte() else 0x00 }
     }
 }

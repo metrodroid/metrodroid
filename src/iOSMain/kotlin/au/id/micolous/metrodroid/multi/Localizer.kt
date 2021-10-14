@@ -47,6 +47,7 @@ actual object Localizer: LocalizerInterface {
     }
     override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString = FormattedString(getResource(res)).format(*v)
     override fun localizeString(res: StringResource, vararg v: Any?): String = format(getResource(res), v)
+    @Suppress("unused") // Used from Swift
     fun englishString(res: StringResource, vararg v: Any?): String = format(res.english, v)
     override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?) = format(getPlural(res, count), v)
     override fun localizeTts(res: StringResource, vararg v: Any?): FormattedString = FormattedString(stripTts(getResource(res))).format(*v)

@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Utility class for reading NfcV / Vicinity /  ISO 15693
@@ -44,7 +43,6 @@ data class NFCVCard constructor(
         @XMLListIdx("index")
         val pages: List<NFCVPage>,
         override val isPartialRead: Boolean = false) : CardProtocol() {
-    @Transient
     override val rawData: List<ListItem>
         get() = listOf(ListItem(R.string.nfcv_system_info, sysInfo?.toHexDump())) +pages.mapIndexed { idx, sector ->
             val pageIndexString = idx.hexString

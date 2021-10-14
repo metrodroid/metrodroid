@@ -26,7 +26,8 @@ HERMETIC_TARGETS := \
 	tisseo \
 	touchngo \
 	troika \
-       waltti
+	waltti \
+	yargor
 
 # All targets that need to fetch some data from the internet, so may not always
 # return the same result.
@@ -46,7 +47,7 @@ ALL_TARGETS := $(HERMETIC_TARGETS) $(WEB_TARGETS)
 all: hermetic web
 
 %.build: %
-	make -C $<
+	$(MAKE) -C $<
 
 hermetic: $(foreach d,$(HERMETIC_TARGETS),$(d).build)
 
@@ -61,12 +62,12 @@ web_copy: $(foreach d,$(HERMETIC_TARGETS),$(d).copy)
 web_clean: $(foreach d,$(HERMETIC_TARGETS),$(d).clean)
 
 %.copy: %
-	make -C $< copy
+	$(MAKE) -C $< copy
 
 copy: $(foreach d,$(ALL_TARGETS),$(d).copy)
 
 %.clean: %
-	make -C $< clean
+	$(MAKE) -C $< clean
 
 clean: $(foreach d,$(ALL_TARGETS),$(d).clean) mdst_clean
 

@@ -22,8 +22,8 @@ import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.charsets.Charsets
-import kotlinx.io.core.String
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
 import kotlin.test.*
 
 class ImportKeysTest : BaseInstrumentedTest() {
@@ -37,7 +37,7 @@ class ImportKeysTest : BaseInstrumentedTest() {
         if (expectedFormat != null) {
             assertEquals(expectedFormat, f)
         }
-        return Pair(String(d, 0, d.size, Charsets.UTF_8), f)
+        return Pair(d.decodeToString(), f)
     }
 
     private fun loadClassicCardRawKeys(path: String): ClassicCardKeys {
@@ -48,7 +48,8 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     private fun loadClassicCardKeys(path: String, expectedID: String?, expectedFormat: KeyFormat?): ClassicKeys {
         val json = loadTestJSON(path, expectedFormat)
-        val k = CardKeys.fromJSON(json.first, "test")!!
+        val k = CardKeys.fromJSON(Json.parseToJsonElement(json.first).jsonObject,
+            "test")!!
 
         if (expectedID != null) {
             assertEquals(expectedID, k.uid)
@@ -58,7 +59,8 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     private fun loadClassicStaticCardKeys(path: String): ClassicStaticKeys {
         val json = loadTestJSON(path, KeyFormat.JSON_MFC_STATIC)
-        val k = CardKeys.fromJSON(json.first, "test")!!
+        val k = CardKeys.fromJSON(Json.parseToJsonElement(json.first).jsonObject,
+            "test")!!
         assertTrue(k is ClassicStaticKeys)
         assertEquals(CardKeys.CLASSIC_STATIC_TAG_ID, k.uid)
         return k
@@ -100,7 +102,7 @@ class ImportKeysTest : BaseInstrumentedTest() {
     }
 
     @Test
-    fun testSectorKeySerialiser() {
+    fun testSectorKeySerializer() {
         val k0 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyA\", \"key\": \"010203040506\"}", "test") as ClassicSectorKey
         val k1 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyB\", \"key\": \"102030405060\"}", "test") as ClassicSectorKey
 
@@ -219,14 +221,9 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     @Test
     fun testInvalidJSON() {
-        try {
-            val card = loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN)
-        } catch (e: Exception) {
-            assertTrue(true, "got expected JSON throw")
-            return
+        assertFails {
+            loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN)
         }
-
-        fail("Expected JSONException")
     }
 
     @Test

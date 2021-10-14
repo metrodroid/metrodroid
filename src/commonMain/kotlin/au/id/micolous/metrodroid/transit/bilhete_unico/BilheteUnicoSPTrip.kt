@@ -43,11 +43,11 @@ internal class BilheteUnicoSPTrip (private val mDay: Int,
     override val fare: TransitCurrency?
         get() = TransitCurrency.BRL(mFare)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mTransport) {
-                BUS -> Trip.Mode.BUS
-                TRAM -> Trip.Mode.TRAM
-                else -> Trip.Mode.OTHER
+                BUS -> Mode.BUS
+                TRAM -> Mode.TRAM
+                else -> Mode.OTHER
             }
 
     override val routeName: FormattedString?

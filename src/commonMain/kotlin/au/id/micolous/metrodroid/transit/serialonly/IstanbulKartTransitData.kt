@@ -48,11 +48,11 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class IstanbulKartTransitData (private val mSerial: String,
                                private val mSerial2: String): SerialOnlyTransitData() {
 
-    public override val extraInfo: List<ListItem>?
+    public override val extraInfo: List<ListItem>
         get() = listOf(ListItem(R.string.istanbulkart_2nd_card_number, mSerial2))
 
-    override val reason: SerialOnlyTransitData.Reason
-        get() = SerialOnlyTransitData.Reason.LOCKED
+    override val reason: Reason
+        get() = Reason.LOCKED
 
     override val cardName get() = NAME
 
@@ -69,7 +69,8 @@ class IstanbulKartTransitData (private val mSerial: String,
                 val serial = parseSerial(metadata) ?: return null
                 return IstanbulKartTransitData(
                         mSerial = serial,
-                        mSerial2 = card.tagId.toHexString().toUpperCase())
+                        mSerial2 = card.tagId.toHexString().uppercase()
+                )
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
             }

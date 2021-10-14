@@ -107,7 +107,7 @@ class ClipperTransitData (private val mSerialNumber: Long?,
              *  manually.
              */
             val data = card.getApplication(APP_ID)?.getFile(0x04)?.data ?: return emptyList()
-            return (0 until data.size step RECORD_LENGTH).reversed().
+            return (data.indices step RECORD_LENGTH).reversed().
                     map { pos -> data.sliceOffLen(pos, RECORD_LENGTH) }.
                     mapNotNull { slice -> createRefill(slice) }
         }

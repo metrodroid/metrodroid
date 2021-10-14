@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class OpalXmlDumpTest: CardReaderWithAssetDumpsTest(XmlCardFormat()) {
+class OpalXmlDumpTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
     @Test
     fun testLitter() {
         /*

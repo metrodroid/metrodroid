@@ -23,8 +23,9 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData
+import au.id.micolous.metrodroid.transit.mrtj.MRTJTransitData
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
-import au.id.micolous.metrodroid.transit.suica.SuicaTransitData
+import au.id.micolous.metrodroid.transit.suica.*
 
 /**
  * Utilities for working with FeliCa cards.
@@ -38,16 +39,20 @@ object FelicaUtils {
      * a particular system operator's data.
      *
      * @param systemCode FeliCa system code to translate.
-     * @return StringRes for what corresponds to that system ocde.
+     * @return StringRes for what corresponds to that system code.
      */
     fun getFriendlySystemName(systemCode: Int): StringResource {
         return when (systemCode) {
-            SuicaTransitData.SYSTEMCODE_SUICA -> R.string.card_name_suica
+            SYSTEMCODE_SUICA -> R.string.felica_system_cybernet
+            SYSTEMCODE_SUICA_UNKNOWN -> R.string.card_name_suica
+            SYSTEMCODE_HAYAKAKEN -> R.string.card_name_hayakaken
+            EdyTransitData.SYSTEMCODE_EDY_EMPTY -> R.string.card_name_edy
             FelicaConsts.SYSTEMCODE_COMMON -> R.string.felica_system_common
             FelicaConsts.SYSTEMCODE_FELICA_LITE -> R.string.card_media_felica_lite
             OctopusTransitData.SYSTEMCODE_OCTOPUS -> R.string.card_name_octopus
             OctopusTransitData.SYSTEMCODE_SZT -> R.string.card_name_szt
             KMTTransitData.SYSTEMCODE_KMT -> R.string.card_name_kmt
+            MRTJTransitData.SYSTEMCODE_MRTJ -> R.string.card_name_mrtj
             FelicaConsts.SYSTEMCODE_NDEF -> R.string.card_format_ndef
             else -> R.string.unknown
         }
@@ -67,9 +72,11 @@ object FelicaUtils {
      */
     fun getFriendlyServiceName(systemCode: Int, serviceCode: Int): StringResource {
         return when (systemCode) {
-            SuicaTransitData.SYSTEMCODE_SUICA -> when (serviceCode) {
-                SuicaTransitData.SERVICE_SUICA_HISTORY -> R.string.suica_file_history
-                SuicaTransitData.SERVICE_SUICA_INOUT -> R.string.suica_file_in_out
+            SYSTEMCODE_SUICA -> when (serviceCode) {
+                SERVICE_SUICA_ID -> R.string.suica_file_id
+                SERVICE_SUICA_HISTORY -> R.string.suica_file_history
+                SERVICE_SUICA_INOUT -> R.string.suica_file_in_out
+                SERVICE_SUICA_ADMISSION -> R.string.suica_file_admission
                 else -> R.string.unknown
             }
 
@@ -100,6 +107,12 @@ object FelicaUtils {
                 KMTTransitData.SERVICE_KMT_ID -> R.string.kmt_file_id
                 KMTTransitData.SERVICE_KMT_BALANCE -> R.string.kmt_file_purse_balance
                 KMTTransitData.SERVICE_KMT_HISTORY -> R.string.kmt_file_history
+                else -> R.string.unknown
+            }
+
+            MRTJTransitData.SYSTEMCODE_MRTJ -> when (serviceCode) {
+                MRTJTransitData.SERVICE_MRTJ_ID -> R.string.mrtj_file_id
+                MRTJTransitData.SERVICE_MRTJ_BALANCE -> R.string.mrtj_file_purse_balance
                 else -> R.string.unknown
             }
 

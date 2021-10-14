@@ -29,8 +29,11 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.nfc.NfcAdapter
 import android.os.Build
+import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -45,6 +48,7 @@ import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
 import java.util.*
 import android.content.pm.PackageManager.GET_META_DATA
+import androidx.core.content.pm.PackageInfoCompat
 
 fun AlertDialog.Builder.safeShow() {
     try {
@@ -97,7 +101,7 @@ object Utils {
     private val versionString: String
         get() {
             val info = packageInfo
-            return "${info.versionName} (${info.versionCode})"
+            return "${info.versionName} (${PackageInfoCompat.getLongVersionCode(info)})"
         }
 
     private val packageInfo: PackageInfo
@@ -241,5 +245,32 @@ object Utils {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun getContentIntent(mimeTypes: List<String>): Intent {
+        val uri = Uri.fromFile(Environment.getExternalStorageDirectory())
+        val i = Intent(Intent.ACTION_GET_CONTENT)
+        i.putExtra(Intent.EXTRA_STREAM, uri)
+        // In Android 4.4 and later, we can say the right thing!
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            i.type = "*/*"
+            i.putExtra(Intent.EXTRA_MIME_TYPES, (mimeTypes + listOf(
+                // Fallback for cases where we didn't get a good mime type from the
+                // OS, this allows most "other" files to be selected.
+                "application/octet-stream")).toTypedArray())
+        } else {
+            // Failsafe, used in the emulator for local files
+            i.type = "application/octet-stream"
+        }
+        return Intent.createChooser(i, Localizer.localizeString(R.string.select_file))
+    }
+
+    fun loadMultiReuse(reuseView: View?, inflater: LayoutInflater, resource: Int,
+                       root: ViewGroup?, attachToRoot: Boolean, tag: String = resource.toString(16)): View {
+        if (reuseView != null && reuseView.tag == tag)
+            return reuseView
+        val v = inflater.inflate(resource, root, attachToRoot)
+        v.tag = tag
+        return v
     }
 }

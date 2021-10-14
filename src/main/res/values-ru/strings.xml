@@ -7,7 +7,7 @@
     <string name="dont_move">Не двигайте карту</string>
     <string name="delete_card">Удалить карту</string>
     <string name="unknown_card">Неизвестная карта</string>
-    <string name="copy_xml">Скопировать</string>
+    <string name="copy_xml">Копировать</string>
     <string name="share_xml">Поделиться</string>
     <string name="save_xml">Сохранить в файл</string>
     <string name="history">История</string>
@@ -56,9 +56,7 @@
     <string name="trip_description">(Из )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (в )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
     </string>
     <string name="trip_description_unknown_start">До %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
-    </string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
     <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
@@ -195,7 +193,7 @@
     <string name="calypso_reading">Считываем карту Calypso…</string>
     <string name="card_partial_read_title">Частично считанная карта!</string>
     <string name="show_partial_data">Показать неполные данные</string>
-    <string name="pref_theme">Скин</string>
+    <string name="pref_theme">Тема</string>
     <string name="pref_theme_desc">Выберите внешний вид приложения</string>
     <plurals name="cards_imported">
         <item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта.</item>
@@ -283,12 +281,10 @@
     <string name="localise_places_longdesc_button">О индикациях языка…</string>
     <string name="localise_places_longdesc_title">О индикациях языка</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> мс</item>
-        <item quantity="few">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
-        <item quantity="many">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> мс</item>
+        <item quantity="few"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="many"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> мс</item>
     </plurals>
     <plurals name="desfire_standard_format">
         <item quantity="one">Тип: %1$s, длина: %2$s байт</item>
@@ -381,7 +377,7 @@
     <string name="location_dubai">Дубай, ОАЭ</string>
     <string name="keys_loaded">Ключи шифрования для этой карты загружены.</string>
     <string name="mode_trolleybus">Троллейбус</string>
-    <string name="copyright">Авторские права © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Авторские права © 2015 – 2021 Michael Farrell</string>
     <string name="locked_mfc_card">Заблокированная карта MIFARE Classic</string>
     <string name="locked_mfu_card">Заблокированная карта MIFARE Ultralight</string>
     <string name="locked_mfd_card">Заблокированная карта MIFARE DESFire</string>
@@ -479,6 +475,10 @@
     <string name="serial_only_card_description_locked">Эта карта заблокирована, и только серийный номер может быть прочитан. Её баланс и история могут храниться на ней, но недоступны.</string>
     <string name="serial_only_card_description_more_research">Поддержка этой карты находится в разработке, и в настоящее время только серийный номер может быть прочитан.</string>
     <string name="full_serial_number">Полный серийный номер</string>
+    <string name="card_name_yargor">ЯрГорТранс</string>
+    <string name="yargor_sub_weekday_tram">Проездной рабочего дня на трамвай</string>
+    <string name="yargor_sub_weekday_trolley">Проездной рабочего дня на троллейбус</string>
+    <string name="yargor_sub_allday_all">Проездной всех дней на все виды транспорта</string>
     <string name="card_name_zolotaya_korona">Золотая Корона</string>
     <string name="zolotaya_korona_region">Регион</string>
     <string name="card_name_krasnodar_etk">Краснодарская ЕТК</string>
@@ -687,13 +687,13 @@
 \nПожалуйста, лоббируйте эмитента карты, чтобы обеспечить открытый доступ к данным на эмитированных картах. Современная технология смарт-карт позволяет безопасно предоставить открытый доступ к данным только для чтения. Некоторые агентства даже предоставляют открытую документацию о формате данных!</string>
     <string name="kmt_file_history">История КМТ</string>
     <string name="kmt_file_id">Идентификация КМТ</string>
-    <string name="kmt_file_purse_balance">Баланс кошелька КМТ</string>
+    <string name="kmt_file_purse_balance">Остаток кошелька КМТ</string>
     <string name="cardtype_header">Условия оплаты картой</string>
     <string name="cardtype_postpay">Постоплата</string>
     <string name="cardtype_mobile_postpay">Мобильная постоплата</string>
     <string name="tmoney_usercode_test">Тест</string>
-    <string name="emv_track_2_equiv">Эквивалентные данные дорожки 2</string>
-    <string name="emv_track_3_equiv">Эквивалентные данные дорожки 3</string>
+    <string name="emv_track_2_equiv">Данные эквивалентные дорожке 2</string>
+    <string name="emv_track_3_equiv">Данные эквивалентные дорожке 3</string>
     <string name="location_barnaul">Барнаул, Россия</string>
     <string name="card_holders_id">Идентификационный номер владельца карты</string>
     <string name="location_santiago_chile">Сантьяго-де-Чили, Чили</string>
@@ -817,13 +817,13 @@
     <string name="felica_process_fare_adjustment">Корректировка тарифа</string>
     <string name="felica_process_admission_payment">Входная плата</string>
     <string name="felica_process_issue_new">Выдача карты</string>
-    <string name="felica_process_entry_a_autocharge">Вход A (автооплата)</string>
-    <string name="felica_process_exit_a_autocharge">Выход A (автооплата)</string>
+    <string name="felica_process_entry_a_autocharge">Вход A (автопополнение)</string>
+    <string name="felica_process_exit_a_autocharge">Выход A (автопополнение)</string>
     <string name="felica_process_deposit_bus">Автобусный депозит</string>
     <string name="felica_process_purchase_special_ticket">Билет (специальный автобус/трамвай)</string>
     <string name="felica_process_merchandise_purchase">Покупка товаров</string>
     <string name="felica_process_bonus_charge">Бонусное пополнение</string>
-    <string name="felica_process_register_deposit">Регистрация депозита</string>
+    <string name="felica_process_register_deposit">Пополнение на кассе</string>
     <string name="felica_process_merchandise_cancel">Отмена покупки товара</string>
     <string name="felica_process_merchandise_admission">Товар или сервис</string>
     <string name="felica_process_merchandise_purchase_cash">Покупка товара (частично наличными)</string>
@@ -976,7 +976,7 @@
     <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid. 
 \nИдентификатор тега:%1$s
 \nПоддерживаемые технологии:%2$s</string>
-    <string name="unknown_ultralight_message">Неизвестный тег Mifare Ultralight</string>
+    <string name="unknown_ultralight_message">Неизвестный тег MIFARE Ultralight</string>
     <string name="nfc_connection_failed">NFC подключение к %s не удалось</string>
     <string name="unknown_date_title">Неизвестная дата</string>
     <string name="card_name_emv_long">EMV (Кредитные и дебетовые карты)</string>
@@ -1051,8 +1051,8 @@
     <string name="show_debug_spans">Показывать отладочный цвет для индикаций языка</string>
     <string name="show_debug_spans_desc">Пометить язык по умолчанию зеленым, английский желтым и местный язык синим</string>
     <string name="ovc_sub_ov_jaarkaart">Личный годовой проездной</string>
-    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Путешествие на балансе, первый класс</string>
-    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Путешествие на балансе, второй класс</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Поездка на остатке, первый класс</string>
+    <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Поездка на остатке, второй класс</string>
     <string name="compass_sub_daypass">Дневной проездной на все зоны (DayPass)</string>
     <string name="compass_sub_one_zone">Одна зона</string>
     <string name="compass_sub_two_zone">Две зоны</string>
@@ -1123,7 +1123,7 @@
     <string name="large_file_yes">Всё равно загрузить (риск сбоя)</string>
     <string name="large_file_no">Отменить (безопасно)</string>
     <string name="large_file_warning">Файл, который вы выбрали, имеет большой размер (%s) и может привести к сбою приложения. Вы хотите продолжить\?</string>
-    <string name="ios_unknown_mifare">Неизвестный Mifare: %s</string>
+    <string name="ios_unknown_mifare">Неизвестный MIFARE: %s</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_light">Светлая</string>
     <plurals name="supported_cards_format">
@@ -1131,4 +1131,83 @@
         <item quantity="few">%d карты</item>
         <item quantity="many">%d карт</item>
     </plurals>
+    <string name="ios_nfcreader_exception">Исключение: %s</string>
+    <string name="app_logo_description">Логотип Метродроида</string>
+    <string name="closed_arrow">Свернутый список</string>
+    <string name="open_arrow">Развёрнутый список</string>
+    <string name="ovc_sub_ov_bijkaart_1e_klas">Дополнительный проездной (Bijabonnement), первый класс</string>
+    <string name="ovc_sub_daluren_oost_nederland">Внепиковая скидка на востоке</string>
+    <string name="ovc_sub_student_week_korting">Скидка по будням для студентов</string>
+    <string name="ovc_sub_student_weekend_korting">Скидка по выходным для студентов</string>
+    <string name="compass_sub_four_zone_wce_one_way">Четыре зоны WCE (в одну сторону)</string>
+    <string name="compass_sub_bulk_daypass">Оптовый дневной проездной на все зоны (DayPass)</string>
+    <string name="compass_sub_bulk_one_zone">Оптовый на одну зону</string>
+    <string name="compass_sub_bulk_two_zone">Оптовый на две зоны</string>
+    <string name="compass_sub_bulk_three_zone">Оптовый на три зоны</string>
+    <string name="compass_sub_gradpass">Выпускной 2-дневный билет (GradPass)</string>
+    <string name="lisboaviva_sub_navegante_urbano">Городской проездной «Навеганте» (Navegante urbano)</string>
+    <string name="lisboaviva_sub_fertagus_pal_lis_ml">Фертагус из Пальмелы в Лиссабон + Городская зона</string>
+    <string name="venezia_carnet_traghetto">Пакет билетов на паром</string>
+    <string name="pisa_carnet_10_bgl_70_min_pisa">Пакет из 10 билетов за 70 минут</string>
+    <string name="pisa_abb_trim_pers_pisa">Триместровый проездной на Пизу</string>
+    <string name="ovc_autocharge_information">Информация об автопополнении</string>
+    <string name="waltti_city_zone">%1$s, зона %2$s</string>
+    <string name="waltti_city_zones">%1$s, зоны %2$s</string>
+    <string name="lisboaviva_engraved_serial">Выгравированный номер</string>
+    <string name="lisboaviva_sub_navegante_lisboa">Проездной «Навеганте» для Лиссабона (Navegante Lisboa)</string>
+    <string name="ricaricami_m1_3_ord_single">Обыкновенный Nr.1 на 3 зоны Ми1-Ми3</string>
+    <string name="mode_monorail">Монорельс</string>
+    <string name="felica_process_booth_exit">Выход из кабинки менеджера станции</string>
+    <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, поездка на остатке</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Поездка на остатке (2-1 день)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Поездка на остатке (1-2 день)</string>
+    <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Поездка на остатке (2-1 скидка)</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing не поддерживается.</string>
+    <string name="felica_first_system_pref">Читайть только первую систему</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid будет читать все системы на картах FeliCa. Это значение по умолчанию.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid будет читать только первую систему на картах FeliCa. Это моделирует обход ошибки в iOS. Чтение мультисистемных карт FeliCa будет неполным!</string>
+    <string name="felica_empty_system">Пустая система</string>
+    <string name="felica_skipped_system">Пропущенная система</string>
+    <string name="felica_first_system_notice">Чтения FeliCa будут неполными.</string>
+    <string name="yargor_transports_valid">Действительно для следующих видов транспорта</string>
+    <string name="card_media_felica">FeliCa</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d пустой сервисный код</item>
+        <item quantity="few">%d пустых сервисных кода</item>
+        <item quantity="many">%d пустых сервисных кодов</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d пропущенный сервисный код</item>
+        <item quantity="few">%d пропущенных сервисных кода</item>
+        <item quantity="many">%d пропущенных сервисных кодов</item>
+    </plurals>
+    <string name="felica_specification_version">Версия спецификации</string>
+    <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
+    <string name="ovc_sub_dalkorting">Dal Korting</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% скидка вне часа пик)</string>
+    <string name="felica_process_booth_deduction">Оплата на билетной кассе</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Студенческий OV-chipkaart рабочего дня (2009)</string>
+    <string name="ovc_sub_studentenkaart_korting_weekend_2009">Студенческая карточка korting выходного дня (2009)</string>
+    <string name="ovc_sub_studentenkaart_korting_week_2009">Студенческая карточка korting рабочего дня (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Студенческий OV-chipkaart выходного дня (2009)</string>
+    <string name="ovc_sub_student_weekend_vrij">Студенческий vrij выходного дня</string>
+    <string name="ovc_sub_student_week_vrij">Студенческий vrij рабочего дня</string>
+    <string name="ovc_sub_fietssupplement">Проездной OV-fiets</string>
+    <string name="ovc_sub_ns_businesscard">Карточка NS-Business</string>
+    <string name="mrtj_file_id">Идентификация MRTJ</string>
+    <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% на городской, 50%% на ж.д. и 50%% на речной транспорт</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% на городской, 0%% на ж.д. и 0%% на речной транспорт</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% на городской, 0%% на ж.д. и 0%% на речной транспорт</string>
+    <string name="zolotaya_korona_discount">Скидка</string>
+    <string name="mrtj_file_purse_balance">Остаток кошелька MRTJ</string>
+    <string name="mrtj_extra_note">Остаток и информация о последней транзакции.</string>
+    <string name="felica_option_version_list">Необязательный список версий</string>
+    <string name="felica_basic_version">Базовая версия спецификации</string>
+    <string name="location_fukuoka_prefecture">Фукуока, Япония</string>
+    <string name="location_nagoya">Нагоя, Япония</string>
+    <string name="location_vladimir">Владимир, Россия</string>
+    <string name="card_name_siticard_vladimir">СитиКард (Владимир)</string>
+    <string name="location_fukuoka_city">Фукуока, Япония</string>
+    <string name="russia_region_33_vladimir">Владимирская область</string>
 </resources>

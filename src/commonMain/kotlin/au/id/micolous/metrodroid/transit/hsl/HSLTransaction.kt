@@ -30,7 +30,10 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-data class HSLTransaction internal constructor(override val parsed: En1545Parsed, private val walttiRegion: Int?): En1545Transaction() {
+data class HSLTransaction internal constructor(
+    override val parsed: En1545Parsed,
+    private val walttiRegion: Int?,
+    private val ultralightCity: Int? = null): En1545Transaction() {
     private val isArvo: Boolean?
         get() = parsed.getInt(IS_ARVO).let {
             when (it) {
@@ -60,7 +63,8 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
         get() = HSLLookup
 
     override val station: Station?
-        get() = HSLLookup.getArea(parsed, AREA_PREFIX, isValidity = false, walttiRegion=walttiRegion)?.let { Station.nameOnly(it) }
+        get() = HSLLookup.getArea(parsed, AREA_PREFIX, isValidity = false,
+                                  walttiRegion=walttiRegion, ultralightCity=ultralightCity)?.let { Station.nameOnly(it) }
 
     override val mode: Trip.Mode
         get() = when (parsed.getInt(LOCATION_NUMBER)) {
@@ -144,7 +148,8 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
                 En1545FixedInteger("RemainingValue", 20)
         )
 
-        fun parseEmbed(raw: ImmutableByteArray, offset: Int, version: HSLTransitData.Variant, walttiArvoRegion: Int? = null): HSLTransaction? {
+        fun parseEmbed(raw: ImmutableByteArray, offset: Int, version: HSLTransitData.Variant,
+                       walttiArvoRegion: Int? = null, ultralightCity: Int? = null): HSLTransaction? {
             val fields = when(version) {
                 HSLTransitData.Variant.HSL_V2 -> EMBED_FIELDS_V2
                 HSLTransitData.Variant.HSL_V1 -> EMBED_FIELDS_V1
@@ -153,7 +158,7 @@ data class HSLTransaction internal constructor(override val parsed: En1545Parsed
             val parsed = En1545Parser.parse(raw, offset, fields)
             if (parsed.getTimeStamp(EVENT, HSLLookup.timeZone) == null)
                 return null
-            return HSLTransaction(parsed, walttiRegion=walttiArvoRegion)
+            return HSLTransaction(parsed, walttiRegion=walttiArvoRegion, ultralightCity=ultralightCity)
         }
         
         fun parseLog(raw: ImmutableByteArray, version: HSLTransitData.Variant): HSLTransaction? {

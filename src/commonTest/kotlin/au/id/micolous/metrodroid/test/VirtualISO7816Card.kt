@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
@@ -112,25 +111,29 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
     protected fun cd(path: Int) : Boolean {
         val app = currentApplication
 
-        if (path == 0) {
-            currentPath = null
-            currentFile = null
-        } else if (app == null) {
-            return false
-        } else {
-            var p : ISO7816Selector? = currentPath
-            while (p != null) {
-                if (cd(p.appendPath(path))) {
-                    return true
+        when {
+            path == 0 -> {
+                currentPath = null
+                currentFile = null
+            }
+            app == null -> {
+                return false
+            }
+            else -> {
+                var p : ISO7816Selector? = currentPath
+                while (p != null) {
+                    if (cd(p.appendPath(path))) {
+                        return true
+                    }
+
+                    p = p.parent()
                 }
 
-                p = p.parent()
+                // p == null
+                // Try a bare path
+                p = ISO7816Selector.makeSelector(path)
+                return cd(p)
             }
-
-            // p == null
-            // Try a bare path
-            p = ISO7816Selector.makeSelector(path)
-            return cd(p)
         }
 
         return true
@@ -153,7 +156,7 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
                     continue
                 }
 
-                val truncatedName = appName.sliceArray(0 until params.size)
+                val truncatedName = appName.sliceArray(params.indices)
 
                 if (params.contentEquals(truncatedName)) {
                     // we have an app!

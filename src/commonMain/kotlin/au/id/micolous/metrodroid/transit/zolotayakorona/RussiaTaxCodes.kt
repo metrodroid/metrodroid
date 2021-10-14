@@ -37,6 +37,8 @@ object RussiaTaxCodes {
             0x28 to Pair(R.string.russia_region_28_amur, MetroTimeZone.YAKUTSK),
             // Arkhangelsk
             0x29 to Pair(R.string.russia_region_29_arkhangelsk, MetroTimeZone.MOSCOW),
+            // Vladimir
+            0x33 to Pair(R.string.russia_region_33_vladimir, MetroTimeZone.MOSCOW),
             // Petropavlovsk-Kamchatsky
             0x41 to Pair(R.string.russia_region_41_kamchatka, MetroTimeZone.KAMCHATKA),
             // Kemerovo and Novokuznetsk

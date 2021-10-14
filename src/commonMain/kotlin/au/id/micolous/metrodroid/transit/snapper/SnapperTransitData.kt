@@ -28,7 +28,13 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-class SnapperTransitData : TMoneyTransitData {
+class SnapperTransitData(card: KSX6924Application) : TMoneyTransitData(
+    card.balance.byteArrayToInt(),
+    card.purseInfo,
+    TransactionTrip.merge(getSnapperTransactionRecords(card).map {
+        SnapperTransaction.parseTransaction(it.first, it.second)
+    })
+) {
     override val balance: TransitBalance?
         get() = mPurseInfo.buildTransitBalance(TransitCurrency.NZD(mBalance))
 
@@ -37,13 +43,6 @@ class SnapperTransitData : TMoneyTransitData {
 
     override val purseInfoResolver
         get() = SnapperPurseInfoResolver
-
-    constructor(card: KSX6924Application) : super (
-            card.balance.byteArrayToInt(),
-            card.purseInfo,
-            TransactionTrip.merge(getSnapperTransactionRecords(card).map {
-                SnapperTransaction.parseTransaction(it.first, it.second) })
-    )
 
     companion object {
         private const val NAME = "Snapper"

@@ -53,6 +53,7 @@ actual object Preferences {
     actual val rawLevel: TransitData.RawLevel
         get() = readString("pref_raw_level")?.let {
             TransitData.RawLevel.fromString(it) } ?: TransitData.RawLevel.NONE
+    @Suppress("unused") // Used from Swift
     val speakBalance
         get() = readBool("pref_key_speak_balance")
     actual val metrodroidVersion: String

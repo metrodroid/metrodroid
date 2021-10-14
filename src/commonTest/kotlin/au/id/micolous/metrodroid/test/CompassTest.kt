@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.time.TimestampFull
 
 import au.id.micolous.metrodroid.card.Card
@@ -39,7 +40,7 @@ import kotlin.test.assertTrue
 class CompassTest : BaseInstrumentedTest() {
 
     private fun createUltralightFromString(cardData: Array<String>): Card {
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
         val serial = ImmutableByteArray.fromHex(cardData[1].substring(0, 18))
 
         val pages = ArrayList<UltralightPage>()

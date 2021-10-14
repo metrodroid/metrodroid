@@ -27,7 +27,7 @@ import android.os.Parcelable
 import androidx.preference.DialogPreference
 import android.util.AttributeSet
 import androidx.annotation.RequiresApi
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.farebot.R
 
 
@@ -35,6 +35,8 @@ import au.id.micolous.farebot.R
  * Implements a preference which allows the user to pick a number.
  */
 
+// Used from XML
+@Suppress("unused")
 class NumberPickerPreference : DialogPreference {
     val minValue: Int
     val maxValue: Int
@@ -56,19 +58,14 @@ class NumberPickerPreference : DialogPreference {
     }
 
     /**
-     * Gets the text from the [SharedPreferences].
+     * The current preference value.
      *
-     * @return The current preference value.
+     * The text is saved to the [SharedPreferences]
      */
-    /**
-     * Saves the text to the [SharedPreferences].
-     *
-     * @param value The text to save
-     */
-    // Always persist/notify the first time.
     var value = 0
         set(value) {
             val changed = field != value
+            // Always persist/notify the first time.
             if (changed || !mValueSet) {
                 field = value
                 mValueSet = true

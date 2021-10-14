@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
 import platform.Foundation.NSData
 import platform.Foundation.NSError

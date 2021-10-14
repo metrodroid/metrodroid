@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -35,21 +34,21 @@ class NewShenzhenTrip (override val capsule: ChinaTripCapsule): ChinaTripAbstrac
     override val endStation: Station?
         get() = when (transport) {
             SZT_METRO -> StationTableReader.getStation(SHENZHEN_STR,
-                    (mStation and 0xff.inv()).toInt(),
+                    (mStation and 0xffffff00).toInt(),
                     (mStation shr 8).toString(16)).addAttribute(
                     Localizer.localizeString(R.string.szt_station_gate,
                             (mStation and 0xff).toString(16)))
             else -> null
         }
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             if (isTopup)
-                return Trip.Mode.TICKET_MACHINE
+                return Mode.TICKET_MACHINE
             return when (transport) {
-                SZT_METRO -> Trip.Mode.METRO
-                SZT_BUS -> Trip.Mode.BUS
-                else -> Trip.Mode.OTHER
+                SZT_METRO -> Mode.METRO
+                SZT_BUS -> Mode.BUS
+                else -> Mode.OTHER
             }
         }
 

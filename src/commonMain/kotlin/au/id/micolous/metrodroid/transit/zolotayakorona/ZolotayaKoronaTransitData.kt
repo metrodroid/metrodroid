@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -35,6 +36,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
 @Parcelize
@@ -44,7 +46,11 @@ data class ZolotayaKoronaTransitData internal constructor(
         private val mCardSerial: String,
         private val mTrip: ZolotayaKoronaTrip?,
         private val mRefill: ZolotayaKoronaRefill?,
-        private val mCardType: Int) : TransitData() {
+        private val mCardType: Int,
+        private val mStatus: Int,
+        private val mDiscountCode: Int,
+        private val mSequenceCtr: Int,
+        private val mTail: ImmutableByteArray) : TransitData() {
     private val estimatedBalance: Int
         get() {
             // a trip followed by refill. Assume only one refill.
@@ -79,14 +85,28 @@ data class ZolotayaKoronaTransitData internal constructor(
         return listOf(
                 ListItem(R.string.zolotaya_korona_region, regionName),
                 ListItem(R.string.card_type, cardInfo?.name ?: mCardType.toString(16)),
+                ListItem(R.string.zolotaya_korona_discount, discountMap[mDiscountCode]?.let {
+                    Localizer.localizeString(it) } ?: Localizer.localizeString(R.string.unknown_format, mDiscountCode.toString(16))),
                 // Printed in hex on the receipt
-                ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()),
+                ListItem(R.string.card_serial_number, mCardSerial.uppercase()),
                 ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
+
+    override fun getRawFields(level: RawLevel): List<ListItem> = listOf(
+            // Unsure about next 2 fields, hence they are hidden in raw fields
+            ListItem("Status", mStatus.toString()),
+            ListItem("Issue seqno", mSequenceCtr.toString()),
+            ListItem(FormattedString("ID-Tail"), mTail.toHexDump())
+    )
 
     override val trips get() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
 
     companion object {
+        private val discountMap = mapOf(
+                0x46 to R.string.zolotaya_korona_discount_111,
+                0x47 to R.string.zolotaya_korona_discount_100,
+                0x48 to R.string.zolotaya_korona_discount_200
+        )
         private val INFO_CARDS = mapOf(
                 0x230100 to CardInfo(
                         name = R.string.card_name_krasnodar_etk,
@@ -192,7 +212,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 return null
             val tz = RussiaTaxCodes.BCDToTimeZone(cardType shr 16)
             val epoch = Epoch.local(1970, tz)
-            // This is pseudo unix time with local day alwayscoerced to 86400 seconds
+            // This is pseudo unix time with local day always coerced to 86400 seconds
             return epoch.daySecond(time / 86400, time % 86400)
         }
 
@@ -217,6 +237,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 val balance = if (card[6] is UnauthorizedClassicSector) null else
                     card[6, 0].data.byteArrayToIntReversed(0, 4)
 
+                val infoBlock = card[4,0].data
                 val refill = ZolotayaKoronaRefill.parse(card[4, 1].data, cardType)
                 val trip = ZolotayaKoronaTrip.parse(card[4, 2].data, cardType, refill, balance)
 
@@ -226,7 +247,11 @@ data class ZolotayaKoronaTransitData internal constructor(
                         mCardType = cardType,
                         mBalance = balance,
                         mTrip = trip,
-                        mRefill = refill
+                        mRefill = refill,
+                        mStatus = infoBlock.getBitsFromBuffer(60, 4),
+                        mSequenceCtr = infoBlock.byteArrayToInt(8, 2),
+                        mDiscountCode = infoBlock[10].toInt() and 0xff,
+                        mTail = infoBlock.sliceOffLen(11, 5)
                 )
             }
 

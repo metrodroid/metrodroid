@@ -59,7 +59,7 @@ class WuhanTongTransitData(val validityStart: Int?,
                 preview = true)
 
         private fun parse(card: ChinaCard): WuhanTongTransitData {
-            val file5 = ChinaTransitData.getFile(card, 0x5)?.binaryData
+            val file5 = getFile(card, 0x5)?.binaryData
             return WuhanTongTransitData(serialNumber = parseSerial(card),
                     validityStart = file5?.byteArrayToInt(20, 4),
                     validityEnd = file5?.byteArrayToInt(16, 4),

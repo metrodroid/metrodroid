@@ -3,7 +3,7 @@
   strings.xml
 
   Copyright 2011-2013 Eric Butler
-  Copyright 2015-2019 Michael Farrell
+  Copyright 2015-2021 Michael Farrell
 
   Authors:
   Eric Butler <eric@codebutler.com>
@@ -21,17 +21,23 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+  Please see the Metrodroid wiki for style and translation guidance:
+  https://github.com/metrodroid/metrodroid/wiki/Translating
+
+  For English dialect usage details, please see:
+  https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name" translatable="false">Metrodroid</string>
 
-    <!-- Additional names now noted in the license screen -->
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <!-- Additional names now noted in the license/licence screen -->
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
 
     <!-- General application strings -->
-    <string name="license">Licenses</string>
-    <string name="title_activity_license">Open source licenses</string>
+    <string name="license">Licences</string>
+    <string name="title_activity_license">Open source licences</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading card…</string>
     <string name="dont_move">Do not move card</string>
@@ -429,7 +435,7 @@
     <string name="theme_dark">Dark</string>
     <!-- Translators: It's about light theme. -->
     <string name="theme_light">Light</string>
-    <!-- Translators: It's about theme that mimicks FareBot appearence. -->
+    <!-- Translators: It's about theme that mimics FareBot appearence. -->
     <string name="theme_farebot" translatable="false">FareBot</string>
 
     <!-- Translators: Do not translate -->
@@ -542,7 +548,7 @@
         <item quantity="one">%d trip remaining out of %d</item>
         <item quantity="other">%d trips remaining out of %d</item>
     </plurals>
-    <!-- Translarors: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
+    <!-- Translators: This a ticket name. Feel free to replace with "Ticket for %d ride(s). -->
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
@@ -637,6 +643,10 @@
     <string name="felica_response_time_write">Write command (1 block)</string>
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
+
+    <string name="felica_specification_version">Specification version</string>
+    <string name="felica_basic_version">Basic specification version</string>
+    <string name="felica_option_version_list">Optional version list</string>
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -784,10 +794,18 @@
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
     <string name="location_crimea">Crimea</string>
     <string name="location_dubai">Dubai, UAE</string>
-    <string name="location_ekaterinburg">Ekaterinburg, Russia</string>
+    <string name="location_ekaterinburg">Yekaterinburg, Russia</string>
     <string name="location_finland">Finland</string>
     <string name="location_france">France</string>
     <string name="location_fribourg_ch">Fribourg, Switzerland</string>
+    <!--
+    Translators: This refers to the city of Fukuoka. This is in the prefecture of the same name.
+     -->
+    <string name="location_fukuoka_city">Fukuoka, Japan</string>
+    <!--
+    Translators: This refers to the prefecture of Fukuoka. It has a city of the same name inside.
+     -->
+    <string name="location_fukuoka_prefecture">Fukuoka, Japan</string>
     <string name="location_denmark">Denmark</string>
     <string name="location_gauteng">Gauteng, South Africa</string>
     <string name="location_germany">Germany</string>
@@ -820,6 +838,7 @@
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="location_montpellier">Montpellier, France</string>
     <string name="location_moscow">Moscow, Russia</string>
+    <string name="location_nagoya">Nagoya, Japan</string>
     <string name="location_nizhniy_novgorod">Nizhniy Novgorod, Russia</string>
     <string name="location_orenburg">Orenburg, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
@@ -854,6 +873,7 @@
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_venezia">Venice, Italy</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_vladimir">Vladimir, Russia</string>
     <string name="location_wellington_nz">Wellington, New Zealand</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_waikato">Waikato, New Zealand</string>
@@ -891,6 +911,8 @@
     <string name="mode_trolleybus">Trolleybus</string>
     <!-- Used as descriptive text for the road toll icon. -->
     <string name="mode_toll_road">Toll road</string>
+    <!-- Used as descriptive text for the monorail icon. -->
+    <string name="mode_monorail">Monorail</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
@@ -1000,6 +1022,9 @@
     <string name="ez_retail_purchase">Retail purchase</string>
     <string name="ez_service_charge">Service charge</string>
 
+    <!-- Translators: name of a pre-paid debige card in Japan. Name is only in English.
+    May be transliterated. https://en.wikipedia.org/wiki/Edy -->
+    <string name="card_name_edy">Edy</string>
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Edy is a pre-paid debit card in Japan. -->
     <string name="edy_file_history">Edy history</string>
@@ -1010,17 +1035,43 @@
     of the purse stored on this card. Edy is a pre-paid debit card in Japan. -->
     <string name="edy_file_purse_balance">Edy purse balance</string>
 
-    <!-- Felica / Suica: These strings must only be used for Felica. -->
-
-    <!-- Translators: It's a ticketing card name in Japan. Japanese: スイカ
-    May be transliterated -->
-    <string name="card_name_suica">Suica</string>
-    <!-- Translators: It's a ticketing card name in Japan. Japanese: イコカ
-    May be transliterated -->
+    <!-- Translators: "IC" is a network of interoperable transit cards in Japan.
+    Cards either have an IC logo, or the letters "I" and "C" somewhere in their name. -->
+    <string name="card_name_japan_ic">Japan IC</string>
+    <!-- Translators: Transit card used in Fukuoka, Japan. Japanese: はやかけん
+    May be transliterated. Card has both Japanese and English names printed on it. -->
+    <string name="card_name_hayakaken">Hayakaken</string>
+    <!-- Translators: Name of a transit card used in Japan. Japanese: イコカ
+    May be transliterated. Card has only the English name printed on it, in all UPPER case. -->
     <string name="card_name_icoca">ICOCA</string>
-    <!-- Translators: It's a ticketing card name in Japan. Japanese: パスモ
-    May be transliterated -->
+    <!-- Translators: Transit card used in Hokkaido Prefecture, Japan. Japanese: キタカ
+    May be transliterated. Card only has the English name printed on it. -->
+    <string name="card_name_kitaca">Kitaca</string>
+    <!-- Translators: Transit card used in Nagoya, Japan. Japanese: マナカ
+    May be transliterated. Card only has the English name printed on it, in all lower case. -->
+    <string name="card_name_manaca">manaca</string>
+    <!-- Translators: Transit card used in Fukuoka Prefecture, Japan. Japanese: ニモカ
+    May be transliterated. Card has only the English name printed on it, in all lower case. -->
+    <string name="card_name_nimoca">nimoca</string>
+    <!-- Translators: Name of a transit card used in Japan. Japanese: パスモ
+    May be transliterated. Card has only the English name printed on it, in all UPPER case. -->
     <string name="card_name_pasmo">PASMO</string>
+    <!-- Translators: Post-paid transit card used in Japan. Japanese: ピタパ
+    May be transliterated. Card only has the English name printed on it. -->
+    <string name="card_name_pitapa">PiTaPa</string>
+    <!-- Translators: Name of a transit card used in Japan. Japanese: スイカ
+    May be transliterated. Card has only the English name printed on it. -->
+    <string name="card_name_suica">Suica</string>
+    <!-- Translators: Transit card used in Fukuoka Prefecture, Japan. Japanese: スゴカ
+    May be transliterated. Card only has the English name printed on it, in all UPPER case. -->
+    <string name="card_name_sugoca">SUGOCA</string>
+    <!-- Translators: Transit card used in Nagoya, Japan. Japanese
+    May be transliterated. Card only has the English name printed on it, and is referred to in
+    all UPPER case. -->
+    <string name="card_name_toica">TOICA</string>
+
+
+    <!-- Felica / Suica: These strings must only be used for Felica. -->
 
     <!--
         Translators:
@@ -1105,8 +1156,7 @@
     <!-- TODO: what is this? -->
     <string name="felica_process_booth_exit">Station Master booth exit</string>
     <string name="felica_process_issue_new">New issue</string>
-    <!-- TODO: what is this? -->
-    <string name="felica_process_booth_deduction">Booth deduction</string>
+    <string name="felica_process_booth_deduction">Payment at ticket booth</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Re-issue</string>
@@ -1127,8 +1177,7 @@
     <string name="felica_process_purchase_special_ticket">Ticket (special bus/streetcar)</string>
     <string name="felica_process_merchandise_purchase">Merchandise purchase</string>
     <string name="felica_process_bonus_charge">Bonus refill</string>
-    <!-- TODO: what is this? -->
-    <string name="felica_process_register_deposit">Register deposit</string>
+    <string name="felica_process_register_deposit">Refill at cash register</string>
     <string name="felica_process_merchandise_cancel">Cancel merchandise</string>
     <string name="felica_process_merchandise_admission">Merchandise/admission</string>
     <string name="felica_process_merchandise_purchase_cash">Merchandise purchase (partially with cash)</string>
@@ -1142,6 +1191,12 @@
     <!-- Translators: Describes the name of a file. This file contains the last use of the card to
     enter (in) or exit (out) a train station. Suica is a transit card in Japan. -->
     <string name="suica_file_in_out">Suica in/out</string>
+    <!-- Translators: Describes the name of a file. This file contains metadata describing the
+    identity of the card. Suica is a transit card in Japan. -->
+    <string name="suica_file_id">Suica identity</string>
+    <!-- Translators: Describes the name of a file. This file contains information about when and
+    where it was used to start a (railway) journey.  Suica is a transit card in Japan. -->
+    <string name="suica_file_admission">Suica admission</string>
 
     <!--
         Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
@@ -1179,6 +1234,11 @@
     <!-- Translators: Name of a transit card in Indonesia. -->
     <string name="card_name_kmt">Kartu Multi Trip</string>
 
+    <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
+    <string name="mrtj_extra_note">Balance and last transaction info.</string>
+    <string name="mrtj_file_id">MRTJ Identity</string>
+    <string name="mrtj_file_purse_balance">MRTJ purse balance</string>
+
     <!-- HSL -->
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
@@ -1191,7 +1251,7 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
-    <!-- Translators: it's a day from mindight to next midnight. -->
+    <!-- Translators: it's a day from midnight to next midnight. -->
     <plurals name="hsl_valid_days_calendar">
         <item quantity="one">%d calendar day</item>
         <item quantity="other">%d calendar days</item>
@@ -1361,7 +1421,13 @@
     <string name="card_name_szt">Shenzhen Tong</string>
     <!-- Translators: Transit card in Hong Kong. Chinese: 八達通. -->
     <string name="card_name_octopus">Octopus</string>
+    <!-- Translators: Transit card in Hong Kong and Shenzhen. Chinese: 互通行 -->
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+    <!--
+    Translators: Hu Tong Xing (Chinese: 互通行) is a transit card used in Hong Kong and Shenzhen.
+    This note is only displayed on iOS: https://github.com/metrodroid/metrodroid/issues/613
+    -->
+    <string name="card_note_octopus_ios">Hu Tong Xing not supported.</string>
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
@@ -1410,7 +1476,7 @@
     <!-- Translators: Dutch "NS-Business Card" -->
     <string name="ovc_sub_ns_businesscard">NS-Business Card</string>
     <!-- Translators: Dutch "Dal Voordeel" -->
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% off-peak discount)</string>
     <!-- Translators: Dutch "Reizen op saldo bij NS, 1e klasse" -->
     <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Travel on Credit, First Class</string>
     <!-- Translators: Dutch "Reizen op saldo bij NS, 2de klasse" -->
@@ -1672,6 +1738,7 @@
     <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
     <!-- Translators: Druzhinnik is a member of Russian Neighbourhood Watch -->
     <string name="troika_druzhinnik_card">Druzhinnik card</string>
+    <string name="purse_ride_counter">Counter of rides using purse</string>
 
     <!-- Translators: This is a list item header, and under it is a number.
     (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->
@@ -1985,6 +2052,8 @@
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
+    <!-- Translators: Type of card media (フェリカ / Felicity Card) -->
+    <string name="card_media_felica">FeliCa</string>
     <!-- Translators: Type of card media, variant of FeliCa (フェリカ / Felicity Card) -->
     <string name="card_media_felica_lite">FeliCa Lite</string>
     <string name="felica_lite_read_only">Read-only data</string>
@@ -1994,9 +2063,89 @@
     <!-- Translators: Area of card storage shared by Suica and Edy,
          possibly othewr systems as well. -->
     <string name="felica_system_common">Common Area (FeliCa Networks)</string>
+    <!-- Translators: area of card storage used by Japanese transit cards, set up by Japanese
+    Railway Cybernetics Council (日本鉄道サイバネティクス協議会). -->
+    <string name="felica_system_cybernet">Japan IC (Cybernet)</string>
+    <!--
+    Translators:
+    Used as a preference title. FeliCa divides cards into "systems" (~applications) and "services"
+    (~files). A single card may have more than one "system".
+
+    By default, this preference is disabled: Metrodroid reads all systems from a FeliCa card.
+
+    When this preference is enabled, Metrodroid will only read the first system on a FeliCa card.
+    -->
+    <string name="felica_first_system_pref">Only read first system</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is disabled (default).
+    -->
+    <string name="felica_first_system_pref_summary_off">Metrodroid will read all systems on FeliCa cards. This is the default.</string>
+    <!--
+    Translators:
+    See 'felica_first_system_pref' for explanation of the preference.
+    This is used as a summary when the preference is enabled.
+    -->
+    <string name="felica_first_system_pref_summary_on">Metrodroid will read only the first system on FeliCa cards. This simulates a workaround for a bug in iOS. Reads of multi-system FeliCa cards will be incomplete!</string>
+
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which does
+    not contain any services (~files).
+    -->
+    <string name="felica_empty_system">Empty system</string>
+
+    <!--
+    Translators:
+    Used as a description for a FeliCa system code (~application) which was not
+    read. This is because of a work-around for an iOS bug.
+    -->
+    <string name="felica_skipped_system">Skipped reading system</string>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that either contain 0 blocks, or all blocks contain null bytes.
+    -->
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d empty service code</item>
+        <item quantity="other">%d empty service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    Used as a title for a list of FeliCa service codes (~file numbers)
+    that were never read from the original card. This can be because the
+    service codes were locked, or because of a software bug.
+    -->
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d skipped service code</item>
+        <item quantity="other">%d skipped service codes</item>
+    </plurals>
+
+    <!--
+    Translators:
+    This notice is shown on the main screen whenever "felica_first_system_pref" is enabled on
+    Android. Enabling that setting may lead to an incomplete data read, and we don't want it left
+    on accidentally.
+
+    This is shown on the main window, instead of the "directions" string; and may be
+    in addition to the "obfuscation_mode_notice".
+    -->
+    <string name="felica_first_system_notice">FeliCa reads will be incomplete.</string>
 
     <!-- TFI Leap -->
+    <!--
+    Translators: keys = encryption keys, "Leap" is a transit card.
+    -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
+    <!--
+    Translators:
+    * Leap is a transit card.
+    * Transport for Ireland (TFI) is the operator of public transport services in Ireland.
+    * key = encryption key
+    -->
     <string name="leap_retrieve_keys_longdesc">Shares your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will know you used Metrodroid on this card. The card can not be read without this key.</string>
 
     <string name="locked_leap">Locked Leap</string>
@@ -2016,12 +2165,13 @@
 
     <!--
     Translators:
-    keys = encryption keys
+    * keys = encryption keys
+    * The setting referenced is in the string [leap_retrieve_keys]
 
-    Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
+    Shown when the user has scanned a Leap card (Irish transit card) and don't have the needed
     encryption keys.
     -->
-    <string name="leap_locked_warning">This card was not unlocked. Please turn on \"Retrieve keys for Leap cards\" in the NFC preferences.</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please turn on “Retrieve keys for Leap cards” in the NFC preferences.</string>
     <!--
     Translators:
     - Shown in "supported cards" list.
@@ -2117,10 +2267,20 @@
     <!-- Translators: Menu item to remove scans of the same card with identical data. -->
     <string name="deduplicate_cards">Deduplicate cards</string>
 
+    <string name="card_name_yargor">Yaroslavl Municipal Transport (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Weekday tram subscription</string>
+    <string name="yargor_sub_weekday_trolley">Weekday trolleybus subscription</string>
+    <string name="yargor_sub_allday_all">All-day all-transport subscription</string>
+    <string name="yargor_transports_valid">Valid for following transports</string>
+
     <!-- Translators: Zolotaya Korona (Russian: Золотая Корона, lit: Golden Crown) is a Russian
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="zolotaya_korona_region">Region</string>
+    <string name="zolotaya_korona_discount">Discount</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% for municipal, 0%% for railroad, 0%% for water transport</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% for municipal, 0%% for railroad, 0%% for water transport</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% for municipal, 50%% for railroad, 50%% for water transport</string>
     <!-- Translators: ETK = Electronic ticket, Yaroslavl (Ярославль) is a city in Russia -->
     <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
     <!-- Translators: ETK = Electronic ticket, Krasnodar (Краснодар) is a city in Russia -->
@@ -2159,6 +2319,7 @@
     <string name="barnaul_ewallet">E-wallet</string>
     <string name="card_name_penza">Penza transport card</string>
     <string name="card_name_siticard">SitiCard</string>
+    <string name="card_name_siticard_vladimir">SitiCard (Vladimir)</string>
     <string name="card_name_kirov">Kirov transport card</string>
     <!-- Translators: Card name used in Ekaterinburg, Russia. -->
     <string name="card_name_ekarta">Ekarta</string>
@@ -2174,10 +2335,10 @@
     <!-- Translators: Sarov is a city in Russia. This is balance usable
          for travelling in Sarov. -->
     <string name="siticard_purse_sarov">Sarov e-wallet</string>
-    <string name="siticard_edinyj_16_trips">Edinyj 16 trips</string>
-    <string name="siticard_edinyj_30_trips">Edinyj 30 trips</string>
-    <string name="siticard_edinyj_3_days">Edinyj 3 days</string>
-    <!-- Translators: Transit card for intercity trolleybus operating in
+    <string name="siticard_edinyj_16_trips">Edinyj (unified ticket) 16 trips</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (unified ticket) 30 trips</string>
+    <string name="siticard_edinyj_3_days">Edinyj (unified ticket) 3 days</string>
+    <!-- Translators: transit card for intercity trolleybus operating in
          Crimea. -->
     <string name="card_name_crimea_trolleybus">Crimea Trolleybus Card</string>
     <!-- Translators: "Parus" is the name of the card and it's issued
@@ -2275,6 +2436,7 @@
     <string name="russia_region_27_khabarovsk">Khabarovsk Krai</string>
     <string name="russia_region_28_amur">Amur Oblast</string>
     <string name="russia_region_29_arkhangelsk">Arkhangelsk Oblast</string>
+    <string name="russia_region_33_vladimir">Vladimir Oblast</string>
     <string name="russia_region_41_kamchatka">Kamchatka Krai</string>
     <string name="russia_region_42_kemerovo">Kemerovo Oblast</string>
     <string name="russia_region_43_kirov">Kirov Oblast</string>
@@ -2294,9 +2456,9 @@
     <string name="russia_region_79_jewish_autonomous">Jewish Autonomous Oblast</string>
     <string name="umarsh_91_crimea">Crimea</string>
 
-    <!-- Translators: This number isn't anywhere on the card but is
-         printed on the refill receipt as "CardNo". -->
-    <string name="touchngo_cardno">Alternative number (\"CardNo\")</string>
+    <!-- Translators:  This number isn't anywhere on the card but is
+         printed on the refill receipt as “CardNo”. -->
+    <string name="touchngo_cardno">Alternative number (“CardNo”)</string>
     <string name="unsupported_tag_message">This tag is currently unsupported by Metrodroid.\n
         Tag identifier: %1$s\n
         Supported technologies:\n
@@ -2347,8 +2509,8 @@
     The card is labelled in both Chinese and English.
     -->
     <string name="card_name_easycard">EasyCard</string>
-    <string name="show_debug_spans">Show debug color for locale spans</string>
-    <string name="show_debug_spans_desc">Highlight default language in green, english in yellow and local language in
+    <string name="show_debug_spans">Show debug colour for locale spans</string>
+    <string name="show_debug_spans_desc">Highlight default language in green, English in yellow and local language in
         blue
     </string>
 
@@ -2385,6 +2547,7 @@
     <string name="ricaricami_urban_2x6">Urban weekly 2x6 ticket</string>
     <string name="ricaricami_yearly_urban">Urban annual subscription</string>
     <string name="ricaricami_monthly_urban">Urban monthly subscription</string>
+    <string name="ricaricami_m1_3_ord_single">Ordinary Nr.1 3 zones Mi1-Mi3</string>
 
     <string name="venezia_ticket_24h">24-hour ticket</string>
     <!-- Translators: "Rete Unica" litelrally "Unique Network" is
@@ -2424,7 +2587,7 @@
     <string name="hotel_checkout">Check-out</string>
 
     <!-- Translators: "%s" is replaced with a file size including units -->
-    <string name="large_file_warning">The file you have chosen is large (%s) and may crash the application. Do you want to proceed?</string>
+    <string name="large_file_warning">The file you have chosen is large (%s) and may crash the app. Do you want to proceed?</string>
     <string name="large_file_yes">Load anyway (risk crashing)</string>
     <string name="large_file_no">Cancel (safe)</string>
     <string name="app_logo_description">Metrodroid logo</string>

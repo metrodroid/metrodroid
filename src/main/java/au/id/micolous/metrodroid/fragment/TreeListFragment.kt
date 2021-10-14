@@ -36,6 +36,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.widget.TextViewCompat
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.TextListItem
 import com.unnamed.b.atv.model.TreeNode
@@ -101,10 +102,7 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             val ta = ctxt.obtainStyledAttributes(intArrayOf(attr))
             textAppearenceRes = ta.getResourceId(0, def)
             ta.recycle()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                text.setTextAppearance(textAppearenceRes)
-            else
-                text.setTextAppearance(ctxt, textAppearenceRes)
+            TextViewCompat.setTextAppearance(text, textAppearenceRes)
         }
 
         private fun getTextListView(li: ListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {

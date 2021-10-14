@@ -46,7 +46,7 @@ class TransactionTrip(override val capsule: TransactionTripCapsule): Transaction
 
     companion object {
         fun merge(transactionsIn: List<Transaction>) =
-                TransactionTripAbstract.merge(transactionsIn) { TransactionTrip(makeCapsule(it)) }
+                merge(transactionsIn) { TransactionTrip(makeCapsule(it)) }
 
         fun merge(vararg transactions: Transaction): List<TransactionTripAbstract> =
                 merge(transactions.toList())
@@ -59,7 +59,7 @@ class TransactionTripLastPrice(override val capsule: TransactionTripCapsule): Tr
 
     companion object {
         fun merge(transactionsIn: List<Transaction>) =
-                TransactionTripAbstract.merge(transactionsIn) { TransactionTripLastPrice(makeCapsule(it)) }
+                merge(transactionsIn) { TransactionTripLastPrice(makeCapsule(it)) }
 
         fun merge(vararg transactions: Transaction): List<TransactionTripAbstract> =
                 merge(transactions.toList())
@@ -82,7 +82,7 @@ abstract class TransactionTripAbstract: Trip() {
             val startLines = start?.routeNames ?: emptyList()
             val endLines = end?.routeNames ?: emptyList()
 
-            return Trip.getRouteName(startLines, endLines)
+            return getRouteName(startLines, endLines)
         }
 
     override// Try to get the route from the nested transactions.
@@ -92,7 +92,7 @@ abstract class TransactionTripAbstract: Trip() {
             val startLines = start?.humanReadableLineIDs ?: emptyList()
             val endLines = end?.humanReadableLineIDs ?: emptyList()
 
-            return Trip.getRouteName(startLines, endLines)
+            return getRouteName(startLines, endLines)
         }
 
     override val passengerCount: Int
@@ -116,8 +116,8 @@ abstract class TransactionTripAbstract: Trip() {
     override val endTimestamp: Timestamp?
         get() = end?.timestamp
 
-    override val mode: Trip.Mode
-        get() = any?.mode ?: Trip.Mode.OTHER
+    override val mode: Mode
+        get() = any?.mode ?: Mode.OTHER
 
     abstract override val fare: TransitCurrency?
 

@@ -35,7 +35,6 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 
 /**
@@ -51,11 +50,9 @@ data class KSX6924Application (
         // Returned by CLA=90 INS=78
         val extraRecords: List<ImmutableByteArray> = emptyList()): ISO7816Application() {
 
-    @Transient
     override val type: String
         get() = TYPE
 
-    @Transient
     override val rawData: List<ListItem>?
         get() {
             val sli = mutableListOf<ListItem>()
@@ -76,22 +73,18 @@ data class KSX6924Application (
             return sli.toList()
         }
 
-    @Transient
     val transactionRecords: List<ImmutableByteArray>?
         get() =
             (getSfiFile(TRANSACTION_FILE)
                     ?: getFile(ISO7816Selector.makeSelector(FILE_NAME, TRANSACTION_FILE)))
                     ?.recordList
 
-    @Transient
     private val purseInfoData: ImmutableByteArray?
         get() = generic.appFci?.let { ISO7816TLV.findBERTLV(it, TAG_PURSE_INFO, false) }
 
-    @Transient
     val purseInfo: KSX6924PurseInfo
         get() = KSX6924PurseInfo(purseInfoData!!)
 
-    @Transient
     val serial: String
         get() = purseInfo.serial
 

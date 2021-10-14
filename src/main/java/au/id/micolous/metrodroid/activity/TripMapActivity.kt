@@ -25,57 +25,28 @@ package au.id.micolous.metrodroid.activity
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
-import android.webkit.WebViewFragment
 import androidx.annotation.RequiresApi
-import au.id.micolous.farebot.BuildConfig
-import au.id.micolous.farebot.R
+import androidx.fragment.app.Fragment
+import au.id.micolous.metrodroid.fragment.TripMapFragment
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.util.Marker
-import au.id.micolous.metrodroid.util.Preferences
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-// We only do it only on API >= 17 and we almost don't
-// handle any user data in javascript. We use external reviewed code (Leaflet)
-@Suppress("AddJavascriptInterface", "SetJavaScriptEnabled")
-class TripMapActivity : MetrodroidActivity() {
+class TripMapActivity : FragmentWrapperActivity() {
+
+    override fun createFragment(): Fragment = TripMapFragment().also {
+        val args = Bundle()
+        args.putParcelable(TRIP_EXTRA, intent.getParcelableExtra<Trip>(TRIP_EXTRA))
+        it.arguments = args
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        val trip = intent.getParcelableExtra<Trip>(TRIP_EXTRA)
+
         super.onCreate(savedInstanceState)
 
-        val trip = intent.getParcelableExtra<Trip>(TRIP_EXTRA)
-        if (trip == null) {
-            // Probably passing around an unparcelable trip
-            Log.d(TAG, "Oops, couldn't display map, as we got a null trip!")
-            finish()
-            return
-        }
-
-        setContentView(R.layout.activity_trip_map)
-
-        val tileURL = Preferences.mapTileUrl
-        val subdomains = Preferences.mapTileSubdomains
-
-        Log.d(TAG, "TilesURL: $tileURL")
-
-        Log.d(TAG, "Subdomains: $subdomains")
-
-        val webView = (fragmentManager.findFragmentById(R.id.map) as WebViewFragment).webView
-        webView.webChromeClient = WebChromeClient()
-
-        val settings = webView.settings
-        settings.javaScriptEnabled = true
-        settings.allowUniversalAccessFromFileURLs = true
-
-        settings.userAgentString = "${settings.userAgentString} metrodroid/${BuildConfig.VERSION_NAME}"
-
-        setDisplayHomeAsUpEnabled(true)
-
         val actionBar = supportActionBar
-        if (actionBar != null) {
+        if (actionBar != null && trip != null) {
             actionBar.title = Trip.formatStationNames(trip)?.spanned
             val agencyName = trip.getAgencyName(false)
             val routeName = Trip.getRouteDisplayName(trip)
@@ -85,52 +56,6 @@ class TripMapActivity : MetrodroidActivity() {
                 else -> (agencyName + " " + routeName).spanned
             }
         }
-
-        //int startMarkerId = R.drawable.marker_start;
-        //int endMarkerId = R.drawable.marker_end;
-
-        /* FIXME: Need icons...
-
-        if (trip.getMode() == Trip.Mode.BUS) {
-            startMarkerId = R.drawable.marker_bus_start;
-            endMarkerId   = R.drawable.marker_bus_end;
-
-        } else if (trip.getMode() == Trip.Mode.TRAIN) {
-            startMarkerId = R.drawable.marker_train_start;
-            endMarkerId   = R.drawable.marker_train_end;
-
-        } else if (trip.getMode() == Trip.Mode.TRAM) {
-            startMarkerId = R.drawable.marker_tram_start;
-            endMarkerId   = R.drawable.marker_tram_end;
-
-        } else if (trip.getMode() == Trip.Mode.METRO) {
-            startMarkerId = R.drawable.marker_metro_start;
-            endMarkerId   = R.drawable.marker_metro_end;
-
-        } else if (trip.getMode() == Trip.Mode.FERRY) {
-            startMarkerId = R.drawable.marker_ferry_start;
-            endMarkerId   = R.drawable.marker_ferry_end;
-        }
-        */
-
-
-        val points = ArrayList<Marker>()
-        //LatLngBounds.Builder builder = LatLngBounds.builder();
-
-        trip.startStation?.let {
-            points.add(Marker(it, "start-marker"))
-        }
-
-        trip.endStation?.let {
-            points.add(Marker(it, "end-marker"))
-        }
-
-        val shim = TripMapShim(points.toTypedArray(), tileURL, subdomains)
-
-        webView.addJavascriptInterface(shim, "TripMapShim")
-
-        webView.loadUrl("file:///android_asset/map.html")
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -141,37 +66,7 @@ class TripMapActivity : MetrodroidActivity() {
         return false
     }
 
-    /*
-        private LatLng addStationMarker(Station station, int iconId) {
-            LatLng pos = new LatLng(Double.valueOf(station.getLatitude()), Double.valueOf(station.getLongitude()));
-            mMap.addMarker(new MarkerOptions()
-                .position(pos)
-                .title(station.getStationName())
-                .snippet(station.getCompanyName())
-                .icon(BitmapDescriptorFactory.fromResource(iconId))
-            );
-            return pos;
-        }
-    */
-    class TripMapShim internal constructor(private val mMarkers: Array<Marker>,
-                                           @get:JavascriptInterface
-                                           val tileUrl: String,
-                                           @get:JavascriptInterface
-                                           val subdomains: String) {
-
-        // Lets build an interface where you can't pass arrays!
-        val markerCount: Int
-            @JavascriptInterface
-            get() = this.mMarkers.size
-
-        @JavascriptInterface
-        fun getMarker(index: Int): Marker {
-            return this.mMarkers[index]
-        }
-    }
-
     companion object {
         const val TRIP_EXTRA = "trip"
-        private val TAG = TripMapActivity::class.java.simpleName
     }
 }

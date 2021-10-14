@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Please see the Metrodroid wiki for style and translation guidance:
+  https://github.com/metrodroid/metrodroid/wiki/Translating
+
+  For English dialect usage details, please see:
+  https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
+-->
 <resources>
     <string name="payment_method_cheque">Check</string>
+    <string name="show_debug_spans">Show debug color for locale spans</string>
+    <string name="license">Licenses</string>
+    <string name="title_activity_license">Open source licenses</string>
 </resources>

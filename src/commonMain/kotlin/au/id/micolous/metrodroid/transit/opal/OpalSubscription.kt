@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.time.Month
 
 /**
  * Class describing auto-topup on Opal.
@@ -41,17 +42,17 @@ import au.id.micolous.metrodroid.time.Daystamp
 internal class OpalSubscription private constructor() : Subscription() {
     // Start of Opal trial
     override val validFrom: Timestamp?
-        get() = Daystamp(2012, 12, 7)
+        get() = Daystamp(2012, Month.DECEMBER, 7)
 
     // Maximum possible date representable on the card
     override val validTo: Timestamp?
-        get() = Daystamp(2159, 6, 6)
+        get() = Daystamp(2159, Month.JUNE, 6)
 
     override val subscriptionName: String?
         get() = Localizer.localizeString(R.string.opal_automatic_top_up)
 
-    override val paymentMethod: Subscription.PaymentMethod
-        get() = Subscription.PaymentMethod.CREDIT_CARD
+    override val paymentMethod: PaymentMethod
+        get() = PaymentMethod.CREDIT_CARD
 
     override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(R.string.opal_agency_tfnsw)
 

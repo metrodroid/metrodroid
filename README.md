@@ -39,7 +39,7 @@ linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.b
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
-* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, COMMET)
+* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, MRT Jakarta)
 
 ## Translated by
 
@@ -48,7 +48,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Dutch: [Vistaus](https://github.com/Vistaus)
 * Finnish: Lari Oesch, Lauri Andler
 * French: [Albirew](https://github.com/Albirew)
-* Hebrew: [Steven Steiner](https://github.com/steets250)
+* Hebrew: [Steven Steiner](https://github.com/steets250), [Yaron Shahrabani](https://github.com/yarons)
 * Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
 * Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
@@ -83,6 +83,7 @@ Card / Agency | Location | Notes
 [BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
 [Carta Mobile][pisa] | :it: Pisa, Italy | :new: `IOS`
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
+Cifial | :earth_africa: _worldwide_ | :new: `MFC`
 City Union | :cn: Mainland China | :new: `IOS`
 [Clipper][clipper] | :us: San Francisco, CA, USA | `IOS`
 [Compass][compass] | :canada: Vancouver, BC, Canada | :new: :one: `IOS`
@@ -101,7 +102,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hafilat][] | :united_arab_emirates: Abu Dhabi, UAE | :new: `IOS`
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: :id: `IOS`
-[HSL][hsl], [Matkakortti][matka] | :finland: Finland | `IOS`
+[HSL][hsl], [Matkakortti][matka], [Waltti][] | :finland: Finland | `IOS`
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id: `IOS`
 [Kartu Multi Trip][kmt] | :indonesia: Jakarta, Indonesia | `KMT` `IOS`
 [Kazan transport card][kazan] | :ru: Kazan, Russia | :new: :closed_lock_with_key: `MFC`
@@ -116,6 +117,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
 [Mobib][mobib] | :belgium: Brussels, Belgium | :new: `IOS`
+[MRT Jakarta][mrtj] | :indonesia: Jakarta, Indonesia | :new:
 [Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: :id: `IOS`
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [Navigo][navigo] | :fr: Paris, France | :new: `IOS`
@@ -149,10 +151,11 @@ Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new: `IOS`
 [Tartu Bus][tartu] | :estonia: Tartu, Estonia | :new: :id: `MFC`
 [T-Money][tmoney] | :kr: South Korea | :new: `IOS`
-T-Union | :cn: Mainland China | :new: `IOS`
+[TPF card][tpf] | :switzerland: Fribourg, Switzerland | :new: :id:
 [TransGironde][gironde] | :fr: Gironde, France | :new: `IOS`
 [Transit Access Pass][laxtap] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][troika] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
+T-Union | :cn: Mainland China | :new: `IOS`
 [Umarsh][umarsh] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 [Ventra][ventra] | :us: Chicago, IL, USA | :new: :one: `IOS`
 [Warszawska Karta Miejska][warsaw] | :poland: Warsaw, Poland | :new: :id: :closed_lock_with_key: `MFC`
@@ -222,7 +225,7 @@ This software and it's authors are not associated with any public transit agency
    ```
    $ git clone --recursive https://github.com/metrodroid/metrodroid.git
    ```
-   
+
    [If you get an error from Gradle about `:material-design-icons` not being available, then your
    clone doesn't have the submodules.](https://github.com/metrodroid/metrodroid/issues/32)
 
@@ -288,6 +291,7 @@ This software and it's authors are not associated with any public transit agency
 [manly]: http://www.manlyfastferry.com.au/
 [matka]: http://www.hsl.fi/EN/passengersguide/travelcard/Pages/default.aspx
 [mobib]: https://mobib.be/
+[mrtj]: https://www.jakartamrt.co.id/
 [mspgoto]: https://www.metrotransit.org/go-to-card
 [myki]: http://ptv.vic.gov.au/
 [myway]: https://www.transport.act.gov.au/myway-and-fares
@@ -327,9 +331,11 @@ This software and it's authors are not associated with any public transit agency
 [tartu]: https://www.tartu.ee/en/tartu-bus-card
 [tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
 [tmoney]: https://www.t-money.co.kr/
+[tpf]: https://www.tpf.ch/abonnements-billets/tpf-card
 [troika]: http://troika.mos.ru/
 [umarsh]: https://umarsh.com/
 [ventra]: https://www.ventrachicago.com/
+[waltti]: https://waltti.fi/en/
 [warsaw]: https://www.ztm.waw.pl/?c=557&l=1
 [wuhan]: http://www.whcst.com/
 [yaroslavl]: https://t-karta.ru/Cards/Yaroslavl

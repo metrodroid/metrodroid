@@ -3,7 +3,7 @@
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2013 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
- * Copryight 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.LocaleSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,7 +54,7 @@ class CardTripsFragment : ListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,7 +63,7 @@ class CardTripsFragment : ListFragment() {
         val trips = mTransitData?.prepareTrips().orEmpty()
 
         if (trips.isNotEmpty()) {
-            listAdapter = UseLogListAdapter(activity!!, trips.toTypedArray())
+            listAdapter = UseLogListAdapter(requireActivity(), trips.toTypedArray())
         } else {
             view.findViewById<View>(android.R.id.list).visibility = View.GONE
             view.findViewById<View>(R.id.error_text).visibility = View.VISIBLE
@@ -80,7 +77,7 @@ class CardTripsFragment : ListFragment() {
             return
         }
 
-        val trip = listAdapter.getItem(position) as? Trip?
+        val trip = listAdapter?.getItem(position) as? Trip?
         if (trip == null || !trip.hasLocation()) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could")
             return
@@ -97,8 +94,6 @@ class CardTripsFragment : ListFragment() {
         override fun getView(position: Int, convertViewReuse: View?, parent: ViewGroup): View {
             val activity = context as Activity
             val inflater = activity.layoutInflater
-            val localisePlaces = Preferences.localisePlaces
-
             val convertView = convertViewReuse ?: inflater.inflate(R.layout.trip_item, parent, false)
 
             val trip = getItem(position)!!
@@ -109,19 +104,11 @@ class CardTripsFragment : ListFragment() {
             if (isFirstInSection(position)) {
                 listHeader.visibility = View.VISIBLE
                 val headerDate = if (date != null) {
-                    TimestampFormatter.longDateFormat(date).spanned
-                } else SpannableString(Localizer.localizeString(R.string.unknown_date_title))
+                    TimestampFormatter.longDateFormat(date)
+                } else Localizer.localizeFormatted(R.string.unknown_date_title)
                 val headerText = listHeader.findViewById<TextView>(android.R.id.text1)
 
-                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val ss = SpannableString(headerDate)
-                    ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
-                    headerText.text = ss
-                } else {
-                    headerText.text = headerDate
-                }
-
-                (listHeader.findViewById<View>(android.R.id.text1) as TextView).text = if (date != null) TimestampFormatter.longDateFormat(date).spanned else null
+                headerText.text = headerDate.spanned
             } else {
                 listHeader.visibility = View.GONE
             }
@@ -161,14 +148,7 @@ class CardTripsFragment : ListFragment() {
             } else
                 iconImageView.setImageDrawable(icon)
 
-            val s = Localizer.localizeString(modeContentDescriptionRes)
-            if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val ss = SpannableString(s)
-                ss.setSpan(LocaleSpan(Locale.getDefault()), 0, ss.length, 0)
-                iconImageView.contentDescription = ss
-            } else {
-                iconImageView.contentDescription = s
-            }
+            iconImageView.contentDescription = Localizer.localizeFormatted(modeContentDescriptionRes).spanned
 
             val time = Trip.formatTimes(trip)
             if (time != null) {

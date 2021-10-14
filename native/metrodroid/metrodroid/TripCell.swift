@@ -76,14 +76,16 @@ class TripCell : UITableViewCell {
         "cashier_yen",
         "unknown",
         "banned",
-        "trolleybus"
+        "trolleybus",
+        "car", // TOLL_ROAD
+        "monorail"
     ]
     
     func renderTrip(trip: Trip) {
         var routeName : FormattedString? = trip.routeName
         if (Preferences.init().rawLevel != TransitData.RawLevel.none) {
             if let raw = trip.getRawFields(level: Preferences.init().rawLevel) {
-                routeName = (routeName ?? FormattedString(input: "")).plus(b_: FormattedString(input: " <" + raw + ">"))
+                routeName = (routeName ?? FormattedString(input: "")).plus(b: FormattedString(input: " <" + raw + ">"))
             }
         }
         routeLabel?.attributedText = boldAttr(bold: trip.getAgencyName(isShort: true)?.attributed,

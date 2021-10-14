@@ -29,14 +29,14 @@ internal class TroikaTrip (override val startTimestamp: Timestamp?,
     override val fare: TransitCurrency?
         get() = if (mFareDesc == null) null else TroikaFare(mFareDesc)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mTransportType) {
-            null -> Trip.Mode.OTHER
-            TroikaBlock.TroikaTransportType.NONE, TroikaBlock.TroikaTransportType.UNKNOWN -> Trip.Mode.OTHER
-            TroikaBlock.TroikaTransportType.SUBWAY -> Trip.Mode.METRO
-            TroikaBlock.TroikaTransportType.MONORAIL -> Trip.Mode.TRAIN
-            TroikaBlock.TroikaTransportType.GROUND -> Trip.Mode.BUS
-            TroikaBlock.TroikaTransportType.MCC -> Trip.Mode.TRAIN
+            null -> Mode.OTHER
+            TroikaBlock.TroikaTransportType.NONE, TroikaBlock.TroikaTransportType.UNKNOWN -> Mode.OTHER
+            TroikaBlock.TroikaTransportType.SUBWAY -> Mode.METRO
+            TroikaBlock.TroikaTransportType.MONORAIL -> Mode.MONORAIL
+            TroikaBlock.TroikaTransportType.GROUND -> Mode.BUS
+            TroikaBlock.TroikaTransportType.MCC -> Mode.TRAIN
         }
 
     override fun getAgencyName(isShort: Boolean) =

@@ -1,7 +1,7 @@
-reader_id,stop_name
-7001,"Tel Aviv - Savidor Center"
-7002,"Herzliya"
-7014,"HaCarmel Center"
-7023,"Tel Aviv HaShalom"
-7025,"Haifa Center"
-7049,"Modi'in Center"
+reader_id,stop_name,stop_lat,stop_lon
+7001,"Tel Aviv - Savidor Center",32.0842437,34.7983117
+7002,"Herzliya",32.163889,34.831389
+7014,"HaCarmel Center",32.8046778,34.9879087
+7023,"Tel Aviv HaShalom",32.0735594,34.7931642
+7025,"Haifa Center HaShmona",32.8223019, 34.9973626
+7049,"Modi'in Center",31.9012099,35.0057199

@@ -26,11 +26,11 @@ internal class PodorozhnikTrip(private val mTimestamp: Int,
         }
 
     // TODO: Handle trams
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             if (mLastTransport == TRANSPORT_METRO && mLastValidator == 0)
-                return Trip.Mode.BUS
-            return if (mLastTransport == TRANSPORT_METRO) Trip.Mode.METRO else Trip.Mode.BUS
+                return Mode.BUS
+            return if (mLastTransport == TRANSPORT_METRO) Mode.METRO else Mode.BUS
         }
 
     // TODO: handle other transports better.

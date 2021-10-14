@@ -1,7 +1,5 @@
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.R
 import platform.Foundation.*
 
 actual fun currencyNameBySymbol(symbol: String): String? =

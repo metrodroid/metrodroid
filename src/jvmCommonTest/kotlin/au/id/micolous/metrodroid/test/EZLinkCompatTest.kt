@@ -30,11 +30,11 @@ import kotlin.test.assertEquals
 /**
  * Contains tests for the old CEPAS XML format, before it was handled by an ISO7816 reader.
  */
-class EZLinkCompatTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
+class EZLinkCompatTest : CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
     @Test
     fun testCardInfo() {
         val c = loadCard<CEPASCard>("cepas/legacy.xml")
-        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat.writeCard(c))
+        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat.makeCardElement(c))
         val p = parseCard<EZLinkCompatTransitData>(c)
         assertEquals(TransitCurrency.SGD(897), p.balance)
     }

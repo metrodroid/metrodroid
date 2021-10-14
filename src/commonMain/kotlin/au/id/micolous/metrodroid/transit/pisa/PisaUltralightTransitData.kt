@@ -37,7 +37,7 @@ data class PisaUltralightTransitData(override val trips: List<TransactionTripAbs
 
     override val cardName get() = NAME
 
-    override fun getRawFields(level: TransitData.RawLevel) = listOf(ListItem("A", mA.toString()),
+    override fun getRawFields(level: RawLevel) = listOf(ListItem("A", mA.toString()),
             ListItem("B", mB.toString(16)))
 }
 

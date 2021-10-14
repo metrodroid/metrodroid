@@ -12,7 +12,7 @@ data class RkfTicket(override val parsed: En1545Parsed, override val lookup: Rkf
         fun parse (record: RkfTctoRecord, lookup: RkfLookup): RkfTicket {
             Log.d("RkfTicket", "TCCO = ${record.chunks}")
             val version = record.chunks[0][0].getBitsFromBufferLeBits(8, 6)
-            val maxTxn = record.chunks.filter { it[0][0] == 0x88.toByte() }.map { it[0].getBitsFromBufferLeBits(8, 12) }.max()
+            val maxTxn = record.chunks.filter { it[0][0] == 0x88.toByte() }.map { it[0].getBitsFromBufferLeBits(8, 12) }.maxOrNull()
             val flat = record.chunks.filter { it[0][0] != 0x88.toByte() || it[0].getBitsFromBufferLeBits(8, 12) == maxTxn }.flatten()
             val parsed = En1545Parsed()
             for (tag in flat) {
@@ -41,10 +41,10 @@ data class RkfTicket(override val parsed: En1545Parsed, override val lookup: Rkf
                     STATUS_FIELD)
             0x96 -> En1545Container(
                     ID_FIELD, // verified
-                    En1545FixedInteger.date(En1545Subscription.CONTRACT_START), // verified
-                    En1545FixedInteger.timePacked16(En1545Subscription.CONTRACT_START), // verified
-                    En1545FixedInteger.date(En1545Subscription.CONTRACT_END), // verified
-                    En1545FixedInteger.timePacked16(En1545Subscription.CONTRACT_END), // verified
+                    En1545FixedInteger.date(CONTRACT_START), // verified
+                    En1545FixedInteger.timePacked16(CONTRACT_START), // verified
+                    En1545FixedInteger.date(CONTRACT_END), // verified
+                    En1545FixedInteger.timePacked16(CONTRACT_END), // verified
                     En1545FixedInteger(CONTRACT_DURATION, 8),  // verified, days
                     En1545FixedInteger.date("Limit"),
                     En1545FixedInteger("PeriodJourneys", 8),

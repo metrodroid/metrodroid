@@ -87,7 +87,7 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     @Test
     fun testRussianCurrencyName() {
         setLocale("ru-RU")
-        assertEquals(actual=currencyNameByCode(840)?.toLowerCase(), expected="доллар сша")
-        assertEquals(actual=currencyNameByCode(643)?.toLowerCase(), expected="российский рубль")
+        assertEquals(actual=currencyNameByCode(840)?.lowercase(), expected="доллар сша")
+        assertEquals(actual=currencyNameByCode(643)?.lowercase(), expected="российский рубль")
     }
 }

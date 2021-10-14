@@ -48,12 +48,12 @@ class KMTTrip (private val mProcessType: Int,
             null
         } else getStation(mEndGateCode)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mProcessType) {
-            0 -> Trip.Mode.TICKET_MACHINE
-            1 -> Trip.Mode.TRAIN
-            2 -> Trip.Mode.POS
-            else -> Trip.Mode.OTHER
+            0 -> Mode.TICKET_MACHINE
+            1 -> Mode.TRAIN
+            2 -> Mode.POS
+            else -> Mode.OTHER
         }
 
     override val fare: TransitCurrency?

@@ -90,5 +90,5 @@ fun decodeBase64(src: String): ByteArray?
             return null
     }
 
-    return out.sliceArray(0..(pos - 1))
+    return out.sliceArray(0 until pos)
 }

@@ -34,8 +34,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 
-import kotlinx.serialization.toUtf8Bytes
-
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.time.TimestampFormatter
@@ -125,13 +123,13 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
 
             when (item.itemId) {
                 R.id.copy_xml -> {
-                    xml = CardSerializer.toJson(mCard!!)
+                    xml = CardSerializer.toJson(mCard!!).toString()
                     ExportHelper.copyXmlToClipboard(this, xml)
                     return true
                 }
 
                 R.id.share_xml -> {
-                    xml = CardSerializer.toJson(mCard!!)
+                    xml = CardSerializer.toJson(mCard!!).toString()
                     i = Intent(Intent.ACTION_SEND)
                     i.type = "application/json"
                     i.putExtra(Intent.EXTRA_TEXT, xml)
@@ -142,7 +140,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                 R.id.save_xml -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         // Metrodroid-1234abcd-20001231-235900.xml
-                        val filename = ExportHelper.makeFilename(mCard!!)
+                        val filename = makeFilename(mCard!!)
 
                         i = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         i.addCategory(Intent.CATEGORY_OPENABLE)
@@ -168,6 +166,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         try {
             if (resultCode == Activity.RESULT_OK) {
                 when (requestCode) {
@@ -176,7 +175,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                         Log.d(TAG, "REQUEST_SAVE_FILE")
                         val os = contentResolver.openOutputStream(uri!!)!!
                         val json = CardSerializer.toJson(mCard!!)
-                        os.write(json.toUtf8Bytes())
+                        os.write(json.toString().encodeToByteArray())
                         os.close()
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
                     }

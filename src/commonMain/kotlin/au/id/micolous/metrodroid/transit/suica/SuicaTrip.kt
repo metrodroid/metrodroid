@@ -69,15 +69,15 @@ class SuicaTrip (val balance: Int,
     override val fare: TransitCurrency?
         get() = TransitCurrency.JPY(fareRaw)
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() {
             val consoleType = consoleTypeInt and 0xFF
             return when {
-                isTVM -> Trip.Mode.TICKET_MACHINE
-                consoleType == 0xc8 -> Trip.Mode.VENDING_MACHINE
-                consoleType == 0xc7 -> Trip.Mode.POS
-                consoleTypeInt == CONSOLE_BUS.toByte().toInt() -> Trip.Mode.BUS
-                else -> Trip.Mode.METRO
+                isTVM -> Mode.TICKET_MACHINE
+                consoleType == 0xc8 -> Mode.VENDING_MACHINE
+                consoleType == 0xc7 -> Mode.POS
+                consoleTypeInt == CONSOLE_BUS.toByte().toInt() -> Mode.BUS
+                else -> Mode.METRO
             }
         }
 

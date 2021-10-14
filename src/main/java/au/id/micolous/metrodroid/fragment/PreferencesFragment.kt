@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.ui.AlertDialogPreference
 import au.id.micolous.metrodroid.ui.NumberPickerPreference
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.collatedBy
-import java.util.*
 
 class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
     private var mPreferenceLaunchFromBackground: CheckBoxPreference? = null
@@ -47,14 +46,14 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
     private var isLaunchFromBgEnabled: Boolean
         get() {
-            val componentName = ComponentName(context!!, BackgroundTagActivity::class.java)
-            val packageManager = context!!.packageManager
+            val componentName = ComponentName(requireContext(), BackgroundTagActivity::class.java)
+            val packageManager = requireContext().packageManager
             val componentEnabledSetting = packageManager.getComponentEnabledSetting(componentName)
             return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
         }
         set(enabled) {
-            val componentName = ComponentName(context!!, BackgroundTagActivity::class.java)
-            val packageManager = context!!.packageManager
+            val componentName = ComponentName(requireContext(), BackgroundTagActivity::class.java)
+            val packageManager = requireContext().packageManager
             val newState = if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             packageManager.setComponentEnabledSetting(componentName, newState, PackageManager.DONT_KILL_APP)
         }
@@ -82,7 +81,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             for (prefKey in Preferences.PREFS_ANDROID_17) {
-                val pref = findPreference(prefKey) ?: continue
+                val pref = findPreference<Preference?>(prefKey) ?: continue
                 pref.isEnabled = false
                 pref.setSummary(R.string.requires_android_17)
             }
@@ -90,7 +89,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             for (prefKey in Preferences.PREFS_ANDROID_21) {
-                val pref = findPreference(prefKey) ?: continue
+                val pref = findPreference<Preference?>(prefKey) ?: continue
                 pref.isEnabled = false
                 pref.setSummary(R.string.requires_android_21)
             }
@@ -131,7 +130,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
         b.putString("key", preference.key)
         dialogFragment.arguments = b
         dialogFragment.setTargetFragment(this, 0)
-        dialogFragment.show(fragmentManager,
+        dialogFragment.show(requireFragmentManager(),
                 "androidx.preference.PreferenceFragment.DIALOG")
     }
 }

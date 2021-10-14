@@ -38,5 +38,5 @@ class CardKeysFileReaderEmbed(private val context: Context,
     override fun listFiles(dir: String) = context.assets.list("$baseDir/$dir")?.toList()
 }
 
-fun CardKeysEmbed(context: Context, baseDir: String) = CardKeysFromFiles(CardKeysFileReaderEmbed(context, baseDir))
+fun getEmbedCardKeys(context: Context, baseDir: String) = CardKeysFromFiles(CardKeysFileReaderEmbed(context, baseDir))
 

@@ -22,8 +22,7 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.DOMESTIC_AIRPORT
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.INTERNATIONAL_AIRPORT
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.AIRPORT_STATIONS
 
 /**
  * Represents trip events on Go Card.
@@ -36,18 +35,19 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
 
-    override fun getAgencyName(isShort: Boolean) = FormattedString.language(
-            when (capsule.mModeInt) {
-                SeqGoData.VEHICLE_FERRY -> "Transdev Brisbane Ferries"
-                SeqGoData.VEHICLE_RAIL -> if (
-                        capsule.mStartStation == DOMESTIC_AIRPORT ||
-                        capsule.mEndStation == DOMESTIC_AIRPORT ||
-                        capsule.mStartStation == INTERNATIONAL_AIRPORT ||
-                        capsule.mEndStation == INTERNATIONAL_AIRPORT) {
-                    "Airtrain"
-                } else {
-                    "Queensland Rail"
-                }
-                else -> "TransLink"
-        }, "en-AU")
+    override fun getAgencyName(isShort: Boolean) =
+        if (capsule.mModeInt == SeqGoData.VEHICLE_RAIL && (
+                AIRPORT_STATIONS.contains(capsule.mStartStation) ||
+                    AIRPORT_STATIONS.contains(capsule.mEndStation))) {
+            FormattedString.language("Airtrain", "en-AU")
+        } else {
+            super.getAgencyName(isShort)
+        }
+
+    override val routeName: FormattedString? get() = when {
+        // TODO: Use MdST (operator name is not prominent on G:link signage)
+        capsule.mModeInt == SeqGoData.VEHICLE_GLINK ->
+            FormattedString.language("G:link", "en-AU")
+        else -> super.routeName
+    }
 }

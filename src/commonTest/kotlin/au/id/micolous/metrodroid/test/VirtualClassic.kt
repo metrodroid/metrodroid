@@ -4,7 +4,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicAccessBits
 import au.id.micolous.metrodroid.card.classic.ClassicCardTech
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 

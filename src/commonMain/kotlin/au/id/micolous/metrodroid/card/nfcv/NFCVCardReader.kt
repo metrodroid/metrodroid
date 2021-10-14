@@ -45,7 +45,7 @@ object NFCVCardReader {
         val sysInfo = sysInfoRsp?.sliceOffLen(1, sysInfoRsp.lastIndex)
         var isPartialRead = false
 
-        // Now iterate through the pages and grab all the datas
+        // Now iterate through the pages and grab all the data
         var pageBuffer = ImmutableByteArray.empty()
         while (true) {
             // Find first unread page

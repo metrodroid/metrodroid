@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
     <string name="license">Licenties</string>
     <string name="title_activity_license">Openbronlicenties</string>
     <string name="directions">Druk op een kaart.</string>
@@ -28,8 +28,7 @@
     <string name="accessibility">Toegankelijkheid</string>
     <string name="speak_balance">Saldo voorlezen</string>
     <string name="speak_balance_summary">Als je een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen schermlezer draait.</string>
-    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Saldo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="loading">Bezig met laden…</string>
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
@@ -40,7 +39,7 @@
 \nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
-    <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
+    <string name="turn_on_nfc">Schakel nfc in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid; er kunnen alleen onbewerkte gegevens worden getoond.</string>
     <string name="unknown_more_info">Meer informatie</string>
@@ -86,8 +85,8 @@
     <string name="card_format">Kaarttype</string>
     <string name="select_file">Bestand selecteren</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
-    <string name="saved_metrodroid_zip">Metrodroid-Export.xml opgeslagen naar USB-opslag.</string>
-    <string name="saved_xml_custom">XML opgeslagen naar USB-opslag.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.xml is opgeslagen op de usb-opslag.</string>
+    <string name="saved_xml_custom">Het xml-bestand is opgeslagen op de usb-opslag.</string>
     <string name="map_tiles_url">Kaarttegels-URL</string>
     <string name="map_tiles_url_summary">Gebruik een aangepaste tegelserver voor ingesloten kaarten m.b.v. Leaflet TileLayer-syntax.</string>
     <string name="map_tiles_subdomains">Kaarttegel-subdomeinen</string>
@@ -100,10 +99,8 @@
     <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
     <string name="mfc_fallback">Terugvallezer</string>
     <plurals name="cards_imported">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd.</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd.</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; kaart geïmporteerd.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; kaarten geïmporteerd.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d blok</item>
@@ -149,7 +146,7 @@
     <string name="felica_process_admission_payment">Toelatingsbetaling</string>
     <string name="felica_process_booth_exit">Stationschefbalie-uitgang</string>
     <string name="felica_process_issue_new">Nieuwe uitgifte</string>
-    <string name="felica_process_booth_deduction">Balie-aftrek</string>
+    <string name="felica_process_booth_deduction">Betaling bij kassa</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Heruitgave</string>
@@ -160,7 +157,7 @@
     <string name="felica_process_purchase_special_ticket">Kaart (speciale bus/tram)</string>
     <string name="felica_process_merchandise_purchase">Handelswaar-aankoop</string>
     <string name="felica_process_bonus_charge">Bonus bij opladen</string>
-    <string name="felica_process_register_deposit">Storting vastleggen</string>
+    <string name="felica_process_register_deposit">Storting bij geldautomaat</string>
     <string name="felica_process_merchandise_cancel">Handelswaar annuleren</string>
     <string name="felica_process_merchandise_admission">Handelswaar/Toelating</string>
     <string name="felica_process_merchandise_purchase_cash">Handelswaar-aankoop (deels met contant geld)</string>
@@ -210,10 +207,8 @@
     <string name="obfuscation_fares">Tarieven beschermen</string>
     <string name="obfuscation_fares_desc">Tarieven wijzigen in een willekeurig bedrag</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">
-            <xliff:g id="count" example="1">%d</xliff:g> privacyvlag ingeschakeld</item>
-        <item quantity="other">
-            <xliff:g id="count" example="3">%d</xliff:g> privacyvlaggen ingeschakeld</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; privacyvlag ingeschakeld</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; privacyvlaggen ingeschakeld</item>
     </plurals>
     <string name="map_tiles_help">Leaflet TileLayer-documentatie bekijken</string>
     <string name="map_tiles_help_summary">Als je hulp nodig hebt bij het gebruiken van kaarttegel-URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
@@ -249,7 +244,7 @@
     <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
     <string name="enabled">Aan</string>
     <string name="disabled">Uit</string>
-    <string name="unsupported_tag">Niet-ondersteunde NFC-kaartmedia</string>
+    <string name="unsupported_tag">Niet-ondersteunde nfc-kaartmedia</string>
     <string name="saving_card">Bezig met opslaan van kaart…</string>
     <string name="mfc_reading">Bezig met lezen van MIFARE Classic-kaart…</string>
     <string name="mfc_have_key">Bezig met proberen van gebruikerssleutel voor sector %d…</string>
@@ -258,28 +253,27 @@
     <string name="mfc_reading_blocks">Bezig met lezen van sector %d…</string>
     <string name="iso14a_detect">Bezig met detecteren van ISO 14443-kaartsoort…</string>
     <string name="mfd_reading">Bezig met lezen van MIFARE DESFire-kaart…</string>
-    <string name="card_reading_type">Bezig met lezen van <xliff:g id="card_name" example="Opal"> 1%s</xliff:g> 2…</string>
+    <string name="card_reading_type">Bezig met uitlezen van &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"card_name\" example=\"Opal\"&gt; 1%s&lt;/xliff:g&gt; 2…</string>
     <string name="mfu_detect">Bezig met detecteren van MIFARE Ultralight-kaartsoort…</string>
     <string name="mfu_reading">Bezig met lezen van MIFARE Ultralight-kaart…</string>
     <string name="location_christchurch_nz">Christchurch, Nieuw-Zeeland</string>
     <string name="erg_agency_id">Vervoerder-ID</string>
     <string name="hardware_information">Hardware-informatie</string>
     <string name="cepas_version">CEPAS-versie</string>
-    <string name="cepas_purse_id">Portemonnee-ID</string>
-    <string name="cepas_purse_status">Portemonnee-status</string>
-    <string name="cepas_purse_balance">Portemonnee-saldo</string>
-    <string name="cepas_purse_creation_date">Portemonnee-creatiedatum</string>
+    <string name="cepas_purse_id">Kaart-id</string>
+    <string name="cepas_purse_status">Kaartstatus</string>
+    <string name="cepas_purse_balance">Kaartsaldo</string>
+    <string name="cepas_purse_creation_date">Kaartcreatiedatum</string>
     <string name="cepas_autoload_amount">Automatisch op te laden bedrag</string>
     <string name="cepas_last_txn_info">Laatste transactie-informatie</string>
     <string name="cepas_credit_header">Krediet-kop</string>
     <string name="cepas_debit_options">Debet-opties</string>
-    <string name="cepas_other_purse_info">Overige portemonnee-informatie</string>
+    <string name="cepas_other_purse_info">Overige saldo-informatie</string>
     <string name="cepas_logfile_record_count">Items in logbestand</string>
     <string name="cepas_issuer_data_length">Gegevenslengte van uitgever</string>
     <string name="cepas_issuer_data">Uitgever-specifieke gegevens</string>
-    <string name="cepas_purse_info">Portemonnee-informatie</string>
-    <string name="trip_description">(Van )<xliff:g id="start_station" example="Tokio">%1$s</xliff:g> [→] (naar )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
-    </string>
+    <string name="cepas_purse_info">Saldo-informatie</string>
+    <string name="trip_description">(Van )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_station\" example=\"Tokio\"&gt;%1$s&lt;/xliff:g&gt; [→] (naar )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_station\" example=\"Osaka\"&gt;%2$s&lt;/xliff:g&gt;</string>
     <string name="mode_bus">Bus</string>
     <string name="mode_train">Trein</string>
     <string name="mode_tram">Tram</string>
@@ -338,15 +332,13 @@
     <string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
     <string name="card_partial_read_desc">De kaart is buiten het bereik gekomen tijdens het uitlezen.
 \n
-\nSommige gegevens zijn gelezen, maar het is waarschijnlijk onvoldoende.
+\nSommige gegevens zijn uitgelezen, maar waarschijnlijk onvoldoende.
 \n
-\nDikke hoesjes en metaal kunnen het NFC-signaal verstoren. Het kan ook zijn dat de NFC-antenne van je kaart of apparaat beschadigd is.</string>
+\nDikke hoesjes en metaal kunnen het nfc-signaal verstoren. Het kan ook zijn dat de nfc-antenne van je kaart of apparaat beschadigd is.</string>
     <string name="show_partial_data">Gedeeltelijke gegevens tonen</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other">
-            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
     </plurals>
     <string name="felica_manufacturer_code">Producentcode</string>
     <string name="felica_card_identification_number">Kaartidentificatienummer</string>
@@ -391,26 +383,17 @@
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
     <string name="no_data_in_clipboard">Geen gegevens op het klembord.</string>
     <string name="app_version">Versie: %s</string>
-    <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g>
-        <xliff:g id="model_codename" example="walleye">(%2$s)</xliff:g>
-    </string>
-    <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g>
-        <xliff:g id="brand" example="Google">(%2$s)</xliff:g>
-    </string>
-    <string name="android_os">Android-versie: <xliff:g id="version" example="9.0">%1$s</xliff:g>
-        <xliff:g id="build_id" example="PPR2.180905.006">(%2$s)</xliff:g>
-    </string>
+    <string name="device_model">Model: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"model_name\" example=\"Pixel 2\"&gt;%1$s&lt;/xliff:g&gt; &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"model_codename\" example=\"walleye\"&gt;(%2$s)&lt;/xliff:g&gt;</string>
+    <string name="device_manufacturer">Fabrikant: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"manufacturer\" example=\"HTC\"&gt;%1$s&lt;/xliff:g&gt; &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"brand\" example=\"Google\"&gt;(%2$s)&lt;/xliff:g&gt;</string>
+    <string name="android_os">Android-versie: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"9.0\"&gt;%1$s&lt;/xliff:g&gt; &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"build_id\" example=\"PPR2.180905.006\"&gt;(%2$s)&lt;/xliff:g&gt;</string>
     <string name="nfc_enabled">NFC: aan</string>
     <string name="nfc_disabled">NFC: uit</string>
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
     <string name="trip_description_unknown_start">naar %s</string>
-    <string name="time_from_to">
-        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
-    </string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
-    </string>
+    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;</string>
+    <string name="time_from_unknown_to">\?\?:\?\? → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%s&lt;/xliff:g&gt;</string>
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
     <string name="pref_show_local_and_english_desc">Toont zowel de lokale als de Engelse naam, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
     <plurals name="trips_remaining">
@@ -502,7 +485,7 @@
     <string name="leap_weekly_accumulators">Wekelijkse tariefbeperkingen</string>
     <string name="initialisation_date">Initialisatiedatum</string>
     <string name="issue_date">Uitgavedatum</string>
-    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de NFC-instellingen.</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld - schakel ophalen van Leap-sleutels in in de nfc-instellingen.</string>
     <string name="location_minneapolis">Minneapolis, MN, VS</string>
     <string name="invalid_json">Ongeldige JSON</string>
     <plurals name="passengers">
@@ -533,7 +516,7 @@
     <string name="no_static_key_assignment">Statistische sleutels kunnen niet worden toegewezen aan een losse kaart.</string>
     <string name="card_id">Kaart-ID</string>
     <string name="vehicle_number">Voertuig %s</string>
-    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
+    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de nfc-instellingen.</string>
     <string name="machine_id">Automaat-ID</string>
     <string name="valid_from_format">Geldig vanaf %1$s</string>
     <string name="location_brussels">Brussel, België</string>
@@ -626,7 +609,7 @@
     <string name="card_name_cityunion">City Union</string>
     <string name="card_name_tunion">T-Union</string>
     <string name="city_union_city">Stad</string>
-    <string name="card_note_kiev">Geldt alleen voor kaarten van vóór 2016; alleen het reislogboek kan worden ingezien</string>
+    <string name="card_note_kiev">Geldt alleen voor kaarten van vóór 2016; alleen het reislogboek kan worden ingezien.</string>
     <string name="card_name_kiev">Kiev Metro</string>
     <string name="transfer">Overstap</string>
     <string name="rejected">Afgewezen</string>
@@ -682,18 +665,18 @@
     <string name="pref_show_raw_station_ids_desc_off">Stationsverkortingen en route-ID\'s zijn verborgen, tenzij onbekend</string>
     <string name="block_title_format_unauthorized">Blokkade: %s (ongeautoriseerd)</string>
     <string name="card_note_chc_metrocard">Alleen kaarten van vóór 2016 (MIFARE Classic) kunnen worden uitgelezen. Nieuwere, volledig versleutelde DESFire-kaarten kunnen niet worden ondersteund.</string>
-    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="mfc_aid_title_format">MIFARE Classic-AID: %1$s #%2$d</string>
     <string name="location_waikato">Waikato, Nieuw-Zeeland</string>
     <string name="page_title_format_empty">Pagina: %s (leeg)</string>
     <string name="location_wellington_nz">Wellington, Nieuw-Zeeland</string>
     <string name="edy_file_history">Edy-reisgeschiedenis</string>
     <string name="edy_file_id">Edy-identiteit</string>
-    <string name="edy_file_purse_balance">Edy-saldo</string>
+    <string name="edy_file_purse_balance">Edy-kaartsaldo</string>
     <string name="suica_file_history">Suica-reisgeschiedenis</string>
     <string name="suica_file_in_out">Suica-in/uit</string>
     <string name="kmt_file_history">KMT-reisgeschiedenis</string>
     <string name="kmt_file_id">KMT-identiteit</string>
-    <string name="kmt_file_purse_balance">KMT-saldo</string>
+    <string name="kmt_file_purse_balance">KMT-kaartsaldo</string>
     <string name="card_name_kmt">Kartu Multi Trip</string>
     <string name="maximum_balance">Maximum saldo</string>
     <string name="branch_code">Filiaalcode</string>
@@ -835,10 +818,10 @@
     <string name="unknown_tags">Onbekende labels</string>
     <string name="card_note_oyster">Er is alleen ondersteuning voor de eerste generatie kaarten (MIFARE Classic). De huidige generatie (die met een D in de linker benedenhoek) is volledig versleuteld (DESFire) en kan dus niet worden ondersteund.</string>
     <string name="location_kazan">Kazan, Rusland</string>
-    <string name="card_name_kazan">Kazan OV-kaart</string>
+    <string name="card_name_kazan">Kazan ov-kaart</string>
     <string name="kazan_blank">Leeg</string>
     <string name="location_shanghai">Shanghai, China</string>
-    <string name="card_name_shanghai">Shanghai OV-kaart</string>
+    <string name="card_name_shanghai">Shanghai ov-kaart</string>
     <string name="valid_origin_destination">Geldig van %1$s tot %2$s</string>
     <string name="valid_origin_destination_via">Geldig van %1$s tot %2$s, via %3$s</string>
     <string name="pref_hide_unsupported_ribbon">Melding \'niet ondersteund\' verbergen</string>
@@ -866,9 +849,9 @@
     <string name="siticard_aerial_tramway">Kabelbaan</string>
     <string name="siticard_adult_60min_xfer_purse">Overstapkaart - 60 minuten (volwassene)</string>
     <string name="siticard_adult_90min_xfer_purse">Overstapkaart - 90 minuten (volwassene)</string>
-    <string name="siticard_edinyj_16_trips">Edinyj - 16 ritten</string>
-    <string name="siticard_edinyj_30_trips">Edinyj - 30 ritten</string>
-    <string name="siticard_edinyj_3_days">Edinyj - 3 dagen</string>
+    <string name="siticard_edinyj_16_trips">Edinyj (één kaartje) - 16 ritten</string>
+    <string name="siticard_edinyj_30_trips">Edinyj (één kaartje) - 30 ritten</string>
+    <string name="siticard_edinyj_3_days">Edinyj (één kaartje) - 3 dagen</string>
     <string name="card_name_crimea_trolleybus">Krim-trolleybuskaart</string>
     <string name="card_name_crimea_parus_school">Parus-scholierenkaart</string>
     <string name="card_name_yoshkar_ola">Josjkar-Ola-vervoerskaart</string>
@@ -876,8 +859,8 @@
     <string name="umarsh_student">Student</string>
     <string name="umarsh_adult">Volwassene</string>
     <plurals name="remaining_day_count">
-        <item quantity="one">Geen resterende dagen</item>
-        <item quantity="other">1 resterende dag</item>
+        <item quantity="one">1 dag resterend</item>
+        <item quantity="other">%d dagen resterend</item>
     </plurals>
     <string name="mfc_rwid">Uitgelezen: %1$s, weggeschreven: %2$s, verhoging: %3$s, verlaging: %4$s</string>
     <string name="mfc_key_never">nooit</string>
@@ -905,7 +888,7 @@
     <string name="warsaw_90_days">90-dagenkaart</string>
     <string name="mode_toll_road">Tolweg</string>
     <string name="hardware">Hardware</string>
-    <string name="android_nfc_settings">Android NFC-instellingen</string>
+    <string name="android_nfc_settings">Android nfc-instellingen</string>
     <string name="exported_at">Door Metrodroid geëxporteerd naar %s</string>
     <string name="last_refill">Laatste keer opgeladen</string>
     <string name="ovc_banned">Geblokkeerd</string>
@@ -1001,8 +984,8 @@
 \n Labelidentificatie: %1$s
 \n Ondersteund:
 \n %2$s</string>
-    <string name="unknown_ultralight_message">Onbekend Mifare Ultralight-label</string>
-    <string name="nfc_connection_failed">De NFC-verbinding met \'%s\' is mislukt</string>
+    <string name="unknown_ultralight_message">Onbekend MIFARE Ultralight-label</string>
+    <string name="nfc_connection_failed">De nfc-verbinding met \'%s\' is mislukt</string>
     <string name="unknown_date_title">Onbekende datum</string>
     <string name="card_name_emv_long">EMV (credit- en bankkaarten)</string>
     <string name="card_reading_emv">Bezig met uitlezen van EMV (credit- of bankkaart)…</string>
@@ -1039,7 +1022,7 @@
     <string name="ovc_sub_ov_jaarkaart">Netabonnement Particulier Jaar</string>
     <string name="ovc_sub_ov_bijkaart_1e_klas">Bijabonnement 1e klas</string>
     <string name="ovc_sub_ns_businesscard">NS-Business Card</string>
-    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel</string>
+    <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% korting in de daluren)</string>
     <string name="ovc_sub_reizen_op_saldo_bij_ns_1e_klasse">Reizen op saldo bij NS, 1e klasse</string>
     <string name="ovc_sub_reizen_op_saldo_bij_ns_2de_klasse">Reizen op saldo bij NS, 2e klasse</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel reizen op saldo</string>
@@ -1054,8 +1037,8 @@
     <string name="ovc_sub_student_weekend_korting">Student weekend-korting</string>
     <string name="ovc_sub_fietssupplement">OV-fietsabonnement</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
-    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
-    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-chipkaart weekend (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten ov-chipkaart week (2009)</string>
+    <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten ov-chipkaart weekend (2009)</string>
     <string name="ovc_sub_studentenkaart_korting_week_2009">Studentenkaart korting week (2009)</string>
     <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkaart korting weekend (2009)</string>
     <string name="compass_sub_daypass">Dagkaart</string>
@@ -1110,11 +1093,10 @@
     <string name="pisa_abb_mens_pers_pisa_sbe">Pisa-maandkaart</string>
     <string name="pisa_carnet_10_bgl_70_min_pisa">70-minutenkaart (10x)</string>
     <string name="pisa_abb_trim_pers_pisa">Trimestrial-abonnement Pisa</string>
-    <string name="ios_version">iOS-versie: <xliff:g id="version" example="10.3">%1$s</xliff:g>
-    </string>
+    <string name="ios_version">iOS-versie: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;</string>
     <string name="ios_main_screen_back">Overzicht</string>
     <string name="ios_scan_card">Scan kaart</string>
-    <string name="ios_nfc_usage">App die het saldo van je OV-kaarten toont</string>
+    <string name="ios_nfc_usage">App die het saldo van je ov-kaarten toont</string>
     <string name="ios_menu_button">Meer</string>
     <string name="ios_menu_title">Menu</string>
     <string name="ios_menu_cancel">Annuleer</string>
@@ -1124,7 +1106,7 @@
     <string name="ios_nfcreader_reading">Bezig met uitlezen van %s</string>
     <string name="ios_nfcreader_tap">Scan je kaart</string>
     <string name="ios_nfcreader_exception">Uitzondering: %s</string>
-    <string name="ios_unknown_mifare">Onbekende Mifare: %s</string>
+    <string name="ios_unknown_mifare">Onbekende MIFARE: %s</string>
     <string name="ios_unknown_tag">Onbekend label: %s</string>
     <string name="ovc_autocharge_information">Informatie over automatisch opladen</string>
     <string name="rkf_stockholm_7_days">Stockholm 7-dagenkaart</string>
@@ -1152,4 +1134,60 @@
     </plurals>
     <string name="lisboaviva_engraved_serial">Gegraveerd getal</string>
     <string name="lisboaviva_sub_navegante_lisboa">Navegante Lissabon</string>
+    <string name="app_logo_description">Metrodroid-logo</string>
+    <string name="closed_arrow">Ingeklapte lijst</string>
+    <string name="open_arrow">Geopende lijst</string>
+    <string name="ricaricami_m1_3_ord_single">Reguliere Nr.1 3 zones Mi1-Mi3</string>
+    <string name="mode_monorail">Monorail</string>
+    <string name="card_note_octopus_ios">Hu Tong Xing wordt niet ondersteund.</string>
+    <string name="card_media_felica">FeliCa</string>
+    <string name="felica_first_system_pref">Alleen eerste systeem uitlezen</string>
+    <string name="felica_first_system_pref_summary_off">Metrodroid leest standaard alle systemen uit op FeliCa-kaarten.</string>
+    <string name="felica_first_system_pref_summary_on">Metrodroid leest alleen het eerste systeem uit op FeliCa-kaarten. Dit simuleert een tussenoplossing voor een iOS-bug. FeliCa-kaarten met meerdere systemen worden slechts deels uitgelezen!</string>
+    <string name="felica_empty_system">Leeg systeem</string>
+    <string name="felica_skipped_system">Systeem overgeslagen</string>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d lege dienstcode</item>
+        <item quantity="other">%d lege dienstcodes</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">%d overgeslagen dienstcode</item>
+        <item quantity="other">%d overgeslagen dienstcodes</item>
+    </plurals>
+    <string name="felica_first_system_notice">FeliCa-kaarten worden slechts deels uitgelezen.</string>
+    <string name="card_name_yargor">Jaroslavl Gemeentelijk Vervoer (YarGorTrans)</string>
+    <string name="yargor_sub_weekday_tram">Tramabonnement - Weekdagen</string>
+    <string name="yargor_sub_weekday_trolley">Trolleybusabonnement - Weekdagen</string>
+    <string name="yargor_sub_allday_all">Onbeperkt abonnement</string>
+    <string name="yargor_transports_valid">Geldig op de volgende vervoersmiddelen</string>
+    <string name="zolotaya_korona_discount">Korting</string>
+    <string name="zolotaya_korona_discount_200">200: 100%% op gemeentelijk vervoer, 0%% op de trein, 0%% op vervoer per boot</string>
+    <string name="zolotaya_korona_discount_100">100: 50%% op gemeentelijk vervoer, 0%% op de trein, 0%% op vervoer per boot</string>
+    <string name="zolotaya_korona_discount_111">111: 50%% op gemeentelijk vervoer, 50%% op de trein, 50%% op vervoer per boot</string>
+    <string name="card_name_mrtj">Kartu Jelajah Berganda MRTJ</string>
+    <string name="mrtj_extra_note">Saldo en recenste transactie-informatie.</string>
+    <string name="mrtj_file_id">MRTJ-identiteit</string>
+    <string name="mrtj_file_purse_balance">MRTJ-kaartsaldo</string>
+    <string name="felica_specification_version">Specificatieversie</string>
+    <string name="felica_basic_version">Basis-specificatieversie</string>
+    <string name="felica_option_version_list">Optionele versielijst</string>
+    <string name="russia_region_33_vladimir">Oblast Vladimir</string>
+    <string name="card_name_siticard_vladimir">SitiCard (Vladimir)</string>
+    <string name="location_vladimir">Vladimir, Rusland</string>
+    <string name="felica_system_cybernet">Japan IC (Cybernet)</string>
+    <string name="suica_file_admission">Suica-opstaplocatie en -tarief</string>
+    <string name="suica_file_id">Suica-identiteit</string>
+    <string name="card_name_toica">TOICA</string>
+    <string name="card_name_sugoca">SUGOCA</string>
+    <string name="card_name_pitapa">PiTaPa</string>
+    <string name="card_name_nimoca">nimoca</string>
+    <string name="card_name_manaca">manaca</string>
+    <string name="card_name_kitaca">Kitaca</string>
+    <string name="card_name_hayakaken">Hayakaken</string>
+    <string name="card_name_japan_ic">Japan IC</string>
+    <string name="card_name_edy">Edy</string>
+    <string name="location_nagoya">Nagoya, Japan</string>
+    <string name="location_fukuoka_prefecture">Fukuoka, Japan</string>
+    <string name="location_fukuoka_city">Fukuoka, Japan</string>
+    <string name="purse_ride_counter">Aantal gereden ritten op portemonnee</string>
 </resources>

@@ -24,7 +24,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.pm.PackageInfoCompat
 
 import au.id.micolous.metrodroid.util.Utils
 
@@ -42,13 +44,19 @@ class AboutActivity : MetrodroidActivity() {
         setDisplayHomeAsUpEnabled(true)
 
         this.findViewById<TextView>(R.id.lblDebugText).text = Utils.deviceInfoString
+        this.findViewById<Button>(R.id.btnLicense).setOnClickListener {
+            onLicenseClick(it)
+        }
+        this.findViewById<Button>(R.id.btnWebsite).setOnClickListener {
+            onWebsiteClick(it)
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun onWebsiteClick(view: View) {
         val b = Uri.parse("https://micolous.github.io/metrodroid/").buildUpon()
-        val version: Int = try {
-            packageManager.getPackageInfo(packageName, 0).versionCode
+        val version: Long = try {
+            PackageInfoCompat.getLongVersionCode(packageManager.getPackageInfo(packageName, 0))
         } catch (ex: PackageManager.NameNotFoundException) {
             // Shouldn't hit this...
             -1

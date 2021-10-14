@@ -27,8 +27,7 @@
     <string name="export_all">Tümünü dışa aktar</string>
     <string name="about">Hakkında</string>
     <string name="preferences">Tercihler</string>
-    <string name="balance_speech">Denge <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Bakiye <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Yükleniyor…</string>
     <string name="scanned_at_format">%1$s Tarihinde %2$s Tarandı</string>
     <string name="supported_cards">Desteklenen kartlar</string>
@@ -39,7 +38,7 @@
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>
     <string name="unknown_more_info">Daha fazla bilgi</string>
     <string name="unknown_more_info_desc">Bu kartın Metrodroid desteği hakkında daha fazla bilgi için dokunun.</string>
-    <string name="lawyercats">Metrodroid ve yaratıcılarının herhangi bir toplu taşıma kurumuyla ilişiği yoktur.</string>
+    <string name="lawyercats">Metrodroid ve yazarları herhangi bir toplu taşıma acentası ile ilişkili değildir.</string>
     <string name="scanned_cards">Geçmiş</string>
     <string name="no_scanned_cards">Henüz herhangi bir kart okutmadınız.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -53,29 +52,29 @@
     <string name="unauthorized_sector_title_format">Sektör: %s (yetkisiz)</string>
     <string name="invalid_sector_title_format">Sektör: %1$s (geçersiz: %2$s)</string>
     <string name="info">Bilgi</string>
-    <string name="valid_format">%1$s den %2$s Geçerli</string>
+    <string name="valid_format">%1$s - %2$s arasında geçerli</string>
     <string name="valid_to_format">%1$s a kadar geçerli</string>
     <string name="unknown_format">Bilinmeyen (%s)</string>
     <string name="unknown">Bilinmeyen</string>
     <string name="keys_required">Bu kartı okumak için şifreleme anahtarları gerekmektedir.</string>
     <string name="load_keys">Anahtarları Yükle</string>
-    <string name="card_keys_not_supported">Metrodroid bu kart tipi için anahtarları desteklememektedir.</string>
+    <string name="card_keys_not_supported">Metrodroid bu kart türü için anahtarları desteklememektedir.</string>
     <string name="add_key">Anahtar Ekle</string>
     <string name="error">Hata</string>
     <string name="keys">Anahtarlar</string>
     <string name="delete">Sil</string>
     <string name="no_keys">Anahtar yok.</string>
-    <string name="nfc_unavailable">NFC Kullanım Dışı</string>
+    <string name="nfc_unavailable">NFC kullanılamıyor</string>
     <string name="general">Genel</string>
     <string name="launch_from_background">Arka planda aç</string>
     <string name="checksum">Sağlama</string>
     <string name="last_transaction">Son işlem</string>
     <string name="date">Tarih</string>
     <string name="time">Saat</string>
-    <string name="vehicle_type">Araç tipi</string>
-    <string name="transaction_type">İşlem tipi</string>
+    <string name="vehicle_type">Araç türü</string>
+    <string name="transaction_type">İşlem türü</string>
     <string name="card_epoch">Kart Dönemi</string>
-    <string name="card_not_supported_on_device">Bu kart cihazınız tarafından desteklenmemektedir.</string>
+    <string name="card_not_supported_on_device">Bu kart aygıtınız tarafından desteklenmiyor.</string>
     <string name="need_stations">Bazı durak isimleri bilinmemektedir.</string>
     <string name="need_stations_submit">Raporla</string>
     <string name="card_preview_reader">Kart okuyucusunun beta sürümü.</string>
@@ -84,14 +83,181 @@
     <string name="card_format">Kart tipi</string>
     <string name="select_file">Dosya seç</string>
     <string name="copied_to_clipboard">Hafızaya kopyalandı</string>
-    <string name="saved_metrodroid_zip">Metrodroid-Export.zip USB Depolama birimine yazıldı.</string>
-    <string name="saved_xml_custom">ZIP dosyası USB Belleğe yazıldı.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip dosyası USB belleğe kaydedildi.</string>
+    <string name="saved_xml_custom">XML dosyası USB belleğe kaydedildi.</string>
     <string name="map_tiles_url">Harita kaynağı URL</string>
-    <string name="cepas_logfile_record_count">Günlük Dosyası Kayıt Sayısı</string>
+    <string name="cepas_logfile_record_count">Log dosyası kayıt sayısı</string>
     <string name="location_taipei">Taipei</string>
-    <string name="copyright">Telif Hakkı © 2015 - 2019 Michael Farrell</string>
+    <string name="copyright">Telif Hakkı © 2015 - 2021 Michael Farrell</string>
     <string name="machine_id">Makine Kimliği</string>
     <string name="transaction_counter">İşlem sayacı</string>
     <string name="machine_id_format">Makine Kimliği %s</string>
     <string name="nfc_settings">NFC ayarları</string>
+    <string name="fully_locked_desc">Bu kartın herhangi bir bölümü bir anahtar olmadan serbestçe okunamaz ve şu anda bu biçimde kullanılabilecek herhangi bir güvenlik açığı yoktur. 
+\n 
+\nKartınız Metrodroid tarafından desteklenmemektedir ve anahtarı deşifre edilmedikçe, desteklenmesi olası değildir. 
+\n 
+\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık belgelendirme bile sağlamaktadır!</string>
+    <string name="add_key_directions">Anahtarlarınızın ikili dökümünü .farebotkeys uzantılı bir dosya olarak kaydedin, kendinize e-posta eki ile gönderin ve ardından bu aygıtta açın.</string>
+    <string name="card_type">Kart türü</string>
+    <string name="map_tiles_url_summary">Leaflet TileLayer sözdizimini kullanarak gömülü haritalar için özel bir döşeme sunucusu kullan.</string>
+    <string name="map_tiles_subdomains">Harita döşemesi alt alan adları</string>
+    <string name="map_tiles_subdomains_summary">Harita URL\'lerinde {s} kullanılıyorsa, virgülle ayrılmış bir alt alan adı listesi veya alt alan adlarının tek karakterli bir listesi.</string>
+    <string name="map_tiles_help">Leaflet TileLayer belgelendirmesini görüntüle</string>
+    <string name="map_tiles_help_summary">Harita döşemesi URL\'lerini kullanma konusunda yardım için, Leaflet\'in çevrim içi belgelendirmesine bakın (sadece İngilizce).</string>
+    <string name="about_card_format">Bu kart biçimi hakkında</string>
+    <string name="online_services">Çevrim içi hizmetler</string>
+    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="auth_retries">Kimlik doğrulama yeniden denemeleri</string>
+    <string name="auth_retries_summary">Her sektör için kimlik doğrulama girişiminde bulunma sayısı</string>
+    <string name="mfc_fallback_desc">Bazı acentaların kartlarında kendilerini tanıtıcı bir özellik yoktur. Bunları okumak için, açıkça bir acenta seçmeniz gerekmektedir.</string>
+    <string name="mfc_fallback">Yedek okuyucu</string>
+    <string name="obfuscation_title">Gizleme</string>
+    <string name="obfuscation_card_numbers">Kart numaralarını gizle</string>
+    <string name="obfuscation_card_numbers_desc">Kart numaralarını hiçbir yerde gösterme</string>
+    <string name="obfuscation_balance">Bakiyeyi gizle</string>
+    <string name="obfuscation_balance_desc">Gösterilen bakiyeyi rasgele bir miktarla değiştir</string>
+    <string name="obfuscation_dates">Tarihleri gizle</string>
+    <string name="obfuscation_dates_desc">Gezi, abonelik, son kullanma ve tarama tarihlerini farklı, rasgele günler olarak göster</string>
+    <string name="obfuscation_times">Zamanları gizle</string>
+    <string name="obfuscation_times_desc">Geziler, abonelikler ve taramalardaki zaman damgalarının çözünürlüğünü azalt ve rasgele yap</string>
+    <string name="obfuscation_fares">Ücretleri gizle</string>
+    <string name="obfuscation_fares_desc">Gösterilen ücretleri rasgele bir miktarla değiştir</string>
+    <string name="accessibility">Erişilebilirlik</string>
+    <string name="speak_balance">Bakiyeyi yüksek sesle söyle</string>
+    <string name="speak_balance_summary">Bir kartı taradığınızda, bakiye otomatik olarak yüksek sesle okunur. Bu, bir ekran okuyucu çalışmıyorken bile çalışır.</string>
+    <string name="felica_system_title_format">Sistem: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">Servis: %1$s (%2$s)</string>
+    <string name="record_title_format">Kayıt: %s</string>
+    <string name="requires_android_21">Android 5.0 veya üstü gerektirir.</string>
+    <string name="binary_title_format">İkili veri</string>
+    <string name="sector_title_format_empty">Sektör: %s (boş)</string>
+    <string name="delete_key_confirm_title">Anahtarı gerçekten sil\?</string>
+    <string name="delete_key_confirm_message"><xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> anahtar dosyası (<xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g> içeren) sonsuza kadar yok olacak.</string>
+    <string name="cant_delete_with_obfuscation">Anahtar silme şu anda kullanılamıyor</string>
+    <string name="cant_delete_with_obfuscation_message">Güvenlik nedeniyle, kart numarası gizleme etkinken anahtarları silemezsiniz. Anahtarları silmek istiyorsanız onu kapatın.</string>
+    <string name="file_exported">Dosya dışa aktarıldı.</string>
+    <string name="valid_from_format">%1$s tarihinden itibaren geçerli</string>
+    <string name="subscription_cost">Maliyet</string>
+    <string name="rejected">Reddedildi</string>
+    <string name="fully_locked_desc_unlockable">Bu kartın herhangi bir kısmı anahtarsız serbestçe okunamıyor. Yüklü bir geçerli anahtarınız yok. 
+\n  
+\nAnahtarlar yüklendikten sonra kart çalışacaktır. Bunlar genellikle her kart için farklıdır. Anahtarı alma ve yükleme hakkında daha fazla bilgi belgelendirmede bulunabilir. 
+\n  
+\nVerilen kartlarda açık veri erişimine izin vermek için lütfen kartı veren kuruluşa başvurun. Modern akıllı kart teknolojisine sahip verilere açık ve salt okunur erişime izin vermek güvenlidir. Bazı kurumlar veri biçimi hakkında açık belgelendirme bile sağlamaktadır!</string>
+    <string name="requires_android_17">Android 4.2 veya üstü gerektirir.</string>
+    <string name="block_title_format_unauthorized">Blok: %s (yetkisiz)</string>
+    <string name="mfc_aid_title_format">MIFARE Classic uygulama kimliği: %1$s #%2$d</string>
+    <string name="page_title_format_empty">Sayfa: %s (boş)</string>
+    <string name="nfcv_system_info">Sistem bilgisi</string>
+    <string name="keys_loaded">Bu kartın şifreleme anahtarları yüklendi.</string>
+    <string name="valid_origin_destination">%1$s - %2$s arasında geçerli</string>
+    <string name="valid_origin_destination_via">%1$s - %2$s arasında %3$s üzerinden geçerli</string>
+    <string name="pref_hide_unsupported_ribbon">\'Desteklenmiyor\' şeridini gizle</string>
+    <string name="pref_hide_unsupported_ribbon_desc_off">Bu aygıt tarafından okunamayan kartların resimlerinin üzerinde kırmızı bir \'desteklenmiyor\' uyarısı olacaktır</string>
+    <string name="pref_hide_unsupported_ribbon_desc_on">Desteklenmeyen kartların resimlerinin üzerinde herhangi bir şey olmayacaktır</string>
+    <string name="last_refill">Son doldurma</string>
+    <string name="localise_places">Yer isimlerine dil ipuçları ekle</string>
+    <string name="localise_places_desc">İstasyon, durak, hat ve rota adları gibi yer isimlerine dil ipuçları (LocaleSpan) ekler. Bu, ekran okuyucular ve diğer erişilebilirlik yazılımları tarafından kullanılan telaffuzu değiştirir.</string>
+    <string name="localise_places_longdesc_button">Dil ipuçları hakkında…</string>
+    <string name="localise_places_longdesc_title">Dil ipuçları hakkında</string>
+    <string name="unsupported_tag">Desteklenmeyen NFC kart ortamı</string>
+    <string name="saving_card">Kart kaydediliyor…</string>
+    <string name="mfc_reading">MIFARE Classic kartı okunuyor…</string>
+    <string name="mfp_reading">MIFARE Plus kartı okunuyor…</string>
+    <string name="lang_override">Uygulama dili</string>
+    <string name="lang_override_desc">Uygulama dilini değiştir. Geçerli olması için uygulamanın yeniden başlatılması gerekmektedir</string>
+    <string name="lang_default">Sistem öntanımlı değeri</string>
+    <string name="localise_places_longdesc">Metinden-konuşmaya sesleri normalde yalnızca bir dil için iyi çalışır.
+\n
+\nLocaleSpan ipuçları, metni farklı bir dilde olarak işaretlemek için kullanılır. Bir istasyona, durağa, hatta veya rota adına uygulandığında, bu ipuçlarını destekleyen bir ekran okuyucu, Android\'i kullanmak için yapılandırdığınız dil yerine, o yerin ana dilinden sentezlenmiş sesler kullanarak ismi telaffuz edecektir.
+\n
+\nBu seçeneğin etkinleştirilmesi, genellikle uluslararası üne sahip olmayan yabancı yer adlarının telaffuzunu iyileştirir, ancak anlaşılması size daha zor gelebilir.
+\n
+\nBu normalde yer adlarının ekran görüntüsünü değiştirmez, ancak bazı aygıtlar farklı bir yazı tipi kullanabilir.
+\n
+\nBu, LocaleSpan API\'sini (Google TalkBack gibi) destekleyen erişilebilirlik yazılımı ve uygun seslerin kurulu olmasını gerektirir.</string>
+    <string name="mfc_have_key">%d sektörü için kullanıcı tarafından sağlanan anahtar deneniyor…</string>
+    <string name="mfc_other_key">%d sektörü için kullanıcı tarafından sağlanan alternatif anahtarlar deneniyor…</string>
+    <string name="mfc_default_key">%d sektörü için iyi bilinen anahtarlar deneniyor…</string>
+    <string name="mfc_reading_blocks">%d sektörü okunuyor…</string>
+    <string name="iso14a_detect">ISO 14443 kart türü algılanıyor…</string>
+    <string name="mfd_reading">MIFARE DESFire kartı okunuyor…</string>
+    <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> okunuyor…</string>
+    <string name="mfu_detect">MIFARE Ultralight kart türü algılanıyor…</string>
+    <string name="mfu_reading">MIFARE Ultralight kartı okunuyor…</string>
+    <string name="calypso_reading">Calypso kartı okunuyor…</string>
+    <string name="card_partial_read_title">Kart kısmen okundu!</string>
+    <string name="mfd_unlocking"><xliff:g id="card_name" example="Leap">%s</xliff:g> kartının kilidi açılıyor…</string>
+    <string name="vicinity_reading">Vicinity kartı okunuyor…</string>
+    <string name="mfc_rwid">Oku: %1$s, yaz: %2$s, arttır: %3$s, azalt: %4$s</string>
+    <string name="mfc_key_never">asla</string>
+    <string name="mfc_key_a">A anahtarı</string>
+    <string name="mfc_key_b">B anahtarı</string>
+    <string name="mfc_key_ab">A|B anahtarı</string>
+    <string name="show_partial_data">Eksik verileri göster</string>
+    <string name="desfire_unknown_file">Bilinmeyen dosya türü</string>
+    <string name="desfire_cyclic_record">Döngüsel kayıt</string>
+    <string name="desfire_linear_record">Doğrusal kayıt</string>
+    <string name="desfire_value_file">Değer dosyası</string>
+    <string name="desfire_backup_file">Yedekleme dosyası</string>
+    <string name="desfire_standard_file">Standart dosya</string>
+    <string name="mfc_uid_mode">UID uzunluğu</string>
+    <plurals name="bytes">
+        <item quantity="one">%d bayt</item>
+        <item quantity="other">%d bayt</item>
+    </plurals>
+    <string name="answer_to_request">ATQA (İsteğe Cevap)</string>
+    <string name="select_acknowledge">SAK (Onay Seç)</string>
+    <string name="manufacture_year">Üretim yılı</string>
+    <string name="manufacture_week">Üretim haftası</string>
+    <plurals name="passengers">
+        <item quantity="one">yolcu</item>
+        <item quantity="other">yolcular</item>
+    </plurals>
+    <plurals name="felica_service_count">
+        <item quantity="one">%d hizmet</item>
+        <item quantity="other">%d hizmet</item>
+    </plurals>
+    <plurals name="record_count">
+        <item quantity="one">%d kayıt</item>
+        <item quantity="other">%d kayıt</item>
+    </plurals>
+    <plurals name="block_count">
+        <item quantity="one">%d blok</item>
+        <item quantity="other">%d blok</item>
+    </plurals>
+    <plurals name="cards_imported">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
+    </plurals>
+    <string name="pref_show_local_and_english_desc">Yerel ayardan bağımsız olarak hem yerel hem de İngilizce adları, kapalıyken en uygun çeşidini kullanarak gösterir.</string>
+    <string name="pref_show_local_and_english_title">Hem yerel hem de İngilizce istasyon adlarını göster</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="pref_theme_desc">Görünüm ve izlenimi seçin</string>
+    <string name="pref_theme">Tema</string>
+    <string name="raw_level_all">Tüm alanlar</string>
+    <string name="raw_level_unknown_only">Yalnızca bilinmeyen alanlar</string>
+    <string name="raw_level_none">Yok (devre dışı)</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
+    </plurals>
+    <string name="key_data">Anahtar verileri</string>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
+        <item quantity="other">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
+    </plurals>
+    <string name="hidden_card_number">Gizli kart numarası</string>
+    <plurals name="milliseconds_short">
+        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
+    </plurals>
+    <string name="card_partial_read_desc">Okurken kart aralık dışına çıktı.
+\n
+\n Bazı veriler okundu, ancak faydalı veriler almak için yeterli olmayabilir.
+\n
+\n Kalın kasalar ve metal, NFC\'nin çalışmasını engelleyebilir. Hata, kartın veya aygıtınızın NFC anteninin hasar gördüğü anlamına da gelebilir.</string>
+    <string name="iso7816_probing">ISO/IEC 7816 kartı sorgulanıyor…</string>
 </resources>

@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.clipper
 
 import au.id.micolous.metrodroid.util.NumberUtils
 
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.Station
@@ -32,13 +31,10 @@ import au.id.micolous.metrodroid.util.StationTableReader
 internal object ClipperData {
     const val AGENCY_CALTRAIN = 0x06
     private const val AGENCY_GGT = 0x0b
+    const val AGENCY_SMART = 0x0c
     const val AGENCY_MUNI = 0x12
     const val AGENCY_GG_FERRY = 0x19
     const val AGENCY_BAY_FERRY = 0x1b
-
-    val GG_FERRY_ROUTES = mapOf(
-            0x03 to FormattedString.language("Larkspur", "en-US"),
-            0x04 to FormattedString.language("San Francisco", "en-US"))
 
     const val CLIPPER_STR = "clipper"
 
@@ -49,6 +45,9 @@ internal object ClipperData {
     fun getAgencyName(agency: Int, isShort: Boolean) =
         StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort)
 
+    fun getRouteName(agency: Int, routeId: Int) =
+        StationTableReader.getLineNameNoFallback(CLIPPER_STR, agency shl 16 or routeId)
+
     fun getStation(agency: Int, stationId: Int, isEnd: Boolean): Station? {
         val humanReadableId = NumberUtils.intToHex(agency) + "/" + NumberUtils.intToHex(stationId)
         val s = StationTableReader.getStationNoFallback(CLIPPER_STR, agency shl 16 or stationId,
@@ -56,10 +55,14 @@ internal object ClipperData {
         if (s != null)
             return s
 
-        if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
+        if (agency == AGENCY_GGT
+                || agency == AGENCY_CALTRAIN
+                || agency == AGENCY_GG_FERRY
+                || agency == AGENCY_SMART) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Localizer.localizeString(R.string.clipper_end_of_line))
-            return Station.nameOnly(Localizer.localizeString(R.string.clipper_zone_number, stationId.toString()))
+            if (agency != AGENCY_GG_FERRY)
+                return Station.nameOnly(Localizer.localizeString(R.string.clipper_zone_number, stationId.toString()))
         }
 
         // Placeholders

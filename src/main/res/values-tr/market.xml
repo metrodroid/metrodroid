@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="market_long_desc">Metrodroid bazı NFC toplu taşıma akıllı kartlarını okur.
+\n
+\nDesteklenen kartlar:
+\n• İstanbulkart - Türkiye 🆕🆔
+\n• Amiibo 🆕
+\n• AT HOP - Auckland, Yeni Zelanda 🆕🆔
+\n• Bilhete Único - São Paulo, Brezilya 📜🗝
+\n• bip! - Santiago, Şili 🆕📜🗝
+\n• BUS-IT - Greater Hamilton (Waikato), Yeni Zelanda 🆕📜🗝
+\n• Carta Mobile - Pisa, İtalya 🆕
+\n• CEPAS (EZ-Link, NETS Flashpay) - Singapur 🇸🇬
+\n• CharlieCard - Boston, MA, ABD 🆕📜🗝
+\n• Cifial 🆕📜
+\n• City Union, T-Union - Çin Anakarası 🆕
+\n• Clipper - San Francisco, CA, ABD
+\n• Compass (tek kullanımlık biletler) - Vancouver, BC, Kanada 🆕
+\n• EasyCard - Taipei 📜🗝
+\n• EMV banka kartları 🆕
+\n• Go card - Brisbane, QLD, Avustralya 🆕📜🗝
+\n• GoCard - Otago (Dunedin ve Queenstown), Yeni Zelanda 🆕📜
+\n• Go-to Card - Minneapolis-St. Paul, MN, ABD 🆕📜🗝
+\n• Hafilat - Abu Dabi, BAE 🆕
+\n• Hop Fastpass - Portland, OR, ABD 🆕🆔
+\n• HSL, Matkakortti, Waltti - Finlandiya
+\n• IC (Suica, ICOCA, PASMO), Edy - Japonya
+\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Fransa
+\n• Kartu Multi Trip - Cakarta, Endonezya
+\n• Kırım Troleybüsü 🆕📜🗝
+\n• Kiev Metrosu - Ukrayna 🆕📜🗝
+\n• KomuterLink - Malezya 🆕📜🗝
+\n• Leap - İrlanda 🆕🇮🇪
+\n• Lisboa Viva - Lizbon, Portekiz 🆕
+\n• Manly Fast Ferry - Sidney, NSW, Avustralya 🆕📜🗝
+\n• metroCARD - Adelaide, Avustralya 🆕
+\n• Metrocard (1st-gen) - Christchurch, Yeni Zelanda 🆕📜🗝
+\n• Metromoney - Tiflis, Gürcistan 🆕📜🗝
+\n• Mobib - Brüksel, Belçika 🆕
+\n• Myki - Melbourne, VIC, Avustralya 🆕🆔
+\n• MyWay - Canberra, ACT, Avustralya 🆕📜🗝
+\n• Nol - Dubai, BAE 🆕🆔
+\n• Octopus - Hong Kong 🆕
+\n• Opal - Sidney, NSW, Avustralya 🆕
+\n• Opus - Québec, Kanada 🆕
+\n• ORCA - Seattle, WA, ABD
+\n• OV-chipkaart - Hollanda 📜🗝
+\n• Oyster (1st-gen) - Londra, Birleşik Krallık 🆕📜🗝
+\n• Pekin Belediyesi Kartı, Shenzhen Tong, T-Union, Wuhan Tong - Çin 🆕
+\n• Podorozhnik - Saint Petersburg, Rusya 🆕📜🗝
+\n• Rav-Kav - İsrail 🆕
+\n• Rejsekort - Danimarka 🆕📜🗝
+\n• RicaricaMi - Milano, İtalya 🆕
+\n• Selecta - Fransa 🆕
+\n• SLAccess - Stockholm, İsvaç 🆕📜🗝
+\n• Smartride - Rotorua, Yeni Zelanda 🆕📜
+\n• SmartRider - Perth, WA, Avustralya 🆕📜🗝
+\n• Snapper (plus) - Wellington, Yeni Zelanda 🆕
+\n• Strelka - Moskova, Rusya 🆕📜🆔
+\n• SunCard - Orlando, FL, ABD 🆕📜🗝🆔
+\n• Tartu Bus - Estonya 🆕📜🆔
+\n• T-Money - Güney Kore 🆕
+\n• Touch ’n Go - Malezya 🆕📜🗝
+\n• TPF card - Fribourg, İsviçre 🆕🆔
+\n• Transit Access Pass - Los Angeles, CA, ABD 🆕📜🗝
+\n• Troika - Moskova, Rusya 🆕📜🗝
+\n• Umarsh (Electronic Barnaul, Kirov, Ekaterinburg Ekarta, Izhevsk Strizh, Nizhniy Novgorod Siticard, Penza, Yoshkar-Ola) - Rusya 🆕📜🗝
+\n• Ventra (tek kullanımlık biletler) - Chicago, IL, ABD 🆕
+\n• Warszawska Karta Miejska - Varşova, Polonya 🆕📜🗝🆔
+\n• Zolotaya Korona (Krasnodar, Orenburg, Samara, Yaroslavl) - Rusya 🆕📜🗝
+\n
+\n🆕 Metrodroid\'de yeni.
+\n📜 MIFARE Classic: tüm aygıtlarla uyumlu değil - bunu okumak için bir aygıt NXP NFC yonga setine ihtiyacınız var.
+\n🗝 Bu kartı okumak için şifreleme anahtarları gerekli.
+\n🇸🇬 CEPAS tüm aygıtlarla uyumlu değil (ISO 14443-B).
+\n🆔 Sadece kart numarası okunabilir.
+\n🇮🇪 Şifreleme anahtarları operatörden indirilir.
+\n
+\nKartları okumak için NFC uyumlu bir aygıta ihtiyacınız vardır.
+\n
+\nBazı acentalar şifreli kartlara sahiptir. Bunları okumak için genellikle her karta özgü olan şifreleme anahtarları edinmeniz gerekmektedir. Üzgünüm, bu konuda size yardımcı olamam.
+\n
+\nMetrodroid ve yazarları herhangi bir toplu taşıma acentasına bağlı değildir. MIFARE Classic üzerinde Cubic Nextfare veya ERG kullanan diğer acentaların kartları da çalışabilir.
+\n
+\nGereken izinler hakkında daha fazla bilgi için lütfen gizlilik politikasına bakın.
+\n
+\nBu, ilave kart desteği ve hata düzeltmeleri içeren, Eric Butler’ın Farebot\'unun bir çatalıdır.
+\n
+\nBu yazılım GNU GPLv3+ altında lisanslanmıştır, kaynak kodları https://github.com/metrodroid/ adresinde bulunabilir.</string>
+    <string name="market_changelog_300">• Cifial, Fribourg TPF, Waltti ve mavi HSL kartları için destek ekler
+\n• Amiibo, SLaccess, Troika ve Viva için hata düzeltmeleri
+\n• Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go ve Viva için yeni veriler
+\n• Geçmiş arama, MIFARE Plus desteği ekler
+\n• Android 4.3 ve daha eski sürümlerde hata düzeltmeleri
+\n
+\nDaha fazla ayrıntı ve bilinen sorunlar (İngilizce): https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_generic">Hataları düzeltir, yeni özellikler ve veriler ekler.
+\n
+\nDaha fazla ayrıntı ve bilinen sorunlar (İngilizce): https://www.metrodroid.org/changelog</string>
+    <string name="market_short_desc">Metrodroid bazı NFC toplu taşıma akıllı kartlarından bilgileri okur.</string>
+</resources>

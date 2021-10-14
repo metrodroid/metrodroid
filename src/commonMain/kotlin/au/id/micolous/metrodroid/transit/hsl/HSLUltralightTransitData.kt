@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils.zeroPad
 
-private const val NAME = "HSL Ultralight"
+private fun getNameUL(city: Int) = if (city == HSLLookup.CITY_UL_TAMPERE) "Tampere Ultralight" else "HSL Ultralight"
 
 @Parcelize
 data class HSLUltralightTransitData(override val trips: List<Trip>,
@@ -36,8 +36,9 @@ data class HSLUltralightTransitData(override val trips: List<Trip>,
                                     val applicationVersion: Int,
                                     val applicationKeyVersion: Int,
                                     val platformType: Int,
-                                    val securityLevel: Int) : TransitData() {
-    override val cardName get() = NAME
+                                    val securityLevel: Int,
+                                    val city: Int) : TransitData() {
+    override val cardName get() = getNameUL(city)
 
     override fun getRawFields(level: RawLevel): List<ListItem> = super.getRawFields(level).orEmpty() + listOf(
             ListItem("Application version", applicationVersion.toString()),
@@ -58,7 +59,8 @@ private fun parse(card: UltralightCard): HSLUltralightTransitData {
     //Read data from application info
     val version = raw.getBitsFromBuffer(0, 4)
 
-    val arvo = HSLArvo.parseUL(raw.sliceOffLen(7, 41), version)
+    val city = card.pages[5].data.getBitsFromBuffer(0, 8)
+    val arvo = HSLArvo.parseUL(raw.sliceOffLen(7, 41), version, city)
     return HSLUltralightTransitData(
             serialNumber = HSLTransitData.formatSerial(getSerial(card)),
             subscriptions = listOfNotNull(arvo),
@@ -66,7 +68,8 @@ private fun parse(card: UltralightCard): HSLUltralightTransitData {
             applicationKeyVersion = card.pages[4].data.getBitsFromBuffer(4, 4),
             platformType = card.pages[5].data.getBitsFromBuffer(20, 3),
             securityLevel = card.pages[5].data.getBitsFromBuffer(23, 1),
-            trips = TransactionTrip.merge(listOfNotNull(arvo?.lastTransaction)))
+            trips = TransactionTrip.merge(listOfNotNull(arvo?.lastTransaction)),
+            city = city)
 }
 
 object HSLUltralightTransitFactory : UltralightCardTransitFactory {
@@ -78,5 +81,6 @@ object HSLUltralightTransitFactory : UltralightCardTransitFactory {
 
     override fun parseTransitData(card: UltralightCard) = parse(card)
 
-    override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, HSLTransitData.formatSerial(getSerial(card)))
+    override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(
+        getNameUL(city=card.pages[5].data.getBitsFromBuffer(0, 8)), HSLTransitData.formatSerial(getSerial(card)))
 }

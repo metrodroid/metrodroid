@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -42,7 +41,7 @@ internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): E
 
     override val routeNames: List<FormattedString>?
         get() {
-            val routeNumber = parsed.getInt(En1545Transaction.EVENT_ROUTE_NUMBER) ?: return emptyList()
+            val routeNumber = parsed.getInt(EVENT_ROUTE_NUMBER) ?: return emptyList()
             return if (agency == LisboaVivaLookup.AGENCY_CP && routeNumber == LisboaVivaLookup.ROUTE_CASCAIS_SADO) {
                 if ((stationId ?: 0) <= 54)
                     listOf(FormattedString.language("Cascais", "pt-PT"))
@@ -56,7 +55,7 @@ internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): E
         get() = LisboaVivaLookup
 
     override fun getStation(station: Int?): Station? = station?.let {
-        lookup.getStation(it, agency, parsed.getIntOrZero(En1545Transaction.EVENT_ROUTE_NUMBER))
+        lookup.getStation(it, agency, parsed.getIntOrZero(EVENT_ROUTE_NUMBER))
     }
 
     override fun isSameTrip(other: Transaction): Boolean {
@@ -74,20 +73,20 @@ internal data class LisboaVivaTransaction (override val parsed: En1545Parsed): E
     companion object {
         private const val TRANSITION = "Transition"
         private val tripFields = En1545Container(
-                En1545FixedInteger.dateTimeLocal(En1545Transaction.EVENT),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_A, 3),
+                En1545FixedInteger.dateTimeLocal(EVENT),
+                En1545FixedInteger(EVENT_UNKNOWN_A, 3),
                 En1545FixedInteger.dateTimeLocal(EVENT_FIRST_STAMP),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_B, 5),
+                En1545FixedInteger(EVENT_UNKNOWN_B, 5),
                 En1545FixedInteger("ContractsUsedBitmap", 4),
-                En1545FixedHex(En1545Transaction.EVENT_UNKNOWN_C, 29),
+                En1545FixedHex(EVENT_UNKNOWN_C, 29),
                 En1545FixedInteger(TRANSITION, 3),
-                En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 5), // Curious
-                En1545FixedInteger(En1545Transaction.EVENT_VEHICLE_ID, 16),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_D, 4),
-                En1545FixedInteger(En1545Transaction.EVENT_DEVICE_ID, 16),
-                En1545FixedInteger(En1545Transaction.EVENT_ROUTE_NUMBER, 16),
-                En1545FixedInteger(En1545Transaction.EVENT_LOCATION_ID, 8),
-                En1545FixedHex(En1545Transaction.EVENT_UNKNOWN_E, 63)
+                En1545FixedInteger(EVENT_SERVICE_PROVIDER, 5), // Curious
+                En1545FixedInteger(EVENT_VEHICLE_ID, 16),
+                En1545FixedInteger(EVENT_UNKNOWN_D, 4),
+                En1545FixedInteger(EVENT_DEVICE_ID, 16),
+                En1545FixedInteger(EVENT_ROUTE_NUMBER, 16),
+                En1545FixedInteger(EVENT_LOCATION_ID, 8),
+                En1545FixedHex(EVENT_UNKNOWN_E, 63)
         )
     }
 }

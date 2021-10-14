@@ -21,11 +21,12 @@
 package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.multi.Log
-import kotlinx.io.charsets.Charsets
-import kotlinx.serialization.json.Json
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
 
 /**
- * Used by [au.id.micolous.metrodroid.util.Utils.detectKeyFormat] to return the format of a key contained within a
+ * Used by [au.id.micolous.metrodroid.key.KeyFormat.Companion.detectKeyFormat] to return the format of a key contained within a
  * file.
  */
 enum class KeyFormat {
@@ -43,10 +44,10 @@ enum class KeyFormat {
     JSON_MFC_STATIC;
 
     val isJSON: Boolean
-        get() = (this == KeyFormat.JSON
-                || this == KeyFormat.JSON_MFC
-                || this == KeyFormat.JSON_MFC_NO_UID
-                || this == KeyFormat.JSON_MFC_STATIC)
+        get() = (this == JSON
+                || this == JSON_MFC
+                || this == JSON_MFC_NO_UID
+                || this == JSON_MFC_STATIC)
 
     companion object {
         const val TAG = "KeyFormat"
@@ -59,10 +60,10 @@ enum class KeyFormat {
                     length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2
         }
 
-        private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
+        private fun rawFormat(length: Int) = if (isRawMifareClassicKeyFileLength(length)) RAW_MFC else UNKNOWN
 
         fun detectKeyFormat(data: ByteArray): KeyFormat {
-            if (data[0] != '{'.toByte()) {
+            if (data[0] != '{'.code.toByte()) {
                 // This isn't a JSON file.
                 Log.d(TAG, "couldn't find starting {")
                 return rawFormat(data.size)
@@ -75,38 +76,38 @@ enum class KeyFormat {
                     Log.d(TAG, "unsupported encoding at byte $i")
                     return rawFormat(data.size)
                 }
-                if (c in listOf('\n'.toByte(), '\r'.toByte(), '\t'.toByte(),
-                                ' '.toByte())) {
+                if (c in listOf('\n', '\r', '\t', ' ').map { it.code.toByte() }) {
                     continue
                 }
 
-                if (c == '}'.toByte()) {
+                if (c == '}'.code.toByte()) {
                     break
                 }
 
                 // This isn't a JSON file.
                 Log.d(TAG, "couldn't find ending }")
-                return if (isRawMifareClassicKeyFileLength(data.size)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
+                return if (isRawMifareClassicKeyFileLength(data.size)) RAW_MFC else UNKNOWN
             }
 
             // Now see if it actually parses.
             try {
-                val o = CardKeys.jsonParser.parseJson(kotlinx.io.core.String(bytes = data,
-                        charset = Charsets.UTF_8)).jsonObject
-                val type = o.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
+                val o = CardKeys.jsonParser.parseToJsonElement(
+                    data.decodeToString()
+                ).jsonObject
+                val type = o[CardKeys.JSON_KEY_TYPE_KEY]?.jsonPrimitiveOrNull?.contentOrNull
                 when(type) {
                     CardKeys.TYPE_MFC ->
-                        return if (o.getPrimitiveOrNull(CardKeys.JSON_TAG_ID_KEY)?.contentOrNull?.isEmpty() != false) {
-                            KeyFormat.JSON_MFC_NO_UID
+                        return if (o[CardKeys.JSON_TAG_ID_KEY]?.jsonPrimitiveOrNull?.contentOrNull?.isEmpty() != false) {
+                            JSON_MFC_NO_UID
                         } else {
-                            KeyFormat.JSON_MFC
+                            JSON_MFC
                         }
 
-                    CardKeys.TYPE_MFC_STATIC -> return KeyFormat.JSON_MFC_STATIC
+                    CardKeys.TYPE_MFC_STATIC -> return JSON_MFC_STATIC
                 }
 
                 // Unhandled JSON format
-                return KeyFormat.JSON
+                return JSON
             } catch (e: Exception) {
                 Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e)
             }

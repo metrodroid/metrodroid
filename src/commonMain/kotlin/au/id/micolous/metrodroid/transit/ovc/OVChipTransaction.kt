@@ -29,19 +29,19 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transaction() {
     private val date: Int
-        get() = parsed.getIntOrZero(En1545FixedInteger.dateName(En1545Transaction.EVENT))
+        get() = parsed.getIntOrZero(En1545FixedInteger.dateName(EVENT))
 
     private val time: Int
-        get() = parsed.getIntOrZero(En1545FixedInteger.timeLocalName(En1545Transaction.EVENT))
+        get() = parsed.getIntOrZero(En1545FixedInteger.timeLocalName(EVENT))
 
     private val transfer: Int
         get() = parsed.getIntOrZero(TRANSACTION_TYPE)
 
     private val company: Int
-        get() = parsed.getIntOrZero(En1545Transaction.EVENT_SERVICE_PROVIDER)
+        get() = parsed.getIntOrZero(EVENT_SERVICE_PROVIDER)
 
     val id: Int
-        get() = parsed.getIntOrZero(En1545Transaction.EVENT_SERIAL_NUMBER)
+        get() = parsed.getIntOrZero(EVENT_SERIAL_NUMBER)
 
     override val lookup get() = OvcLookup
 
@@ -141,32 +141,32 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
                         En1545FixedInteger.timeLocal(EVENT)
                 ),
                 neverSeenField(1),
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_A, 24),
-                En1545FixedInteger(OVChipTransaction.TRANSACTION_TYPE, 7),
+                En1545FixedInteger(EVENT_UNKNOWN_A, 24),
+                En1545FixedInteger(TRANSACTION_TYPE, 7),
                 neverSeenField(4),
-                En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 16),
+                En1545FixedInteger(EVENT_SERVICE_PROVIDER, 16),
                 neverSeenField(6),
-                En1545FixedInteger(En1545Transaction.EVENT_SERIAL_NUMBER, 24),
+                En1545FixedInteger(EVENT_SERIAL_NUMBER, 24),
                 neverSeenField(8),
-                En1545FixedInteger(En1545Transaction.EVENT_LOCATION_ID, 16),
+                En1545FixedInteger(EVENT_LOCATION_ID, 16),
                 neverSeenField(10),
-                En1545FixedInteger(En1545Transaction.EVENT_DEVICE_ID, 24),
+                En1545FixedInteger(EVENT_DEVICE_ID, 24),
                 neverSeenField(12),
                 neverSeenField(13),
                 neverSeenField(14),
-                En1545FixedInteger(En1545Transaction.EVENT_VEHICLE_ID, 16),
+                En1545FixedInteger(EVENT_VEHICLE_ID, 16),
                 neverSeenField(16),
-                En1545FixedInteger(En1545Transaction.EVENT_CONTRACT_POINTER, 5),
+                En1545FixedInteger(EVENT_CONTRACT_POINTER, 5),
                 neverSeenField(18),
                 neverSeenField(19),
                 neverSeenField(20),
                 En1545FixedInteger("TripDurationMinutes", 16),
                 neverSeenField(22),
                 neverSeenField(23),
-                En1545FixedInteger(En1545Transaction.EVENT_PRICE_AMOUNT, 16),
+                En1545FixedInteger(EVENT_PRICE_AMOUNT, 16),
                 En1545FixedInteger("EventSubscriptionID", 13),
                 // Could be from 8 to 10
-                En1545FixedInteger(En1545Transaction.EVENT_UNKNOWN_C, 10),
+                En1545FixedInteger(EVENT_UNKNOWN_C, 10),
                 neverSeenField(27),
                 En1545FixedInteger("EventExtra", 0),
                 reversed = reversed
@@ -174,11 +174,11 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
 
         private val OVC_UL_TRIP_FIELDS = En1545Container(
                 En1545FixedInteger("A", 8),
-                En1545FixedInteger(En1545Transaction.EVENT_SERIAL_NUMBER, 12),
-                En1545FixedInteger(En1545Transaction.EVENT_SERVICE_PROVIDER, 12),
+                En1545FixedInteger(EVENT_SERIAL_NUMBER, 12),
+                En1545FixedInteger(EVENT_SERVICE_PROVIDER, 12),
                 En1545FixedInteger(TRANSACTION_TYPE, 3),
-                En1545FixedInteger.date(En1545Transaction.EVENT),
-                En1545FixedInteger.timeLocal(En1545Transaction.EVENT),
+                En1545FixedInteger.date(EVENT),
+                En1545FixedInteger.timeLocal(EVENT),
                 En1545FixedInteger("balseqno", 4),
                 En1545FixedHex("D", 64)
         )

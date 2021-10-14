@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.Test
@@ -29,9 +30,9 @@ import kotlin.test.assertNull
 class En1545Test {
     @Test
     fun testBcdDate() {
-        assertEquals(Daystamp(2011, 11 /* December */, 31),
+        assertEquals(Daystamp(2011, Month.DECEMBER, 31),
             En1545FixedInteger.parseDateBCD(0x20111231))
-        assertEquals(Daystamp(2019, 0 /* January */, 1),
+        assertEquals(Daystamp(2019, Month.JANUARY, 1),
             En1545FixedInteger.parseDateBCD(0x20190101))
     }
 
@@ -50,7 +51,7 @@ class En1545Test {
             ImmutableByteArray.fromHex("0000000020110101"), 0, f)
 
         assertNull(h.getTimeStamp(En1545TransitData.HOLDER_BIRTH_DATE, MetroTimeZone.UTC))
-        assertEquals(Daystamp(2011, 0 /* January */, 1),
+        assertEquals(Daystamp(2011, Month.JANUARY, 1),
             h.getTimeStamp(En1545TransitData.ENV_APPLICATION_VALIDITY_END, MetroTimeZone.UTC))
     }
 }

@@ -43,6 +43,7 @@ import java.util.zip.ZipOutputStream
 import au.id.micolous.metrodroid.provider.CardDBHelper
 import au.id.micolous.metrodroid.provider.CardProvider
 import au.id.micolous.metrodroid.provider.CardsTableColumns
+import java.io.ByteArrayInputStream
 
 import kotlin.text.Charsets
 
@@ -85,19 +86,17 @@ object ExportHelper {
         return res
     }
 
-    private fun makeFilename(tagId: String,
-                             scannedAt: TimestampFull,
-                             format: String, gen: Int): String {
-        val dt = scannedAt.isoDateTimeFilenameFormat()
-        return if (gen != 0) "Metrodroid-$tagId-$dt-$gen.$format" else "Metrodroid-$tagId-$dt.$format"
-    }
-
-    fun makeFilename(card: Card): String = makeFilename(card.tagId.toHexString(),
-                card.scannedAt, "json", 0)
-
-    fun zipFileFromString(zo: ZipOutputStream, ts: TimestampFull, name: String, contents: String) {
+    /**
+     * Adds a file from a [String] to a ZIP file ([ZipOutputStream]).
+     *
+     * @param zo The ZIP file to write to
+     * @param ts The timestamp to set on the file
+     * @param name A filename for the new ZIP entry
+     * @param contents The contents of the file to write. This will be encoded in UTF-8.
+     */
+    private fun zipFileFromString(zo: ZipOutputStream, ts: TimestampFull?, name: String, contents: String) {
         ZipEntry(name).let { ze ->
-            ze.time = ts.timeInMillis
+            if (ts != null) ze.time = ts.timeInMillis
             zo.putNextEntry(ze)
         }
         zo.write(ImmutableByteArray.fromUTF8(contents).dataCopy)
@@ -136,7 +135,7 @@ object ExportHelper {
     }
 
     fun importCards(istream: InputStream,
-                    importer: CardImporter,
+                    importer: CardMultiImporter,
                     context: Context): Collection<Uri> {
         val it = importer.readCards(istream) ?: return emptyList()
 
@@ -144,9 +143,10 @@ object ExportHelper {
     }
 
     fun importCards(s: String,
-                    importer: CardImporter,
+                    importer: CardMultiImporter,
                     context: Context): Collection<Uri> {
-        val it = importer.readCards(s) ?: return emptyList()
+        val it = importer.readCards(ByteArrayInputStream(s.encodeToByteArray()))
+            ?: return emptyList()
 
         return importCards(it, context)
     }
@@ -168,11 +168,6 @@ object ExportHelper {
 
         return context.contentResolver.insert(CardProvider.CONTENT_URI_CARD, cv)
     }
-
-    private fun readCardDataFromCursor(cursor: Cursor): String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
-
-    private fun readCardsXml(cursor: Cursor): Iterator<String> =
-            IteratorTransformer(CursorIterator(cursor), this::readCardDataFromCursor)
 
     fun deleteSet(context: Context, tf: Iterable<Long>): Int {
         @NonNls val s = "(" + tf.joinToString(", ") + ")"

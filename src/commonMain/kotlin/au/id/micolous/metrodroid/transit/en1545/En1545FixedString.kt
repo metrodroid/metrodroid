@@ -51,7 +51,7 @@ class En1545FixedString(private val mName: String, private val mLen: Int) : En15
                     j++
                 }
             } else {
-                ret.append(('A'.toInt() + bl - 1).toChar())
+                ret.append(('A'.code + bl - 1).toChar())
                 lastNonSpace = j
                 j++
             }

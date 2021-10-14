@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Μετρόδροειδ</string>
     <string name="license">Άδειες</string>
     <string name="directions">Αγγίξτε μια κάρτα.</string>
     <string name="reading_card">Ανάγνωση κάρτας…</string>
@@ -12,7 +13,7 @@
     <string name="locked_mfd_card">Κλειδωμένη κάρτα MIFARE DESFire</string>
     <string name="hw_detail">Πληροφορίες κατασκευής</string>
     <string name="copy_xml">Αντιγραφή</string>
-    <string name="share_xml">Μοιραστείτε</string>
+    <string name="share_xml">Κοινοποίηση</string>
     <string name="save_xml">Αποθήκευση σε αρχείο</string>
     <string name="history">Ιστορικό</string>
     <string name="import_xml">Εισαγωγή</string>
@@ -122,4 +123,5 @@
     <string name="nol_red">Κόκκινο</string>
     <string name="mobib_jump_1_trip">Jump 1 ταξίδι</string>
     <string name="mobib_jump_10_trips">Jump 10 ταξίδια</string>
+    <string name="title_activity_license">Άδειες Ανοιχτού Κώδικα</string>
 </resources>

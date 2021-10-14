@@ -26,10 +26,10 @@ import au.id.micolous.metrodroid.util.StationTableReaderImpl.InvalidHeaderExcept
 import platform.Foundation.NSBundle
 
 import au.id.micolous.metrodroid.proto.stations.*
-import kotlinx.cinterop.usePinned
 import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.usePinned
 
-actual internal fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)
 
 private const val TAG = "StationTableReaderIOS"
@@ -69,7 +69,8 @@ operator fun GPBUInt32UInt32Dictionary.get(key: UInt): UInt? {
     return null
 }
 
-fun GPBUInt32Array.toList(): List<UInt> = List(this.count.toInt()) { this.valueAtIndex(it.toULong()) }
+fun GPBUInt32Array.toList(): List<UInt> = List(this.count().toInt()) {
+    this.valueAtIndex(it.toULong()) }
 
 private const val MAX_VARINT = 10
 
@@ -211,7 +212,8 @@ internal constructor(dbName: String) : StationTableReader {
         private val MAGIC = ImmutableByteArray.of(0x4d, 0x64, 0x53, 0x54)
         private const val VERSION = 1
 
-        private fun squash(input: String): String = input.substringAfter("TransportType").replace("_", "", ignoreCase = true).toLowerCase()
+        private fun squash(input: String): String =
+            input.substringAfter("TransportType").replace("_", "", ignoreCase = true).lowercase()
 
         private fun convertTransportType(input : TransportType): Trip.Mode? {
             if (input == TransportType_Unknown)

@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import kotlin.test.Test
 
-class UltralightXmlTest: CardReaderWithAssetDumpsTest(XmlCardFormat()) {
+class UltralightXmlTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
     @Test
     fun testOldFile() {
         val card = loadCard<UltralightCard>("mfu/blank_old.xml")

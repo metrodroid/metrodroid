@@ -22,7 +22,6 @@
 package au.id.micolous.metrodroid.transit.gautrain
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.transit.ovc.OVChipSubscription
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -31,10 +30,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 data class GautrainSubscription internal constructor(override val parsed: En1545Parsed,
                                                      private val mType1: Int,
                                                      private val mUsed: Int) : En1545Subscription() {
-    override val subscriptionState get(): Subscription.SubscriptionState =
+    override val subscriptionState get(): SubscriptionState =
             if (mType1 != 0) {
-                if (mUsed != 0) Subscription.SubscriptionState.USED else Subscription.SubscriptionState.STARTED
-            } else Subscription.SubscriptionState.INACTIVE
+                if (mUsed != 0) SubscriptionState.USED else SubscriptionState.STARTED
+            } else SubscriptionState.INACTIVE
 
     override val lookup get() = GautrainLookup
 

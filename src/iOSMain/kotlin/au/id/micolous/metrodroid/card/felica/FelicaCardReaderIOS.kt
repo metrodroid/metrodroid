@@ -23,14 +23,14 @@ import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import kotlinx.coroutines.runBlocking
 
 import platform.Foundation.*
 
+@Suppress("unused") // Used from Swift
 object FelicaCardReaderIOS {
-    @NativeThrows
+    @Throws(Throwable::class)
     fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,
              defaultSysCode: NSData,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
@@ -38,7 +38,20 @@ object FelicaCardReaderIOS {
         Log.d(TAG, "Start dump ${xfer.uid}")
         runBlocking {
             Log.d(TAG, "Start async")
-            val df = FelicaReader.dumpTag(xfer, feedback)
+
+            /*
+             * onlyFirst = true is an iOS-specific hack to work around
+             * https://github.com/metrodroid/metrodroid/issues/613
+             *
+             * _NFReaderSession._validateFelicaCommand asserts that you're talking to the exact
+             * IDm that the system discovered -- including the upper 4 bits (which indicate the
+             * system number).
+             *
+             * Tell FelicaReader to only dump the first service.
+             *
+             * Once iOS fixes this, do an iOS version check instead.
+             */
+            val df = FelicaReader.dumpTag(xfer, feedback, onlyFirst = true)
             Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), felica = df)
         }

@@ -1,7 +1,6 @@
-reader_id,stop_name
-0x23cdb,Bellegarde - gare
-0x20769,Culoz
-0x303fa,Grenoble - Île Verte
-0x303fb,Grenoble - Victor Hugo
-
+reader_id,stop_name,stop_lat,stop_lon
+0x23cdb,Bellegarde - gare,46.1061,5.8229
+0x20769,Culoz,45.8431292,5.7786982
+0x303fa,Grenoble - Île Verte,45.1972520,5.7367666
+0x303fb,Grenoble - Victor Hugo,45.1898164,5.7251056
 

@@ -42,7 +42,7 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
 
     override fun getProductName(productCode: Int): String? = null
 
-    constructor(card: UltralightCard) : this(NextfareUltralightTransitData.parse(card)
+    constructor(card: UltralightCard) : this(parse(card)
     { raw, baseDate -> VentraUltralightTransaction(raw, baseDate) }
     )
 
@@ -78,9 +78,7 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
                     VentraUltralightTransitData(card)
 
             override fun parseTransitIdentity(card: UltralightCard) =
-                    TransitIdentity(NAME,
-                        NextfareUltralightTransitData.formatSerial(
-                                NextfareUltralightTransitData.getSerial(card)))
+                    TransitIdentity(NAME, formatSerial(getSerial(card)))
         }
     }
 }

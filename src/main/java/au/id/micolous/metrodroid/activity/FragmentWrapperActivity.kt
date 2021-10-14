@@ -26,8 +26,6 @@ import androidx.fragment.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 
 import au.id.micolous.farebot.R
 
@@ -40,11 +38,7 @@ abstract class FragmentWrapperActivity : MetrodroidActivity() {
         super.onCreate(savedInstanceState)
         setDisplayHomeAsUpEnabled(true)
 
-        val container = FrameLayout(this)
-        container.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT)
-        container.id = R.id.content
-        setContentView(container)
+        setContentView(R.layout.activity_fragment_wrapper)
 
         if (fragment == null) {
             val transaction = supportFragmentManager.beginTransaction()

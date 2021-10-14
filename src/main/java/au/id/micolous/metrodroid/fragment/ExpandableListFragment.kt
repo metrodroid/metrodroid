@@ -75,7 +75,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
             if (mList != null) {
                 mList!!.setAdapter(adapter)
                 if (!mListShown && !hadAdapter) {
-                    setListShown(true, view!!.windowToken != null)
+                    setListShown(true, requireView().windowToken != null)
                 }
             }
         }
@@ -130,7 +130,7 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = FrameLayout(activity!!)
+        val root = FrameLayout(requireActivity())
 
         val tv = TextView(activity)
         tv.id = INTERNAL_EMPTY_ID
@@ -330,11 +330,11 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
         return false
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo) {}
+    override fun onCreateContextMenu(menu: ContextMenu, view: View, menuInfo: ContextMenuInfo?) {}
 
     fun onContentChanged() {
-        val emptyView = view!!.findViewById<View>(android.R.id.empty)
-        mList = view!!.findViewById(android.R.id.list)
+        val emptyView = requireView().findViewById<View>(android.R.id.empty)
+        mList = requireView().findViewById(android.R.id.list)
         if (mList == null) {
             throw RuntimeException("Your content must have a ExpandableListView whose id attribute is " + "'android.R.id.list'")
         }

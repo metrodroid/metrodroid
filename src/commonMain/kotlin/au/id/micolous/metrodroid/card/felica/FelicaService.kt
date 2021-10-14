@@ -2,6 +2,8 @@
  * FelicaService.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +26,17 @@ import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 data class FelicaService(
-        @XMLListIdx("address")
-        val blocks: List<FelicaBlock>) {
+    /** Blocks that are part of this Service */
+    @XMLListIdx("address") val blocks: List<FelicaBlock> = emptyList(),
+    /** When reading, did we skip trying to read the contents of this system? */
+    val skipped: Boolean = false
+) {
     fun getBlock(idx: Int) = blocks[idx]
 
-    @Transient
+    /** Shows Blocks inside of this Service */
     val rawData: List<ListItem>
         get() =
             blocks.mapIndexed { blockAddr, (data) ->

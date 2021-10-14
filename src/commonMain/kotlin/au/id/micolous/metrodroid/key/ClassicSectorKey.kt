@@ -31,7 +31,8 @@ import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.json
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 import kotlin.experimental.xor
 
 interface ClassicSectorAlgoKey {
@@ -42,16 +43,16 @@ interface ClassicSectorAlgoKey {
 
 data class TouchnGoKey (val key: ImmutableByteArray,
                         val type: ClassicSectorKey.KeyType): ClassicSectorAlgoKey {
-    override fun toJSON(sector: Int): JsonObject = json {
+    override fun toJSON(sector: Int): JsonObject = buildJsonObject {
         when (type) {
-            ClassicSectorKey.KeyType.A -> KEY_TYPE to TYPE_KEYA
-            ClassicSectorKey.KeyType.B -> KEY_TYPE to TYPE_KEYB
+            ClassicSectorKey.KeyType.A -> put(KEY_TYPE, JsonPrimitive(TYPE_KEYA))
+            ClassicSectorKey.KeyType.B -> put(KEY_TYPE, JsonPrimitive(TYPE_KEYB))
             else -> {
             }
         }
-        KEY_VALUE to key.toHexString()
-        SECTOR_IDX to sector
-        TRANSFORM_KEY to "touchngo"
+        put(KEY_VALUE, JsonPrimitive(key.toHexString()))
+        put(SECTOR_IDX, JsonPrimitive(sector))
+        put(TRANSFORM_KEY, JsonPrimitive("touchngo"))
     }
 
     override fun resolve(tagId: ImmutableByteArray, sector: Int): ClassicSectorKey {
@@ -128,15 +129,16 @@ data class ClassicSectorKey internal constructor(
     fun updateType(keyType: KeyType) = ClassicSectorKey(key = key,
             type = keyType, bundle = bundle)
 
-    override fun toJSON(sector: Int): JsonObject = json {
+    override fun toJSON(sector: Int): JsonObject = buildJsonObject {
             when (type) {
-                ClassicSectorKey.KeyType.A -> KEY_TYPE to TYPE_KEYA
-                ClassicSectorKey.KeyType.B -> KEY_TYPE to TYPE_KEYB
+                KeyType.A -> put(KEY_TYPE, JsonPrimitive(TYPE_KEYA))
+                KeyType.B -> put(KEY_TYPE, JsonPrimitive(TYPE_KEYB))
                 else -> {
                 }
             }
-            KEY_VALUE to key.toHexString()
-            SECTOR_IDX to sector
+            put(KEY_VALUE, JsonPrimitive(key.toHexString()))
+            put(SECTOR_IDX, JsonPrimitive(sector))
+            put(ClassicKeysImpl.KEY_BUNDLE, JsonPrimitive(bundle))
         }
 
     companion object {

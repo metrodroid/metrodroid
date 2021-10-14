@@ -1,10 +1,9 @@
 /*
  * MainActivity.kt
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +30,12 @@ import android.nfc.tech.MifareUltralight
 import android.nfc.tech.NfcA
 import android.nfc.tech.NfcF
 import android.nfc.tech.NfcV
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 
 import au.id.micolous.metrodroid.multi.Localizer
@@ -42,6 +43,7 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.util.ifTrue
 
 class MainActivity : MetrodroidActivity() {
     private var mNfcAdapter: NfcAdapter? = null
@@ -69,10 +71,21 @@ class MainActivity : MetrodroidActivity() {
 
             val intent = Intent(this, ReadingTagActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
-            mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+            val pendingFlags =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    PendingIntent.FLAG_MUTABLE
+                else
+                    0
+            mPendingIntent = PendingIntent.getActivity(this, 0, intent, pendingFlags)
         }
 
         updateObfuscationNotice(mNfcAdapter != null)
+        findViewById<Button>(R.id.history_button).setOnClickListener {
+            onHistoryClick(it)
+        }
+        findViewById<Button>(R.id.supported_cards_button).setOnClickListener {
+            onSupportedCardsClick(it)
+        }
     }
 
     override fun onResume() {
@@ -97,10 +110,15 @@ class MainActivity : MetrodroidActivity() {
                 if (Preferences.obfuscateTripTimes) 1 else 0
 
         val directions = findViewById<TextView>(R.id.directions)
+        val felicaNote = Preferences.felicaOnlyFirst.ifTrue { R.string.felica_first_system_notice }
 
         if (obfuscationFlagsOn > 0) {
-            directions.text = Localizer.localizePlural(R.plurals.obfuscation_mode_notice,
-                    obfuscationFlagsOn, obfuscationFlagsOn)
+            val flagsNote = Localizer.localizePlural(
+                R.plurals.obfuscation_mode_notice, obfuscationFlagsOn, obfuscationFlagsOn)
+            directions.text = felicaNote?.let {
+                "${Localizer.localizeString(it)} $flagsNote" } ?: flagsNote
+        } else if (felicaNote != null) {
+            directions.setText(felicaNote)
         } else if (!hasNfc) {
             directions.setText(R.string.nfc_unavailable)
         } else {

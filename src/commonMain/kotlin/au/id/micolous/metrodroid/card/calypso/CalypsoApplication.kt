@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Implements communication with Calypso cards.
@@ -55,10 +54,8 @@ import kotlinx.serialization.Transient
 @Serializable
 data class CalypsoApplication (
         override val generic: ISO7816ApplicationCapsule): ISO7816Application() {
-    @Transient
     override val type: String
         get() = TYPE
-    @Transient
     val ticketEnv: ImmutableByteArray?
         get() = try {
             getFile(File.TICKETING_ENVIRONMENT)?.getRecord(1)
@@ -71,7 +68,6 @@ data class CalypsoApplication (
     // This shows a country name if it's known, or "unknown (number)" if not.
     // Actually it uses manufacturer time zone but as it's only a day anyway,
     // and we don't know the manufacturer time zone, this is good enough
-    @Transient
     override val manufacturingInfo: List<ListItem>?
         get() {
             val iccFile = getFile(File.ICC)
@@ -200,7 +196,7 @@ data class CalypsoApplication (
 
         val FACTORY: ISO7816ApplicationFactory = object : ISO7816ApplicationFactory {
             override val typeMap: Map<String, KSerializer<out ISO7816Application>>
-                get() = mapOf(TYPE to CalypsoApplication.serializer())
+                get() = mapOf(TYPE to serializer())
             override val applicationNames: List<ImmutableByteArray>
                 get() = CALYPSO_FILENAMES
 

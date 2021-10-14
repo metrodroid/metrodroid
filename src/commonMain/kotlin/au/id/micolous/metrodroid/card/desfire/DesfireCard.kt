@@ -34,7 +34,6 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 data class DesfireCard constructor(
@@ -46,11 +45,9 @@ data class DesfireCard constructor(
         override val isPartialRead: Boolean = false,
         val appListLocked: Boolean = false) : CardProtocol() {
 
-    @Transient
     override val manufacturingInfo: List<ListItem>
         get() = DesfireManufacturingData(manufacturingData).info
 
-    @Transient
     override val rawData: List<ListItem>
         get() = applications.map { (id,app) ->
                 ListItemRecursive(makeName(id),

@@ -24,14 +24,5 @@ import au.id.micolous.metrodroid.multi.StringResource
 /**
  * ListItem which supports directing to a website.
  */
-class UriListItem : ListItem {
-    val uri: String
-
-    constructor(name: String, value: String, uri: String) : super(name, value) {
-        this.uri = uri
-    }
-
-    constructor(nameResource: StringResource, valueResource: StringResource, uri: String) : super(nameResource, valueResource) {
-        this.uri = uri
-    }
-}
+class UriListItem(nameResource: StringResource, valueResource: StringResource, val uri: String) :
+    ListItem(nameResource, valueResource)

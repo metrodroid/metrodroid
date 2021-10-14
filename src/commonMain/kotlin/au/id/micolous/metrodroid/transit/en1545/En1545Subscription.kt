@@ -54,35 +54,35 @@ abstract class En1545Subscription : Subscription() {
     override val purchaseTimestamp: Timestamp?
         get() = parsed.getTimeStamp(CONTRACT_SALE, lookup.timeZone)
 
-    override val paymentMethod: Subscription.PaymentMethod
+    override val paymentMethod: PaymentMethod
         get() {
             if (cost == null) {
                 return super.paymentMethod
             }
 
             return when (parsed.getIntOrZero(CONTRACT_PAY_METHOD)) {
-                0x90 -> Subscription.PaymentMethod.CASH
-                0xb3 -> Subscription.PaymentMethod.CREDIT_CARD
+                0x90 -> PaymentMethod.CASH
+                0xb3 -> PaymentMethod.CREDIT_CARD
 
-                0 -> Subscription.PaymentMethod.UNKNOWN
-                else -> Subscription.PaymentMethod.UNKNOWN
+                0 -> PaymentMethod.UNKNOWN
+                else -> PaymentMethod.UNKNOWN
             }
         }
 
     override val lastUseTimestamp: Timestamp?
         get() = parsed.getTimeStamp(CONTRACT_LAST_USE, lookup.timeZone)
 
-    override val subscriptionState: Subscription.SubscriptionState
+    override val subscriptionState: SubscriptionState
         get() {
             val status = parsed.getInt(CONTRACT_STATUS) ?: return super.subscriptionState
 
             when (status) {
-                0 -> return Subscription.SubscriptionState.UNUSED
-                1 -> return Subscription.SubscriptionState.STARTED
-                0xFF -> return Subscription.SubscriptionState.EXPIRED
+                0 -> return SubscriptionState.UNUSED
+                1 -> return SubscriptionState.STARTED
+                0xFF -> return SubscriptionState.EXPIRED
             }
             Log.d(TAG, "Unknown subscription state: " + NumberUtils.intToHex(status))
-            return Subscription.SubscriptionState.UNKNOWN
+            return SubscriptionState.UNKNOWN
         }
 
     override val saleAgencyName: FormattedString?

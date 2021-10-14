@@ -47,7 +47,9 @@ class CardInfo(
         val imageId: DrawableResource? = null,
         val imageAlphaId: DrawableResource? = null,
 
-        val iOSSupported: Boolean? = null) {
+        val iOSSupported: Boolean? = null,
+        /** Replaces [resourceExtraNote] on iOS only. */
+        val iOSExtraNote: StringResource? = null) {
 
     // TODO: Make this the primary constructor
     constructor(
@@ -61,7 +63,8 @@ class CardInfo(
             resourceExtraNote: StringResource? = null,
             imageId: DrawableResource? = null,
             imageAlphaId: DrawableResource? = null,
-            iOSSupported: Boolean? = null
+            iOSSupported: Boolean? = null,
+            iOSExtraNote: StringResource? = null
     ) : this(
             name = Localizer.localizeString(name),
             cardType = cardType,
@@ -73,6 +76,7 @@ class CardInfo(
             imageId = imageId,
             imageAlphaId = imageAlphaId,
             iOSSupported = iOSSupported,
+            iOSExtraNote = iOSExtraNote,
             region = region)
 
     val hasBitmap get() = imageId != null

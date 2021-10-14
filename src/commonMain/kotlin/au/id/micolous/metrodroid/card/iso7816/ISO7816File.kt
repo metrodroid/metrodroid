@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Represents a file on a Calypso card.
@@ -41,7 +40,6 @@ data class ISO7816File internal constructor(
         @XMLListIdx("index")
         private val records: Map<Int, ImmutableByteArray> = emptyMap(),
         val fci: ImmutableByteArray? = null) {
-    @Transient
     val recordList get() = records.entries.sortedBy { it.key }.map { it.value }.toList()
 
     /**

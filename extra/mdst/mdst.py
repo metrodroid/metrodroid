@@ -3,7 +3,7 @@
 """
 mdst.py - Helper for writing MdST files
 
-Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ SCHEMA_VER = 1
 
 def delimited_value(msg):
   # Emits a writeDelimited compatible Protobuf message
-  o = msg.SerializeToString()
+  o = msg.SerializeToString(deterministic=True)
   d = encoder._VarintBytes(len(o))
   return d + o
 
@@ -39,9 +39,9 @@ class MdstWriter(object):
   def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
     """
     Creates a new MdST database.
-    
+
     This class must be initialised with the parameters in the StationDb header.
-    
+
     fh: required, file-like object to write to.
     version: required, this is a numeric revision number for the database.
     local_languages: optional, list of languages which should be treated as "local".
@@ -49,14 +49,14 @@ class MdstWriter(object):
     lines: optional, dict of [int](Line) declaring a mapping of lines.
     tts_hint_language: optional, str of LocaleSpan hint for station names.
     license_notice_f: optional, file-like object containing a license notice.
-    
-    
+
+
     """
     sdb = StationDb()
     sdb.version = version
     if tts_hint_language:
       sdb.tts_hint_language = tts_hint_language
-    
+
     if local_languages:
       for l in local_languages:
         sdb.local_languages.append(l)
@@ -96,7 +96,7 @@ class MdstWriter(object):
     fh.write(b'MdST')
     fh.write(struct.pack('!II', SCHEMA_VER, 0))
     fh.write(delimited_value(sdb))
-    
+
     self.stationlist_off = fh.tell()
     self.fh = fh
     self.stations = {}
@@ -119,14 +119,14 @@ class MdstWriter(object):
     for station_id, offset in sorted(self.stations.items(), key=itemgetter(0)):
       sidx.station_map[station_id] = offset
     self.fh.write(delimited_value(sidx))
-    
+
     index_end_off = self.fh.tell()
 
     # Write the location of the index
     self.fh.seek(4+4)
     self.fh.write(struct.pack('!I', self.index_off - self.stationlist_off))
     self.fh.close()
-    
+
     return index_end_off
 
 
@@ -158,7 +158,7 @@ def read_stops_from_csv(db, csv_f):
 def read_operators_from_csv(csv_f):
   operators = {}
   opread = csv.DictReader(csv_f)
-    
+
   for op in opread:
     oppb = Operator()
     oppb.name.english = op['name']
@@ -172,5 +172,21 @@ def read_operators_from_csv(csv_f):
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
 
-
   return operators
+
+def read_lines_from_csv(csv_f):
+  lines = {}
+  lineread = csv.DictReader(csv_f)
+
+  for line in lineread:
+    linepb = Line()
+    linepb.name.english = line['name']
+    if 'short_name' in line and line['short_name']:
+      linepb.name.english_short = line['short_name']
+    if 'local_name' in line and line['local_name']:
+      linepb.name.local = line['local_name']
+    if 'mode' in line and line['mode']:
+      linepb.transport = TransportType.Value(line['mode'])
+    lines[int(line['id'], 0)] = linepb
+
+  return lines

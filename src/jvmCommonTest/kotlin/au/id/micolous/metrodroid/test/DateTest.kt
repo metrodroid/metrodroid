@@ -22,8 +22,6 @@ import au.id.micolous.metrodroid.time.getYMD
 import au.id.micolous.metrodroid.time.yearToDays
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import java.util.*
 
 /**
@@ -58,7 +56,7 @@ class DateTest {
             val expectedD = g.get(Calendar.DAY_OF_MONTH)
             assertEquals (ymd.year, expectedY,
                 "Wrong year for days $days: ${ymd.year} vs $expectedY")
-            assertEquals (ymd.month, expectedM,
+            assertEquals (ymd.month.zeroBasedIndex, expectedM,
                 "Wrong month for days $days: ${ymd.month} vs $expectedM")
             assertEquals (ymd.day, expectedD,
             "Wrong days for days $days: ${ymd.day} vs $expectedD")

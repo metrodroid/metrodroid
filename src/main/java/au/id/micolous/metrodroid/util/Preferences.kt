@@ -38,6 +38,7 @@ actual object Preferences {
     const val PREF_LAST_READ_AT = "last_read_at"
     private const val PREF_MFC_AUTHRETRY = "pref_mfc_authretry"
     private const val PREF_MFC_FALLBACK = "pref_mfc_fallback"
+    private const val PREF_FELICA_ONLY_FIRST = "pref_felica_only_first"
     private const val PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys"
 
     private const val PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers"
@@ -150,7 +151,7 @@ actual object Preferences {
 
     val themePreference get() = getStringPreference(PREF_THEME, "dark")
 
-    actual val mfcFallbackReader get() = getStringPreference(PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US)
+    actual val mfcFallbackReader get() = getStringPreference(PREF_MFC_FALLBACK, "null").lowercase(Locale.US)
 
     actual val language: String get() = Locale.getDefault().language
 
@@ -161,21 +162,23 @@ actual object Preferences {
                 tm.phoneType == TelephonyManager.PHONE_TYPE_CDMA)) {
             val netCountry = tm.networkCountryIso
             if (netCountry != null && netCountry.length == 2)
-                return netCountry.toUpperCase(Locale.US)
+                return netCountry.uppercase(Locale.US)
 
             val simCountry = tm.simCountryIso
             if (simCountry != null && simCountry.length == 2)
-                return simCountry.toUpperCase(Locale.US)
+                return simCountry.uppercase(Locale.US)
         }
 
         // Fall back to using the Locale settings
-        return Locale.getDefault().country.toUpperCase(Locale.US)
+        return Locale.getDefault().country.uppercase(Locale.US)
     }
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,
             TransitData.RawLevel.NONE.toString())) ?: TransitData.RawLevel.NONE
 
     val overrideLang get() = getStringPreference(PREF_LANG_OVERRIDE, "")
+
+    val felicaOnlyFirst get() = getBooleanPref(PREF_FELICA_ONLY_FIRST, false)
 
     actual val metrodroidVersion: String
         get() = BuildConfig.VERSION_NAME

@@ -50,7 +50,7 @@ class SupportedCardsViewController: UICollectionViewController {
         }
     }
     var items = CardInfoRegistry.init().allCardsByRegion.map { Section(
-        region: $0.first as! TransitRegion,
+        region: $0.first!,
         filtering: $0.second as! [CardInfo]) }.filter { !$0.isEmpty }
     
     // MARK: - UICollectionViewDataSource protocol

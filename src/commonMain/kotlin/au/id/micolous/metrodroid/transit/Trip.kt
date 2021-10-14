@@ -206,6 +206,7 @@ abstract class Trip : Parcelable {
         BANNED(9, R.string.mode_banned),
         TROLLEYBUS(10, R.string.mode_trolleybus),
         TOLL_ROAD(11, R.string.mode_toll_road),
+        MONORAIL(12, R.string.mode_monorail),
     }
 
     class Comparator : kotlin.Comparator<Trip> {
@@ -283,7 +284,7 @@ abstract class Trip : Parcelable {
 
             // Method 3: get the intersection of the two list of candidate stations
             val lines = startLines.toSet() intersect endLines.toSet()
-            if (!lines.isEmpty()) {
+            if (lines.isNotEmpty()) {
                 // There is exactly 1 common line -- return it
                 if (lines.size == 1) {
                     return lines.iterator().next()

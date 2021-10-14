@@ -61,7 +61,7 @@ internal actual fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: I
     val ymd = getYMD(daysSinceEpoch)
     val nstz = metroTz2NS(tz)
     dateComponents.day = ymd.day.toLong()
-    dateComponents.month = ymd.month.toLong() + 1
+    dateComponents.month = ymd.month.oneBasedIndex.toLong()
     dateComponents.year = ymd.year.toLong()
     dateComponents.hour = hour.toLong()
     dateComponents.minute = min.toLong()
@@ -112,6 +112,7 @@ actual object TimestampFormatter {
             }
 
     actual fun dateTimeFormat(ts: TimestampFull) = FormattedString(dateTimeFormat(makeCalendar(ts)))
+    @Suppress("unused") // Used from Swift
     fun dateFormat(ts: Timestamp) = FormattedString(dateFormat(makeDateCalendar(ts)))
     actual fun timeFormat(ts: TimestampFull) = FormattedString(timeFormat(makeDateCalendar(ts)))
 

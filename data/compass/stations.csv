@@ -1,75 +1,75 @@
-reader_id,stop_name,comment
-1,Waterfront Stn,"Expo and Millenium Lines, SeaBus"
-2,Burrard Stn,
-3,Granville Stn,
-4,Stadium Stn,
-5,Main St. Stn,
-6,Broadway Stn,
-7,Nanaimo Stn,
-8,29th Ave Stn,
-9,Joyce Stn,
-10,Patterson Stn,
-11,Metrotown Stn,
-12,Royal Oak Stn,
-13,Edmonds Stn,
-14,22nd St. Stn,
-15,New West Stn,
-16,Columbia Stn,
-17,Scott Road Stn,
-18,Gateway Stn,
-19,Surrey Central Stn,
-20,King George Stn,
-31,VCC/Clark Stn,
-32,Commercial Stn,
-33,Renfrew Stn,
-34,Rupert Stn,
-35,Gilmore Stn,
-36,Brentwood Stn,
-37,Holdom Stn,
-38,Sperling Stn,
-39,Lake City Way Stn,
-40,Production Way Stn,
-41,Lougheed Stn,
-42,Braid Stn,
-43,Sapperton Stn,
-44,,Reserved for Woodlands Stn
-50,Waterfront Stn,Canada Line
-51,Vancouver City Stn,
-52,Yaletown-Roundhouse Stn,
-53,Olympic Village Stn,
-54,Broadway-City Hall Stn,
-55,King Edward Stn,
-56,,Reserved for 33rd Avenue Stn
-57,Oakridge-41st Stn,
-58,Langara-49th Stn,
-59,,Reserved for 57th Avenue Stn
-60,Marine Drive Stn,
-61,Bridgeport Stn,
-62,,Reserved for Capstan Stn
-63,Aberdeen Stn,
-64,Lansdowne Stn,
-65,Brighouse Stn,
-70,Templeton Stn,
-71,Sea Island Stn,
-72,,Reserved for YVR 3 Stn
-73,YVR Stn,
-75,London Drugs,
-76,BC Ferries,
-80,Waterfront Stn,West Coast Express
-81,Port Moody Stn,West Coast Express
-82,Coquitlam Central Stn,West Coast Express
-83,Port Coquitlam Stn,Unverified speculation
-84,Pitt Meadows Stn,Unverified speculation
-85,Maple Meadows Stn,Unverified speculation
-86,Port Haney Stn,Unverified speculation
-87,Mission City Stn,Unverified speculation
-90,Lonsdale Quay,SeaBus Terminal
-91,Burquitlam Stn,
-92,,Reserved for Queens Stn
-93,Moody Centre Stn,
-94,Inlet Centre Stn,
-95,,Reserved for Falcon Stn
-96,Coquitlam Central Stn,
-97,Lincoln Stn,
-98,Lafarge Lake Stn,
-99,Lincoln Stn,Bogus entry because the fare gates record 99 instead of 97
+reader_id,stop_name,comment,stop_lat,stop_lon,osm_place_id
+1,Waterfront Station,"Expo and Millenium Lines, SeaBus",49.2859502,-123.1112786,63845957
+2,Burrard Station,,49.2856324,-123.1197783,63755709
+3,Granville Station,,49.2832289,-123.1160432,63457949
+4,Stadium-Chinatown Station,,49.279398,-123.1093113,63755629
+5,Main Street–Science World Station,,49.2731524,-123.1004436,127653
+6,Broadway Station,,49.2626230,-123.0691186,3956040167
+7,Nanaimo Station,,49.248374,-123.0560202,63454821
+8,29th Ave Station,,49.2442084,-123.0459222,64442550
+9,Joyce–Collingwood Station,,49.2383444,-123.0315365,63457534
+10,Patterson Station,,49.2296904,-123.0126437,56407134
+11,Metrotown Station,,49.2258524,-123.0038944,63812336
+12,Royal Oak Station,,49.2200742,-122.9884168,63812322
+13,Edmonds Station,,49.2121286,-122.9592336,63457278
+14,22nd St. Station,,49.2000649,-122.949015,63754977
+15,New Westminster Station,,49.20137,-122.9127416,63789800
+16,Columbia Station,,49.2048182,-122.9061329,63754428
+17,Scott Road Station,,49.2044338,-122.8741266,63456629
+18,Gateway Station,,49.1991139,-122.850605,63456249
+19,Surrey Central Station,,49.1893248,-122.8478529,63456241
+20,King George Station,,49.1827755,-122.8447317,63811286
+31,VCC/Clark Station,,49.2658292,-123.0791414,63755491
+32,Commercial Station,,49.2626230,-123.0691186,3956040167
+33,Renfrew Station,,49.2589451,-123.0452551,63994771
+34,Rupert Station,,49.260712,-123.0330982,63626253
+35,Gilmore Station,,49.2650043,-123.0134183,120952
+36,Brentwood Station,,49.2859502,-123.1112786,63845957
+37,Holdom Station,,49.2647432,-122.982327,63458511
+38,Sperling–Burnaby Lake Station,,49.259194,-122.9640609,63995020
+39,Lake City Way Station,,49.2546106,-122.9392748,64067629
+40,Production Way–University Station,,49.2534219,-122.9181469,63287790
+41,Lougheed Station,,49.2476906,-122.8951244,53176331
+42,Braid Station,,49.2332642,-122.8828291,63458115
+43,Sapperton Station,,49.224545,-122.8895213,63789607
+44,,Reserved for Woodlands Stn,,,
+50,Waterfront Station,Canada Line,49.2859502,-123.1112786,63845957
+51,Vancouver City Centre Station,,49.2824713,-123.1186283,63814285
+52,Yaletown-Roundhouse Station,,49.2745376,-123.1219055,63456094
+53,Olympic Village Station,,49.2665609,-123.1156986,63814145
+54,Broadway-City Hall Station,,49.2628399,-123.1145101,63756837
+55,King Edward Station,,49.2491759,-123.1158299,63458909
+56,,Reserved for 33rd Avenue Stn,,,
+57,Oakridge-41st Avenue Station,,49.2331614,-123.1166166,63995563
+58,Langara-49th Avenue Station,,49.2262741,-123.1160909,63287735
+59,,Reserved for 57th Avenue Stn,,,
+60,Marine Drive Station,,49.2092186,-123.1161245,54949658
+61,Bridgeport Station,,49.1954978,-123.1260745,51005509
+62,,Reserved for Capstan Stn,,,
+63,Aberdeen Station,,49.1839817,-123.1363164,63458641
+64,Lansdowne Station,,49.174568,-123.1364653,63995010
+65,Brighouse Station,,49.1681069,-123.1362733,63288457
+70,Templeton Station,,49.1966743,-123.1464661,63455942
+71,Sea Island Station,,49.1930194,-123.1579366,63814104
+72,,Reserved for YVR 3 Stn,,,
+73,YVR Station,,49.1942382,-123.1783476,63812982
+75,London Drugs,,,,
+76,BC Ferries,,,,
+80,Waterfront Station,West Coast Express,49.2859502,-123.1112786,63845957
+81,Port Moody Station,West Coast Express,49.278056,-122.846389,
+82,Coquitlam Central Station,West Coast Express,49.2738781,-122.7999939,63491148
+83,Port Coquitlam Station,Unverified speculation,49.2614762,-122.7740946,8327074
+84,Pitt Meadows Station,Unverified speculation,49.2257473,-122.6883896,8344382
+85,Maple Meadows Station,Unverified speculation,49.2165104,-122.6661132,8306526
+86,Port Haney Station,Unverified speculation,49.2124293,-122.6062266,16315828
+87,Mission City Station,Unverified speculation,49.133611,-122.303889,
+90,Lonsdale Quay,SeaBus Terminal,49.3095361,-123.0838831,4017393
+91,Burquitlam Station,,49.2613309,-122.8899378,63458528
+92,,Reserved for Queens Stn,,,
+93,Moody Centre Station,,49.2780809,-122.8468772,63490243
+94,Inlet Centre Station,,49.2771919,-122.8279855,63462500
+95,,Reserved for Falcon Stn,,,
+96,Coquitlam Central Station,,49.2738781,-122.7999939,63491148
+97,Lincoln Station,,49.2803689,-122.7940158,63795695
+98,Lafarge Lake Station,,49.2854711,-122.7917373,63462557
+99,Lincoln Station,Bogus entry because the fare gates record 99 instead of 97,49.2803689,-122.7940158,63795695

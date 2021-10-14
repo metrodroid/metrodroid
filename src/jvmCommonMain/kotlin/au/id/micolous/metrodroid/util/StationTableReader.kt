@@ -30,7 +30,7 @@ import java.io.InputStream
 import java.util.*
 
 expect fun openMdstFile(dbName: String): InputStream?
-internal actual fun StationTableReaderGetSTR(name: String): StationTableReader? =
+internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
 
 /**
@@ -79,7 +79,7 @@ private constructor(dbName: String) : StationTableReader {
             throw InvalidHeaderException()
         }
 
-        if (!Arrays.equals(header, MAGIC)) {
+        if (!header.contentEquals(MAGIC)) {
             throw InvalidHeaderException()
         }
 
@@ -95,7 +95,7 @@ private constructor(dbName: String) : StationTableReader {
         mStationDb = Stations.StationDb.parseDelimitedFrom(mTable)
 
         // Mark where the start of the station list is.
-        // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
+        // AssetInputStream allows unlimited seeking, no need to specify a read limit.
         mTable.mark(0)
     }
 

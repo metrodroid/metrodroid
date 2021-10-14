@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class CEPASHistory private constructor(val transactions: List<CEPASTransaction>) {
     constructor(purseData: ImmutableByteArray) : this(
-            (0 until purseData.size step recordSize).map {
+            (purseData.indices step recordSize).map {
                 CEPASTransaction(purseData.sliceOffLen(it, recordSize))
             })
 

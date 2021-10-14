@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.waikato.WaikatoCardTransitFactory
 import au.id.micolous.metrodroid.transit.warsaw.WarsawTransitData
+import au.id.micolous.metrodroid.transit.yargor.YarGorTransitFactory
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
 
 object ClassicCardFactoryRegistry {
@@ -82,6 +83,7 @@ object ClassicCardFactoryRegistry {
             ChileBipTransitFactory,
             WarsawTransitData.FACTORY,
             CifialTransitFactory,
+            YarGorTransitFactory,
 
             // This check must be THIRD TO LAST.
             //

@@ -27,8 +27,9 @@ import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.TimestampFull
 import kotlinx.coroutines.runBlocking
 
+@Suppress("unused") // Used from Swift
 object PlusCardReaderIOS {
-    @NativeThrows
+    @Throws(Throwable::class)
     fun dump(wrapper: UltralightTransceiverIOS.SwiftWrapper,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
         val xfer = UltralightTransceiverIOS(wrapper)

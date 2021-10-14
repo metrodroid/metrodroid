@@ -20,10 +20,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateDefinition">
     <color name="Metrodroid.Dark.CardIdTextColor">#ffcc44</color>
 
-    <style name="Metrodroid.Dark" parent="@style/Theme.AppCompat">
-        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
-        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
-        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+    <style name="Metrodroid.Dark" parent="@style/Theme.MaterialComponents">
+        <item name="colorPrimary">#338855</item>
+        <item name="colorPrimaryDark">#224422</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
@@ -34,9 +34,7 @@
     </style>
 
     <style name="Metrodroid.Dark.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
-        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
-        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
-        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="LockImageUnlocked">@drawable/unlocked</item>
     </style>
@@ -56,14 +54,15 @@
         <item>@drawable/banned</item>
         <item>@drawable/trolleybus</item>
         <item>@drawable/car</item>
+        <item>@drawable/monorail</item>
     </integer-array>
 
     <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
 
-    <style name="Metrodroid.Light" parent="@style/Theme.AppCompat.Light">
-        <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
-        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+    <style name="Metrodroid.Light" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#44ff99</item>
+        <item name="colorPrimaryDark">#33bb66</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="MainActivityTheme">@style/Metrodroid.Light</item>
@@ -74,9 +73,7 @@
     </style>
 
     <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
-        <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
-        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="LockImageUnlocked">@drawable/unlocked</item>
     </style>
@@ -96,6 +93,7 @@
     	<item>@drawable/banned</item>
         <item>@drawable/trolleybus</item>
         <item>@drawable/car</item>
+        <item>@drawable/monorail</item>
     </integer-array>
 
     <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
@@ -106,9 +104,7 @@
         <item name="actionBarStyle">@style/FareBot.Theme.ActionBar</item>
         <item name="android:actionBarDivider">@null</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
-        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="LockImageUnlocked">@drawable/unlocked</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
@@ -192,5 +188,7 @@
         <item>@drawable/ic_transaction_bus_32dp</item>
         <!-- TODO: Add car icon -->
         <item>@drawable/ic_transaction_unknown_32dp</item>
+        <!-- TODO: Add monorail icon -->
+        <item>@drawable/ic_transaction_train_32dp</item>
     </integer-array>
 </resources>

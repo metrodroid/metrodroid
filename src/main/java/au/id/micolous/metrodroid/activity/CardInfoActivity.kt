@@ -25,6 +25,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
@@ -65,11 +66,20 @@ class CardInfoActivity : MetrodroidActivity() {
     private var mShowMoreInfo = false
     private var mMenu: Menu? = null
 
+    private fun speakTts(utt: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mTTS?.speak(utt, TextToSpeech.QUEUE_FLUSH, null, null)
+        } else {
+            @Suppress("DEPRECATION")
+            mTTS?.speak(utt, TextToSpeech.QUEUE_FLUSH, null)
+        }
+    }
+
     private val mTTSInitListener = OnInitListener { status ->
         if (status == TextToSpeech.SUCCESS && mTransitData!!.balances != null) {
             for (balanceVal in mTransitData!!.balances!!) {
                 val balance = balanceVal.balance.formatCurrencyString(true).spanned
-                mTTS?.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null)
+                speakTts(getString(R.string.balance_speech, balance))
             }
         }
     }

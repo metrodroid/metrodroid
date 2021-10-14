@@ -23,13 +23,13 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.hsl.HSLArvo
 import au.id.micolous.metrodroid.transit.hsl.HSLKausi
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.*
 
@@ -101,11 +101,11 @@ class HSLTest : BaseInstrumentedTest() {
         val periodPass = subs[0] as HSLKausi
         assertEquals("PeriodPass for zones BC", periodPass.subscriptionName)
         assertEquals(77, periodPass.machineId)
-        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019,5,8,12,34), periodPass.purchaseTimestamp)
+        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019, Month.JUNE, 8,12,34), periodPass.purchaseTimestamp)
         assertEquals(TransitCurrency.EUR(20000), periodPass.cost)
         assertEquals("30 calendar days", periodPass.formatPeriod())
-        assertEquals(Daystamp(2019, 5, 9), periodPass.validFrom)
-        assertEquals(Daystamp(2019, 6, 9), periodPass.validTo)
+        assertEquals(Daystamp(2019, Month.JUNE, 9), periodPass.validFrom)
+        assertEquals(Daystamp(2019, Month.JULY, 9), periodPass.validTo)
         assertEquals(1, periodPass.passengerCount)
 
         val eticket = subs[1] as HSLArvo
@@ -114,10 +114,10 @@ class HSLTest : BaseInstrumentedTest() {
         assertEquals("90 minutes", eticket.formatPeriod())
         assertEquals("Adult", eticket.profile)
         assertEquals("English", eticket.language)
-        assertEquals(Daystamp(2019, 5, 6), eticket.purchaseTimestamp) // FIXME: check hour
+        assertEquals(Daystamp(2019, Month.JUNE, 6), eticket.purchaseTimestamp) // FIXME: check hour
 
-        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019,5,6,23,51), eticket.validFrom)
-        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019,5,7,1,21), eticket.validTo)
+        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019, Month.JUNE, 6,23,51), eticket.validFrom)
+        assertEquals(TimestampFull(MetroTimeZone.HELSINKI, 2019, Month.JUNE, 7,1,21), eticket.validTo)
         assertEquals(1, eticket.passengerCount)
 
         val trips = o.trips.sortedWith(Trip.Comparator())

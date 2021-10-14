@@ -157,7 +157,7 @@ abstract class TransitData : Parcelable {
     fun getLastUseDaystamp(): Daystamp? {
         // Find the last trip taken on the card.
         return trips?.mapNotNull { t -> t.endTimestamp ?: t.startTimestamp }?.map { it.toDaystamp() }
-                ?.maxBy { it.daysSinceEpoch }
+                ?.maxByOrNull { it.daysSinceEpoch }
     }
 
     /**
@@ -194,7 +194,7 @@ abstract class TransitData : Parcelable {
      *
      * @see [trips], [TripObfuscator.obfuscateTrips]
      */
-    @NativeThrows
+    @Throws(Throwable::class)
     fun prepareTrips(safe: Boolean = false): List<Trip>?  = logAndSwiftWrap ("TransitData", "prepareTrips failed") lam@{
         val trips = this.trips ?: return@lam null
 

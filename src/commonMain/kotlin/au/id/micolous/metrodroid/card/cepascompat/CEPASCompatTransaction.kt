@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 // This file is only for reading old dumps
 @Parcelize
@@ -36,7 +35,6 @@ data class CEPASCompatTransaction(
         private val date2: Long,
         @SerialName("user-data")
         val userData: String) : Parcelable {
-    @Transient
     val unixDate: Long
         get() =
         // Compatibility for Metrodroid <= 2.9.34

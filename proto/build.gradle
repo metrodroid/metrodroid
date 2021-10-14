@@ -1,7 +1,7 @@
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
@@ -9,7 +9,7 @@ allprojects {
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -115,4 +115,9 @@ repositories {
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

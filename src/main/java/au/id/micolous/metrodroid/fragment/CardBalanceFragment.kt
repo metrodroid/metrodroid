@@ -35,13 +35,14 @@ import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.Utils
 
 class CardBalanceFragment : ListFragment() {
     private var mTransitData: TransitData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTransitData = arguments!!.getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
+        mTransitData = requireArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ class CardBalanceFragment : ListFragment() {
         val subscriptions = mTransitData!!.subscriptions
         if (subscriptions != null)
             combined.addAll(subscriptions)
-        listAdapter = BalancesAdapter(activity!!, combined)
+        listAdapter = BalancesAdapter(requireActivity(), combined)
     }
 
     private inner class BalancesAdapter internal constructor(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
@@ -74,22 +75,14 @@ class CardBalanceFragment : ListFragment() {
         }
 
         private fun getErrorView(convertView: View?, parent: ViewGroup, err: String): View {
-            var view = convertView
-            if (view == null || view.tag !== TAG_ERROR_VIEW) {
-                view = activity?.layoutInflater?.inflate(R.layout.balance_item, parent, false)
-                view!!.tag = TAG_ERROR_VIEW
-            }
+            val view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
 
-            (view.findViewById<View>(R.id.balance) as TextView).text = err
+            view.findViewById<TextView>(R.id.balance).text = err
             return view
         }
 
         fun getSubscriptionView(convertView: View?, parent: ViewGroup, subscription: Subscription): View {
-            var view = convertView
-            if (view == null || view.tag !== TAG_SUBSCRIPTION_VIEW) {
-                view = activity?.layoutInflater?.inflate(R.layout.subscription_item, parent, false)
-                view!!.tag = TAG_SUBSCRIPTION_VIEW
-            }
+            val view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.subscription_item, parent, false)
 
             val validView = view.findViewById<TextView>(R.id.valid)
             val validity = subscription.formatValidity()
@@ -184,11 +177,7 @@ class CardBalanceFragment : ListFragment() {
 
         private fun getBalanceView(convertView: View?,
                                    parent: ViewGroup, balance: TransitBalance): View {
-            var view = convertView
-            if (view == null || view.tag !== TAG_BALANCE_VIEW) {
-                view = activity?.layoutInflater?.inflate(R.layout.balance_item, parent, false)
-                view!!.tag = TAG_BALANCE_VIEW
-            }
+            val view = Utils.loadMultiReuse(convertView, activity?.layoutInflater!!, R.layout.balance_item, parent, false)
 
             val validView = view.findViewById<TextView>(R.id.valid)
             val validity = TransitBalance.formatValidity(balance)
@@ -225,7 +214,7 @@ class CardBalanceFragment : ListFragment() {
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
 
         Log.d(TAG, "Clicked $id $position")
-        val item = listAdapter.getItem(position) ?: return
+        val item = listAdapter?.getItem(position) ?: return
 
         if (item is TransitBalance) {
             return
@@ -247,7 +236,7 @@ class CardBalanceFragment : ListFragment() {
             tv.visibility = View.GONE
             lv.visibility = View.INVISIBLE
 
-            val a = ListItemAdapter(activity!!, infos)
+            val a = ListItemAdapter(requireActivity(), infos)
             lv.adapter = a
 
             // Calculate correct height
@@ -271,10 +260,6 @@ class CardBalanceFragment : ListFragment() {
 
     companion object {
         private const val TAG = "CardBalanceFragment"
-
-        private const val TAG_BALANCE_VIEW = "balanceView"
-        private const val TAG_SUBSCRIPTION_VIEW = "subscriptionView"
-        private const val TAG_ERROR_VIEW = "errorView"
 
         internal fun subHasExtraInfo(sub: Subscription): Boolean = Subscription.hasInfo(sub)
 

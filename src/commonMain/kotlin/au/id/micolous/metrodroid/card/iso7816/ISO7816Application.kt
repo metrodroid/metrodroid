@@ -222,8 +222,4 @@ abstract class ISO7816Application {
     open fun parseTransitIdentity(card: ISO7816Card): TransitIdentity? = null
 
     open fun parseTransitData(card: ISO7816Card): TransitData? = null
-
-    companion object {
-        private const val TAG = "ISO7816Application"
-    }
 }

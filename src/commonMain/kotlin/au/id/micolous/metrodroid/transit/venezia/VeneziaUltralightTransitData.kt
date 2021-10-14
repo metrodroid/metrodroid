@@ -127,7 +127,7 @@ private fun parse(card: UltralightCard): VeneziaUltralightTransitData {
 
     val transactions = blocks.mapNotNull { VeneziaUltralightTransaction.parse(it, tripFormat) }
 
-    val lastTransaction = transactions.maxWith (nullsFirst(compareBy { it.timestamp as? TimestampFull }))
+    val lastTransaction = transactions.maxWithOrNull (nullsFirst(compareBy { it.timestamp as? TimestampFull }))
 
     val sub = VeneziaUltralightSubscription(
             head,

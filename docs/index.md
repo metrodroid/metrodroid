@@ -33,7 +33,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Cubic Nextfare][nextfare] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EasyCard][easycard] | Taipei | :closed_lock_with_key: `MFC`
 [Edy][edy] | :jp: Japan
-[Ekarta][ekarta] | :ru: Ekaterinburg, Russia | :new: :closed_lock_with_key: `MFC`
+[Ekarta][ekarta] | :ru: Yekaterinburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Electronic Barnaul][barnaul] | :ru: Barnaul, Russia | :new: :closed_lock_with_key: `MFC`
 [EMV][emv] | :earth_africa: _worldwide_ | :new:
 [Envibus][envibus] | :fr: Sophia Antipolis, France | :new: `IOS`

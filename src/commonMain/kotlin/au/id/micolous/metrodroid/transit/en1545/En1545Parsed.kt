@@ -160,10 +160,5 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
         private fun makeFullName(name: String, path: String?): String {
             return if (path == null || path.isEmpty()) name else "$path/$name"
         }
-
-        private fun dig2(v: Int): String = when (v) {
-            in 0..9 -> "0$v"
-            else -> "$v"
-        }
     }
 }

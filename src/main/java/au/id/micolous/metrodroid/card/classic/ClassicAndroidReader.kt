@@ -36,7 +36,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-import au.id.micolous.metrodroid.key.CardKeysEmbed
+import au.id.micolous.metrodroid.key.getEmbedCardKeys
 
 object ClassicAndroidReader {
     private const val TAG = "ClassicAndroidReader"
@@ -62,7 +62,7 @@ object ClassicAndroidReader {
             }
         }
 
-    fun getKeyRetrieverEmbed(context: Context): CardKeysFromFiles = CardKeysEmbed(context, "keys")
+    fun getKeyRetrieverEmbed(context: Context): CardKeysFromFiles = getEmbedCardKeys(context, "keys")
 
     private fun detectMfcSupport(): Boolean {
         if (android.os.Build.MODEL in devicesMifareNotWorks) {

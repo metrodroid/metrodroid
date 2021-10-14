@@ -74,6 +74,7 @@ object HSLLookup : En1545LookupUnknown() {
 
     const val WALTTI_OULU = 229
     const val WALTTI_LAHTI = 223
+    const val CITY_UL_TAMPERE = 1
 
     private val lahtiZones = listOf(
         "A", "B", "C", "D", "E", "F1", "F2", "G", "H", "I"
@@ -85,12 +86,13 @@ object HSLLookup : En1545LookupUnknown() {
     private fun mapWalttiZone(region: Int, id: Int): String = when (region) {
         WALTTI_OULU -> lahtiZones[id - 1]
         WALTTI_LAHTI -> ouluZones[id - 1]
-        else -> String(charArrayOf('A' + id - 1))
+        else -> charArrayOf('A' + id - 1).concatToString()
     }
 
     private fun walttiNameRegion(id: Int): String? = StationTableReader.getOperatorName("waltti_region", id, true)?.unformatted
 
-    fun getArea(parsed: En1545Parsed, prefix: String, isValidity: Boolean, walttiRegion: Int? = null): String? {
+    fun getArea(parsed: En1545Parsed, prefix: String, isValidity: Boolean,
+                walttiRegion: Int? = null, ultralightCity: Int? = null): String? {
         if (parsed.getInt(contractAreaName(prefix)) == null && parsed.getInt(contractWalttiZoneName(prefix)) != null) {
             val region = walttiRegion ?: parsed.getIntOrZero(contractWalttiRegionName(prefix))
             val regionName = walttiNameRegion(region) ?: region.toString()
@@ -111,15 +113,30 @@ object HSLLookup : En1545LookupUnknown() {
         if (type in 0..1 && value == 0) {
             return null
         }
+        if (ultralightCity == CITY_UL_TAMPERE && type == 0) {
+            val from = value % 6
+            if (isValidity) {
+                val to = value / 6
+                val num = to - from + 1
+                val zones = (from..to).map { 'A' + it }.toCharArray().concatToString()
+                return Localizer.localizePlural(R.plurals.hsl_zones, num, zones, num)
+            } else {
+                return Localizer.localizeString(R.string.hsl_zone_station,
+                    charArrayOf('A' + from).concatToString()
+                )
+            }
+        }
         if (type == 2) {
             val to = value and 7
             if (isValidity) {
                 val from = value shr 3
                 val num = to - from + 1
-                    val zones = String((from..to).map { 'A' + it }.toCharArray())
+                val zones = (from..to).map { 'A' + it }.toCharArray().concatToString()
                 return Localizer.localizePlural(R.plurals.hsl_zones, num, zones, num)
             } else {
-                return Localizer.localizeString(R.string.hsl_zone_station, String(charArrayOf('A' + to)))
+                return Localizer.localizeString(R.string.hsl_zone_station,
+                    charArrayOf('A' + to).concatToString()
+                )
             }
         }
         return areaMap[Pair(type, value)]?.let {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_license">مجوزهای متن‌باز</string>
+    <string name="reading_card">در حال خواندن کارت…</string>
+    <string name="dont_move">کارت را تکان ندهید</string>
+    <string name="advanced_info">اطلاعات پیشرفته</string>
+    <string name="delete_card">حذف کارت</string>
+    <string name="unknown_card">کارت ناشناخته</string>
+    <string name="hw_detail">اطلاعات ساخت</string>
+    <string name="data">داده خام</string>
+    <string name="copy_xml">کپی</string>
+    <string name="share_xml">اشتراک گذاری</string>
+    <string name="history">تاریخچه</string>
+    <string name="about">درباره</string>
+    <string name="ricaricami_daily_urban">بلیط روزانه شهری</string>
+    <string name="ricaricami_yearly_urban">اشتراک سالانه شهری</string>
+    <string name="ricaricami_monthly_urban">اشتراک ماهانه شهری</string>
+    <string name="venezia_airport_bus_ticket">بلیط اتوبوس فرودگاه</string>
+    <string name="cards_search">جستجو</string>
+    <string name="hotel_room_number">شماره اتاق</string>
+    <string name="closed_arrow">لیست بسته</string>
+</resources>

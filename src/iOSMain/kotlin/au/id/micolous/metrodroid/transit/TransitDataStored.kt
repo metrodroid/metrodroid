@@ -20,12 +20,12 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.ui.ListItem
 
 @Parcelize
+@Suppress("unused") // Used from Swift
 data class TransitDataStored internal constructor(
     override val balances: List<TransitBalance>?,
     override val serialNumber: String?,
@@ -51,7 +51,7 @@ data class TransitDataStored internal constructor(
         // Nullable Throwable is a pain for kotlin-swift interop, hence have
         // this wrapper to create a non-throwing TransitData with the same
         // data as original except for trips being already prepared
-        @NativeThrows
+        @Throws(Throwable::class)
         fun store(original: TransitData): TransitDataStored = TransitDataStored(
             balances = original.balances,
             serialNumber = original.serialNumber,
@@ -66,7 +66,7 @@ data class TransitDataStored internal constructor(
             rawFieldsAll = original.getRawFields(RawLevel.ALL),
             rawFieldsUnknown = original.getRawFields(RawLevel.UNKNOWN_ONLY))
 
-        @NativeThrows
+        @Throws(Throwable::class)
         fun parse(card: Card): TransitDataStored? = logAndSwiftWrap ("TransitDataStore", "Failed to parse") {
             card.parseTransitData()?.let { store(it) }
         }

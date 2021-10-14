@@ -157,8 +157,8 @@ class SmartRiderTransitData (override val serialNumber: String?,
 
             override fun earlyCardInfo(sectors: List<ClassicSector>): CardInfo? =
                     when (detectKeyType(sectors)) {
-                        SmartRiderTransitData.CardType.MYWAY -> MYWAY_CARD_INFO
-                        SmartRiderTransitData.CardType.SMARTRIDER -> SMARTRIDER_CARD_INFO
+                        CardType.MYWAY -> MYWAY_CARD_INFO
+                        CardType.SMARTRIDER -> SMARTRIDER_CARD_INFO
                         else -> null
                     }
 

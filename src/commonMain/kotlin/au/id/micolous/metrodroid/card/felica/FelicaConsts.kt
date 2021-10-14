@@ -81,6 +81,10 @@ object FelicaConsts {
     const val COMMAND_WRITE: Byte = 0x16
     const val RESPONSE_WRITE: Byte = 0x17
 
+    // Request Specification Version (s4.4.15)
+    const val COMMAND_REQUEST_SPECIFICATION_VERSION: Byte = 0x3c
+    const val RESPONSE_REQUEST_SPECIFICATION_VERSION: Byte = 0x3d
+
     // Reset Mode (s4.4.16)
     const val COMMAND_RESET_MODE: Byte = 0x3e
     const val RESPONSE_RESET_MODE: Byte = 0x3f
@@ -91,7 +95,7 @@ object FelicaConsts {
     // FeliCa Lite
     const val SYSTEMCODE_FELICA_LITE = 0x88b4
     // NDEF (NFC Data Exchange Format)
-    const val SYSTEMCODE_NDEF = 0x4000
+    const val SYSTEMCODE_NDEF = 0x12fc
     // Common Area (FeliCa Networks, Inc), used by IC (Suica) and Edy
     const val SYSTEMCODE_COMMON = 0xfe00
 

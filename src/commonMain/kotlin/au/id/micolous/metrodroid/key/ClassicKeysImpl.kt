@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.key
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.*
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
 
 abstract class ClassicKeysImpl : ClassicKeys {
 
@@ -42,21 +43,17 @@ abstract class ClassicKeysImpl : ClassicKeys {
         get () = keys.values.flatten().filterIsInstance<ClassicSectorKey>().map { it.key.toHexString() }.distinct().size +
                 keys.values.flatten().filter { it !is ClassicSectorKey }.size
 
-    private val keysJson: JsonArray
-        get() = jsonArray {
+    protected val baseJson: JsonObject
+        get() = buildJsonObject {
+            putJsonArray(KEYS) {
                 for ((sector, keys) in keys.entries.sortedBy { it.key }) {
                     keys.map { it.toJSON(sector) }.forEach {
-                        +it
+                        add(it)
                     }
                 }
             }
-
-    protected val baseJson: JsonObject
-        get() = json {
-            KEYS to keysJson
-            CardKeys.JSON_KEY_TYPE_KEY to type
+            put(CardKeys.JSON_KEY_TYPE_KEY, type)
         }
-
 
     /**
      * Gets all keys for the card.
@@ -125,7 +122,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
             for ((i, jsonElement) in keysJSON.withIndex()) {
                 val json = jsonElement.jsonObject
                 val w = classicFromJSON(json, defaultBundle) ?: continue
-                var sectorIndex = json.getPrimitiveOrNull(ClassicSectorKey.SECTOR_IDX)?.intOrNull
+                var sectorIndex = json[ClassicSectorKey.SECTOR_IDX]?.jsonPrimitiveOrNull?.intOrNull
                 if (sectorIndex == null && allowMissingIdx)
                     sectorIndex = i
                 // if allowMissingIdx is false, purposefully trip the exception
@@ -140,11 +137,11 @@ abstract class ClassicKeysImpl : ClassicKeys {
             return keys
         }
 
-        private const val KEY_BUNDLE = "bundle"
+        const val KEY_BUNDLE = "bundle"
         private const val KEY_LEN = 6
 
         private fun classicFromJSON(json: JsonObject, defaultBundle: String): ClassicSectorAlgoKey? {
-            val t = json.getPrimitiveOrNull(ClassicSectorKey.KEY_TYPE)?.contentOrNull
+            val t = json[ClassicSectorKey.KEY_TYPE]?.jsonPrimitiveOrNull?.contentOrNull
             val kt = when (t) {
                 "", null -> ClassicSectorKey.KeyType.UNKNOWN
                 ClassicSectorKey.TYPE_KEYA -> ClassicSectorKey.KeyType.A
@@ -152,9 +149,9 @@ abstract class ClassicKeysImpl : ClassicKeys {
                 else -> ClassicSectorKey.KeyType.UNKNOWN
             }
 
-            return when (json.getPrimitiveOrNull(TRANSFORM_KEY)?.contentOrNull ?: "none") {
+            return when (json[TRANSFORM_KEY]?.jsonPrimitiveOrNull?.contentOrNull ?: "none") {
                 "none" -> {
-                    val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]!!.content)
+                    val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]?.jsonPrimitiveOrNull!!.content)
 
                     // Check that the key is the correct length
                     if (keyData.size != KEY_LEN) {
@@ -163,16 +160,16 @@ abstract class ClassicKeysImpl : ClassicKeys {
 
                     // Checks completed, pass the data back.
                     ClassicSectorKey(type = kt, key = keyData,
-                            bundle = json.getPrimitiveOrNull(KEY_BUNDLE)?.contentOrNull ?: defaultBundle)
+                            bundle = json[KEY_BUNDLE]?.jsonPrimitiveOrNull?.contentOrNull ?: defaultBundle)
                 }
                 "touchngo" -> {
-                    TouchnGoKey(type = kt, key = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]!!.content))
+                    TouchnGoKey(type = kt, key = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE]?.jsonPrimitiveOrNull!!.content))
                 }		
                 else -> null
             }
         }
 
         fun classicFromJSON(json: String, defaultBundle: String): ClassicSectorAlgoKey? =
-                classicFromJSON(CardKeys.jsonParser.parseJson(json).jsonObject, defaultBundle)
+                classicFromJSON(CardKeys.jsonParser.parseToJsonElement(json).jsonObject, defaultBundle)
     }
 }

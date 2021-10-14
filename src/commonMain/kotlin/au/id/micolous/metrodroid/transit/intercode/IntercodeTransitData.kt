@@ -40,13 +40,13 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
     override val info: List<ListItem>?
         get() = super.info.orEmpty() +
                 mTicketEnvParsed.getInfo(setOf(
-                        En1545TransitData.ENV_NETWORK_ID,
-                        En1545FixedInteger.dateName(En1545TransitData.ENV_APPLICATION_ISSUE),
-                        En1545TransitData.ENV_APPLICATION_ISSUER_ID,
-                        En1545FixedInteger.dateName(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
-                        En1545TransitData.ENV_AUTHENTICATOR,
-                        En1545FixedInteger.dateName(En1545TransitData.HOLDER_PROFILE),
-                        En1545FixedInteger.dateBCDName(En1545TransitData.HOLDER_BIRTH_DATE),
+                        ENV_NETWORK_ID,
+                        En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
+                        ENV_APPLICATION_ISSUER_ID,
+                        En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END),
+                        ENV_AUTHENTICATOR,
+                        En1545FixedInteger.dateName(HOLDER_PROFILE),
+                        En1545FixedInteger.dateBCDName(HOLDER_BIRTH_DATE),
                         HOLDER_CARD_TYPE))
 
     override val lookup get() = getLookup(networkId)
@@ -74,13 +74,13 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 cardType = CardType.ISO7816)
 
         val TICKET_ENV_FIELDS = En1545Container(
-                En1545FixedInteger(En1545TransitData.ENV_VERSION_NUMBER, 6),
+                En1545FixedInteger(ENV_VERSION_NUMBER, 6),
                 En1545Bitmap(
-                        En1545FixedInteger(En1545TransitData.ENV_NETWORK_ID, 24),
-                        En1545FixedInteger(En1545TransitData.ENV_APPLICATION_ISSUER_ID, 8),
-                        En1545FixedInteger.date(En1545TransitData.ENV_APPLICATION_VALIDITY_END),
+                        En1545FixedInteger(ENV_NETWORK_ID, 24),
+                        En1545FixedInteger(ENV_APPLICATION_ISSUER_ID, 8),
+                        En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
                         En1545FixedInteger("EnvPayMethod", 11),
-                        En1545FixedInteger(En1545TransitData.ENV_AUTHENTICATOR, 16),
+                        En1545FixedInteger(ENV_AUTHENTICATOR, 16),
                         En1545FixedInteger("EnvSelectList", 32),
                         En1545Container(
                                 En1545FixedInteger("EnvCardStatus", 1),
@@ -95,18 +95,18 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                                 En1545FixedString("HolderForename", 85)
                         ),
                         En1545Bitmap(
-                                En1545FixedInteger.dateBCD(En1545TransitData.HOLDER_BIRTH_DATE),
+                                En1545FixedInteger.dateBCD(HOLDER_BIRTH_DATE),
                                 En1545FixedString("HolderBirthPlace", 115)
                         ),
                         En1545FixedString("HolderBirthName", 85),
-                        En1545FixedInteger(En1545TransitData.HOLDER_ID_NUMBER, 32),
+                        En1545FixedInteger(HOLDER_ID_NUMBER, 32),
                         En1545FixedInteger("HolderCountryAlpha", 24),
                         En1545FixedInteger("HolderCompany", 32),
                         En1545Repeat(2,
                                 En1545Bitmap(
                                         En1545FixedInteger("HolderProfileNetworkId", 24),
                                         En1545FixedInteger("HolderProfileNumber", 8),
-                                        En1545FixedInteger.date(En1545TransitData.HOLDER_PROFILE)
+                                        En1545FixedInteger.date(HOLDER_PROFILE)
                                 )
                         ),
                         En1545Bitmap(
@@ -130,16 +130,16 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
 
         private val contractListFields = En1545Repeat(4,
                 En1545Bitmap(
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_NETWORK_ID, 24),
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_TARIFF, 16),
-                        En1545FixedInteger(En1545TransitData.CONTRACTS_POINTER, 5)
+                        En1545FixedInteger(CONTRACTS_NETWORK_ID, 24),
+                        En1545FixedInteger(CONTRACTS_TARIFF, 16),
+                        En1545FixedInteger(CONTRACTS_POINTER, 5)
                 )
         )
 
         private fun parse(card: CalypsoApplication): IntercodeTransitData {
-            val ticketEnv = Calypso1545TransitData.parseTicketEnv(card, TICKET_ENV_HOLDER_FIELDS)
-            val netID = ticketEnv.getIntOrZero(En1545TransitData.ENV_NETWORK_ID)
-            val capsule = Calypso1545TransitData.parseWithEnv(
+            val ticketEnv = parseTicketEnv(card, TICKET_ENV_HOLDER_FIELDS)
+            val netID = ticketEnv.getIntOrZero(ENV_NETWORK_ID)
+            val capsule = parseWithEnv(
                     card, ticketEnv, contractListFields, getSerial(netID, card),
                     { data, counter, list, listnum -> createSubscription(data, list, listnum, netID, counter) },
                     { data -> IntercodeTransaction.parse(data, netID) },
@@ -152,7 +152,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 netID: Int, counter: Int?): IntercodeSubscription? {
             if (contractList == null || listNum == null)
                 return null
-            val tariff = contractList.getInt(En1545TransitData.CONTRACTS_TARIFF, listNum) ?: return null
+            val tariff = contractList.getInt(CONTRACTS_TARIFF, listNum) ?: return null
             return IntercodeSubscription.parse(data, tariff shr 4 and 0xff, netID, counter)
         }
 

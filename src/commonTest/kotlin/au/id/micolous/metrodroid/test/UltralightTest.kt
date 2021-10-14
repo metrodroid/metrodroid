@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import kotlin.test.Test
 
-class UltralightTest: CardReaderWithAssetDumpsTest(JsonKotlinFormat) {
+class UltralightTest: CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotlinFormat) {
     @Test
     fun testOldFile() {
         val card = loadCard<UltralightCard>("mfu/blank_old.json")

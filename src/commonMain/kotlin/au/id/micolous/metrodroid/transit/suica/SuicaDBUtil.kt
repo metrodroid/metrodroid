@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.util.StationTableReader
  */
 
 object SuicaDBUtil {
-    private const val TAG = "SuicaUtil"
     private const val SUICA_BUS_STR = "suica_bus"
     private const val SUICA_RAIL_STR = "suica_rail"
 
@@ -63,8 +62,8 @@ object SuicaDBUtil {
      * or there was some other database error, null is returned.
      */
     fun getRailStation(regionCode: Int, lineCode: Int, stationCode: Int): Station? {
-        var lineCodeLow = lineCode and 0xFF
-        var stationCodeLow = stationCode and 0xFF
+        val lineCodeLow = lineCode and 0xFF
+        val stationCodeLow = stationCode and 0xFF
         val areaCode = regionCode shr 6 and 0xFF
         val stationId = (areaCode shl 16) + (lineCodeLow shl 8) + stationCodeLow
         return if (stationId == 0) null else StationTableReader.getStation(SUICA_RAIL_STR, stationId,

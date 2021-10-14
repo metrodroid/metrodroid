@@ -36,7 +36,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 class VeneziaTransitData (val calypso: Calypso1545TransitDataCapsule) : Calypso1545TransitData(calypso) {
 
     private constructor(card: CalypsoApplication) :
-            this(calypso = Calypso1545TransitData.parse(
+            this(calypso = parse(
                     card = card,
                     ticketEnvHolderFields = TICKETING_ENV_FIELDS,
                     // Venezia Unica doesn't use contract list

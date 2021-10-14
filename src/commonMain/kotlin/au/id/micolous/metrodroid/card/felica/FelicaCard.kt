@@ -2,7 +2,7 @@
  * FelicaCard.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
 @XMLIgnore("idm")
@@ -47,6 +46,7 @@ data class FelicaCard(
         val pMm: ImmutableByteArray?,
         @XMLListIdx("code")
         val systems: Map<Int, FelicaSystem>,
+        val specificationVersion: ImmutableByteArray? = null,
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
     /**
@@ -58,7 +58,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Manufacturer code.
      */
-    @Transient
     private val manufacturerCode: Int
         get() = tagId.byteArrayToInt(0, 2)
 
@@ -68,7 +67,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Card identification number.
      */
-    @Transient
     private val cardIdentificationNumber: Long
         get() = tagId.byteArrayToLong(2, 6)
 
@@ -78,7 +76,6 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return ROM type
      */
-    @Transient
     private val romType: Int?
         get() = pMm?.byteArrayToInt(0, 1)
 
@@ -88,19 +85,15 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return IC type
      */
-    @Transient
     private val icType: Int?
         get() = pMm?.byteArrayToInt(1, 1)
 
-    @Transient
     private val fixedResponseTime: Double?
         get() = calculateMaximumResponseTime(1, 0)
 
-    @Transient
     private val mutualAuthentication2Time: Double?
         get() = getMutualAuthentication1Time(0)
 
-    @Transient
     private val otherCommandsTime: Double?
         get() = calculateMaximumResponseTime(5, 0)
 
@@ -110,11 +103,50 @@ data class FelicaCard(
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      * @return Maximum response time
      */
-    @Transient
     private val maximumResponseTime: Long?
         get() = pMm?.byteArrayToLong(2, 6)
 
-    @Transient
+    private fun checkSpecificationVersionFormat(s: ImmutableByteArray): Boolean = (
+        // Format Version (1 byte) + Basic Version (2 bytes) + Number of Options (1 byte)
+        s.size >= 4 &&
+        // Format Version
+        s[0].toInt() == 0)
+
+    private fun getVersion(b: ImmutableByteArray, off: Int): Int? {
+        val s =  b.sliceOffLenSafe(off, 2) ?: return null
+        return s.reverseBuffer().convertBCDtoInteger() % 1000
+    }
+
+    /**
+     * Gets the basic specification version supported by the card.
+     */
+    val basicVersion: Int?
+        get() {
+            val s = specificationVersion ?: return null
+            if (!checkSpecificationVersionFormat(s)) return null
+            return getVersion(s, 1)
+        }
+
+    /**
+     * Gets optional specification versions supported by the card.
+     *
+     * This is only populated on cards that support DES.
+     */
+    val optionVersions: List<Int>?
+        get() {
+            val s = specificationVersion ?: return null
+            if (!checkSpecificationVersionFormat(s)) return null
+            val count = s[3].toInt()
+            // 2 bytes per record
+            if (s.size < (2 * count) + 4) {
+                return null
+            }
+
+            return 0.rangeTo(count).mapNotNull { i ->
+                getVersion(s, (2 * i) + 4)
+            }.toList()
+        }
+
     override val manufacturingInfo: List<ListItem>
         get() {
             val items = mutableListOf<ListItem>()
@@ -162,19 +194,48 @@ data class FelicaCard(
                 items.add(ListItem(R.string.felica_response_time_other,
                 Localizer.localizePlural(R.plurals.milliseconds_short, d?.toInt() ?: 0, formatDouble(d))))
             }
+
+            if (specificationVersion != null) {
+                items.add(HeaderListItem(R.string.felica_specification_version))
+                items.add(ListItem(R.string.felica_basic_version, basicVersion?.toString()))
+                val versions = optionVersions
+                if (!versions.isNullOrEmpty()) {
+                    items.add(ListItem(R.string.felica_option_version_list,
+                        versions.joinToString()))
+                }
+            }
+
             return items
         }
 
-    @Transient
     override val rawData: List<ListItem>
-        get() = systems.map { (systemCode, system) ->
-            ListItemRecursive(
-                    Localizer.localizeString(R.string.felica_system_title_format,
-                            systemCode.hexString,
-                            Localizer.localizeString(
-                                    FelicaUtils.getFriendlySystemName(systemCode))),
-                    Localizer.localizePlural(R.plurals.felica_service_count,
-                            system.services.size, system.services.size), system.rawData(systemCode))
+        get() =
+            listOfNotNull(
+                pMm?.let { ListItem(R.string.felica_pmm, it.toHexDump()) },
+                specificationVersion?.let {
+                    ListItem(R.string.felica_specification_version, it.toHexDump()) }
+            ) + systems.map { (systemCode, system) ->
+            val title = Localizer.localizeString(R.string.felica_system_title_format,
+                systemCode.hexString,
+                Localizer.localizeString(
+                    FelicaUtils.getFriendlySystemName(systemCode)))
+
+            if (system.services.isEmpty()) {
+                ListItem(title, Localizer.localizeString(if (system.skipped) {
+                    R.string.felica_skipped_system
+                } else {
+                    R.string.felica_empty_system
+                }))
+            } else {
+                ListItemRecursive(
+                    title,
+                    Localizer.localizePlural(
+                        R.plurals.felica_service_count,
+                        system.services.size, system.services.size
+                    ),
+                    system.rawData(systemCode)
+                )
+            }
         }
 
     /**

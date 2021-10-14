@@ -73,14 +73,14 @@ abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
     override val fare: TransitCurrency?
         get() = currency(capsule.mCost)
 
-    override val mode: Trip.Mode
-        get() = if (capsule.isTopup) Trip.Mode.TICKET_MACHINE else lookupMode()
+    override val mode: Mode
+        get() = if (capsule.isTopup) Mode.TICKET_MACHINE else lookupMode()
 
     protected open fun getStation(stationId: Int): Station? {
         return StationTableReader.getStation(str, stationId)
     }
 
-    protected open fun lookupMode(): Trip.Mode {
+    protected open fun lookupMode(): Mode {
         return StationTableReader.getOperatorDefaultMode(str, capsule.mModeInt)
     }
 

@@ -27,11 +27,8 @@ import au.id.micolous.metrodroid.key.CardKeysFileReader
 import au.id.micolous.metrodroid.key.CardKeysFromFiles
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
-import kotlinx.io.charsets.Charsets
-import kotlinx.io.core.String
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -41,10 +38,8 @@ class ClassicReaderTest : BaseInstrumentedTest() {
     private fun keyReader(path: String): CardKeysFileReader = object : CardKeysFileReader {
         override fun listFiles(dir: String): List<String>? = listAsset("$path/keys/$dir")
 
-        override fun readFile(fileName: String): String? {
-            val b = loadSmallAssetBytesSafe("$path/keys/$fileName") ?: return null
-            return String(b, 0, b.size, Charsets.UTF_8)
-        }
+        override fun readFile(fileName: String): String?
+            = loadSmallAssetBytesSafe("$path/keys/$fileName")?.decodeToString()
     }
 
      /*   context, baseDir = "$path/keys"
@@ -61,15 +56,15 @@ class ClassicReaderTest : BaseInstrumentedTest() {
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)
             val blockCount = raw.size / 16
-            val maxReads = blockCount
             val maxAuths = 4 * card.sectorCount + 8
 
             val actualReads = card.readCounter
             val actualAuths = card.authCounter
             Log.d(TAG, "$addMsg reads/auths/sectors = $actualReads/$actualAuths/${card.sectorCount}")
             assertTrue(
-                    message = "$addMsg: Made $actualReads reads which is more than $maxReads",
-                    actual = actualReads <= maxReads)
+                message = "$addMsg: Made $actualReads reads which is more than $blockCount",
+                actual = actualReads <= blockCount
+            )
             assertTrue(
                     message = "$addMsg: Made $actualAuths auths which is more than $maxAuths",
                     actual = actualAuths <= maxAuths)
@@ -97,7 +92,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
 
             for (block in 0 until blockCount - 1) {
                 assertFalse (read[idx, block].isUnauthorized, "$addMsg: Sector $idx, block $block should be ok but isn't")
-                val actual = read[idx, block].data!!
+                val actual = read[idx, block].data
                 val expected = raw.copyOfRange(blockOffset * 16,
                         (blockOffset + 1) * 16)
                 assertTrue (

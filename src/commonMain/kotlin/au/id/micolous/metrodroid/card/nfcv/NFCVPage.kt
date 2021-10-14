@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Represents a page of data on a NFC Vicinity card
@@ -35,7 +34,6 @@ data class NFCVPage(
         val dataRaw: ImmutableByteArray = ImmutableByteArray.empty(),
         @XMLId("unauthorized")
         val isUnauthorized: Boolean = false) {
-    @Transient
     val data: ImmutableByteArray
         get() {
             if (isUnauthorized)

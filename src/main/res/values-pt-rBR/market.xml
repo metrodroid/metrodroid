@@ -86,9 +86,9 @@
 \nEste é um fork do Farebot de Eric Butler, com suporte para cartões adicionais e correções de bugs.
 \n
 \nEste software está licenciado sob a licença GNU GPLv3+, o código fonte está disponível em https://github.com/micolous/metrodroid/</string>
-    <string name="market_changelog_generic">Correção de bugs, novas funcionalidades e dados.
-\n
-\nMais detalhes e problemas conhecidos (em Inglês): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic">Correção de bugs, novas funcionalidades e dados. 
+\n 
+\nMais detalhes e problemas conhecidos (em Inglês): https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_43">• Adicionado suporte para cartões Amiibo, Crimea Trolleybus, Kazan, Russian Umarsh, Santiago bip, e Warsaw
 \n• Melhorias e correções para cartões Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go e Troika
 \n• Corrigido bugs que faziam o Metrodroid falhar, e alguns bugs com cartões MIFARE Classic
@@ -101,4 +101,11 @@
 \n* Muitas outras alterações.
 \n
 \nMais detalhes e problemas conhecidos: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_300">• Suporte para cartões Cifial, Fribourg TPF, Waltti e HSL azul
+\n• Correções de bugs do Amiibo, SLaccess, Troika e Viva
+\n• Novos dados para o Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go e Viva
+\n• Adição do histórico de pesquisa, suporte ao MIFARE Plus
+\n• Correção do bugs no Android 4.3 e versões anteriores
+\n
+\nMais detalhes e problemas identificados (em Inglês): https://www.metrodroid.org/changelog</string>
 </resources>

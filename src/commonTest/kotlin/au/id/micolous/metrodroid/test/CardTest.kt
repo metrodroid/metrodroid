@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Month
 import au.id.micolous.metrodroid.card.classic.*
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
@@ -28,6 +29,8 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.serializers.jsonObjectOrNull
+import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitData
@@ -35,6 +38,8 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.longOrNull
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -46,17 +51,25 @@ import kotlin.test.assertTrue
  */
 class CardTest : BaseInstrumentedTest() {
     @Test
-    fun testJsonSerialiser() {
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
+    fun testJsonSerializer() {
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
 
         val c1 = Card(ImmutableByteArray.fromHex("00123456"),
                 d,
                 mifareClassic = ClassicCard(emptyList<ClassicSectorRaw>()))
 
-        val json = JsonKotlinFormat.writeCard(c1)
+        val json = JsonKotlinFormat.makeCardElement(c1)
+        val jsonString = JsonKotlinFormat.makeCardString(c1)
 
-        assertTrue(json.contains("\"timeInMillis\": 1264982400000"))
-        assertTrue(json.contains("\"tagId\": \"00123456\""))
+        assertEquals(
+            1264982400000,
+            json.jsonObjectOrNull?.get("scannedAt")?.jsonObjectOrNull?.get("timeInMillis")?.jsonPrimitiveOrNull?.longOrNull,
+        "Unexpected Json: $json")
+        assertEquals(
+            "00123456",
+            json.jsonObjectOrNull?.get("tagId")?.jsonPrimitiveOrNull?.contentOrNull)
+        assertTrue(jsonString.contains("\"timeInMillis\": 1264982400000"))
+        assertTrue(jsonString.contains("\"tagId\": \"00123456\""))
         Log.d("CardTest", "JSON serialized to $json")
 
         val c2 = JsonKotlinFormat.readCard(json)
@@ -67,7 +80,7 @@ class CardTest : BaseInstrumentedTest() {
 
     @Test
     fun testUnauthorizedUltralight() {
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, Month.FEBRUARY, 1, 0, 0, 0)
 
         val u1 = UltralightCard(
                 "MF0ICU2",
@@ -128,7 +141,6 @@ class CardTest : BaseInstrumentedTest() {
     fun testUnauthorizedClassic() {
         val e = ImmutableByteArray.ofB(0x6d, 0x65, 0x74, 0x72, 0x6f, 0x64, 0x72, 0x6f, 0x69, 0x64, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69)
         val k = ImmutableByteArray(6)
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
         val l = (0..15).map { UnauthorizedClassicSector() }.toMutableList<ClassicSector>()
 
@@ -161,7 +173,6 @@ class CardTest : BaseInstrumentedTest() {
         val otherBytes = ImmutableByteArray(16) { i -> (i + 1).toByte() }
 
         val k = ImmutableByteArray(6)
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
         val all00Blocks = List(4) { all00Bytes }
         val allFFBlocks = List(4) { allFFBytes }
@@ -188,8 +199,6 @@ class CardTest : BaseInstrumentedTest() {
 
     @Test
     fun testUnauthorizedDesfire() {
-        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
-
         // Card with no files at all.
         val c1 = DesfireCard(ImmutableByteArray.empty(), emptyMap())
 

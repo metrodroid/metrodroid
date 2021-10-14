@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 /**
  * Utility class for reading MIFARE Ultralight / Ultralight C
@@ -49,7 +48,6 @@ data class UltralightCard constructor(
         @XMLListIdx("index")
         val pages: List<UltralightPage>,
         override val isPartialRead: Boolean = false) : CardProtocol() {
-    @Transient
     override val rawData: List<ListItem>
         get() = pages.mapIndexed { idx, sector ->
             val pageIndexString = idx.hexString

@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.card.nfcv.NFCVCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.multi.NativeThrows
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -95,20 +94,15 @@ class Card(
         val iso7816: ISO7816Card? = null,
         val vicinity: NFCVCard? = null
 ) {
-    @Transient
     val allProtocols: List<CardProtocol>
         get() = listOfNotNull(mifareClassic, mifareDesfire, mifareUltralight, cepasCompat,
                 felica, iso7816, vicinity)
-    @Transient
     val manufacturingInfo: List<ListItem>?
         get() = allProtocols.mapNotNull { it.manufacturingInfo }.flatten().ifEmpty { null }
-    @Transient
     val rawData: List<ListItem>?
         get() = allProtocols.mapNotNull { it.rawData }.flatten().ifEmpty { null }
-    @Transient
     val isPartialRead: Boolean
         get() = allProtocols.any { it.isPartialRead }
-    @Transient
     val cardType: CardType
         get () = when {
             allProtocols.size > 1 -> CardType.MultiProtocol
@@ -125,7 +119,7 @@ class Card(
             else -> CardType.Unknown
         }
 
-    @NativeThrows
+    @Throws(Throwable::class)
     fun parseTransitIdentity(): TransitIdentity? = logAndSwiftWrap("Card", "parseTransitIdentity failed") lam@{
         for (protocol in allProtocols) {
             val td = protocol.parseTransitIdentity()
@@ -135,7 +129,7 @@ class Card(
         return@lam null
     }
 
-    @NativeThrows
+    @Throws(Throwable::class)
     fun parseTransitData(): TransitData? = logAndSwiftWrap("Card", "parseTransitData failed") lam@{
         for (protocol in allProtocols) {
             val td = protocol.parseTransitData()
@@ -146,6 +140,7 @@ class Card(
     }
 
     // Convenience for Swift interop
+    @Suppress("unused")
     val safeBalance : TransitCurrency? by lazy {
         try {
             parseTransitData()?.balances?.first()?.balance
@@ -155,6 +150,7 @@ class Card(
     }
 
     // Convenience for Swift interop
+    @Suppress("unused")
     val safeTransitIdentity: TransitIdentity? by lazy {
         try {
             parseTransitIdentity()

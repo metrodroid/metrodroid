@@ -5,9 +5,10 @@ BART_URL = https://www.bart.gov/dev/schedules/google_transit.zip
 VTA_URL = https://gtfs.vta.org/gtfs_vta.zip
 MUNI_URL = http://gtfs.sfmta.com/transitdata/google_transit.zip
 SFBF_URL = https://transitfeeds.com/p/golden-gate-bridge-highway-transportation-district/344/latest/download
-ZIP_FILES := bart_gtfs.zip vta_gtfs.zip muni_gtfs.zip sfbf_gtfs.zip
+GGT_URL = https://transitfeeds.com/p/golden-gate-bridge-highway-transportation-district/349/latest/download
+ZIP_FILES := bart_gtfs.zip vta_gtfs.zip muni_gtfs.zip sfbf_gtfs.zip ggt_gtfs.zip
 
-MAPPING_FILES = mapping_bart.csv mapping_vta.csv mapping_muni.csv mapping_sfbf.csv operators.csv stations.csv
+MAPPING_FILES = mapping_bart.csv mapping_vta.csv mapping_muni.csv mapping_sfbf.csv mapping_ggt.csv operators.csv stations.csv
 
 all: clipper.mdst clipper.csv
 
@@ -17,12 +18,15 @@ clipper.mdst: $(MAPPING_FILES) $(ZIP_FILES) mdst
 	    vta_gtfs.zip \
 	    muni_gtfs.zip \
 	    sfbf_gtfs.zip \
+	    ggt_gtfs.zip \
 	    -m mapping_bart.csv \
 	    -m mapping_vta.csv \
 	    -m mapping_muni.csv \
-           -m mapping_sfbf.csv \
+	    -m mapping_sfbf.csv \
+	    -m mapping_ggt.csv \
 	    -l en-US \
 	    -p operators.csv \
+	    -r lines.csv \
 	    -x stations.csv \
 	    -n NOTICE \
 	    -o $@
@@ -38,6 +42,9 @@ muni_gtfs.zip:
 
 sfbf_gtfs.zip:
 	curl -L -o $@ -z $@ $(SFBF_URL)
+
+ggt_gtfs.zip:
+	curl -L -o $@ -z $@ $(GGT_URL)
 
 copy: clipper.copy
 

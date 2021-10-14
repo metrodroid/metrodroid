@@ -1,5 +1,3 @@
-reader_id,stop_name
-0x1003ed,"Mérignac - Quatre Chemins"
-0x101771,"Andernos - Centre"
-
-
+reader_id,stop_name,stop_lat,stop_lon
+0x1003ed,"Mérignac - Quatre Chemins",44.8325905,-0.6448535
+0x101771,"Andernos - Centre",44.7426455,-1.0983035

@@ -58,7 +58,7 @@ class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
     override val endStation: Station?
         get() = EZUserData.parse(mTransaction.userData, type).endStation
 
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = EZLinkTrip.getMode(type)
 
     override fun getAgencyName(isShort: Boolean) =

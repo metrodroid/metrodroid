@@ -35,7 +35,7 @@ class CardViewController: UITabBarController {
         var err: String? = nil
         var td: TransitDataStored?
         do {
-            try TransitDataStored.Storer.init().parse(card: card, result: &td)
+            td = try TransitDataStored.Storer.init().parse(card: card)
         } catch {
             err = error.localizedDescription
         }

@@ -36,12 +36,12 @@ class EdyTrip (private val mProcessType: Int,
                private val mBalance: Int): Trip() {
 
     // TODO: Revisit this, and check that these Modes are sensible.
-    override val mode: Trip.Mode
+    override val mode: Mode
         get() = when (mProcessType) {
-            EdyTransitData.FELICA_MODE_EDY_DEBIT -> Trip.Mode.POS
-            EdyTransitData.FELICA_MODE_EDY_CHARGE -> Trip.Mode.TICKET_MACHINE
-            EdyTransitData.FELICA_MODE_EDY_GIFT -> Trip.Mode.VENDING_MACHINE
-            else -> Trip.Mode.OTHER
+            EdyTransitData.FELICA_MODE_EDY_DEBIT -> Mode.POS
+            EdyTransitData.FELICA_MODE_EDY_CHARGE -> Mode.TICKET_MACHINE
+            EdyTransitData.FELICA_MODE_EDY_GIFT -> Mode.VENDING_MACHINE
+            else -> Mode.OTHER
         }
 
     // Credits are "negative"

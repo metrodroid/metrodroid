@@ -41,7 +41,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 private const val LOG_FORMAT = 0x9f4f
 private const val PIN_RETRY = 0x9f17
@@ -50,7 +49,6 @@ private const val TYPE_ANCHOR = "emv-anchor"
 
 @Serializable
 class EmvCard(override val generic: ISO7816ApplicationCapsule) : ISO7816Application() {
-    @Transient
     override val type: String
         get() = TYPE_ANCHOR
 }
@@ -60,18 +58,14 @@ class EmvCardMain internal constructor(
         override val generic: ISO7816ApplicationCapsule,
         private val dataResponse: Map<String, ImmutableByteArray>,
         val gpoResponse: ImmutableByteArray?) : ISO7816Application() {
-    @Transient
     override val type: String
         get() = TYPE_MAIN
 
-    @Transient
     val logFormat: ImmutableByteArray?
         get() = dataResponse[LOG_FORMAT.toString(16)]
-    @Transient
     val pinTriesRemaining: ImmutableByteArray?
         get() = dataResponse[PIN_RETRY.toString(16)]
 
-    @Transient
     val parserIgnore: Boolean
         get() = generic.appName?.let { appName ->
             PARSER_IGNORED_AID_PREFIX.indexOfFirst {
@@ -90,7 +84,6 @@ class EmvCardMain internal constructor(
         EmvTransitFactory.parseTransitIdentity(this)
     }
 
-    @Transient
     override val rawData get() = super.rawData.orEmpty() +
             ListItem(R.string.emv_gpo_response, gpoResponse?.toHexString() ?: "null") +
             (dataResponse.map { (k, v) -> ListItem(Localizer.localizeString(R.string.emv_data_response, k), v.toHexString()) })

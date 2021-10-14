@@ -50,7 +50,6 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
  */
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
     private val klasses =
@@ -91,13 +90,11 @@ data class ISO7816Card (
         return null
     }
 
-    @Transient
     override val manufacturingInfo get(): List<ListItem>? {
         val manufacturingInfo = applications.mapNotNull { it.manufacturingInfo }.flatten()
         return manufacturingInfo.ifEmpty { null }
     }
 
-    @Transient
     override val rawData get(): List<ListItem> {
         val rawData = mutableListOf<ListItem>()
         for (app in applications) {
@@ -123,7 +120,6 @@ data class ISO7816Card (
         return rawData
     }
 
-    @Transient
     val size get(): Int = applications.size
 
     companion object {

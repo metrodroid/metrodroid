@@ -16,6 +16,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardReader
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardReaderA
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.toImmutable
 
 
@@ -64,7 +65,8 @@ object CardReader {
             val transceiver = AndroidFelicaTransceiver(tag)
 
             transceiver.connect()
-            val c = FelicaReader.dumpTag(transceiver, feedbackInterface)
+            val c = FelicaReader.dumpTag(
+                transceiver, feedbackInterface, onlyFirst = Preferences.felicaOnlyFirst)
             transceiver.close()
             return Card(tagId = tagId, scannedAt = TimestampFull.now(), felica = c)
 
@@ -112,23 +114,15 @@ object CardReader {
         }
     }
 
-    private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? {
-        var card: UltralightCard? = null
-
+    private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? =
         AndroidNfcATransceiver(tag).use {
             it.connect()
-            card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
+            UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
-        return card
-    }
 
-    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? {
-        var card: NFCVCard? = null
-
+    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? =
         AndroidNfcVTransceiver(tag).use {
             it.connect()
-            card = NFCVCardReader.dumpTag(it, feedbackInterface)
+            NFCVCardReader.dumpTag(it, feedbackInterface)
         }
-        return card
-    }
 }

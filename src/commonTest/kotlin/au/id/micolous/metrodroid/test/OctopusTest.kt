@@ -64,9 +64,8 @@ class OctopusTest : BaseInstrumentedTest() {
         assertTrue(message="TransitData must be instance of OctopusTransitData",
                 actual=d is OctopusTransitData)
 
-        val o = d as OctopusTransitData
-        assertEquals(expected=1, actual=o.balances!!.size)
-        assertEquals(expected=expectedBalance, actual=o.balances!![0].balance)
+        assertEquals(expected=1, actual=d.balances!!.size)
+        assertEquals(expected=expectedBalance, actual=d.balances!![0].balance)
     }
 
     @Test

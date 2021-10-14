@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="market_changelog_300">• Dodano obsługę kart Cifial, Fribourg TPF, Waltti i niebieskich HSL
+\n• Poprawki błędów dla Amiibo, SLaccess, Troika i Viva
+\n• Nowe dane dla Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go i Viva
+\n• Dodano wyszukiwanie historii, obsługę MIFARE Plus
+\n• Poprawki błędów w Androidzie 4.3 i starszych
+\n
+\nWięcej szczegółów i znanych problemów (w języku angielskim): https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_generic">Naprawia błędy, dodaje nowe funkcje i dane.
+\n
+\nWięcej szczegółów i znanych problemów (w języku angielskim): https://www.metrodroid.org/changelog</string>
+</resources>

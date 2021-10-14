@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 
@@ -8,7 +7,6 @@ import au.id.micolous.metrodroid.transit.adelaide.AdelaideTransaction
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil
 import au.id.micolous.metrodroid.util.StationTableReader
 
@@ -41,7 +39,7 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     fun testLicenseNotice() {
         val notice = StationTableReader.getNotice(SeqGoData.SEQ_GO_STR)
         assertNotNull(notice)
-        assertTrue(notice!!.contains("Translink"))
+        assertTrue(notice.contains("Translink"))
     }
 
     @Test
@@ -55,18 +53,18 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         var s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
         assertEquals("JR East", s.companyName?.unformatted)
-        assertEquals("Shinjuku", s.getStationName(false)?.unformatted)
+        assertEquals("Shinjuku", s.getStationName(false).unformatted)
         assertEquals(1, s.lineNames!!.size)
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
-        assertFalse(s.lineNames!![0]?.unformatted.equals("山手", ignoreCase = true))
+        assertFalse(s.lineNames!![0].unformatted.equals("山手", ignoreCase = true))
 
         // Test in Japanese
         setLocale("ja-JP")
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
         assertEquals("東日本旅客鉄道", s.companyName?.unformatted)
-        assertEquals("新宿", s.getStationName(false)?.unformatted)
+        assertEquals("新宿", s.getStationName(false).unformatted)
         assertEquals(1, s.lineNames!!.size)
         assertEquals("山手", s.lineNames!![0].unformatted)
 
@@ -75,24 +73,24 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
         assertEquals("JR East", s.companyName?.unformatted)
-        assertEquals("Shinjuku", s.getStationName(false)?.unformatted)
+        assertEquals("Shinjuku", s.getStationName(false).unformatted)
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
         assertEquals(1, s.lineNames!!.size)
-        assertFalse(s.lineNames!![0]?.unformatted.equals("山手", ignoreCase = true))
+        assertFalse(s.lineNames!![0].unformatted.equals("山手", ignoreCase = true))
 
         // Test showing both English and Japanese strings
         setLocale("en-US")
         showLocalAndEnglish(true)
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("Shinjuku (新宿)", s.getStationName(false)?.unformatted)
+        assertEquals("Shinjuku (新宿)", s.getStationName(false).unformatted)
 
         // Test showing both Japanese and English strings.
         setLocale("ja-JP")
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE)
         assertNotNull(s)
-        assertEquals("新宿 (Shinjuku)", s.getStationName(false)?.unformatted)
+        assertEquals("新宿 (Shinjuku)", s.getStationName(false).unformatted)
     }
 
     private fun createEasyCardTrip(startStation: Int, endStation: Int): Trip {

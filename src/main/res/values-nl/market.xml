@@ -155,7 +155,7 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_generic">Bugs opgelost en nieuwe functies en gegevens toegevoegd. 
 \n 
-\nMeer informatie en bekende problemen (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+\nMeer informatie en bekende problemen (Engels): https://www.metrodroid.org/changelog</string>
     <string name="market_changelog_36">* Ondersteuning toegevoegd voor de volgende kaarten: CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Frankrijk), InstanbulKart, Mobib, Leap, RicaciraMi en Streika.
 \n* HSL-lezer gerepareerd.
 \n* Nieuwe stations toegevoegd voor Clipper en Kartu Multi Trip.
@@ -191,4 +191,16 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n* Vele onderhuidse wijzigingen.
 \n
 \nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_43">• Ondersteuning toegevoegd voor Amiibo-, Krim-trolleybus-, Kazan-, Russische Umarsh-, Santiago bip- en Warschau-kaarten
+\n• Verbeteringen omtrent Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go en Troika
+\n• Fouten opgelost die Metrodroid deden crashen, en fouten opgelost omtrent MIFARE Classic-kaarten
+\n
+\nMeer informatie en bekende problemen (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_300">• Ondersteuning toegevoegd voor Cifial-, Fribourg TPF-, Waltti- en blauwe HSL-kaarten
+\n• Foutoplossingen omtrent Amiibo, SLaccess, Troika en Viva
+\n• Nieuwe gegevens voor Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch ’n Go en Viva
+\n• Nieuw: zoeken in de reishistorie en ondersteuning voor MIFARE Plus
+\n• Foutoplossingen op Android 4.3 en eerder
+\n
+\nMeer informatie en bekende problemen (Engels): https://www.metrodroid.org/changelog</string>
 </resources>

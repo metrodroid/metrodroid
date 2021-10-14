@@ -39,7 +39,6 @@ data class DesfireApplication(
         private val dirListLocked: Boolean = false) {
     @Transient
     val interpretedFiles: Map<Int, DesfireFile> = files.mapValues { (_, v) -> DesfireFile.create(v) }
-    @Transient
     val rawData: List<ListItem>
         get() = interpretedFiles.map { (k, v) -> v.getRawData(k) } + authLog.map { it.rawData }
 

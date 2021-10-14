@@ -36,8 +36,8 @@ class TransitName(
     }
 
     fun selectBestName(isShort: Boolean): FormattedString? {
-        val hasEnglishFull = englishFull != null && !englishFull.isEmpty()
-        val hasEnglishShort = englishShort != null && !englishShort.isEmpty()
+        val hasEnglishFull = englishFull != null && englishFull.isNotEmpty()
+        val hasEnglishShort = englishShort != null && englishShort.isNotEmpty()
 
         val english: String? = when {
             hasEnglishFull && !hasEnglishShort -> englishFull
@@ -46,8 +46,8 @@ class TransitName(
             else -> englishFull
         }
 
-        val hasLocalFull = localFull != null && !localFull.isEmpty()
-        val hasLocalShort = localShort != null && !localShort.isEmpty()
+        val hasLocalFull = localFull != null && localFull.isNotEmpty()
+        val hasLocalShort = localShort != null && localShort.isNotEmpty()
 
         val local: String? = when {
             hasLocalFull && !hasLocalShort -> localFull
@@ -56,17 +56,18 @@ class TransitName(
             else -> localFull
         }
 
-        if (showBoth() && english != null && !english.isEmpty()
-                && local != null && !local.isEmpty()) {
+        if (showBoth() && english != null && english.isNotEmpty()
+                && local != null && local.isNotEmpty()
+        ) {
             if (english == local)
                 return FormattedString.language(local, ttsHintLanguage)
             return if (useEnglishName()) FormattedString.english(english) + " (" + FormattedString.language(local, ttsHintLanguage) + ")" else FormattedString.language(local, ttsHintLanguage) + " (" + FormattedString.english(english) + ")"
         }
-        if (useEnglishName() && english != null && !english.isEmpty()) {
+        if (useEnglishName() && english != null && english.isNotEmpty()) {
             return FormattedString.english(english)
         }
 
-        return if (local != null && !local.isEmpty()) {
+        return if (local != null && local.isNotEmpty()) {
             // Local preferred, or English not available
             FormattedString.language(local, ttsHintLanguage)
         } else if (english != null) {

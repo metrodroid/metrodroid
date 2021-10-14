@@ -23,19 +23,41 @@ import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
-class FelicaXmlImportTest: CardReaderWithAssetDumpsTest(XmlCardFormat())  {
+class FelicaXmlImportTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat())  {
+    private fun checkLoadCard(path: String): FelicaCard {
+        val c = loadCard<FelicaCard>(path)
+        assertEquals(ImmutableByteArray.fromHex("0101010101010101"), c.tagId)
+        val felica = c.felica
+        assertNotNull(felica)
+        checkDummySystem3(felica)
+        return felica
+    }
+
+    /**
+     * Checks for the presence of a system 3 on the card, with the dummy contents: a single
+     * service, 0x1, with 1 block containing 16 bytes of null.
+     */
+    private fun checkDummySystem3(felica: FelicaCard) {
+        val system = felica.systems[3]
+        assertNotNull(system)
+        val service = system.services[1]
+        assertNotNull(service)
+        assertFalse(service.skipped)
+        val blocks = service.blocks.toList()
+        assertEquals(1, blocks.count())
+        val data = blocks[0].data
+        assertEquals(ImmutableByteArray.empty(16), data)
+    }
+
     /**
      * Test reading a FeliCa XML dump with IDm tag (like <= v2.9.37)
      */
     @Test
     fun testFelicaXmlIdm() {
-        val c = loadCard<FelicaCard>("felica/felica-idm.xml")
-        assertEquals(ImmutableByteArray.fromHex("0101010101010101"), c.tagId)
-        val felica = c.felica
-        assertNotNull(felica)
-        assertEquals(setOf(3), felica.systems.keys)
+        checkLoadCard("felica/felica-idm.xml")
     }
 
     /**
@@ -43,10 +65,6 @@ class FelicaXmlImportTest: CardReaderWithAssetDumpsTest(XmlCardFormat())  {
      */
     @Test
     fun testFelicaXmlNoIdm() {
-        val c = loadCard<FelicaCard>("felica/felica-no-idm.xml")
-        assertEquals(ImmutableByteArray.fromHex("0101010101010101"), c.tagId)
-        val felica = c.felica
-        assertNotNull(felica)
-        assertEquals(setOf(3), felica.systems.keys)
+        checkLoadCard("felica/felica-no-idm.xml")
     }
 }

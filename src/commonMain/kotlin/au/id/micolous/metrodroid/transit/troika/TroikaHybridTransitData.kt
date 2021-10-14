@@ -64,7 +64,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
 
             val troikaItems = mTroika.info
 
-            if (troikaItems != null && !troikaItems.isEmpty()) {
+            if (troikaItems != null && troikaItems.isNotEmpty()) {
                 items.add(HeaderListItem(R.string.card_name_troika))
                 items.addAll(troikaItems)
             }
@@ -107,6 +107,8 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
 
     override val warning: String?
         get() = mTroika.warning
+
+    override fun getRawFields(level: RawLevel): List<ListItem>? = mTroika.debug
 
     private constructor(card: ClassicCard) : this(
             mTroika = TroikaTransitData(card),

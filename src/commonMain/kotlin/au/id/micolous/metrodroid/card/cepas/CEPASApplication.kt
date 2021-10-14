@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 data class CEPASApplication(
@@ -44,7 +43,6 @@ data class CEPASApplication(
         private val purses: Map<Int, ImmutableByteArray>,
         private val histories: Map<Int, ImmutableByteArray>) : ISO7816Application() {
 
-    @Transient
     override val rawData: List<ListItem>?
         get() = purses.map { (key, value) ->
             ListItemRecursive.collapsedValue(
@@ -57,7 +55,6 @@ data class CEPASApplication(
         }
 
     // FIXME: What about other purses?
-    @Transient
     override val manufacturingInfo: List<ListItem>?
         get() {
             val purseRaw = getPurse(3) ?: return listOf(
@@ -104,7 +101,6 @@ data class CEPASApplication(
 
     fun getHistory(purseId: Int): ImmutableByteArray? = histories[purseId]
 
-    @Transient
     override val type: String
         get() = TYPE
 
