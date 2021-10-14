@@ -7,11 +7,12 @@ import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSBundle
 import platform.Foundation.NSError
 import platform.Foundation.NSFileManager
+import platform.Foundation.NSLocale
 
 actual abstract class BaseInstrumentedTestPlatform actual constructor() {
     actual fun setLocale(languageTag: String) {
-        // Preferences.languageActual = languageTag.substringBefore("-")
-        //Locale.setDefault(Locale.forLanguageTag(languageTag)) TODO
+        Preferences.languageOverrideForTest.value = languageTag.substringBefore("-")
+        Preferences.localeOverrideForTest.value = NSLocale(localeIdentifier = languageTag)
     }
 
     actual fun loadAssetSafe(path: String): Input? =
