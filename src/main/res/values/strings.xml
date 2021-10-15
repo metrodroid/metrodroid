@@ -2527,14 +2527,14 @@
     <!-- Translators: French "Ligne %d" -->
     <string name="gironde_line">Line number %d</string>
 
-    <!-- Translators: French "BRUPASS 1 Voyage", Dutch "BRUPASS 1 rit" -->
-    <string name="mobib_jump_1_trip">BRUPASS 1 trip</string>
+    <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
+    <string name="mobib_jump_1_trip">JUMP 1 trip</string>
     <!-- Translators: French "JUMP 10 Voyages", Dutch "JUMP 10 ritten" -->
-    <string name="mobib_jump_10_trips">BRUPASS 10 trips</string>
+    <string name="mobib_jump_10_trips">JUMP 10 trips</string>
     <!-- Translators: French "1 Voyages BUS Airport", Dutch "1 rit BUS Airport". -->
-    <string name="mobib_airport_bus">Go2City 1 journey</string>
+    <string name="mobib_airport_bus">Single fare bus airport</string>
     <!-- Translators: French "JUMP 24h + BUS Airport", Dutch "JUMP 24 - 48 - 72 uur + BUS Airport" -->
-    <string name="mobib_jump_24h_bus_airport">BRUPASS 1 day</string>
+    <string name="mobib_jump_24h_bus_airport">JUMP 24h + Bus Airport</string>
 
     <string name="rkf_stockholm_30_days">Stockholm 30-day ticket</string>
     <string name="rkf_stockholm_7_days">Stockholm 7-day ticket</string>
