@@ -1,5 +1,5 @@
 /*
- * Timestamp.kt
+ * TimestampFormatter.kt
  *
  * Copyright 2019 Google
  *
@@ -25,36 +25,32 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
 import kotlin.native.concurrent.SharedImmutable
 
-fun date2Timestamp(date: NSDate): TimestampFull {
-    val t = (date.timeIntervalSince1970 * 1000).toLong()
-    val tz = NSTimeZone.defaultTimeZone.name
-    return TimestampFull(timeInMillis = t, tz = MetroTimeZone(tz))
-}
-
-/** Reference to UTC timezone.  */
-@SharedImmutable
-private val UTC : NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
-
-// Currently empty but there are few time zones that may need mapping in
-// the future like e.g. America/Buenos_Aires
-@SharedImmutable
-private val tzOverrides = mapOf<String,String>()
-
-private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
-    if (tz == MetroTimeZone.LOCAL)
-      return NSTimeZone.defaultTimeZone
-    if (tz == MetroTimeZone.UTC || tz == MetroTimeZone.UNKNOWN)
-      return UTC
-    val tzMapped = tzOverrides[tz.olson] ?: tz.olson
-    val nstz = NSTimeZone.timeZoneWithName(tzName = tzMapped)
-    if (nstz != null) {
-        return nstz
-    }
-    Log.e("metroTz2NS", "Unable to find timezone ${tz.olson}. Using UTC as fallback but it's likely to result in wrong timestamps")
-    return UTC
-}
-
 actual object TimestampFormatter {
+
+    /** Reference to UTC timezone.  */
+    private val UTC: NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
+
+    // Currently empty but there are few time zones that may need mapping in
+    // the future like e.g. America/Buenos_Aires
+    private val tzOverrides = mapOf<String, String>()
+
+    private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
+        if (tz == MetroTimeZone.LOCAL)
+            return NSTimeZone.defaultTimeZone
+        if (tz == MetroTimeZone.UTC || tz == MetroTimeZone.UNKNOWN)
+            return UTC
+        val tzMapped = tzOverrides[tz.olson] ?: tz.olson
+        val nstz = NSTimeZone.timeZoneWithName(tzName = tzMapped)
+        if (nstz != null) {
+            return nstz
+        }
+        Log.e(
+            "metroTz2NS",
+            "Unable to find timezone ${tz.olson}. Using UTC as fallback but it's likely to result in wrong timestamps"
+        )
+        return UTC
+    }
+
     // Equivalent of java Calendar to avoid restructuring the code
     data class Calendar(val time: NSDate, val tz: NSTimeZone)
     fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
@@ -87,7 +83,7 @@ actual object TimestampFormatter {
         dateFormatter.dateStyle = dateStyle
         dateFormatter.timeStyle = timeStyle
         dateFormatter.timeZone = c.tz
- 
+
         return dateFormatter.stringFromDate(c.time)
     }
 

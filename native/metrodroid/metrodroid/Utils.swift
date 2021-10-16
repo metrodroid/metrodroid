@@ -23,6 +23,12 @@ import UIKit
 import metrolib
 
 class Utils {
+    class func date2Timestamp(date: Date) -> TimestampFull {
+        let t = Int64(date.timeIntervalSince1970 * 1000)
+        let tz = NSTimeZone.default.identifier
+        return TimestampFull(timeInMillis: t, tz: MetroTimeZone(olson: tz))
+    }
+
     class func openUrl(url: String) {
         guard let typedUrl = URL(string: url) else {
             return

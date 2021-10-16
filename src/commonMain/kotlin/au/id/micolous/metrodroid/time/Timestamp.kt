@@ -298,7 +298,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 @Parcelize
 @Serializable
 // Precision or minutes and higher
-data class TimestampFull internal constructor(val timeInMillis: Long,
+data class TimestampFull(val timeInMillis: Long,
                                             val tz: MetroTimeZone): Parcelable, Comparable<TimestampFull>, Timestamp() {
     override fun toDaystamp() = Daystamp(ldt.date)
 

@@ -273,7 +273,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         
         // Configure the cell’s contents.
         let el = effectiveHistory[indexPath.section].entries[indexPath.item]
-        let scanTime = TimestampKt.date2Timestamp(date: el.date)
+        let scanTime = Utils.date2Timestamp(date: el.date)
         cell.textLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
                                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
                                                                 TimestampFormatter.init().dateFormat(ts: scanTime)).attributed
