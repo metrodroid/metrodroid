@@ -287,7 +287,7 @@ kotlin {
                                    includeDirs(new File(project('proto').buildDir, 'generated/source/proto/main/objc'))
                                    compilerOpts '-I' + projectDir +
                                        '/third_party/protobuf/objectivec', '-DTARGET_OS_OSX=0',
-                                       '-DTARGET_OS_MACCATALYST=0'
+                                       '-DTARGET_OS_MACCATALYST=0', '-DNS_FORMAT_ARGUMENT(A)=', '-D_Nullable_result=_Nullable'
                           }
                 }
             }

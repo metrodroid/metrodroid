@@ -60,6 +60,8 @@ model {
                     args << '-fembed-bitcode'
                     args << '-arch'
                     args << 'arm64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-D_Nullable_result=_Nullable'
                 }
             }
             target("ios_x86_64") {
@@ -68,6 +70,8 @@ model {
                     args << '-arch'
                     args << 'x86_64'
                     args << '-m64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-D_Nullable_result=_Nullable'
                 }
             }
         }
