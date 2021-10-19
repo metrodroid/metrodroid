@@ -117,7 +117,7 @@ class EmvFactory : ISO7816ApplicationFactory {
 
     override val fixedAppIds get() = false    
 
-    override suspend fun dumpTag(protocol: ISO7816Protocol,
+    override fun dumpTag(protocol: ISO7816Protocol,
                                  capsule: ISO7816ApplicationMutableCapsule,
                                  feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_emv))
@@ -167,14 +167,14 @@ class EmvFactory : ISO7816ApplicationFactory {
         return mainApps.toList()
     }
 
-    private suspend fun readData(tag: ISO7816Protocol, p1p2: Int) = try {
+    private fun readData(tag: ISO7816Protocol, p1p2: Int) = try {
         tag.sendRequest(ISO7816Protocol.CLASS_80, 0xca.toByte(),
                 (p1p2 shr 8).toByte(), p1p2.toByte(), 0)
     } catch (e: Exception) {
         null
     }
 
-    private suspend fun readGpo(tag: ISO7816Protocol, mainAppData: ImmutableByteArray?): ImmutableByteArray? {
+    private fun readGpo(tag: ISO7816Protocol, mainAppData: ImmutableByteArray?): ImmutableByteArray? {
         if (mainAppData == null)
             return null
         Log.d(TAG, "AD = $mainAppData")

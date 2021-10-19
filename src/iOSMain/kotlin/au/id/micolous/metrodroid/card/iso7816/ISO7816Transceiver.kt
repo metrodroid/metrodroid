@@ -42,7 +42,7 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
         val err: NSError?
     )
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray = runBlocking {
         val (rep, sw1, sw2, err) = suspendCoroutine<Capsule> { cont ->
             Log.d(TAG, ">>> $data")
             tag.transmit(data.toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }

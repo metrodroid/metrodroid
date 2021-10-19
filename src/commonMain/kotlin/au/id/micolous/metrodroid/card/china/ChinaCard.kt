@@ -74,7 +74,7 @@ data class ChinaCard(
              * field.
              * @throws Exception On communication errors.
              */
-            override suspend fun dumpTag(protocol: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule, feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
+            override fun dumpTag(protocol: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule, feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
                 val bals = mutableMapOf<Int, ImmutableByteArray>()
 
                 try {

@@ -35,7 +35,7 @@ interface ISO7816ApplicationFactory {
     val stopAfterFirstApp: Boolean
         get() = false
 
-    suspend fun dumpTag(protocol: ISO7816Protocol,
+    fun dumpTag(protocol: ISO7816Protocol,
                         capsule: ISO7816ApplicationMutableCapsule,
                         feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>?
 

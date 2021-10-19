@@ -26,6 +26,6 @@ interface DesfireUnlocker {
     fun getOrder(desfireTag: DesfireProtocol, fileIds: IntArray): IntArray
 
     // Unlock a given file.
-    suspend fun unlock(desfireTag: DesfireProtocol, files: Map<Int, RawDesfireFile>,
+    fun unlock(desfireTag: DesfireProtocol, files: Map<Int, RawDesfireFile>,
                fileId: Int, authLog: MutableList<DesfireAuthLog>)
 }

@@ -37,7 +37,7 @@ class UltralightTransceiverIOS(val tag: SwiftWrapper): CardTransceiver {
         val reply: NSData,
         val err: NSError?)
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray = runBlocking {
         val (repl, err) = suspendCoroutine<Capsule> { cont ->
             Log.d(TAG, ">>> $data")
             tag.transmit(data.toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }

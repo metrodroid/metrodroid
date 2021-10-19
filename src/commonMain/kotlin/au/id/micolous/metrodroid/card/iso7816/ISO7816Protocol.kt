@@ -71,7 +71,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         return output
     }
 
-    private suspend fun sendRequestReal(
+    private fun sendRequestReal(
             cla: Byte, ins: Byte, p1: Byte, p2: Byte,
             length: Byte, parameters: ImmutableByteArray): ImmutableByteArray {
         val sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters)
@@ -109,7 +109,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
      * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.
      */
-    suspend fun sendRequest(cla: Byte, ins: Byte, p1: Byte, p2: Byte, length: Byte, parameters: ImmutableByteArray): ImmutableByteArray {
+    fun sendRequest(cla: Byte, ins: Byte, p1: Byte, p2: Byte, length: Byte, parameters: ImmutableByteArray): ImmutableByteArray {
         Log.d(TAG, "First attempt")
         var recvBuffer = sendRequestReal(cla, ins, p1, p2, length, parameters)
 
@@ -151,11 +151,11 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         return recvBuffer.sliceOffLen(0, recvBuffer.size - 2)
     }
 
-    suspend fun sendRequest(cla: Byte, ins: Byte, p1: Byte, p2: Byte, length: Byte)
+    fun sendRequest(cla: Byte, ins: Byte, p1: Byte, p2: Byte, length: Byte)
             : ImmutableByteArray = sendRequest(cla, ins, p1, p2, length,
             ImmutableByteArray.empty())
 
-    suspend fun selectByName(name: ImmutableByteArray, nextOccurrence: Boolean): ImmutableByteArray {
+    fun selectByName(name: ImmutableByteArray, nextOccurrence: Boolean): ImmutableByteArray {
         Log.d(TAG, "Select by name $name")
         // Select an application by file name
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
@@ -163,13 +163,13 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                 name)
     }
 
-    suspend fun unselectFile() {
+    fun unselectFile() {
         Log.d(TAG, "Unselect file")
         sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                 0.toByte(), 0.toByte(), 0.toByte())
     }
 
-    suspend fun selectById(fileId: Int): ImmutableByteArray {
+    fun selectById(fileId: Int): ImmutableByteArray {
         val file = ImmutableByteArray.of((fileId shr 8).toByte(), fileId.toByte())
         Log.d(TAG, "Select file $file")
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
@@ -177,7 +177,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                 file)
     }
 
-    suspend fun readRecord(recordNumber: Byte, length: Byte) = try {
+    fun readRecord(recordNumber: Byte, length: Byte) = try {
         Log.d(TAG, "Read record $recordNumber")
         sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                 recordNumber, 0x4.toByte() /* p1 is record number */, length)
@@ -188,7 +188,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         null
     }
 
-    suspend fun readBinary() = try {
+    fun readBinary() = try {
         Log.d(TAG, "Read binary")
         sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, 0.toByte(), 0.toByte(), 0.toByte())
     } catch (e: ISO7816Exception) {
@@ -197,7 +197,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         null
     }
 
-    suspend fun selectByNameOrNull(name: ImmutableByteArray) =
+    fun selectByNameOrNull(name: ImmutableByteArray) =
             try {
                 selectByName(name, false)
             } catch (e: ISO7816Exception) {
@@ -206,7 +206,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                 null
             }
 
-    suspend fun readBinary(sfi: Int) =
+    fun readBinary(sfi: Int) =
             try {
                 Log.d(TAG, "Read binary")
                 sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (0x80 or sfi).toByte(), 0.toByte(), 0.toByte())
@@ -217,7 +217,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                 null
             }
 
-    suspend fun readRecord(sfi: Int, recordNumber: Byte, length: Byte) =
+    fun readRecord(sfi: Int, recordNumber: Byte, length: Byte) =
             try {
                 Log.d(TAG, "Read record $recordNumber")
                 sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,

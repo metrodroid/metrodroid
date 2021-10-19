@@ -32,10 +32,6 @@ import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.InputStream
 
-actual fun <T> runAsync(block: suspend () -> T) {
-    runBlocking { block() }
-}
-
 actual fun loadAssetStream(path: String): InputStream? =
     try {
         DataInputStream(

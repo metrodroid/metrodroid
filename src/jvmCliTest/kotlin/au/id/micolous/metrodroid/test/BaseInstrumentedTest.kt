@@ -8,10 +8,6 @@ import java.io.File
 import java.io.InputStream
 import java.util.Locale
 
-actual fun <T> runAsync(block: suspend () -> T) {
-    runBlocking { block() }
-}
-
 actual fun loadAssetStream(path: String): InputStream? {
     val uri = BaseInstrumentedTest::class.java.getResource("/$path")?.toURI() ?: return null
     val file = File(uri)

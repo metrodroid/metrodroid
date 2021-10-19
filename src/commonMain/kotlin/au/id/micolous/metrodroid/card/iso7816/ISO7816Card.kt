@@ -139,7 +139,7 @@ data class ISO7816Card (
          * field.
          * @throws Exception On communication errors.
          */
-        suspend fun dumpTag(tech: CardTransceiver,
+        fun dumpTag(tech: CardTransceiver,
                             feedbackInterface: TagReaderFeedbackInterface,
                             coreNFC: Boolean = false): ISO7816Card {
             var partialRead = false

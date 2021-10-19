@@ -112,8 +112,8 @@ data class CEPASApplication(
             feedbackInterface.updateProgressBar(value, 64)
         }
 
-        suspend fun dumpTag(iso7816Tag: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule,
-                            feedbackInterface: TagReaderFeedbackInterface): CEPASApplication? {
+        fun dumpTag(iso7816Tag: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule,
+                    feedbackInterface: TagReaderFeedbackInterface): CEPASApplication? {
             val cepasPurses = mutableMapOf<Int, ImmutableByteArray>()
             val cepasHistories = mutableMapOf<Int, ImmutableByteArray>()
             var isValid = false

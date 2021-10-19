@@ -33,12 +33,11 @@ object ISO7816CardReaderIOS {
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
         val xfer = ISO7816Transceiver(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        runBlocking {
-            Log.d(TAG, "Start async")
-            val df = ISO7816Card.dumpTag(xfer, feedback, coreNFC = true)
-            Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
-            scannedAt = TimestampFull.now(), iso7816 = df)
-        }
+        val df = ISO7816Card.dumpTag(xfer, feedback, coreNFC = true)
+        Card(
+            tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
+            scannedAt = TimestampFull.now(), iso7816 = df
+        )
     }
     
     private const val TAG = "ISO7816CardReaderIOS"

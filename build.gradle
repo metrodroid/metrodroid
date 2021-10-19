@@ -293,7 +293,6 @@ kotlin {
         commonMain {
             dependencies {
                 api "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinserial_version"
-                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'commonMain/kotlin')
@@ -319,6 +318,7 @@ kotlin {
         iOSMain {
             dependencies {
                 implementation project(':proto')
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}-native-mt"
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'iOSMain/kotlin')
