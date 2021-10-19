@@ -63,6 +63,10 @@ model {
                     args << '-DNS_FORMAT_ARGUMENT(A)='
                     args << '-D_Nullable_result=_Nullable'
                 }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'arm64'
+                }
             }
             target("ios_x86_64") {
                 objcCompiler.withArguments { args ->
@@ -72,6 +76,10 @@ model {
                     args << '-m64'
                     args << '-DNS_FORMAT_ARGUMENT(A)='
                     args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'x86_64'
                 }
             }
         }
