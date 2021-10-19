@@ -52,6 +52,14 @@ protobuf {
 final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
                               ? "ios_arm64" : "ios_x86_64"
 
+task generateProtoWrapper() {
+    ext {
+        sourceDir = new File(buildDir, 'generated/source/proto/main/objc')
+        headerDir = sourceDir
+    }
+    dependsOn 'generateProto'
+}
+
 model {
     toolChains {
         clang(Clang) {
@@ -98,11 +106,12 @@ model {
             sources {
                 objc {
                     source {
-                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
                         include "GPBProtocolBuffers.m", "Stations.pbobjc.m"
+                        generatedBy generateProtoWrapper
                     }
                     exportedHeaders {
-                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
                     }
                 }
             }
