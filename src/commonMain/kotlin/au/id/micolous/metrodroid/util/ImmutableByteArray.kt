@@ -216,11 +216,6 @@ class ImmutableByteArray private constructor(
         os.write(mData, offset, length)
     }
 
-    fun chunked(size: Int): List<ImmutableByteArray>
-            = chunked(size).map {
-        it.toByteArray().toImmutable()
-    }
-
     infix fun xor(other: ImmutableByteArray) = ImmutableByteArray(size) {
         mData[it] xor other[it]
     }

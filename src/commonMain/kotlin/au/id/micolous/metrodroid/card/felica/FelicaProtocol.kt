@@ -402,67 +402,6 @@ class FelicaProtocol(val tag: FelicaTransceiver,
     }
 
     /**
-     * Reads multiple blocks without encryption.
-     *
-     * FeliCa Lite supports up to 4 blocks at once.
-     *
-     * JIS X 6319-4 specifies that up to 8 blocks may be read at once.
-     *
-     * The practical protocol limit is 15 (16*15+10+1 = 251 bytes), which is enforced.
-     *
-     * However, the regular FeliCa specification does not indicate an actual limit.
-     */
-    suspend fun readWithoutEncryption(
-            systemNumber: Int, serviceCode: Int, blockNumbers: IntArray):
-            Map<Int, ImmutableByteArray>? {
-        if (blockNumbers.size > 15) {
-            throw IllegalArgumentException("Can only read 15 blocks at a time, you gave " +
-                    "${blockNumbers.size}")
-        }
-
-        if (blockNumbers.isEmpty()) {
-            // No entries -- nothing to send to the card!
-            return emptyMap()
-        }
-
-        val blockRequests = blockNumbers.map {
-            encodeBlockRequest(it).toList()
-        }.flatten().toTypedArray()
-
-        val resp = sendRequest(COMMAND_READ_WO_ENCRYPTION, systemNumber,
-                0x01, // Number of service codes
-                serviceCode and 0xff, // Service code (lower byte)
-                serviceCode shr 8, // Service code (upper byte)
-                blockNumbers.size, // Number of blocks to read
-                *blockRequests
-        )
-
-        if (resp.byteArrayToInt(9, 1) != 0) {
-            // Status flag 1!
-            Log.w(TAG, "Error reading from card: ${resp.getHexString(9, 2)}")
-            return null
-        }
-
-        if (resp.size < 12) {
-            // Short response
-            Log.w(TAG, "Short response from card: expected more than 12 bytes, got ${resp.size}")
-            return null
-        }
-
-        if (resp.size != 12 + (resp[11].toInt() * 16)) {
-            // Short response
-            Log.w(TAG, "Bad response from card: expected ${12 + (resp[11].toInt() * 16)} bytes," +
-                    " got ${resp.size} ")
-            return null
-        }
-
-        // Process the response data
-        return resp.sliceArray(12 until resp.size).chunked(16).withIndex().associate {
-            Pair(blockNumbers[it.index], it.value)
-        }
-    }
-
-    /**
      * Requests information from a card about supported communication protocols.
      *
      * If the command execution was successful (Status Flag 1 == 0), this returns the response data
