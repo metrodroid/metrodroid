@@ -83,6 +83,7 @@ model {
                     args << 'x86_64'
                     args << '-m64'
                     args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-mios-simulator-version-min=8.0'
                     args << '-D_Nullable_result=_Nullable'
                 }
                 linker.withArguments { args ->
