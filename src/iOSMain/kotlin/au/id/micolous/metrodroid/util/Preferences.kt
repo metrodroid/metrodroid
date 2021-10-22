@@ -46,7 +46,7 @@ actual object Preferences {
     actual val convertTimezone by BoolDelegate("pref_convert_timezones")
     actual val mfcFallbackReader: String get() = "" // useful only for reading really old dumps
     actual val mfcAuthRetry: Int get() = 5 // no MFC reader
-    actual val retrieveLeapKeys: Boolean get() = false // no Leap key retriever
+    actual var retrieveLeapKeys by BoolDelegate("pref_retrieve_leap_keys")
     actual val obfuscateTripTimes by BoolDelegate("pref_obfuscate_trip_times")
     actual val debugSpans by BoolDelegate("pref_debug_spans")
     actual val localisePlaces by BoolDelegate("pref_localise_places")

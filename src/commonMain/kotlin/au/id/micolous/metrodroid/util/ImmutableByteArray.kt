@@ -233,6 +233,17 @@ class ImmutableByteArray private constructor(
 
     @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = ImmutableByteArray::class)
+    class RawSerializer : KSerializer<ImmutableByteArray> {
+        override fun serialize(encoder: Encoder, value: ImmutableByteArray) {
+            encoder.encodeSerializableValue(ByteArraySerializer(), value.mData)
+        }
+
+        override fun deserialize(decoder: Decoder): ImmutableByteArray = ImmutableByteArray(
+                decoder.decodeSerializableValue(ByteArraySerializer()))
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Serializer(forClass = ImmutableByteArray::class)
     companion object : KSerializer<ImmutableByteArray> {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
                 mData = byteArrayOf(this) + second.mData)

@@ -77,8 +77,6 @@ Metrodroid for iOS **does not support**:
   * **Hu Tong Xing (互通行)** (untested) will probably _only_ read the Octopus (HKD) purse balance,
     and not the Shenzhen Tong (CNY) purse balance.
 
-* **Leap**: unlocking Leap cards is not implemented.
-
 * **MIFARE Classic based cards**: iOS 13 does not support the proprietary [Crypto-1][] algorithm
   used by MIFARE Classic, so we cannot read any such transit card. MFC support is omitted, including
   the following components:
