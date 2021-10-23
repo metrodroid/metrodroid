@@ -218,7 +218,7 @@ data class FelicaCard(
             val title = Localizer.localizeString(R.string.felica_system_title_format,
                 systemCode.hexString,
                 Localizer.localizeString(
-                    FelicaUtils.getFriendlySystemName(systemCode)))
+                    FelicaConsts.SYSTEM_NAMES[systemCode] ?: R.string.unknown))
 
             if (system.services.isEmpty()) {
                 ListItem(title, Localizer.localizeString(if (system.skipped) {

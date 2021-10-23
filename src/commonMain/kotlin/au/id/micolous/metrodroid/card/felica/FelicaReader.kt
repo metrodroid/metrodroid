@@ -200,7 +200,8 @@ object FelicaReader {
                 feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
                 for (serviceCode in serviceCodes) {
-                    val expectedBlocks = FelicaUtils.getBlockSize(systemCode, serviceCode)
+                    val expectedBlocks = FelicaConsts.EXPECTED_BLOCK_SIZE[
+                        systemCode]?.get(serviceCode)
                     Log.d(TAG, "- Fetching service code ${serviceCode.hexString}, expecting " +
                         "$expectedBlocks block(s)")
                     val blocks = mutableListOf<FelicaBlock>()

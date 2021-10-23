@@ -61,8 +61,8 @@ data class FelicaSystem(
                         Localizer.localizeString(R.string.felica_service_title_format,
                                 serviceCode.hexString,
                                 Localizer.localizeString(
-                                        FelicaUtils.getFriendlyServiceName(systemCode,
-                                                serviceCode))),
+                                    FelicaConsts.SERVICE_NAMES[systemCode]?.get(
+                                        serviceCode) ?: R.string.unknown)),
                         Localizer.localizePlural(R.plurals.block_count,
                                 service.blocks.size, service.blocks.size), service.rawData)
             }

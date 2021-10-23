@@ -2,7 +2,7 @@
  * FelicaConsts.kt
  *
  * Copyright 2011 Kazzz
- * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2021 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018-2019 Google Inc
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,14 @@
  */
 
 package au.id.micolous.metrodroid.card.felica
+
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.transit.edy.EdyTransitData
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData
+import au.id.micolous.metrodroid.transit.mrtj.MRTJTransitData
+import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
+import au.id.micolous.metrodroid.transit.suica.*
 
 object FelicaConsts {
     // CARD COMMANDS
@@ -104,4 +112,93 @@ object FelicaConsts {
     const val SERVICE_FELICA_LITE_READONLY = 0x0b00
     // FeliCa Lite, read-write mode
     const val SERVICE_FELICA_LITE_READWRITE = 0x0900
+
+    /**
+     * Translates the System Name to a human-readable name.
+     *
+     * Systems in FeliCa are like Applications in MIFARE.  They represent
+     * a particular system operator's data.
+     */
+    val SYSTEM_NAMES: Map<Int, StringResource> = mapOf(
+        SYSTEMCODE_SUICA to R.string.felica_system_cybernet,
+        SYSTEMCODE_SUICA_UNKNOWN to R.string.card_name_suica,
+        SYSTEMCODE_HAYAKAKEN to R.string.card_name_hayakaken,
+        EdyTransitData.SYSTEMCODE_EDY_EMPTY to R.string.card_name_edy,
+        SYSTEMCODE_COMMON to R.string.felica_system_common,
+        SYSTEMCODE_FELICA_LITE to R.string.card_media_felica_lite,
+        OctopusTransitData.SYSTEMCODE_OCTOPUS to R.string.card_name_octopus,
+        OctopusTransitData.SYSTEMCODE_SZT to R.string.card_name_szt,
+        KMTTransitData.SYSTEMCODE_KMT to R.string.card_name_kmt,
+        MRTJTransitData.SYSTEMCODE_MRTJ to R.string.card_name_mrtj,
+        SYSTEMCODE_NDEF to R.string.card_format_ndef,
+    )
+
+    /**
+     * Translates the Service Name to a human-readable name.
+     *
+     * Services in FeliCa are like Files in MIFARE.
+     *
+     * The first key is the System Code, the second key is the Service Code.
+     */
+    val SERVICE_NAMES: Map<Int, Map<Int, StringResource>> = mapOf(
+        SYSTEMCODE_SUICA to mapOf(
+            SERVICE_SUICA_ID to R.string.suica_file_id,
+            SERVICE_SUICA_HISTORY to R.string.suica_file_history,
+            SERVICE_SUICA_INOUT to R.string.suica_file_in_out,
+            SERVICE_SUICA_ADMISSION to R.string.suica_file_admission,
+        ),
+        SYSTEMCODE_COMMON to mapOf(
+            EdyTransitData.SERVICE_EDY_ID to R.string.edy_file_id,
+            EdyTransitData.SERVICE_EDY_BALANCE to R.string.edy_file_purse_balance,
+            EdyTransitData.SERVICE_EDY_HISTORY to R.string.edy_file_history,
+        ),
+        SYSTEMCODE_FELICA_LITE to mapOf(
+            SERVICE_FELICA_LITE_READONLY to R.string.felica_lite_read_only,
+            SERVICE_FELICA_LITE_READWRITE to R.string.felica_lite_read_write,
+        ),
+        OctopusTransitData.SYSTEMCODE_OCTOPUS to mapOf(
+            OctopusTransitData.SERVICE_OCTOPUS to R.string.card_name_octopus,
+        ),
+        OctopusTransitData.SYSTEMCODE_SZT to mapOf(
+            OctopusTransitData.SERVICE_SZT to R.string.card_name_szt,
+        ),
+        KMTTransitData.SYSTEMCODE_KMT to mapOf(
+            KMTTransitData.SERVICE_KMT_ID to R.string.kmt_file_id,
+            KMTTransitData.SERVICE_KMT_BALANCE to R.string.kmt_file_purse_balance,
+            KMTTransitData.SERVICE_KMT_HISTORY to R.string.kmt_file_history,
+        ),
+        MRTJTransitData.SYSTEMCODE_MRTJ to mapOf(
+            MRTJTransitData.SERVICE_MRTJ_ID to R.string.mrtj_file_id,
+            MRTJTransitData.SERVICE_MRTJ_BALANCE to R.string.mrtj_file_purse_balance,
+        ),
+    )
+
+    /**
+     * Expected number of blocks for a given System and Service Code.
+     *
+     * The first key is the System Code, the second key is the Service Code.
+     */
+    val EXPECTED_BLOCK_SIZE: Map<Int, Map<Int, Int>> = mapOf(
+        SYSTEMCODE_SUICA to mapOf(
+            SERVICE_SUICA_ID to 1,
+            SERVICE_SUICA_HISTORY to 20,
+            SERVICE_SUICA_INOUT to 3,
+            SERVICE_SUICA_ADMISSION to 2,
+            0x184b to 36,
+            0x194b to 16,
+            0x198b to 3,
+            0x234b to 4,
+            0x238b to 16,
+            0x23cb to 4,
+        ),
+        SYSTEMCODE_COMMON to mapOf(
+            0x394b to 1,
+            0x398b to 16,
+            0x39c9 to 6,
+        ),
+        SYSTEMCODE_SUICA_UNKNOWN to mapOf(
+            0x4b to 5,
+            0x28b to 5,
+        ),
+    )
 }
