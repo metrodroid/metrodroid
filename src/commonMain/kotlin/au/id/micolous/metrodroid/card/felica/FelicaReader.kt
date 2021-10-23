@@ -200,24 +200,53 @@ object FelicaReader {
                 feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
                 for (serviceCode in serviceCodes) {
-                    Log.d(TAG, "- Fetching service code ${serviceCode.hexString}")
+                    val expectedBlocks = FelicaUtils.getBlockSize(systemCode, serviceCode)
+                    Log.d(TAG, "- Fetching service code ${serviceCode.hexString}, expecting " +
+                        "$expectedBlocks block(s)")
                     val blocks = mutableListOf<FelicaBlock>()
+                    var addr = 0
 
                     try {
-                        // TODO: Request more than 1 block
-                        var addr = 0
-                        var result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
-                        while (result != null) {
-                            blocks += FelicaBlock(result)
-                            addr++
-                            if (addr >= 0x20 && liteMagic)
-                                break
-                            result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
+                        if (expectedBlocks != null) {
+                            // We know what the size will be, fetch multiple blocks at once.
+                            val addrs = (0 until expectedBlocks).asSequence()
+                            val chunkSize = if (
+                                liteMagic || systemCode == FelicaConsts.SYSTEMCODE_FELICA_LITE) {
+                                4
+                            } else {
+                                8
+                            }
+                            for (c in addrs.chunked(chunkSize)) {
+                                val result = fp.readWithoutEncryption(
+                                    systemNumber, serviceCode, c.asSequence())
+                                if (result == null) {
+                                    Log.w(TAG, "Error reading blocks: $c")
+                                    break
+                                }
+
+                                result.forEach {
+                                    if (it.key >= addr) {
+                                        addr = it.key + 1
+                                    }
+                                    blocks.add(FelicaBlock(it.value))
+                                }
+                            }
+                        }
+
+                      if (expectedBlocks == null || addr < expectedBlocks) {
+                            Log.d(TAG, "Incorrect or unknown block size, using fallback mode")
+                            var result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
+                            while (result != null) {
+                                blocks += FelicaBlock(result)
+                                addr++
+                                if (addr >= 0x20 && liteMagic)
+                                    break
+                                result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
+                            }
                         }
                     } catch (tl: CardLostException) {
                         partialRead = true
                     }
-
                     actionsDone += 1
                     feedbackInterface.updateProgressBar(actionsDone, totalActions)
 

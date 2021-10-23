@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.transit.suica.*
  * Utilities for working with FeliCa cards.
  */
 object FelicaUtils {
-
     /**
      * Translates the System Name to a human-readable name.
      *
@@ -117,6 +116,34 @@ object FelicaUtils {
             }
 
             else -> R.string.unknown
+        }
+    }
+
+    /**
+     * Gets the expected number of blocks for a given system and service code.
+     *
+     * @param systemCode FeliCa system code
+     * @param serviceCode FeliCa service code
+     * @return Number of blocks in the service code, or null if unknown.
+     */
+    fun getBlockSize(systemCode: Int, serviceCode: Int): Int? {
+        return when (systemCode) {
+            SYSTEMCODE_SUICA -> when (serviceCode) {
+                SERVICE_SUICA_ID -> 1
+                SERVICE_SUICA_HISTORY -> 20
+                SERVICE_SUICA_INOUT -> 3
+                SERVICE_SUICA_ADMISSION -> 2
+
+                0x184b -> 36
+                0x194b -> 16
+                0x198b -> 3
+                0x234b -> 4
+                0x238b -> 16
+                0x23cb -> 4
+                else -> null
+            }
+
+            else -> null
         }
     }
 }
