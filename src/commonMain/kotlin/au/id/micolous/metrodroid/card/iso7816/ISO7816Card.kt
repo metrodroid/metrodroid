@@ -41,7 +41,7 @@ import au.id.micolous.metrodroid.serializers.MultiTypeSerializer
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.china.BeijingTransitData
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 
 /**
@@ -90,13 +90,13 @@ data class ISO7816Card (
         return null
     }
 
-    override val manufacturingInfo get(): List<ListItem>? {
+    override val manufacturingInfo get(): List<ListItemInterface>? {
         val manufacturingInfo = applications.mapNotNull { it.manufacturingInfo }.flatten()
         return manufacturingInfo.ifEmpty { null }
     }
 
-    override val rawData get(): List<ListItem> {
-        val rawData = mutableListOf<ListItem>()
+    override val rawData get(): List<ListItemInterface> {
+        val rawData = mutableListOf<ListItemInterface>()
         for (app in applications) {
             val appName = app.appName
             val appTitle = when {
@@ -104,7 +104,7 @@ data class ISO7816Card (
                 appName.isASCII() -> appName.readASCII()
                 else -> appName.toHexString()
             }
-            val rawAppData = mutableListOf<ListItem>()
+            val rawAppData = mutableListOf<ListItemInterface>()
             val appData = app.appFci
             if (appData != null)
                 rawAppData.add(ListItemRecursive(

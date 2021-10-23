@@ -22,10 +22,13 @@
 package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 
-class TextListItem : ListItem {
-    constructor(textResource: StringResource) : super(textResource)
-    constructor(text: String) : super(text)
-    constructor(text: FormattedString) : super(text)
+class TextListItem private constructor(override val text1: FormattedString) : ListItemInterface {
+    constructor(textResource: StringResource) : this(
+        Localizer.localizeFormatted(textResource))
+
+    override val text2: FormattedString?
+        get() = null
 }

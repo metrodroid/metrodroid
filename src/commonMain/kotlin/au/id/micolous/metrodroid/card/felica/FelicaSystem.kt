@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
@@ -37,7 +38,7 @@ data class FelicaSystem(
     fun getService(serviceCode: Int) = services[serviceCode]
 
     /** Shows raw data for all Services within this System */
-    fun rawData(systemCode: Int): List<ListItem> {
+    fun rawData(systemCode: Int): List<ListItemInterface> {
         val emptyServices = services.filterValues { it.blocks.isEmpty() }
         val skippedServiceIds = emptyServices.filterValues { it.skipped }.keys
         val emptyServiceIds = emptyServices.filterValues { !it.skipped }.keys

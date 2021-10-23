@@ -22,17 +22,15 @@
 package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 
-class HeaderListItem : ListItem {
-    val headingLevel: Int
-    constructor(titleResource: StringResource, headingLevel: Int = 2) : super(titleResource) {
-        this.headingLevel = headingLevel
-    }
-    constructor(title: String) : super(title) {
-        this.headingLevel = 2
-    }
-    constructor(title: FormattedString) : super(title) {
-        this.headingLevel = 2
-    }
+class HeaderListItem private constructor(override val text1: FormattedString?, val headingLevel: Int): ListItemInterface {
+    constructor(titleResource: StringResource, headingLevel: Int = 2)
+            : this(Localizer.localizeFormatted(titleResource), headingLevel)
+    constructor(title: String) : this(FormattedString(title), 2)
+    constructor(title: FormattedString) : this(title, 2)
+
+    override val text2: FormattedString?
+        get() = null
 }

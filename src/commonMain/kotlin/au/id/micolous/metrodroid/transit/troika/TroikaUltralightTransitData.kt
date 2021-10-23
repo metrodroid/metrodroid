@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 
 @Parcelize
 class TroikaUltralightTransitData (private val mBlock: TroikaBlock): TransitData() {
@@ -47,7 +47,7 @@ class TroikaUltralightTransitData (private val mBlock: TroikaBlock): TransitData
     override val cardName: String
         get() = mBlock.cardName
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = mBlock.info
 
     companion object {

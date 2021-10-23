@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 
 /**
  * Troika cards.
@@ -37,7 +37,7 @@ class TroikaTransitData(private val mBlocks: List<TroikaIndexedBlock>) : Parcela
     val serialNumber: String?
         get() = mBlocks[0].block.serialNumber
 
-    val info: List<ListItem>?
+    val info: List<ListItemInterface>?
         get() = mBlocks.flatMap { (_, block) -> block.info.orEmpty() }.ifEmpty { null }
 
     val balance: TransitBalance
@@ -55,7 +55,8 @@ class TroikaTransitData(private val mBlocks: List<TroikaIndexedBlock>) : Parcela
     val subscriptions: List<Subscription>
         get() = mBlocks.mapNotNull {  (_, block) -> block.subscription }
 
-    val debug: List<ListItem>? get() =
+    val debug: List<ListItemInterface>
+        get() =
         mBlocks.flatMap {  (blockNum, block) -> listOf(HeaderListItem("Block $blockNum")) + block.debug }
 
     constructor(card: ClassicCard) : this(

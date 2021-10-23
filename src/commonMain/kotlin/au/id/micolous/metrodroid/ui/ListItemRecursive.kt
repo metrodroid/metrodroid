@@ -20,33 +20,32 @@
 package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 
-class ListItemRecursive : ListItem {
-    val subTree: List<ListItem>?
+class ListItemRecursive private constructor(
+    override val text1: FormattedString,
+    override val text2: FormattedString?,
+    val subTree: List<ListItemInterface>?): ListItemInterface {
 
-    constructor(text1: String, text2: String?, subTree: List<ListItem>?) : super(text1, text2) {
-        this.subTree = subTree
-    }
+    constructor(text1: String, text2: String?, subTree: List<ListItemInterface>?)
+            : this(FormattedString(text1), text2?.let { FormattedString(it) }, subTree)
 
-    constructor(text1Res: StringResource, text2: String?, subTree: List<ListItem>?) : super(text1Res, text2) {
-        this.subTree = subTree
-    }
+    constructor(text1Res: StringResource, text2: String?, subTree: List<ListItemInterface>?)
+            : this(Localizer.localizeFormatted(text1Res),
+        text2?.let { FormattedString(it) }, subTree)
 
     companion object {
 
-        fun collapsedValue(name: String, value: FormattedString): ListItem {
-            return collapsedValue(name, null, value)
-        }
+        fun collapsedValue(name: String, value: FormattedString): ListItemInterface =
+            collapsedValue(name, null, value)
 
-        fun collapsedValue(nameRes: StringResource, value: FormattedString?): ListItem {
-            return ListItemRecursive(nameRes, null,
-                    if (value != null) listOf(ListItem(null, value)) else null)
-        }
+        fun collapsedValue(nameRes: StringResource, value: FormattedString?): ListItemInterface =
+            ListItemRecursive(nameRes, null,
+                if (value != null) listOf(ListItem(null, value)) else null)
 
-        fun collapsedValue(title: String, subtitle: String?, value: FormattedString?): ListItem {
-            return ListItemRecursive(title, subtitle,
+        fun collapsedValue(title: String, subtitle: String?, value: FormattedString?): ListItemInterface =
+            ListItemRecursive(title, subtitle,
                     if (value != null) listOf(ListItem(null, value)) else null)
-        }
     }
 }

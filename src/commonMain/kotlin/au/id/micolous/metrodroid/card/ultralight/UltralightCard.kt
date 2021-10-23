@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.hexString
@@ -54,9 +55,9 @@ data class UltralightCard constructor(
         override val isPartialRead: Boolean = false,
         val cardRawModel: UltralightTypeRaw? = null
 ) : CardProtocol() {
-    override val manufacturingInfo: List<ListItem>?
+    override val manufacturingInfo: List<ListItemInterface>?
         get() {
-            val ret = mutableListOf<ListItem>()
+            val ret = mutableListOf<ListItemInterface>()
             if (cardModel.isNotEmpty()) {
                 ret += ListItem(R.string.mfu_model, FormattedString(cardModel))
                 try {

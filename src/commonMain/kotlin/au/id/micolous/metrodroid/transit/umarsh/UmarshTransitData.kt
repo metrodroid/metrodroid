@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.zolotayakorona.RussiaTaxCodes
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -319,7 +320,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
         else
             null
 
-    override fun getRawFields(level: TransitData.RawLevel): List<ListItem> = listOf(
+    override fun getRawFields(level: TransitData.RawLevel): List<ListItemInterface> = listOf(
             HeaderListItem("sector $secno")) + (
             if (level == TransitData.RawLevel.ALL)
                 listOf(
@@ -380,10 +381,10 @@ data class UmarshTransitData(val sectors: List<UmarshSector>) : TransitData() {
     override val subscriptions: List<Subscription>?
         get() = sectors.filter { it.denomination != UmarshDenomination.RUB }
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>
         get() = sectors.flatMap { it.genericInfo }
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = sectors.flatMap { it.getRawFields(level) }
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? = sectors.flatMap { it.getRawFields(level) }
 }
 
 object UmarshTransitFactory : ClassicCardTransitFactory {

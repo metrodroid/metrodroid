@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.transit.serialonly
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.UriListItem
 
 abstract class SerialOnlyTransitData : TransitData() {
@@ -32,8 +33,8 @@ abstract class SerialOnlyTransitData : TransitData() {
         get() = null
 
     protected abstract val reason: Reason
-    final override val info get(): List<ListItem>? {
-        val li = mutableListOf(
+    final override val info get(): List<ListItemInterface>? {
+        val li = mutableListOf<ListItemInterface>(
                 ListItem(R.string.card_format, cardName),
                 ListItem(R.string.card_serial_number, serialNumber))
         li += extraInfo ?: emptyList()

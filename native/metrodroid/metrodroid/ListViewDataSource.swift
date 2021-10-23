@@ -29,7 +29,7 @@ class ListItemRender {
     let url: String?
     let isHeader: Bool
     
-    init(li: ListItem, level: Int) {
+    init(li: ListItemInterface, level: Int) {
         text1 = li.text1
         text2 = li.text2
         url = (li as? UriListItem)?.uri
@@ -76,7 +76,7 @@ class ListViewSection {
 class ListViewDataSource : NSObject, UITableViewDataSource, UITableViewDelegate {
     let sections: [ListViewSection]
     
-    class func flatRecurse(output: inout [ListItemRender], input: [ListItem], level: Int) {
+    class func flatRecurse(output: inout [ListItemRender], input: [ListItemInterface], level: Int) {
         for cur in input {
             if let rec = cur as? metrolib.ListItemRecursive {
                 output.append(ListItemRender(li: cur, level: level))
@@ -91,7 +91,7 @@ class ListViewDataSource : NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
     // TODO: Remove this once we have tree
-    class func flatten(_ input: [ListItem]) -> [ListItemRender] {
+    class func flatten(_ input: [ListItemInterface]) -> [ListItemRender] {
         if input.first(where: {el in el is metrolib.ListItemRecursive}) == nil {
             return input.map { ListItemRender(li: $0, level: 0) }
         }
@@ -119,7 +119,7 @@ class ListViewDataSource : NSObject, UITableViewDataSource, UITableViewDelegate 
     }
     
 
-    init(items: [ListItem]) {
+    init(items: [ListItemInterface]) {
         var res: [ListViewSection] = []
         var curSection: [ListItemRender] = []
         var sectionTitle: String?

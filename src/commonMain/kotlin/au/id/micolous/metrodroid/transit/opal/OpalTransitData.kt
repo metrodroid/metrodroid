@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.time.*
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
@@ -86,7 +87,7 @@ class OpalTransitData (
     val lastTransactionTime
         get() = OPAL_EPOCH.dayMinute(mDay, mMinute)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOfNotNull(
                 HeaderListItem(R.string.general),
                 ListItem(R.string.opal_weekly_trips, weeklyTrips.toString()),

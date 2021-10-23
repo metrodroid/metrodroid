@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.XMLId
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
@@ -36,7 +36,7 @@ data class DesfireAuthLog(
         private val challenge: ImmutableByteArray,
         private val response: ImmutableByteArray,
         private val confirm: ImmutableByteArray) {
-    val rawData: ListItem
+    val rawData: ListItemInterface
         get() =
             ListItemRecursive(R.string.desfire_keyex, Localizer.localizeString(R.string.desfire_key_number,
                     NumberUtils.intToHex(keyId)), listOf(

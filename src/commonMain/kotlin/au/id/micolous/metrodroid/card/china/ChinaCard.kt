@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.KSerializer
@@ -37,7 +37,7 @@ data class ChinaCard(
         override val generic: ISO7816ApplicationCapsule,
         val balances: Map<Int, ImmutableByteArray>) : ISO7816Application() {
 
-    override val rawData: List<ListItem>?
+    override val rawData: List<ListItemInterface>?
         get() = balances.map { (idx, data) -> ListItemRecursive.collapsedValue(
             Localizer.localizeString(R.string.china_balance, idx),
             data.toHexDump()) }

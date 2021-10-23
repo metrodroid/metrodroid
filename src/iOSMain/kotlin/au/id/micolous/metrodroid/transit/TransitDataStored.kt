@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 
 @Parcelize
 @Suppress("unused") // Used from Swift
@@ -31,17 +31,17 @@ data class TransitDataStored internal constructor(
     override val serialNumber: String?,
     override val trips: List<Trip>?,
     override val subscriptions: List<Subscription>?,
-    override val info: List<ListItem>?,
+    override val info: List<ListItemInterface>?,
     override val cardName: String,
     override val moreInfoPage: String?,
     override val onlineServicesPage: String?,
     override val warning: String?,
     override val hasUnknownStations: Boolean,
-    val rawFieldsAll: List<ListItem>?,
-    val rawFieldsUnknown: List<ListItem>?
+    val rawFieldsAll: List<ListItemInterface>?,
+    val rawFieldsUnknown: List<ListItemInterface>?
 ): TransitData() {
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = when(level) {
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? = when(level) {
         RawLevel.NONE -> null
         RawLevel.UNKNOWN_ONLY -> rawFieldsUnknown
         RawLevel.ALL -> rawFieldsAll

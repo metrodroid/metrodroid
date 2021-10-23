@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.unknown
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.TextListItem
 
 /**
@@ -34,7 +34,7 @@ abstract class UnauthorizedTransitData : TransitData() {
     open val isUnlockable: Boolean
         get() = false
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOf(
                 HeaderListItem(R.string.fully_locked_title, headingLevel = 1),
                 TextListItem(if (isUnlockable) R.string.fully_locked_desc_unlockable else R.string.fully_locked_desc)

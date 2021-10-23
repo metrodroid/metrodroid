@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.card.desfire.files
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
@@ -41,7 +41,7 @@ class UnauthorizedDesfireFile(override val fileSettings: DesfireFileSettings?,
     override val data: ImmutableByteArray
         get() = throw IllegalStateException("Unauthorized access to file: $errorMessage")
 
-    override fun getRawData(id: Int): ListItem {
+    override fun getRawData(id: Int): ListItemInterface {
         val title = Localizer.localizeString(R.string.unauthorized_file_title_format,
                 id.hexString)
         val subtitle = fileSettings?.subtitle

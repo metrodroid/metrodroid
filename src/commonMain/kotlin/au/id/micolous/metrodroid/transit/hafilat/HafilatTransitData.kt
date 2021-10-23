@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Parser
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -51,7 +52,7 @@ class HafilatTransitData (
     override val cardName: String
         get() = Localizer.localizeString(NAME)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() {
             val items = mutableListOf<ListItem>()
             if (purse != null) {

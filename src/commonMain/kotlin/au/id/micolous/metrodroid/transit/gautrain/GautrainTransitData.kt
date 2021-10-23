@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.transit.ovc.OVChipIndex
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -82,7 +83,7 @@ data class GautrainTransitData(private val mSerial: Long,
         get() = TransitBalanceStored(GautrainLookup.parseCurrency(mBalances.maxByOrNull { it.mTxn }?.mBalance ?: 0),
                 En1545FixedInteger.parseDate(mExpdate, GautrainLookup.timeZone))
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = mBalances.mapIndexed {
+    override fun getRawFields(level: RawLevel): List<ListItemInterface> = mBalances.mapIndexed {
         idx, bal -> ListItem("Bal $idx", bal.toString())
     } + mIndex.getRawFields(level)
 }

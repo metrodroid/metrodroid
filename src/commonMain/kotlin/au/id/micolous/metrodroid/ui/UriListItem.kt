@@ -19,10 +19,18 @@
  */
 package au.id.micolous.metrodroid.ui
 
+import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.StringResource
 
 /**
  * ListItem which supports directing to a website.
  */
-class UriListItem(nameResource: StringResource, valueResource: StringResource, val uri: String) :
-    ListItem(nameResource, valueResource)
+class UriListItem private constructor(
+    override val text1: FormattedString,
+    override val text2: FormattedString, val uri: String)
+    : ListItemInterface {
+    constructor(nameResource: StringResource, valueResource: StringResource, uri: String) :
+            this(Localizer.localizeFormatted(nameResource),
+            Localizer.localizeFormatted(valueResource), uri)
+}

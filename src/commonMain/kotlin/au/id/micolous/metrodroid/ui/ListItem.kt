@@ -26,9 +26,10 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.PluralsResource
 import au.id.micolous.metrodroid.multi.StringResource
 
-open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
+class ListItem(override val text1: FormattedString?,
+               override val text2: FormattedString?): ListItemInterface {
 
-    protected constructor(nameResource: StringResource) : this(nameResource, null as FormattedString?)
+    constructor(nameResource: StringResource) : this(nameResource, null as FormattedString?)
 
     constructor(nameResource: StringResource, valueResource: StringResource) : this(nameResource, Localizer.localizeString(valueResource))
 

@@ -8,6 +8,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 
@@ -58,7 +59,7 @@ internal class TroikaPurseE5(val rawData: ImmutableByteArray) : TroikaBlock(
             ListItem("E", rawData.getBitsFromBuffer(223, 1).hexString)
     )
 
-    override val info: List<ListItem>
+    override val info: List<ListItemInterface>
         get() = super.info.orEmpty() + listOf(
                 ListItem(R.string.refill_counter, refillCounter.toString()),
                 ListItem(R.string.purse_ride_counter, tripsOnPurse.toString())

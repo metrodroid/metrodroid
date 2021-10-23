@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
@@ -57,7 +58,7 @@ class HSLTransitData(override val serialNumber: String?,
                      val securityLevel: Int?,
                      val version: Variant) : TransitData() {
 
-    override fun getRawFields(level: RawLevel): List<ListItem> = super.getRawFields(level).orEmpty() + listOf(
+    override fun getRawFields(level: RawLevel): List<ListItemInterface> = super.getRawFields(level).orEmpty() + listOf(
             ListItem("Application version", applicationVersion.toString()),
             ListItem("Application key version", applicationKeyVersion.toString()),
             ListItem("Platform type", platformType.toString()),

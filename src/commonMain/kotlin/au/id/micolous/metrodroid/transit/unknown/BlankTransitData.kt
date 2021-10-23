@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.TextListItem
 
 /**
@@ -40,7 +40,7 @@ class BlankTransitData(private val cardNameRes: StringResource): TransitData() {
     override val serialNumber: String?
         get() = null
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOf(
                 HeaderListItem(R.string.fully_blank_title, headingLevel = 1),
                 TextListItem(R.string.fully_blank_desc)

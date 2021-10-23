@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -68,7 +69,7 @@ data class CalypsoApplication (
     // This shows a country name if it's known, or "unknown (number)" if not.
     // Actually it uses manufacturer time zone but as it's only a day anyway,
     // and we don't know the manufacturer time zone, this is good enough
-    override val manufacturingInfo: List<ListItem>?
+    override val manufacturingInfo: List<ListItemInterface>?
         get() {
             val iccFile = getFile(File.ICC)
             val data = iccFile?.getRecord(1) ?: return emptyList()

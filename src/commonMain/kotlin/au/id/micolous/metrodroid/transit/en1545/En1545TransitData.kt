@@ -22,13 +22,14 @@ package au.id.micolous.metrodroid.transit.en1545
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.Preferences
 
 abstract class En1545TransitData : TransitData {
 
     protected val mTicketEnvParsed: En1545Parsed
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() {
             val li = mutableListOf<ListItem>()
             val tz = lookup.timeZone
@@ -86,7 +87,7 @@ abstract class En1545TransitData : TransitData {
         mTicketEnvParsed = parsed
     }
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? =
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? =
             mTicketEnvParsed.getInfo(
                     when (level) {
                         RawLevel.UNKNOWN_ONLY -> setOf(

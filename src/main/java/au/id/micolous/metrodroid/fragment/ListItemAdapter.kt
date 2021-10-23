@@ -29,12 +29,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.UriListItem
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.ui.ListItemInterface
 
-class ListItemAdapter(context: Context, items: List<ListItem>) : ArrayAdapter<ListItem>(context, 0, items) {
+class ListItemAdapter(context: Context, items: List<ListItemInterface>) : ArrayAdapter<ListItemInterface>(context, 0, items) {
 
     override fun getItemViewType(position: Int): Int = if (getItem(position) is HeaderListItem) 0 else 1
 

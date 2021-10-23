@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
@@ -45,10 +45,10 @@ data class DesfireCard constructor(
         override val isPartialRead: Boolean = false,
         val appListLocked: Boolean = false) : CardProtocol() {
 
-    override val manufacturingInfo: List<ListItem>
+    override val manufacturingInfo: List<ListItemInterface>
         get() = DesfireManufacturingData(manufacturingData).info
 
-    override val rawData: List<ListItem>
+    override val rawData: List<ListItemInterface>
         get() = applications.map { (id,app) ->
                 ListItemRecursive(makeName(id),
                         null, app.rawData)
