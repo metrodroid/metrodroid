@@ -1,5 +1,5 @@
 /*
- * Timestamp.kt
+ * TimestampFormatter.kt
  *
  * Copyright 2019 Google
  *
@@ -25,71 +25,32 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
 import kotlin.native.concurrent.SharedImmutable
 
-fun date2Timestamp(date: NSDate): TimestampFull {
-    val t = (date.timeIntervalSince1970 * 1000).toLong()
-    val tz = NSTimeZone.defaultTimeZone.name
-    return TimestampFull(timeInMillis = t, tz = MetroTimeZone(tz))
-}
-
-internal actual fun makeNow(): TimestampFull = date2Timestamp(NSDate())
-
-/** Reference to UTC timezone.  */
-@SharedImmutable
-private val UTC : NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
-
-// Currently empty but there are few time zones that may need mapping in
-// the future like e.g. America/Buenos_Aires
-@SharedImmutable
-private val tzOverrides = mapOf<String,String>()
-
-private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
-    if (tz == MetroTimeZone.LOCAL)
-      return NSTimeZone.defaultTimeZone
-    if (tz == MetroTimeZone.UTC || tz == MetroTimeZone.UNKNOWN)
-      return UTC
-    val tzMapped = tzOverrides[tz.olson] ?: tz.olson
-    val nstz = NSTimeZone.timeZoneWithName(tzName = tzMapped)
-    if (nstz != null) {
-        return nstz
-    }
-    Log.e("metroTz2NS", "Unable to find timezone ${tz.olson}. Using UTC as fallback but it's likely to result in wrong timestamps")
-    return UTC
-}
-
-internal actual fun epochDayHourMinToMillis(tz: MetroTimeZone, daysSinceEpoch: Int, hour: Int, min: Int): Long {
-    val dateComponents = NSDateComponents()
-    val ymd = getYMD(daysSinceEpoch)
-    val nstz = metroTz2NS(tz)
-    dateComponents.day = ymd.day.toLong()
-    dateComponents.month = ymd.month.oneBasedIndex.toLong()
-    dateComponents.year = ymd.year.toLong()
-    dateComponents.hour = hour.toLong()
-    dateComponents.minute = min.toLong()
-    dateComponents.second = 0.toLong()
-    dateComponents.nanosecond = 0.toLong()
-    dateComponents.timeZone = nstz
-
-    val gregorianCalendar = NSCalendar(calendarIdentifier = NSCalendarIdentifierGregorian)
-    gregorianCalendar.timeZone = nstz
-    val date = gregorianCalendar.dateFromComponents(dateComponents)
-    return (date!!.timeIntervalSince1970 * 1000).toLong()
-}
-
-internal actual fun getDaysFromMillis(millis: Long, tz: MetroTimeZone): DHM {
-    val nstz = metroTz2NS(tz)
-    val cal = NSCalendar(calendarIdentifier = NSCalendarIdentifierGregorian)
-    cal.timeZone = nstz
-    val d = NSDate.dateWithTimeIntervalSince1970(millis / 1000.0)
-    val comp = cal.componentsInTimeZone(nstz, fromDate = d)
-    return DHM(days = YMD(
-        year = comp.year.toInt(),
-        month = comp.month.toInt() - 1,
-        day = comp.day.toInt()).daysSinceEpoch,
-        hour = comp.hour.toInt(),
-        min = comp.minute.toInt())
-}
-
 actual object TimestampFormatter {
+
+    /** Reference to UTC timezone.  */
+    private val UTC: NSTimeZone = NSTimeZone.timeZoneForSecondsFromGMT(0)
+
+    // Currently empty but there are few time zones that may need mapping in
+    // the future like e.g. America/Buenos_Aires
+    private val tzOverrides = mapOf<String, String>()
+
+    private fun metroTz2NS(tz: MetroTimeZone): NSTimeZone {
+        if (tz == MetroTimeZone.LOCAL)
+            return NSTimeZone.defaultTimeZone
+        if (tz == MetroTimeZone.UTC || tz == MetroTimeZone.UNKNOWN)
+            return UTC
+        val tzMapped = tzOverrides[tz.olson] ?: tz.olson
+        val nstz = NSTimeZone.timeZoneWithName(tzName = tzMapped)
+        if (nstz != null) {
+            return nstz
+        }
+        Log.e(
+            "metroTz2NS",
+            "Unable to find timezone ${tz.olson}. Using UTC as fallback but it's likely to result in wrong timestamps"
+        )
+        return UTC
+    }
+
     // Equivalent of java Calendar to avoid restructuring the code
     data class Calendar(val time: NSDate, val tz: NSTimeZone)
     fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
@@ -122,7 +83,7 @@ actual object TimestampFormatter {
         dateFormatter.dateStyle = dateStyle
         dateFormatter.timeStyle = timeStyle
         dateFormatter.timeZone = c.tz
- 
+
         return dateFormatter.stringFromDate(c.time)
     }
 

@@ -236,6 +236,9 @@ dependencies {
     implementation 'com.github.bmelnychuk:atv:1.2.9'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     androidTestUtil "androidx.test:orchestrator:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
@@ -301,6 +304,7 @@ kotlin {
             dependencies {
                 api "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinserial_version"
                 api "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$kotlinserial_version"
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.0")
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'commonMain/kotlin')
@@ -555,15 +559,14 @@ android {
         // "pm clear" command after each test invocation. This command ensures
         // that the app's state is completely cleared between tests.
         testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        multiDexEnabled true
     }
 
     buildTypes {
         debug {
             pseudoLocalesEnabled true
             buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\""+androidLanguageList.join("\", \"")+"\", \"en-rXA\", \"ar-rXB\"}"
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                    'proguard.cfg'
         }
         dev.initWith(buildTypes.debug)
         dev {
@@ -605,6 +608,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
