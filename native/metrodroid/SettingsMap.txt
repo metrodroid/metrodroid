@@ -16,3 +16,5 @@
 "None (disabled)" = "string.raw_level_none";
 "Only unknown fields" = "string.raw_level_unknown_only";
 "All fields" = "string.raw_level_all";
+"Retrieve keys for Leap cards" = "string.leap_retrieve_keys";
+"NFC settings" = "string.nfc_settings";

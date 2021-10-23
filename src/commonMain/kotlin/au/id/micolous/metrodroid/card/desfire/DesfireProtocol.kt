@@ -43,7 +43,7 @@ import au.id.micolous.metrodroid.util.toImmutable
  */
 class DesfireProtocol(private val mTagTech: CardTransceiver) {
 
-    suspend fun getManufacturingData() = sendRequest(GET_MANUFACTURING_DATA, true)
+    fun getManufacturingData() = sendRequest(GET_MANUFACTURING_DATA, true)
 
     /**
      * Gets an Application List from the card.
@@ -55,7 +55,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
      * @return Array of integers representing DESFire application IDs, in big-endian.
      * @throws Exception on communication failures.
      */
-    suspend fun getAppList(): IntArray {
+    fun getAppList(): IntArray {
         val appDirBuf = sendRequest(GET_APPLICATION_DIRECTORY, true)
 
         return IntArray(appDirBuf.size / 3) {
@@ -63,7 +63,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         }
     }
 
-    suspend fun getFileList(): IntArray {
+    fun getFileList(): IntArray {
         val buf = sendRequest(GET_FILES, true)
         return IntArray(buf.size) { buf[it].toInt() }
     }
@@ -79,33 +79,33 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
      * @param appId App ID, in big-endian.
      * @throws Exception on communication failures.
      */
-    suspend fun selectApp(appId: Int) {
+    fun selectApp(appId: Int) {
         sendRequest(SELECT_APPLICATION, true,
                 (appId shr 16).toByte(), (appId shr 8).toByte(), appId.toByte())
     }
 
-    suspend fun getFileSettings(fileNo: Int) =
+    fun getFileSettings(fileNo: Int) =
             sendRequest(GET_FILE_SETTINGS, true, fileNo.toByte())
 
-    suspend fun readFile(fileNo: Int) =
+    fun readFile(fileNo: Int) =
             sendRequest(READ_DATA, true, fileNo.toByte(),
                 0x0.toByte(), 0x0.toByte(), 0x0.toByte(),
                 0x0.toByte(), 0x0.toByte(), 0x0.toByte())
 
-    suspend fun readRecord(fileNum: Int) = sendRequest(READ_RECORD, true, fileNum.toByte(),
+    fun readRecord(fileNum: Int) = sendRequest(READ_RECORD, true, fileNum.toByte(),
                 0x0.toByte(), 0x0.toByte(), 0x0.toByte(),
                 0x0.toByte(), 0x0.toByte(), 0x0.toByte())
 
-    suspend fun getValue(fileNum: Int) = sendRequest(GET_VALUE, true, fileNum.toByte())
+    fun getValue(fileNum: Int) = sendRequest(GET_VALUE, true, fileNum.toByte())
 
-    suspend fun sendUnlock(keyNum: Int) = sendRequest(UNLOCK, false, keyNum.toByte())
+    fun sendUnlock(keyNum: Int) = sendRequest(UNLOCK, false, keyNum.toByte())
 
-    private suspend fun sendRequest(command: Byte,
+    private fun sendRequest(command: Byte,
                                     getAdditionalFrame: Boolean,
                                     vararg parameters: Byte) =
             sendRequest(command, getAdditionalFrame, parameters.toImmutable())
 
-    private suspend fun sendRequest(command: Byte,
+    private fun sendRequest(command: Byte,
                                     getAdditionalFrame: Boolean,
                                     parameters: ImmutableByteArray): ImmutableByteArray {
         var output = ImmutableByteArray.empty()
@@ -163,7 +163,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         return output + 0.toByte()
     }
 
-    suspend fun sendAdditionalFrame(bytes: ImmutableByteArray) =
+    fun sendAdditionalFrame(bytes: ImmutableByteArray) =
             sendRequest(ADDITIONAL_FRAME, false, bytes)
 
     companion object {

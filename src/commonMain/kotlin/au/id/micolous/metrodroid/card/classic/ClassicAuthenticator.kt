@@ -40,7 +40,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
                                                 private val mRetryLimit: Int = Preferences.mfcAuthRetry,
                                                 private val mPreferredBundles: MutableList<String> = mutableListOf()
                                                ) {
-    private suspend fun tryKey(tech: ClassicCardTech,
+    private fun tryKey(tech: ClassicCardTech,
                        sectorIndex: Int,
                        sectorKey: ClassicSectorKey): Boolean {
         if (!tech.authenticate(sectorIndex, sectorKey))
@@ -51,7 +51,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
         return true
     }
 
-    private suspend fun tryCandidatesSub(tech: ClassicCardTech,
+    private fun tryCandidatesSub(tech: ClassicCardTech,
                                  sectorIndex: Int,
                                  candidates: Collection<ClassicSectorKey>): ClassicSectorKey? {
         candidates.forEach { sectorKey ->
@@ -61,7 +61,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
         return null
     }
 
-    private suspend fun tryCandidates(tech: ClassicCardTech,
+    private fun tryCandidates(tech: ClassicCardTech,
                               sectorIndex: Int,
                               candidates: Collection<ClassicSectorKey>,
                               keyType: ClassicSectorKey.KeyType): ClassicSectorKey? {
@@ -74,7 +74,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
         return null
     }
 
-    suspend fun authenticate(tech: ClassicCardTech,
+    fun authenticate(tech: ClassicCardTech,
                      feedbackInterface: TagReaderFeedbackInterface,
                      sectorIndex: Int,
                      expectDynamic: Boolean,

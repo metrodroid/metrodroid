@@ -31,10 +31,6 @@ import org.robolectric.annotation.Config
 import java.io.File
 import java.io.InputStream
 
-actual fun <T> runAsync(block: suspend () -> T) {
-    runBlocking { block() }
-}
-
 actual fun loadAssetStream(path: String): InputStream? {
     val uri = BaseInstrumentedTest::class.java.getResource("/$path")?.toURI() ?: return null
     val file = File(uri)
@@ -51,26 +47,6 @@ actual abstract class BaseInstrumentedTestPlatform {
 
     actual fun setLocale(languageTag: String) {
         LocaleTools.setLocale(languageTag, context.resources)
-    }
-
-    /**
-     * Sets a boolean preference.
-     * @param preference Key to the preference
-     * @param value Desired state of the preference.
-     */
-    private fun setBooleanPref(preference: String, value: Boolean) {
-        val prefs = Preferences.getSharedPreferences()
-        prefs.edit()
-                .putBoolean(preference, value)
-                .apply()
-    }
-
-    actual fun showRawStationIds(state: Boolean) {
-        setBooleanPref(Preferences.PREF_SHOW_RAW_IDS, state)
-    }
-
-    actual fun showLocalAndEnglish(state: Boolean) {
-        setBooleanPref(Preferences.PREF_SHOW_LOCAL_AND_ENGLISH, state)
     }
 
     actual fun loadAssetSafe(path: String) : Input? = loadAssetStream(path)?.let {

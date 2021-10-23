@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 
 class ISO7816Test : CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotlinFormat) {
     @Test
-    fun testIso7816Card() = runAsync {
+    fun testIso7816Card() {
         // Load up a Mobib card that is basically empty
         val card = loadCard<ISO7816Card>("iso7816/mobib_blank.json")
         val cardIso7816 = card.iso7816!!

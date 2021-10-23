@@ -46,7 +46,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }*/
 
-    fun doTest(path: String) = runAsync {
+    fun doTest(path: String) {
         val auth = CardKeysFromFiles(keyReader(path))
         for (dump in listAsset("$path/dumps").orEmpty()) {
             val raw = loadSmallAssetBytes("$path/dumps/$dump").toImmutable()

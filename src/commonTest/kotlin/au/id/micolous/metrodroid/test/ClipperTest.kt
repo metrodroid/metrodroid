@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
 import au.id.micolous.metrodroid.transit.clipper.ClipperTrip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.*
 
 
@@ -55,7 +56,7 @@ class ClipperTest : BaseInstrumentedTest() {
     @Test
     fun testDemoCard() {
         setLocale("en-US")
-        showRawStationIds(false)
+        Preferences.showRawStationIds = false
 
         assertEquals(32 * 2, refill.length)
 

@@ -81,7 +81,7 @@ object FelicaReader {
      * (`false`), read all system codes. Setting this to `true` will result in an incomplete
      * read, but is needed to work around a bug in iOS.
      */
-    suspend fun dumpTag(tag: FelicaTransceiver,
+    fun dumpTag(tag: FelicaTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface,
                         onlyFirst: Boolean = false):
             FelicaCard {

@@ -31,7 +31,8 @@ import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.TransitData
-import java.util.*
+import kotlin.reflect.KProperty
+import java.util.Locale
 
 actual object Preferences {
     const val PREF_LAST_READ_ID = "last_read_id"
@@ -55,10 +56,8 @@ actual object Preferences {
     private const val PREF_RAW_LEVEL = "pref_raw_level"
     const val PREF_THEME = "pref_theme"
     const val PREF_LANG_OVERRIDE = "pref_lang_override"
-    @VisibleForTesting
-    const val PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english"
-    @VisibleForTesting
-    const val PREF_SHOW_RAW_IDS = "pref_show_raw_ids"
+    private const val PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english"
+    private const val PREF_SHOW_RAW_IDS = "pref_show_raw_ids"
 
     private const val PREF_MAP_TILE_URL = "pref_map_tile_url"
     private const val PREF_MAP_TILE_SUBDOMAINS = "pref_map_tile_subdomains"
@@ -69,13 +68,18 @@ actual object Preferences {
 
     val PREFS_ANDROID_21 = arrayOf(PREF_LOCALISE_PLACES, PREF_LOCALISE_PLACES_HELP)
 
-    @VisibleForTesting
-    fun getSharedPreferences(): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.instance)
-    }
+    private fun getSharedPreferences(): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.instance)
 
-    private fun getBooleanPref(preference: String, default_setting: Boolean): Boolean {
-        return getSharedPreferences().getBoolean(preference, default_setting)
+    class BoolDelegate(private val preference: String, private val defaultSetting: Boolean) {
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean =
+            getSharedPreferences().getBoolean(preference, defaultSetting)
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
+            getSharedPreferences().edit()
+                .putBoolean(preference, value)
+                .apply()
+        }
     }
 
     /**
@@ -102,38 +106,25 @@ actual object Preferences {
      *
      * @return true if we should not show any card numbers
      */
-    actual val hideCardNumbers: Boolean
-        get() = getBooleanPref(PREF_HIDE_CARD_NUMBERS, false)
-    actual val obfuscateBalance: Boolean
-        get() = getBooleanPref(PREF_OBFUSCATE_BALANCE, false)
-    actual val obfuscateTripFares: Boolean
-        get() = getBooleanPref(PREF_OBFUSCATE_TRIP_FARES, false)
-    actual val showRawStationIds: Boolean
-        get() = getBooleanPref(PREF_SHOW_RAW_IDS, false)
-    actual val obfuscateTripDates: Boolean
-        get() = getBooleanPref(PREF_OBFUSCATE_TRIP_DATES, false)
-    actual val convertTimezone: Boolean
-        get() = getBooleanPref(PREF_CONVERT_TIMEZONES, false)
+    actual val hideCardNumbers by BoolDelegate(PREF_HIDE_CARD_NUMBERS, false)
+    actual val obfuscateBalance by BoolDelegate(PREF_OBFUSCATE_BALANCE, false)
+    actual val obfuscateTripFares by BoolDelegate(PREF_OBFUSCATE_TRIP_FARES, false)
+    actual var showRawStationIds by BoolDelegate(PREF_SHOW_RAW_IDS, false)
+    actual val obfuscateTripDates by BoolDelegate(PREF_OBFUSCATE_TRIP_DATES, false)
+    actual val convertTimezone by BoolDelegate(PREF_CONVERT_TIMEZONES, false)
 
-    actual val obfuscateTripTimes
-        get() = getBooleanPref(PREF_OBFUSCATE_TRIP_TIMES, false)
+    actual val obfuscateTripTimes by BoolDelegate(PREF_OBFUSCATE_TRIP_TIMES, false)
 
-    val hideUnsupportedRibbon
-        get() = getBooleanPref(PREF_HIDE_UNSUPPORTED_RIBBON, false)
-    actual val localisePlaces
-      get() = getBooleanPref(PREF_LOCALISE_PLACES, false)
+    val hideUnsupportedRibbon by BoolDelegate(PREF_HIDE_UNSUPPORTED_RIBBON, false)
+    actual val localisePlaces by BoolDelegate(PREF_LOCALISE_PLACES, false)
 
-    val speakBalance
-      get() = getBooleanPref("pref_key_speak_balance", false)
+    val speakBalance by BoolDelegate("pref_key_speak_balance", false)
 
-    actual val showBothLocalAndEnglish
-        get() = getBooleanPref(PREF_SHOW_LOCAL_AND_ENGLISH, false)
+    actual var showBothLocalAndEnglish by BoolDelegate(PREF_SHOW_LOCAL_AND_ENGLISH, false)
 
-    actual val retrieveLeapKeys
-        get() = getBooleanPref(PREF_RETRIEVE_LEAP_KEYS, false)
+    actual var retrieveLeapKeys by BoolDelegate(PREF_RETRIEVE_LEAP_KEYS, false)
 
-    actual val debugSpans
-        get() = getBooleanPref(PREF_DEBUG_SPANS, false)
+    actual val debugSpans by BoolDelegate(PREF_DEBUG_SPANS, false)
 
     val mapTileUrl: String
         get () {
@@ -178,7 +169,7 @@ actual object Preferences {
 
     val overrideLang get() = getStringPreference(PREF_LANG_OVERRIDE, "")
 
-    val felicaOnlyFirst get() = getBooleanPref(PREF_FELICA_ONLY_FIRST, false)
+    val felicaOnlyFirst by BoolDelegate(PREF_FELICA_ONLY_FIRST, false)
 
     actual val metrodroidVersion: String
         get() = BuildConfig.VERSION_NAME

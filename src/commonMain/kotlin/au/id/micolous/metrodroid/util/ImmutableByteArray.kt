@@ -23,7 +23,9 @@ package au.id.micolous.metrodroid.util
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.nativeFreeze
 import kotlinx.serialization.*
+import kotlinx.serialization.builtins.ByteArraySerializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.experimental.xor
@@ -39,6 +41,10 @@ class ImmutableByteArray private constructor(
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
     constructor(len: Int) : this(mData = ByteArray(len))
+
+    init {
+        nativeFreeze()
+    }
 
     @Transient
     val dataCopy: ByteArray
@@ -223,6 +229,17 @@ class ImmutableByteArray private constructor(
 
     infix fun xor(other: ImmutableByteArray) = ImmutableByteArray(size) {
         mData[it] xor other[it]
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Serializer(forClass = ImmutableByteArray::class)
+    class RawSerializer : KSerializer<ImmutableByteArray> {
+        override fun serialize(encoder: Encoder, value: ImmutableByteArray) {
+            encoder.encodeSerializableValue(ByteArraySerializer(), value.mData)
+        }
+
+        override fun deserialize(decoder: Decoder): ImmutableByteArray = ImmutableByteArray(
+                decoder.decodeSerializableValue(ByteArraySerializer()))
     }
 
     @OptIn(ExperimentalSerializationApi::class)

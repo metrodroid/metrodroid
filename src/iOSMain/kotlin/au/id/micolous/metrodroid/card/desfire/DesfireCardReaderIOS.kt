@@ -34,12 +34,11 @@ object DesfireCardReaderIOS {
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
         val xfer = ISO7816Transceiver(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        runBlocking {
-            Log.d(TAG, "Start async")
-            val df = DesfireCardReader.dumpTag(xfer, feedback)
-            Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
-            scannedAt = TimestampFull.now(), mifareDesfire = df)
-        }
+        val df = DesfireCardReader.dumpTag(xfer, feedback)
+        Card(
+            tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
+            scannedAt = TimestampFull.now(), mifareDesfire = df
+        )
     }
 
     private const val TAG = "DesfireCardReaderIOS"

@@ -114,7 +114,7 @@ open class JavaCardTransceiver(
         card?.disconnect(DisconnectDisposition.Reset)
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         if (printTrace) println(">>> ${data.getHexString()}")
 
         val r = wrapJavaExceptions {
@@ -131,7 +131,7 @@ class JavaFeliCaTransceiver private constructor(
     override val uid: ImmutableByteArray?
         get() = transceiver.uid
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         requireFeliCa()
 
         // Wrap in a pseudo APDU

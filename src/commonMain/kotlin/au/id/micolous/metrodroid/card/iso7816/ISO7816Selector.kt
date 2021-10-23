@@ -34,7 +34,7 @@ data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
         return ret.toString()
     }
 
-    suspend fun select(tag: ISO7816Protocol): ImmutableByteArray? {
+    fun select(tag: ISO7816Protocol): ImmutableByteArray? {
         var fci: ImmutableByteArray? = null
         for (sel in path) {
             fci = sel.select(tag)

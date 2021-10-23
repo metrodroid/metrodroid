@@ -41,7 +41,7 @@ object DesfireCardReader {
      * field.
      * @throws Exception On communication errors.
      */
-    suspend fun dumpTag(tech: CardTransceiver,
+     fun dumpTag(tech: CardTransceiver,
                         feedbackInterface: TagReaderFeedbackInterface): DesfireCard? {
         val apps = mutableMapOf<Int, DesfireApplication>()
 
@@ -159,7 +159,7 @@ object DesfireCardReader {
         return DesfireCard(manufData, apps, isPartialRead = false, appListLocked = appListLocked)
     }
 
-    private suspend fun wrap(cmd: Byte, f: suspend () -> ImmutableByteArray): RawDesfireFile? {
+    private fun wrap(cmd: Byte, f: () -> ImmutableByteArray): RawDesfireFile? {
         try {
             return RawDesfireFile(null, f(), readCommand=cmd)
         } catch (e: DesfireProtocol.PermissionDeniedException) {
@@ -169,7 +169,7 @@ object DesfireCardReader {
         }
     }
 
-    suspend fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): RawDesfireFile {
+    fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): RawDesfireFile {
         wrap (DesfireProtocol.READ_DATA) {
             desfireTag.readFile(fileId)
         }?.let { return it }

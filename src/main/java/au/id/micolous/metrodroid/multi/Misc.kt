@@ -23,3 +23,4 @@ package au.id.micolous.metrodroid.multi
 actual interface Parcelable: android.os.Parcelable
 actual typealias Parcelize = kotlinx.parcelize.Parcelize
 actual typealias VisibleForTesting = androidx.annotation.VisibleForTesting
+actual fun Any?.nativeFreeze(): Any? = this

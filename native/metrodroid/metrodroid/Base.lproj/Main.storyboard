@@ -1022,7 +1022,7 @@
                             <outlet property="delegate" destination="m4f-OM-iCE" id="w7B-5W-az8"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Raw Info" image="circle.grid.hex" catalog="system" id="Y02-Nq-iPR"/>
+                    <tabBarItem key="tabBarItem" title="Raw Info" image="circle.hexagongrid" catalog="system" id="Y02-Nq-iPR"/>
                     <connections>
                         <outlet property="errorView" destination="3KD-My-rh8" id="nRm-VZ-sQg"/>
                     </connections>
