@@ -31,3 +31,4 @@ fun <T> logAndSwiftWrap(tag: String, msg: String, f: () -> T): T {
         throw Exception(ex)
     }
 }
+expect fun Any?.nativeFreeze(): Any?

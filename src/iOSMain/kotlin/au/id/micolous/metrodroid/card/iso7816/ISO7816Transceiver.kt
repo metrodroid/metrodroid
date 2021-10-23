@@ -26,12 +26,20 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.coroutines.suspendCoroutine
+import kotlin.native.concurrent.freeze
 
 class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
     override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
+
+    init {
+       freeze()
+    }
 
     // Kotlin-objc interface behaves weirdly if we pass it directly,
     // packing as data class is nicer and works better
@@ -40,12 +48,19 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
         val sw1: UByte,
         val sw2: UByte,
         val err: NSError?
-    )
+    ) {
+        init {
+            freeze()
+        }
+    }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val (rep, sw1, sw2, err) = suspendCoroutine<Capsule> { cont ->
-            Log.d(TAG, ">>> $data")
-            tag.transmit(data.toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+        Log.d(TAG, ">>> $data")
+        val (rep, sw1, sw2, err) = runBlocking {
+            val chan = Channel<Capsule>()
+            chan.freeze()
+            tag.transmit(data.toNSData(), chan)
+            chan.receive()
         }
         if (err != null) {
             Log.d(TAG, "<!< $err")
@@ -62,10 +77,19 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
     // Kotlin apparently lack imports for NFCTagMiFare
     interface SwiftWrapper {
         fun getIdentifier(): NSData
-        fun transmit(input: NSData, callback: (Capsule) -> Unit)
+        fun transmit(input: NSData, channel: SendChannel<Capsule>)
     }
 
     companion object {
         private const val TAG = "ISO7816Transceiver"
+
+        fun callback(channel: SendChannel<Capsule>, reply: NSData,
+                     sw1: UByte, sw2: UByte, error: NSError?) {
+            val capsule = Capsule(reply, sw1, sw2, error)
+            runBlocking {
+                channel.send(capsule)
+                channel.close()
+            }
+        }
     }
 }

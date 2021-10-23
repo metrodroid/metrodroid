@@ -56,7 +56,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
 
     private fun rotate(input: ImmutableByteArray) = input.sliceOffLen(1, input.size - 1) + input.sliceOffLen(0,1)
 
-    override suspend fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
+    override fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
         if (key.key.size != ClassicSectorKey.AES_KEY_LEN) {
             return false
         }
@@ -103,7 +103,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
         return aesCmac8(key=kmac!!, macdata=macdata)
     }
 
-    override suspend fun readBlock(block: Int): ImmutableByteArray {
+    override fun readBlock(block: Int): ImmutableByteArray {
         val cmd = ImmutableByteArray.of(0x33, block.toByte(), 0, 1)
         val reply = tag.transceive(cmd + computeMac(cmd, rctr))
         rctr++
@@ -117,7 +117,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
     companion object {
         private const val TAG = "PlusProtocol"
 
-        private suspend fun checkSectorPresence(tag: CardTransceiver, sectorIndex: Int): Boolean {
+        private fun checkSectorPresence(tag: CardTransceiver, sectorIndex: Int): Boolean {
             val keyNum = 2 * sectorIndex + 0x4000
             val cmd = ImmutableByteArray.of(0x70, keyNum.toByte(), (keyNum shr 8).toByte(), 0x06,
                                             0, 0, 0, 0, 0, 0)
@@ -125,7 +125,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
             return (reply.size == 17 && reply[0] == 0x90.toByte())
         }
 
-        suspend fun connect(tag: CardTransceiver): PlusProtocol? {
+        fun connect(tag: CardTransceiver): PlusProtocol? {
             try {
                 if (!checkSectorPresence(tag, 0)) {
                     return null

@@ -71,7 +71,7 @@ data class KROCAPConfigDFApplication (
             override val applicationNames: List<ImmutableByteArray>
                 get() = APP_NAME
 
-            override suspend fun dumpTag(protocol: ISO7816Protocol,
+            override fun dumpTag(protocol: ISO7816Protocol,
                                          capsule: ISO7816ApplicationMutableCapsule,
                                          feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
                 feedbackInterface.updateStatusText(

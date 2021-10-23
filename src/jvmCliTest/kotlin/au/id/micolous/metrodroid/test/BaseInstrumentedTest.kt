@@ -8,10 +8,6 @@ import java.io.File
 import java.io.InputStream
 import java.util.Locale
 
-actual fun <T> runAsync(block: suspend () -> T) {
-    runBlocking { block() }
-}
-
 actual fun loadAssetStream(path: String): InputStream? {
     val uri = BaseInstrumentedTest::class.java.getResource("/$path")?.toURI() ?: return null
     val file = File(uri)
@@ -22,14 +18,6 @@ actual abstract class BaseInstrumentedTestPlatform actual constructor() {
     actual fun setLocale(languageTag: String) {
         Preferences.languageActual = languageTag.substringBefore("-")
         Locale.setDefault(Locale.forLanguageTag(languageTag))
-    }
-
-    actual fun showRawStationIds(state: Boolean) {
-        Preferences.showRawStationIdsActual = state
-    }
-
-    actual fun showLocalAndEnglish(state: Boolean) {
-        Preferences.showLocalAndEnglishActual = state
     }
 
     actual fun loadAssetSafe(path: String) : Input? =

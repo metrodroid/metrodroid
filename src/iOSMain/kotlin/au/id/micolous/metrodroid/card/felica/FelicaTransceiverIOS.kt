@@ -25,23 +25,38 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.coroutines.suspendCoroutine
+import kotlin.native.concurrent.freeze
 
 class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): FelicaTransceiver {
     override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
     override val defaultSystemCode : Int? = defaultSysCode.toImmutable().byteArrayToInt()
 
+    init {
+        freeze()
+    }
+
     data class Capsule (
         val reply: NSData,
-        val err: NSError?)
+        val err: NSError?) {
+        init {
+            freeze()
+        }
+    }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        val (repl, err) = suspendCoroutine<Capsule> { cont ->
-            Log.d(TAG, ">>> $data")
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+        Log.d(TAG, ">>> $data")
+        val chan = Channel<Capsule>()
+        val (repl, err) = runBlocking {
+            chan.freeze()
             // iOS adds the length byte itself
-            tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData()) { cap -> cont.resumeWith(Result.success(cap)) }
+            tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData(), chan)
+            chan.receive()
         }
         if (err != null) {
             Log.d(TAG, "<!< $err")
@@ -58,10 +73,19 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
     // Kotlin apparently lack imports for NFCTagMiFare
     interface SwiftWrapper {
         fun getIdentifier(): NSData
-        fun transmit(input: NSData, callback: (Capsule) -> Unit)
+        fun transmit(input: NSData, channel: SendChannel<Capsule>)
     }
 
     companion object {
         private const val TAG = "FelicaTransceiver"
+
+        fun callback(channel: SendChannel<Capsule>, reply: NSData,
+            error: NSError?) {
+            val capsule = Capsule(reply, error)
+            runBlocking {
+                channel.send(capsule)
+                channel.close()
+            }
+        }
     }
 }

@@ -29,8 +29,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object NFCVCardReader {
     const val MAX_PAGES = 255
-    suspend fun dumpTag(tech: CardTransceiver,
-                        feedbackInterface: TagReaderFeedbackInterface): NFCVCard {
+    fun dumpTag(
+        tech: CardTransceiver,
+        feedbackInterface: TagReaderFeedbackInterface
+    ): NFCVCard {
         feedbackInterface.updateProgressBar(0, MAX_PAGES)
 
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.vicinity_reading))

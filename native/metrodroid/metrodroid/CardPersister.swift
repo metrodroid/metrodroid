@@ -497,8 +497,8 @@ class CardPersister {
         }
         
         var digest = Data(count: Int(CC_SHA512_DIGEST_LENGTH))
-        digest.withUnsafeMutableBytes {
-            _ = CC_SHA512_Final($0, &context)
+        digest.withUnsafeMutableBytes { (ptr: UnsafeMutableRawBufferPointer) -> Void in
+            _ = CC_SHA512_Final(ptr.baseAddress?.assumingMemoryBound(to: UInt8.self), &context)
         }
         
         return digest.map { String(format: "%02hhx", $0) }.joined()

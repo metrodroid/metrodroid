@@ -34,20 +34,18 @@ object PlusCardReaderIOS {
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
         val xfer = UltralightTransceiverIOS(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        runBlocking {
-            Log.d(TAG, "Start async")
-            feedback.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
-            feedback.showCardType(null)
+        feedback.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
+        feedback.showCardType(null)
 
-            val techWrapper = PlusProtocol.connect(xfer) ?: throw Exception("Unknown MifarePlus")
+        val techWrapper = PlusProtocol.connect(xfer) ?: throw Exception("Unknown MifarePlus")
 
-            val keyRetriever = CardKeysDummy()
+        val keyRetriever = CardKeysDummy()
 
-            val p = ClassicReader.readCard(
-                keyRetriever, techWrapper, feedback)
-            Card(tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
-                scannedAt = TimestampFull.now(), mifareClassic = p)
-        }
+        val p = ClassicReader.readCard(keyRetriever, techWrapper, feedback)
+        Card(
+            tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
+            scannedAt = TimestampFull.now(), mifareClassic = p
+        )
     }
 
     private const val TAG = "PlusCardReaderIOS"

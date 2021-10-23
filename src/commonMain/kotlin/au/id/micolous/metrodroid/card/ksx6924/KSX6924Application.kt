@@ -151,9 +151,11 @@ data class KSX6924Application (
              * @return TMoneyCard of the card contents. Returns null if an unsupported card is in the
              * field.
              */
-            override suspend fun dumpTag(protocol: ISO7816Protocol,
-                                         capsule: ISO7816ApplicationMutableCapsule,
-                                         feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
+            override fun dumpTag(
+                protocol: ISO7816Protocol,
+                capsule: ISO7816ApplicationMutableCapsule,
+                feedbackInterface: TagReaderFeedbackInterface
+            ): List<ISO7816Application>? {
                 val balanceResponse: ImmutableByteArray
                 val extraRecords = ArrayList<ImmutableByteArray>()
 

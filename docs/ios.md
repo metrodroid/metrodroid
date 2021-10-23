@@ -137,8 +137,6 @@ Some accessibility features are not available from iOS version:
 
 * Locales without real translations are omitted: Irish, Maori, Malay and Traditional Chinese.
   
-* Currently the library tests don't run due to a compiler problem.
-
 * Currently there are no iOS-specific tests.
 
 ## Build Metrodroid for iOS from source

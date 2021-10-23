@@ -51,7 +51,7 @@ class ConcurrentFileReader private constructor(
         override fun readToString(): String = realRead(available2G).decodeToString()
     }
 
-    fun makeInputStream(): Input = FileInput(this)
+    fun makeInput(): Input = FileInput(this)
 
     fun read(off: Long, len: Int): ByteArray {
         val actualLen = minOf(len, (fileLength - off).toInt())

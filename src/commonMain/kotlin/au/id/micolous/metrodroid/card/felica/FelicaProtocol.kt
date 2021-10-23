@@ -101,16 +101,16 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * @throws CardLostException If the tag moves out of the NFC field
      * @throws CardTransceiveException On communications errors
      */
-    private suspend fun sendRequest(commandCode: Byte, systemNumber: Int?, vararg data: Byte) =
+    private fun sendRequest(commandCode: Byte, systemNumber: Int?, vararg data: Byte) =
             sendRequest(commandCode, systemNumber, data.toImmutable())
 
-    private suspend fun sendRequest(commandCode: Byte, systemNumber: Int?) =
+    private fun sendRequest(commandCode: Byte, systemNumber: Int?) =
             sendRequest(commandCode, systemNumber, ImmutableByteArray.empty())
 
-    private suspend fun sendRequest(commandCode: Byte, systemNumber: Int?, vararg data: Number) =
+    private fun sendRequest(commandCode: Byte, systemNumber: Int?, vararg data: Number) =
             sendRequest(commandCode, systemNumber, data.toImmutable())
 
-    private suspend fun sendRequest(
+    private fun sendRequest(
             commandCode: Byte, systemNumber: Int?, data: ImmutableByteArray): ImmutableByteArray {
         if (commandCode.toInt() and 0x01 != 0) {
             throw IllegalArgumentException("commandCode must be even")
@@ -146,7 +146,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      *
      * @throws CardLostException if the tag went out of the field
      */
-    suspend fun getSystemCodeList(): IntArray {
+    fun getSystemCodeList(): IntArray {
         val res = sendRequest(COMMAND_REQUEST_SYSTEMCODE, 0)
 
         if (res.size < 10) {
@@ -173,7 +173,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      *
      * @returns True if the card is a FeliCa Lite.
      */
-    suspend fun pollFelicaLite(): Boolean {
+    fun pollFelicaLite(): Boolean {
         return try {
             pollForSystemCode(SYSTEMCODE_FELICA_LITE) != null
         } catch (e: CardLostException) {
@@ -203,7 +203,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      *
      * @param systemCodes An array of systemCodes to Poll for.
      */
-    suspend fun pollForSystemCodes(systemCodes: IntArray): IntArray {
+    fun pollForSystemCodes(systemCodes: IntArray): IntArray {
         val r = mutableMapOf<Int, Int>()
 
         for (systemCode in systemCodes) {
@@ -241,7 +241,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      *
      * One must select a system code first with pollForSystemCode().
      */
-    suspend fun getServiceCodeList(systemNumber: Int): IntArray {
+    fun getServiceCodeList(systemNumber: Int): IntArray {
         val serviceCodeList = mutableListOf<Int>()
 
         // index 0 = root area
@@ -289,7 +289,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * @throws CardTransceiveException On communication errors
      * @throws CardLostException If the tag moves out of the field, or there is no response
      */
-    suspend fun pollForSystemCode(systemCode: Int, maxTries: Int = 3): Int? {
+    fun pollForSystemCode(systemCode: Int, maxTries: Int = 3): Int? {
         if (maxTries < 1) {
             throw IllegalArgumentException("maxTries must be at least 1")
         }
@@ -330,7 +330,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * If the card does not support [getSystemCodeList], you may need to use [pollForSystemCode]
      * instead.
      */
-    suspend fun resetMode(systemNumber: Int) {
+    fun resetMode(systemNumber: Int) {
         val res = sendRequest(COMMAND_RESET_MODE, systemNumber,
                 0, 0) // Reserved parameter, always specify 0x0000
 
@@ -360,7 +360,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * Returns 2 bytes of 0xffff when the card reaches EOF.
      * All return values are little endian.
      */
-    private suspend fun searchServiceCode(systemNumber: Int, index: Int): ImmutableByteArray {
+    private fun searchServiceCode(systemNumber: Int, index: Int): ImmutableByteArray {
         if (index < 0 || index > 0xffff) {
             throw IllegalArgumentException("index must be in range 0-0xffff")
         }
@@ -384,7 +384,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * @returns Block data, or null on read error.
      * @throws CardLostException if the tag went out of the field
      */
-    suspend fun readWithoutEncryption(
+    fun readWithoutEncryption(
             systemNumber: Int, serviceCode: Int, blockNumber: Int): ImmutableByteArray? {
         val r = ImmutableByteArray.ofB(
                 0x01, // Number of service codes
@@ -412,7 +412,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      *
      * However, the regular FeliCa specification does not indicate an actual limit.
      */
-    suspend fun readWithoutEncryption(
+    fun readWithoutEncryption(
             systemNumber: Int, serviceCode: Int, blockNumbers: IntArray):
             Map<Int, ImmutableByteArray>? {
         if (blockNumbers.size > 15) {
@@ -477,7 +477,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * @param systemNumber The system number to use for communication with the card.
      * @return On success, a Request Specification Version structure, starting from Format Version.
      */
-    suspend fun requestSpecificationVersion(systemNumber: Int): ImmutableByteArray? {
+    fun requestSpecificationVersion(systemNumber: Int): ImmutableByteArray? {
         val r = ImmutableByteArray.empty(2)
 
         // Older cards don't respond to the request, rather than returning an error.

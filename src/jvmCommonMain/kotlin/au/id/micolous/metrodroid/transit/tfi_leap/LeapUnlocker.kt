@@ -64,7 +64,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
     }
 
     @Throws(Exception::class)
-    private suspend fun unlock1f(desfireTag: DesfireProtocol,
+    private fun unlock1f(desfireTag: DesfireProtocol,
                                  files: Map<Int, RawDesfireFile>): DesfireAuthLog? {
         if (mUnlocked1f)
             return null
@@ -116,7 +116,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
     }
 
     @Throws(Exception::class)
-    private suspend fun unlockRest(desfireTag: DesfireProtocol, files: Map<Int, RawDesfireFile>): DesfireAuthLog? {
+    private fun unlockRest(desfireTag: DesfireProtocol, files: Map<Int, RawDesfireFile>): DesfireAuthLog? {
         if (mUnlockedRest)
             return null
 
@@ -175,7 +175,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
         return DesfireAuthLog(0x03, challenge, response.toImmutable(), confirm)
     }
 
-    override suspend fun unlock(desfireTag: DesfireProtocol,
+    override fun unlock(desfireTag: DesfireProtocol,
                                 files: Map<Int, RawDesfireFile>, fileId: Int,
                                 authLog: MutableList<DesfireAuthLog>) {
         var cur: DesfireAuthLog? = null

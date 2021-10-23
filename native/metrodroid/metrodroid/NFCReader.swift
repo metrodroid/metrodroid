@@ -47,10 +47,9 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
             return tag.identifier
         }
         
-        func transmit(input: Data,
-                      callback__ callback: @escaping (ISO7816Transceiver.Capsule) -> Void) {
+        func transmit(input: Data, channel__ channel: Kotlinx_coroutines_coreSendChannel) {
             tag.sendMiFareISO7816Command(NFCISO7816APDU(data: input)!, completionHandler: {data,sw1,sw2,err in
-                callback(ISO7816Transceiver.Capsule(rep: data, sw1: sw1, sw2: sw2, err: err))})
+                ISO7816Transceiver.companion.callback(channel: channel, reply: data, sw1: sw1, sw2: sw2, error: err)})
         }
     }
     
@@ -65,16 +64,16 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
             return tag.identifier
         }
         
-        func transmit(input: Data, callback__ callback: @escaping (ISO7816Transceiver.Capsule) -> Void) {
+        func transmit(input: Data, channel__ channel: Kotlinx_coroutines_coreSendChannel) {
             tag.sendCommand(apdu: NFCISO7816APDU(data: input)!, completionHandler: {data,sw1,sw2,err in
-                callback(ISO7816Transceiver.Capsule(rep: data, sw1: sw1, sw2: sw2, err: err))})
+                ISO7816Transceiver.companion.callback(channel: channel, reply: data, sw1: sw1, sw2: sw2, error: err)})
         }
     }
     
     class FelicaWrapper : FelicaTransceiverIOSSwiftWrapper {
-        func transmit(input: Data, callback: @escaping (FelicaTransceiverIOS.Capsule) -> Void) {
+        func transmit(input: Data, channel: Kotlinx_coroutines_coreSendChannel) {
             print("Sending \(input)")
-            tag.sendFeliCaCommand(commandPacket: input, completionHandler: {reply, err in callback(FelicaTransceiverIOS.Capsule(reply: reply, err: err))})
+            tag.sendFeliCaCommand(commandPacket: input, completionHandler: {reply, err in FelicaTransceiverIOS.companion.callback(channel: channel, reply: reply, error: err)})
         }
         
         var tag: NFCFeliCaTag
@@ -89,9 +88,12 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
     }
 
     class UltralightWrapper : UltralightTransceiverIOSSwiftWrapper {
-        func transmit(input: Data, callback_ callback: @escaping (UltralightTransceiverIOS.Capsule) -> Void) {
+        func transmit(input: Data, channel_ channel: Kotlinx_coroutines_coreSendChannel) {
             print("Sending \(input)")
-            tag.sendMiFareCommand(commandPacket: input, completionHandler: {reply, err in callback(UltralightTransceiverIOS.Capsule(reply: reply, err: err))})
+            tag.sendMiFareCommand(commandPacket: input, completionHandler: {reply, err in
+                print ("Reply \(reply), err \(String(describing: err))")
+                UltralightTransceiverIOS.companion.callback(channel: channel, reply: reply, error: err)
+            })
         }
         
         var tag: NFCMiFareTag

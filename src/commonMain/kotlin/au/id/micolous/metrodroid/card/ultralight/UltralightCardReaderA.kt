@@ -27,8 +27,10 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object UltralightCardReaderA {
-    suspend fun dumpTagA(tech: CardTransceiver,
-                        feedbackInterface: TagReaderFeedbackInterface): UltralightCard? {
+    fun dumpTagA(
+        tech: CardTransceiver,
+        feedbackInterface: TagReaderFeedbackInterface
+    ): UltralightCard? {
         feedbackInterface.updateProgressBar(0, 1)
 
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfu_reading))

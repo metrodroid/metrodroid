@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object ClassicReader {
-    private suspend fun readSectorWithKey(tech: ClassicCardTech, sectorIndex: Int,
+    private fun readSectorWithKey(tech: ClassicCardTech, sectorIndex: Int,
         correctKey: ClassicSectorKey,
         extraKey: ClassicSectorKey? = null): ClassicSectorRaw {
         val blocks = mutableListOf<ImmutableByteArray>()
@@ -86,7 +86,7 @@ object ClassicReader {
         return null
     }
 
-    suspend fun readCard(retriever: CardKeysRetriever, tech: ClassicCardTech,
+    fun readCard(retriever: CardKeysRetriever, tech: ClassicCardTech,
                  feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
         val sectorCount = tech.sectorCount
         val sectors = mutableListOf<ClassicSector>()
@@ -156,13 +156,13 @@ object ClassicReader {
         return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = false, subType = tech.subType)
     }
 
-    suspend fun readPlusCardNoSak(retriever: CardKeysRetriever, tag: CardTransceiver,
+    fun readPlusCardNoSak(retriever: CardKeysRetriever, tag: CardTransceiver,
                                   feedbackInterface: TagReaderFeedbackInterface): ClassicCard? {
         val protocol = PlusProtocol.connect(tag) ?: return null
         return readCard(retriever, protocol, feedbackInterface)
     }
 
-    suspend fun readPlusCard(retriever: CardKeysRetriever, tag: CardTransceiver,
+    fun readPlusCard(retriever: CardKeysRetriever, tag: CardTransceiver,
                              feedbackInterface: TagReaderFeedbackInterface,
                              atqa: Int, sak: Short): ClassicCard? {
         // MIFARE Type Identification Procedure
