@@ -53,18 +53,20 @@ class OrcaTransaction (private val mTimestamp: Long,
         get() = !mIsTopup && mTransType == TRANS_TYPE_CANCEL_TRIP
 
     // FIXME: Need to find bus route #s
-    override val routeNames: List<FormattedString>
+    override val routeNames: List<FormattedString>?
         get() = when {
             mIsTopup -> listOf(Localizer.localizeFormatted(R.string.orca_topup))
-            isLink -> listOf(FormattedString.english("Link Light Rail"))
-            isSounder -> listOf(FormattedString.english("Sounder Train"))
+            isLink -> super.routeNames
+            isSounder -> super.routeNames
+            isSeattleStreetcar -> super.routeNames
             mAgency == OrcaTransitData.AGENCY_ST -> listOf(FormattedString.english("Express Bus"))
             isMonorail -> listOf(FormattedString.english("Seattle Monorail"))
             isWaterTaxi -> listOf(FormattedString.english("Water Taxi"))
+            isSwift -> super.routeNames
             mAgency == OrcaTransitData.AGENCY_KCM -> {
                 when (mFtpType) {
                     FTP_TYPE_BUS -> listOf(FormattedString.english("Bus"))
-                    FTP_TYPE_BRT -> listOf(FormattedString.english("BRT"))
+                    FTP_TYPE_BRT -> super.routeNames
                     else -> emptyList()
                 }
             }

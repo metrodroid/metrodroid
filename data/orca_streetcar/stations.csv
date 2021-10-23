@@ -1,27 +1,27 @@
-reader_id,stop_name,short_name,stop_lat,stop_lon,comment
-9056,"14th Ave S & Washington","14th & Washington",47.6005639165279,-122.314181327819,""
-9065,"Broadway & E Denny NB","Broadway & Denny NB",47.6181568313295,-122.320747375488,""
-9066,"Broadway & E Denny SB","Broadway & Denny SB",47.6180158077495,-122.320980727672,""
-9061,"Broadway & Marion NB","Broadway & Marion NB",47.6098502555259,-122.320717871189,""
-9062,"Broadway & Marion SB","Broadway & Marion SB",47.6098086650832,-122.320913672447,""
-9064,"Broadway & Pine NB","Broadway & Pine NB",47.6150723056943,-122.320758104324,""
-9063,"Broadway & Pine SB","Broadway & Pine SB",47.6161933149567,-122.320924401283,"Renamed from Pike"
-9059,"Broadway & Terrace NB","Broadway & Terrace NB",47.6054649941559,-122.320712506771,""
-9060,"Broadway & Terrace SB","Broadway & Terrace SB",47.6049785239516,-122.320937812328,""
-9057,"E Yesler Wy & Broadway EB","Yesler & Broadway EB",47.6016327884738,-122.32006072998,""
-9058,"E Yesler Wy & Broadway WB","Yesler & Broadway WB",47.6017431107308,-122.320216298103,""
-9007,"Fairview & Aloha","Fairview & Aloha",47.627573814398,-122.332401573657,"Renamed from Fairview & Campus"
-9006,"Lake Union Park","Lake Union Park",47.6259030928503,-122.336444975041,""
-9001,"McGraw Square","McGraw Square",47.6129802934938,-122.337363660335,""
-9051,"Occidental S & S Jackson","Occidental & Jackson",47.5991973,-122.3332461,""
-9055,"S Jackson & 12th Ave S","Jackson & 12th Ave",47.599210161578,-122.315737009048,"Renamed from 13th"
-9052,"S Jackson & 5th Ave S EB","Jackson & 5th Ave EB",47.5992065442833,-122.326776981353,""
-9053,"S Jackson & 5th Ave S WB","Jackson & 5th Ave WB",47.5992065442833,-122.326776981353,""
-9054,"S Jackson & 7th Ave S","Jackson & 7th Ave",47.5992002140171,-122.323275357484,""
-9005,"Terry & Republican NB","Terry & Republican NB",47.6234169199518,-122.337044477462,"Renamed from Terry & Mercer NB"
-9004,"Terry & Thomas NB","Terry & Thomas NB",47.6213677268386,-122.337264418601,""
-9002,"Westlake & 7th NB","Westlake & 7th NB",47.6154700859254,-122.337763309478,""
-9003,"Westlake & Denny NB","Westlake & Denny NB",47.6180953595593,-122.33830243349,""
-9008,"Westlake & Mercer SB","Westlake & Mercer SB",47.624065919813,-122.33858205378,""
-9010,"Westlake & 9th SB","Westlake & 9th SB",47.6179615678097,-122.33851969242,""
-9009,"Westlake & Thomas SB","Westlake & Thomas SB",47.6214526971832,-122.338578701019,""
+reader_id,stop_name,short_name,line_id,stop_lat,stop_lon,comment
+9056,14th Ave S & Washington,14th & Washington,2,47.60056392,-122.3141813,
+9065,Broadway & E Denny NB,Broadway & Denny NB,2,47.61815683,-122.3207474,
+9066,Broadway & E Denny SB,Broadway & Denny SB,2,47.61801581,-122.3209807,
+9061,Broadway & Marion NB,Broadway & Marion NB,2,47.60985026,-122.3207179,
+9062,Broadway & Marion SB,Broadway & Marion SB,2,47.60980867,-122.3209137,
+9064,Broadway & Pine NB,Broadway & Pine NB,2,47.61507231,-122.3207581,
+9063,Broadway & Pine SB,Broadway & Pine SB,2,47.61619331,-122.3209244,Renamed from Pike
+9059,Broadway & Terrace NB,Broadway & Terrace NB,2,47.60546499,-122.3207125,
+9060,Broadway & Terrace SB,Broadway & Terrace SB,2,47.60497852,-122.3209378,
+9057,E Yesler Wy & Broadway EB,Yesler & Broadway EB,2,47.60163279,-122.3200607,
+9058,E Yesler Wy & Broadway WB,Yesler & Broadway WB,2,47.60174311,-122.3202163,
+9007,Fairview & Aloha,Fairview & Aloha,1,47.62757381,-122.3324016,Renamed from Fairview & Campus
+9006,Lake Union Park,Lake Union Park,1,47.62590309,-122.336445,
+9001,McGraw Square,McGraw Square,1,47.61298029,-122.3373637,
+9051,Occidental S & S Jackson,Occidental & Jackson,2,47.5991973,-122.3332461,
+9055,S Jackson & 12th Ave S,Jackson & 12th Ave,2,47.59921016,-122.315737,Renamed from 13th
+9052,S Jackson & 5th Ave S EB,Jackson & 5th Ave EB,2,47.59920654,-122.326777,
+9053,S Jackson & 5th Ave S WB,Jackson & 5th Ave WB,2,47.59920654,-122.326777,
+9054,S Jackson & 7th Ave S,Jackson & 7th Ave,2,47.59920021,-122.3232754,
+9005,Terry & Republican NB,Terry & Republican NB,1,47.62341692,-122.3370445,Renamed from Terry & Mercer NB
+9004,Terry & Thomas NB,Terry & Thomas NB,1,47.62136773,-122.3372644,
+9002,Westlake & 7th NB,Westlake & 7th NB,1,47.61547009,-122.3377633,
+9003,Westlake & Denny NB,Westlake & Denny NB,1,47.61809536,-122.3383024,
+9008,Westlake & Mercer SB,Westlake & Mercer SB,1,47.62406592,-122.3385821,
+9010,Westlake & 9th SB,Westlake & 9th SB,1,47.61796157,-122.3385197,
+9009,Westlake & Thomas SB,Westlake & Thomas SB,1,47.6214527,-122.3385787,
