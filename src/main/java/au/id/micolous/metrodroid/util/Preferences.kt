@@ -122,7 +122,7 @@ actual object Preferences {
 
     actual var showBothLocalAndEnglish by BoolDelegate(PREF_SHOW_LOCAL_AND_ENGLISH, false)
 
-    actual val retrieveLeapKeys by BoolDelegate(PREF_RETRIEVE_LEAP_KEYS, false)
+    actual var retrieveLeapKeys by BoolDelegate(PREF_RETRIEVE_LEAP_KEYS, false)
 
     actual val debugSpans by BoolDelegate(PREF_DEBUG_SPANS, false)
 

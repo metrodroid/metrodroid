@@ -31,7 +31,7 @@ expect object Preferences {
     val convertTimezone: Boolean
     val mfcFallbackReader: String
     val mfcAuthRetry: Int
-    val retrieveLeapKeys: Boolean
+    var retrieveLeapKeys: Boolean
     var showBothLocalAndEnglish: Boolean
     val language: String
     val region: String?

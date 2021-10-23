@@ -11,7 +11,7 @@ actual object Preferences {
     actual val convertTimezone: Boolean = false
     actual val mfcFallbackReader: String = ""
     actual val mfcAuthRetry: Int = 5
-    actual val retrieveLeapKeys: Boolean = false
+    actual var retrieveLeapKeys: Boolean = false
     actual val obfuscateTripTimes: Boolean = false
     actual val debugSpans: Boolean = false
     actual val localisePlaces: Boolean = false
