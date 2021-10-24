@@ -6,8 +6,8 @@ all: orca.mdst orca.csv
 clean:
 	rm -f orca.mdst orca.csv
 
-orca.mdst: stations.csv agencies.csv mdst
-	python3 $(MDST)/csv2pb.py stations.csv -n NOTICE -p agencies.csv -o $@ -V 2 -l en_US
+orca.mdst: stations.csv agencies.csv lines.csv mdst
+	python3 $(MDST)/csv2pb.py stations.csv -n NOTICE -p agencies.csv -r lines.csv -o $@ -V 2 -l en_US
 
 copy: orca.copy
 
