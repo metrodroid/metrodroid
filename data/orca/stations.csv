@@ -1,15 +1,15 @@
 operator_id,reader_id,stop_name,short_name,line_id,stop_lat,stop_lon
-7,458753,Everett Station,Everett,8,47.9754544,-122.19764
-7,458754,Edmonds Station,Edmonds,8,47.8110791,-122.384302
-7,458755,King Street,King St,"8,9",47.598445,-122.330161
-7,458756,Tukwila Station,Tukwila,9,47.4606933,-122.240506
-7,458757,Kent,,9,47.384257,-122.233151
-7,458758,Auburn Station,Auburn,9,47.3065155,-122.232117
-7,458759,Sumner Station,Sumner,9,47.2016541,-122.244566
-7,458760,Puyallup Station,Puyallup,9,47.1926177,-122.29555
-7,458761,Tacoma Dome Station,Tacoma Dome,9,47.2400587,-122.427522
-7,466433,Mukilteo Station,Mukilteo,8,47.9491683,-122.3010919
-7,466434,Lakewood Station,Lakewood,9,47.1529884,-122.5015344
+7,458753,Everett Station,Everett,6,47.9754544,-122.19764
+7,458754,Edmonds Station,Edmonds,6,47.8110791,-122.384302
+7,458755,King Street,King St,"6,7",47.598445,-122.330161
+7,458756,Tukwila Station,Tukwila,7,47.4606933,-122.240506
+7,458757,Kent,,7,47.384257,-122.233151
+7,458758,Auburn Station,Auburn,7,47.3065155,-122.232117
+7,458759,Sumner Station,Sumner,7,47.2016541,-122.244566
+7,458760,Puyallup Station,Puyallup,7,47.1926177,-122.29555
+7,458761,Tacoma Dome Station,Tacoma Dome,7,47.2400587,-122.427522
+7,466433,Mukilteo Station,Mukilteo,6,47.9491683,-122.3010919
+7,466434,Lakewood Station,Lakewood,7,47.1529884,-122.5015344
 7,469103,University of Washington,UW Station,1,47.6496,-122.3037
 7,469104,Capitol Hill,,1,47.6192,-122.3202
 7,469105,Angle Lake,,1,47.4227143,-122.2978669
@@ -26,7 +26,7 @@ operator_id,reader_id,stop_name,short_name,line_id,stop_lat,stop_lon
 7,471955,Rainier Beach,,1,47.5222626,-122.279579
 7,471956,Tukwila International Blvd,Tukwila,1,47.4642754,-122.288391
 7,471957,SeaTac/Airport,SeaTac,1,47.4445305,-122.297012
-7,473061,South Tacoma Station,South Tacoma,9,47.2038608,-122.4877278
+7,473061,South Tacoma Station,South Tacoma,7,47.2038608,-122.4877278
 7,473768,Northgate,,1,47.7030545,-122.3283918
 7,473769,Roosevelt,,1,47.676595,-122.315976
 7,473770,U District,,1,47.6603545,-122.3141008

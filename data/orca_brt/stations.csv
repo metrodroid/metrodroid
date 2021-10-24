@@ -1,5 +1,5 @@
 reader_id,stop_name,short_name,line_id,stop_lat,stop_lon,comment
-8101,Bellevue Transit Ctr,Bell TC,2,47.6155475,-122.1953814,
+8101,Bellevue Transit Center,Bellevue TC,2,47.6155475,-122.1953814,
 8102,NE 8th & 124th NE EB,8th & 124th EB,2,47.61742579,-122.1759606,
 8103,NE 8th & 140th NE EB,8th & 140th EB,2,47.61707383,-122.1530932,Renamed from 104th
 8104,156th NE & NE 10th NB,156th & 10th NB,2,47.61832136,-122.1323168,
@@ -7,7 +7,7 @@ reader_id,stop_name,short_name,line_id,stop_lat,stop_lon,comment
 8106,NE 24th & Bel-Red WB,24th & Bel-Red WB,2,47.631649,-122.134445,
 8107,156th NE at OTC NB,156th @ OTC NB,2,47.64398846,-122.1321881,
 8108,148th NE & NE 51st NB,148th & 51st NB,2,47.6557369,-122.1430939,
-8109,Redmond Transit Ctr,Redmond TC,2,47.67665094,-122.124935,
+8109,Redmond Transit Center,Redmond TC,2,47.67665094,-122.124935,
 8110,148th NE & NE 87th SB,148th & 87th SB,2,47.68076804,-122.1452343,
 8111,148th NE & NE Old Redmond Rd SB,148th & Old Redmond SB,2,47.66712685,-122.1432951,
 8112,148th NE & NE 51st SB,148th & 51st SB,2,47.65466371,-122.1434641,
