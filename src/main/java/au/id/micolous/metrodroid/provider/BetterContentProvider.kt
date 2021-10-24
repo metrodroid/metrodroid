@@ -37,15 +37,8 @@ import android.text.TextUtils
 import org.jetbrains.annotations.NonNls
 
 abstract class BetterContentProvider(private val mHelperClass: Class<out SQLiteOpenHelper>, private val mDirType: String, private val mItemType: String,
-                                     private val mTableName: String, private val mContentUri: Uri) : ContentProvider() {
+                                     private val mTableName: String, private val mContentUri: Uri, private val mUriMatcher: UriMatcher) : ContentProvider() {
     private var mHelper: SQLiteOpenHelper? = null
-    private val mUriMatcher: UriMatcher
-
-    init {
-        val basePath = mContentUri.path!!.substring(1)
-
-        mUriMatcher = createUriMatcher(mContentUri, basePath)
-    }
 
     override fun onCreate(): Boolean {
         try {
@@ -130,13 +123,6 @@ abstract class BetterContentProvider(private val mHelperClass: Class<out SQLiteO
         return count
     }
 
-    protected open fun createUriMatcher(contentUri: Uri, @NonNls basePath: String): UriMatcher {
-        val matcher = UriMatcher(UriMatcher.NO_MATCH)
-        matcher.addURI(contentUri.authority, basePath, CODE_COLLECTION)
-        matcher.addURI(contentUri.authority, "$basePath/#", CODE_SINGLE)
-        return matcher
-    }
-
     protected open fun appendWheres(builder: SQLiteQueryBuilder, matcher: UriMatcher, uri: Uri) {
         when (matcher.match(uri)) {
             CODE_COLLECTION -> {
@@ -150,5 +136,12 @@ abstract class BetterContentProvider(private val mHelperClass: Class<out SQLiteO
     companion object {
         protected const val CODE_COLLECTION = 100
         protected const val CODE_SINGLE = 101
+
+        fun createUriMatcher(contentUri: Uri, @NonNls basePath: String): UriMatcher {
+            val matcher = UriMatcher(UriMatcher.NO_MATCH)
+            matcher.addURI(contentUri.authority, basePath, CODE_COLLECTION)
+            matcher.addURI(contentUri.authority, "$basePath/#", CODE_SINGLE)
+            return matcher
+        }
     }
 }
