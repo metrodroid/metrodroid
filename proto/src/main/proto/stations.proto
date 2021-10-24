@@ -11,9 +11,12 @@ message StationDb {
     // Version number for the data in this file (not the schema).
     uint64 version = 1;
 
-    // Language codes (two-letter ISO code) where we should show the "local_name"
-    // instead of the english_name.
-    repeated string local_languages = 2;
+    /* Language codes (two-letter ISO code) where we should show the `local_name`
+     * instead of the `english_name`.
+     *
+     * DEPRECATED: use `languages` instead.
+     */
+    repeated string local_languages = 2 [deprecated = true];
 
     // All operators / companies in the network.
     map<uint32, Operator> operators = 3;
@@ -22,11 +25,16 @@ message StationDb {
     map<uint32, Line> lines = 4;
 
     // Provides a hint for LocaleSpan about which language to mark up the
-    // names with, to improve pronunciation.
+    // English names with, to improve pronunciation.
     string tts_hint_language = 5;
 
     // Licensing notice for the file.
     string license_notice = 6;
+
+    /* A map of language codes (two-letter ISO code) to language ID, local to
+     * this file, used for `Names.other` and `Names.other_short`.
+     */
+    map<string, uint32> languages = 7;
 }
 
 enum TransportType {
@@ -48,12 +56,18 @@ enum TransportType {
 
 message Names {
     string english = 1;
-
-    string local = 2;
-
     string english_short = 3;
 
-    string local_short = 4;
+    /* Name, translated into `StationDb.local_languages`.
+     * DEPRECATED: Use `translated` instead.
+     */
+    string local = 2 [deprecated = true];
+    string local_short = 4 [deprecated = true];
+
+    /* Non-English names. Key is an identifier in `StationDb.languages`.
+     */
+    map<uint32, string> other = 5;
+    map<uint32, string> other_short = 6;
 }
 
 message Operator {
