@@ -76,7 +76,7 @@ class AndroidFelicaTransceiver(private val tag: Tag) : FelicaTransceiver, Closea
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
             nfcF!!.transceive(data.dataCopy)
         }.toImmutable()
 }
@@ -111,7 +111,7 @@ class AndroidNfcVTransceiver(private val tag: Tag) : CardTransceiver, Closeable 
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray =
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray =
             wrapAndroidExceptions { nfcV!!.transceive(data.dataCopy) }.toImmutable()
 }
 
@@ -144,7 +144,7 @@ class AndroidIsoTransceiver(private val tag: Tag) : CardTransceiver, Closeable {
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray =
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray =
             wrapAndroidExceptions { isoDep!!.transceive(data.dataCopy)
         }.toImmutable()
 }
@@ -178,7 +178,7 @@ class AndroidNfcATransceiver(private val tag: Tag) : CardTransceiver, Closeable 
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
             nfcA!!.transceive(data.dataCopy)
         }.toImmutable()
 }

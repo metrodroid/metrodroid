@@ -202,7 +202,7 @@ data class CalypsoApplication (
 
             override val stopAfterFirstApp get() = true
 
-            override suspend fun dumpTag(protocol: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule, feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application> {
+            override fun dumpTag(protocol: ISO7816Protocol, capsule: ISO7816ApplicationMutableCapsule, feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application> {
                 // At this point, the connection is already open, we just need to dump the right things...
 
                 feedbackInterface.updateStatusText(Localizer.localizeString(R.string.calypso_reading))

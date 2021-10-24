@@ -36,8 +36,6 @@ import au.id.micolous.metrodroid.util.StationTableReader
 
 private const val NAME = "Leap"
 
-internal expect fun createUnlockerDispatch(appId: Int, manufData: ImmutableByteArray): DesfireUnlocker?
-
 @Parcelize
 class LockedLeapTransitData : TransitData() {
     override val serialNumber: String?

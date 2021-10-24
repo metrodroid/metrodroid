@@ -63,7 +63,7 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
         }
     }
 
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         val cls = data[0]
         if (cls != CLASS_ISO7816) {
             return COMMAND_NOT_ALLOWED

@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class CEPASProtocol(private val mTagTech: ISO7816Protocol) {
 
-    suspend fun getPurse(purseId: Int): ImmutableByteArray? {
+    fun getPurse(purseId: Int): ImmutableByteArray? {
         try {
             return mTagTech.sendRequest(ISO7816Protocol.CLASS_90,
                     0x32.toByte(), purseId.toByte(), 0.toByte(), 0.toByte()).ifEmpty { null }
@@ -39,7 +39,7 @@ class CEPASProtocol(private val mTagTech: ISO7816Protocol) {
 
     }
 
-    suspend fun getHistory(purseId: Int): ImmutableByteArray? {
+    fun getHistory(purseId: Int): ImmutableByteArray? {
         var historyBuff: ImmutableByteArray
         try {
             historyBuff = mTagTech.sendRequest(

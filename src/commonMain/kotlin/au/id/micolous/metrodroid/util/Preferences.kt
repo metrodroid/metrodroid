@@ -26,13 +26,13 @@ expect object Preferences {
     val obfuscateBalance: Boolean
     val obfuscateTripFares: Boolean
     val hideCardNumbers: Boolean
-    val showRawStationIds:Boolean
+    var showRawStationIds:Boolean
     val obfuscateTripDates: Boolean
     val convertTimezone: Boolean
     val mfcFallbackReader: String
     val mfcAuthRetry: Int
-    val retrieveLeapKeys: Boolean
-    val showBothLocalAndEnglish: Boolean
+    var retrieveLeapKeys: Boolean
+    var showBothLocalAndEnglish: Boolean
     val language: String
     val region: String?
     val obfuscateTripTimes: Boolean

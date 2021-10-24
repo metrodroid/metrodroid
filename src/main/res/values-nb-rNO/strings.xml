@@ -1018,4 +1018,24 @@
     <string name="compass_sub_three_zone">Tre soner</string>
     <string name="compass_sub_two_zone">To soner</string>
     <string name="compass_sub_one_zone">Én sone</string>
+    <string name="location_nagoya">Nagoya, Japan</string>
+    <string name="navigo_sector_id_station_id">Sektor-ID %1$d, stasjons-ID %2$d</string>
+    <string name="card_name_metromoney">Metromoney</string>
+    <string name="oura_billet_tarif_normal">Normalprisbillett</string>
+    <string name="gironde_line">Linje %d</string>
+    <string name="open_arrow">Åpne liste</string>
+    <string name="ovc_sub_student_weekend_korting">Studentukerabatt</string>
+    <string name="russia_region_18_udmurt">Udmurtia-republikken</string>
+    <string name="russia_region_12_mari_el">Mari El-republikken</string>
+    <string name="location_vladimir">Vladimir, Russland</string>
+    <string name="emv_pan_sequence_number">PAN-sekvensnummer</string>
+    <string name="nfc_connection_failed">NFC-tilkobling til %s mislyktes</string>
+    <string name="navigo_sector_station_id">Sektor %1$s, stasjons-ID %2$d</string>
+    <string name="mobib_jump_1_trip"></string>
+    <string name="rkf_stockholm_72_hours">72-timersbillett for Stockholm</string>
+    <string name="closed_arrow">Sammenfold liste</string>
+    <string name="rkf_stockholm_7_days">7-dagersbillett for Stockholm</string>
+    <string name="russia_region_65_sakhalin">Sakhalin oblast</string>
+    <string name="russia_region_66_sverdlovsk">Sverdlovsk oblast</string>
+    <string name="russia_region_74_chelyabinsk">Tsjeljabinsk oblast</string>
 </resources>

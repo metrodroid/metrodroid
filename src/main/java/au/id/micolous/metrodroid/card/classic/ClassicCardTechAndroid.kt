@@ -36,7 +36,7 @@ class ClassicCardTechAndroid(private val tech: MifareClassic,
 
     override fun getBlockCountInSector(sectorIndex: Int) = tech.getBlockCountInSector(sectorIndex)
 
-    override suspend fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean = wrapAndroidExceptions {
+    override fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean = wrapAndroidExceptions {
         if (key.key.size != 6)
             false
         else if (key.type === ClassicSectorKey.KeyType.A || key.type === ClassicSectorKey.KeyType.UNKNOWN) {
@@ -47,7 +47,7 @@ class ClassicCardTechAndroid(private val tech: MifareClassic,
 
     override val sectorCount = tech.sectorCount
 
-    override suspend fun readBlock(block: Int): ImmutableByteArray = wrapAndroidExceptions {
+    override fun readBlock(block: Int): ImmutableByteArray = wrapAndroidExceptions {
         try {
             tech.readBlock(block).toImmutable()
         } catch (e: TagLostException) {

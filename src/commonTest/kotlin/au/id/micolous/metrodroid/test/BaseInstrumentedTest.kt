@@ -3,12 +3,8 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.util.Input
 import kotlin.test.assertNotNull
 
-expect fun <T> runAsync(block: suspend () -> T)
-
 expect abstract class BaseInstrumentedTestPlatform() {
     fun setLocale(languageTag: String)
-    fun showRawStationIds(state: Boolean)
-    fun showLocalAndEnglish(state: Boolean)
     fun loadAssetSafe(path: String) : Input?
     fun listAsset(path: String) : List <String>?
 }

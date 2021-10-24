@@ -11,26 +11,20 @@ actual object Preferences {
     actual val convertTimezone: Boolean = false
     actual val mfcFallbackReader: String = ""
     actual val mfcAuthRetry: Int = 5
-    actual val retrieveLeapKeys: Boolean = false
+    actual var retrieveLeapKeys: Boolean = false
     actual val obfuscateTripTimes: Boolean = false
     actual val debugSpans: Boolean = false
     actual val localisePlaces: Boolean = false
 
     @VisibleForTesting
-    var showRawStationIdsActual = true
-    @VisibleForTesting
     var languageActual = "en"
-    @VisibleForTesting
-    var showLocalAndEnglishActual = true
 
-    actual val showRawStationIds: Boolean
-        get() = showRawStationIdsActual
+    actual var showRawStationIds = true
     actual val language: String
         get() = languageActual
     actual val region: String?
         get() = null
-    actual val showBothLocalAndEnglish: Boolean
-        get() = showLocalAndEnglishActual
+    actual var showBothLocalAndEnglish = true
     actual val rawLevel: TransitData.RawLevel
         get() = TransitData.RawLevel.UNKNOWN_ONLY
     actual val metrodroidVersion: String

@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.*
 
 /**
@@ -51,7 +52,7 @@ class OrcaTest : BaseInstrumentedTest() {
     @Test
     fun testDemoCard() {
         setLocale("en-US")
-        showRawStationIds(false)
+        Preferences.showRawStationIds = false
 
         // This is mocked-up data, probably has a wrong checksum.
         val c = constructOrcaCard()

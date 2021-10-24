@@ -44,7 +44,7 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
             return keyZero + block.sliceOffLen(6, 10)
     }
 
-    override suspend fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
+    override fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
         authCounter++
         val type = key.type
         val accBits = getAccessBits(sectorIndex)
@@ -70,7 +70,7 @@ class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
             else -> throw IllegalArgumentException()
         }
 
-    override suspend fun readBlock(block: Int): ImmutableByteArray {
+    override fun readBlock(block: Int): ImmutableByteArray {
         readCounter++
         val sectorIdx = blockToSector(block)
         // TODO: verify behaviour in this case on real card

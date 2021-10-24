@@ -52,12 +52,26 @@ protobuf {
 final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
                               ? "ios_arm64" : "ios_x86_64"
 
+task generateProtoWrapper() {
+    ext {
+        sourceDir = new File(buildDir, 'generated/source/proto/main/objc')
+        headerDir = sourceDir
+    }
+    dependsOn 'generateProto'
+}
+
 model {
     toolChains {
         clang(Clang) {
             target("ios_arm64") {
                 objcCompiler.withArguments { args ->
                     args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'arm64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
                     args << '-arch'
                     args << 'arm64'
                 }
@@ -68,6 +82,13 @@ model {
                     args << '-arch'
                     args << 'x86_64'
                     args << '-m64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-mios-simulator-version-min=8.0'
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'x86_64'
                 }
             }
         }
@@ -86,11 +107,12 @@ model {
             sources {
                 objc {
                     source {
-                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
                         include "GPBProtocolBuffers.m", "Stations.pbobjc.m"
+                        generatedBy generateProtoWrapper
                     }
                     exportedHeaders {
-                        srcDirs new File(buildDir, 'generated/source/proto/main/objc'), new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
                     }
                 }
             }
