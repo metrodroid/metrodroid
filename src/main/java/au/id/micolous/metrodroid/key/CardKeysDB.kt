@@ -17,11 +17,11 @@ class CardKeysDB (private val context: Context): CardKeysRetriever {
 
         // Static key requests should give all of the static keys.
         while (cursor.moveToNext()) {
-            if (cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE)) != CardKeys.TYPE_MFC_STATIC)
+            if (cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.CARD_TYPE)) != CardKeys.TYPE_MFC_STATIC)
                 continue
             try {
-                val id = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
-                val json = CardSerializer.jsonPlainStable.parseToJsonElement(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA)))
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(KeysTableColumns._ID))
+                val json = CardSerializer.jsonPlainStable.parseToJsonElement(cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.KEY_DATA)))
                 val nk = ClassicStaticKeys.fromJSON(json.jsonObject, "cursor/$id") ?: continue
                 if (keys == null)
                     keys = nk
@@ -58,7 +58,7 @@ class CardKeysDB (private val context: Context): CardKeysRetriever {
         if (!cursor.moveToFirst())
             return null
         return CardKeys.fromJSON(
-                CardSerializer.jsonPlainStable.parseToJsonElement(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))).jsonObject,
-                cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE)))
+                CardSerializer.jsonPlainStable.parseToJsonElement(cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.KEY_DATA))).jsonObject,
+                cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.CARD_TYPE)))
     }
 }
