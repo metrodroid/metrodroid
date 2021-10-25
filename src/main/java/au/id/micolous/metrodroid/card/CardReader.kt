@@ -28,7 +28,7 @@ object CardReader {
 
     private fun getAtqaSak(tag: Tag): Pair<Int, Short>? = NfcA.get(tag)?.let { getAtqaSak(it) }
 
-    suspend fun dumpTag(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): Card {
+    fun dumpTag(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): Card {
         val techs = tag.techList
         val tagId = tag.id.toImmutable()
         Log.d(TAG, "Reading tag ${tagId.toHexString()}. ${techs.size} tech(s) supported:")
@@ -114,13 +114,13 @@ object CardReader {
         }
     }
 
-    private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? =
+    private fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? =
         AndroidNfcATransceiver(tag).use {
             it.connect()
             UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
 
-    private suspend fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? =
+    private fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? =
         AndroidNfcVTransceiver(tag).use {
             it.connect()
             NFCVCardReader.dumpTag(it, feedbackInterface)

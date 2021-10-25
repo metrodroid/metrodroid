@@ -208,7 +208,7 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
         }
     }
 
-    private suspend fun dumpTag(context: Context, terminal: String) : Card {
+    private fun dumpTag(context: Context, terminal: String) : Card {
         JavaCardTransceiver(context, terminal, traces, noUID).use {
             it.connect()
 

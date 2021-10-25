@@ -30,7 +30,7 @@ internal class ReadingTagTask private constructor(
         private val tag: Tag): CoroutineScope  {
     override val coroutineContext = Job()
 
-    suspend fun doInBackground(): Pair<Uri?,Boolean> {
+    fun doInBackground(): Pair<Uri?,Boolean> {
         val card = CardReader.dumpTag(tag, readingTagActivity)
 
         readingTagActivity.updateStatusText(Localizer.localizeString(R.string.saving_card))

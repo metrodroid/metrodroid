@@ -91,7 +91,7 @@ object ClassicAndroidReader {
                 CardKeysDB(context)
         ))
 
-    suspend fun dumpTag(tagId: ImmutableByteArray, tag: Tag, feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
+    fun dumpTag(tagId: ImmutableByteArray, tag: Tag, feedbackInterface: TagReaderFeedbackInterface): ClassicCard {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_reading))
         feedbackInterface.showCardType(null)
 
@@ -114,7 +114,7 @@ object ClassicAndroidReader {
         }
     }
 
-    suspend fun dumpPlus(tag: CardTransceiver, feedbackInterface: TagReaderFeedbackInterface,
+    fun dumpPlus(tag: CardTransceiver, feedbackInterface: TagReaderFeedbackInterface,
                          atqa: Int, sak: Short): ClassicCard? {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
         feedbackInterface.showCardType(null)
