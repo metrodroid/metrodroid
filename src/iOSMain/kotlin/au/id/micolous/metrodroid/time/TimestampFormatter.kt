@@ -23,7 +23,6 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
-import kotlin.native.concurrent.SharedImmutable
 
 actual object TimestampFormatter {
 

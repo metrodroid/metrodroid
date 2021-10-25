@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
-import kotlinx.coroutines.runBlocking
 
 import platform.Foundation.*
 

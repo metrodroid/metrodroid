@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.tfi_leap
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
-import au.id.micolous.metrodroid.card.desfire.DesfireUnlocker
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.*

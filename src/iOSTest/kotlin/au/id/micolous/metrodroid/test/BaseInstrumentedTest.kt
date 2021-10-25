@@ -3,9 +3,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.util.ConcurrentFileReader
 import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.Preferences
-import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSBundle
-import platform.Foundation.NSError
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSLocale
 

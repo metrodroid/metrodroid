@@ -26,8 +26,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.JavaStreamInput
-import au.id.micolous.metrodroid.util.Preferences
-import kotlinx.coroutines.runBlocking
 import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.InputStream

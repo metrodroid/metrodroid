@@ -23,14 +23,12 @@ import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.coroutines.suspendCoroutine
 import kotlin.native.concurrent.freeze
 
 class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): FelicaTransceiver {

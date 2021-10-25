@@ -22,7 +22,6 @@
 package au.id.micolous.metrodroid.util
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
 import android.telephony.TelephonyManager

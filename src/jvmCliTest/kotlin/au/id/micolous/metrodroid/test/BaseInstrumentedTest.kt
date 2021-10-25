@@ -3,7 +3,6 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.JavaStreamInput
 import au.id.micolous.metrodroid.util.Preferences
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.InputStream
 import java.util.Locale

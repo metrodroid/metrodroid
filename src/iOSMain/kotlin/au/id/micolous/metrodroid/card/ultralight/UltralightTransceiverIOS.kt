@@ -24,15 +24,12 @@ import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.suspendCoroutine
 import kotlin.native.concurrent.freeze
 
 class UltralightTransceiverIOS(val tag: SwiftWrapper): CardTransceiver {

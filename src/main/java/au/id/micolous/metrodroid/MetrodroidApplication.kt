@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid
 
-import android.app.Application
 import android.content.Context
 import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
