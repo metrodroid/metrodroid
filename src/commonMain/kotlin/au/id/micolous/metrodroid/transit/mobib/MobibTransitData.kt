@@ -102,7 +102,7 @@ class MobibTransitData(
                 region = TransitRegion.BELGIUM,
                 locationId = R.string.location_brussels)
 
-        val TZ = MetroTimeZone.BRUXELLES
+        val TZ = MetroTimeZone.BRUSSELS
 
         private fun ticketEnvFields(version: Int) = when {
                 version <= 2 -> En1545Container(
