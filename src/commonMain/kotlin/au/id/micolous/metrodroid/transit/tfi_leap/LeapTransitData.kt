@@ -51,10 +51,10 @@ class LockedLeapTransitData : TransitData() {
 }
 
 @Parcelize
-private class AccumulatorBlock internal constructor(private val mAccumulators: List<Pair<Int, Int>>, // agency, value
-                                                    private val mAccumulatorRegion: Int?,
-                                                    private val mAccumulatorScheme: Int?,
-                                                    private val mAccumulatorStart: TimestampFull) : Parcelable {
+private class AccumulatorBlock(private val mAccumulators: List<Pair<Int, Int>>, // agency, value
+                               private val mAccumulatorRegion: Int?,
+                               private val mAccumulatorScheme: Int?,
+                               private val mAccumulatorStart: TimestampFull) : Parcelable {
 
     // Fare cap explanation: https://about.leapcard.ie/fare-capping
     //
@@ -67,7 +67,7 @@ private class AccumulatorBlock internal constructor(private val mAccumulators: L
     // - All-operator spend (which applies to the sum of all fares)
     //
     // Certain services are excluded from the caps.
-    internal val info: List<ListItem>
+    val info: List<ListItem>
         get()  = listOf(ListItem(
                     R.string.leap_period_start,
                     TimestampFormatter.dateTimeFormat(mAccumulatorStart)),
@@ -84,7 +84,7 @@ private class AccumulatorBlock internal constructor(private val mAccumulators: L
                     )
                 }
 
-    internal constructor(file: ImmutableByteArray, offset: Int) : this(
+    constructor(file: ImmutableByteArray, offset: Int) : this(
             mAccumulatorStart = LeapTransitData.parseDate(file, offset),
             mAccumulatorRegion = file[offset + 4].toInt(),
             mAccumulatorScheme = file.byteArrayToInt(offset + 5, 3),

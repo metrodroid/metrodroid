@@ -40,11 +40,11 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
 private data class PodorozhnikSector4 (
-        internal val mBalance: Int,
-        internal val mLastTopup: Int,
-        internal val mLastTopupTime: Int,
-        internal val mLastTopupMachine: Int,
-        internal val mLastTopupAgency: Int
+        val mBalance: Int,
+        val mLastTopup: Int,
+        val mLastTopupTime: Int,
+        val mLastTopupMachine: Int,
+        val mLastTopupAgency: Int
 ): Parcelable
 
 private fun decodeSector4(card: ClassicCard): PodorozhnikSector4? {
@@ -65,13 +65,13 @@ private fun decodeSector4(card: ClassicCard): PodorozhnikSector4? {
 
 @Parcelize
 private data class PodorozhnikSector5 (
-        internal val mLastFare: Int,
-        internal val mExtraTripTimes: List<Int>,
-        internal val mLastValidator: Int,
-        internal val mLastTripTime: Int,
-        internal val mGroundCounter: Int,
-        internal val mSubwayCounter: Int,
-        internal val mLastTransport: Int
+        val mLastFare: Int,
+        val mExtraTripTimes: List<Int>,
+        val mLastValidator: Int,
+        val mLastTripTime: Int,
+        val mGroundCounter: Int,
+        val mSubwayCounter: Int,
+        val mLastTransport: Int
 ): Parcelable
 
 private fun decodeSector5(card: ClassicCard): PodorozhnikSector5? {

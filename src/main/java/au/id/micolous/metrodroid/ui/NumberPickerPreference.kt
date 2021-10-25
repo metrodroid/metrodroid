@@ -111,8 +111,8 @@ class NumberPickerPreference : DialogPreference {
 
     @Parcelize
     private class SavedState (
-            internal val superState: Parcelable,
-            internal val value: Int): Parcelable
+            val superState: Parcelable,
+            val value: Int): Parcelable
 
     companion object {
         private const val NPP_SCHEMA = "http://micolous.github.io/metrodroid/schemas/number-picker-preference"

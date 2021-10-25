@@ -66,7 +66,7 @@ class SupportedCardsFragment : ExpandableListFragment() {
         return false
     }
 
-    private class CardsAdapter internal constructor(val context: Context) : BaseExpandableListAdapter() {
+    private class CardsAdapter(val context: Context) : BaseExpandableListAdapter() {
         val keyBundles: Set<String>? = ClassicAndroidReader.getKeyRetriever(context).forClassicStatic()?.allBundles
         val cards = CardInfoRegistry.allCardsByRegion
         private val mLayoutInflater: LayoutInflater = context.getSystemService(

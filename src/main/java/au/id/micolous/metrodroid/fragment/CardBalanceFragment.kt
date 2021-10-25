@@ -57,7 +57,7 @@ class CardBalanceFragment : ListFragment() {
         listAdapter = BalancesAdapter(requireActivity(), combined)
     }
 
-    private inner class BalancesAdapter internal constructor(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
+    private inner class BalancesAdapter(context: Context, balances: List<Any>) : ArrayAdapter<Any>(context, 0, balances) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val item = getItem(position)

@@ -79,5 +79,5 @@ class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mVie
 
     override fun restoreState(parcelable: Parcelable?, classLoader: ClassLoader?) {}
 
-    private class TabInfo internal constructor(internal val mClass: Class<*>, internal val mArgs: Bundle?, internal val mName: String)
+    private class TabInfo(val mClass: Class<*>, val mArgs: Bundle?, val mName: String)
 }

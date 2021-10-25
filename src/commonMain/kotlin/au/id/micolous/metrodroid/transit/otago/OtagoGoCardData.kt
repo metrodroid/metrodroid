@@ -91,7 +91,7 @@ private data class OtagoGoCardTrip(override val startTimestamp: TimestampFull,
 }
 
 @Parcelize
-private data class OtagoGoCardTransitData internal constructor(
+private data class OtagoGoCardTransitData(
         private val mSerial: Long,
         private val mBalance: Int,
         private val mRefill: OtagoGoCardRefill?,

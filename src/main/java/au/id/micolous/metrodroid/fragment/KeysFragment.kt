@@ -148,7 +148,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         override fun onLoaderReset(cursorLoader: Loader<Cursor>) {}
     }
 
-    private class KeyLoader internal constructor(context: Context) : CursorLoader(context, CardKeyProvider.CONTENT_URI, null, null, null, KeysTableColumns.CREATED_AT + " DESC") {
+    private class KeyLoader(context: Context) : CursorLoader(context, CardKeyProvider.CONTENT_URI, null, null, null, KeysTableColumns.CREATED_AT + " DESC") {
 
         private fun list2Cursor(list: List<CardKeysFromFiles.CardKeyRead>): Cursor {
             val cur = MatrixCursor(arrayOf(KeysTableColumns._ID, KeysTableColumns.CARD_ID, KeysTableColumns.CARD_TYPE, KeysTableColumns.KEY_DATA))
@@ -267,7 +267,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
     }
 
-    private class KeysAdapter internal constructor(activity: Activity) : ResourceCursorAdapter(activity, android.R.layout.simple_list_item_2, null, false) {
+    private class KeysAdapter(activity: Activity) : ResourceCursorAdapter(activity, android.R.layout.simple_list_item_2, null, false) {
 
         override fun bindView(view: View, context: Context, cursor: Cursor) {
             @NonNls val id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID))

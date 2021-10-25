@@ -126,13 +126,13 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         override fun onLoaderReset(cursorLoader: Loader<Cursor>) {}
     }
 
-    private class Scan internal constructor(cursor: Cursor) {
-        internal val mScannedAt: Long = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
-        internal val mLabel: String? = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL))
-        internal val mType: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
-        internal val mSerial: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
-        internal val mData: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
-        internal val mTransitIdentity: TransitIdentity? by lazy {
+    private class Scan(cursor: Cursor) {
+        val mScannedAt: Long = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
+        val mLabel: String? = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL))
+        val mType: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
+        val mSerial: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
+        val mData: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
+        val mTransitIdentity: TransitIdentity? by lazy {
             try {
                 XmlOrJsonCardFormat.parseString(mData)?.parseTransitIdentity()
             } catch (ex: Exception) {
@@ -140,7 +140,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 TransitIdentity(error, null)
             }
         }
-        internal val mId: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
+        val mId: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
 
         fun matches(query: String): Boolean {
             val ti = mTransitIdentity
@@ -284,7 +284,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    private class DedupTask internal constructor(activity: Activity) : BetterAsyncTask<Pair<String?, Int?>>(activity) {
+    private class DedupTask(activity: Activity) : BetterAsyncTask<Pair<String?, Int?>>(activity) {
         override fun doInBackground(): Pair<String?, Int?> {
             try {
                 val tf = ExportHelper.findDuplicates(MetrodroidApplication.instance)
@@ -384,9 +384,9 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
     class UserCancelledException : Exception()
 
-    private abstract class CommonReadTask internal constructor(cardsFragment: CardsFragment,
-                                                               private val mCardImporter: CardMultiImporter,
-                                                               val uri: Uri) : BetterAsyncTask<Pair<String?, Collection<Uri>?>?>(
+    private abstract class CommonReadTask(cardsFragment: CardsFragment,
+                                          private val mCardImporter: CardMultiImporter,
+                                          val uri: Uri) : BetterAsyncTask<Pair<String?, Collection<Uri>?>?>(
             cardsFragment.requireActivity()) {
         private val mCardsFragment: WeakReference<CardsFragment> = WeakReference(cardsFragment)
 
@@ -435,7 +435,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     }
 
 
-    private class ReadTask internal constructor(val cardsFragment: CardsFragment, uri: Uri)
+    private class ReadTask(val cardsFragment: CardsFragment, uri: Uri)
         : CommonReadTask(cardsFragment, XmlOrJsonCardFormat(), uri) {
         override fun verifyStream(stream: InputStream): InputStream {
             val pb = PushbackInputStream(stream)
@@ -466,10 +466,10 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class MCTReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri)
+    private class MCTReadTask(cardsFragment: CardsFragment, uri: Uri)
         : CommonReadTask(cardsFragment, CardMultiImportAdapter (MctCardImporter()), uri)
 
-    private class MFCReadTask internal constructor(cardsFragment: CardsFragment, uri: Uri)
+    private class MFCReadTask(cardsFragment: CardsFragment, uri: Uri)
         : CommonReadTask(cardsFragment, CardMultiImportAdapter (MfcCardImporter()), uri)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -509,10 +509,10 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         (requireView().findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).notifyDataSetChanged()
     }
 
-    private class CardsAdapter internal constructor(ctxt: Context,
-                                                    private val mScans: Map<CardId, List<Scan>>,
-                                                    private val mCards: List<CardId>,
-                                                    private val mReverseCards: Map<CardId, Int>) : BaseExpandableListAdapter() {
+    private class CardsAdapter(ctxt: Context,
+                               private val mScans: Map<CardId, List<Scan>>,
+                               private val mCards: List<CardId>,
+                               private val mReverseCards: Map<CardId, Int>) : BaseExpandableListAdapter() {
 
         private var filteredCards: List<CardId>? = null
 

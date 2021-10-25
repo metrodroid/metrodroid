@@ -96,7 +96,7 @@ private data class WaikatoCardTrip(override val startTimestamp: TimestampFull,
 }
 
 @Parcelize
-private data class WaikatoCardTransitData internal constructor(
+private data class WaikatoCardTransitData(
         private val mSerial: Long,
         private val mBalance: Int,
         override val trips: List<WaikatoCardTrip>,

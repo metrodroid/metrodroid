@@ -89,7 +89,7 @@ class CardTripsFragment : ListFragment() {
         startActivity(intent)
     }
 
-    private class UseLogListAdapter internal constructor(context: Context, items: Array<Trip>) : ArrayAdapter<Trip>(context, 0, items) {
+    private class UseLogListAdapter(context: Context, items: Array<Trip>) : ArrayAdapter<Trip>(context, 0, items) {
 
         override fun getView(position: Int, convertViewReuse: View?, parent: ViewGroup): View {
             val activity = context as Activity

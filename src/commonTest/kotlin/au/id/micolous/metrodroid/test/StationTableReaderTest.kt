@@ -140,7 +140,7 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     }
 
     @Parcelize
-    private class MockAdelaideTransaction internal constructor(private val mRouteNumber: Int, override val transport: Int) : AdelaideTransaction(En1545Parsed()) {
+    private class MockAdelaideTransaction(private val mRouteNumber: Int, override val transport: Int) : AdelaideTransaction(En1545Parsed()) {
 
         override val routeNumber: Int?
             get() = mRouteNumber
