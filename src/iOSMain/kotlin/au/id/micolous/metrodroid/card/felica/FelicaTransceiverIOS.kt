@@ -77,6 +77,7 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
     companion object {
         private const val TAG = "FelicaTransceiver"
 
+        @Suppress("unused")  // Called from Swift
         fun callback(channel: SendChannel<Capsule>, reply: NSData,
             error: NSError?) {
             val capsule = Capsule(reply, error)

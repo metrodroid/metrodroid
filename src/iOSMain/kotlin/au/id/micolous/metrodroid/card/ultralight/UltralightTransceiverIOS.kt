@@ -76,6 +76,7 @@ class UltralightTransceiverIOS(val tag: SwiftWrapper): CardTransceiver {
     companion object {
         private const val TAG = "UltralightTransceiver"
 
+        @Suppress("unused")  // Called from Swift
         fun callback(channel: SendChannel<Capsule>, reply: NSData,
             error: NSError?) {
             val capsule = Capsule(reply, error)

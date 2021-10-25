@@ -81,6 +81,7 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
     companion object {
         private const val TAG = "ISO7816Transceiver"
 
+        @Suppress("unused")  // Called from Swift
         fun callback(channel: SendChannel<Capsule>, reply: NSData,
                      sw1: UByte, sw2: UByte, error: NSError?) {
             val capsule = Capsule(reply, sw1, sw2, error)
