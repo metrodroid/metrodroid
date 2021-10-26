@@ -21,11 +21,9 @@
 
 package au.id.micolous.metrodroid.ui
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.PluralsResource
-import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.multi.*
 
+@Parcelize
 class ListItem(override val text1: FormattedString?,
                override val text2: FormattedString?): ListItemInterface {
 

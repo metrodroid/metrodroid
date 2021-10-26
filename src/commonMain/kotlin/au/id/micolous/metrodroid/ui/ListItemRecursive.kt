@@ -21,8 +21,10 @@ package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.StringResource
 
+@Parcelize
 class ListItemRecursive private constructor(
     override val text1: FormattedString,
     override val text2: FormattedString?,

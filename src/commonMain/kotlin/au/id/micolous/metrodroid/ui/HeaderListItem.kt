@@ -23,8 +23,10 @@ package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.StringResource
 
+@Parcelize
 class HeaderListItem private constructor(override val text1: FormattedString?, val headingLevel: Int): ListItemInterface {
     constructor(titleResource: StringResource, headingLevel: Int = 2)
             : this(Localizer.localizeFormatted(titleResource), headingLevel)
