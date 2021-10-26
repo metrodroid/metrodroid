@@ -13,8 +13,8 @@ private const val TAG = "NetworkHelper"
 
 object NetworkHelperReal : NetworkHelper {
     object Callback {
-        fun callback(channel: SendChannel<ImmutableByteArray?>, dat: NSData?, response: NSURLResponse?,
-                     error: NSError?) {
+        private fun callback(channel: SendChannel<ImmutableByteArray?>, dat: NSData?, response: NSURLResponse?,
+                             error: NSError?) {
             val respTyped = response as NSHTTPURLResponse
             runBlocking {
                 if (error == null && respTyped.statusCode == 200.toLong())

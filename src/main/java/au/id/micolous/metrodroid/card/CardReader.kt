@@ -100,7 +100,7 @@ object CardReader {
         throw UnsupportedTagProtocolException(techs.toList(), tagId.toHexString())
     }
 
-    fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard {
+    private fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard {
         val tech = MifareUltralight.get(tag) ?: throw CardProtocolUnsupportedException("Mifare Ultralight")
 
         try {

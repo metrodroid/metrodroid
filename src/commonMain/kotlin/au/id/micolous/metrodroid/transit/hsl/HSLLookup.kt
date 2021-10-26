@@ -70,10 +70,10 @@ object HSLLookup : En1545LookupUnknown() {
         Pair(1, 9) to R.string.hsl_transport_u_linja
     )
 
-    val walttiValiditySplit = listOf(Pair(0, 0)) + (1..10).map { Pair(it, it) } + (1..10).flatMap { start -> ((start+1)..10).map { Pair(start, it) } }
+    private val walttiValiditySplit = listOf(Pair(0, 0)) + (1..10).map { Pair(it, it) } + (1..10).flatMap { start -> ((start+1)..10).map { Pair(start, it) } }
 
-    const val WALTTI_OULU = 229
-    const val WALTTI_LAHTI = 223
+    private const val WALTTI_OULU = 229
+    private const val WALTTI_LAHTI = 223
     const val CITY_UL_TAMPERE = 1
 
     private val lahtiZones = listOf(

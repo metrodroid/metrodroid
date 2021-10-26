@@ -31,8 +31,8 @@ object LocalizeGenerator {
         val plurals: Map<String, Map<String, String>>
     ) 
     
-    const val pkg = "au.id.micolous.metrodroid.multi"
-    const val androidR = "au.id.micolous.farebot.R"
+    private const val pkg = "au.id.micolous.metrodroid.multi"
+    private const val androidR = "au.id.micolous.farebot.R"
 
     fun generateMappedAppleStringsFile(outputFile: File, inputFiles: List<File>, mapFile: File) {
         val xmlFiles = inputFiles.map { readStringsXml(it) }
@@ -152,7 +152,7 @@ object LocalizeGenerator {
         writer.close()
     }
 
-    fun readStringsXml(stringsFile: File): XMLStringsFile {
+    private fun readStringsXml(stringsFile: File): XMLStringsFile {
         val dbFactory = DocumentBuilderFactory.newInstance()
         val dBuilder = dbFactory.newDocumentBuilder()
         val doc = dBuilder.parse(stringsFile)

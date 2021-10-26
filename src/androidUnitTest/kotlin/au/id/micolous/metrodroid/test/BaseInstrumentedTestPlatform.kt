@@ -38,7 +38,7 @@ actual fun loadAssetStream(path: String): InputStream? {
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28])
 actual abstract class BaseInstrumentedTestPlatform {
-    val context : Context
+    private val context : Context
         get() = MetrodroidApplication.instance
 
     actual fun setLocale(languageTag: String) {

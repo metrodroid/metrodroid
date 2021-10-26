@@ -6,7 +6,7 @@ import java.io.ByteArrayInputStream
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 
-class NodeWrapperImpl(val node: Node): NodeWrapper {
+class NodeWrapperImpl(private val node: Node): NodeWrapper {
     override val childNodes: List<NodeWrapper>
         get() {
             val children = node.childNodes ?: return emptyList()

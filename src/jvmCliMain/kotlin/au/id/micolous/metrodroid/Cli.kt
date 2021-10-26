@@ -53,7 +53,7 @@ class Cli: CliktCommand() {
 
 class Identify: CliktCommand(
         help="Identifies the card(s) in a Metrodroid JSON file") {
-    val fname by argument()
+    private val fname by argument()
 
     override fun run() {
         for (card in loadCards(fname) ?: return) {
@@ -72,8 +72,8 @@ class Identify: CliktCommand(
 
 class MakeJson: CliktCommand(
         help="Converts Metrodroid XML/JSON into latest version of JSON") {
-    val fname by argument()
-    val output by argument()
+    private val fname by argument()
+    private val output by argument()
 
     override fun run() {
         for (card in loadCards(fname) ?: return) {
@@ -87,7 +87,7 @@ class MakeJson: CliktCommand(
 
 class Parse: CliktCommand(
         help="Parses the card(s) in a Metrodroid JSON file") {
-    val fname by argument()
+    private val fname by argument()
 
     override fun run() {
         for (card in loadCards(fname) ?: return) {
@@ -168,7 +168,7 @@ fun printCard(card: Card) {
 
 class Unrecognized: CliktCommand(
         help="Lists unrecognized card(s) in a Metrodroid JSON file") {
-    val fname by argument()
+    private val fname by argument()
 
     override fun run() {
         val allUIDs = mutableSetOf<Pair<ImmutableByteArray, CardType>>()

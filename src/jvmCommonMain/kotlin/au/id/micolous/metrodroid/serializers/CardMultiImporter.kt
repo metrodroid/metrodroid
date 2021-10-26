@@ -15,7 +15,7 @@ interface CardMultiImporter {
     fun readCards(stream: InputStream): Iterator<Card>?
 }
 
-class CardMultiImportAdapter (val base: CardImporter): CardMultiImporter {
+class CardMultiImportAdapter (private val base: CardImporter): CardMultiImporter {
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val card = base.readCard(JavaStreamInput(stream))
         return if (card == null) {

@@ -169,7 +169,7 @@ object DesfireCardReader {
         }
     }
 
-    fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): RawDesfireFile {
+    private fun tryAllCommands(desfireTag: DesfireProtocol, fileId: Int): RawDesfireFile {
         wrap (DesfireProtocol.READ_DATA) {
             desfireTag.readFile(fileId)
         }?.let { return it }

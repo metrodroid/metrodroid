@@ -40,7 +40,7 @@ actual fun loadAssetStream(path: String): InputStream? =
 
 @RunWith(AndroidJUnit4::class)
 actual abstract class BaseInstrumentedTestPlatform {
-    val context : Context
+    private val context : Context
             get() = InstrumentationRegistry.getInstrumentation().context
 
     /**
