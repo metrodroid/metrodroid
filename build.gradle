@@ -66,6 +66,23 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
     executionData(files("${buildDir}/jacoco/jvmCliTest.exec"))
 }
 
+task androidDebugUnitJacoco(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'au/id/micolous/metrodroid/multi/R*.class']
+    def debugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+
+    sourceDirectories.from = files(["${project.projectDir}/src/jvmCommonMain/kotlin",
+                                    "${project.projectDir}/src/main/java",
+                                    "${project.projectDir}/src/commonMain/kotlin"])
+    classDirectories.from = files([debugTree])
+    executionData(files("${buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"))
+}
+
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
 def generatedLanguagesDir = new File(buildDir, "generated/res/localize/iOS")
 def svgDir = new File(projectDir, "cardimages/svg")
@@ -589,6 +606,8 @@ android {
         debug {
             pseudoLocalesEnabled true
             buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\"" + androidLanguageList.join("\", \"") + "\", \"en-rXA\", \"ar-rXB\"}"
+            testCoverageEnabled true
+            debuggable true
         }
         dev.initWith(buildTypes.debug)
         dev {
@@ -678,6 +697,12 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+            all {
+                jacoco {
+                    includeNoLocationClasses = true
+                    excludes = ['jdk.internal.*']
+                }
+            }
         }
     }
 
