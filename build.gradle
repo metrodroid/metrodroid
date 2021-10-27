@@ -43,6 +43,28 @@ apply plugin: 'checkstyle'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/classes/kotlin/jvmCli", excludes: fileFilter)
+
+   sourceDirectories.from = files(["${project.projectDir}/src/jvmCommonMain/kotlin",
+                               "${project.projectDir}/src/jvmCliMain/kotlin",
+			       "${project.projectDir}/src/commonMain/kotlin"])
+    classDirectories.from = files([debugTree])
+    executionData(files("${buildDir}/jacoco/jvmCliTest.exec"))
+}
 
 def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
 def generatedLanguagesDir = new File(buildDir, "generated/res/localize/iOS")
