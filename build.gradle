@@ -59,9 +59,9 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def debugTree = fileTree(dir: "${buildDir}/classes/kotlin/jvmCli", excludes: fileFilter)
 
-   sourceDirectories.from = files(["${project.projectDir}/src/jvmCommonMain/kotlin",
-                               "${project.projectDir}/src/jvmCliMain/kotlin",
-			       "${project.projectDir}/src/commonMain/kotlin"])
+    sourceDirectories.from = files(["${project.projectDir}/src/jvmCommonMain/kotlin",
+                                    "${project.projectDir}/src/jvmCliMain/kotlin",
+                                    "${project.projectDir}/src/commonMain/kotlin"])
     classDirectories.from = files([debugTree])
     executionData(files("${buildDir}/jacoco/jvmCliTest.exec"))
 }
@@ -75,10 +75,10 @@ def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
 def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
 def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
 def testAssetsDirs = [
-                'src/commonTest/assets',
-                'third_party/vpereira_bilhete/',
-                'third_party/RejsekortReader/dumps/'
-        ]
+        'src/commonTest/assets',
+        'third_party/vpereira_bilhete/',
+        'third_party/RejsekortReader/dumps/'
+]
 
 task generateLocalize {
     inputs.file stringsXmlFile
@@ -148,18 +148,18 @@ task iOSImages {
     inputs.dir svgDir
     outputs.dir cardAssetsDir
     doLast {
-        fileTree(drawableHdpiDir).visit { FileVisitDetails details -> 
-           def name = details.file.name
-           def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
-           if (basename in iOSUnsupportedImages) {
-               return
-           }
-           
-           def imageset = new File(cardAssetsDir, basename + ".imageset")
+        fileTree(drawableHdpiDir).visit { FileVisitDetails details ->
+            def name = details.file.name
+            def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
+            if (basename in iOSUnsupportedImages) {
+                return
+            }
 
-           mkdir(imageset)
+            def imageset = new File(cardAssetsDir, basename + ".imageset")
 
-           new File(imageset, "Contents.json").text = """{
+            mkdir(imageset)
+
+            new File(imageset, "Contents.json").text = """{
   "images" : [
     {
       "idiom" : "universal",
@@ -181,25 +181,25 @@ task iOSImages {
   }
 }
 """
-           def link = new File(imageset, name)
-           delete link
-           ant.symlink(resource: "../../../../../" + relativeDrawableHdpiDir + "/" + name, link: link)
+            def link = new File(imageset, name)
+            delete link
+            ant.symlink(resource: "../../../../../" + relativeDrawableHdpiDir + "/" + name, link: link)
         }
 
         // To keep the size of app low we only generate 1x scale for
         // cards
-        fileTree(svgDir).visit { FileVisitDetails details -> 
-           def name = details.file.name
-           def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
-           if (basename in iOSUnsupportedImages) {
-               return
-           }
-           
-           def imageset = new File(cardAssetsDir, basename + ".imageset")
+        fileTree(svgDir).visit { FileVisitDetails details ->
+            def name = details.file.name
+            def basename = name.replaceFirst(~/\.[a-z]*$/) { _ -> "" }
+            if (basename in iOSUnsupportedImages) {
+                return
+            }
 
-           mkdir(imageset)
+            def imageset = new File(cardAssetsDir, basename + ".imageset")
 
-           new File(imageset, "Contents.json").text = """{
+            mkdir(imageset)
+
+            new File(imageset, "Contents.json").text = """{
   "images" : [
     {
       "idiom" : "universal",
@@ -221,10 +221,10 @@ task iOSImages {
   }
 }
 """
-           def render = new File(imageset, basename + ".png")
-           exec {
+            def render = new File(imageset, basename + ".png")
+            exec {
                 commandLine System.getenv('INKSCAPE') ?: "inkscape", "-z", "-e", render, "-w", "380", details.file.path
-           }
+            }
         }
     }
 }
@@ -290,8 +290,8 @@ kotlin {
             }
         }
 
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
-                              ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
+                               ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'iOS') {
             binaries {
@@ -309,13 +309,13 @@ kotlin {
                 tasks[compileKotlinTaskName].dependsOn += 'iOSLanguages'
                 tasks[compileKotlinTaskName].dependsOn += ':proto:mainStaticLibrary'
                 cinterops {
-                          stations {
-                                   defFile project.file("src/iOSMain/cinterop/stations.def")
-                                   includeDirs(new File(project('proto').buildDir, 'generated/source/proto/main/objc'))
-                                   compilerOpts '-I' + projectDir +
-                                       '/third_party/protobuf/objectivec', '-DTARGET_OS_OSX=0',
-                                       '-DTARGET_OS_MACCATALYST=0', '-DNS_FORMAT_ARGUMENT(A)=', '-D_Nullable_result=_Nullable'
-                          }
+                    stations {
+                        defFile project.file("src/iOSMain/cinterop/stations.def")
+                        includeDirs(new File(project('proto').buildDir, 'generated/source/proto/main/objc'))
+                        compilerOpts '-I' + projectDir +
+                                '/third_party/protobuf/objectivec', '-DTARGET_OS_OSX=0',
+                                '-DTARGET_OS_MACCATALYST=0', '-DNS_FORMAT_ARGUMENT(A)=', '-D_Nullable_result=_Nullable'
+                    }
                 }
             }
         }
@@ -361,7 +361,7 @@ kotlin {
         iOSTest {
             dependencies {
                 implementation project(':proto')
-            } 
+            }
         }
 
         androidTest {
@@ -372,7 +372,7 @@ kotlin {
                 implementation project(':proto')
             }
             kotlin.srcDirs += [
-                'src/jvmCommonTest/kotlin'
+                    'src/jvmCommonTest/kotlin'
             ]
         }
 
@@ -410,44 +410,44 @@ kotlin {
 }
 
 def commonLanguageList = [
-                // Update this whenever new language translations become available in Weblate.
-                // Languages we support
-                // Also add the language in XCode
-                'en',
-                'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
-                'de',
-                'el',
-                'es',
-                'fi',
-                'fr',
-                'he',
-                'id',
-                'it',
-                'ja',
-                'kab',
-                'nb-rNO',
-                'nl',
-                'pt-rBR',
-                'ru',
-                'tr',
-                'zh-rCN'
-                ] 
+        // Update this whenever new language translations become available in Weblate.
+        // Languages we support
+        // Also add the language in XCode
+        'en',
+        'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN', 'en-rNZ', 'en-rUS',
+        'de',
+        'el',
+        'es',
+        'fi',
+        'fr',
+        'he',
+        'id',
+        'it',
+        'ja',
+        'kab',
+        'nb-rNO',
+        'nl',
+        'pt-rBR',
+        'ru',
+        'tr',
+        'zh-rCN'
+]
 
 def iOSLanguageList = commonLanguageList
 
 def androidLanguageList = iOSLanguageList + [
-                // We omit languages without real translations on iOS
-                'ga',
-                'mi',
-                'ms',
-                'zh-rHK',
-                'zh-rSG',
-                'zh-rTW',
+        // We omit languages without real translations on iOS
+        'ga',
+        'mi',
+        'ms',
+        'zh-rHK',
+        'zh-rSG',
+        'zh-rTW',
 
-                // obsolete identifier
-                'iw',
-                'in'
-                ]
+        // obsolete identifier
+        'iw',
+        'in'
+]
 
 static def mapAndroidLanguageToIOS(String alang) {
     if (alang == "nb-rNO")
@@ -471,9 +471,9 @@ task iOSLanguages {
     doLast {
         for (lang in iOSLanguageList) {
             LocalizeGenerator.INSTANCE.generateAppleStringsFile(
-              new File(generatedLanguagesDir, mapAndroidLanguageToIOS(lang) + '.lproj/Metrolib.strings'),
-              langSources(lang),
-              lang
+                    new File(generatedLanguagesDir, mapAndroidLanguageToIOS(lang) + '.lproj/Metrolib.strings'),
+                    langSources(lang),
+                    lang
             )
         }
     }
@@ -483,19 +483,19 @@ task iOSMappedLanguages {
     doLast {
         for (lang in iOSLanguageList) {
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
-              new File(projectDir, 'native/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/Main.strings'),
-              langSources(lang),
-              new File(projectDir, 'native/metrodroid/metrodroid/MainMap.txt')
+                    new File(projectDir, 'native/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/Main.strings'),
+                    langSources(lang),
+                    new File(projectDir, 'native/metrodroid/metrodroid/MainMap.txt')
             )
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
-              new File(projectDir, 'native/metrodroid/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/InfoPlist.strings'),
-              langSources(lang),
-              new File(projectDir, 'native/metrodroid/metrodroid/InfoPlistMap.txt')
+                    new File(projectDir, 'native/metrodroid/metrodroid/metrodroid/' + mapAndroidLanguageToIOS(lang) + '.lproj/InfoPlist.strings'),
+                    langSources(lang),
+                    new File(projectDir, 'native/metrodroid/metrodroid/InfoPlistMap.txt')
             )
             LocalizeGenerator.INSTANCE.generateMappedAppleStringsFile(
-              new File(projectDir, 'native/metrodroid/Settings.bundle/' + mapAndroidLanguageToIOS(lang) + '.lproj/Root.strings'),
-              langSources(lang),
-              new File(projectDir, 'native/metrodroid/SettingsMap.txt')
+                    new File(projectDir, 'native/metrodroid/Settings.bundle/' + mapAndroidLanguageToIOS(lang) + '.lproj/Root.strings'),
+                    langSources(lang),
+                    new File(projectDir, 'native/metrodroid/SettingsMap.txt')
             )
         }
     }
@@ -511,33 +511,33 @@ task packForXCode(type: Sync) {
     dependsOn iOSLanguages
 
     from framework.outputFile
-    into new File (frameworkDir, "metrolib.framework")
+    into new File(frameworkDir, "metrolib.framework")
 
     from generatedLanguagesDir
-    into new File (frameworkDir, "metrolib.framework")
+    into new File(frameworkDir, "metrolib.framework")
 }
 
 tasks.build.dependsOn packForXCode
 
 task copyTestAssetsIOS {
-    testAssetsDirs.each { 
-    	   inputs.dir new File(projectDir, it) 
+    testAssetsDirs.each {
+        inputs.dir new File(projectDir, it)
     }
     inputs.dir new File(projectDir, "mdst")
     outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
     doLast {
-    	def outBase = kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
-       	testAssetsDirs.each { relativeDir ->
-       			       new File(projectDir, relativeDir).list().each { subDir -> 
-           def link = new File(outBase, subDir)
-           delete link
-           ant.symlink(resource: "../../../../" + relativeDir + "/" + subDir, link: link)
+        def outBase = kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+        testAssetsDirs.each { relativeDir ->
+            new File(projectDir, relativeDir).list().each { subDir ->
+                def link = new File(outBase, subDir)
+                delete link
+                ant.symlink(resource: "../../../../" + relativeDir + "/" + subDir, link: link)
+            }
         }
-	}
 
-           def link = new File(outBase, "mdst")
-           delete link
-           ant.symlink(resource: "../../../../mdst", link: link)
+        def link = new File(outBase, "mdst")
+        delete link
+        ant.symlink(resource: "../../../../mdst", link: link)
     }
 }
 
@@ -569,8 +569,8 @@ android {
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
-        resConfigs (androidLanguageList)
-        buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\""+androidLanguageList.join("\", \"")+"\"}"
+        resConfigs(androidLanguageList)
+        buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\"" + androidLanguageList.join("\", \"") + "\"}"
         vectorDrawables {
             useSupportLibrary = true
             generatedDensities 'ldpi', 'mdpi', 'hdpi'
@@ -588,7 +588,7 @@ android {
     buildTypes {
         debug {
             pseudoLocalesEnabled true
-            buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\""+androidLanguageList.join("\", \"")+"\", \"en-rXA\", \"ar-rXB\"}"
+            buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\"" + androidLanguageList.join("\", \"") + "\", \"en-rXA\", \"ar-rXB\"}"
         }
         dev.initWith(buildTypes.debug)
         dev {
@@ -647,8 +647,8 @@ android {
     }
 
     lintOptions {
-        abortOnError (project.hasProperty('LINT_FATAL'))
-        warningsAsErrors (project.hasProperty('LINT_FATAL'))
+        abortOnError(project.hasProperty('LINT_FATAL'))
+        warningsAsErrors(project.hasProperty('LINT_FATAL'))
         disable 'MissingTranslation'
         // Lint doesn't understand our multiplatform setup
         disable 'UnusedResources'
