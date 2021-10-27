@@ -56,7 +56,7 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
         html.enabled = true
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'au/id/micolous/metrodroid/multi/R*.class']
     def debugTree = fileTree(dir: "${buildDir}/classes/kotlin/jvmCli", excludes: fileFilter)
 
     sourceDirectories.from = files(["${project.projectDir}/src/jvmCommonMain/kotlin",
