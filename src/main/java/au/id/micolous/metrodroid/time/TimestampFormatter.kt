@@ -32,7 +32,8 @@ import au.id.micolous.metrodroid.util.TripObfuscator
 import java.util.*
 
 actual object TimestampFormatter {
-    fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
+    private fun makeTimezone(tz: MetroTimeZone): TimeZone = TimeZone.getTimeZone(tz.resolvedOlson)
+    private fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
 
     private fun makeRawCalendar(ts: TimestampFull): Calendar {
         val g = GregorianCalendar(makeTimezone(ts.tz))

@@ -44,6 +44,8 @@ data class MetroTimeZone(val olson: String): Parcelable {
         else -> TimeZone.of(olson)
     }
 
+    val resolvedOlson get() = libTimeZone.id
+
     @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = MetroTimeZone::class)
     companion object : KSerializer<MetroTimeZone> {
