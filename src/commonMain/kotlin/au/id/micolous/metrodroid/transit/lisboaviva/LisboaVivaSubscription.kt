@@ -52,8 +52,7 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
         get() {
             val vf = validFrom ?: return null
             val period = parsed.getIntOrZero(CONTRACT_PERIOD)
-            val units = parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)
-            when (units) {
+            when (parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)) {
                 0x109 -> return vf + Duration.daysLocal(period - 1)
                 0x10a -> {
                     // It's calendar months. Hence this trickery

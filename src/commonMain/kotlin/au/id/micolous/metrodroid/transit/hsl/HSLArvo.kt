@@ -37,8 +37,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
     @VisibleForTesting
     fun formatPeriod(): String {
         val period = parsed.getIntOrZero(CONTRACT_PERIOD)
-        val units = parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)
-        when (units) {
+        when (parsed.getIntOrZero(CONTRACT_PERIOD_UNITS)) {
             0 -> return Localizer.localizePlural(R.plurals.hsl_valid_mins,
                     period, period)
             1 -> return Localizer.localizePlural(R.plurals.hsl_valid_hours,
@@ -59,8 +58,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
                 1 -> return Localizer.localizeString(R.string.hsl_adult)
                 else -> return Localizer.localizeString(R.string.unknown_format, prof)
             }
-            val child = parsed.getInt(CHILD)
-            when (child) {
+            when (parsed.getInt(CHILD)) {
                 0 -> return Localizer.localizeString(R.string.hsl_adult)
                 1 -> return Localizer.localizeString(R.string.hsl_child)
                 else -> return null

@@ -141,8 +141,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
         private const val KEY_LEN = 6
 
         private fun classicFromJSON(json: JsonObject, defaultBundle: String): ClassicSectorAlgoKey? {
-            val t = json[ClassicSectorKey.KEY_TYPE]?.jsonPrimitiveOrNull?.contentOrNull
-            val kt = when (t) {
+            val kt = when (json[ClassicSectorKey.KEY_TYPE]?.jsonPrimitiveOrNull?.contentOrNull) {
                 "", null -> ClassicSectorKey.KeyType.UNKNOWN
                 ClassicSectorKey.TYPE_KEYA -> ClassicSectorKey.KeyType.A
                 ClassicSectorKey.TYPE_KEYB -> ClassicSectorKey.KeyType.B
