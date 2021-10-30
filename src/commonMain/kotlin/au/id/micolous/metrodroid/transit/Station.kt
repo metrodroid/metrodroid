@@ -22,8 +22,10 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 class Station (val humanReadableId: String, val companyName: FormattedString? = null,
                val lineNames: List<FormattedString>? = emptyList(),
                private val stationNameRaw: FormattedString?,
