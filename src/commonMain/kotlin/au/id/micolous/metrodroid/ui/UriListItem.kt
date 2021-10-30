@@ -23,15 +23,19 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.StringResource
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * ListItem which supports directing to a website.
  */
 @Parcelize
+@Serializable
+@SerialName("uri")
 class UriListItem private constructor(
     override val text1: FormattedString,
     override val text2: FormattedString, val uri: String)
-    : ListItemInterface {
+    : ListItemInterface() {
     constructor(nameResource: StringResource, valueResource: StringResource, uri: String) :
             this(Localizer.localizeFormatted(nameResource),
             Localizer.localizeFormatted(valueResource), uri)

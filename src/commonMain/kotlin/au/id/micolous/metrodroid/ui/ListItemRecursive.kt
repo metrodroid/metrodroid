@@ -23,12 +23,16 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.StringResource
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
+@SerialName("recursive")
 class ListItemRecursive private constructor(
     override val text1: FormattedString,
     override val text2: FormattedString?,
-    val subTree: List<ListItemInterface>?): ListItemInterface {
+    val subTree: List<ListItemInterface>?): ListItemInterface() {
 
     constructor(text1: String, text2: String?, subTree: List<ListItemInterface>?)
             : this(FormattedString(text1), text2?.let { FormattedString(it) }, subTree)

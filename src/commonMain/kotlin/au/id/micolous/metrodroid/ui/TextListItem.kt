@@ -25,9 +25,13 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.StringResource
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Parcelize
-class TextListItem private constructor(override val text1: FormattedString) : ListItemInterface {
+@Serializable
+@SerialName("text")
+class TextListItem private constructor(override val text1: FormattedString) : ListItemInterface() {
     constructor(textResource: StringResource) : this(
         Localizer.localizeFormatted(textResource))
 
