@@ -44,9 +44,9 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
             super.getAgencyName(isShort)
         }
 
-    override val routeName: FormattedString? get() = when {
+    override val routeName: FormattedString? get() = when (capsule.mModeInt) {
         // TODO: Use MdST (operator name is not prominent on G:link signage)
-        capsule.mModeInt == SeqGoData.VEHICLE_GLINK ->
+        SeqGoData.VEHICLE_GLINK ->
             FormattedString.language("G:link", "en-AU")
         else -> super.routeName
     }
