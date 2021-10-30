@@ -23,10 +23,8 @@ package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.util.Aes
-import au.id.micolous.metrodroid.util.Cmac
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.card.CardTransceiver
+import au.id.micolous.metrodroid.util.*
 
 /**
  * Protocol implementation for MIFARE Plus in SL0 / SL3 mode.
@@ -37,9 +35,13 @@ import au.id.micolous.metrodroid.card.CardTransceiver
  */
 class PlusProtocol private constructor(private val tag: CardTransceiver,
                                        override val sectorCount: Int) : ClassicCardTech {
-    var kmac: ImmutableByteArray? = null
-    var ti: ImmutableByteArray? = null
-    var rctr: Int = 0
+    private val kmac = AtomicRef<ImmutableByteArray?>(null)
+    private val ti = AtomicRef<ImmutableByteArray?>(null)
+    private val rctr = AtomicCounter()
+
+    init {
+        nativeFreeze()
+    }
     
     override fun getBlockCountInSector(sectorIndex: Int) = if (sectorIndex >= 32) 16 else 4
 
@@ -91,24 +93,22 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
 
         val kmacPlain = rndA.sliceOffLen(7, 5) + rndB.sliceOffLen(7, 5) +
                 (rndA.sliceOffLen(0, 5) xor rndB.sliceOffLen(0, 5)) + ImmutableByteArray.of(0x22)
-        ti = raw2.sliceOffLen(0, 4)
-        kmac = Aes.encryptCbc(kmacPlain, key.key)
-        rctr = 0
+        ti.value = raw2.sliceOffLen(0, 4)
+        kmac.value = Aes.encryptCbc(kmacPlain, key.key)
+        rctr.set(0)
         return true
     }
 
     private fun computeMac(input: ImmutableByteArray, ctr: Int): ImmutableByteArray {
         val macdata = ImmutableByteArray.of(input[0], ctr.toByte(), (ctr shr 8).toByte()) +
-                ti!! + input.drop(1)
-        return aesCmac8(key=kmac!!, macdata=macdata)
+                ti.value!! + input.drop(1)
+        return aesCmac8(key=kmac.value!!, macdata=macdata)
     }
 
     override fun readBlock(block: Int): ImmutableByteArray {
         val cmd = ImmutableByteArray.of(0x33, block.toByte(), 0, 1)
-        val reply = tag.transceive(cmd + computeMac(cmd, rctr))
-        rctr++
-
-        return reply.sliceOffLen(1, 16)
+        return tag.transceive(
+            cmd + computeMac(cmd, rctr.getAndIncrement())).sliceOffLen(1, 16)
     }
 
     override val subType: ClassicCard.SubType
