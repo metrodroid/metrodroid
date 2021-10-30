@@ -16,6 +16,7 @@ actual abstract class BaseInstrumentedTestPlatform actual constructor() {
                 listOf(mapppedLang) as NSArray,
                 forKey = "AppleLanguages")
         NSUserDefaults.standardUserDefaults.synchronize()
+        Preferences.regionOverrideForTest.value = languageTag.substringAfter('-')
     }
 
     actual fun loadAssetSafe(path: String): Input? =
