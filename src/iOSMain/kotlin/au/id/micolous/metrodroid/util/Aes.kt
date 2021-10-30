@@ -15,7 +15,7 @@ actual object Aes {
                 input.dataCopy.usePinned { inputPinned ->
                     output.usePinned { outputPinned ->
                         outputSize.usePinned { outputSizePinned ->
-                            val ccStatus = CCCrypt(mode,
+                            CCCrypt(mode,
                                     kCCAlgorithmAES128,
                                     0,
                                     keyPinned.addressOf(0),
