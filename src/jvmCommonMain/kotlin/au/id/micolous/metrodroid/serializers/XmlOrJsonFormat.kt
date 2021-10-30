@@ -22,7 +22,7 @@ class XmlOrJsonCardFormat : CardMultiImporter {
     @OptIn(ExperimentalStdlibApi::class)
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
-        when (pb.peekAndSkipSpace().toChar()) {
+        when (pb.peekAndSkipSpace().toInt().toChar()) {
             '<' -> return iterateXmlCards(pb) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
             '[', '{' -> return AutoJsonFormat.readCardList(pb.readBytes().decodeToString()).iterator()
             'P' -> return readZip(pb).iterator()
