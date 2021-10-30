@@ -55,10 +55,10 @@ class ViewController: UIViewController {
         
         if (obfuscationFlagsOn > 0) {
             obfuscationLabel.text = Utils.localizePlural(
-                RKt.R.plurals.obfuscation_mode_notice,
+                Rplurals.init().obfuscation_mode_notice,
                 obfuscationFlagsOn, obfuscationFlagsOn)
         } else if (!hasNfc) {
-            obfuscationLabel.text = Utils.localizeString(RKt.R.string.nfc_unavailable)
+            obfuscationLabel.text = Utils.localizeString(Rstring.init().nfc_unavailable)
         } else {
             obfuscationLabel.text = nil
         }

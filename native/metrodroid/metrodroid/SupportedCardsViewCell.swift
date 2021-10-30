@@ -60,7 +60,7 @@ class SupportedCardsViewCell: UICollectionViewCell {
             notes += Utils.localizeString(li)
         }
         if (ci.preview) {
-            notes += " " + Utils.localizeString(RKt.R.string.card_preview_reader)
+            notes += " " + Utils.localizeString(Rstring.init().card_preview_reader)
         }
         if notes == "" {
             return nil

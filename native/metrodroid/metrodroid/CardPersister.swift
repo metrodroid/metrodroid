@@ -149,7 +149,7 @@ class CardPersister {
                 return true
             }
             if inf?.transitName == nil
-                && Utils.localizeString(RKt.R.string.unknown_card).localizedCaseInsensitiveContains(query) {
+                && Utils.localizeString(Rstring.init().unknown_card).localizedCaseInsensitiveContains(query) {
                 return true
             }
             return false
@@ -227,9 +227,9 @@ class CardPersister {
         let archive = Archive(url: url, accessMode: .update)!
         let now = TimestampFull.Companion.init().now()
         try addZipFileFromString(archive: archive, name: "README." + Localizer.init().language + ".txt",
-                             contents: Utils.localizeString(RKt.R.string.exported_at, now.format()) + Utils.getDeviceString())
+                             contents: Utils.localizeString(Rstring.init().exported_at, now.format()) + Utils.getDeviceString())
         try addZipFileFromString(archive: archive, name: "README.txt",
-                             contents: Utils.englishString(RKt.R.string.exported_at, now.isoDateTimeFormat()) + Utils.getDeviceStringEnglish())
+                             contents: Utils.englishString(Rstring.init().exported_at, now.isoDateTimeFormat()) + Utils.getDeviceStringEnglish())
 
         return url
     }

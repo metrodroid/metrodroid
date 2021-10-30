@@ -114,7 +114,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
             let url = try CardPersister.persistCard(card: card, json: json)
             if Preferences.init().speakBalance {
                 if let balance = card.safeBalance?.formatCurrencyString(isBalance: true).unformatted {
-                    let balanceStr = Utils.localizeString(RKt.R.string.balance_speech, balance)
+                    let balanceStr = Utils.localizeString(Rstring.init().balance_speech, balance)
                     Utils.speakText(voiceOutdata: balanceStr)
                 }
             }
@@ -123,7 +123,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                 self.navigationController?.pushViewController(cr, animated: true)
             }
         } catch {
-            Utils.showError(viewController: self.navigationController!, msg: Utils.localizeString(RKt.R.string.ios_nfcreader_exception, "\(error)"))
+            Utils.showError(viewController: self.navigationController!, msg: Utils.localizeString(Rstring.init().ios_nfcreader_exception, "\(error)"))
         }
     }
 
@@ -146,7 +146,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
     private var max: Int
     
     override init() {
-        self.msg = Utils.localizeString(RKt.R.string.ios_nfcreader_tap)
+        self.msg = Utils.localizeString(Rstring.init().ios_nfcreader_tap)
         self.cur = 0
         self.max = 1
     }
@@ -156,16 +156,16 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
     }
     
     func statusConnecting(cardType: CardType) {
-        updateStatusText(msg: Utils.localizeString(RKt.R.string.ios_nfcreader_connecting, cardType.description()))
+        updateStatusText(msg: Utils.localizeString(Rstring.init().ios_nfcreader_connecting, cardType.description()))
     }
 
     func statusReading(cardType: CardType) {
-        updateStatusText(msg: Utils.localizeString(RKt.R.string.ios_nfcreader_reading, cardType.description()))
+        updateStatusText(msg: Utils.localizeString(Rstring.init().ios_nfcreader_reading, cardType.description()))
     }
     
     class func connectionError(session: NFCTagReaderSession, err: Error?) {
             session.invalidate(errorMessage:
-                Utils.localizeString(RKt.R.string.ios_nfcreader_connection_error, " \(String(describing: err))"))
+                Utils.localizeString(Rstring.init().ios_nfcreader_connection_error, " \(String(describing: err))"))
     }
     
     func vicinityRead(tag: NFCISO15693Tag) -> Card {
@@ -285,7 +285,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                 })
                 break
             default:
-                session.invalidate(errorMessage: Utils.localizeString(RKt.R.string.ios_unknown_mifare, "\(mifare)"))
+                session.invalidate(errorMessage: Utils.localizeString(Rstring.init().ios_unknown_mifare, "\(mifare)"))
                 break
             }
             break
@@ -363,7 +363,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
 
         default:
             session.invalidate(errorMessage:
-                Utils.localizeString(RKt.R.string.ios_unknown_tag, "\(tag)"))
+                Utils.localizeString(Rstring.init().ios_unknown_tag, "\(tag)"))
         }
     }
     
@@ -372,7 +372,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
         session = NFCTagReaderSession(pollingOption: [
             .iso14443, .iso18092, .iso15693],
                                          delegate: self)
-        session!.alertMessage = Utils.localizeString(RKt.R.string.ios_nfcreader_tap)
+        session!.alertMessage = Utils.localizeString(Rstring.init().ios_nfcreader_tap)
         session!.begin()
         self.navigationController = navigationController
     }

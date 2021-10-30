@@ -60,7 +60,7 @@ class SubscriptionViewCell : UICollectionViewCell {
             usedLabel?.text = Utils.localizeString(subState.descriptionRes)
         }
         if let remainingDays = formatted.remainingDayCount {
-            daysLabel?.text = Utils.localizePlural(RKt.R.plurals.remaining_day_count,
+            daysLabel?.text = Utils.localizePlural(Rplurals.init().remaining_day_count,
                                                    Int(truncating: remainingDays), remainingDays)
         } else {
             daysLabel?.text = nil

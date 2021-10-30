@@ -42,7 +42,7 @@ class CardViewController: UITabBarController {
         if (td == nil || err != nil) {
             return AdvancedCardViewController.create(card: card, url: url,
                                                         error:
-                err ?? Utils.localizeString(RKt.R.string.unknown_card_description), isCritical: err != nil)
+                err ?? Utils.localizeString(Rstring.init().unknown_card_description), isCritical: err != nil)
         }
         cr.td = td
         return cr
@@ -58,7 +58,7 @@ class CardViewController: UITabBarController {
     
     func copyNumberAction(_: UIAlertAction) {
         UIPasteboard.general.string = td?.serialNumber ?? card?.tagId.toHexString()
-        let alert = Utils.makeAlertDialog(msg: Utils.localizeString(RKt.R.string.copied_to_clipboard))
+        let alert = Utils.makeAlertDialog(msg: Utils.localizeString(Rstring.init().copied_to_clipboard))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -80,37 +80,37 @@ class CardViewController: UITabBarController {
     }
     
     @objc func menuAction() {
-        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.ios_menu_title), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(Rstring.init().ios_menu_title), preferredStyle: .actionSheet)
         if (!Preferences.init().hideCardNumbers) {
             optionMenu.addAction(
-                UIAlertAction(title: Utils.localizeString(RKt.R.string.copy_card_number), style: .default, handler: copyNumberAction))
+                UIAlertAction(title: Utils.localizeString(Rstring.init().copy_card_number), style: .default, handler: copyNumberAction))
         }
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.advanced_info), style: .default, handler: advancedInfoAction))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().advanced_info), style: .default, handler: advancedInfoAction))
         if td?.moreInfoPage != nil {
             optionMenu.addAction(
-                UIAlertAction(title: Utils.localizeString(RKt.R.string.about_card_format), style: .default, handler: aboutFormatAction))
+                UIAlertAction(title: Utils.localizeString(Rstring.init().about_card_format), style: .default, handler: aboutFormatAction))
         }
         if td?.onlineServicesPage != nil {
             optionMenu.addAction(
-                UIAlertAction(title: Utils.localizeString(RKt.R.string.online_services), style: .default, handler: onlineServicesAction))
+                UIAlertAction(title: Utils.localizeString(Rstring.init().online_services), style: .default, handler: onlineServicesAction))
         }
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_menu_cancel), style: .cancel))
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_menu_cancel), style: .cancel))
         
         self.present(optionMenu, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(RKt.R.string.ios_menu_button), style: .plain, target: self, action: #selector(menuAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(Rstring.init().ios_menu_button), style: .plain, target: self, action: #selector(menuAction))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         var hiddenSerial: String? = nil
         if (Preferences.init().hideCardNumbers) {
-            hiddenSerial = Utils.localizeString(RKt.R.string.hidden_card_number)
+            hiddenSerial = Utils.localizeString(Rstring.init().hidden_card_number)
         }
-        let unknown = Utils.localizeString(RKt.R.string.unknown)
+        let unknown = Utils.localizeString(Rstring.init().unknown)
         title = "\(td?.cardName ?? unknown) \(Utils.directedDash) \(hiddenSerial ?? (td?.serialNumber ?? card?.tagId.toHexString()).flatMap(Utils.weakLTR) ?? unknown)"
         self.viewControllers = self.viewControllers?.filter { v in
             ((v as? CardViewProtocol)?.setTransitData(card: card!, transitData: td) ?? false)
