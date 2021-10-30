@@ -20,31 +20,92 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
+import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
+import au.id.micolous.metrodroid.util.ObfuscatedTrip
+import kotlinx.serialization.Serializable
 
 @Parcelize
-@Suppress("unused") // Used from Swift
+@Suppress("unused") // Used from Swift and tests
+@Serializable
 data class TransitDataStored internal constructor(
-    override val balances: List<TransitBalance>?,
-    override val serialNumber: String?,
-    override val trips: List<Trip>?,
-    override val subscriptions: List<Subscription>?,
-    override val info: List<ListItemInterface>?,
+    override val balances: List<TransitBalance>? = null,
+    override val serialNumber: String? = null,
+    override val trips: List<ObfuscatedTrip>? = null,
+    override val subscriptions: List<StoredSubscription>? = null,
+    override val info: List<ListItemInterface>? = null,
     override val cardName: String,
-    override val moreInfoPage: String?,
-    override val onlineServicesPage: String?,
-    override val warning: String?,
+    override val moreInfoPage: String? = null,
+    override val onlineServicesPage: String? = null,
+    override val warning: String? = null,
     override val hasUnknownStations: Boolean,
-    val rawFieldsAll: List<ListItemInterface>?,
-    val rawFieldsUnknown: List<ListItemInterface>?
+    val rawFieldsAll: List<ListItemInterface>? = null,
+    val rawFieldsUnknown: List<ListItemInterface>? = null
 ): TransitData() {
 
     override fun getRawFields(level: RawLevel): List<ListItemInterface>? = when(level) {
         RawLevel.NONE -> null
         RawLevel.UNKNOWN_ONLY -> rawFieldsUnknown
         RawLevel.ALL -> rawFieldsAll
+    }
+    
+    @Serializable
+    @Parcelize
+    class StoredSubscription(
+        override val id: Int? = null,
+        override val validFrom: Timestamp? = null,
+        override val validTo: Timestamp? = null,
+        override val machineId: Int? = null,
+        override val subscriptionName: String? = null,
+        override val passengerCount: Int,
+        override val subscriptionState: SubscriptionState,
+        override val saleAgencyName: FormattedString? = null,
+        override val purchaseTimestamp: Timestamp? = null,
+        override val lastUseTimestamp: Timestamp? = null,
+        override val paymentMethod: PaymentMethod,
+        override val remainingTripCount: Int? = null,
+        override val totalTripCount: Int? = null,
+        override val remainingDayCount: Int? = null,
+        override val remainingTripsInDayCount: Int? = null,
+        override val zones: IntArray? = null,
+        override val transferEndTimestamp: Timestamp? = null,
+        val rawFieldsUnknown: List<ListItemInterface>? = null,
+        val rawFieldsFull: List<ListItemInterface>? = null,
+        override val info: List<ListItemInterface>? = null,
+        val agencyName: FormattedString? = null,
+        val agencyNameShort: FormattedString? = null,
+        override val cost: TransitCurrency? = null
+    ): Subscription() {
+        constructor(base: Subscription) : this(
+            id = base.id,
+            validFrom = base.validFrom,
+            validTo = base.validTo,
+            machineId = base.machineId,
+            subscriptionName = base.subscriptionName,
+            passengerCount = base.passengerCount,
+            subscriptionState = base.subscriptionState,
+            saleAgencyName = base.saleAgencyName,
+            purchaseTimestamp = base.purchaseTimestamp,
+            lastUseTimestamp = base.lastUseTimestamp,
+            paymentMethod = base.paymentMethod,
+            remainingTripCount = base.remainingTripCount,
+            totalTripCount = base.totalTripCount,
+            remainingDayCount = base.remainingDayCount,
+            remainingTripsInDayCount = base.remainingTripsInDayCount,
+            zones = base.zones,
+            transferEndTimestamp = base.transferEndTimestamp,
+            rawFieldsUnknown = base.getRawFields(RawLevel.UNKNOWN_ONLY),
+            rawFieldsFull = base.getRawFields(RawLevel.ALL),
+            info = base.info,
+            agencyName = base.getAgencyName(false),
+            agencyNameShort = base.getAgencyName(true),
+            cost = base.cost
+        )
+
     }
 
     object Storer {
@@ -56,7 +117,7 @@ data class TransitDataStored internal constructor(
             balances = original.balances,
             serialNumber = original.serialNumber,
             trips = original.prepareTripsSafe(),
-            subscriptions = original.subscriptions,
+            subscriptions = original.subscriptions?.map { StoredSubscription(it) },
             info = original.info,
             cardName = original.cardName,
             moreInfoPage = original.moreInfoPage,
