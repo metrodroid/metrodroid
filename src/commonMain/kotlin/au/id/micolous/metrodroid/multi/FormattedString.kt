@@ -19,6 +19,50 @@
 
 package au.id.micolous.metrodroid.multi
 
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+
+// This loses formatting but we use it only for tests
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(forClass = FormattedString::class)
+class FormattedStringSerializerSimple : KSerializer<FormattedString> {
+    override fun deserialize(decoder: Decoder) = FormattedString(
+        String.serializer().deserialize(decoder)
+    )
+
+    override fun serialize(encoder: Encoder, value: FormattedString) {
+        String.serializer().serialize(encoder, value.unformatted)
+    }
+
+    override val descriptor: SerialDescriptor
+        get() = PrimitiveSerialDescriptor("unformatted", PrimitiveKind.STRING)
+}
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(forClass = FormattedStringFallback::class)
+class FormattedStringFallbackSerializer : KSerializer<FormattedStringFallback> {
+    override fun deserialize(decoder: Decoder) = FormattedStringFallback(
+        String.serializer().deserialize(decoder)
+    )
+
+    override fun serialize(encoder: Encoder, value: FormattedStringFallback) {
+        String.serializer().serialize(encoder, value.unformatted)
+    }
+}
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(forClass = FormattedString::class)
+expect class FormattedStringSerializer : KSerializer<FormattedString>
+
+@Serializable(with=FormattedStringSerializer::class)
 expect class FormattedString(input: String) : Parcelable {
     val unformatted: String
 
@@ -47,6 +91,7 @@ expect class FormattedStringBuilder() {
 }
 
 @Parcelize
+@Serializable(with=FormattedStringFallbackSerializer::class)
 class FormattedStringFallback (private val input: String): Parcelable {
     override fun toString(): String = unformatted
     val unformatted get() = input

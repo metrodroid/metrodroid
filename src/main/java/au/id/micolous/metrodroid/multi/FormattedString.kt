@@ -27,8 +27,12 @@ import android.os.Parcel
 import android.text.*
 import android.text.style.*
 import au.id.micolous.metrodroid.ui.HiddenSpan
+import kotlinx.serialization.Serializable
 import java.util.Locale
 
+actual typealias FormattedStringSerializer = FormattedStringSerializerSimple
+
+@Serializable(with=FormattedStringSerializerSimple::class)
 actual class FormattedString (val spanned: Spanned): Parcelable {
     actual val unformatted: String
         get() = spanned.toString()
