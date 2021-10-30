@@ -24,16 +24,14 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
-
-import platform.Foundation.*
+import platform.CoreNFC.NFCFeliCaTagProtocol
 
 @Suppress("unused") // Used from Swift
 object FelicaCardReaderIOS {
     @Throws(Throwable::class)
-    fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,
-             defaultSysCode: NSData,
+    fun dump(tag: NFCFeliCaTagProtocol,
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
-        val xfer = FelicaTransceiverIOS(wrapper, defaultSysCode)
+        val xfer = FelicaTransceiverIOS(tag)
         Log.d(TAG, "Start dump ${xfer.uid}")
 
         /*

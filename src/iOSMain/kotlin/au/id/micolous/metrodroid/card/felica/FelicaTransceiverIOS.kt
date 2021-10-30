@@ -28,20 +28,21 @@ import au.id.micolous.metrodroid.util.toNSData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
+import platform.CoreNFC.NFCFeliCaTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.native.concurrent.freeze
 
-class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): FelicaTransceiver {
-    override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
-    override val defaultSystemCode : Int? = defaultSysCode.toImmutable().byteArrayToInt()
+class FelicaTransceiverIOS(val tag: NFCFeliCaTagProtocol): FelicaTransceiver {
+    override val uid: ImmutableByteArray? = tag.currentIDm.toImmutable()
+    override val defaultSystemCode : Int? = tag.currentSystemCode.toImmutable().byteArrayToInt()
 
     init {
         freeze()
     }
 
     data class Capsule (
-        val reply: NSData,
+        val reply: NSData?,
         val err: NSError?) {
         init {
             freeze()
@@ -53,13 +54,19 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
         val chan = Channel<Capsule>()
         val (repl, err) = runBlocking {
             chan.freeze()
+            val lambda = {reply: NSData?, error: NSError? ->
+                callback(channel =  chan, reply = reply, error = error)
+            }
+            lambda.freeze()
             // iOS adds the length byte itself
-            tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData(), chan)
+            tag.sendFeliCaCommandPacket(
+                    commandPacket = data.sliceOffLen(1, data.size - 1).toNSData(),
+                    completionHandler = lambda)
             chan.receive()
         }
-        if (err != null) {
+        if (err != null || repl == null) {
             Log.d(TAG, "<!< $err")
-            if (err.code == 100L)
+            if (err?.code == 100L)
               throw CardLostException(err.toString())
             throw CardTransceiveException(err.toString())
         } else {
@@ -69,17 +76,10 @@ class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): Felic
         }
     }
 
-    // Kotlin apparently lack imports for NFCTagMiFare
-    interface SwiftWrapper {
-        fun getIdentifier(): NSData
-        fun transmit(input: NSData, channel: SendChannel<Capsule>)
-    }
-
     companion object {
         private const val TAG = "FelicaTransceiver"
 
-        @Suppress("unused")  // Called from Swift
-        fun callback(channel: SendChannel<Capsule>, reply: NSData,
+        fun callback(channel: SendChannel<Capsule>, reply: NSData?,
             error: NSError?) {
             val capsule = Capsule(reply, error)
             runBlocking {

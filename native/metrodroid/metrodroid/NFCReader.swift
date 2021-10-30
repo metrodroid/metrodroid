@@ -35,77 +35,6 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
     func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
         print("NFC Session end \(error)")
     }
-    
-    class DesfireWrapper : ISO7816TransceiverSwiftWrapper {
-        var tag: NFCMiFareTag
-        
-        init(tag: NFCMiFareTag) {
-            self.tag = tag
-        }
-        
-        func getIdentifier() -> Data {
-            return tag.identifier
-        }
-        
-        func transmit(input: Data, channel__ channel: Kotlinx_coroutines_coreSendChannel) {
-            tag.sendMiFareISO7816Command(NFCISO7816APDU(data: input)!, completionHandler: {data,sw1,sw2,err in
-                ISO7816Transceiver.companion.callback(channel: channel, reply: data, sw1: sw1, sw2: sw2, error: err)})
-        }
-    }
-    
-    class Iso7816Wrapper : ISO7816TransceiverSwiftWrapper {
-        var tag: NFCISO7816Tag
-        
-        init(tag: NFCISO7816Tag) {
-            self.tag = tag
-        }
-        
-        func getIdentifier() -> Data {
-            return tag.identifier
-        }
-        
-        func transmit(input: Data, channel__ channel: Kotlinx_coroutines_coreSendChannel) {
-            tag.sendCommand(apdu: NFCISO7816APDU(data: input)!, completionHandler: {data,sw1,sw2,err in
-                ISO7816Transceiver.companion.callback(channel: channel, reply: data, sw1: sw1, sw2: sw2, error: err)})
-        }
-    }
-    
-    class FelicaWrapper : FelicaTransceiverIOSSwiftWrapper {
-        func transmit(input: Data, channel: Kotlinx_coroutines_coreSendChannel) {
-            print("Sending \(input)")
-            tag.sendFeliCaCommand(commandPacket: input, completionHandler: {reply, err in FelicaTransceiverIOS.companion.callback(channel: channel, reply: reply, error: err)})
-        }
-        
-        var tag: NFCFeliCaTag
-        
-        init(tag: NFCFeliCaTag) {
-            self.tag = tag
-        }
-        
-        func getIdentifier() -> Data {
-            return tag.currentIDm
-        }
-    }
-
-    class UltralightWrapper : UltralightTransceiverIOSSwiftWrapper {
-        func transmit(input: Data, channel_ channel: Kotlinx_coroutines_coreSendChannel) {
-            print("Sending \(input)")
-            tag.sendMiFareCommand(commandPacket: input, completionHandler: {reply, err in
-                print ("Reply \(reply), err \(String(describing: err))")
-                UltralightTransceiverIOS.companion.callback(channel: channel, reply: reply, error: err)
-            })
-        }
-        
-        var tag: NFCMiFareTag
-        
-        init(tag: NFCMiFareTag) {
-            self.tag = tag
-        }
-        
-        func getIdentifier() -> Data {
-            return tag.identifier
-        }
-    }
 
     func postDump(card: Card) {
         do {
@@ -222,7 +151,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                     DispatchQueue.global().async {
                         print("swift async")
                         do {
-                            let card = try DesfireCardReaderIOS.init().dump(wrapper: DesfireWrapper(tag: mifare), feedback: self)
+                            let card = try DesfireCardReaderIOS.init().dump(tag: mifare, feedback: self)
                             if (!card.isPartialRead) {
                                 self.updateProgressBar(progress: 1, max: 1)
                             }
@@ -247,7 +176,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                     DispatchQueue.global().async {
                         print("swift async")
                         do {
-                            let card = try UltralightCardReaderIOS.init().dump(wrapper: UltralightWrapper(tag: mifare), feedback: self)
+                            let card = try UltralightCardReaderIOS.init().dump(tag: mifare, feedback: self)
                             if (!card.isPartialRead) {
                                 self.updateProgressBar(progress: 1, max: 1)
                             }
@@ -272,7 +201,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                     DispatchQueue.global().async {
                         print("swift async")
                         do {
-                            let card = try PlusCardReaderIOS.init().dump(wrapper: UltralightWrapper(tag: mifare), feedback: self)
+                            let card = try PlusCardReaderIOS.init().dump(tag: mifare, feedback: self)
                             if (!card.isPartialRead) {
                                 self.updateProgressBar(progress: 1, max: 1)
                             }
@@ -302,7 +231,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                 DispatchQueue.global().async {
                     print("swift async")
                     do {
-                        let card = try ISO7816CardReaderIOS.init().dump(wrapper: Iso7816Wrapper(tag: iso), feedback: self)
+                        let card = try ISO7816CardReaderIOS.init().dump(tag: iso, feedback: self)
                         if (!card.isPartialRead) {
                             self.updateProgressBar(progress: 1, max: 1)
                         }
@@ -328,7 +257,7 @@ class NFCReader : NSObject, NFCTagReaderSessionDelegate, TagReaderFeedbackInterf
                 DispatchQueue.global().async {
                     print("swift async")
                     do {
-                        let card = try FelicaCardReaderIOS.init().dump(wrapper: FelicaWrapper(tag: felica), defaultSysCode: felica.currentSystemCode, feedback: self)
+                        let card = try FelicaCardReaderIOS.init().dump(tag: felica, feedback: self)
                         if (!card.isPartialRead) {
                             self.updateProgressBar(progress: 1, max: 1)
                         }

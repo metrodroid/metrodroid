@@ -29,12 +29,14 @@ import au.id.micolous.metrodroid.util.toNSData
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
+import platform.CoreNFC.NFCISO7816APDU
+import platform.CoreNFC.NFCISO7816TagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.native.concurrent.freeze
 
-class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
-    override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
+class ISO7816Transceiver(val tag: NFCISO7816TagProtocol): CardTransceiver {
+    override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
 
     init {
        freeze()
@@ -43,7 +45,7 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
     // Kotlin-objc interface behaves weirdly if we pass it directly,
     // packing as data class is nicer and works better
     data class Capsule (
-        val rep: NSData,
+        val rep: NSData?,
         val sw1: UByte,
         val sw2: UByte,
         val err: NSError?
@@ -58,12 +60,17 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
         val (rep, sw1, sw2, err) = runBlocking {
             val chan = Channel<Capsule>()
             chan.freeze()
-            tag.transmit(data.toNSData(), chan)
+            val lambda = { data: NSData?, sw1: UByte, sw2: UByte, err: NSError? ->
+                callback(channel = chan, reply = data, sw1 = sw1, sw2 = sw2, error = err)
+            }
+            lambda.freeze()
+            tag.sendCommandAPDU(NFCISO7816APDU(data = data.toNSData()),
+                    completionHandler = lambda)
             chan.receive()
         }
-        if (err != null) {
+        if (err != null || rep == null) {
             Log.d(TAG, "<!< $err")
-            if (err.code == 100L)
+            if (err?.code == 100L)
               throw CardLostException(err.toString())
             throw CardTransceiveException(err.toString())
         } else {
@@ -73,17 +80,10 @@ class ISO7816Transceiver(val tag: SwiftWrapper): CardTransceiver {
         }
     }
 
-    // Kotlin apparently lack imports for NFCTagMiFare
-    interface SwiftWrapper {
-        fun getIdentifier(): NSData
-        fun transmit(input: NSData, channel: SendChannel<Capsule>)
-    }
-
     companion object {
         private const val TAG = "ISO7816Transceiver"
 
-        @Suppress("unused")  // Called from Swift
-        fun callback(channel: SendChannel<Capsule>, reply: NSData,
+        fun callback(channel: SendChannel<Capsule>, reply: NSData?,
                      sw1: UByte, sw2: UByte, error: NSError?) {
             val capsule = Capsule(reply, sw1, sw2, error)
             runBlocking {
