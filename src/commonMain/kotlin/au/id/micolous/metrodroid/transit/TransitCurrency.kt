@@ -24,11 +24,15 @@ import au.id.micolous.metrodroid.util.ISO4217
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
 internal expect fun formatCurrency(value: Int, divisor: Int, currencyCode: String, isBalance: Boolean): FormattedString
 
-sealed class TransitCurrencyBase : TransitBalance, Parcelable {
+@Serializable
+@SerialName("currency")
+sealed class TransitCurrencyBase : TransitBalance(), Parcelable {
     abstract fun formatCurrencyString(isBalance: Boolean): FormattedString
     abstract fun obfuscate(): TransitCurrencyBase
 
@@ -45,8 +49,11 @@ sealed class TransitCurrencyBase : TransitBalance, Parcelable {
     }
 }
 
+@Serializable
+@SerialName("resource")
 @Parcelize
 data class TransitCurrencyResource (
+    @Serializable(with = StringResourceSerializer::class)
     private val mDesc: StringResource)
     : TransitCurrencyBase () {
     override fun formatCurrencyString(isBalance: Boolean) =
@@ -57,12 +64,16 @@ data class TransitCurrencyResource (
 }
 
 @Parcelize
+@Serializable
+@SerialName("iso")
 data class TransitCurrency (
+        @SerialName("value")
         private val mCurrency: Int,
         /**
          * 3 character currency code (eg: AUD) per ISO 4217.
          */
         @VisibleForTesting
+        @SerialName("currencyCode")
         val mCurrencyCode: String,
         /**
          * Value to divide by to get that currency's value in non-fractional parts.
@@ -72,6 +83,7 @@ data class TransitCurrency (
          * If the currency has no fractional part (eg: IDR, JPY, KRW), then the divisor should be 1,
          */
         @VisibleForTesting
+        @SerialName("divisor")
         val mDivisor: Int
 ): TransitCurrencyBase(), Parcelable {
 

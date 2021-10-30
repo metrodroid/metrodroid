@@ -19,8 +19,8 @@
 package au.id.micolous.metrodroid.transit.oyster
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -29,9 +29,9 @@ class OysterPurse(
         val value: Int,
         private val sequence: Int,
         private val subsequence: Int
-) : Comparable<OysterPurse>, TransitBalance {
+) : Comparable<OysterPurse>, Parcelable {
 
-    override val balance: TransitCurrency
+    val balance: TransitCurrency
         get() = TransitCurrency.GBP(value)
 
     internal constructor(record: ImmutableByteArray) : this(

@@ -24,17 +24,19 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
+import kotlinx.serialization.Serializable
 
-interface TransitBalance : Parcelable {
-    val balance: TransitCurrency
+@Serializable
+sealed class TransitBalance : Parcelable {
+    abstract val balance: TransitCurrency
 
-    val validFrom: Timestamp?
+    open val validFrom: Timestamp?
         get() = null
 
-    val validTo: Timestamp?
+    open val validTo: Timestamp?
         get() = null
 
-    val name: String?
+    open val name: String?
         get() = null
 
     companion object {

@@ -22,12 +22,16 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.time.Timestamp
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
+@SerialName("stored")
 class TransitBalanceStored constructor(override val balance: TransitCurrency,
                                        override val name: String?,
                                        override val validFrom: Timestamp?,
-                                       override val validTo: Timestamp?) : TransitBalance {
+                                       override val validTo: Timestamp?) : TransitBalance() {
     constructor(bal: TransitCurrency, name: String?) : this(bal, name, null, null)
     constructor(bal: TransitCurrency, expiry: Timestamp?) : this(bal, null, null, expiry)
     constructor(bal: TransitCurrency, name: String?, expiry: Timestamp?) : this(bal, name, null, expiry)

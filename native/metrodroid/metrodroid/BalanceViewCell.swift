@@ -31,7 +31,7 @@ class BalanceViewCell : UICollectionViewCell {
         balanceLabel?.attributedText = b.balance.maybeObfuscateBalance()
             .formatCurrencyString(isBalance: true).attributed
         nameLabel?.text = b.name
-        validityLabel?.attributedText = TransitBalanceCompanion.init().formatValidity(balance: b)?.attributed
+        validityLabel?.attributedText = TransitBalance.companion.formatValidity(balance: b)?.attributed
         layer.cornerRadius = 8.0
     }
 }
