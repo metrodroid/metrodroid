@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 
 abstract class En1545Subscription : Subscription() {
@@ -122,7 +123,7 @@ abstract class En1545Subscription : Subscription() {
     open val balance: TransitBalance?
         get() = null
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() {
             val li = mutableListOf<ListItem>()
             val clas = parsed.getInt(CONTRACT_PASSENGER_CLASS)

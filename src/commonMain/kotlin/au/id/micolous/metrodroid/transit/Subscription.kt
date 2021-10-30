@@ -217,7 +217,7 @@ abstract class Subscription : Parcelable {
      *
      */
     // TODO: i18n
-    open val info: List<ListItem>?
+    open val info: List<ListItemInterface>?
         get() {
             val items = mutableListOf<ListItem>()
             if (saleAgencyName != null) {

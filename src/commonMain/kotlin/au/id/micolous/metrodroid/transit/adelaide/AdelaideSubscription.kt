@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
 
 import au.id.micolous.metrodroid.transit.intercode.IntercodeSubscription
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -31,7 +31,7 @@ class AdelaideSubscription (override val parsed: En1545Parsed): En1545Subscripti
     override val lookup: AdelaideLookup
         get() = AdelaideLookup
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = super.info.orEmpty() +
                 parsed.getInfo(setOf(CONTRACT_TARIFF,
                         En1545FixedInteger.dateName(CONTRACT_SALE),

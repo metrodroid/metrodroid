@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import kotlin.random.Random
 
 @Parcelize
@@ -68,7 +69,7 @@ data class HSLArvo(override val parsed: En1545Parsed,
     @VisibleForTesting
     val language get() = HSLLookup.languageCode(parsed.getInt(LANGUAGE_CODE))
 
-    override val info: List<ListItem>
+    override val info: List<ListItemInterface>
         get() = super.info.orEmpty().filter { it.text1?.unformatted != Localizer.localizeString(R.string.purchase_date) } + listOfNotNull(
                 ListItem(R.string.hsl_period, formatPeriod()), // FIXME: put above separator
                 ListItem(R.string.hsl_language, language),
