@@ -11,6 +11,7 @@ import java.io.PushbackInputStream
 import java.util.zip.ZipInputStream
 
 class XmlCardFormat : CardMultiImporter {
+    @OptIn(ExperimentalStdlibApi::class)
     override fun readCards(stream: InputStream): Iterator<Card>
         = iterateXmlCards(stream) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
 }
@@ -18,6 +19,7 @@ class XmlCardFormat : CardMultiImporter {
 class XmlOrJsonCardFormat : CardMultiImporter {
     private val mfcFormat = MfcCardImporter()
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
         when (pb.peekAndSkipSpace().toChar()) {
