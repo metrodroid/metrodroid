@@ -26,6 +26,7 @@ import platform.Foundation.NSUserDefaults
 import platform.Foundation.countryCode
 import platform.Foundation.currentLocale
 import platform.Foundation.preferredLanguages
+import kotlin.native.concurrent.AtomicInt
 import kotlin.native.concurrent.AtomicReference
 import kotlin.reflect.KProperty
 
@@ -68,4 +69,11 @@ actual object Preferences {
     val speakBalance by BoolDelegate("pref_key_speak_balance")
     actual val metrodroidVersion: String
         get() = (NSBundle.mainBundle.infoDictionary?.get("CFBundleShortVersionString") as? String) ?: "unknown"
+
+    private val useIsoDateTimeStampsBacker = AtomicInt(0)
+    actual var useIsoDateTimeStamps: Boolean
+        get() = useIsoDateTimeStampsBacker.value != 0
+        set(value) {
+            useIsoDateTimeStampsBacker.value = if (value) 1 else 0
+        }
 }

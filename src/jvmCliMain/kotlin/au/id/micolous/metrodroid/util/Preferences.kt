@@ -29,4 +29,5 @@ actual object Preferences {
         get() = TransitData.RawLevel.UNKNOWN_ONLY
     actual val metrodroidVersion: String
         get() = "testing"
+    actual var useIsoDateTimeStamps = false
 }

@@ -28,7 +28,9 @@ import android.text.style.LocaleSpan
 import android.text.style.TtsSpan
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
+import java.text.SimpleDateFormat
 import java.util.*
 
 actual object TimestampFormatter {
@@ -68,7 +70,11 @@ actual object TimestampFormatter {
     }
 
     private fun longDateFormat(date: Calendar?): SpannableString {
-        val s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.instance),
+        val df = if (Preferences.useIsoDateTimeStamps)
+            SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        else
+            DateFormat.getLongDateFormat(MetrodroidApplication.instance)
+        val s = formatCalendar(df,
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -85,7 +91,11 @@ actual object TimestampFormatter {
     }
 
     private fun dateFormat(date: Calendar?): SpannableString {
-        val s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
+        val df = if (Preferences.useIsoDateTimeStamps)
+            SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        else
+            DateFormat.getDateFormat(MetrodroidApplication.instance)
+        val s = formatCalendar(df,
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -101,7 +111,11 @@ actual object TimestampFormatter {
     }
 
     private fun timeFormat(date: Calendar?): SpannableString {
-        val s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance),
+        val tf = if (Preferences.useIsoDateTimeStamps)
+            SimpleDateFormat("HH:mm", Locale.US)
+        else
+            DateFormat.getTimeFormat(MetrodroidApplication.instance)
+        val s = formatCalendar(tf,
                 date ?: return SpannableString(""))
 
         val b = SpannableString(s)
@@ -114,11 +128,20 @@ actual object TimestampFormatter {
     }
 
     private fun dateTimeFormat(date: Calendar?): SpannableString {
-        val d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.instance),
+        val df = if (Preferences.useIsoDateTimeStamps)
+            SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        else
+            DateFormat.getDateFormat(MetrodroidApplication.instance)
+        val d =  formatCalendar(df,
                 date ?: return SpannableString(""))
-        val t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.instance), date)
+        val tf = if (Preferences.useIsoDateTimeStamps)
+            SimpleDateFormat("HH:mm", Locale.US)
+        else
+            DateFormat.getTimeFormat(MetrodroidApplication.instance)
+        val t = formatCalendar(tf, date)
+        val separator = if (Preferences.useIsoDateTimeStamps) "T" else "0"
 
-        val b = SpannableString("$d $t")
+        val b = SpannableString("$d$separator$t")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             b.setSpan(TtsSpan.DateBuilder()

@@ -1,11 +1,13 @@
 package au.id.micolous.metrodroid.time
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.util.Preferences
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Locale
 
 actual object TimestampFormatter {
     private fun makeCalendar(ts: TimestampFull) =
@@ -33,11 +35,25 @@ actual object TimestampFormatter {
         c?.let { df.format(it) } ?: ""
 
     private fun longDateFormat(date: ZonedDateTime?): String =
-        formatCalendar(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG), date)
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ISO_LOCAL_DATE else
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG), date
+        )
 
     private fun timeFormat(date: ZonedDateTime?): String =
-        formatCalendar(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM), date)
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ofPattern("HH:mm", Locale.US)
+            else
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM), date
+        )
 
     private fun dateTimeFormat(date: ZonedDateTime?): String =
-        formatCalendar(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM), date)
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US)
+            else
+                DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM), date
+        )
 }
