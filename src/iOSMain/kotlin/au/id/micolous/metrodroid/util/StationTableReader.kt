@@ -175,7 +175,7 @@ internal constructor(dbName: String) : StationTableReader {
 
     override fun getOperatorName(oper: Int): TransitName? {
         val po = mStationDb.operators.objectForKey(oper.toUInt()) as? Operator ?: return null
-        return makeTransitName(po.name ?: return null)
+        return makeTransitName(po.name)
     }
 
     override fun getLineName(id: Int): TransitName? {
