@@ -50,7 +50,7 @@ fun PushbackInputStream.peekAndSkipSpace(): Byte {
     return c.toByte()
 }
 
-// Used by android variant. FWarning gets issued for jvmCli variant
+// Used by android variant. Warning gets issued for jvmCli variant
 @Suppress("unused")
 fun PushbackInputStream.peek(): Byte {
     val c = this.read()
