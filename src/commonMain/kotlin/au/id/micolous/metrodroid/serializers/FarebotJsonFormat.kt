@@ -65,7 +65,7 @@ object AutoJsonFormat : CardImporterString() {
     override fun readCardList(input: String): List<Card> =
             readCards(CardSerializer.jsonPlainStable.parseToJsonElement(input), input)
 
-    fun readCards(input: JsonElement, plain: String): List<Card> =
+    private fun readCards(input: JsonElement, plain: String): List<Card> =
         if (input.jsonObjectOrNull?.containsKey("cards") == true &&
                 input.jsonObjectOrNull?.containsKey("scannedAt") != true &&
                 input.jsonObjectOrNull?.containsKey("tagId") != true)
