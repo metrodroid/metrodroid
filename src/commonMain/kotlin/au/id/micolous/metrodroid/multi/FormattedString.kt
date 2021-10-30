@@ -59,6 +59,7 @@ class FormattedStringFallback (private val input: String): Parcelable {
 
     companion object {
         fun monospace(input: String) = FormattedStringFallback(input)
+        @Suppress("unused") // Used through typealias to FormattedString
         fun defaultLanguage(input: String) = FormattedStringFallback(input)
         fun english(input: String) = FormattedStringFallback(input)
         @Suppress("UNUSED_PARAMETER")

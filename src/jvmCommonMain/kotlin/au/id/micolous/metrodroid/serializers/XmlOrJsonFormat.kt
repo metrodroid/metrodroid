@@ -48,6 +48,8 @@ class XmlOrJsonCardFormat : CardMultiImporter {
     companion object {
         private val xmlFormat = XmlCardFormat()
 
+        // Used by android variant. Warning gets issued for jvmCli variant
+        @Suppress("unused")
         fun parseString(xml: String): Card? = try {
             when (xml.find { it !in listOf('\n', '\r', '\t', ' ') }) {
                 '<' -> xmlFormat.readCards(xml.byteInputStream()).let {

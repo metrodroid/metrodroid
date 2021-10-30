@@ -62,6 +62,7 @@ actual abstract class BaseInstrumentedTestPlatform {
      *
      * @param languageTag ITEF BCP-47 language tag string
      */
+    @Suppress("unused") // Used by ExportHelperTest
     fun setAndroidLanguage(languageTag: String?) {
         val l = languageTag?.let { LocaleTools.compatLocaleForLanguageTag(it) }
         LocaleTools.setResourcesLocale(l, MetrodroidApplication.instance.resources)

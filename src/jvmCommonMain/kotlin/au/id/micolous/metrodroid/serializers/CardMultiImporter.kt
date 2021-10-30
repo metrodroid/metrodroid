@@ -15,6 +15,8 @@ interface CardMultiImporter {
     fun readCards(stream: InputStream): Iterator<Card>?
 }
 
+// Used by android variant. Warning gets issued for jvmCli variant
+@Suppress("unused")
 class CardMultiImportAdapter (private val base: CardImporter): CardMultiImporter {
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val card = base.readCard(JavaStreamInput(stream))
