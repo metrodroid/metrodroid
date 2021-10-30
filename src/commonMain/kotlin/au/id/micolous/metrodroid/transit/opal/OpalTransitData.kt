@@ -148,7 +148,8 @@ class OpalTransitData (
             }
         }
 
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 imageId = R.drawable.opal_card,
                 name = NAME,
                 locationId = R.string.location_sydney_australia,

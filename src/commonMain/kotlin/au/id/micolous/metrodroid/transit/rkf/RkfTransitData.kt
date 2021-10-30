@@ -119,7 +119,8 @@ data class RkfTransitData internal constructor(
     }
 
     companion object {
-        private val issuerMap = mapOf(
+        @VisibleForTesting
+        val issuerMap = mapOf(
                 RkfLookup.SLACCESS to CardInfo(
                         name = "SLaccess",
                         locationId = R.string.location_stockholm,

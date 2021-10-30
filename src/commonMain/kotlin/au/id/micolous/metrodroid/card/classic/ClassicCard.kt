@@ -47,8 +47,7 @@ data class ClassicCard constructor(
     }
 
     companion object {
-        @VisibleForTesting
-        val MANUFACTURER_FUDAN = ListItem(
+        private val MANUFACTURER_FUDAN = ListItem(
                 R.string.manufacturer_name, R.string.manufacturer_fudan_microelectronics)
         private val MANUFACTURER_NXP = ListItem(
                 R.string.manufacturer_name, R.string.manufacturer_nxp)

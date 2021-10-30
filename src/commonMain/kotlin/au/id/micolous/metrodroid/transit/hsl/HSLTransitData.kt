@@ -126,7 +126,8 @@ class HSLTransitData(override val serialNumber: String?,
 
         private const val CARD_NAME_HSL = "HSL"
         private const val CARD_NAME_WALTTI = "Waltti"
-        private val HSL_CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val HSL_CARD_INFO = CardInfo(
                 imageId = R.drawable.hsl_card,
                 name = CARD_NAME_HSL,
                 locationId = R.string.location_helsinki_finland,

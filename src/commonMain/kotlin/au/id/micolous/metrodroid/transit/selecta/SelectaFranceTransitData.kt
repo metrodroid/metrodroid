@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.*
 
 /**
@@ -45,7 +46,8 @@ data class SelectaFranceTransitData(private val mBalance: Int,
     companion object {
         private const val NAME = "Selecta France"
 
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 name = NAME,
                 locationId = R.string.location_france,
                 imageId = R.drawable.selecta,
