@@ -19,6 +19,9 @@
 
 package au.id.micolous.metrodroid.multi
 
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+
 expect class StringResource
 expect class PluralsResource
 expect class DrawableResource
@@ -40,6 +43,9 @@ val R get(): Rinterface = object: Rinterface {
     override val plurals get() = Rplurals
     override val drawable get() = Rdrawable
 }
+
+@OptIn(ExperimentalSerializationApi::class)
+expect class StringResourceSerializer : KSerializer<StringResource>
 
 internal fun stripTts(input: String): String {
     val b = StringBuilder()

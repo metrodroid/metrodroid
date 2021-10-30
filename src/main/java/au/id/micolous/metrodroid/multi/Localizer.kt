@@ -32,11 +32,31 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.ui.HiddenSpan
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
 actual typealias StringResource = Int
 actual typealias DrawableResource = Int
 actual typealias PluralsResource = Int
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(forClass = StringResource::class)
+actual class StringResourceSerializer : KSerializer<StringResource> {
+    override fun deserialize(decoder: Decoder): StringResource {
+        val id = String.serializer().deserialize(decoder)
+        return Rmap.strings[id]!!
+    }
+
+    override fun serialize(encoder: Encoder, value: StringResource) {
+        String.serializer().serialize(encoder,
+            Rmap.strings.filterValues { it == value }.keys.first())
+    }
+}
 
 actual object Localizer : LocalizerInterface {
     /**
