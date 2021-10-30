@@ -181,13 +181,11 @@ abstract class ErgTransitData : TransitData() {
             return ErgMetadataRecord.recordFromBytes(file2)
         }
 
-        internal fun getMetadataRecord(card: ClassicCard): ErgMetadataRecord? {
-            try {
-                return getMetadataRecord(card.getSector(0))
-            } catch (ex: UnauthorizedException) {
-                // Can't be for us...
-                return null
-            }
+        internal fun getMetadataRecord(card: ClassicCard): ErgMetadataRecord? = try {
+            getMetadataRecord(card.getSector(0))
+        } catch (ex: UnauthorizedException) {
+            // Can't be for us...
+            null
         }
     }
 }

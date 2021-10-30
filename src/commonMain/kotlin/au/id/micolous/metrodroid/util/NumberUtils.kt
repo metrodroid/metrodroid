@@ -112,13 +112,11 @@ object NumberUtils {
         return ret.substring(0, ret.length - 1)
     }
 
-    private fun digitsOf(integer: Int): IntArray {
-        return digitsOf(integer.toString())
-    }
+    private fun digitsOf(integer: Int): IntArray =
+        digitsOf(integer.toString())
 
-    fun digitsOf(integer: Long): IntArray {
-        return digitsOf(integer.toString())
-    }
+    fun digitsOf(integer: Long): IntArray =
+        digitsOf(integer.toString())
 
     private fun digitsOf(integer: String): IntArray = integer.map { charArrayOf(it).concatToString()
         .toInt() }.toIntArray()

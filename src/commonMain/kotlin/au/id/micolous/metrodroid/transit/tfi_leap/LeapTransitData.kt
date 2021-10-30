@@ -238,13 +238,11 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
 
             override fun parseTransitData(card: DesfireCard) = parse(card)
 
-            override fun parseTransitIdentity(card: DesfireCard): TransitIdentity {
-                try {
-                    return TransitIdentity(NAME, getSerial(card))
-                } catch (e: Exception) {
-                    return TransitIdentity(
-                            Localizer.localizeString(R.string.locked_leap), null)
-                }
+            override fun parseTransitIdentity(card: DesfireCard): TransitIdentity = try {
+                TransitIdentity(NAME, getSerial(card))
+            } catch (e: Exception) {
+                TransitIdentity(
+                    Localizer.localizeString(R.string.locked_leap), null)
             }
 
             override fun createUnlocker(appIds: Int, manufData: ImmutableByteArray) = createUnlockerDispatch(appIds, manufData)
