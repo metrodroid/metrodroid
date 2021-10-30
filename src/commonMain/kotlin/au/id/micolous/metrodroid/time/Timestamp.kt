@@ -218,6 +218,7 @@ class EpochLocal internal constructor(private val baseDays: Int,
         m = (s / 60) % 60, s = s % 60)
 }
 
+@Serializable
 sealed class Timestamp: Parcelable {
     val monthNumberOneBased: Int get() = month.number
     val monthNumberZeroBased: Int get() = month.number - 1
@@ -237,6 +238,7 @@ sealed class Timestamp: Parcelable {
 
 @Parcelize
 @Serializable
+@SerialName("daystamp")
 // Only date is known
 data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), Comparable<Daystamp> {
     override fun toDaystamp(): Daystamp = this
@@ -249,6 +251,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
                 TimestampFormatter.longDateFormat(this)
 
     val dayOfYear: Int get() = localDate.dayOfYear
+    @IgnoredOnParcel
     override val localDate by lazy {
         epochLocalDate + DatePeriod(0, 0, daysSinceEpoch)
     }
@@ -305,6 +308,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 
 @Parcelize
 @Serializable
+@SerialName("full")
 // Precision or minutes and higher
 data class TimestampFull(val timeInMillis: Long,
                                             val tz: MetroTimeZone): Parcelable, Comparable<TimestampFull>, Timestamp() {
@@ -313,12 +317,15 @@ data class TimestampFull(val timeInMillis: Long,
     val hour: Int get() = ldt.hour
     val minute: Int get() = ldt.minute
     val second: Int get() = ldt.second
+    @IgnoredOnParcel
     val ldt by lazy {
         Instant.fromEpochMilliseconds(timeInMillis).toLocalDateTime(tz.libTimeZone)
     }
+    @IgnoredOnParcel
     val ldtUtc by lazy {
         Instant.fromEpochMilliseconds(timeInMillis).toLocalDateTime(MetroTimeZone.UTC.libTimeZone)
     }
+    @IgnoredOnParcel
     override val localDate by lazy {
         ldt.date
     }
