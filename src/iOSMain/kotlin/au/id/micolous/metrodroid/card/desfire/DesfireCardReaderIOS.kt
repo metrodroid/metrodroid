@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.card.desfire
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Transceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
