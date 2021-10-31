@@ -225,6 +225,19 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
              */
             TestCase("anonymt_dump-20120814.mfd", "parsed/anonymt_dump-20120814.json",
                 RkfTransitData::class, CardType.MifareClassic, RkfTransitData.FACTORY, RkfTransitData.issuerMap[RkfLookup.REJSEKORT], InputType.MFC),
+	                // TODO: Use .xml
+            TestCase("cepas/legacy.json", "parsed/cepaslegacy.json",
+                EZLinkCompatTransitData::class, CardType.CEPAS, null, null),
+            TestCase("hsl/hslul.json", "parsed/hslul.json",
+                HSLUltralightTransitData::class, CardType.MifareUltralight, HSLUltralightTransitFactory,
+                HSLTransitData.HSL_CARD_INFO
+            ),
+            TestCase("troika/troikaul.json", "parsed/troikaul.json",
+                TroikaUltralightTransitData::class, CardType.MifareUltralight,
+                TroikaUltralightTransitData.FACTORY, TroikaTransitData.CARD_INFO),
+            TestCase("selecta/selecta.json", "parsed/selecta.json",
+                SelectaFranceTransitData::class, CardType.MifareClassic,
+                SelectaFranceTransitData.FACTORY, SelectaFranceTransitData.CARD_INFO),
             TestCase("mfu/blank_old.json", null, null,
                 CardType.MifareUltralight, null, null),
         )
