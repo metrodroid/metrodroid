@@ -97,15 +97,6 @@ data class FelicaCard(
     private val otherCommandsTime: Double?
         get() = calculateMaximumResponseTime(5, 0)
 
-    /**
-     * Gets the maximum response time of the card (part of PMm).
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return Maximum response time
-     */
-    private val maximumResponseTime: Long?
-        get() = pMm?.byteArrayToLong(2, 6)
-
     private fun checkSpecificationVersionFormat(s: ImmutableByteArray): Boolean = (
         // Format Version (1 byte) + Basic Version (2 bytes) + Number of Options (1 byte)
         s.size >= 4 &&
