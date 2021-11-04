@@ -21,17 +21,25 @@ package au.id.micolous.metrodroid.util
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.os.AsyncTask
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
-abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activity, showLoading: Boolean = true, loadingText: String? = null, private val mFinishOnError: Boolean = false) : AsyncTask<Void, ProgressBar, BetterAsyncTask.TaskResult<Result>>() {
+abstract class BetterAsyncTask<Result> constructor(
+    val activity: Activity,
+    showLoading: Boolean = true,
+    loadingText: String? = null,
+    private val mFinishOnError: Boolean = false
+) : CoroutineScope {
 
+    override val coroutineContext = Job()
     private val mProgressBar: ProgressBar? = activity.findViewById(R.id.progressbar)
     private val mProgressText: TextView? = activity.findViewById(R.id.progresstext)
     protected val mWeakActivity: WeakReference<Activity> = WeakReference(activity)
@@ -46,8 +54,8 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activ
     }
 
     fun cancelIfRunning() {
-        if (status != Status.FINISHED) {
-            super.cancel(true)
+        if (coroutineContext.isActive) {
+            coroutineContext.cancel()
         }
 
         mProgressBar?.visibility = View.GONE
@@ -58,29 +66,28 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activ
         mProgressText?.text = text?.ifEmpty { null } ?: Localizer.localizeString(R.string.loading)
     }
 
-    override fun doInBackground(vararg unused: Void): TaskResult<Result> =
-        try {
-            TaskResult(doInBackground())
-        } catch (e: Exception) {
-            Log.e(TAG, "Error in task:", e)
-            TaskResult(e)
-        }
-
-    override fun onPreExecute() {
-        super.onPreExecute()
+    fun execute() {
         mProgressBar?.visibility = View.VISIBLE
         mProgressText?.visibility = View.VISIBLE
-    }
+        launch {
+            var ex: Exception? = null
+            val res = try {
+                doInBackground()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in task:", e)
+                ex = e
+                null
+            }
 
-    override fun onPostExecute(result: TaskResult<Result>) {
-        mProgressBar?.visibility = View.GONE
-        mProgressText?.visibility = View.GONE
-        result.exception?.also {
-            onError(it)
-            return
+            activity.runOnUiThread {
+                mProgressBar?.visibility = View.GONE
+                mProgressText?.visibility = View.GONE
+                if (ex != null)
+                    onError(ex)
+                else
+                    onResult(res)
+            }
         }
-
-        onResult(result.obj)
     }
 
     private fun onError(ex: Exception) {
@@ -99,21 +106,6 @@ abstract class BetterAsyncTask<Result> @JvmOverloads constructor(activity: Activ
     protected abstract fun doInBackground(): Result
 
     protected abstract fun onResult(result: Result?)
-
-    class TaskResult<T> {
-        val obj: T?
-        val exception: Exception?
-
-        constructor(obj: T) {
-            this.obj = obj
-            exception = null
-        }
-
-        constructor(exception: Exception) {
-            this.exception = exception
-            obj = null
-        }
-    }
 
     companion object {
         private const val TAG = "BetterAsyncTask"

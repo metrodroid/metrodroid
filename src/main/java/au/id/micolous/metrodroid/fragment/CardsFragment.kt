@@ -314,7 +314,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class ShareTask (val activity: Activity): BetterAsyncTask<Pair<String?, File?>>(activity) {
+    private class ShareTask (activity: Activity): BetterAsyncTask<Pair<String?, File?>>(activity) {
 
         override fun doInBackground(): Pair<String?, File?> {
             try {
