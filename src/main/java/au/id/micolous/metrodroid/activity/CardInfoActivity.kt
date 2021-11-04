@@ -34,7 +34,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.UnsupportedCardException
@@ -90,7 +90,7 @@ class CardInfoActivity : MetrodroidActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_card_info)
-        val viewPager = findViewById<ViewPager>(R.id.pager)
+        val viewPager = findViewById<ViewPager2>(R.id.pager)
         mTabsAdapter = TabPagerAdapter(this, viewPager)
 
         setDisplayHomeAsUpEnabled(true)
@@ -170,15 +170,15 @@ class CardInfoActivity : MetrodroidActivity() {
 
                     if (mTransitData!!.balances != null || mTransitData!!.subscriptions != null) {
                         mTabsAdapter!!.addTab(R.string.balances_and_subscriptions,
-                                CardBalanceFragment::class.java, args)
+                                ::CardBalanceFragment, args)
                     }
 
                     if (mTransitData!!.trips != null) {
-                        mTabsAdapter!!.addTab(R.string.history, CardTripsFragment::class.java, args)
+                        mTabsAdapter!!.addTab(R.string.history, ::CardTripsFragment, args)
                     }
 
                     if (TransitData.hasInfo(mTransitData!!)) {
-                        mTabsAdapter!!.addTab(R.string.info, CardInfoFragment::class.java, args)
+                        mTabsAdapter!!.addTab(R.string.info, ::CardInfoFragment, args)
                     }
 
                     val w = mTransitData!!.warning
@@ -230,7 +230,7 @@ class CardInfoActivity : MetrodroidActivity() {
 
     override fun onSaveInstanceState(bundle: Bundle) {
         super.onSaveInstanceState(bundle)
-        bundle.putInt(KEY_SELECTED_TAB, (findViewById<View>(R.id.pager) as ViewPager).currentItem)
+        bundle.putInt(KEY_SELECTED_TAB, findViewById<ViewPager2>(R.id.pager).currentItem)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

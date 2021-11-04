@@ -22,8 +22,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ProgressBar
@@ -62,17 +61,19 @@
                     android:layout_marginStart="8dp"/>
         </LinearLayout>
 
-        <androidx.viewpager.widget.ViewPager
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
             android:visibility="gone"
             android:layout_weight="1"
             android:layout_width="match_parent"
+
             android:layout_height="0dp" >
-          <androidx.viewpager.widget.PagerTabStrip
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="top"/>
-        </androidx.viewpager.widget.ViewPager>
+        </androidx.viewpager2.widget.ViewPager2>
 
         <LinearLayout
                 android:id="@+id/unauthorized_card"
