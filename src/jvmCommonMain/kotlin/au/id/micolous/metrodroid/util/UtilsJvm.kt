@@ -69,6 +69,7 @@ class JavaStreamInput (private val stream: InputStream): Input {
         return ba.sliceArray(0 until actual)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun readToString(): String = stream.readBytes().decodeToString()
 }
 
