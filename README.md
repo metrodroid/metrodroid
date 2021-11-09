@@ -101,6 +101,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [GoCard][otago] | :new_zealand: Otago, including Greater Dunedin and Queenstown, New Zealand | :new: `MFC`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hafilat][] | :united_arab_emirates: Abu Dhabi, UAE | :new: `IOS`
+[HOLO][holo] | :us: O'ahu, HI, USA | :new: :id: `IOS`
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: :id: `IOS`
 [HSL][hsl], [Matkakortti][matka], [Waltti][] | :finland: Finland | `IOS`
 [IstanbulKart][istanbul] | :tr: Istanbul, Turkey | :new: :id: `IOS`
@@ -276,6 +277,7 @@ This software and it's authors are not associated with any public transit agency
 [gironde]: https://www.transgironde.fr/
 [hafilat]: https://dot.abudhabi.ae/en/mediainfo/hafilat_smart_card
 [hfp]: https://myhopcard.com/
+[holo]: https://www.holocard.net/
 [hsl]: https://www.hsl.fi/EN/
 [icoca]: https://en.wikipedia.org/wiki/ICOCA
 [istanbul]: https://www.istanbulkart.istanbul/

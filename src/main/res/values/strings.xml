@@ -823,6 +823,8 @@
     <string name="location_moscow">Moscow, Russia</string>
     <string name="location_nagoya">Nagoya, Japan</string>
     <string name="location_nizhniy_novgorod">Nizhniy Novgorod, Russia</string>
+    <!-- Translators: "O'ahu" refers to the island of O'ahu in the state of Hawaii, not a city -->
+    <string name="location_oahu">O'ahu, HI, USA</string>
     <string name="location_orenburg">Orenburg, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_otago">Otago, New Zealand</string>

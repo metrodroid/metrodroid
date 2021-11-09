@@ -24,6 +24,7 @@ object DesfireCardTransitRegistry {
             IstanbulKartTransitData.FACTORY,
             LeapTransitData.FACTORY,
             TrimetHopTransitData.FACTORY,
+            HoloTransitData.FACTORY,
             AdelaideMetrocardTransitData.FACTORY,
             HafilatTransitData.FACTORY,
             AtHopTransitData.FACTORY,
