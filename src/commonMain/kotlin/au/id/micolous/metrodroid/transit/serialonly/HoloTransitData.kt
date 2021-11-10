@@ -89,7 +89,7 @@ data class HoloTransitData(private val mSerial: Int?,
         }
 
         private fun parseSerial(app: DesfireApplication?) =
-                app?.getFile(0)?.data?.byteArrayToInt(0xe, 2)
+                app?.getFile(0)?.data?.convertBCDtoInteger(0xe, 2)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = APP_ID in appIds
@@ -104,7 +104,7 @@ data class HoloTransitData(private val mSerial: Int?,
 
         private fun formatSerial(ser: Int?) =
                 if (ser != null)
-                    "01-001-${NumberUtils.zeroPad(ser, 8)}-RA" //TODO: update this
+                    "31059300 1 ????? ?${ser}"
                 else
                     null
 
