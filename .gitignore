@@ -17,6 +17,11 @@ project.properties
 xcuserdata/
 
 .gradle
+.vscode
+.settings
+
+*.classpath
+*.project
 
 *.keystore
 com_crashlytics_export_strings.xml
