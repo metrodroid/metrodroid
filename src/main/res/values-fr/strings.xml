@@ -377,7 +377,7 @@
     <string name="felica_response_time_auth1">Commande Authentification1 (1 noeud)</string>
     <string name="felica_response_time_auth2">Commande Authentification2</string>
     <string name="felica_response_time_read">Lire la commande (1 bloc)</string>
-    <string name="felica_response_time_write">Écrire la commande (1 bloc)</string>
+    <string name="felica_response_time_write">Commande d\'écriture (1 bloc)</string>
     <string name="felica_response_time_other">Commandes d\'émission</string>
     <string name="calypso_serial_number">Numéro de série</string>
     <string name="calypso_manufacture_country">Pays de fabrication</string>
