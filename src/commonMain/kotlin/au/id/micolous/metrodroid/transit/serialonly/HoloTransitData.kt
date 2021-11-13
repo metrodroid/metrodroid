@@ -49,11 +49,14 @@ import au.id.micolous.metrodroid.util.NumberUtils
  */
 @Parcelize
 data class HoloTransitData(private val mSerial: Int?,
-                                private val mIssueDate: Int?) : SerialOnlyTransitData() {
+                                private val mLastTransactionTimestamp: Int?, private val mManufacturingId: Int?) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>?
-        get() = mIssueDate?.let { listOf(ListItem(R.string.issue_date,
-                TimestampFormatter.dateTimeFormat(parseTime(mIssueDate)))) }
+        get() = listOf(
+            ListItem(R.string.last_transaction,
+                mLastTransactionTimestamp?.let {TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))}),
+            ListItem(R.string.manufacture_id, mManufacturingId?.let { formatMfgId(mManufacturingId)})
+            )
 
     override val reason: Reason
         get() = Reason.NOT_STORED
@@ -80,12 +83,14 @@ data class HoloTransitData(private val mSerial: Int?,
             val app = card.getApplication(APP_ID) ?: return null
             val file1 = app.getFile(1)?.data
             val serial = parseSerial(app)
-            val issueDate = file1?.byteArrayToInt(8, 4)
-            if (serial == null && issueDate == null) return null
+            val mfgId = app.getFile(0)?.data?.byteArrayToInt(0xb, 3)
+            val lastTransactionTimestamp = file1?.byteArrayToInt(8, 4)
+            if (serial == null && lastTransactionTimestamp == null) return null
 
             return HoloTransitData(
                     mSerial = serial,
-                    mIssueDate = issueDate)
+                mLastTransactionTimestamp = lastTransactionTimestamp,
+                mManufacturingId = mfgId)
         }
 
         private fun parseSerial(app: DesfireApplication?) =
@@ -106,6 +111,12 @@ data class HoloTransitData(private val mSerial: Int?,
                 if (ser != null)
                     "31059300 1 ????? ?${ser}"
                 else
+                    null
+
+        private fun formatMfgId(mfgId: Int?) =
+                if (mfgId != null) {
+                    "1-001-101000${mfgId}=XA"
+                } else
                     null
 
         private fun parseTime(date: Int) = Epoch.utc(1970, TZ).seconds(date.toLong())

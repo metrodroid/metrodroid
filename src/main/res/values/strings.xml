@@ -481,6 +481,7 @@
 
     <string name="manufacture_week">Week of manufacture</string>
     <string name="manufacture_year">Year of manufacture</string>
+    <string name="manufacture_id">Manufacturing ID</string>
     <!-- Translators: This is data sent by the card in response to an ISO 14443 SELECT command.
     Do not translate "SAK". -->
     <string name="select_acknowledge">SAK (Select Acknowledge)</string>
