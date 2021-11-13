@@ -109,13 +109,13 @@ data class HoloTransitData(private val mSerial: Int?,
 
         private fun formatSerial(ser: Int?) =
                 if (ser != null)
-                    "31059300 1 ????? ?${ser}"
+                    "31059300 1 ***** *${ser}"
                 else
                     null
 
         private fun formatMfgId(mfgId: Int?) =
                 if (mfgId != null) {
-                    "1-001-101000${mfgId}=XA"
+                    "1-001-101000${mfgId}-XA"
                 } else
                     null
 
