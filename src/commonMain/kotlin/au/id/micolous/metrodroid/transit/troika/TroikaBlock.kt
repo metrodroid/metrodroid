@@ -264,6 +264,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                 // This should never be shown to user, don't localize.
                 "Empty ticket holder"
             0x183d, 0x2129 -> Localizer.localizeString(R.string.troika_druzhinnik_card)
+            0x5d9a -> troikaRides(1)
             0x5d9b -> troikaRides(1)
             0x5d9c -> troikaRides(2)
             0x5da0 -> troikaRides(20)
