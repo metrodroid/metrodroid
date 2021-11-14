@@ -42,8 +42,7 @@ class VentraUltralightTransitData (override val capsule: NextfareUltralightTrans
 
     override fun getProductName(productCode: Int): String? = null
 
-    constructor(card: UltralightCard) : this(parse(card)
-    { raw, baseDate -> VentraUltralightTransaction(raw, baseDate) }
+    constructor(card: UltralightCard) : this(parse(card, ::VentraUltralightTransaction)
     )
 
     companion object {

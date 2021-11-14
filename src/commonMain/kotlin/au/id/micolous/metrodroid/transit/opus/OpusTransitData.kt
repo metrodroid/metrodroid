@@ -40,7 +40,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
     private constructor(card: CalypsoApplication) : this(parse(
             card, ticketEnvFields, contractListFields, getSerial(card),
             { data, counter, _, _ -> if (counter == null) null else OpusSubscription(data, counter) },
-            { data -> OpusTransaction(data) }, null,
+            ::OpusTransaction, null,
             // Contracts 2 is a copy of contract list on opus
             card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1)?.recordList.orEmpty()))
 

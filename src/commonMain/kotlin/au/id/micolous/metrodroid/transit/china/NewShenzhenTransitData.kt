@@ -60,7 +60,7 @@ class NewShenzhenTransitData (val validityStart: Int?,
             return NewShenzhenTransitData(
                     validityStart = szttag?.byteArrayToInt(20, 4),
                     validityEnd = szttag?.byteArrayToInt(24, 4),
-                    trips = ChinaTransitData.parseTrips(card)  { data -> NewShenzhenTrip(data) },
+                    trips = ChinaTransitData.parseTrips(card, ::NewShenzhenTrip),
                     mSerial = parseSerial(card),
                     mBalance = ChinaTransitData.parseBalance(card)
             )

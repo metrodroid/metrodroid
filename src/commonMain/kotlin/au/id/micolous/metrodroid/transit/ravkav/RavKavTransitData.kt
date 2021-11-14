@@ -57,7 +57,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
     private constructor(card: CalypsoApplication) : this(parse(
             card, TICKETING_ENV_FIELDS, null, getSerial(card),
             { data, counter, _, _ -> RavKavSubscription(data, counter) },
-            { data -> createTrip(data) }))
+            Companion::createTrip))
 
     override val lookup get(): En1545Lookup = RavKavLookup
 

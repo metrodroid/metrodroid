@@ -39,9 +39,9 @@ class NextfareUnknownUltralightTransitData (override val capsule: NextfareUltral
 
     override fun makeCurrency(value: Int) = TransitCurrency.XXX(value)
 
-    private constructor(card: UltralightCard) : this(parse(card) {
-        data, baseDate -> NextfareUnknownUltralightTransaction(data, baseDate)
-    })
+    private constructor(card: UltralightCard) : this(
+        parse(card, ::NextfareUnknownUltralightTransaction)
+    )
 
     override fun getProductName(productCode: Int): String? = null
 

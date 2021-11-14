@@ -94,7 +94,7 @@ class MspGotoTransitData (override val capsule: NextfareTransitDataCapsule): Nex
                 val capsule = parse(
                         card = card,
                         timeZone = TIME_ZONE,
-                        newTrip = { capsule -> MspGotoTrip(capsule) },
+                        newTrip = ::MspGotoTrip,
                         newRefill = { MspGotoTrip(NextfareTripCapsule(it)) },
                         shouldMergeJourneys = false)
                 return MspGotoTransitData(capsule)

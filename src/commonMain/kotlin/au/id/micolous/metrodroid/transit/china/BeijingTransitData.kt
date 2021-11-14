@@ -56,7 +56,7 @@ class BeijingTransitData (val validityStart: Int?,
             return BeijingTransitData(serialNumber = parseSerial(card),
                     validityStart = info?.byteArrayToInt(0x18, 4),
                     validityEnd = info?.byteArrayToInt(0x1c, 4),
-                    trips = ChinaTransitData.parseTrips(card) { data -> ChinaTrip(data) },
+                    trips = ChinaTransitData.parseTrips(card, ::ChinaTrip),
                     mBalance = ChinaTransitData.parseBalance(card)
             )
         }

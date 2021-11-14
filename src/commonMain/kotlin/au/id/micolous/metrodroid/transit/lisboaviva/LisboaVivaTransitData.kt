@@ -74,7 +74,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                         capsule = parse(
                                 card, TICKETING_ENV_FIELDS, null, getSerial(card),
                                 { data, ctr, _, _ -> LisboaVivaSubscription(data, ctr) },
-                                { data -> LisboaVivaTransaction(data) }),
+                                ::LisboaVivaTransaction),
                         tagId = card.getFile(CalypsoApplication.File.ICC)?.getRecord(1)
                                 ?.byteArrayToLong(16, 4),
                         holderName = card.getFile(CalypsoApplication.File.ID)?.getRecord(1)?.readLatin1())
