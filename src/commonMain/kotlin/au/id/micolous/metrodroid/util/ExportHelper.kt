@@ -1,4 +1,3 @@
-@file:JvmName("ExportHelperJvm")
 /*
  * ExportHelper.kt
  *
@@ -29,11 +28,12 @@ import au.id.micolous.metrodroid.time.TimestampFull
  * @param tagId The tag's UID
  * @param scannedAt A [TimestampFull] of when the [Card] dump was created
  * @param format The format of the dump, used as a filename extension
- * @param gen Used for handling duplicate filenames in a ZIP
+ * @param generation Used for handling duplicate filenames in a ZIP
  */
-fun makeFilename(tagId: String, scannedAt: TimestampFull, format: String, gen: Int = 0): String {
+fun makeFilename(tagId: String, scannedAt: TimestampFull, format: String,
+                 generation: Int = 0): String {
     val dt = scannedAt.isoDateTimeFilenameFormat()
-    return if (gen != 0) "Metrodroid-$tagId-$dt-$gen.$format" else "Metrodroid-$tagId-$dt.$format"
+    return if (generation != 0) "Metrodroid-$tagId-$dt-$generation.$format" else "Metrodroid-$tagId-$dt.$format"
 }
 
 /**
@@ -41,5 +41,5 @@ fun makeFilename(tagId: String, scannedAt: TimestampFull, format: String, gen: I
  *
  * @param card The [Card] dump to generate a filename for.
  */
-fun makeFilename(card: Card): String
-    = makeFilename(card.tagId.toHexString(), card.scannedAt, "json")
+fun makeFilename(card: Card, generation: Int = 0): String
+    = makeFilename(card.tagId.toHexString(), card.scannedAt, "json", generation)

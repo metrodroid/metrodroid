@@ -31,19 +31,10 @@ class CardPersister {
         return dir
     }
     
-    class func fileName(card: Card, generation: Int) -> String {
-        let base = "Metrodroid-\(card.tagId.toHexString())-\(card.scannedAt.isoDateTimeFilenameFormat())"
-        let ext = "json"
-        if (generation == 0) {
-            return "\(base).\(ext)"
-        }
-        return "\(base)-\(generation).\(ext)"
-    }
-    
     class func newFileName(card: Card) throws -> URL {
         var generation = 0
         while true {
-            let at = fileName(card: card, generation: generation)
+            let at = ExportHelperKt.makeFilename(card: card, generation: Int32(generation))
             let u = try cardsDirectory().appendingPathComponent(at)
             if (!FileManager.default.fileExists(atPath: u.path)) {
                 return u
