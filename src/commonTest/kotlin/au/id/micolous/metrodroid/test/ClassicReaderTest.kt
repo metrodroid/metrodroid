@@ -35,24 +35,24 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ClassicReaderTest : BaseInstrumentedTest() {
-    private fun keyReader(path: String): CardKeysFileReader = object : CardKeysFileReader {
-        override fun listFiles(dir: String): List<String>? = listAsset("$path/keys/$dir")
+    private fun keyReader(keys: List<String>): CardKeysFileReader = object : CardKeysFileReader {
+        override fun listFiles(dir: String): List<String>? = keys
 
         override fun readFile(fileName: String): String?
-            = loadSmallAssetBytesSafe("$path/keys/$fileName")?.decodeToString()
+            = loadSmallAssetBytesSafe(fileName)?.decodeToString()
     }
 
      /*   context, baseDir = "$path/keys"
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }*/
 
-    fun doTest(path: String) {
-        val auth = CardKeysFromFiles(keyReader(path))
-        for (dump in listAsset("$path/dumps").orEmpty()) {
-            val raw = loadSmallAssetBytes("$path/dumps/$dump").toImmutable()
+    fun doTest(dumps: List<String>, keys: List<String> = emptyList()) {
+        val auth = CardKeysFromFiles(keyReader(keys))
+        for (dump in dumps) {
+            val raw = loadSmallAssetBytes(dump).toImmutable()
             val card = VirtualClassic(raw)
             val read = ClassicReader.readCard(auth, card, MockFeedbackInterface.get())
-            val addMsg = "dump = $path/dumps/$dump"
+            val addMsg = "dump = $dump"
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)
             val blockCount = raw.size / 16
@@ -125,9 +125,9 @@ class ClassicReaderTest : BaseInstrumentedTest() {
         }
     }
 
-    // Synthetic dumps are not prepared yet, so dummy-out the tests for now
     @Test
-    fun testDummy() {
+    fun testEasycard() {
+        doTest(listOf("easycard/deadbeef.mfc"))
     }
 
     companion object {
