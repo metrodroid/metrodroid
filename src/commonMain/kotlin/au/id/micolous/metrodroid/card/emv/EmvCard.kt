@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_UNPREDICTABLE_NUMBER
 import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.sum
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
@@ -185,8 +186,7 @@ class EmvFactory : ISO7816ApplicationFactory {
 
         Log.d(TAG, "PDOL = $pdolTemplate")
 
-        var pdolFilled = ImmutableByteArray.empty()
-        ISO7816TLV.pdolIterate(pdolTemplate) { id, len ->
+        val pdolFilled = ISO7816TLV.pdolIterate(pdolTemplate).map { (id, len) ->
             val contents = when (id.toHexString()) {
                 // Currency: USD
                 TAG_TRANSACTION_CURRENCY_CODE -> ImmutableByteArray.fromHex("0840")
@@ -206,12 +206,12 @@ class EmvFactory : ISO7816ApplicationFactory {
                 else -> ImmutableByteArray.empty()
             }
             val adjusted = when {
-                contents.size > len -> contents.sliceArray((contents.size - len)..contents.size)
+                contents.size > len -> contents.drop(contents.size - len)
                 contents.size < len -> ImmutableByteArray(len - contents.size) { 0 } + contents
                 else -> contents
             }
-            pdolFilled += adjusted
-        }
+            adjusted
+        }.sum()
 
         val gpoRequest = ImmutableByteArray.ofB(0x83, pdolFilled.size) + pdolFilled
         try {

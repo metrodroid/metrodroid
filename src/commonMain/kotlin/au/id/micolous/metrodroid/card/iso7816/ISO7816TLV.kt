@@ -203,7 +203,6 @@ object ISO7816TLV {
         }
     }
 
-    // TODO: Replace with Sequence
     /**
      * Iterates over Processing Options Data Object List (PDOL), tag 9f38.
      *
@@ -211,9 +210,9 @@ object ISO7816TLV {
      *
      * The lengths in this context are the expected length in the request.
      */
-    fun pdolIterate(buf: ImmutableByteArray,
-                    iterator: (id: ImmutableByteArray,
-                               len: Int) -> Unit) {
+    fun pdolIterate(buf: ImmutableByteArray):
+            Sequence<Pair<ImmutableByteArray, Int>> =
+                    sequence {
         var p = 0
 
         while (p < buf.size) {
@@ -221,7 +220,7 @@ object ISO7816TLV {
             if (idlen < 0) break
             val (lenlen, datalen, eoclen) = decodeTLVLen(buf, p + idlen) ?: break
             if (lenlen < 0 || datalen < 0 || eoclen != 0) break
-            iterator(buf.sliceOffLen(p, idlen), datalen)
+            yield(Pair(buf.sliceOffLen(p, idlen), datalen))
 
             p += idlen + lenlen
         }
