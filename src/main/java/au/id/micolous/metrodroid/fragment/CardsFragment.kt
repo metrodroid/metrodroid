@@ -168,7 +168,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
         registerForContextMenu(listView!!)
         if (listAdapter == null) {
-            loaderManager.initLoader(0, null, mLoaderCallbacks).startLoading()
+            LoaderManager.getInstance(this).initLoader(0, null, mLoaderCallbacks).startLoading()
         }
     }
 

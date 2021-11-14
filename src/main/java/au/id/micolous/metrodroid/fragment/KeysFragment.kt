@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.fragment
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentUris
@@ -179,7 +178,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         setEmptyText(getString(R.string.no_keys))
         listView.onItemLongClickListener = this
         listAdapter = KeysAdapter(requireActivity())
-        loaderManager.initLoader(0, null, mLoaderCallbacks)
+        LoaderManager.getInstance(this).initLoader(0, null, mLoaderCallbacks)
     }
 
     override fun onItemLongClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Boolean {
