@@ -26,8 +26,6 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.KEY_VALUE
 import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.SECTOR_IDX
 import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.TYPE_KEYA
 import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.TYPE_KEYB
-import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -87,14 +85,6 @@ data class ClassicSectorKey internal constructor(
         A,
         B,
         MULTIPLE;
-
-        @Suppress("unused")
-        val formatRes: StringResource
-            get() = when (this) {
-                A -> R.string.classic_key_format_a
-                B -> R.string.classic_key_format_b
-                else -> R.string.classic_key_format
-            }
 
         fun inverse() = if (this == B) {
             A
