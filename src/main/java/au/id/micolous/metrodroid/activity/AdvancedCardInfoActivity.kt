@@ -118,21 +118,18 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         tryAndShowError {
-            val xml: String
-            val i: Intent
-
             when (item.itemId) {
                 R.id.copy_xml -> {
-                    xml = CardSerializer.toJson(mCard!!).toString()
-                    ExportHelper.copyXmlToClipboard(this, xml)
+                    val json = CardSerializer.toJsonString(mCard!!)
+                    ExportHelper.copyXmlToClipboard(this, json)
                     return true
                 }
 
                 R.id.share_xml -> {
-                    xml = CardSerializer.toJson(mCard!!).toString()
-                    i = Intent(Intent.ACTION_SEND)
+                    val json = CardSerializer.toJsonString(mCard!!)
+                    val i = Intent(Intent.ACTION_SEND)
                     i.type = "application/json"
-                    i.putExtra(Intent.EXTRA_TEXT, xml)
+                    i.putExtra(Intent.EXTRA_TEXT, json)
                     startActivity(i)
                     return true
                 }
@@ -142,7 +139,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                         // Metrodroid-1234abcd-20001231-235900.xml
                         val filename = makeFilename(mCard!!)
 
-                        i = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                        val i = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         i.addCategory(Intent.CATEGORY_OPENABLE)
                         i.type = "application/json"
                         i.putExtra(Intent.EXTRA_TITLE, filename)
@@ -167,8 +164,8 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         val uri: Uri? = result.data?.data
         Log.d(TAG, "REQUEST_SAVE_FILE")
         val os = contentResolver.openOutputStream(uri!!)!!
-        val json = CardSerializer.toJson(mCard!!)
-        os.write(json.toString().encodeToByteArray())
+        val json = CardSerializer.toJsonString(mCard!!)
+        os.write(json.encodeToByteArray())
         os.close()
         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
     }
