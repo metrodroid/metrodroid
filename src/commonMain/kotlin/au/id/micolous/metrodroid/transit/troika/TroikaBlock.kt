@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 abstract class TroikaBlock private constructor(private val mSerial: Long,
                                                protected val mLayout: Int,
@@ -80,8 +81,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
 
     open val debug: List<ListItem>
         get() = listOf(
-                ListItem("Layout", "0x" + mLayout.toString(16)),
-                ListItem("TicketType", "0x" + mTicketType.toString(16)),
+                ListItem("Layout", mLayout.hexString),
+                ListItem("TicketType", mTicketType.hexString),
                 ListItem("Checksum", "0x$mCheckSum")
         )
 

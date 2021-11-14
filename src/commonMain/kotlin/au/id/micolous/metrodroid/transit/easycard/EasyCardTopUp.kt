@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 @Parcelize
 data class EasyCardTopUp(
@@ -59,7 +60,7 @@ data class EasyCardTopUp(
 
     override val humanReadableRouteID get(): String? = null
 
-    override val machineID get() = "0x${machineId.toString(16)}"
+    override val machineID get() = machineId.hexString
 
     companion object {
         fun parse(card: ClassicCard) = EasyCardTopUp(card[2, 2].data)

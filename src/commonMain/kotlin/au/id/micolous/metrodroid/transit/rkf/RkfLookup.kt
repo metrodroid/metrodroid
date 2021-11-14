@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.StationTableReader
+import au.id.micolous.metrodroid.util.hexString
 
 const val STR = "rkf"
 
@@ -81,8 +82,8 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
         return StationTableReader.getStation(
                 STR,
                 station or ((agency ?: 0) shl 16),
-                (if (agency != null) "0x${agency.toString(16)}/" else "") +
-                        "0x${station.toString(16)}")
+                (if (agency != null) "${agency.hexString}/" else "") +
+                        station.hexString)
 
     }
 

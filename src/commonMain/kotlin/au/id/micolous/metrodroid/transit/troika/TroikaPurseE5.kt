@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 // This is e-purse layout
 @Parcelize
@@ -51,10 +52,10 @@ internal class TroikaPurseE5(val rawData: ImmutableByteArray) : TroikaBlock(
     override val lastRefillTime get() = convertDateTime2019(0, rawData.getBitsFromBuffer(84, 23))
 
     override val debug get() = super.debug + listOf(
-            ListItem("Ticket Type 2", "0x" + rawData.getBitsFromBuffer(74, 10).toString(16)),
-            ListItem("B", "0x" + rawData.getBitsFromBuffer(117, 11).toString(16)),
-            ListItem("D", "0x" + rawData.getBitsFromBuffer(202, 14).toString(16)),
-            ListItem("E", "0x" + rawData.getBitsFromBuffer(223, 1).toString(16))
+            ListItem("Ticket Type 2", rawData.getBitsFromBuffer(74, 10).hexString),
+            ListItem("B", rawData.getBitsFromBuffer(117, 11).hexString),
+            ListItem("D", rawData.getBitsFromBuffer(202, 14).hexString),
+            ListItem("E", rawData.getBitsFromBuffer(223, 1).hexString)
     )
 
     override val info: List<ListItem>

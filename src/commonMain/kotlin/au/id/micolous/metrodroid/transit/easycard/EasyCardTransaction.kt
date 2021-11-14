@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 @Parcelize
 data class EasyCardTransaction internal constructor(
@@ -62,7 +63,7 @@ data class EasyCardTransaction internal constructor(
         else -> Trip.Mode.METRO
     }
 
-    override val machineID get() = "0x${machineId.toString(16)}"
+    override val machineID get() = machineId.hexString
 
     override fun isSameTrip(other: Transaction): Boolean {
         if (other !is EasyCardTransaction) {

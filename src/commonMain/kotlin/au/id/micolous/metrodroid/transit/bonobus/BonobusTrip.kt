@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
+import au.id.micolous.metrodroid.util.hexString
 
 @Parcelize
 data class BonobusTrip internal constructor(
@@ -46,7 +47,7 @@ data class BonobusTrip internal constructor(
     }
     override val startTimestamp get() = parseTimestamp(mTimestamp)
     override fun getRawFields(level: TransitData.RawLevel): String?
-            = "A=0x${mA.toString(16)}" + (if (level == TransitData.RawLevel.ALL) "/station=$mStation mode=$mMode L${NumberUtils.zeroPad(mLine,4)} T${NumberUtils.zeroPad(mT,4)}" else "")
+            = "A=${mA.hexString}" + (if (level == TransitData.RawLevel.ALL) "/station=$mStation mode=$mMode L${NumberUtils.zeroPad(mLine,4)} T${NumberUtils.zeroPad(mT,4)}" else "")
     override val vehicleID get() = if (mVehicleNumber == 0) null else NumberUtils.zeroPad(mVehicleNumber, 4)
     override val routeName get() = if (mMode == MODE_BUS) FormattedString((mLine - 10).toString()) else null
     override val startStation: Station?

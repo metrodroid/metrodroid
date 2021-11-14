@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 private val EPOCH = Epoch.utc(1900, MetroTimeZone.HELSINKI)
 private fun parseTimestamp(day: Int, minute: Int): TimestampFull = EPOCH.dayMinute(day,
@@ -68,8 +69,8 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
 
     override val routeName get() = TampereTransitData.getRouteName(mRoute)
 
-    override fun getRawFields(level: TransitData.RawLevel) = "A=0x${mA.toString(16)}/B=$mB/C=$mC" +
-            (if (level != TransitData.RawLevel.UNKNOWN_ONLY) "/EventCode=$mEventCode/flags=0x${mFlags.toString(16)}/sinceFirstStamp=$mMinutesSinceFirstStamp/transport=0x${mTransport.toString(16)}" else "")
+    override fun getRawFields(level: TransitData.RawLevel) = "A=${mA.hexString}/B=$mB/C=$mC" +
+            (if (level != TransitData.RawLevel.UNKNOWN_ONLY) "/EventCode=$mEventCode/flags=${mFlags.hexString}/sinceFirstStamp=$mMinutesSinceFirstStamp/transport=${mTransport.hexString}" else "")
 
     companion object {
         fun parse(raw: ImmutableByteArray): TampereTrip? {
