@@ -29,7 +29,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @SerialName("recursive")
-class ListItemRecursive private constructor(
+data class ListItemRecursive constructor(
     override val text1: FormattedString,
     override val text2: FormattedString?,
     val subTree: List<ListItemInterface>?): ListItemInterface() {

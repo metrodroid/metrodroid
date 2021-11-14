@@ -32,7 +32,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @SerialName("uri")
-class UriListItem private constructor(
+data class UriListItem(
     override val text1: FormattedString,
     override val text2: FormattedString, val uri: String)
     : ListItemInterface() {

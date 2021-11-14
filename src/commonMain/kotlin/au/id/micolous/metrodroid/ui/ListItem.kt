@@ -28,7 +28,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @SerialName("normal")
-class ListItem(override val text1: FormattedString?,
+data class ListItem(override val text1: FormattedString?,
                override val text2: FormattedString?): ListItemInterface() {
 
     constructor(nameResource: StringResource) : this(nameResource, null as FormattedString?)

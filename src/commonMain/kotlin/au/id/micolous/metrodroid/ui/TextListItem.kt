@@ -31,7 +31,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @SerialName("text")
-class TextListItem private constructor(override val text1: FormattedString) : ListItemInterface() {
+data class TextListItem constructor(override val text1: FormattedString) : ListItemInterface() {
     constructor(textResource: StringResource) : this(
         Localizer.localizeFormatted(textResource))
 

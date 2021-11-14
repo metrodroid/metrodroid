@@ -31,7 +31,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @SerialName("header")
-class HeaderListItem private constructor(override val text1: FormattedString?, val headingLevel: Int): ListItemInterface() {
+data class HeaderListItem constructor(override val text1: FormattedString?, val headingLevel: Int): ListItemInterface() {
     constructor(titleResource: StringResource, headingLevel: Int = 2)
             : this(Localizer.localizeFormatted(titleResource), headingLevel)
     constructor(title: String) : this(FormattedString(title), 2)
