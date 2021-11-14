@@ -151,8 +151,8 @@ open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, Exp
     /**
      * Attach to list view once Fragment is ready to run.
      */
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         ensureList()
     }
 
