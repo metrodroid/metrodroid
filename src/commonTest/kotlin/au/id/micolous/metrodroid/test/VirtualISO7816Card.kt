@@ -201,7 +201,7 @@ open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
             val ef = p1i and 0x1f
             val data = app.getSfiFile(ef)?.binaryData ?: return FILE_NOT_FOUND
 
-            return truncateOkResponse(data.sliceArray(p2i until data.size), retLength)
+            return truncateOkResponse(data.drop(p2i), retLength)
         } else {
             Log.d(TAG, "ReadBinary($p1i, $p2i)")
             if (p1i != 0 || p2i != 0) {

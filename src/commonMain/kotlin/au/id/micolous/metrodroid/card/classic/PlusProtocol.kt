@@ -54,7 +54,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
         return ImmutableByteArray(8) { cmac[2 * it + 1] }
     }
 
-    private fun rotate(input: ImmutableByteArray) = input.sliceOffLen(1, input.size - 1) + input.sliceOffLen(0,1)
+    private fun rotate(input: ImmutableByteArray) = input.drop(1) + input.sliceOffLen(0,1)
 
     override fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean {
         if (key.key.size != ClassicSectorKey.AES_KEY_LEN) {
@@ -99,7 +99,7 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
 
     private fun computeMac(input: ImmutableByteArray, ctr: Int): ImmutableByteArray {
         val macdata = ImmutableByteArray.of(input[0], ctr.toByte(), (ctr shr 8).toByte()) +
-                ti!! + input.sliceOffLen(1, input.size - 1)
+                ti!! + input.drop(1)
         return aesCmac8(key=kmac!!, macdata=macdata)
     }
 
