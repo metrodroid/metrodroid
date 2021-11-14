@@ -41,6 +41,7 @@ package au.id.micolous.metrodroid.fragment
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.ContextMenu
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.Gravity
@@ -60,7 +61,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 
 open class ExpandableListFragment : Fragment(), OnCreateContextMenuListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupCollapseListener, ExpandableListView.OnGroupExpandListener {
 
-    private val mHandler = Handler()
+    private val mHandler = Handler(Looper.getMainLooper())
     private val mOnClickListener = AdapterView.OnItemClickListener { parent, v, position, id -> onListItemClick(parent as ListView, v, position, id) }
     private val mOnChildClickListener = ExpandableListView.OnChildClickListener { parent, v, groupPosition, childPosition, id -> this.onListChildClick(parent, v, groupPosition, childPosition, id) }
     /**
