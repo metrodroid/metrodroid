@@ -19,6 +19,5 @@
 
 package au.id.micolous.metrodroid.util
 
-fun Input.forEachLine(function: (String) -> Unit) {
-    this.readToString().split('\n', '\r').filter { it.isNotEmpty() }.forEach(function)
-}
+fun Input.lines() =
+    this.readToString().split('\n', '\r').filter { it.isNotEmpty() }.asSequence()

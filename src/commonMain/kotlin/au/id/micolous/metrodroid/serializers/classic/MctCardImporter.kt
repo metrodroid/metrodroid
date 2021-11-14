@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Input
-import au.id.micolous.metrodroid.util.forEachLine
+import au.id.micolous.metrodroid.util.lines
 
 /**
  * Class to read files built by MIFARE Classic Tool.
@@ -39,7 +39,7 @@ class MctCardImporter : CardImporter {
         var maxSector = -1
         var curBlocks = mutableListOf<ImmutableByteArray>()
         var lastBlock: String? = null
-        stream.forEachLine { lineRaw ->
+        stream.lines().forEach { lineRaw ->
             val line = lineRaw.trim()
             if (line.startsWith("+Sector:")) {
                 flushSector(sectors, curSector, curBlocks, lastBlock)
