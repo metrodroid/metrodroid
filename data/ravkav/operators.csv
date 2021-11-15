@@ -1,26 +1,26 @@
-id,name,short_name
-1,"Service Center (Postal Bank)","Service Center"
-2,"Israel Rail",
-3,"Egged",
-4,"Egged Transport","Egged"
-5,"Dan",
-6,"NTT (Nazereth Consolidated Bus Services)","NTT"
-7,"NTT (Nazereth Travel & Tourism)","NTT"
-8,"JB Tours","JB"
-9,"Omni (Nazrin Express)","Omni"
-10,"Ayalot Regional Council",
-11,"Elite",
-14,"Nativ Express",
-15,"Metropolis",
-16,"Superbus",
-17,"Connex & Veolia",
-18,"Kavim",
-19,"Metrodan",
-20,"Carmelit",
-21,"CityPass",
-22,"undefined 22",
-23,"Galim (Narkis Gal)","Galim"
-24,"Golan Regional Council","Golan"
-25,"Afikim",
-30,"Dan North",
-41,"East Jerusalem operators","East Jerusalem"
+id,name,short_name,name#1,short_name#1
+1,"Service Center (Postal Bank)","Service Center","מרכז שירות (בנק הדואר)","מרכז שירות"
+2,"Israel Rail",,"רכבת ישראל"
+3,"Egged",,"אגד"
+4,"Egged Transport",,"אגד תעבורה"
+5,"Dan",,"דן"
+6,"NTT (Nazereth Consolidated Bus Services)","NTT","נצרת שירותי אוטובוסים","נצרת"
+7,"NTT (Nazereth Travel & Tourism)","NTT","נצרת תיור ונופש","נצרת"
+8,"GB Tours","GB","ג'י בי טורס","ג'י בי"
+9,"Omni (Nazrin Express)","Omni","אומני (נאזרין אקספרס)","אומני"
+10,"Ayalot Regional Council",,"מועצה אזורית איילות",
+11,"Elite",,"עילית",
+14,"Nativ Express",,"נתיב אקספרס",
+15,"Metropoline",,"מטרפולין",
+16,"Superbus",,"סופרבוס",
+17,"Connex & Veolia",,"קונקס וויולה",
+18,"Kavim",,"קווים",
+19,"Metrodan",,"מטרודן",
+20,"Carmelit",,"כרמלית",
+21,"CityPass",,"סיטיפס",
+22,"undefined 22",,"לא מוגדר 22",
+23,"Galim (Narkis Gal)","Galim","גלים (נרקיס גל)","גלים"
+24,"Golan Regional Council","Golan","מועצה אזורית גולן","גולן"
+25,"Afikim",,"אפיקים",
+30,"Dan North",,"דן דרום",
+41,"East Jerusalem operators","East Jerusalem","מפעילי מזרח ירושלים","מזרח ירושלים"

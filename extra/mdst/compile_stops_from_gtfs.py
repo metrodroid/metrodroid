@@ -4,7 +4,7 @@
 compile_stops_from_gtfs.py
 Compiles MdST stop database from GTFS data and reader ID.
 
-Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2021 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime
 from gtfstools import Gtfs
@@ -42,24 +41,42 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
+def translate_names(name, row, translations, strip_suffixes):
+  translated = translations.get(row['stop_name'], {})
+  print(f'translated = {translated}, {row["stop_name"]}')
+  if translated:
+    for i, s in translated.items():
+      if i == 0:
+        name.english = massage_name(s, strip_suffixes)
+      else:
+        name.other[i] = s
+  else:
+    name.english = massage_name(row['stop_name'], strip_suffixes)
+
+
 def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None,
                             strip_suffixes='', agency_ids=None, tts_hint_language=None,
-                            operators_f=None, extra_f=None, local_languages=None,
+                            operators_f=None, extra_f=None, languages_f=None,
                             license_notice_f=None, lines_f=None):
+  gtfs_languages = {}
+  mdst_languages = {}
   lines = {}
+  translations = {}
+
+  if languages_f is not None:
+    languages_f = codecs.getreader('utf-8-sig')(languages_f)
+    langread = csv.DictReader(languages_f)
+    for lang in langread:
+      id = int(lang['id'])
+      if lang['gtfs_lang']:
+        gtfs_languages[lang['gtfs_lang']] = id
+      if lang['lang']:
+        mdst_languages[lang['lang']] = id
 
   if lines_f is not None:
     lines_f = codecs.getreader('utf-8-sig')(lines_f)
-    lineread = csv.DictReader(lines_f)
-
-    for line in lineread:
-        linepb = Line()
-        linepb.name.english = line['name']
-        if 'short_name' in line and line['short_name']:
-          linepb.name.english_short = line['short_name']
-        if 'local_name' in line and line['local_name']:
-          linepb.name.local = line['local_name']
-        lines[int(line['id'], 0)] = linepb
+    lines = mdst.read_lines_from_csv(lines_f)
+    lines_f.close()
 
   if all_matching_f is not None:
     all_matching_f = [codecs.getreader('utf-8-sig')(x) for x in all_matching_f]
@@ -99,15 +116,29 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
     fh=open(output_f, 'wb'),
     version=version,
     operators=operators,
-    local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
     license_notice_f=license_notice_f,
-    lines=lines
+    lines=lines,
+    languages=mdst_languages,
   )
 
   station_count = 0
 
   for num, gtfs in enumerate(all_gtfs):
+    try:
+      trans = gtfs.open('translations.txt')
+    except KeyError:
+      # no translations
+      pass
+    else:
+      # Load translations into memory, uses OLD GTFS format
+      # trans_id,lang,translation
+      for t in trans:
+        if t['trans_id'] not in translations:
+          translations[t['trans_id']] = {}
+        lang_id = gtfs_languages[t['lang']]
+        translations[t['trans_id']][lang_id] = t['translation']
+
     agency_id = agency_ids.pop(0)
     stops = gtfs.open('stops.txt')
     # See if there is a matching file
@@ -157,7 +188,6 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
       # Now run through the stops
       for stop in stops:
         # preprocess stop data
-        name = massage_name(stop['stop_name'], strip_suffixes)
         y = float(stop['stop_lat'].strip())
         x = float(stop['stop_lon'].strip())
 
@@ -167,7 +197,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
         for reader_id in stop_ids.get(stop.get('stop_id', 'stop_id_absent'), []):
           s = Station()
           s.id = int(reader_id, 0)
-          s.name.english = name
+          translate_names(s.name, stop, translations, strip_suffixes)
           if y and x:
             s.latitude = y
             s.longitude = x
@@ -184,12 +214,10 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
         for reader_id in stop_codes.get(stop.get('stop_code', 'stop_code_absent'), []):
           s = Station()
           s.id = int(reader_id, 0)
-          s.name.english = name
-
+          translate_names(s.name, stop, translations, strip_suffixes)
           if y and x:
             s.latitude = y
             s.longitude = x
-
           if reader_id in short_names:
             s.name.english_short = short_names[reader_id]
           if agency_id >= 0:
@@ -275,9 +303,10 @@ def main():
     required=False,
     help='If specified, provides a hint for LocaleSpan when marking up station names and lines. The default is to specify no language.')
 
-  parser.add_argument('-L', '--local-languages',
+  parser.add_argument('-F', '--languages',
     required=False,
-    help='If specified, provides a list of languages when to show local name. Comma-separated')
+    type=FileType('rb'),
+    help='If specified, a mapping of language codes to IDs.')
 
   parser.add_argument('-n', '--license-notice',
     required=False,
@@ -291,7 +320,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages, options.license_notice, options.lines)
+  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.languages, options.license_notice, options.lines)
 
 if __name__ == '__main__':
   main()

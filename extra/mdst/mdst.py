@@ -3,7 +3,7 @@
 """
 mdst.py - Helper for writing MdST files
 
-Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+Copyright 2018-2021 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from __future__ import absolute_import, print_function
 from google.protobuf.internal import encoder
 from stations_pb2 import StationDb, Operator, Line, Station, StationIndex, TransportType
 import struct
@@ -35,8 +34,8 @@ def delimited_value(msg):
   return d + o
 
 
-class MdstWriter(object):
-  def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
+class MdstWriter:
+  def __init__(self, fh, version, operators=None, lines=None, tts_hint_language=None, license_notice_f=None, languages=None):
     """
     Creates a new MdST database.
 
@@ -57,18 +56,14 @@ class MdstWriter(object):
     if tts_hint_language:
       sdb.tts_hint_language = tts_hint_language
 
-    if local_languages:
-      for l in local_languages:
-        sdb.local_languages.append(l)
+    if languages:
+      for code, id in languages.items():
+        sdb.languages[code] = id
 
     if operators:
       for k, v in sorted(operators.items(), key=itemgetter(0)):
         if isinstance(v, Operator):
-          sdb.operators[k].name.english = v.name.english
-          sdb.operators[k].name.english_short = v.name.english_short
-          sdb.operators[k].name.local = v.name.local
-          sdb.operators[k].name.local_short = v.name.local_short
-          sdb.operators[k].default_transport = v.default_transport
+          sdb.operators[k].MergeFrom(v)
           continue
         if v[0] != None:
           sdb.operators[k].name.english = v[0]
@@ -78,11 +73,7 @@ class MdstWriter(object):
     if lines:
       for k, v in sorted(lines.items(), key=itemgetter(0)):
         if isinstance(v, Line):
-          sdb.lines[k].name.english = v.name.english
-          sdb.lines[k].name.english_short = v.name.english_short
-          sdb.lines[k].name.local = v.name.local
-          sdb.lines[k].name.local_short = v.name.local_short
-          sdb.lines[k].transport = v.transport
+          sdb.lines[k].MergeFrom(v)
           continue
         if v[0] != None:
           sdb.lines[k].name.english = v[0]
@@ -130,18 +121,29 @@ class MdstWriter(object):
     return index_end_off
 
 
+def read_names_from_row(name, row):
+  name.english = row['name']
+  if 'short_name' in row:
+    name.english_short = row['short_name']
+  for k in row:
+      if '#' not in k or not row[k]:
+        continue
+      f, id = k.split('#')
+      id = int(id)
+
+      if f == 'name':
+        name.other[id] = row[k]
+      elif f == 'short_name':
+        name.other_short[id] = row[k]
+
+
 def read_stops_from_csv(db, csv_f):
   exread = csv.DictReader(csv_f)
 
   for stop in exread:
     s = Station()
     s.id = int(stop['reader_id'], 0)
-    if 'stop_name' in stop and stop['stop_name']:
-      s.name.english = stop['stop_name']
-    if 'local_name' in stop and stop['local_name']:
-      s.name.local = stop['local_name']
-    if 'short_name' in stop and stop['short_name']:
-      s.name.english_short = stop['short_name']
+    read_names_from_row(s.name, stop)
     if 'operator_id' in stop and stop['operator_id']:
       s.operator_id = int(stop['operator_id'])
     if 'line_id' in stop and stop['line_id']:
@@ -161,13 +163,7 @@ def read_operators_from_csv(csv_f):
 
   for op in opread:
     oppb = Operator()
-    oppb.name.english = op['name']
-    if 'short_name' in op and op['short_name']:
-      oppb.name.english_short = op['short_name']
-    if 'local_name' in op and op['local_name']:
-      oppb.name.local = op['local_name']
-    if 'local_short_name' in op and op['local_short_name']:
-      oppb.name.local_short = op['local_short_name']
+    read_names_from_row(oppb.name, op)
     if 'mode' in op and op['mode']:
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
@@ -180,11 +176,7 @@ def read_lines_from_csv(csv_f):
 
   for line in lineread:
     linepb = Line()
-    linepb.name.english = line['name']
-    if 'short_name' in line and line['short_name']:
-      linepb.name.english_short = line['short_name']
-    if 'local_name' in line and line['local_name']:
-      linepb.name.local = line['local_name']
+    read_names_from_row(linepb.name, line)
     if 'mode' in line and line['mode']:
       linepb.transport = TransportType.Value(line['mode'])
     lines[int(line['id'], 0)] = linepb
