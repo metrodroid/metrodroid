@@ -223,7 +223,7 @@ class ImmutableByteArray private constructor(
     }
 
     fun chunked(size: Int): List<ImmutableByteArray>
-            = chunked(size).map {
+            = mData.asIterable().chunked(size).map {
         it.toByteArray().toImmutable()
     }
 

@@ -413,27 +413,28 @@ class FelicaProtocol(val tag: FelicaTransceiver,
      * However, the regular FeliCa specification does not indicate an actual limit.
      */
     fun readWithoutEncryption(
-            systemNumber: Int, serviceCode: Int, blockNumbers: IntArray):
+            systemNumber: Int, serviceCode: Int, blockNumbers: Sequence<Int>):
             Map<Int, ImmutableByteArray>? {
-        if (blockNumbers.size > 15) {
-            throw IllegalArgumentException("Can only read 15 blocks at a time, you gave " +
-                    "${blockNumbers.size}")
+        val size = blockNumbers.count()
+        if (size > 15) {
+            throw IllegalArgumentException(
+                "Can only read 15 blocks at a time, you gave $size")
         }
 
-        if (blockNumbers.isEmpty()) {
+        if (size == 0) {
             // No entries -- nothing to send to the card!
             return emptyMap()
         }
 
         val blockRequests = blockNumbers.map {
             encodeBlockRequest(it).toList()
-        }.flatten().toTypedArray()
+        }.flatten().toList().toTypedArray()
 
         val resp = sendRequest(COMMAND_READ_WO_ENCRYPTION, systemNumber,
                 0x01, // Number of service codes
                 serviceCode and 0xff, // Service code (lower byte)
                 serviceCode shr 8, // Service code (upper byte)
-                blockNumbers.size, // Number of blocks to read
+                size, // Number of blocks to read
                 *blockRequests
         )
 
@@ -457,9 +458,9 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         }
 
         // Process the response data
-        return resp.sliceArray(12 until resp.size).chunked(16).withIndex().associate {
-            Pair(blockNumbers[it.index], it.value)
-        }
+        return resp.sliceArray(12 until resp.size).chunked(16).zip(blockNumbers.asIterable()) {
+            blockData, blockIndex -> Pair(blockIndex, blockData)
+        }.toMap()
     }
 
     /**
