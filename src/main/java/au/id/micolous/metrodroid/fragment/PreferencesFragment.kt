@@ -130,7 +130,7 @@ class PreferencesFragment : PreferenceFragmentCompat(), Preference.OnPreferenceC
         b.putString("key", preference.key)
         dialogFragment.arguments = b
         dialogFragment.setTargetFragment(this, 0)
-        dialogFragment.show(requireFragmentManager(),
+        dialogFragment.show(parentFragmentManager,
                 "androidx.preference.PreferenceFragment.DIALOG")
     }
 }
