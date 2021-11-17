@@ -101,14 +101,19 @@ object FelicaReader {
         var specificationVersion: ImmutableByteArray? = null
 
         try {
-            var codes = fp.getSystemCodeList().toMutableList()
+            var codes = try {
+                fp.getSystemCodeList().toList()
+            } catch (e: CardLostException) {
+                Log.d(TAG, "requestSpecificationVersion: Swallowing CardLostException")
+                null
+            }
 
             // Check if we failed to get a System Code
-            if (codes.isEmpty()) {
+            if (codes == null || codes.isEmpty()) {
                 // Lite has no system code list
                 if (fp.pollFelicaLite()) {
                     Log.d(TAG, "Detected Felica Lite card")
-                    codes.add(FelicaConsts.SYSTEMCODE_FELICA_LITE)
+                    codes = listOf(FelicaConsts.SYSTEMCODE_FELICA_LITE)
                     liteMagic = true
                 } else {
                     // Don't do these on lite as it may respond to any code
