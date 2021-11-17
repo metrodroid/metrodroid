@@ -95,6 +95,7 @@ class ImmutableByteArray private constructor(
     operator fun plus(second: Byte) = ImmutableByteArray(this.mData + second)
     fun sliceArray(intRange: IntRange) = ImmutableByteArray(mData = mData.sliceArray(intRange))
     fun sliceOffLen(off: Int, datalen: Int) = sliceArray(off until (off + datalen))
+    fun drop(off: Int) = sliceOffLen(off, size - off)
     fun toHexDump() = getHexDump(mData, 0, mData.size)
     fun byteArrayToInt() = byteArrayToInt(0, mData.size)
     fun <T> fold(l: T, function: (T, Byte) -> T): T = mData.fold(l, function)
