@@ -33,12 +33,6 @@
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_dark</item>
     </style>
 
-    <style name="Metrodroid.Dark.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
-        <item name="ButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
-        <item name="LockImage">@drawable/locked</item>
-        <item name="LockImageUnlocked">@drawable/unlocked</item>
-    </style>
-
     <integer-array name="Metrodroid.Dark.TransportIcons" >
         <item>@drawable/bus</item>
         <item>@drawable/train</item>
@@ -70,12 +64,6 @@
         <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
-    </style>
-
-    <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
-        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="LockImage">@drawable/locked</item>
-        <item name="LockImageUnlocked">@drawable/unlocked</item>
     </style>
 
     <integer-array name="Metrodroid.Light.TransportIcons" >
