@@ -48,7 +48,7 @@ import java.util.*
  */
 val ReaderState.ignored : Boolean
     get() {
-        val iname = reader.toLowerCase(Locale.ENGLISH)
+        val iname = reader.lowercase(Locale.ENGLISH)
 
         // Yubikey CCID
         return iname.contains("yubi")
