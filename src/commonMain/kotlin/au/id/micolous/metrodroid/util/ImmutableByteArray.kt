@@ -33,6 +33,16 @@ import kotlin.experimental.xor
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 fun Array<out Number>.toImmutable(): ImmutableByteArray = ImmutableByteArray.ofB(*this)
 
+fun Iterable<ImmutableByteArray>.sum(): ImmutableByteArray =
+    fold(ImmutableByteArray.empty()) {
+            acc, el -> acc + el
+    }
+
+fun Sequence<ImmutableByteArray>.sum(): ImmutableByteArray =
+    fold(ImmutableByteArray.empty()) {
+            acc, el -> acc + el
+    }
+
 @Parcelize
 @Serializable(with = ImmutableByteArray.Companion::class)
 class ImmutableByteArray private constructor(
