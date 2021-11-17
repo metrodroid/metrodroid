@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.ksx6924.KROCAPData.TAG_SERIAL_NUMBER
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
@@ -46,7 +46,7 @@ class KROCAPTransitData(val pdata: ImmutableByteArray) : SerialOnlyTransitData()
 
     override val cardName get() = NAME
 
-    override val extraInfo: List<ListItem>?
+    override val extraInfo: List<ListItemInterface>?
         get() = ISO7816TLV.infoBerTLV(pdata, TAGMAP)
 
     companion object {

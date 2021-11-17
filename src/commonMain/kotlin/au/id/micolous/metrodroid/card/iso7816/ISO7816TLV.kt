@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card.iso7816
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
@@ -129,77 +130,88 @@ object ISO7816TLV {
      * @param buf The BER-TLV encoded data to iterate over
      * @return [Sequence] of [Triple] of `id, header, data`
      */
-    fun berTlvIterate(buf: ImmutableByteArray) :
+    fun berTlvIterate(buf: ImmutableByteArray, multihead: Boolean = false) :
             Sequence<Triple<ImmutableByteArray, ImmutableByteArray, ImmutableByteArray>> {
         return sequence {
-            // Skip null bytes at start:
-            // "Before, between, or after TLV-coded data objects, '00' bytes without any meaning may
-            // occur (for example, due to erased or modified TLV-coded data objects)."
-            var p = buf.indexOfFirst { it != 0.toByte() }
+            var p = 0
+            while (p < buf.size) {
+                // Skip null bytes at start:
+                // "Before, between, or after TLV-coded data objects, '00' bytes without any meaning may
+                // occur (for example, due to erased or modified TLV-coded data objects)."
+                p = buf.indexOfFirstStarting(p) { it != 0.toByte() }
 
-            if (p == -1) {
-                // No non-null bytes
-                return@sequence
-            }
-
-            // Skip ID
-            p = getTLVIDLen(buf, 0)
-            val (startoffset, alldatalen, alleoclen) = decodeTLVLen(buf, p) ?: return@sequence
-            if (p < 0 || startoffset < 0 || alldatalen < 0 || alleoclen < 0) {
-                Log.w(TAG, "Invalid TLV reading header: p=$p, startoffset=$startoffset, " +
-                        "alldatalen=$alldatalen, alleoclen=$alleoclen")
-                return@sequence
-            }
-
-            p += startoffset
-            val fulllen = p + alldatalen
-
-            while (p < fulllen) {
-                // Skip null bytes
-                if (buf[p] == 0.toByte()) {
-                    p++
-                    continue
+                if (p == -1) {
+                    // No non-null bytes
+                    return@sequence
                 }
 
-                val idlen = getTLVIDLen(buf, p)
-
-                if (p + idlen >= buf.size) break // EOF
-                val id = buf.sliceOffLenSafe(p, idlen)
-                if (id == null) {
-                    Log.w(TAG, "Invalid TLV ID data at $p: out of bounds")
-                    break
+                // Skip ID
+                p += getTLVIDLen(buf, p)
+                val (startoffset, alldatalen, alleoclen) = decodeTLVLen(buf, p) ?: return@sequence
+                if (p < 0 || startoffset < 0 || alldatalen < 0 || alleoclen < 0) {
+                    Log.w(
+                        TAG, "Invalid TLV reading header: p=$p, startoffset=$startoffset, " +
+                                "alldatalen=$alldatalen, alleoclen=$alleoclen"
+                    )
+                    return@sequence
                 }
 
-                // Log.d(TAG, "($p) id=${id.getHexString()}")
+                p += startoffset
+                val fulllen = p + alldatalen
 
-                val (hlen, datalen, eoclen) = decodeTLVLen(buf, p + idlen) ?: break
+                while (p < fulllen) {
+                    // Skip null bytes
+                    if (buf[p] == 0.toByte()) {
+                        p++
+                        continue
+                    }
 
-                if (idlen < 0 || hlen < 0 || datalen < 0 || eoclen < 0) {
-                    // Invalid lengths, abort!
-                    Log.w(TAG, "Invalid TLV data at $p (<0): idlen=$idlen, hlen=$hlen, " +
-                            "datalen=$datalen, eoclen=$eoclen")
-                    break
+                    val idlen = getTLVIDLen(buf, p)
+
+                    if (p + idlen >= buf.size) return@sequence // EOF
+                    val id = buf.sliceOffLenSafe(p, idlen)
+                    if (id == null) {
+                        Log.w(TAG, "Invalid TLV ID data at $p: out of bounds")
+                        return@sequence
+                    }
+
+                    // Log.d(TAG, "($p) id=${id.getHexString()}")
+
+                    val (hlen, datalen, eoclen) = decodeTLVLen(buf, p + idlen) ?: break
+
+                    if (idlen < 0 || hlen < 0 || datalen < 0 || eoclen < 0) {
+                        // Invalid lengths, abort!
+                        Log.w(
+                            TAG, "Invalid TLV data at $p (<0): idlen=$idlen, hlen=$hlen, " +
+                                    "datalen=$datalen, eoclen=$eoclen"
+                        )
+                        return@sequence
+                    }
+
+                    val header = buf.sliceOffLenSafe(p, idlen + hlen)
+                    val data = buf.sliceOffLenSafe(p + idlen + hlen, datalen)
+
+                    if (header == null || data == null) {
+                        // Invalid ranges, abort!
+                        Log.w(TAG, "Invalid TLV data at $p: out of bounds")
+                        return@sequence
+                    }
+
+                    if ((id.isAllZero() || id.isEmpty()) && (header.isEmpty() || header.isAllZero())
+                        && data.isEmpty()
+                    ) {
+                        // Skip empty tag
+                        continue
+                    }
+
+                    // Log.d(TAG, "($p) id=${id.toHexString()}, header=${header.getHexString()}, " +
+                    //         "data=${data.getHexString()}")
+                    yield(Triple(id, header, data))
+                    p += idlen + hlen + datalen + eoclen
                 }
 
-                val header = buf.sliceOffLenSafe(p, idlen + hlen)
-                val data = buf.sliceOffLenSafe(p + idlen + hlen, datalen)
-
-                if (header == null || data == null) {
-                    // Invalid ranges, abort!
-                    Log.w(TAG, "Invalid TLV data at $p: out of bounds")
-                    break
-                }
-
-                if ((id.isAllZero() || id.isEmpty()) && (header.isEmpty() || header.isAllZero())
-                        && data.isEmpty()) {
-                    // Skip empty tag
-                    continue
-                }
-
-                // Log.d(TAG, "($p) id=${id.toHexString()}, header=${header.getHexString()}, " +
-                //         "data=${data.getHexString()}")
-                yield(Triple(id, header, data))
-                p += idlen + hlen + datalen + eoclen
+                if (!multihead)
+                    return@sequence
             }
         }
     }
@@ -227,13 +239,17 @@ object ISO7816TLV {
         }
     }
 
-    fun findBERTLV(buf: ImmutableByteArray, target: String, keepHeader: Boolean): ImmutableByteArray? {
-        return findBERTLV(buf, ImmutableByteArray.fromHex(target), keepHeader)
-    }
+    fun findBERTLV(
+        buf: ImmutableByteArray, target: String,
+        keepHeader: Boolean, multihead: Boolean = false
+    ): ImmutableByteArray? =
+        findBERTLV(buf, ImmutableByteArray.fromHex(target), keepHeader, multihead)
 
-    fun findBERTLV(buf: ImmutableByteArray, target: ImmutableByteArray, keepHeader: Boolean):
+    fun findBERTLV(buf: ImmutableByteArray, target: ImmutableByteArray,
+                   keepHeader: Boolean, multihead: Boolean = false):
             ImmutableByteArray? {
-        val result = berTlvIterate(buf).firstOrNull { it.first == target } ?: return null
+        val result = berTlvIterate(buf, multihead).firstOrNull {
+            it.first == target } ?: return null
 
         return if (keepHeader) {
             result.second + result.third
@@ -262,12 +278,12 @@ object ISO7816TLV {
     /**
      * Parses BER-TLV data, and builds [ListItem] and [ListItemRecursive] for each of the tags.
      */
-    fun infoBerTLV(buf: ImmutableByteArray): List<ListItemInterface> {
-        return berTlvIterate(buf).map { (id, header, data) ->
+    fun infoBerTLV(buf: ImmutableByteArray, multihead: Boolean = false): List<ListItemInterface> {
+        return berTlvIterate(buf, multihead).map { (id, header, data) ->
             if (id[0].toInt() and 0xe0 == 0xa0) {
                 try {
                     ListItemRecursive(id.toHexString(),
-                            null, infoBerTLV(header + data))
+                            null, infoBerTLV(header + data, multihead))
                 } catch (e: Exception) {
                     ListItem(id.toHexDump(), data.toHexDump())
                 }
@@ -319,8 +335,9 @@ object ISO7816TLV {
      */
     fun infoBerTLV(tlv: ImmutableByteArray,
                    tagMap: Map<String, TagDesc>,
-                   includeUnknown: Boolean = false) =
-            berTlvIterate(tlv).mapNotNull { (id, _, data) ->
+                   includeUnknown: Boolean = false,
+                   multihead: Boolean = false) =
+            berTlvIterate(tlv, multihead).mapNotNull { (id, _, data) ->
                 val idStr = id.toHexString()
 
                 val d = tagMap[idStr]
@@ -338,11 +355,15 @@ object ISO7816TLV {
     /**
      * Like [infoBerTLV], but also returns a list of IDs that were unknown in the process.
      */
-    fun infoBerTLVWithUnknowns(tlv: ImmutableByteArray, tagMap: Map<String, TagDesc>):
+    fun infoBerTLVWithUnknowns(
+        tlv: ImmutableByteArray,
+        tagMap: Map<String, TagDesc>,
+        multihead: Boolean
+    ):
             Pair<List<ListItem>, Set<String>> {
         val unknownIds = mutableSetOf<String>()
 
-        return Pair(berTlvIterate(tlv).mapNotNull { (id, _, data) ->
+        return Pair(berTlvIterate(tlv, multihead).mapNotNull { (id, _, data) ->
             val idStr = id.toHexString()
 
             val d = tagMap[idStr]
@@ -432,5 +453,34 @@ object ISO7816TLV {
                 p += len
             }
         }
+    }
+
+    fun infoBerTLVs(
+        tlvs: List<ImmutableByteArray>,
+        tagmap: Map<String, TagDesc>,
+        hideThings: Boolean,
+        multihead: Boolean = false
+    ): List<ListItemInterface> {
+        val res = mutableListOf<ListItemInterface>(
+            HeaderListItem(R.string.tlv_tags))
+        val unknownIds = mutableSetOf<String>()
+        for (tlv in tlvs) {
+            val li = if (hideThings) {
+                infoBerTLV(tlv, tagmap, multihead = multihead)
+            } else {
+                val (li, unknowns) = infoBerTLVWithUnknowns(
+                    tlv, tagmap, multihead)
+                unknownIds += unknowns
+                li
+            }
+
+            res += li
+        }
+
+        if (unknownIds.isNotEmpty()) {
+            res += ListItem(R.string.unknown_tags, unknownIds.joinToString(", "))
+        }
+
+        return res
     }
 }
