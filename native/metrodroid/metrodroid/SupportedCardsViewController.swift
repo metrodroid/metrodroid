@@ -27,7 +27,7 @@ class SupportedCardsViewController: UICollectionViewController {
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     // Classic is not supported currently
     static let supportedProtocols: [CardType] = [
-        .felica, .iso7816, .mifaredesfire, .mifareultralight, .mifareplus, .vicinity]
+        .felica, .iso7816, .mifaredesfire, .mifareultralight, .mifareplus, .vicinity, .multiprotocol]
     class func isSupported(cardInfo: CardInfo) -> Bool {
         return cardInfo.iOSSupported as? Bool ?? supportedProtocols.contains(cardInfo.cardType)
     }
