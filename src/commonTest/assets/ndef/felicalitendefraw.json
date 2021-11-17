@@ -1,0 +1,34 @@
+[
+    {"type":"normal","text1":"Manufacture Parameter (PMm)","text2":"00f10000 00014300"},
+    {"type":"recursive","text1":"System: 0x88b4 (FeliCa Lite)","text2":"1 service","subTree":[
+	{"type":"recursive","text1":"Service: 0xb (Read-only data)","text2":"27 blocks","subTree":[
+	    {"type":"normal","text1":"0x00","text2":"10010100 0d000000 00000100 00130033"},
+	    {"type":"normal","text1":"0x01","text2":"d1010f55 026d6574 726f6472 6f69642e"},
+	    {"type":"normal","text1":"0x02","text2":"6f726700 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x03","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x04","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x05","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x06","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x07","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x08","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x09","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x0a","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x0b","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x0c","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x0d","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x0e","text2":"ffffffff ffffffff ffffffff ffffffff"},
+	    {"type":"normal","text1":"0x80","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x81","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x82","text2":"01234567 89abcdef 00000000 00000000"},
+	    {"type":"normal","text1":"0x83","text2":"01234567 89abcdef 00f10000 00014300"},
+	    {"type":"normal","text1":"0x84","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x85","text2":"88b40000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x86","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x87","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x88","text2":"ffffff01 ff000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x90","text2":"08feff00 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0x92","text2":"00000000 00000000 00000000 00000000"},
+	    {"type":"normal","text1":"0xa0","text2":"00000000 00000000 00000000 00000000"}
+	]}
+    ]}
+]
