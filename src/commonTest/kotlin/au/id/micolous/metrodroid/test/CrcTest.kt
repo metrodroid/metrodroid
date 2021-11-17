@@ -33,4 +33,16 @@ class CrcTest {
         assertEquals(actual=HashUtils.calculateCRC16IBM(ImmutableByteArray.fromASCII("Metrodroid")), expected=0xe52c)
         assertEquals(actual=HashUtils.calculateCRC16IBM(ImmutableByteArray.fromASCII("CrcTest")), expected=0x2699)
     }
+
+    @Test
+    fun testNXP() {
+        assertEquals(actual=HashUtils.calculateCRC8NXP(ImmutableByteArray.empty()),
+            expected=0xc7)
+        assertEquals(actual=HashUtils.calculateCRC8NXP(ImmutableByteArray.of(0)),
+            expected=0x66)
+        assertEquals(actual=HashUtils.calculateCRC8NXP(ImmutableByteArray.of(1)),
+            expected=0x7b)
+        assertEquals(actual=HashUtils.calculateCRC8NXP(ImmutableByteArray.fromHex(
+            "0003e103e103e103e103e103e1000000000000000000000000000000000000")), expected=0xb0)
+    }
 }
