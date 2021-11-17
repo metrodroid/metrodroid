@@ -45,8 +45,7 @@ private fun splitby4(input: String?): String? {
     if (input == null)
         return null
     val len = input.length
-    val res = (0..len step 4).fold("") { prev, i -> prev + input.substring(i, minOf(i + 4, len)) + " " }
-    return if (res.endsWith(' ')) res.substring(0, res.length - 1) else res
+    return (0..len step 4).joinToString(" ") { input.substring(it, minOf(it + 4, len)) }
 }
 
 private fun getPan(t2: ImmutableByteArray?): String? {
