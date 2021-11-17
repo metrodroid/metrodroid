@@ -84,4 +84,12 @@ data class NFCVCard constructor(
         }
         return data
     }
+
+    fun readBytes(start: Int, len: Int): ImmutableByteArray {
+        val pageSize = pages[0].data.size
+        val startPage = start / pageSize
+        val endPage = (start + len + pageSize - 1) / pageSize
+        return readPages(startPage, endPage - startPage)
+            .sliceOffLen(start - startPage * pageSize, len)
+    }
 }
