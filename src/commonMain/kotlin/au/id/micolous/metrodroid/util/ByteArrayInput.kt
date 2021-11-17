@@ -29,7 +29,7 @@ class ByteArrayInput (private val ba: ByteArray): Input {
     private fun realRead(sz: Int): ByteArray {
         val off = offset
         offset += sz
-        return ba.sliceArray(off..(off+sz))
+        return ba.sliceArray(off until (off+sz))
     }
 
     override fun readBytes(sz: Int): ByteArray = realRead(
