@@ -100,7 +100,6 @@ class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API
     }
 
     override fun run() {
-        val o = Object()
         val context = Context.establish()
         val allTerminals = context.getAllReaderStatus()
         val outFile : File? = outFile
