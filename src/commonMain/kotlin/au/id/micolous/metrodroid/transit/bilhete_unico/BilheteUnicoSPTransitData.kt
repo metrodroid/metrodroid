@@ -126,12 +126,8 @@ class BilheteUnicoSPTransitData (private val mCredit: Int,
                     && data[13].toInt() and 0xff == addr.inv() and 0xff)
         }
 
-        private fun checkCRC16Sector(s: ClassicSector): Boolean {
-            val blocks = s.blocks
-            val crc = blocks.subList(0, blocks.size - 1).fold (0) { crc, b ->
-                HashUtils.calculateCRC16IBM(b.data, crc) }
-            return crc == 0
-        }
+        private fun checkCRC16Sector(s: ClassicSector): Boolean =
+            HashUtils.calculateCRC16IBM(s.allData) == 0
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 

@@ -82,7 +82,7 @@ class TroikaTransitData(private val mBlocks: List<Pair<Int, TroikaBlock> >) : Pa
                 val sector = card.getSector(idx)
                 if (sector is UnauthorizedClassicSector)
                     return null
-                val block = sector.readBlocks(0, 3)
+                val block = sector.allData
                 return if (!TroikaBlock.check(block)) null else TroikaBlock.parseBlock(block)
             } catch (e: Exception) {
                 Log.w(TAG, "Error decoding troika sector", e)
