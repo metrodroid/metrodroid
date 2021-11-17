@@ -51,7 +51,7 @@ abstract class SerialOnlyTransitData : TransitData() {
         return li
     }
 
-    protected enum class Reason {
+    enum class Reason {
         UNSPECIFIED,
         /** The card doesn't store the balance */
         NOT_STORED,
