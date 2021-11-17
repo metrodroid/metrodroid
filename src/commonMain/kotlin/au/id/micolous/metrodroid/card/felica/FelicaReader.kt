@@ -189,7 +189,7 @@ object FelicaReader {
                             excludedCodes.joinToString(limit = 50, transform = Int::hexString))
 
                     for (serviceCode in excludedCodes) {
-                        services[serviceCode] = FelicaService(skipped = true)
+                        services[serviceCode] = FelicaService.skipped()
                     }
 
                     serviceCodes = serviceCodes.filter { it and 0x01 == 1 }.toIntArray()
@@ -201,14 +201,14 @@ object FelicaReader {
 
                 for (serviceCode in serviceCodes) {
                     Log.d(TAG, "- Fetching service code ${serviceCode.hexString}")
-                    val blocks = mutableListOf<FelicaBlock>()
+                    val blocks = mutableMapOf<Int, FelicaBlock>()
 
                     try {
                         // TODO: Request more than 1 block
                         var addr = 0
                         var result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
                         while (result != null) {
-                            blocks += FelicaBlock(result)
+                            blocks[addr] = FelicaBlock(result)
                             addr++
                             if (addr >= 0x20 && liteMagic)
                                 break
@@ -223,7 +223,7 @@ object FelicaReader {
 
                     Log.d(TAG, "- Service code ${serviceCode.hexString} has ${blocks.size} blocks")
 
-                    services[serviceCode] = FelicaService(blocks)
+                    services[serviceCode] = FelicaService(blocksMap=blocks)
 
                     if (partialRead)
                         break

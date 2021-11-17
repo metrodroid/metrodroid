@@ -39,7 +39,7 @@ data class FelicaSystem(
 
     /** Shows raw data for all Services within this System */
     fun rawData(systemCode: Int): List<ListItemInterface> {
-        val emptyServices = services.filterValues { it.blocks.isEmpty() }
+        val emptyServices = services.filterValues { it.isEmpty() }
         val skippedServiceIds = emptyServices.filterValues { it.skipped }.keys
         val emptyServiceIds = emptyServices.filterValues { !it.skipped }.keys
 
@@ -54,19 +54,23 @@ data class FelicaSystem(
                     skippedServiceIds.size, skippedServiceIds.size),
                     skippedServiceIds.joinToString { it.hexString })
             }
-        ) + services.mapNotNull { (serviceCode, service) ->
-            if (service.blocks.isEmpty()) {
-                null
-            } else {
-                ListItemRecursive(
-                        Localizer.localizeString(R.string.felica_service_title_format,
-                                serviceCode.hexString,
-                                Localizer.localizeString(
-                                        FelicaUtils.getFriendlyServiceName(systemCode,
-                                                serviceCode))),
-                        Localizer.localizePlural(R.plurals.block_count,
-                                service.blocks.size, service.blocks.size), service.rawData)
-            }
+        ) + services.filter { it.value.isNotEmpty() }.map { (serviceCode, service) ->
+            ListItemRecursive(
+                Localizer.localizeString(
+                    R.string.felica_service_title_format,
+                    serviceCode.hexString,
+                    Localizer.localizeString(
+                        FelicaUtils.getFriendlyServiceName(
+                            systemCode,
+                            serviceCode
+                        )
+                    )
+                ),
+                Localizer.localizePlural(
+                    R.plurals.block_count,
+                    service.size, service.size
+                ), service.rawData
+            )
         }
     }
 }

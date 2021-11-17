@@ -44,9 +44,9 @@ class FelicaJsonImportTest: CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonK
         val service = system.services[1]
         assertNotNull(service)
         assertFalse(service.skipped)
-        val blocks = service.blocks.toList()
+        val blocks = service.blocksMap
         assertEquals(1, blocks.count())
-        val data = blocks[0].data
+        val data = blocks[0]!!.data
         assertEquals(ImmutableByteArray.empty(16), data)
     }
 
@@ -157,7 +157,7 @@ class FelicaJsonImportTest: CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonK
             } else {
                 assertFalse(service.skipped, "service $f must not be skipped")
             }
-            assertTrue(service.blocks.isEmpty(), "service $f must have an empty list of blocks")
+            assertTrue(service.blocksMap.isEmpty(), "service $f must have an empty list of blocks")
         }
     }
 

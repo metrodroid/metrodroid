@@ -88,16 +88,15 @@ class KMTTransitData (override val trips: List<KMTTrip>,
         private fun parse(card: FelicaCard): KMTTransitData {
             val serialNumber = getSerial(card)
             val serviceBalance = card.getSystem(SYSTEMCODE_KMT)?.getService(SERVICE_KMT_BALANCE)
-            val blocksBalance = serviceBalance?.blocks
-            val blockBalance = blocksBalance?.get(0)
+            val blockBalance = serviceBalance?.getBlock(0)
             val dataBalance = blockBalance?.data
             val mCurrentBalance = dataBalance?.byteArrayToIntReversed(0, 4) ?: 0
             val mTransactionCounter = dataBalance?.byteArrayToInt(13, 3) ?: 0
             val mLastTransAmount = dataBalance?.byteArrayToIntReversed(4, 4) ?: 0
 
             val trips = card.getSystem(SYSTEMCODE_KMT)
-                    ?.getService(SERVICE_KMT_HISTORY)?.blocks
-                    ?.mapNotNull { block ->
+                    ?.getService(SERVICE_KMT_HISTORY)?.blocksMap
+                    ?.mapNotNull { (_, block) ->
                         if (block.data[0].toInt() != 0 && block.data.byteArrayToInt(8, 2) != 0) {
                             KMTTrip.parse(block)
                         } else
@@ -117,7 +116,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
 
         private fun getSerial(card: FelicaCard): String? {
             val dataID = card.getSystem(SYSTEMCODE_KMT)?.getService(SERVICE_KMT_ID)
-                    ?.blocks?.get(0)?.data ?: return null
+                    ?.getBlock(0)?.data ?: return null
             return if (dataID.isASCII())
                 dataID.readASCII()
             else

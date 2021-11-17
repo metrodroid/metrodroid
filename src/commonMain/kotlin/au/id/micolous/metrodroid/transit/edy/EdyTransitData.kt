@@ -77,18 +77,18 @@ class EdyTransitData (override val trips: List<EdyTrip>,
         private fun parse(card: FelicaCard): EdyTransitData? {
             val system = card.getSystem(SYSTEMCODE_EDY) ?: return null
             // card ID is in block 0, bytes 2-9, big-endian ordering
-            val mSerialNumber = system.getService(SERVICE_EDY_ID)?.blocks?.get(0)
+            val mSerialNumber = system.getService(SERVICE_EDY_ID)?.getBlock(0)
                     ?.data?.sliceOffLen(2, 8)
 
             // current balance info in block 0, bytes 0-3, little-endian ordering
             val mCurrentBalance = system.getService(SERVICE_EDY_BALANCE)
-                    ?.blocks?.get(0)?.data?.byteArrayToIntReversed(0, 3)
+                    ?.getBlock(0)?.data?.byteArrayToIntReversed(0, 3)
 
             // now read the transaction history
             val serviceHistory = system.getService(SERVICE_EDY_HISTORY)
 
             // Read blocks in order
-            val trips = serviceHistory?.blocks?.map { EdyTrip.parse(it) }.orEmpty()
+            val trips = serviceHistory?.blocksMap?.map { (_, value) -> EdyTrip.parse(value) }.orEmpty()
 
             return EdyTransitData(trips = trips,
                     mCurrentBalance = mCurrentBalance,

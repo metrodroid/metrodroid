@@ -73,8 +73,7 @@ class MRTJTransitData(
 
         private fun parse(card: FelicaCard): MRTJTransitData {
             val serviceBalance = card.getSystem(SYSTEMCODE_MRTJ)?.getService(SERVICE_MRTJ_BALANCE)
-            val blocksBalance = serviceBalance?.blocks
-            val blockBalance = blocksBalance?.get(0)
+            val blockBalance = serviceBalance?.getBlock(0)
             val dataBalance = blockBalance?.data
             val mCurrentBalance = dataBalance?.byteArrayToIntReversed(0, 4) ?: 0
             val mTransactionCounter = dataBalance?.byteArrayToInt(13, 3) ?: 0

@@ -25,7 +25,6 @@ package au.id.micolous.metrodroid.transit.suica
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.felica.FelicaBlock
 import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
@@ -67,15 +66,11 @@ class SuicaTransitData (
             val trips = mutableListOf<SuicaTrip>()
 
             // Read blocks oldest-to-newest to calculate fare.
-            val blocks = service?.blocks ?: return null
-            var tapBlocks: List<FelicaBlock>? = tapService?.blocks
-            for (i in blocks.indices) {
-                val block = blocks[i]
-
-                var previousBalance = -1
-                if (i + 1 < blocks.size)
-                    previousBalance = blocks[i + 1].data.byteArrayToIntReversed(
-                            10, 2)
+            val blocks = service?.blocksMap ?: return null
+            var tapBlocks = tapService?.blocksMap
+            for ((i, block) in blocks) {
+                val previousBalance = blocks[i + 1]?.data?.byteArrayToIntReversed(
+                            10, 2) ?: -1
                 val trip = SuicaTrip.parse(block, previousBalance)
 
                 if (trip.startTimestamp == null) {
@@ -92,9 +87,9 @@ class SuicaTransitData (
                 */
 
                 if (tapBlocks != null && trip.consoleTypeInt == 0x16) {
-                    for (matchingTap in tapBlocks.indices) {
+                    for ((matchingTap, tapBlockVal) in tapBlocks) {
+                        val tapBlock = tapBlockVal.data
                         if (matchedTaps.contains(matchingTap)) continue
-                        val tapBlock = tapBlocks[matchingTap].data
 
                         /*
                         Log.d(TAG, String.format(Locale.ENGLISH,
@@ -132,9 +127,9 @@ class SuicaTransitData (
                         matchedTaps.add(matchingTap)
                         break
                     }
-                    for (matchingTap in tapBlocks.indices) {
+                    for ((matchingTap, tapBlockVal) in tapBlocks) {
                         if (matchedTaps.contains(matchingTap)) continue
-                        val tapBlock = tapBlocks[matchingTap].data
+                        val tapBlock = tapBlockVal.data
 
                         /*
                         int fare = NumberUtils.byteArrayToIntReversed(tapBlock, 10, 2);
