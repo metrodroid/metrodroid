@@ -40,14 +40,13 @@ fun getErrorMessage(ex: Throwable?): String {
 }
 
 fun PushbackInputStream.peekAndSkipSpace(): Byte {
-    var c: Int
     while (true) {
-        c = this.read()
-        if (!Character.isSpaceChar(c.toChar()))
-            break
+        val c: Int = this.read()
+        if (!Character.isSpaceChar(c.toChar())) {
+            this.unread(c)
+            return c.toByte()
+        }
     }
-    this.unread(c)
-    return c.toByte()
 }
 
 // Used by android variant. Warning gets issued for jvmCli variant
