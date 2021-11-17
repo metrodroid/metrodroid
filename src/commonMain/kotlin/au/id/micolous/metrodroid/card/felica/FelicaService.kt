@@ -28,20 +28,37 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FelicaService(
+class FelicaService private constructor(
+    @XMLListIdx("address")
+    // Deprecated: kept for deserialization of old dumps
+    private val blocks: List<FelicaBlock>? = null,
     /** Blocks that are part of this Service */
-    @XMLListIdx("address") val blocks: List<FelicaBlock> = emptyList(),
+    val blocksMap: Map<Int, FelicaBlock> = blocks?.mapIndexed {
+            idx, block -> Pair(idx, block)
+    }?.toMap() ?: emptyMap(),
     /** When reading, did we skip trying to read the contents of this system? */
     val skipped: Boolean = false
 ) {
-    fun getBlock(idx: Int) = blocks[idx]
+    constructor(blocksMap: Map<Int, FelicaBlock>) : this(
+        blocks=null, blocksMap=blocksMap, skipped=false
+    )
+    fun getBlock(idx: Int) = blocksMap[idx]
+    fun isEmpty(): Boolean = blocksMap.isEmpty()
+    fun isNotEmpty() = blocksMap.isNotEmpty()
+
+    val size: Int
+        get() = blocksMap.size
 
     /** Shows Blocks inside of this Service */
     val rawData: List<ListItem>
         get() =
-            blocks.mapIndexed { blockAddr, (data) ->
+            blocksMap.map { (blockAddr, data) ->
                 ListItem(
-                        FormattedString(NumberUtils.zeroPad(blockAddr, 2)),
-                        data.toHexDump())
+                        FormattedString("0x" + NumberUtils.zeroPad(blockAddr.toString(16), 2)),
+                        data.data.toHexDump())
             }
+
+    companion object {
+        fun skipped() = FelicaService(skipped=true)
+    }
 }
