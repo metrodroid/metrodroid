@@ -223,6 +223,21 @@ object FelicaReader {
                         partialRead = true
                     }
 
+                    val extraAddrs =
+                        if (systemCode == FelicaConsts.SYSTEMCODE_FELICA_LITE)
+                            (0x80..0x88) + listOf(0x90, 0x92, 0xa0)
+                        else
+                            emptyList()
+
+                    try {
+                        // TODO: Request more than 1 block
+                        for (addr in extraAddrs) {
+                            blocks[addr] = FelicaBlock(fp.readWithoutEncryption(systemNumber, serviceCode, addr) ?: continue)
+                        }
+                    } catch (tl: CardLostException) {
+                        partialRead = true
+                    }
+
                     actionsDone += 1
                     feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
