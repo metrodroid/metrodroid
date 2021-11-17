@@ -41,7 +41,8 @@ data class TagDesc(val name: StringResource,
                 val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
                 currencyNameByCode(n) ?: n.toString()
             }
-            TagContents.COUNTRY -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
+            TagContents.COUNTRY_BCD -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
+            TagContents.COUNTRY_ASCIINUM -> countryCodeToName(data.readASCII().toInt())
             else -> data.toHexString()
         }
     }
@@ -54,7 +55,8 @@ enum class TagContents {
     DUMP_UNKNOWN,
     HIDE,
     CURRENCY,
-    COUNTRY
+    COUNTRY_BCD,
+    COUNTRY_ASCIINUM
 }
 
 enum class TagHiding {
