@@ -412,7 +412,19 @@ class CardPersister {
             }
             if (name.hasSuffix(".mfc")) {
                 let bin = try readBinaryEntry(arch: arch, entry: entry)
-                let card = mfcFormat.readCard(bin: UtilsKt.toByteArray(bin))
+                let timeInMillis = (entry.fileAttributes[.modificationDate] as? Date)?.timeIntervalSince1970 ?? 0
+                let time: TimestampFull
+                if timeInMillis == 0 {
+                    time = TimestampFull.companion.now()
+                } else {
+                    time = TimestampFull(
+                        timeInMillis: Int64(timeInMillis * 1000),
+                        tz: MetroTimeZone.companion.LOCAL)
+                }
+                let card = mfcFormat.readCard(
+                    bin: UtilsKt.toByteArray(bin),
+                    time: time
+                )
                 let url = try persistCard(card: card)
                 count += 1
                 if count == 1 {

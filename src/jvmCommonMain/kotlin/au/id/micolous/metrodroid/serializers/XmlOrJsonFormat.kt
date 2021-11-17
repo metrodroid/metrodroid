@@ -3,6 +3,8 @@ package au.id.micolous.metrodroid.serializers
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.JavaStreamInput
 import au.id.micolous.metrodroid.util.peekAndSkipSpace
 import java.io.ByteArrayInputStream
@@ -39,7 +41,7 @@ class XmlOrJsonCardFormat : CardMultiImporter {
             when {
                 ze.name.endsWith(".json") -> m += AutoJsonFormat.readCardList(zi.bufferedReader().readText())
                 ze.name.endsWith(".xml") -> m += readXmlCards(zi).asSequence().toList()
-                ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(JavaStreamInput(zi))
+                ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(JavaStreamInput(zi), TimestampFull(ze.time, MetroTimeZone.LOCAL))
             }
         }
         return m
