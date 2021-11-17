@@ -71,7 +71,7 @@ internal object EmvData {
             // TODO: show as date
             TAG_CARD_EFFECTIVE to TagDesc(R.string.emv_card_effective, DUMP_SHORT, DATE),
             TAG_INTERCHANGE_PROTOCOL to TagDesc(R.string.emv_interchange_control, DUMP_SHORT),
-            TAG_ISSUER_COUNTRY to TagDesc(R.string.issuer_country, COUNTRY),
+            TAG_ISSUER_COUNTRY to TagDesc(R.string.issuer_country, COUNTRY_BCD),
             // TODO: show language
             "5f2d" to TagDesc(R.string.emv_language_preference, ASCII),
             // TODO: show as int
