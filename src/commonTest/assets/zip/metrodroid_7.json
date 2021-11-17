@@ -1,0 +1,171 @@
+{
+    "tagId": "deadbeef",
+    "scannedAt": {
+        "timeInMillis": 1636917121000,
+        "tz": "LOCAL"
+    },
+    "mifareClassic": {
+        "sectors": [
+            {
+                "blocks": [
+                    "deadbeef228804004759049949101608",
+                    "0e140001070208030904081000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "02ff0004000047f6490066c06f0103ca",
+                    "0000001027102700bf620100000000dc",
+                    "ee6494aa1200000000000064640000a6",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "f50000000afffffff500000000ff00ff",
+                    "f50000000afffffff500000000ff00ff",
+                    "a0bd8bf351306400f500e12e46c03100",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "610fcd6e52110f004a001232a4331200",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "6110cc6e520000004a001233aabbcc00",
+                    "6100ca6e52000a004a00120511223300",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "000000002e00000000c6d16e52000000",
+                    "000000012500000000a0cc6e52000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            },
+            {
+                "blocks": [
+                    "00000000000000000000000000000000",
+                    "00000000000000000000000000000000",
+                    "0000000000000000000000fb427c0000",
+                    "ffffffffffff08778fffffffffffffff"
+                ],
+                "keyA": "ffffffffffff",
+                "keyB": "ffffffffffff"
+            }
+        ]
+    }
+}
