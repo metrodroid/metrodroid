@@ -2619,4 +2619,5 @@
     <string name="cli_smartcard_command_help">Communicates with a card using the PC/SC API</string>
     <string name="cli_notices_command_help">List license notices</string>
     <string name="cli_hwinfo_command_help">Print the hardware info of card(s)</string>
+    <string name="cli_mad_command_help">Print cards with valid MiFare Classic Access Directory and its content</string>
 </resources>
