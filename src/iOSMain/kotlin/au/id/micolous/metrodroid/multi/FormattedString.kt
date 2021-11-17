@@ -88,4 +88,6 @@ actual class FormattedStringBuilder actual constructor() {
     actual fun build(): FormattedString = FormattedString(mut)
 
     private val mut: NSMutableAttributedString = NSMutableAttributedString()
+    actual fun isEmpty(): Boolean = mut.length == 0.toULong()
+    actual fun isNotEmpty(): Boolean = mut.length != 0.toULong()
 }
