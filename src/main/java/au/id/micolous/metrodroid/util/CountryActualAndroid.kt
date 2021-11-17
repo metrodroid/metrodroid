@@ -11,3 +11,11 @@ actual fun currencyNameBySymbol(symbol: String): String? =
             it.currencyCode
         }
     }
+
+actual fun languageCodeToName(isoAlpha: String): String? =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        Locale.forLanguageTag(isoAlpha)
+    } else {
+        Locale(isoAlpha.substringBefore('-'),
+            isoAlpha.substringAfter('-', ""))
+    }.displayName

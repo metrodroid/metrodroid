@@ -7,3 +7,7 @@ actual fun currencyNameBySymbol(symbol: String): String? =
 
 actual fun iso3166AlphaToName(isoAlpha: String): String? =
     Preferences.currentLocale.localizedStringForCountryCode(isoAlpha)
+
+actual fun languageCodeToName(isoAlpha: String): String? =
+    Preferences.currentLocale.localizedStringForLanguageCode(
+        isoAlpha.replace('-', '_'))
