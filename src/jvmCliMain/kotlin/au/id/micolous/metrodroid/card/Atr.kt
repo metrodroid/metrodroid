@@ -76,7 +76,7 @@ data class Atr(
 
             val historicalByteCount = nibbles[0]
             val protocols = if (nibbles.size > 1) {
-                nibbles.slice(1 until nibbles.size)
+                nibbles.drop(1)
             } else {
                 // No protocols specified; T=0
                 listOf(0)
@@ -123,7 +123,7 @@ data class Atr(
             var statusIndicator: ImmutableByteArray? = null
 
             if (t1.count() > 2) {
-                ISO7816TLV.compactTlvIterate(t1.sliceOffLen(1, t1.count() - 1)).forEach {
+                ISO7816TLV.compactTlvIterate(t1.drop(1)).forEach {
                     when (it.first) {
                         0x3 -> cardServiceDataByte = it.second.byteArrayToInt() and 0xff
                         0x6 -> preIssuingData = it.second

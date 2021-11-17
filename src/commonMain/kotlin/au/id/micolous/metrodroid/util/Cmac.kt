@@ -56,8 +56,7 @@ object Cmac {
         for (i in 0..(n - 2)) {
             x = cipher(x xor macdata.sliceOffLen(16 * i, 16))
         }
-        val lastBlockStart = (n - 1) * 16
-        val lastBlock = macdata.sliceOffLen(lastBlockStart, macdata.size - lastBlockStart)
+        val lastBlock = macdata.drop((n - 1) * 16)
         val mlast = if (lastBlock.size == 16) lastBlock xor k1 else cmacPad(lastBlock) xor k2
         return cipher(mlast xor x)
     }

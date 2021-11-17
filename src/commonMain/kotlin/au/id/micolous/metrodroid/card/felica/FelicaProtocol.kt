@@ -138,7 +138,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         }
 
         // Automatically strip off the length prefix before returning it.
-        return recvBuffer.sliceArray(1 until recvBuffer.size)
+        return recvBuffer.drop(1)
     }
 
     /**
@@ -371,7 +371,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
 
         return if (res.isEmpty()) {
             ImmutableByteArray.empty()
-        } else res.sliceArray(9 until res.size)
+        } else res.drop(9)
 
     }
 
@@ -398,7 +398,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
         return if (resp[9].toInt() != 0) {
             // Status flag 1
             null
-        } else resp.sliceArray(12 until resp.size)
+        } else resp.drop(12)
     }
 
     /**
@@ -494,7 +494,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
             null
         } else {
             // Start at Format Version
-            resp.sliceArray(11 until resp.size)
+            resp.drop(11)
         }
     }
 
@@ -519,7 +519,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
 
                 else -> ImmutableByteArray.ofB(
                         (idm[0].toInt() and 0xf) or (systemNumber shl 4)) +
-                        idm.sliceArray(1 until idm.size)
+                        idm.drop(1)
             }
         }
 
@@ -529,7 +529,7 @@ class FelicaProtocol(val tag: FelicaTransceiver,
          * The upper four bits are the system number.
          */
         fun idmEquals(a: ImmutableByteArray, b: ImmutableByteArray) =
-                (a.sliceArray(1 until a.size) == b.sliceArray(1 until b.size)) and
+                (a.drop(1) == b.drop(1)) and
                         ((a[0].toInt() and 0xf) == (b[0].toInt() and 0xf))
 
         /**

@@ -48,7 +48,7 @@ abstract class VeneziaTransaction : En1545Transaction() {
 data class VeneziaTransactionCalypso internal constructor(override val parsed: En1545Parsed) : VeneziaTransaction() {
     companion object {
         fun parse(data: ImmutableByteArray) =
-                if (data.sliceOffLen(9, data.size - 9).isAllZero())
+                if (data.drop(9).isAllZero())
                     null
                 else
                     VeneziaTransactionCalypso(En1545Parser.parse(data, tripFields))
