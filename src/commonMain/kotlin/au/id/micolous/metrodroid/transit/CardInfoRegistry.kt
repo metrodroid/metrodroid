@@ -25,7 +25,7 @@ object CardInfoRegistry {
     val allCards = allFactories.flatMap { it.allCards }
 
     val allCardsAlphabetical: List<CardInfo>
-        get () = allCards.collatedBy { it.name }
+        get () = allCards.collatedBy { it.name }.distinct()
 
     val allCardsByRegion: List<Pair<TransitRegion, List<CardInfo>>>
         get() {
@@ -33,6 +33,6 @@ object CardInfoRegistry {
             val regions = cards.map { it.region }.distinct()
                     .sortedWith(TransitRegion.RegionComparator)
             return regions.map { region -> Pair(region,
-                cards.filter { it.region == region }.collatedBy { it.name }) }
+                cards.filter { it.region == region }.collatedBy { it.name }.distinct()) }
         }
 }
