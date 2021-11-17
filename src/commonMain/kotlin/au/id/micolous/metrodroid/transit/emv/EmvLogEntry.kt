@@ -59,14 +59,12 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
 
     override val fare get(): TransitCurrency? {
         val amountBin = values[TAG_AMOUNT_AUTHORISED] ?: return null
-        val amount = amountBin.fold(0L) { acc, b ->
-            acc * 100 + NumberUtils.convertBCDtoInteger(b.toInt() and 0xff)
-        }
+        val amount = amountBin.convertBCDtoInteger()
 
-        val codeBin = values[TAG_TRANSACTION_CURRENCY_CODE] ?: return TransitCurrency.XXX(amount.toInt())
+        val codeBin = values[TAG_TRANSACTION_CURRENCY_CODE] ?: return TransitCurrency.XXX(amount)
         val code = NumberUtils.convertBCDtoInteger(codeBin.byteArrayToInt())
 
-        return TransitCurrency(amount.toInt(), code)
+        return TransitCurrency(amount, code)
     }
 
     override val mode get() = Mode.POS
