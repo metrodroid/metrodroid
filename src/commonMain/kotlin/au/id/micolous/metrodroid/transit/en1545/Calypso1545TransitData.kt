@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.sum
 
 typealias SubCreator = (data: ImmutableByteArray, counter: Int?,
                         contractList: En1545Parsed?,
@@ -165,7 +166,7 @@ abstract class Calypso1545TransitData constructor (
         fun parseTicketEnv(card: CalypsoApplication,
                            ticketEnvHolderFields: En1545Container): En1545Parsed {
             val ticketEnv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
-                    ?.recordList?.fold(ImmutableByteArray.empty()) { acc, data -> acc + data }
+                    ?.recordList?.sum()
                     ?: ImmutableByteArray.empty()
             return En1545Parser.parse(ticketEnv, ticketEnvHolderFields)
         }

@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.classic
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.sum
 
 abstract class ClassicSector {
     abstract val blocks: List<ClassicBlock>
@@ -40,14 +41,10 @@ abstract class ClassicSector {
             ClassicSectorKey(key = keyB, type = ClassicSectorKey.KeyType.B, bundle = "read-back")
         }
 
-    fun readBlocks(startBlock: Int, blockCount: Int): ImmutableByteArray {
-        var data = ImmutableByteArray.empty()
-        for (index in startBlock until startBlock + blockCount) {
-            val blockData = getBlock(index).data
-            data = data.plus(blockData)
-        }
-        return data
-    }
+    fun readBlocks(startBlock: Int, blockCount: Int): ImmutableByteArray =
+        (startBlock until startBlock + blockCount).map {
+            getBlock(it).data
+        }.sum()
 
     fun getBlock(index: Int) = blocks[index]
     operator fun get(index: Int): ClassicBlock = getBlock(index)

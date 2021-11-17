@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.sum
 
 /*
  * Reference:
@@ -162,7 +163,7 @@ class MobibTransitData(
 
         private fun parse(card: CalypsoApplication): MobibTransitData {
             val rawTicketEnv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
-                    ?.recordList?.fold(ImmutableByteArray.empty()) { acc, data -> acc + data }
+                    ?.recordList?.sum()
             val ticketEnv = if (rawTicketEnv == null) En1545Parsed() else
                         En1545Parser.parse(rawTicketEnv, ticketEnvFields(rawTicketEnv.getBitsFromBuffer(0, 6)))
             val contracts = card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1)?.recordList?.subList(
