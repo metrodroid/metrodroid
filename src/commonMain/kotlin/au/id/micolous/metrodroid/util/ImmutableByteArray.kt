@@ -228,6 +228,14 @@ class ImmutableByteArray private constructor(
         mData[it] xor other[it]
     }
 
+    fun indexOfFirstStarting(start: Int, predicate: (Byte) -> Boolean): Int {
+        for (idx in start until size) {
+            if (predicate(mData[idx]))
+                return idx
+        }
+        return -1
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = ImmutableByteArray::class)
     class RawSerializer : KSerializer<ImmutableByteArray> {
