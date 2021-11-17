@@ -39,4 +39,7 @@ data class UriListItem(
     constructor(nameResource: StringResource, valueResource: StringResource, uri: String) :
             this(Localizer.localizeFormatted(nameResource),
             Localizer.localizeFormatted(valueResource), uri)
+    constructor(nameResource: StringResource, value: FormattedString, uri: String) :
+            this(Localizer.localizeFormatted(nameResource),
+            value, uri)
 }
