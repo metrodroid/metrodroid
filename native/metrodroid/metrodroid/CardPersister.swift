@@ -392,6 +392,9 @@ class CardPersister {
         var singleCard: Card? = nil
         var singleURL: URL? = nil
         for entry in arch.makeIterator() {
+            if (entry.type != .file) {
+                continue
+            }
             let name = entry.path(using: .utf8)
             if (name.hasSuffix(".json")) {
                 let str = try readStringEntry(arch: arch, entry: entry)
