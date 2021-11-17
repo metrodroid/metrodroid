@@ -54,6 +54,7 @@ object LocaleTools {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             c.setLocale(l)
         } else {
+            @Suppress("DEPRECATION")
             c.locale = l
         }
         r.updateConfiguration(c, r.displayMetrics)
