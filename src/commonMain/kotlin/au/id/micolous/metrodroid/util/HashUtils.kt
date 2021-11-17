@@ -7,6 +7,8 @@ import au.id.micolous.metrodroid.multi.Log
 object HashUtils {
     private fun calculateCRCReversed(data: ImmutableByteArray, init: Int, table: IntArray) =
             data.fold(init) { cur1, b -> (cur1 shr 8) xor table[(cur1 xor b.toInt()) and 0xff] }
+    private fun calculateCRC8(data: ImmutableByteArray, init: Int, table: IntArray) =
+        data.fold(init) { cur1, b -> table[(cur1 xor b.toInt()) and 0xff] }
 
     private fun getCRCTableReversed(poly: Int) =
             (0..255).map { v ->
@@ -18,10 +20,31 @@ object HashUtils {
                 }
             }.toIntArray()
 
-    private val CRC16_IBM_TABLE = getCRCTableReversed(0xa001)
+    private fun getCRCTableDirect(poly: Int, bits: Int): IntArray {
+        val extPoly = poly or (1 shl bits)
+        val mask = 1 shl (bits - 1)
+        return (0..255).map { v ->
+            (0..7).fold(v) { cur, _ ->
+                if ((cur and mask) != 0)
+                    (cur shl 1) xor extPoly
+                else
+                    (cur shl 1)
+            }
+        }.toIntArray()
+    }
+
+    private val CRC16_IBM_TABLE by lazy { getCRCTableReversed(0xa001) }
+    private val CRC8_NXP_TABLE by lazy { getCRCTableDirect(0x1d, 8) }
+    const val CRC8_NXP_INITIAL = 0xc7
 
     fun calculateCRC16IBM(data: ImmutableByteArray, crc: Int = 0) =
             calculateCRCReversed(data, crc, CRC16_IBM_TABLE)
+
+    fun calculateCRC8NXP(data: ImmutableByteArray, crc: Int = CRC8_NXP_INITIAL): Int =
+        calculateCRC8(data, crc, CRC8_NXP_TABLE)
+
+    fun calculateCRC8NXP(vararg data: ImmutableByteArray): Int =
+        data.fold(CRC8_NXP_INITIAL) { crc, block -> calculateCRC8NXP(block, crc)}
 
     /**
      * Checks if a salted hash of a value is found in a group of expected hash values.
