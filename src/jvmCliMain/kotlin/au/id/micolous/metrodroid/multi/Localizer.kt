@@ -8,5 +8,5 @@ actual object Localizer : LocalizerInterface {
     override fun localizeString(res: StringResource, vararg v: Any?): String = res.english.format(*v)
     override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString = FormattedString(res.english.format(*v))
     override fun localizeTts(res: StringResource, vararg v: Any?): FormattedString = FormattedString(stripTts(res.english).format(*v))
-    override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?) = res.englishMany.format(*v)
+    override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?) = if (count == 1) res.englishOne.format(*v) else res.englishMany.format(*v)
 }
