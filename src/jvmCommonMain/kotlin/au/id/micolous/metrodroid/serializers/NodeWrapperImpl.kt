@@ -3,7 +3,6 @@ package au.id.micolous.metrodroid.serializers
 import au.id.micolous.metrodroid.card.Card
 import org.w3c.dom.Node
 import java.io.ByteArrayInputStream
-import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 
 class NodeWrapperImpl(private val node: Node): NodeWrapper {
@@ -23,16 +22,17 @@ class NodeWrapperImpl(private val node: Node): NodeWrapper {
         get() = node.nodeValue ?: node.textContent
 
     companion object {
-        fun read(stream: InputStream): NodeWrapper {
+        @OptIn(ExperimentalStdlibApi::class)
+        fun read(contents: String): NodeWrapper {
             val dbFactory = DocumentBuilderFactory.newInstance()
             val dBuilder = dbFactory.newDocumentBuilder()
             val doc = dBuilder.parse(
                 ByteArrayInputStream(
-                    filterBadXMLChars(stream.bufferedReader().readText()).encodeToByteArray())
+                    filterBadXMLChars(contents).encodeToByteArray())
             )
             return NodeWrapperImpl(doc.documentElement)
         }
     }
 }
 
-fun readCardXML(reader: InputStream): Card = readCardXML(NodeWrapperImpl.read(reader))
+fun readCardXML(contents: String): Card = readCardXML(NodeWrapperImpl.read(contents))

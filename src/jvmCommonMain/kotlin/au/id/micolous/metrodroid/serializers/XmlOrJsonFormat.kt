@@ -13,7 +13,7 @@ import java.util.zip.ZipInputStream
 class XmlCardFormat : CardMultiImporter {
     @OptIn(ExperimentalStdlibApi::class)
     override fun readCards(stream: InputStream): Iterator<Card>
-        = iterateXmlCards(stream) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
+        = readXmlCards(stream)
 }
 
 class XmlOrJsonCardFormat : CardMultiImporter {
@@ -23,7 +23,7 @@ class XmlOrJsonCardFormat : CardMultiImporter {
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
         when (pb.peekAndSkipSpace().toInt().toChar()) {
-            '<' -> return iterateXmlCards(pb) { readCardXML(ByteArrayInputStream(it.encodeToByteArray())) }
+            '<' -> return readXmlCards(pb)
             '[', '{' -> return AutoJsonFormat.readCardList(pb.readBytes().decodeToString()).iterator()
             'P' -> return readZip(pb).iterator()
             else -> return null
@@ -38,7 +38,7 @@ class XmlOrJsonCardFormat : CardMultiImporter {
             Log.d("Importer", "Importing ${ze.name}")
             when {
                 ze.name.endsWith(".json") -> m += AutoJsonFormat.readCardList(zi.bufferedReader().readText())
-                ze.name.endsWith(".xml") -> m += readCardXML(zi)
+                ze.name.endsWith(".xml") -> m += readXmlCards(zi).asSequence().toList()
                 ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(JavaStreamInput(zi))
             }
         }
