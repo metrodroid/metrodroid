@@ -48,14 +48,14 @@ object NFCVCardReader {
         var isPartialRead = false
 
         // Now iterate through the pages and grab all the data
-        var pageBuffer = ImmutableByteArray.empty()
+        val pages = mutableListOf<NFCVPage>()
+        var page = 0
         while (true) {
             // Find first unread page
-            val page = pageBuffer.size / 4
             if (page >= MAX_PAGES)
                 break
             // read command
-            val rd = ImmutableByteArray.of(0x22, 0x23) + tech.uid!! + ImmutableByteArray.ofB(page, 1)
+            val rd = ImmutableByteArray.of(0x22, 0x20) + tech.uid!! + ImmutableByteArray.ofB(page)
             val res: ImmutableByteArray
             try {
                 res = tech.transceive(rd)
@@ -67,13 +67,9 @@ object NFCVCardReader {
             }
             if (res.isEmpty() || res[0] != 0.toByte())
                 break
-            pageBuffer += res.sliceOffLen(1, res.lastIndex)
-            feedbackInterface.updateProgressBar(pageBuffer.size, 1024)
-        }
-
-        val numPages = (pageBuffer.size / 4)
-        val pages = (0 until numPages).map {i ->
-            NFCVPage(pageBuffer.sliceOffLen(i * 4, 4))
+            pages += NFCVPage(res.sliceOffLen(1, res.lastIndex))
+            page++
+            feedbackInterface.updateProgressBar(page, 256)
         }
 
         // Now we have pages to stuff in the card.
