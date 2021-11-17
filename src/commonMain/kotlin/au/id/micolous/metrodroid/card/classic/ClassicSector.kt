@@ -27,6 +27,8 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.sum
 
 abstract class ClassicSector {
+    val allData: ImmutableByteArray get() =
+        readBlocks(0, blocks.size - 1)
     abstract val blocks: List<ClassicBlock>
     abstract fun getRawData(idx: Int): ListItem
     abstract val raw: ClassicSectorRaw
