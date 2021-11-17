@@ -292,4 +292,27 @@ class ImmutableByteArrayTest : BaseInstrumentedTest() {
         assertTrue(ImmutableByteArray.fromASCII("ABCD").any { it == 'A'.code.toByte() })
         assertFalse(ImmutableByteArray.fromASCII("ABCD").any { it == 'a'.code.toByte() })
     }
+
+    @Test
+    fun testUTF() {
+        val STR = "Metrodroid\uD83D\uDE00\uD83C\uDDE6\uD83C\uDDFAМетродроид"
+        val u16be = ImmutableByteArray.fromHex("004d006500740072006f00640072006f00690064d83dde00d83cdde6d83cddfa041c043504420440043e04340440043e04380434")
+        val u16le = ImmutableByteArray.fromHex("4d006500740072006f00640072006f00690064003dd800de3cd8e6dd3cd8fadd1c043504420440043e04340440043e0438043404")
+        val u8 = ImmutableByteArray.fromHex("4d6574726f64726f6964f09f9880f09f87a6f09f87bad09cd0b5d182d180d0bed0b4d180d0bed0b8d0b4")
+        val invChar = "\uFFFD"
+        assertEquals(STR, u16be.readUTF16(isLittleEndian = false))
+        assertEquals(STR, u16le.readUTF16(isLittleEndian = true))
+        assertEquals(STR, u16be.readUTF16BOM(isLittleEndianDefault = false))
+        assertEquals(STR, u16le.readUTF16BOM(isLittleEndianDefault = true))
+        val u16lebom = ImmutableByteArray.fromHex("fffe") + u16le
+        assertEquals(STR, u16lebom.readUTF16BOM(isLittleEndianDefault = false))
+        assertEquals(STR, u16lebom.readUTF16BOM(isLittleEndianDefault = true))
+        val u16bebom = ImmutableByteArray.fromHex("feff") + u16be
+        assertEquals(STR, u16bebom.readUTF16BOM(isLittleEndianDefault = false))
+        assertEquals(STR, u16bebom.readUTF16BOM(isLittleEndianDefault = true))
+        assertEquals(STR, u8.readUTF8())
+        assertEquals(STR+invChar, (u16le + ImmutableByteArray.fromHex("41")).readUTF16(isLittleEndian = true))
+        assertEquals(u8, ImmutableByteArray.fromUTF8(STR))
+        assertEquals(invChar, ImmutableByteArray.fromHex("41").readUTF16BOM(isLittleEndianDefault = true))
+    }
 }
