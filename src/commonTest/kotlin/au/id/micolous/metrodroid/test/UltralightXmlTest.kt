@@ -19,13 +19,14 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import kotlin.test.Test
+import kotlin.test.assertIs
 
-class UltralightXmlTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
+class UltralightXmlTest : BaseInstrumentedTest() {
     @Test
     fun testOldFile() {
-        val card = loadCard<UltralightCard>("mfu/blank_old.xml")
+        val card = loadCardXml("mfu/blank_old.xml")
+        assertIs<UltralightCard>(card.mifareUltralight)
         // FIXME: Make sure this emits BlankUltralightTransitData in tests
     }
 }

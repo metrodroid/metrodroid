@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.util.Input
 import kotlin.test.assertNotNull
 
@@ -8,8 +9,9 @@ annotation class AndroidMinSdk(val minSdk: Int)
 expect abstract class BaseInstrumentedTestPlatform() {
     fun setLocale(languageTag: String)
     fun loadAssetSafe(path: String) : Input?
-    fun listAsset(path: String) : List <String>?
 }
+
+expect fun loadCardXml(path: String): Card
 
 abstract class BaseInstrumentedTest : BaseInstrumentedTestPlatform() {
     fun loadSmallAssetBytesSafe(path: String): ByteArray? {

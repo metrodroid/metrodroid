@@ -19,16 +19,13 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.felica.FelicaCard
-import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
-class FelicaXmlImportTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat())  {
+class FelicaXmlImportTest: BaseInstrumentedTest()  {
     private fun checkLoadCard(path: String): FelicaCard {
-        val c = loadCard<FelicaCard>(path)
+        val c = loadCardXml(path)
+        assertIs<FelicaCard>(c.felica)
         assertEquals(ImmutableByteArray.fromHex("0101010101010101"), c.tagId)
         val felica = c.felica
         assertNotNull(felica)

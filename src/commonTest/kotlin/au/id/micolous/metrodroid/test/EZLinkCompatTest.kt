@@ -21,21 +21,23 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
-import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 /**
  * Contains tests for the old CEPAS XML format, before it was handled by an ISO7816 reader.
  */
-class EZLinkCompatTest : CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
+class EZLinkCompatTest : BaseInstrumentedTest() {
     @Test
     fun testCardInfo() {
-        val c = loadCard<CEPASCard>("cepas/legacy.xml")
+        val c = loadCardXml("cepas/legacy.xml")
+        assertIs<CEPASCard>(c.cepasCompat)
         Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat.makeCardElement(c))
-        val p = parseCard<EZLinkCompatTransitData>(c)
+        val p = c.parseTransitData()
+        assertIs<EZLinkCompatTransitData>(p)
         assertEquals(TransitCurrency.SGD(897), p.balance)
     }
 }
