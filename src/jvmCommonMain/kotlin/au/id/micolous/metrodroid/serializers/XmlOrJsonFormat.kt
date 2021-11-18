@@ -5,12 +5,9 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.util.JavaStreamInput
-import au.id.micolous.metrodroid.util.peekAndSkipSpace
-import java.io.ByteArrayInputStream
+import au.id.micolous.metrodroid.util.*
 import java.io.InputStream
 import java.io.PushbackInputStream
-import java.util.zip.ZipInputStream
 
 class XmlCardFormat : CardMultiImporter {
     @OptIn(ExperimentalStdlibApi::class)
@@ -19,33 +16,29 @@ class XmlCardFormat : CardMultiImporter {
 }
 
 class XmlOrJsonCardFormat : CardMultiImporter {
-    private val mfcFormat = MfcCardImporter()
-
     @OptIn(ExperimentalStdlibApi::class)
     override fun readCards(stream: InputStream): Iterator<Card>? {
         val pb = PushbackInputStream(stream)
         when (pb.peekAndSkipSpace().toInt().toChar()) {
             '<' -> return readXmlCards(pb)
             '[', '{' -> return AutoJsonFormat.readCardList(pb.readBytes().decodeToString()).iterator()
-            'P' -> return readZip(pb).iterator()
+            'P' -> return readZip(pb)
             else -> return null
         }
     }
 
-    private fun readZip(stream: InputStream): List<Card> {
-        val zi = ZipInputStream(stream)
-        val m = mutableListOf<Card>()
-        while (true) {
-            val ze = zi.nextEntry ?: break
+    private fun readZip(stream: InputStream): Iterator<Card> =
+        ZipIterator(stream).map { (ze, zi) ->
             Log.d("Importer", "Importing ${ze.name}")
             when {
-                ze.name.endsWith(".json") -> m += AutoJsonFormat.readCardList(zi.bufferedReader().readText())
-                ze.name.endsWith(".xml") -> m += readXmlCards(zi).asSequence().toList()
-                ze.name.endsWith(".mfc") -> m += mfcFormat.readCard(JavaStreamInput(zi), TimestampFull(ze.time, MetroTimeZone.LOCAL))
+                ze.name.endsWith(".json") -> AutoJsonFormat.readCardList(
+                    zi.bufferedReader().readText()
+                ).iterator()
+                ze.name.endsWith(".xml") -> readXmlCards(zi)
+                ze.name.endsWith(".mfc") -> listOf(MfcCardImporter().readCard(JavaStreamInput(zi), TimestampFull(ze.time, MetroTimeZone.LOCAL))).iterator()
+                else -> emptyList<Card>().iterator()
             }
-        }
-        return m
-    }
+        }.flatten()
 
     companion object {
         private val xmlFormat = XmlCardFormat()

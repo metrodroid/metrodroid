@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.util.mapNotNull
 
 import org.jetbrains.annotations.NonNls
 import org.xmlpull.v1.XmlPullParser
@@ -35,7 +36,7 @@ internal fun readXmlCards(stream: InputStream): Iterator<Card> {
     val reader = stream.reader(Charsets.UTF_8)
     xpp.setInput(reader)
 
-    return IteratorTransformerNotNull(XmlPullParserIterator(xpp)) { readCardXML(it) }
+    return XmlPullParserIterator(xpp).mapNotNull { readCardXML(it) }
 }
 
 private class XmlPullParserIterator(
