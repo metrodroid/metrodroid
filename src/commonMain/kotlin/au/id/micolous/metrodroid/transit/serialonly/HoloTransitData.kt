@@ -35,7 +35,6 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
  * Transit data type for HOLO card.
@@ -49,12 +48,15 @@ import au.id.micolous.metrodroid.util.NumberUtils
  */
 @Parcelize
 data class HoloTransitData(private val mSerial: Int?,
-                                private val mLastTransactionTimestamp: Int?, private val mManufacturingId: Int?) : SerialOnlyTransitData() {
+                                private val mLastTransactionTimestamp: Int?, private val mManufacturingId: String?) : SerialOnlyTransitData() {
 
-    public override val extraInfo: List<ListItem>?
+    public override val extraInfo: List<ListItem>
         get() = listOf(
-            ListItem(R.string.last_transaction,
-                mLastTransactionTimestamp?.let {TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))}),
+            ListItem(R.string.last_transaction, when (mLastTransactionTimestamp) {
+                0 -> "Never"
+                null -> "Never"
+                else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp)).toString()
+            }),
             ListItem(R.string.manufacture_id, mManufacturingId?.let { formatMfgId(mManufacturingId)})
             )
 
@@ -83,7 +85,7 @@ data class HoloTransitData(private val mSerial: Int?,
             val app = card.getApplication(APP_ID) ?: return null
             val file1 = app.getFile(1)?.data
             val serial = parseSerial(app)
-            val mfgId = app.getFile(0)?.data?.byteArrayToInt(0xb, 3)
+            val mfgId = (app.getFile(0)?.data?.convertBCDtoInteger(8, 3).toString() + app.getFile(0)?.data?.byteArrayToInt(0xb, 3).toString())
             val lastTransactionTimestamp = file1?.byteArrayToInt(8, 4)
             if (serial == null && lastTransactionTimestamp == null) return null
 
@@ -113,10 +115,10 @@ data class HoloTransitData(private val mSerial: Int?,
                 else
                     null
 
-        private fun formatMfgId(mfgId: Int?) =
-                if (mfgId != null) {
-                    "1-001-101000${mfgId}-XA"
-                } else
+        private fun formatMfgId(mfgId: String?) =
+                if (mfgId != null)
+                    "1-001-${mfgId}-XA"
+                else
                     null
 
         private fun parseTime(date: Int) = Epoch.utc(1970, TZ).seconds(date.toLong())
