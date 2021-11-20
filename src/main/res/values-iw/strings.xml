@@ -502,9 +502,9 @@
     <string name="pref_theme">ערכת עיצוב</string>
     <plurals name="milliseconds_short">
         <item quantity="one">מילישנייה</item>
-        <item quantity="two">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; מילישניות</item>
-        <item quantity="many">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; מילישניות</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; מילישניות</item>
+        <item quantity="two"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> מילישניות</item>
+        <item quantity="many"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> מילישניות</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> מילישניות</item>
     </plurals>
     <string name="show_partial_data">הצגת נתונים חלקיים</string>
     <string name="card_partial_read_desc">הכרטיס יצא מטווח הקליטה בזמן הקריאה.
@@ -578,9 +578,9 @@
     <string name="iso7816_probing">כרטיס ISO/IEC 7816 מתושאל…</string>
     <plurals name="hidden_key_data">
         <item quantity="one">נתוני מפתח מוסתרים (בית אחד)</item>
-        <item quantity="two">נתוני מפתח מוסתרים (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; בתים)</item>
-        <item quantity="many">נתוני מפתח מוסתרים (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; בתים)</item>
-        <item quantity="other">נתוני מפתח מוסתרים (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; בתים)</item>
+        <item quantity="two">נתוני מפתח מוסתרים (<xliff:g id="count" example="1">%d</xliff:g> בתים)</item>
+        <item quantity="many">נתוני מפתח מוסתרים (<xliff:g id="count" example="1">%d</xliff:g> בתים)</item>
+        <item quantity="other">נתוני מפתח מוסתרים (<xliff:g id="count" example="1">%d</xliff:g> בתים)</item>
     </plurals>
     <string name="hidden_card_number">מספר כרטיס מוסתר</string>
     <string name="key_data">נתוני המפתח</string>
@@ -589,9 +589,9 @@
     <string name="raw_level_none">אין (מושבת)</string>
     <plurals name="obfuscation_mode_notice">
         <item quantity="one">דגלון האפלה אחד פעיל</item>
-        <item quantity="two">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; דגלוני האפלה פעילים</item>
-        <item quantity="many">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; דגלוני האפלה פעילים</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; דגלוני האפלה פעילים</item>
+        <item quantity="two"><xliff:g id="count" example="1">%d</xliff:g> דגלוני האפלה פעילים</item>
+        <item quantity="many"><xliff:g id="count" example="1">%d</xliff:g> דגלוני האפלה פעילים</item>
+        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> דגלוני האפלה פעילים</item>
     </plurals>
     <string name="purse_serial_number">המספר הסידורי של הארנק</string>
     <string name="card_note_adelaide">ניתן לקרוא רק מספר סידורי, נסיעות ומינויים</string>
@@ -814,9 +814,9 @@
     </plurals>
     <plurals name="cards_imported">
         <item quantity="one">כרטיס אחד יובא.</item>
-        <item quantity="two">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; כרטיסים יובאו.</item>
-        <item quantity="many">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; כרטיסים יובאו.</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; כרטיסים יובאו.</item>
+        <item quantity="two"><xliff:g id="count" example="1">%d</xliff:g> כרטיסים יובאו.</item>
+        <item quantity="many"><xliff:g id="count" example="1">%d</xliff:g> כרטיסים יובאו.</item>
+        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> כרטיסים יובאו.</item>
     </plurals>
     <string name="large_file_no">ביטול (בטוח)</string>
     <string name="large_file_yes">לטעון בכל זאת (סכנת קריסה)</string>
@@ -845,7 +845,7 @@
     <string name="add_key_directions">עליך לשמור היטל בינרי של המפתחות שלך כקובץ עם הסיומת ‎.farebotkeys, לשלוח אותו לעצמך בדוא״ל כקובץ מצורף ולפתוח אותו במכשיר זה.</string>
     <string name="cant_delete_with_obfuscation_message">מטעמי בטיחות, אין לך אפשרות למחוק מפתחות בזמן שהאפלת מפתחות מופעלת. יש לכבות אותה אם ברצונך למחוק מפתחות.</string>
     <string name="cant_delete_with_obfuscation">מחיקת מפתחות אינה זמינה</string>
-    <string name="delete_key_confirm_message">קובץ המפתח &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"description\" example=\"a1b2c3d4\"&gt;%1$s&lt;/xliff:g&gt; (המכיל &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"key_type\" example=\"1 MIFARE Classic key\"&gt;%2$s&lt;/xliff:g&gt;) יאבד לנצח.<xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g>" (containing <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) will be gone forever.</string>
+    <string name="delete_key_confirm_message">קובץ המפתח <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (המכיל <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) יאבד לנצח.</string>
     <string name="rejected">נדחתה</string>
     <string name="delete_key_confirm_title">למחוק מפתח\?</string>
     <string name="delete">מחיקה</string>
