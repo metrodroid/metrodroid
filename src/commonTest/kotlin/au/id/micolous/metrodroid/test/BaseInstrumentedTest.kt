@@ -33,6 +33,6 @@ abstract class BaseInstrumentedTest : BaseInstrumentedTestPlatform() {
     }
 
     companion object {
-        const val MAX_SMALL_SIZE = 1048576
+        const val MAX_SMALL_SIZE = 4194304
     }
 }
