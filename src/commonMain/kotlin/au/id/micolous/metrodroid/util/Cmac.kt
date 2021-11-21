@@ -49,7 +49,8 @@ object Cmac {
         return Pair(k1, k2)
     }
 
-    private fun cmac(macdata: ImmutableByteArray, cipher: (ImmutableByteArray) -> ImmutableByteArray): ImmutableByteArray {
+        private fun cmac(macdata: ImmutableByteArray, tlen: Int?,
+                     cipher: (ImmutableByteArray) -> ImmutableByteArray): ImmutableByteArray {
         var x = ImmutableByteArray.empty(16)
         val (k1, k2) = cmacSubkeys(cipher)
         val n = if (macdata.isEmpty()) 1 else (macdata.size + 15) / 16
@@ -58,9 +59,12 @@ object Cmac {
         }
         val lastBlock = macdata.drop((n - 1) * 16)
         val mlast = if (lastBlock.size == 16) lastBlock xor k1 else cmacPad(lastBlock) xor k2
-        return cipher(mlast xor x)
+        val fullmac = cipher(mlast xor x)
+        if (tlen == null)
+            return fullmac
+        return fullmac.sliceOffLen(0, tlen)
     }
 
-    fun aesCmac(macdata: ImmutableByteArray, key: ImmutableByteArray): ImmutableByteArray = cmac(
-            macdata) { Aes.encryptCbc(it, key)}
+    fun aesCmac(macdata: ImmutableByteArray, key: ImmutableByteArray, tlen: Int? = null): ImmutableByteArray = cmac(
+            macdata, tlen) { Aes.encryptCbc(it, key)}
 }
