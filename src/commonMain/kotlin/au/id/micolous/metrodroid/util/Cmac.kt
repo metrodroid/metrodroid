@@ -52,7 +52,7 @@ object Cmac {
     private fun cmac(macdata: ImmutableByteArray, cipher: (ImmutableByteArray) -> ImmutableByteArray): ImmutableByteArray {
         var x = ImmutableByteArray.empty(16)
         val (k1, k2) = cmacSubkeys(cipher)
-        val n = (macdata.size + 15) / 16
+        val n = if (macdata.isEmpty()) 1 else (macdata.size + 15) / 16
         for (i in 0..(n - 2)) {
             x = cipher(x xor macdata.sliceOffLen(16 * i, 16))
         }
