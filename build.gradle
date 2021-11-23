@@ -420,6 +420,7 @@ kotlin {
             kotlin.srcDirs += new File(generatedLocalizeDir, 'jvmCliMain/kotlin')
             resources.srcDirs += new File("$projectDir/mdst")
             resources.srcDirs += new File("$projectDir/src/commonMain/assets")
+            resources.srcDirs += new File("$projectDir/src/main/res")
             resources.srcDirs += ["$buildDir/assets"]
             kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
             preBuild.dependsOn copyThirdPartyNotices

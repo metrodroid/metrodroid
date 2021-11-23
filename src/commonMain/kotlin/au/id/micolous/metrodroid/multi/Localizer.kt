@@ -84,11 +84,41 @@ internal fun stripTts(input: String): String {
     return c.toString()
 }
 
-interface LocalizerInterface {
-    fun localizeString(res: StringResource, vararg v: Any?): String
-    fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString = FormattedString(localizeString(res, *v))
-    fun localizeTts(res: StringResource, vararg v: Any?): FormattedString
-    fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String
+interface LocalizerInterfaceBase <T: String?, U: FormattedString?> {
+    fun localizeString(res: StringResource, vararg v: Any?): T
+    fun localizeFormatted(res: StringResource, vararg v: Any?): U
+    fun localizeTts(res: StringResource, vararg v: Any?): U
+    fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): T
+}
+
+interface LocalizerInterfaceSkippable: LocalizerInterfaceBase<String?, FormattedString?> {
+    override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString? =
+        localizeString(res, *v)?.let { FormattedString(it) }
+}
+interface LocalizerInterface: LocalizerInterfaceBase<String, FormattedString> {
+    override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString =
+        FormattedString(localizeString(res, *v))
+}
+
+abstract class LocalizeFallbacker(
+    var plist: List<LocalizerInterfaceSkippable>,
+    val last: LocalizerInterface
+): LocalizerInterface {
+    override fun localizeString(res: StringResource, vararg v: Any?): String =
+        plist.firstNotNullOfOrNull { it.localizeString(res, *v) } ?:
+        last.localizeString(res, *v)
+
+    override fun localizeTts(res: StringResource, vararg v: Any?): FormattedString =
+        plist.firstNotNullOfOrNull { it.localizeTts(res, *v) } ?:
+        last.localizeTts(res, *v)
+
+    override fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String =
+        plist.firstNotNullOfOrNull { it.localizePlural(res, count, *v) } ?:
+        last.localizePlural(res, count, *v)
+
+    override fun localizeFormatted(res: StringResource, vararg v: Any?): FormattedString =
+        plist.firstNotNullOfOrNull { it.localizeFormatted(res, *v) } ?:
+        last.localizeFormatted(res, *v)
 }
 
 expect object Localizer : LocalizerInterface

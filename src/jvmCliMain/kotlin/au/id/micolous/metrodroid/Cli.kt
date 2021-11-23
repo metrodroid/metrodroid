@@ -252,7 +252,10 @@ class Notices: CliktCommand(
     }
 }
 
-fun main(args: Array<String>) = Cli().main(args)
+fun main(args: Array<String>) {
+    Localizer.loadDefaultLocale()
+    Cli().main(args)
+}
 
 private fun loadCards(fname: String): Iterator<Card>? {
     val by = File(fname).inputStream()
