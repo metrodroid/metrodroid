@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 
 /**
@@ -43,8 +44,18 @@ internal class ObfuscatedTrip (
         override val machineID: String?,
         override val passengerCount: Int,
         private val mAgencyName: FormattedString?,
-        private val mShortAgencyName: FormattedString?
+        private val mShortAgencyName: FormattedString?,
+        private val rawFieldsUnknown: String? = null,
+        private val rawFieldsFull: String? = null,
 ): Trip() {
+
+    override fun getRawFields(level: TransitData.RawLevel): String? = when {
+        Preferences.hideCardNumbers || Preferences.obfuscateBalance || Preferences.obfuscateTripDates
+                || Preferences.obfuscateTripFares || Preferences.obfuscateTripTimes -> null
+        level == TransitData.RawLevel.ALL -> rawFieldsFull
+        level == TransitData.RawLevel.UNKNOWN_ONLY -> rawFieldsUnknown
+        else -> null
+    }
 
     constructor(realTrip: Trip, timeDelta: Long, obfuscateFares: Boolean) : this (
             routeName = realTrip.routeName,
@@ -64,7 +75,9 @@ internal class ObfuscatedTrip (
                     it
             },
             startTimestamp = realTrip.startTimestamp?.obfuscateDelta(timeDelta),
-            endTimestamp = realTrip.endTimestamp?.obfuscateDelta(timeDelta)
+            endTimestamp = realTrip.endTimestamp?.obfuscateDelta(timeDelta),
+            rawFieldsFull = realTrip.getRawFields(TransitData.RawLevel.ALL),
+            rawFieldsUnknown = realTrip.getRawFields(TransitData.RawLevel.UNKNOWN_ONLY)
     )
 
     override fun getAgencyName(isShort: Boolean) =
