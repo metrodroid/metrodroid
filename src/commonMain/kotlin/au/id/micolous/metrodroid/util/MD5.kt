@@ -97,7 +97,7 @@ class MD5Ctx {
     /**
      * MD5 state
      */
-    internal val state: MD5State = MD5State()
+    private val state: MD5State = MD5State()
 
     private fun rotate_left(x: UInt, n: Int): UInt = (x shl n) or (x.shr(32 - n))
 
@@ -213,12 +213,9 @@ class MD5Ctx {
      */
     @Suppress("NAME_SHADOWING")
     fun Update(stat: MD5State, buffer: ImmutableByteArray, offset: Int, length: Int) {
-        var length = length
+        /* Length can be told to be shorter, but not longer */
+        val length = length.coerceAtMost(buffer.size - offset)
         var i: Int
-
-        /* Length can be told to be shorter, but not inter */
-        if (length - offset > buffer.size)
-            length = buffer.size - offset
 
         /* compute number of bytes mod 64 */
         var index: Int = stat.count[0].ushr(3) and 0x3f
@@ -290,6 +287,6 @@ class MD5Ctx {
         /**
          * Padding for Final()
          */
-        internal val padding = ImmutableByteArray(64) { if (it == 0) 0x80.toByte() else 0x00 }
+        private val padding = ImmutableByteArray(64) { if (it == 0) 0x80.toByte() else 0x00 }
     }
 }
