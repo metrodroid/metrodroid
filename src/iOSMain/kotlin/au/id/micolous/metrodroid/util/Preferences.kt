@@ -55,9 +55,9 @@ actual object Preferences {
         get() = languageOverrideForTest.value ?: NSLocale.preferredLanguages[0] as String
     actual val region: String?
         get() = currentLocale.countryCode
-    val languageOverrideForTest: AtomicReference<String?> = AtomicReference<String?>(null)
+    val languageOverrideForTest = AtomicReference<String?>(null)
     val currentLocale: NSLocale get() = localeOverrideForTest.value ?: NSLocale.currentLocale
-    val localeOverrideForTest: AtomicReference<NSLocale?> = AtomicReference<NSLocale?>(null)
+    val localeOverrideForTest = AtomicReference<NSLocale?>(null)
 
     actual var showRawStationIds by BoolDelegate("pref_show_raw_ids")
     actual var showBothLocalAndEnglish by BoolDelegate("pref_show_local_and_english")
