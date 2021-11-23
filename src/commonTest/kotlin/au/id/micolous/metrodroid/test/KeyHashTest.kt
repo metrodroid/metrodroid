@@ -39,6 +39,14 @@ import kotlin.test.assertEquals
 class KeyHashTest {
     @Test
     fun testIncorrectKeyHash() {
+        // Empty list
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT0))
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT0))
+
+        // Null key
+        assertEquals(-1, HashUtils.checkKeyHash(null as ClassicSectorKey?,
+            SALT0, MAD_HASH1))
+
         // Test with just 1 possible answer
         assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH1))
 
