@@ -31,10 +31,10 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-class TMoneyTrip(val type: Int,
-                 val cost: Int,
-                 val time: Long,
-                 val balance: Int) : Trip() {
+class TMoneyTrip(private val type: Int,
+                 private val cost: Int,
+                 private val time: Long,
+                 private val balance: Int) : Trip() {
 
     override val fare
         get() = TransitCurrency.KRW(cost)
