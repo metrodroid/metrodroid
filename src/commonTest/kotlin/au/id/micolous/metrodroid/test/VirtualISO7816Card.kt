@@ -43,7 +43,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * This is intended as a test fixture.
  */
-open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
+class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
     override val uid: ImmutableByteArray?
         get() = mCard.tagId
 

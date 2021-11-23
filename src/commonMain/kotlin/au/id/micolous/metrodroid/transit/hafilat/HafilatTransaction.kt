@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
-open class HafilatTransaction (override val parsed: En1545Parsed): En1545Transaction() {
+class HafilatTransaction (override val parsed: En1545Parsed): En1545Transaction() {
     override val lookup: En1545Lookup
         get() = HafilatLookup
 

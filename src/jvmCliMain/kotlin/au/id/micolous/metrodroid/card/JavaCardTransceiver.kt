@@ -38,7 +38,7 @@ fun <T> wrapJavaExceptions(f: () -> T): T {
 /**
  * Implements a wrapper for kotlin-pcsc API to [CardTransceiver].
  */
-open class JavaCardTransceiver(
+class JavaCardTransceiver(
     private val context: Context,
     private val terminal: String,
     private val printTrace: Boolean = false,
