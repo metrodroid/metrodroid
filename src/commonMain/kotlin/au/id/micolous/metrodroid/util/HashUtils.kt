@@ -80,9 +80,7 @@ object HashUtils {
         return checkKeyHash(key.key, salt, *expectedHashes)
     }
 
-    fun checkKeyHash(key: ClassicSector?, salt: String, vararg expectedHashes: String): Int {
-        if (key == null)
-            return -1
+    fun checkKeyHash(key: ClassicSector, salt: String, vararg expectedHashes: String): Int {
         val a = checkKeyHash(key.keyA, salt, *expectedHashes)
         if (a != -1)
             return a
