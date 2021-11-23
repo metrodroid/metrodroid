@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 class ImmutableByteArrayTest {
     @Test
@@ -84,5 +85,15 @@ class ImmutableByteArrayTest {
         assertEquals(-1, s.indexOf(n2, 3, 4))
         assertEquals(-1, s.indexOf(n2, 3, 5))
         assertEquals(-1, s.indexOf(n2, 3, 6))
+    }
+
+    @Test
+    fun testBase64() {
+        assertEquals(ImmutableByteArray.fromASCII("Metrodroid"),
+            ImmutableByteArray.fromBase64("TWV0cm9kcm9pZA=="))
+        assertEquals(ImmutableByteArray.fromASCII("Metrodroid"),
+            ImmutableByteArray.fromBase64("TWV-0cm9k-cm9p----ZA==--"))
+        assertFails { ImmutableByteArray.fromBase64("Metrodroid") } // Wrong padding
+        assertFails { ImmutableByteArray.fromBase64("====") } // Wrong padding
     }
 }
