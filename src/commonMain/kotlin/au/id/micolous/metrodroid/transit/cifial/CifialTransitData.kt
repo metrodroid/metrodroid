@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.cifial
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.*
@@ -83,9 +84,15 @@ private fun parse(card: ClassicCard): CifialTransitData {
 }
 
 object CifialTransitFactory : ClassicCardTransitFactory {
-    override fun check(card: ClassicCard) =
-            card[0,1].data[0] == 0x47.toByte() &&
-                    card[0,2].data.let { validateDate(it, 5) && validateDate(it,10) }
+    override val earlySectors: Int get() = 1
+
+    override fun earlyCheck(sectors: List<ClassicSector>): Boolean = checkSector0(sectors[0])
+
+    private fun checkSector0(sector0: ClassicSector) =
+        sector0[1].data[0] == 0x47.toByte() &&
+                sector0[2].data.let { validateDate(it, 5) && validateDate(it,10) }
+
+    override fun check(card: ClassicCard) = checkSector0(card[0])
 
     override fun parseTransitData(card: ClassicCard) = parse(card)
 
