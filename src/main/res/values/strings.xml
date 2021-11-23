@@ -2611,4 +2611,12 @@
     <string name="mfu_version">Version</string>
     <string name="mfu_size_id">Size ID</string>
     <string name="mfu_protocol_type">Protocol type</string>
+    <string name="cli_identify_command_help">Identifies the card(s) in a Metrodroid file</string>
+    <string name="cli_makejson_command_help">Converts Metrodroid XML/JSON into latest version of JSON</string>
+    <string name="cli_parse_command_help">Parses the card(s) in a Metrodroid file</string>
+    <string name="cli_unrecognized_command_help">Lists unrecognized card(s) in a Metrodroid file</string>
+    <string name="cli_supported_command_help">Lists all cards supported by Metrodroid</string>
+    <string name="cli_smartcard_command_help">Communicates with a card using the PC/SC API</string>
+    <string name="cli_notices_command_help">List license notices</string>
+    <string name="cli_hwinfo_command_help">Print the hardware info of card(s)</string>
 </resources>
