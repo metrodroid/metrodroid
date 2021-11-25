@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.transit.touchngo.TouchnGoTransitFactory
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
-import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
+import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitFactory
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.waikato.WaikatoCardTransitFactory
 import au.id.micolous.metrodroid.transit.warsaw.WarsawTransitData
@@ -92,7 +92,7 @@ object ClassicCardFactoryRegistry {
             // This check must be SECOND TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all empty sectors
-            BlankClassicTransitData.FACTORY,
+            BlankClassicTransitFactory,
             // This check must be LAST.
             //
             // This is for agencies who don't have identifying "magic" in their card.
@@ -106,7 +106,7 @@ object ClassicCardFactoryRegistry {
             // This check must be SECOND TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all empty sectors
-            BlankClassicTransitData.FACTORY
+            BlankClassicTransitFactory
     )
     val allFactories = classicFactories + plusFactories
 }

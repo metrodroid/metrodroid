@@ -11,7 +11,7 @@ import au.id.micolous.metrodroid.transit.orca.OrcaTransitData
 import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.tampere.TampereTransitData
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData
-import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitData
+import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitFactory
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 
 object DesfireCardTransitRegistry {
@@ -33,6 +33,6 @@ object DesfireCardTransitRegistry {
             MagnaCartaTransitData.FACTORY,
             IntercardTransitData.FACTORY,
             TPFCardTransitData.Factory,
-            BlankDesfireTransitData.FACTORY,
+            BlankDesfireTransitFactory,
             UnauthorizedDesfireTransitData.FACTORY)
 }

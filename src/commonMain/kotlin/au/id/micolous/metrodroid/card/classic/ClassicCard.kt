@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
 @Serializable
-class ClassicCard constructor(
+data class ClassicCard constructor(
         @XMLListIdx("index")
         @SerialName("sectors")
         val sectorsRaw: List<ClassicSectorRaw>,

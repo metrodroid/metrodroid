@@ -10,7 +10,7 @@ import au.id.micolous.metrodroid.transit.serialonly.MRTUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
-import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData
+import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 import au.id.micolous.metrodroid.transit.venezia.VeneziaUltralightTransitFactory
 
@@ -29,7 +29,7 @@ object UltralightTransitRegistry {
             AmiiboTransitFactory,
             HSLUltralightTransitFactory,
 
-            BlankUltralightTransitData.FACTORY,
+            BlankUltralightTransitFactory,
             // This check must be LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors

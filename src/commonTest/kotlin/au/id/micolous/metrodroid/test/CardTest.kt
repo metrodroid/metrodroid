@@ -32,11 +32,7 @@ import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.serializers.jsonObjectOrNull
 import au.id.micolous.metrodroid.serializers.jsonPrimitiveOrNull
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
-import au.id.micolous.metrodroid.transit.unknown.BlankDesfireTransitData
-import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
-import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
-import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
+import au.id.micolous.metrodroid.transit.unknown.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.longOrNull
@@ -186,14 +182,14 @@ class CardTest : BaseInstrumentedTest() {
         val allFFCard = ClassicCard(allFFSectors)
         val otherCard = ClassicCard(otherSectors)
 
-        assertTrue(all00Card.parseTransitData() is BlankClassicTransitData,
+        assertTrue(all00Card.parseTransitData() is BlankTransitData,
                 "A card with all 00 in its blocks is BlankClassicTransitData")
-        assertTrue(allFFCard.parseTransitData() is BlankClassicTransitData,
+        assertTrue(allFFCard.parseTransitData() is BlankTransitData,
                 "A card with all FF in its blocks is BlankClassicTransitData")
 
         // If the tests crash here, this is a bug in the other reader module. We shouldn't be able
         // to crash reader modules with garbage data.
-        assertFalse(otherCard.parseTransitData() is BlankClassicTransitData,
+        assertFalse(otherCard.parseTransitData() is BlankTransitData,
                 "A card with other data in its blocks is not BlankClassicTransitData")
     }
 
@@ -202,7 +198,7 @@ class CardTest : BaseInstrumentedTest() {
         // Card with no files at all.
         val c1 = DesfireCard(ImmutableByteArray.empty(), emptyMap())
 
-        assertTrue(c1.parseTransitData() is BlankDesfireTransitData)
+        assertTrue(c1.parseTransitData() is BlankTransitData)
 
         // Card with only locked files.
         val c2 = DesfireCard(ImmutableByteArray.empty(),
