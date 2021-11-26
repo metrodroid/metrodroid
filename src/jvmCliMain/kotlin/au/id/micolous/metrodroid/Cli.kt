@@ -209,7 +209,7 @@ class Supported: CliktCommand(
     }
 }
 
-class Notices: TranslatedCommand(
+class Notices: CliktCommand(
     help="List license notices") {
 
     fun readLicenseTextFromAsset(path: String) {
