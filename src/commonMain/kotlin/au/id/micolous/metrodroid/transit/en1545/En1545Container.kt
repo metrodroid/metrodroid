@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * This consists of a concatenation of all fields inside of it, with no additional data.
  */
-class En1545Container(vararg val fields: En1545Field) : En1545Field {
+class En1545Container(private vararg val fields: En1545Field) : En1545Field {
     override fun parseField(b: ImmutableByteArray, off: Int, path: String, holder: En1545Parsed, bitParser: En1545Bits): Int {
         var currentOffset = off
         for (el in fields) {
