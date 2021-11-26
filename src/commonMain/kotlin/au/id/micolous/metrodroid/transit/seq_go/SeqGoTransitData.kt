@@ -130,9 +130,6 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
 
                 return SeqGoTransitData(capsule, capsule.mConfig?.ticketType)
             }
-
-            override val notice: String?
-                get() = StationTableReader.getNotice(SeqGoData.SEQ_GO_STR)
         }
     }
 }

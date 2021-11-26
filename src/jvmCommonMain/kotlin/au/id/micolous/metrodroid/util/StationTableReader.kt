@@ -29,9 +29,14 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
-expect fun openMdstFile(dbName: String): InputStream?
+expect object ResourceAccessor {
+    fun openMdstFile(dbName: String): InputStream?
+    fun stationTableReaderList(): List<String>
+}
+
 internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
+internal actual fun stationTableReaderList(): List<String> = ResourceAccessor.stationTableReaderList()
 
 /**
  * Metrodroid Station Table (MdST) file reader.
@@ -64,7 +69,7 @@ private constructor(dbName: String) : StationTableReader {
             null
         }
     }
-    private val mTable: InputStream = openMdstFile(dbName)!!
+    private val mTable: InputStream = ResourceAccessor.openMdstFile(dbName)!!
     private val mStationsLength: Int
 
     override val notice: String?

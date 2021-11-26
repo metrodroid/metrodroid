@@ -124,7 +124,4 @@ object EZLinkTransitFactory : CardTransitFactory<CEPASApplication> {
         val canNo = purse.can.toHexString()
         return TransitIdentity(EZLinkTransitData.getCardIssuer(canNo), canNo)
     }
-
-    override val notice: String?
-        get() = StationTableReader.getNotice(EZLinkTransitData.EZLINK_STR)
 }

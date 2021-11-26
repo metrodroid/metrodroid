@@ -419,10 +419,15 @@ kotlin {
             }
             kotlin.srcDirs += new File(generatedLocalizeDir, 'jvmCliMain/kotlin')
             resources.srcDirs += new File("$projectDir/mdst")
+            resources.srcDirs += new File("$projectDir/src/commonMain/assets")
+            resources.srcDirs += ["$buildDir/assets"]
             kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+            preBuild.dependsOn copyThirdPartyNotices
         }
     }
 }
+
+tasks['jvmCliProcessResources'].dependsOn copyThirdPartyNotices
 
 def commonLanguageList = [
         // Update this whenever new language translations become available in Weblate.
@@ -540,6 +545,8 @@ task copyTestAssetsIOS {
     }
     inputs.dir new File(projectDir, "mdst")
     outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+    inputs.dir new File(projectDir, "src/commonMain/assets")
+    outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
     doLast {
         def outBase = kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
         testAssetsDirs.each { relativeDir ->
@@ -637,7 +644,7 @@ android {
         androidTest.assets.srcDirs += testAssetsDirs
         androidTest.java.srcDirs += ['src/jvmCommonTest/kotlin']
         androidTest.java.srcDirs += ['src/androidCommonTest/kotlin']
-        main.assets.srcDirs += ['build/assets', 'mdst']
+        main.assets.srcDirs += ['build/assets', 'mdst', 'src/commonMain/assets']
         main.res.srcDirs += ['cardimages/android']
         test.java.srcDirs += ['src/androidUnitTest/kotlin']
         test.java.srcDirs += ['src/androidCommonTest/kotlin']

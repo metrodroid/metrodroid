@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.StationTableReader
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.arguments.argument
@@ -44,7 +45,8 @@ class Cli: CliktCommand() {
             Unrecognized(),
             Supported(),
             MakeJson(),
-            SmartCard()
+            SmartCard(),
+            Notices(),
         )
     }
 
@@ -203,6 +205,28 @@ class Supported: CliktCommand(
             if (card.resourceExtraNote != null) {
                 println("     note = ${Localizer.localizeString(card.resourceExtraNote)}")
             }
+        }
+    }
+}
+
+class Notices: TranslatedCommand(
+    help="List license notices") {
+
+    fun readLicenseTextFromAsset(path: String) {
+        val s = Notices::class.java.getResourceAsStream("/$path")?.readBytes()
+            ?.decodeToString() ?: return
+        println(s)
+        println("")
+    }
+
+    override fun run() {
+        readLicenseTextFromAsset("Metrodroid-NOTICE.txt")
+        readLicenseTextFromAsset("third_party/NOTICE.AOSP.txt")
+        readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt")
+
+        for (notice in StationTableReader.allNotices) {
+            println(notice)
+            println("")
         }
     }
 }

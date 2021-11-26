@@ -141,8 +141,8 @@
 		9CC7BA2C22F6960B00F45148 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = metrodroid/nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CC7BA2D22F7189500F45148 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		9CC7BA2E22F7189900F45148 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "metrodroid/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Logos-NOTICE.txt"; path = "../../src/main/assets/Logos-NOTICE.txt"; sourceTree = "<group>"; };
-		9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Metrodroid-NOTICE.txt"; path = "../../src/main/assets/Metrodroid-NOTICE.txt"; sourceTree = "<group>"; };
+		9CC7BA3222F7CD7A00F45148 /* Logos-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Logos-NOTICE.txt"; path = "../../src/commonMain/assets/Logos-NOTICE.txt"; sourceTree = "<group>"; };
+		9CC7BA3422F7CD8500F45148 /* Metrodroid-NOTICE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Metrodroid-NOTICE.txt"; path = "../../src/commonMain/assets/Metrodroid-NOTICE.txt"; sourceTree = "<group>"; };
 		9CCEE1EC22E3D181007BF742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = metrodroid/Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CCEE1EE22E3D1D9007BF742 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = metrodroid/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CD6DFEA22D33F7B003A5CEA /* metrodroid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = metrodroid.entitlements; sourceTree = "<group>"; };

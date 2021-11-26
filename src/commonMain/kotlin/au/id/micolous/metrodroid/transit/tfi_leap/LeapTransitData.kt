@@ -246,9 +246,6 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
             }
 
             override fun createUnlocker(appIds: Int, manufData: ImmutableByteArray) = createUnlockerDispatch(appIds, manufData)
-
-            override val notice: String?
-                get() = StationTableReader.getNotice(LEAP_STR)
         }
 
         fun earlyCheck(appId: Int): Boolean {

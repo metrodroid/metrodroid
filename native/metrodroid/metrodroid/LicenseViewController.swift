@@ -35,10 +35,7 @@ class LicenseViewController: UIViewController {
         licenseText += readLicenseTextFromAsset("NOTICE.noto-emoji")
         licenseText += readLicenseTextFromAsset("NOTICE.protobuf")
         
-        for factory in CardInfoRegistry.init().allFactories {
-            guard let notice = factory.notice else {
-                continue
-            }
+        for notice in StationTableReader.allNotices {
             licenseText += notice
             licenseText += "\n\n"
         }

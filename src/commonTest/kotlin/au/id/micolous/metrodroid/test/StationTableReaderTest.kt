@@ -39,8 +39,13 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     @Test
     fun testLicenseNotice() {
         val notice = StationTableReader.getNotice(SeqGoData.SEQ_GO_STR)
-        assertNotNull(notice)
-        assertTrue(notice.contains("Translink"))
+        assertTrue(notice!!.contains("Translink"))
+    }
+
+    @Test
+    fun testNotices() {
+        assertEquals(13, StationTableReader.allNotices.size)
+        assertTrue(StationTableReader.allNotices.any { it.contains("Translink") })
     }
 
     @Test

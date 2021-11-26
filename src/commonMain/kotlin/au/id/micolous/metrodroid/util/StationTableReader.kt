@@ -8,6 +8,7 @@ import au.id.micolous.metrodroid.transit.TransitName
 import au.id.micolous.metrodroid.transit.Trip
 
 internal expect fun stationTableReaderGet(name: String): StationTableReader?
+internal expect fun stationTableReaderList(): List<String>
 
 data class ProtoStation(val operatorId: Int?, val name: TransitName, val latitude: Float, val longitude: Float, val lineIdList: List<Int>)
 
@@ -25,6 +26,11 @@ interface StationTableReader {
     fun getLineMode(id: Int): Trip.Mode?
 
     companion object {
+        private val allSTRs: List<String>
+            get() = stationTableReaderList()
+        val allNotices: List<String> get() =
+            allSTRs.sorted().mapNotNull { getNotice(it) }
+
         private fun fallbackName(humanReadableId: String): FormattedString =
             Localizer.localizeFormatted(R.string.unknown_format, humanReadableId)
 

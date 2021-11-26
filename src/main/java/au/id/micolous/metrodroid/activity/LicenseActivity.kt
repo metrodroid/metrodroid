@@ -25,6 +25,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.transit.CardInfoRegistry
+import au.id.micolous.metrodroid.util.StationTableReader
 import kotlin.io.use
 
 class LicenseActivity : MetrodroidActivity() {
@@ -45,8 +46,8 @@ class LicenseActivity : MetrodroidActivity() {
         readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.noto-emoji.txt")
         readLicenseTextFromAsset(lblLicenseText, "third_party/NOTICE.protobuf.txt")
 
-        for (factory in CardInfoRegistry.allFactories) {
-                lblLicenseText.append(factory.notice ?: continue)
+        for (notice in StationTableReader.allNotices) {
+                lblLicenseText.append(notice)
                 lblLicenseText.append("\n\n")
         }
 

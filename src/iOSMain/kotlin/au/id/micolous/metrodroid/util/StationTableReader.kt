@@ -31,6 +31,8 @@ import kotlinx.cinterop.usePinned
 
 internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderRegistry.fetch(name)
+internal actual fun stationTableReaderList(): List<String> =
+    StationTableReaderRegistry.allList
 
 private const val TAG = "StationTableReaderIOS"
 
@@ -48,7 +50,7 @@ class StationTableReaderWrapper (val name: String) {
 }
 
 object StationTableReaderRegistry {
-    private val allList: List<String> get() {
+    val allList: List<String> get() {
         val res = NSBundle.mainBundle.pathsForResourcesOfType("mdst", inDirectory = "mdst").toList().filterIsInstance<String>().map { it.substringAfterLast("/").substringBefore(".mdst") }
         Log.d(TAG, "mdsts = $res")
         return res
