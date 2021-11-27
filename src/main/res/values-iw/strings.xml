@@ -1249,4 +1249,5 @@
     <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten OV-chipkaart weekend (2009)</string>
     <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
     <string name="purse_ride_counter">מונה נסיעות באמצעות ארנק</string>
+    <string name="clipper_base_date">תאריך יסוד</string>
 </resources>
