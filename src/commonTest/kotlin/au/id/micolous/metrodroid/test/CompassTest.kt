@@ -67,6 +67,9 @@ class CompassTest : BaseInstrumentedTest() {
 
             val cd = d as CompassUltralightTransitData?
             assertEquals(cardData[0], cd!!.serialNumber)
+
+            val ti = card.parseTransitIdentity()
+            assertEquals(cardData[0], ti?.serialNumber)
         }
     }
 
