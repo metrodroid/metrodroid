@@ -91,7 +91,7 @@ class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
         }
     }
 
-    protected fun cd(path: ISO7816Selector) : Boolean {
+    private fun cd(path: ISO7816Selector) : Boolean {
         val app = currentApplication ?: return false
         Log.d(TAG, "cd(${path.formatString()})")
 
@@ -108,7 +108,7 @@ class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
         }
     }
 
-    protected fun cd(path: Int) : Boolean {
+    private fun cd(path: Int) : Boolean {
         val app = currentApplication
 
         when {
