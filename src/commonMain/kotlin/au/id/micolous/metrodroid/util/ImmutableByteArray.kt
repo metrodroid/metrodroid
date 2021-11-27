@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.util
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.nativeFreeze
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ByteArraySerializer
 import kotlinx.serialization.encoding.Decoder
