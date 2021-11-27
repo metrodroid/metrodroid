@@ -56,7 +56,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone"
-    />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/textView3"
