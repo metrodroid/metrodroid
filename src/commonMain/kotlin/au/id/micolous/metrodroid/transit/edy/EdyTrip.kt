@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaBlock
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -49,6 +50,9 @@ class EdyTrip (private val mProcessType: Int,
         get() = if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT) {
             TransitCurrency.JPY(-mTransactionAmount)
         } else TransitCurrency.JPY(mTransactionAmount)
+
+    override fun getRawFields(level: TransitData.RawLevel): String
+        = "SeqNum=$mSequenceNumber,balance=$mBalance"
 
     companion object {
 

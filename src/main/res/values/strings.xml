@@ -2596,4 +2596,5 @@
     <!-- Translators: used as contentDescription for arrow indicating
          open list. -->
     <string name="open_arrow">Open list</string>
+    <string name="clipper_base_date">Base Date</string>
 </resources>

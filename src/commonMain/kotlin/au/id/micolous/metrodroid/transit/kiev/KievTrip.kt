@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -63,6 +64,9 @@ class KievTrip (
     override fun getAgencyName(isShort: Boolean): FormattedString? {
         return if (mTransactionType == "84/04/40/53") Localizer.localizeFormatted(R.string.mode_metro) else mTransactionType?.let { Localizer.localizeFormatted(R.string.unknown_format, it) }
     }
+
+    override fun getRawFields(level: TransitData.RawLevel): String
+        = "mCounter1=$mCounter1,mCounter2=$mCounter2"
 
     companion object {
         private val TZ = MetroTimeZone.KIEV

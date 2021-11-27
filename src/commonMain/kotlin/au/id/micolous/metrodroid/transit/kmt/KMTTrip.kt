@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 
@@ -62,6 +63,8 @@ class KMTTrip (private val mProcessType: Int,
         } else TransitCurrency.IDR(mTransactionAmount)
 
     override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(R.string.kmt_agency)
+
+    override fun getRawFields(level: TransitData.RawLevel): String = "mSequenceNumber=$mSequenceNumber"
 
     companion object {
         fun parse(block: FelicaBlock): KMTTrip {
