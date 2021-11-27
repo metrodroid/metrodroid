@@ -48,7 +48,11 @@ import au.id.micolous.metrodroid.ui.NfcSettingsPreference
 import java.io.IOException
 import java.util.*
 import android.content.pm.PackageManager.GET_META_DATA
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.fragment.app.Fragment
 
 fun AlertDialog.Builder.safeShow() {
     try {
@@ -57,6 +61,32 @@ fun AlertDialog.Builder.safeShow() {
         /* Ignore... happens if the activity was destroyed */
     }    
 }
+
+inline fun Activity.tryAndShowError(lambda: () -> Unit) {
+    try {
+        lambda()
+    } catch (ex: Exception) {
+        Utils.showError(this, ex)
+    }
+}
+
+fun <I, O> ComponentActivity.registerForActivityResultIfOkAndShowError(
+    contract: ActivityResultContract<I, O>,
+    callback: ActivityResultCallback<O>) =
+    registerForActivityResult(contract) { result ->
+        tryAndShowError {
+            callback.onActivityResult(result)
+        }
+    }
+
+fun <I, O> Fragment.registerForActivityResultIfOkAndShowError(
+    contract: ActivityResultContract<I, O>,
+    callback: ActivityResultCallback<O>) =
+    registerForActivityResult(contract) { result ->
+        requireActivity().tryAndShowError {
+            callback.onActivityResult(result)
+        }
+    }
 
 object Utils {
     private const val TAG = "Utils"

@@ -37,6 +37,7 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.FileProvider
 import androidx.loader.app.LoaderManager
@@ -205,7 +206,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        try {
+        requireActivity().tryAndShowError {
             when (item.itemId) {
                 R.id.import_clipboard -> {
                     run {
@@ -233,12 +234,12 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 }
 
                 R.id.import_mct_file -> {
-                    startActivityForResult(Utils.getContentIntent(listOf("text/plain")), REQUEST_SELECT_FILE_MCT)
+                    requestSelectFileMctLauncher.launch(Utils.getContentIntent(listOf("text/plain")))
                     return true
                 }
 
                 R.id.import_mfc_file -> {
-                    startActivityForResult(Utils.getContentIntent(listOf()), REQUEST_SELECT_FILE_MFC)
+                    requestSelectFileMfcLauncher.launch(Utils.getContentIntent(listOf()))
                     return true
                 }
 
@@ -247,7 +248,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                     val i = Utils.getContentIntent(
                             listOf("application/xml", "application/json", "text/xml", "text/json", "text/plain", "application/zip")
                     )
-                    startActivityForResult(i, REQUEST_SELECT_FILE)
+                    requestSelectFileLauncher.launch(i)
                     return true
                 }
 
@@ -267,7 +268,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                         i.addCategory(Intent.CATEGORY_OPENABLE)
                         i.type = "application/zip"
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME)
-                        startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
+                        requestSaveFileLauncher.launch(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)))
                     } else {
                         @Suppress("DEPRECATION")
                         val file = File(Environment.getExternalStorageDirectory().toString() + "/" + STD_EXPORT_FILENAME)
@@ -277,8 +278,6 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                     return true
                 }
             }
-        } catch (ex: Exception) {
-            Utils.showError(requireActivity(), ex)
         }
 
         return false
@@ -472,38 +471,23 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     private class MFCReadTask(cardsFragment: CardsFragment, uri: Uri)
         : CommonReadTask(cardsFragment, CardMultiImportAdapter (MfcCardImporter()), uri)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val uri: Uri?
-        try {
-            if (resultCode == Activity.RESULT_OK) {
-                when (requestCode) {
-                    REQUEST_SELECT_FILE -> {
-                        uri = data?.data!!
-                        ReadTask(this, uri).execute()
-                    }
-
-                    REQUEST_SELECT_FILE_MCT -> {
-                        uri = data?.data!!
-                        MCTReadTask(this, uri).execute()
-                    }
-
-                    REQUEST_SELECT_FILE_MFC -> {
-                        uri = data?.data!!
-                        MFCReadTask(this, uri).execute()
-                    }
-
-                    REQUEST_SAVE_FILE -> {
-                        uri = data?.data!!
-                        Log.d(TAG, "REQUEST_SAVE_FILE")
-                        SaveTask(requireActivity(), uri).execute()
-                    }
-                }
-            }
-        } catch (ex: Exception) {
-            Utils.showError(requireActivity(), ex)
+    private val requestSelectFileLauncher =
+        registerForActivityResultIfOkAndShowError(ActivityResultContracts.StartActivityForResult()) { result ->
+            ReadTask(this, result.data?.data!!).execute()
         }
-
-    }
+    private val requestSelectFileMctLauncher =
+        registerForActivityResultIfOkAndShowError(ActivityResultContracts.StartActivityForResult()) { result ->
+            MCTReadTask(this, result.data?.data!!).execute()
+        }
+    private val requestSelectFileMfcLauncher =
+        registerForActivityResultIfOkAndShowError(ActivityResultContracts.StartActivityForResult()) { result ->
+            MFCReadTask(this, result.data?.data!!).execute()
+        }
+    private val requestSaveFileLauncher =
+        registerForActivityResultIfOkAndShowError(ActivityResultContracts.StartActivityForResult()) { result ->
+            Log.d(TAG, "REQUEST_SAVE_FILE")
+            SaveTask(requireActivity(), result.data?.data!!).execute()
+        }
 
     private fun updateListView() {
         (requireView().findViewById<ExpandableListView>(android.R.id.list).expandableListAdapter as CardsAdapter).notifyDataSetChanged()
@@ -616,10 +600,6 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
 
     companion object {
         private const val TAG = "CardsFragment"
-        private const val REQUEST_SELECT_FILE = 1
-        private const val REQUEST_SAVE_FILE = 2
-        private const val REQUEST_SELECT_FILE_MCT = 3
-        private const val REQUEST_SELECT_FILE_MFC = 4
         @NonNls
         private const val STD_EXPORT_FILENAME = "Metrodroid-Export.zip"
 
