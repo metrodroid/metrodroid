@@ -35,7 +35,7 @@ class LicenseViewController: UIViewController {
         licenseText += readLicenseTextFromAsset("NOTICE.noto-emoji")
         licenseText += readLicenseTextFromAsset("NOTICE.protobuf")
         
-        for notice in StationTableReader.allNotices {
+        for notice in StationTableReaderCompanion.init().allNotices {
             licenseText += notice
             licenseText += "\n\n"
         }
