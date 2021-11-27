@@ -184,7 +184,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     override fun onItemLongClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Boolean {
         val cursor = listAdapter?.getItem(position) as Cursor
 
-        mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID))
+        mActionKeyId = cursor.getInt(cursor.getColumnIndexOrThrow(KeysTableColumns._ID))
         mActionMode = requireActivity().startActionMode(mActionModeCallback)
 
         return true
@@ -269,15 +269,15 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     private class KeysAdapter(activity: Activity) : ResourceCursorAdapter(activity, android.R.layout.simple_list_item_2, null, false) {
 
         override fun bindView(view: View, context: Context, cursor: Cursor) {
-            @NonNls val id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID))
-            val type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE))
+            @NonNls val id = cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.CARD_ID))
+            val type = cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.CARD_TYPE))
 
             val textView1 = view.findViewById<TextView>(android.R.id.text1)
             val textView2 = view.findViewById<TextView>(android.R.id.text2)
 
             when (type) {
                 CardKeys.TYPE_MFC_STATIC -> {
-                    val keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))
+                    val keyData = cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.KEY_DATA))
                     var desc: String? = null
                     var fileType: String? = null
                     try {
@@ -302,7 +302,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     }
                 }
                 CardKeys.TYPE_MFC -> {
-                    val keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))
+                    val keyData = cursor.getString(cursor.getColumnIndexOrThrow(KeysTableColumns.KEY_DATA))
                     var fileType: String? = null
 
                     try {

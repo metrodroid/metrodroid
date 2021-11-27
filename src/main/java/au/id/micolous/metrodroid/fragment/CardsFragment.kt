@@ -105,9 +105,9 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             cursor.moveToPosition(-1)
             while (cursor.moveToNext()) {
                 val type = cursor.getInt(cursor
-                        .getColumnIndex(CardsTableColumns.TYPE))
+                        .getColumnIndexOrThrow(CardsTableColumns.TYPE))
                 val serial = cursor.getString(cursor
-                        .getColumnIndex(CardsTableColumns.TAG_SERIAL))
+                        .getColumnIndexOrThrow(CardsTableColumns.TAG_SERIAL))
                 val id = CardId(type, serial)
                 if (!scans.containsKey(id)) {
                     scans[id] = ArrayList()
@@ -127,11 +127,11 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
     }
 
     private class Scan(cursor: Cursor) {
-        val mScannedAt: Long = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
-        val mLabel: String? = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL))
-        val mType: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE))
-        val mSerial: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
-        val mData: String = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
+        val mScannedAt: Long = cursor.getLong(cursor.getColumnIndexOrThrow(CardsTableColumns.SCANNED_AT))
+        val mLabel: String? = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.LABEL))
+        val mType: Int = cursor.getInt(cursor.getColumnIndexOrThrow(CardsTableColumns.TYPE))
+        val mSerial: String = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.TAG_SERIAL))
+        val mData: String = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA))
         val mTransitIdentity: TransitIdentity? by lazy {
             try {
                 XmlOrJsonCardFormat.parseString(mData)?.parseTransitIdentity()
@@ -140,7 +140,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
                 TransitIdentity(error, null)
             }
         }
-        val mId: Int = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID))
+        val mId: Int = cursor.getInt(cursor.getColumnIndexOrThrow(CardsTableColumns._ID))
 
         fun matches(query: String): Boolean {
             val ti = mTransitIdentity

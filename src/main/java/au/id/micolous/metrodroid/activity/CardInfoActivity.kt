@@ -107,7 +107,7 @@ class CardInfoActivity : MetrodroidActivity() {
                     startManagingCursor(cursor)
                     cursor!!.moveToFirst()
 
-                    val data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA))
+                    val data = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA))
 
                     mCard = XmlOrJsonCardFormat.parseString(data)
                     mTransitData = mCard!!.parseTransitData()

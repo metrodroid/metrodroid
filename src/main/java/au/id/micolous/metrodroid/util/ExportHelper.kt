@@ -55,9 +55,9 @@ object ExportHelper {
 
     @NonNls
     private fun strongHash(cursor: Cursor): String {
-        @NonNls val serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL)).trim { it <= ' ' }
+        @NonNls val serial = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.TAG_SERIAL)).trim { it <= ' ' }
         @NonNls val data = XmlUtils.cutXmlDef(
-                cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim { it <= ' ' })
+                cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA)).trim { it <= ' ' })
         val md = MessageDigest.getInstance("SHA-512")
 
         md.update(("(${serial.length}, ${data.length})").toByteArray(Charsets.UTF_8))
@@ -76,7 +76,7 @@ object ExportHelper {
             @NonNls val hash = strongHash(cursor)
 
             if (hash in hashes) {
-                res.add(cursor.getLong(cursor.getColumnIndex(CardsTableColumns._ID)))
+                res.add(cursor.getLong(cursor.getColumnIndexOrThrow(CardsTableColumns._ID)))
                 continue
             }
 
@@ -118,9 +118,9 @@ object ExportHelper {
                     Localizer.englishString(R.string.exported_at, now.isoDateTimeFormat()) + "\n" + Utils.deviceInfoStringEnglish)
 
         while (cursor.moveToNext()) {
-            val content = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim { it <= ' ' }
-            val scannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT))
-            val tagId = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL))
+            val content = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA)).trim { it <= ' ' }
+            val scannedAt = cursor.getLong(cursor.getColumnIndexOrThrow(CardsTableColumns.SCANNED_AT))
+            val tagId = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.TAG_SERIAL))
             val scannedAtTs = TimestampFull(scannedAt, MetroTimeZone.LOCAL)
             val ext = if (content[0] == '<') "xml" else "json"
             var name: String
