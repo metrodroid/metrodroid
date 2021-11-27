@@ -1190,4 +1190,5 @@
     <string name="location_fukuoka_prefecture">Fukuoka, Japan</string>
     <string name="location_fukuoka_city">Fukuoka, Japan</string>
     <string name="purse_ride_counter">Aantal gereden ritten op portemonnee</string>
+    <string name="clipper_base_date">Basisdatum</string>
 </resources>
