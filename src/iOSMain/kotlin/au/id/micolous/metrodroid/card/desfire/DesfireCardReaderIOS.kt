@@ -20,21 +20,19 @@
 package au.id.micolous.metrodroid.card.desfire
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardReaderIOS
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.TimestampFull
 import platform.CoreNFC.NFCMiFareTagProtocol
 
-@Suppress("unused") // Used from Swift
-object DesfireCardReaderIOS {
-    @Throws(Throwable::class)
-    fun dump(tag: NFCMiFareTagProtocol,
-             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
+object DesfireCardReaderIOS : CardReaderIOS<NFCMiFareTagProtocol> {
+    override fun dump(tag: NFCMiFareTagProtocol,
+             feedback: TagReaderFeedbackInterface): Card {
         val xfer = DesfireTransceiver(tag)
         Log.d(TAG, "Start dump ${xfer.uid}")
         val df = DesfireCardReader.dumpTag(xfer, feedback)
-        Card(
+        return Card(
             tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), mifareDesfire = df
         )

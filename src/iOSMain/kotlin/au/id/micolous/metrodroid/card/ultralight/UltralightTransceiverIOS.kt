@@ -19,70 +19,23 @@
 
 package au.id.micolous.metrodroid.card.ultralight
 
-import au.id.micolous.metrodroid.card.CardLostException
-import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.card.CardTransceiver
-import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.card.CardTransceiverIOSPlain
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.runBlocking
 import platform.CoreNFC.NFCMiFareTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.native.concurrent.freeze
 
-class UltralightTransceiverIOS(val tag: NFCMiFareTagProtocol): CardTransceiver {
+class UltralightTransceiverIOS(val tag: NFCMiFareTagProtocol): CardTransceiverIOSPlain() {
     override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
 
     init {
         freeze()
     }
 
-    data class Capsule(
-            val reply: NSData?,
-            val err: NSError?) {
-        init {
-            freeze()
-        }
-    }
-
-    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        Log.d(TAG, ">>> $data")
-        val (repl, err) = runBlocking {
-            val chan = Channel<Capsule>()
-            chan.freeze()
-            val lambda = { reply: NSData?, error: NSError? ->
-                callback(chan, reply, error)
-            }
-            lambda.freeze()
-            tag.sendMiFareCommand(data.toNSData(), lambda)
-            chan.receive()
-        }
-        if (err != null || repl == null) {
-            Log.d(TAG, "<!< $err")
-            if (err?.code == 100L)
-              throw CardLostException(err.toString())
-            throw CardTransceiveException(err.toString())
-        } else {
-            val rep = repl.toImmutable()
-            Log.d(TAG, "<<< $rep")
-            return rep
-        }
-    }
-
-    companion object {
-        private const val TAG = "UltralightTransceiver"
-
-        fun callback(channel: SendChannel<Capsule>, reply: NSData?,
-            error: NSError?) {
-            val capsule = Capsule(reply, error)
-            runBlocking {
-                channel.send(capsule)
-                channel.close()
-            }
-        }
+    override fun send(dt: ImmutableByteArray, cb: (NSData?, NSError?) -> Unit) {
+        tag.sendMiFareCommand(dt.toNSData(), cb)
     }
 }
