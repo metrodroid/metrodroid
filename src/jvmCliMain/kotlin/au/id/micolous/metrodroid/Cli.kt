@@ -212,7 +212,7 @@ class Supported: CliktCommand(
 class Notices: CliktCommand(
     help="List license notices") {
 
-    fun readLicenseTextFromAsset(path: String) {
+    private fun readLicenseTextFromAsset(path: String) {
         val s = Notices::class.java.getResourceAsStream("/$path")?.readBytes()
             ?.decodeToString() ?: return
         println(s)
