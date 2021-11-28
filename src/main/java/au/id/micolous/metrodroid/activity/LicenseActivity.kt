@@ -24,7 +24,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.util.StationTableReader
 import kotlin.io.use
 

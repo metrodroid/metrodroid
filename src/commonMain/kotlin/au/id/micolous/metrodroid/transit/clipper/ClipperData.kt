@@ -36,7 +36,7 @@ internal object ClipperData {
     const val AGENCY_GG_FERRY = 0x19
     const val AGENCY_BAY_FERRY = 0x1b
 
-    const val CLIPPER_STR = "clipper"
+    private const val CLIPPER_STR = "clipper"
 
     fun getMode(agency: Int): Trip.Mode {
         return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency)

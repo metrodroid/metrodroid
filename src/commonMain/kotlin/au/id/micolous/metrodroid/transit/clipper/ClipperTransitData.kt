@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize

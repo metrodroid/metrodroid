@@ -44,7 +44,7 @@ class EZLinkTransitData (override val serialNumber: String?,
         get() = if (mBalance != null) TransitCurrency.SGD(mBalance) else null
 
     companion object {
-        const val EZLINK_STR = "ezlink"
+        private const val EZLINK_STR = "ezlink"
 
         private val EPOCH = Epoch.utc(1995, MetroTimeZone.SINGAPORE, -8 * 60)
 

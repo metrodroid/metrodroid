@@ -35,7 +35,6 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.StationTableReader
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.

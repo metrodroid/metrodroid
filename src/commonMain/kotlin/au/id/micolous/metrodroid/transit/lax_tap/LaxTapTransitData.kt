@@ -34,7 +34,6 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.StationTableReader
 
 /**
  * Los Angeles Transit Access Pass (LAX TAP) card.
