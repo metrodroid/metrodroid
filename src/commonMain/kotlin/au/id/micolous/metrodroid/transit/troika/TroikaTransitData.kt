@@ -32,19 +32,19 @@ import au.id.micolous.metrodroid.ui.ListItem
  */
 
 @Parcelize
-class TroikaTransitData(private val mBlocks: List<Pair<Int, TroikaBlock> >) : Parcelable {
+class TroikaTransitData(private val mBlocks: List<TroikaIndexedBlock>) : Parcelable {
 
     val serialNumber: String?
-        get() = mBlocks[0].second.serialNumber
+        get() = mBlocks[0].block.serialNumber
 
     val info: List<ListItem>?
         get() = mBlocks.flatMap { (_, block) -> block.info.orEmpty() }.ifEmpty { null }
 
     val balance: TransitBalance
-        get() = mBlocks[0].second.balance ?: TransitCurrency.RUB(0)
+        get() = mBlocks[0].block.balance ?: TransitCurrency.RUB(0)
 
     val warning: String?
-        get() = if (mBlocks[0].second.balance == null && subscriptions.isEmpty())
+        get() = if (mBlocks[0].block.balance == null && subscriptions.isEmpty())
             Localizer.localizeString(R.string.troika_unformatted)
         else
             null
@@ -60,7 +60,7 @@ class TroikaTransitData(private val mBlocks: List<Pair<Int, TroikaBlock> >) : Pa
 
     constructor(card: ClassicCard) : this(
             listOf(8, 7, 4, 1).mapNotNull {idx ->
-                decodeSector(card, idx)?.let { Pair(idx, it) }
+                decodeSector(card, idx)?.let { TroikaIndexedBlock(idx, it) }
             }
         )
 
@@ -74,6 +74,12 @@ class TroikaTransitData(private val mBlocks: List<Pair<Int, TroikaBlock> >) : Pa
                 resourceExtraNote = R.string.card_note_russia,
                 region = TransitRegion.RUSSIA,
                 keysRequired = true, preview = true, keyBundle = "troika")
+
+        @Parcelize
+        data class TroikaIndexedBlock(
+            val sectorNum: Int,
+            val block: TroikaBlock
+        ): Parcelable
 
         private const val TAG = "TroikaTransitData"
 
