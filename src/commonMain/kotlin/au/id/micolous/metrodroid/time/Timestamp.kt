@@ -200,14 +200,21 @@ class EpochLocal internal constructor(private val baseDays: Int,
     fun days(d: Int) =
             Daystamp(daysSinceEpoch = baseDays + d)
 
-    fun dayMinute(d: Int, m: Int) = TimestampFull(
-        tz = tz,
-        localDateTime = (epochLocalDate + DatePeriod(0, 0, baseDays + d))
-            .atTime(m / 60, m % 60))
-    fun daySecond(d: Int, s: Int) = TimestampFull(
-        tz = tz,
-        localDateTime = (epochLocalDate + DatePeriod(0, 0, baseDays + d))
-            .atTime(s / 3600, (s / 60) % 60, s%60))
+    fun dayHMS(d: Int, h: Int, m: Int, s: Int = 0) =
+        if (h in 0..23 && m in 0..59 && s in 0..59)
+            TimestampFull(
+                tz = tz,
+                localDateTime = days(d).localDate.atTime(hour = h, minute = m, second = s)
+            )
+        else
+            TimestampFull(
+                tz = tz,
+                timeInMillis = days(d).localDate.atTime(hour = 0, minute = 0, second = 0)
+                    .toInstant(timeZone = tz.libTimeZone).toEpochMilliseconds() + (h * 3600L + m * 60L + s) * 1000L)
+
+    fun dayMinute(d: Int, m: Int) = dayHMS(d = d, h = m / 60, m = m % 60)
+    fun daySecond(d: Int, s: Int) = dayHMS(d = d, h = s / 3600,
+        m = (s / 60) % 60, s = s % 60)
 }
 
 sealed class Timestamp: Parcelable {
