@@ -21,6 +21,4 @@ package au.id.micolous.metrodroid.card.ksx6924
 
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 
-interface KSX6924CardTransitFactory : CardTransitFactory<KSX6924Application> {
-    override fun check(card: KSX6924Application): Boolean
-}
+interface KSX6924CardTransitFactory : CardTransitFactory<KSX6924Application>
