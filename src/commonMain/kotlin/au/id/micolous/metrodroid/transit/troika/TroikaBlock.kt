@@ -158,7 +158,8 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
             mCheckSum = mCheckSum
     )
 
-    internal enum class TroikaTransportType {
+    @Parcelize
+    internal enum class TroikaTransportType: Parcelable {
         NONE,
         UNKNOWN,
         SUBWAY,
