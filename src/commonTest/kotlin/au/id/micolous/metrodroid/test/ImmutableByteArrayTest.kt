@@ -19,11 +19,9 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFails
+import kotlin.test.*
 
-class ImmutableByteArrayTest {
+class ImmutableByteArrayTest : BaseInstrumentedTest() {
     @Test
     fun testIndexOfAtStart() {
         // Check single byte
@@ -95,5 +93,191 @@ class ImmutableByteArrayTest {
             ImmutableByteArray.fromBase64("TWV-0cm9k-cm9p----ZA==--"))
         assertFails { ImmutableByteArray.fromBase64("Metrodroid") } // Wrong padding
         assertFails { ImmutableByteArray.fromBase64("====") } // Wrong padding
+    }
+
+    @Test
+    fun testMap() {
+        assertEquals(ImmutableByteArray.fromHex("00010409101924"),
+            ImmutableByteArray.fromHex("00010203040506").map { (it * it).toByte() })
+    }
+
+    @Test
+    fun testContains() {
+        assertTrue(ImmutableByteArray.fromHex("00010203040506").contains(0))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506").contains(1))
+        assertFalse(ImmutableByteArray.fromHex("00010203040506").contains(7))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506ff").contains(-1))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506ff").contains(0xff.toByte()))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506").containsAll(listOf(0, 1)))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506").containsAll(listOf(1, 0)))
+        assertTrue(ImmutableByteArray.fromHex("00010203040506").containsAll(listOf(0)))
+        assertFalse(ImmutableByteArray.fromHex("00010203040506").containsAll(listOf(0, 7)))
+    }
+
+    @Test
+    fun testCopyInto() {
+        val b1 = "ZZZZZZZZZ".encodeToByteArray()
+        ImmutableByteArray.fromASCII("XXABCDXX").copyInto(b1, 1, 2, 5)
+        assertContentEquals("ZABCZZZZZ".encodeToByteArray(), b1)
+
+        val b2 = "ZZZZZZZZZ".encodeToByteArray()
+        ImmutableByteArray.fromASCII("XXABCDXX").copyInto(b2, 1, 2)
+        assertContentEquals("ZABCDXXZZ".encodeToByteArray(), b2)
+
+        val b3 = "ZZZZZZZZZ".encodeToByteArray()
+        ImmutableByteArray.fromASCII("XXABCDXX").copyInto(b3)
+        assertContentEquals("XXABCDXXZ".encodeToByteArray(), b3)
+    }
+
+    @Test
+    fun testIsASCII() {
+        assertTrue(ImmutableByteArray.fromUTF8("ABC").isASCII())
+        assertFalse(ImmutableByteArray.fromUTF8("ABC\u0420ABC").isASCII())
+        assertFalse(ImmutableByteArray.fromUTF8("ABC\u0004ABC").isASCII())
+        assertTrue(ImmutableByteArray.fromUTF8("ABC\nABC").isASCII())
+        assertTrue(ImmutableByteArray.fromUTF8("ABC\r\nABC").isASCII())
+        assertFalse(ImmutableByteArray.fromUTF8("ABC\u0000ABC").isASCII())
+        assertFalse(ImmutableByteArray.fromUTF8("ABC\u000BABC").isASCII())
+        assertFalse(ImmutableByteArray.fromUTF8("ABC\u000FABC").isASCII())
+    }
+
+    @Test
+    fun testLatin1() {
+        assertEquals("1fª»Ì", ImmutableByteArray.fromHex("316600AABBCC").readLatin1())
+    }
+
+    @Test
+    fun testEquals() {
+        assertEquals(ImmutableByteArray.fromHex("31"), ImmutableByteArray.fromASCII("1"))
+        assertFalse(ImmutableByteArray.fromASCII("1").equals(object {}))
+    }
+
+    @Test
+    fun testStartsWith() {
+        assertTrue(ImmutableByteArray.fromASCII("ABC").startsWith(
+            ImmutableByteArray.fromASCII("AB")))
+        assertFalse(ImmutableByteArray.fromASCII("ABC").startsWith(
+            ImmutableByteArray.fromASCII("ABCD")))
+        assertFalse(ImmutableByteArray.fromASCII("ABC").startsWith(
+            ImmutableByteArray.fromASCII("ABD")))
+        assertFalse(ImmutableByteArray.fromASCII("ABC").startsWith(
+            ImmutableByteArray.fromASCII("AD")))
+        assertFalse(ImmutableByteArray.fromASCII("ABC").startsWith(
+            ImmutableByteArray.fromASCII("BCD")))
+    }
+
+    @Test
+    fun testSignedLeBits() {
+        assertEquals(-14,
+            ImmutableByteArray.fromASCII("ABC").getBitsFromBufferSignedLeBits(5, 5))
+        assertEquals(4,
+            ImmutableByteArray.fromASCII("ABC").getBitsFromBufferSignedLeBits(7, 5))
+        assertEquals(-494,
+            ImmutableByteArray.fromASCII("ABC").getBitsFromBufferSignedLeBits(5, 10))
+    }
+
+    @Test
+    fun testSlice() {
+        assertEquals(ImmutableByteArray.fromASCII("BCD"),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(1, 3))
+        assertEquals(ImmutableByteArray.fromASCII("BCD"),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(1, 3))
+        assertFails {
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(-1, 3)
+        }
+        assertEquals(ImmutableByteArray.empty(),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(3, -1))
+        assertFails {
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(3, 7)
+        }
+        assertFails {
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(7, 1)
+        }
+        assertEquals(null,
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(-1, 3))
+        assertEquals(null,
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(3, -1))
+        assertEquals(ImmutableByteArray.fromASCII("DE"),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(3, 7))
+        assertEquals(null,
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(7, 1))
+    }
+
+    @Test
+    fun testPlus() {
+        assertEquals(ImmutableByteArray.fromASCII("ABCDE"),
+            ImmutableByteArray.fromASCII("ABC") + ImmutableByteArray.fromASCII("DE"))
+        assertEquals(ImmutableByteArray.fromASCII("ABCDE"),
+            ImmutableByteArray.fromASCII("ABCD") + 'E'.code.toByte())
+        assertEquals(ImmutableByteArray.fromASCII("ABCDE"),
+            ImmutableByteArray.fromASCII("ABC") + "DE".encodeToByteArray())
+    }
+
+    @Test
+    fun testHex() {
+        assertFailsWith<IllegalArgumentException> {
+            ImmutableByteArray.fromHex("0")
+        }
+        assertFailsWith<IllegalArgumentException> {
+            ImmutableByteArray.fromHex("1X")
+        }
+        assertEquals("41", ImmutableByteArray.fromASCII("A").toHexString())
+        assertEquals("41", ImmutableByteArray.getHexString("A".encodeToByteArray()))
+        assertEquals("010203",
+            ImmutableByteArray.fromHex("010203").toHexDump().unformatted)
+        assertEquals("01020304",
+            ImmutableByteArray.fromHex("01020304").toHexDump().unformatted)
+        assertEquals("01020304 05",
+            ImmutableByteArray.fromHex("0102030405").toHexDump().unformatted)
+        assertEquals("01020304 05060708",
+            ImmutableByteArray.fromHex("0102030405060708").toHexDump().unformatted)
+        assertEquals("01020304 05060708 090a0b0c 0d0e0f00",
+            ImmutableByteArray.fromHex("0102030405060708090a0b0c0d0e0f00").toHexDump().unformatted)
+        assertEquals("01020304 05060708 090a0b0c 0d0e0f00\n11",
+            ImmutableByteArray.fromHex("0102030405060708090a0b0c0d0e0f0011").toHexDump().unformatted)
+    }
+
+    @Test
+    fun testInt() {
+        assertEquals(0x0102030405060708,
+            ImmutableByteArray.byteArrayToLong(byteArrayOf(1,2,3,4,5,6,7,8), 0, 8))
+        assertFailsWith<IllegalArgumentException> {
+            ImmutableByteArray.byteArrayToLong(byteArrayOf(1,2,3,4,5,6,7,8), 0, 9)
+        }
+        assertEquals(0x0102030405060708,
+            ImmutableByteArray.of(1,2,3,4,5,6,7,8).byteArrayToLong(0, 8))
+        assertEquals(0x0102030405060708,
+            ImmutableByteArray.of(1,2,3,4,5,6,7,8).byteArrayToLong())
+        assertEquals(0x0807060504030201,
+            ImmutableByteArray.of(1,2,3,4,5,6,7,8).byteArrayToLongReversed())
+        assertEquals(0x01020304,
+            ImmutableByteArray.of(1,2,3,4).byteArrayToInt())
+        assertEquals(0x04030201,
+            ImmutableByteArray.of(1,2,3,4).byteArrayToIntReversed())
+        assertFailsWith<IllegalArgumentException> {
+            ImmutableByteArray.of(1,2,3,4,5,6,7,8).byteArrayToLong(0, 9)
+        }
+    }
+
+    @Test
+    fun testCompare() {
+        assertEquals(0, ImmutableByteArray.fromASCII("ABCD").compareTo(ImmutableByteArray.fromASCII("ABCD")))
+        assertTrue(ImmutableByteArray.fromASCII("ABCD") < ImmutableByteArray.fromASCII("ABCE"))
+        assertTrue(ImmutableByteArray.fromASCII("ABCD") > ImmutableByteArray.fromASCII("ABCC"))
+        assertTrue(ImmutableByteArray.fromASCII("ABCD") < ImmutableByteArray.fromASCII("ABCDE"))
+        assertTrue(ImmutableByteArray.fromASCII("ABCD") > ImmutableByteArray.fromASCII("AB\u0420"))
+        assertTrue(ImmutableByteArray.fromASCII("AB\u0420") < ImmutableByteArray.fromASCII("AB\u0421"))
+    }
+
+    @Test
+    fun testCopyConstructor() {
+        assertEquals(ImmutableByteArray.fromHex("ABCD"),
+            ImmutableByteArray(ImmutableByteArray.fromHex("ABCD")))
+    }
+
+    @Test
+    fun testAny() {
+        assertTrue(ImmutableByteArray.fromASCII("ABCD").any { it == 'A'.code.toByte() })
+        assertFalse(ImmutableByteArray.fromASCII("ABCD").any { it == 'a'.code.toByte() })
     }
 }
