@@ -1,10 +1,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.util.NumberUtils
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class NumberTest : BaseInstrumentedTest() {
     @Test
@@ -26,5 +23,11 @@ class NumberTest : BaseInstrumentedTest() {
         assertEquals(1, NumberUtils.log10floor(99))
         assertEquals(2, NumberUtils.log10floor(100))
         assertEquals(6, NumberUtils.log10floor(1234567))
+    }
+
+    @Test
+    fun testDigits() {
+        assertContentEquals(intArrayOf(1, 2, 3, 4, 5, 6, 7),
+            NumberUtils.digitsOf(1234567))
     }
 }
