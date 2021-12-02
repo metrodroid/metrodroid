@@ -1,9 +1,7 @@
 package au.id.micolous.metrodroid.card.calypso
 
-import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.Preferences
 
 /**
  * Contains constants related to Calypso.
@@ -47,14 +45,8 @@ object CalypsoData {
             0x2E to R.string.calypso_manufacturer_calypso
     )
 
-    fun getCompanyName(
-            datum: Byte, showRaw: Boolean = Preferences.showRawStationIds) : String {
-        val hexId = NumberUtils.byteToHex(datum)
-        val res = manufacturerNames[datum.toInt() and 0xff]
-        return when {
-            res == null -> Localizer.localizeString(R.string.unknown_format, hexId)
-            showRaw -> "${Localizer.localizeString(res)} [$hexId]"
-            else -> Localizer.localizeString(res)
-        }
-    }
+    fun getCompanyName(datum: Byte): String = NumberUtils.mapLookupLocalize(
+        datum.toInt() and 0xff,
+        manufacturerNames
+    )
 }

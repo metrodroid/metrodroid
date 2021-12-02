@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.card.ultralight
 
 import au.id.micolous.metrodroid.card.CardTransceiveException
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
@@ -36,7 +37,8 @@ object UltralightCardReader {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfu_detect))
 
         val p = UltralightProtocol(tech)
-        val t = p.getCardType()
+        val tRaw = p.getCardType()
+        val t = tRaw.parse()
 
         if (t.pageCount <= 0) {
             return null
@@ -69,8 +71,7 @@ object UltralightCardReader {
             if (!unauthorized) {
                 pages.add(UltralightPage(
                         pageBuffer.sliceOffLen(
-                        pageNumber % 4 * UltralightCard.PAGE_SIZE,
-                        UltralightCard.PAGE_SIZE)))
+                        pageNumber % 4 * UltralightCard.PAGE_SIZE, UltralightCard.PAGE_SIZE)))
             } else {
                 pages.add(UltralightPage.unauthorized())
             }
@@ -78,6 +79,7 @@ object UltralightCardReader {
         }
 
         // Now we have pages to stuff in the card.
-        return UltralightCard(cardModel = t.toString(), pages = pages, isPartialRead = false)
+        return UltralightCard(cardModel = t.toString(), cardRawModel = tRaw,
+            pages = pages, isPartialRead = false)
     }
 }

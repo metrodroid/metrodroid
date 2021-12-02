@@ -20,9 +20,11 @@ package au.id.micolous.metrodroid.card.ultralight
 
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
+import kotlinx.serialization.Serializable
 
 /**
  * Low level commands for MIFARE Ultralight.
@@ -57,63 +59,19 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * @return MIFARE Ultralight card type.
      * @throws CardTransceiveException On card communication error (eg: reconnects)
      */
-    fun getCardType(): UltralightType {
+    fun getCardType(): UltralightCard.UltralightTypeRaw {
         // Try EV1's GET_VERSION command
         // This isn't supported by non-UL EV1s, and will cause those cards to disconnect.
-        val b = try {
-            getVersion()
+        try {
+            return UltralightCard.UltralightTypeRaw(versionCmd = getVersion())
         } catch (e: CardTransceiveException) {
             Log.d(TAG, "getVersion returned error, not EV1", e)
-            null
         } catch (e: CardLostException) {
             Log.d(TAG, "getVersion returned error, not EV1", e)
-            null
         }
 
-        if (b != null) {
-            if (b.size != 8) {
-                Log.d(TAG, "getVersion didn't return 8 bytes, got (${b.size} instead): $b")
-                return UltralightType.UNKNOWN
-            }
-
-            if (b[2].toInt() == 0x04) {
-                // Datasheet suggests we should do some maths here to allow for future card types,
-                // however for all cards, we get an inexact data length. A locked page read does a
-                // NAK, but an authorised read will wrap around to page 0x00.
-                return when (b[6].toInt()) {
-                    0x0F -> UltralightType.NTAG213
-                    0x11 -> UltralightType.NTAG215
-                    0x13 -> UltralightType.NTAG216
-                    else -> {
-                        Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): $b")
-                        UltralightType.UNKNOWN
-                    }
-                }
-            }
-
-            if (b[2].toInt() != 0x03) {
-                // TODO: PM3 notes that there are a number of NTAG which respond to this command, and look similar to EV1.
-                Log.d(TAG, "getVersion got a tag response with non-EV1 product code (${b[2]}): $b")
-                return UltralightType.UNKNOWN
-            }
-
-            // EV1 version detection.
-            //
-            // Datasheet suggests we should do some maths here to allow for future card types,
-            // however for the EV1_MF0UL11 we get an inexact data length. PM3 does the check this
-            // way as well, and locked page reads all look the same.
-            return when (b[6].toInt()) {
-                0x0b -> UltralightType.EV1_MF0UL11
-                0x0e -> UltralightType.EV1_MF0UL21
-                else -> {
-                    Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): $b")
-                    UltralightType.UNKNOWN
-                }
-            }
-        } else {
-            // Reconnect the tag
-            mTagTech.reconnect()
-        }
+        // Reconnect the tag
+        mTagTech.reconnect()
 
         // Try to get a nonce for 3DES authentication with Ultralight C.
         try {
@@ -126,7 +84,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             // TODO: PM3 says NTAG 203 (with different memory size) also looks like this.
 
             mTagTech.reconnect()
-            return UltralightType.MF0ICU1
+            return UltralightCard.UltralightTypeRaw(repliesToAuth1 = false)
         } catch (e: CardLostException) {
             // Non-C cards will disconnect here.
             Log.d(TAG, "auth1 returned error, not Ultralight C.", e)
@@ -134,14 +92,14 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             // TODO: PM3 says NTAG 203 (with different memory size) also looks like this.
 
             mTagTech.reconnect()
-            return UltralightType.MF0ICU1
+            return UltralightCard.UltralightTypeRaw(repliesToAuth1 = false)
         }
 
         // To continue, we need to halt the auth attempt.
         halt()
         mTagTech.reconnect()
 
-        return UltralightType.MF0ICU2
+        return UltralightCard.UltralightTypeRaw(repliesToAuth1 = true)
     }
 
     /**
@@ -152,25 +110,6 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      */
     private fun getVersion(): ImmutableByteArray = sendRequest(GET_VERSION)
 
-    internal enum class UltralightType(
-            /** Number of pages of memory that the card supports.  */
-            val pageCount: Int) {
-        /** Unknown type  */
-        UNKNOWN(-1),
-        /** MIFARE Ultralight (MF0ICU1), 16 pages  */
-        MF0ICU1(16),
-        /** MIFARE Ultralight C (MF0ICU2), 48 pages (but pages 44-47 are masked), 3DES  */
-        MF0ICU2(44),
-        /** MIFARE Ultralight EV1 (MF0UL11), 20 pages  */
-        EV1_MF0UL11(20),
-        /** MIFARE Ultralight EV1 (MF0UL21), 41 pages  */
-        EV1_MF0UL21(41),
-
-        NTAG213(45),
-        NTAG215(135),
-        NTAG216(231)
-    }
-
     /**
      * Gets a nonce for 3DES authentication from the card. This only works on MIFARE Ultralight C
      * cards. Authentication is not implemented in Metrodroid or Android.
@@ -178,8 +117,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * @throws CardTransceiveException on card communication failure, or if the card does not support the
      * command.
      */
-    private fun auth1(): ImmutableByteArray =
-        sendRequest(AUTH_1, 0x00.toByte())
+    private fun auth1(): ImmutableByteArray = sendRequest(AUTH_1, 0x00.toByte())
 
     /**
      * Instructs the card to terminate its session. This is supported by all Ultralight cards.
@@ -201,7 +139,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
     }
 
     private fun sendRequest(vararg data: Byte): ImmutableByteArray {
-        Log.d(TAG,  "sent card: ${data.toImmutable()}")
+        Log.d(TAG,  "sent card: " + ImmutableByteArray.getHexString(data))
 
         return mTagTech.transceive(data.toImmutable())
     }

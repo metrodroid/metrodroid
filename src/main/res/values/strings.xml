@@ -2597,4 +2597,18 @@
          open list. -->
     <string name="open_arrow">Open list</string>
     <string name="clipper_base_date">Base Date</string>
+    <string name="mfu_model">Ultralight model</string>
+    <string name="mfu_get_version">Get version response</string>
+    <string name="mfu_get_version_raw">Raw response</string>
+    <string name="mfu_size">Size</string>
+    <plurals name="mfu_num_pages">
+        <item quantity="one">One page</item>
+        <item quantity="other">%d pages</item>
+    </plurals>
+    <string name="mfu_vendor">Vendor</string>
+    <string name="mfu_product_type">Product type</string>
+    <string name="mfu_product_subtype">Product subtype</string>
+    <string name="mfu_version">Version</string>
+    <string name="mfu_size_id">Size ID</string>
+    <string name="mfu_protocol_type">Protocol type</string>
 </resources>

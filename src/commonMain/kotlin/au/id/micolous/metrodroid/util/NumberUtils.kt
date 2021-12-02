@@ -21,6 +21,10 @@
 
 package au.id.micolous.metrodroid.util
 
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
+
 val Byte.hexString: String get() = NumberUtils.byteToHex(this)
 val Int.hexString: String get() = NumberUtils.intToHex(this)
 val Long.hexString: String get() = NumberUtils.longToHex(this)
@@ -61,18 +65,16 @@ object NumberUtils {
         ((data shr (4 * it)) and 0xf) in 0..9
     }
 
-    fun zeroPad(value: Int, minDigits: Int): String {
-        val cand = value.toString()
-        if (cand.length >= minDigits)
-            return cand
-        return CharArray(minDigits - cand.length) { '0' }.concatToString() + cand
+    fun zeroPad(value: String, minDigits: Int): String {
+        if (value.length >= minDigits)
+            return value
+        return CharArray(minDigits - value.length) { '0' }.concatToString() + value
     }
-    fun zeroPad(value: Long, minDigits: Int): String {
-        val cand = value.toString()
-        if (cand.length >= minDigits)
-            return cand
-        return CharArray(minDigits - cand.length) { '0' }.concatToString() + cand
-    }
+
+    fun zeroPad(value: Int, minDigits: Int): String =
+        zeroPad(value.toString(), minDigits)
+    fun zeroPad(value: Long, minDigits: Int): String =
+        zeroPad(value.toString(), minDigits)
 
     fun groupString(value: String, separator: String, vararg groups: Int): String {
         val ret = StringBuilder()
@@ -174,4 +176,19 @@ object NumberUtils {
         return ctr
     }
 
+    private fun <T>mapLookupReal(datum: Int, map: Map<Int, T>, conv: (T) -> String) : String {
+        val showRaw: Boolean = Preferences.showRawStationIds
+        val hexId = intToHex(datum)
+        val res = map[datum]
+        return when {
+            res == null -> Localizer.localizeString(R.string.unknown_format, hexId)
+            showRaw -> "${conv(res)} [$hexId]"
+            else -> conv(res)
+        }
+    }
+
+    fun mapLookupLocalize(datum: Int, map: Map<Int, StringResource>) : String =
+        mapLookupReal(datum, map) { Localizer.localizeString(it) }
+    fun mapLookup(datum: Int, map: Map<Int, String>) : String =
+        mapLookupReal(datum, map) { it }
 }
