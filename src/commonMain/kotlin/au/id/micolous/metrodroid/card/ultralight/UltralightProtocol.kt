@@ -41,7 +41,7 @@ import kotlinx.serialization.Serializable
  * MIFARE Commands: https://www.nxp.com/docs/en/application-note/AN10833.pdf
  */
 
-internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
+internal class UltralightProtocol(private val mTagTech: CardTransceiver) {
 
     /**
      * Gets the MIFARE Ultralight card type.

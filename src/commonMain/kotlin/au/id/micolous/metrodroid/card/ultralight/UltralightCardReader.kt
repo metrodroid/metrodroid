@@ -82,4 +82,17 @@ object UltralightCardReader {
         return UltralightCard(cardModel = t.toString(), cardRawModel = tRaw,
             pages = pages, isPartialRead = false)
     }
+
+    class PageReader(val base: CardTransceiver) : CardTransceiver by base, UltralightTransceiver {
+        override fun readPages(pageNumber: Int): ImmutableByteArray =
+            base.transceive(ImmutableByteArray.ofB(0x30, pageNumber))
+    }
+
+    fun dumpTagA(
+        tech: CardTransceiver,
+        feedbackInterface: TagReaderFeedbackInterface
+    ): UltralightCard? = dumpTag(
+        PageReader(tech),
+        feedbackInterface
+    )
 }

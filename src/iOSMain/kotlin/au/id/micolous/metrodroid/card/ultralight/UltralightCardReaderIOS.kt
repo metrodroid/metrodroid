@@ -32,7 +32,7 @@ object UltralightCardReaderIOS {
              feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
         val xfer = UltralightTransceiverIOS(wrapper)
         Log.d(TAG, "Start dump ${xfer.uid}")
-        val u = UltralightCardReaderA.dumpTagA(xfer, feedback)
+        val u = UltralightCardReader.dumpTagA(xfer, feedback)
         Card(
             tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), mifareUltralight = u
