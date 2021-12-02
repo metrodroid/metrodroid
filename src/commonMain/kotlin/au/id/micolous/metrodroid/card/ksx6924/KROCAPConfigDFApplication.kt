@@ -71,9 +71,12 @@ data class KROCAPConfigDFApplication (
             override val applicationNames: List<ImmutableByteArray>
                 get() = APP_NAME
 
-            override fun dumpTag(protocol: ISO7816Protocol,
-                                         capsule: ISO7816ApplicationMutableCapsule,
-                                         feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
+            override fun dumpTag(
+                protocol: ISO7816Protocol,
+                capsule: ISO7816ApplicationMutableCapsule,
+                feedbackInterface: TagReaderFeedbackInterface,
+                presentAids: List<ImmutableByteArray?>
+            ): List<ISO7816Application>? {
                 feedbackInterface.updateStatusText(
                         Localizer.localizeString(R.string.card_reading_type, KROCAPTransitData.NAME))
 

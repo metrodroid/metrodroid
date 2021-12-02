@@ -36,8 +36,10 @@ interface ISO7816ApplicationFactory {
         get() = false
 
     fun dumpTag(protocol: ISO7816Protocol,
-                        capsule: ISO7816ApplicationMutableCapsule,
-                        feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>?
+                capsule: ISO7816ApplicationMutableCapsule,
+                feedbackInterface: TagReaderFeedbackInterface,
+                presentAids: List<ImmutableByteArray?>
+    ): List<ISO7816Application>?
 
     val typeMap: Map<String, KSerializer<out ISO7816Application>>
 

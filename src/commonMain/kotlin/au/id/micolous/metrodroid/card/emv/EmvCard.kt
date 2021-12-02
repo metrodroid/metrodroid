@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.card.emv
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.china.ChinaRegistry
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.multi.Localizer
@@ -115,13 +116,18 @@ class EmvFactory : ISO7816ApplicationFactory {
             ImmutableByteArray.fromASCII("2PAY.SYS.DDF01")
     )
 
-    override val fixedAppIds get() = false    
+    override val fixedAppIds get() = false
 
-    override fun dumpTag(protocol: ISO7816Protocol,
-                                 capsule: ISO7816ApplicationMutableCapsule,
-                                 feedbackInterface: TagReaderFeedbackInterface): List<ISO7816Application>? {
+    override fun dumpTag(
+        protocol: ISO7816Protocol,
+        capsule: ISO7816ApplicationMutableCapsule,
+        feedbackInterface: TagReaderFeedbackInterface,
+        presentAids: List<ImmutableByteArray?>
+    ): List<ISO7816Application>? {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_emv))
-        feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
+        if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(presentAids.filterNotNull()).isEmpty()) {
+            feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
+        }
         feedbackInterface.updateProgressBar(0, 32)
         capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
 

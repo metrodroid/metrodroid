@@ -184,7 +184,7 @@ data class ISO7816Card (
                         val app = factory.dumpTag(
                                 iso7816Tag, ISO7816ApplicationMutableCapsule(
                                 appFci = appFci, appName = appId),
-                                feedbackInterface) ?: continue
+                                feedbackInterface, apps.map { it.appName }) ?: continue
 
                         apps.addAll(app)
 

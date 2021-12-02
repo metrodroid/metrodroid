@@ -154,7 +154,8 @@ data class KSX6924Application (
             override fun dumpTag(
                 protocol: ISO7816Protocol,
                 capsule: ISO7816ApplicationMutableCapsule,
-                feedbackInterface: TagReaderFeedbackInterface
+                feedbackInterface: TagReaderFeedbackInterface,
+                presentAids: List<ImmutableByteArray?>
             ): List<ISO7816Application>? {
                 val balanceResponse: ImmutableByteArray
                 val extraRecords = ArrayList<ImmutableByteArray>()
