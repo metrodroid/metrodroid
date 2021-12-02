@@ -72,11 +72,11 @@ data class TransitDataStored internal constructor(
         override val remainingTripsInDayCount: Int? = null,
         override val zones: IntArray? = null,
         override val transferEndTimestamp: Timestamp? = null,
-        val rawFieldsUnknown: List<ListItemInterface>? = null,
-        val rawFieldsFull: List<ListItemInterface>? = null,
+        private val rawFieldsUnknown: List<ListItemInterface>? = null,
+        private val rawFieldsFull: List<ListItemInterface>? = null,
         override val info: List<ListItemInterface>? = null,
-        val agencyName: FormattedString? = null,
-        val agencyNameShort: FormattedString? = null,
+        private val agencyName: FormattedString? = null,
+        private val agencyNameShort: FormattedString? = null,
         override val cost: TransitCurrency? = null
     ): Subscription() {
         constructor(base: Subscription) : this(
