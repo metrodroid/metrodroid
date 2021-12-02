@@ -255,7 +255,7 @@ class ImmutableByteArray private constructor(
         fun fromHex(hex: String) = ImmutableByteArray(mData = hexStringToByteArray(hex))
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.copyOf())
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
-        fun empty(length: Int = 0) = ImmutableByteArray(mData = ByteArray(length))
+        fun empty(length: Int) = ImmutableByteArray(mData = ByteArray(length))
 
         fun of(vararg b: Byte) = ImmutableByteArray(mData = b)
         fun ofB(vararg b: Number) = ImmutableByteArray(b.size) { i -> b[i].toByte() }
