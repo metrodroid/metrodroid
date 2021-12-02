@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 
 object UltralightCardReader {
@@ -46,7 +47,7 @@ object UltralightCardReader {
 
         // Now iterate through the pages and grab all the datas
         var pageNumber = 0
-        var pageBuffer = ByteArray(0)
+        var pageBuffer = ImmutableByteArray(0)
         val pages = mutableListOf<UltralightPage>()
         var unauthorized = false
         while (pageNumber < t.pageCount) {
@@ -67,9 +68,9 @@ object UltralightCardReader {
             // Now lets stuff this into some pages.
             if (!unauthorized) {
                 pages.add(UltralightPage(
-                        pageBuffer.copyOfRange(
+                        pageBuffer.sliceOffLen(
                         pageNumber % 4 * UltralightCard.PAGE_SIZE,
-                        (pageNumber % 4 + 1) * UltralightCard.PAGE_SIZE).toImmutable()))
+                        UltralightCard.PAGE_SIZE)))
             } else {
                 pages.add(UltralightPage.unauthorized())
             }

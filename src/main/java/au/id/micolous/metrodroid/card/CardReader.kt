@@ -62,14 +62,13 @@ object CardReader {
         }
 
         if (NfcF::class.java.name in techs) {
-            val transceiver = AndroidFelicaTransceiver(tag)
-
-            transceiver.connect()
-            val c = FelicaReader.dumpTag(
-                transceiver, feedbackInterface, onlyFirst = Preferences.felicaOnlyFirst)
-            transceiver.close()
+            val c = AndroidFelicaTransceiver(tag).use {
+                it.connect()
+                FelicaReader.dumpTag(
+                    it, feedbackInterface, onlyFirst = Preferences.felicaOnlyFirst
+                )
+            }
             return Card(tagId = tagId, scannedAt = TimestampFull.now(), felica = c)
-
         }
 
         if (MifareClassic::class.java.name in techs) {
@@ -92,27 +91,19 @@ object CardReader {
 
         if (NfcV::class.java.name in techs) {
             val u = dumpTagV(tag, feedbackInterface)
-            if (u != null)
-                return Card(tagId = tagId, scannedAt = TimestampFull.now(),
+            return Card(tagId = tagId, scannedAt = TimestampFull.now(),
                         vicinity = u)
         }
 
         throw UnsupportedTagProtocolException(techs.toList(), tagId.toHexString())
     }
 
-    private fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard {
-        val tech = MifareUltralight.get(tag) ?: throw CardProtocolUnsupportedException("Mifare Ultralight")
-
-        try {
-            tech.connect()
-            return UltralightCardReader.dumpTag(AndroidUltralightTransceiver(tech), feedbackInterface)
+    private fun dumpTagUL(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard =
+        AndroidUltralightTransceiver(tag).use {
+            it.connect()
+            UltralightCardReader.dumpTag(it, feedbackInterface)
                     ?: throw UnknownUltralightException()
-        } finally {
-            if (tech.isConnected) {
-                tech.close()
-            }
         }
-    }
 
     private fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? =
         AndroidNfcATransceiver(tag).use {
@@ -120,7 +111,7 @@ object CardReader {
             UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
 
-    private fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard? =
+    private fun dumpTagV(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): NFCVCard =
         AndroidNfcVTransceiver(tag).use {
             it.connect()
             NFCVCardReader.dumpTag(it, feedbackInterface)

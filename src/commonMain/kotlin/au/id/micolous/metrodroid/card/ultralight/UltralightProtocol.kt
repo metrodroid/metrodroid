@@ -22,6 +22,7 @@ import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 
 /**
  * Low level commands for MIFARE Ultralight.
@@ -71,7 +72,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
 
         if (b != null) {
             if (b.size != 8) {
-                Log.d(TAG, "getVersion didn't return 8 bytes, got (${b.size} instead): " + ImmutableByteArray.getHexString(b))
+                Log.d(TAG, "getVersion didn't return 8 bytes, got (${b.size} instead): $b")
                 return UltralightType.UNKNOWN
             }
 
@@ -84,7 +85,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
                     0x11 -> UltralightType.NTAG215
                     0x13 -> UltralightType.NTAG216
                     else -> {
-                        Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): %s" + ImmutableByteArray.getHexString(b))
+                        Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): $b")
                         UltralightType.UNKNOWN
                     }
                 }
@@ -92,7 +93,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
 
             if (b[2].toInt() != 0x03) {
                 // TODO: PM3 notes that there are a number of NTAG which respond to this command, and look similar to EV1.
-                Log.d(TAG, "getVersion got a tag response with non-EV1 product code (${b[2]}): " + ImmutableByteArray.getHexString(b))
+                Log.d(TAG, "getVersion got a tag response with non-EV1 product code (${b[2]}): $b")
                 return UltralightType.UNKNOWN
             }
 
@@ -105,7 +106,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
                 0x0b -> UltralightType.EV1_MF0UL11
                 0x0e -> UltralightType.EV1_MF0UL21
                 else -> {
-                    Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): " + ImmutableByteArray.getHexString(b))
+                    Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): $b")
                     UltralightType.UNKNOWN
                 }
             }
@@ -149,7 +150,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * @throws CardTransceiveException on card communication failure, or if the card does not support the
      * command.
      */
-    private fun getVersion(): ByteArray = sendRequest(GET_VERSION)
+    private fun getVersion(): ImmutableByteArray = sendRequest(GET_VERSION)
 
     internal enum class UltralightType(
             /** Number of pages of memory that the card supports.  */
@@ -177,9 +178,8 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      * @throws CardTransceiveException on card communication failure, or if the card does not support the
      * command.
      */
-    private fun auth1(): ByteArray {
-        return sendRequest(AUTH_1, 0x00.toByte())
-    }
+    private fun auth1(): ImmutableByteArray =
+        sendRequest(AUTH_1, 0x00.toByte())
 
     /**
      * Instructs the card to terminate its session. This is supported by all Ultralight cards.
@@ -200,10 +200,10 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
 
     }
 
-    private fun sendRequest(vararg data: Byte): ByteArray {
-        Log.d(TAG,  "sent card: " + ImmutableByteArray.getHexString(data))
+    private fun sendRequest(vararg data: Byte): ImmutableByteArray {
+        Log.d(TAG,  "sent card: ${data.toImmutable()}")
 
-        return mTagTech.transceive(data)
+        return mTagTech.transceive(data.toImmutable())
     }
 
     companion object {

@@ -19,21 +19,24 @@
 
 package au.id.micolous.metrodroid.card.ultralight
 
+import android.nfc.Tag
 import android.nfc.tech.MifareUltralight
+import au.id.micolous.metrodroid.card.AndroidCardTransceiver
 import au.id.micolous.metrodroid.card.wrapAndroidExceptions
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 
-// TODO: Merge this with AndroidCardTransceiver
-class AndroidUltralightTransceiver(val tech: MifareUltralight) : UltralightTransceiver {
-    override fun readPages(pageNumber: Int): ByteArray = wrapAndroidExceptions {
-        tech.readPages(pageNumber)
-    }
-
-    override fun transceive(data: ByteArray): ByteArray = wrapAndroidExceptions {
-        tech.transceive(data)
-    }
-
+class AndroidUltralightTransceiver(tag: Tag) : AndroidCardTransceiver<MifareUltralight>(tag, MifareUltralight::get),
+    UltralightTransceiver {
     override fun reconnect() {
-        tech.close()
-        tech.connect()
+        connect()
+    }
+
+    override fun readPages(pageNumber: Int): ImmutableByteArray = wrapAndroidExceptions {
+        protocol!!.readPages(pageNumber).toImmutable()
+    }
+
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+        protocol!!.transceive(data.dataCopy).toImmutable()
     }
 }
