@@ -26,7 +26,7 @@ package au.id.micolous.metrodroid.util
  * This is similar to [takeIf], but will not evaluate the closure in [lazyValue] if [this]
  * is false.
  */
-inline fun <T>Boolean.ifTrue(lazyValue: () -> T?) : T? {
+fun <T>Boolean.ifTrue(lazyValue: () -> T?) : T? {
     return when {
         this -> lazyValue()
         else -> null
@@ -41,7 +41,7 @@ inline fun <T>Boolean.ifTrue(lazyValue: () -> T?) : T? {
  * This is similar to [takeUnless], but will not evaluate the closure in [lazyValue] if [this]
  * is true.
  */
-inline fun <T>Boolean.ifFalse(lazyValue: () -> T?) : T? {
+fun <T>Boolean.ifFalse(lazyValue: () -> T?) : T? {
     return when {
         this -> null
         else -> lazyValue()
