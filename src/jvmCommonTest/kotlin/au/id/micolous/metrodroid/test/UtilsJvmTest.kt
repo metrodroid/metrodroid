@@ -20,6 +20,10 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.util.getErrorMessage
+import au.id.micolous.metrodroid.util.peek
+import au.id.micolous.metrodroid.util.peekAndSkipSpace
+import java.io.ByteArrayInputStream
+import java.io.PushbackInputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -86,5 +90,19 @@ class UtilsJvmTest : BaseInstrumentedTest() {
                 )
             )
         )
+    }
+
+    @Test
+    fun testPeekAndSkipSpace() {
+        val pb = PushbackInputStream(ByteArrayInputStream("   <xml".encodeToByteArray()))
+        assertEquals('<'.code.toByte(), pb.peekAndSkipSpace())
+        assertEquals('<'.code, pb.read())
+    }
+
+    @Test
+    fun testPeek() {
+        val pb = PushbackInputStream(ByteArrayInputStream("<xml".encodeToByteArray()))
+        assertEquals('<'.code.toByte(), pb.peek())
+        assertEquals('<'.code, pb.read())
     }
 }
