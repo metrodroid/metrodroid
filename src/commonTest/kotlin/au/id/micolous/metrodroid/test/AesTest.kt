@@ -77,4 +77,18 @@ class AesTest : BaseInstrumentedTest() {
             )
         }
     }
+
+    @Test
+    fun testDefaultIv() {
+        assertEquals(ImmutableByteArray.fromHex("278e13c267dffcae5c6c939efd8597a0"),
+            Aes.encryptCbc(decrypted = ImmutableByteArray.fromASCII("Single block msg"),
+                key = ImmutableByteArray.fromHex("3dafba429d9eb430b422da802c9fac41")
+            )
+        )
+        assertEquals(ImmutableByteArray.fromASCII("Single block msg"),
+            Aes.decryptCbc(encrypted = ImmutableByteArray.fromHex("278e13c267dffcae5c6c939efd8597a0"),
+                key = ImmutableByteArray.fromHex("3dafba429d9eb430b422da802c9fac41")
+            )
+        )
+    }
 }
