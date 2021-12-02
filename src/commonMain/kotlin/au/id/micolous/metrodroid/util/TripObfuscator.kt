@@ -47,8 +47,10 @@ object TripObfuscator {
 
         val today = TimestampFull.now().toDaystamp()
 
+        val ret = Daystamp.fromDayOfYear(year, dayOfYear)
+
         // Adjust for the time of year
-        if (year > today.year || year == today.year && dayOfYear >= today.dayOfYear) {
+        if (ret > today) {
             year--
         }
 
