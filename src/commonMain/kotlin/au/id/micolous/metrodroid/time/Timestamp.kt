@@ -22,9 +22,8 @@
 
 package au.id.micolous.metrodroid.time
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.*
+import au.id.micolous.metrodroid.util.AtomicRef
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
@@ -394,8 +393,12 @@ data class TimestampFull(val timeInMillis: Long,
     override fun obfuscateDelta(delta: Long) = TimestampFull(timeInMillis = timeInMillis + delta, tz = tz)
 
     companion object {
-        fun now() = TimestampFull(
+        @VisibleForTesting
+        val nowSource = AtomicRef {
+            TimestampFull(
                 timeInMillis = Clock.System.now().toEpochMilliseconds(),
                 tz = MetroTimeZone(TimeZone.currentSystemDefault().id))
+        }
+        fun now() = nowSource.value()
     }
 }

@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.Trip
 import kotlin.random.Random
@@ -33,13 +34,28 @@ object TripObfuscator {
     /**
      * Remaps days of the year to a different day of the year.
      */
-    private val mCalendarMapping = (0..365).shuffled()
+    private val mRandomSource = AtomicRef<Random>(Random.Default)
+    private val mCalendarMapping = AtomicRef((0..365).toList())
+
+    private fun prepareCalendarMapping() {
+        mCalendarMapping.value = (0..365).shuffled(mRandomSource.value)
+    }
+
+    init {
+        prepareCalendarMapping()
+    }
+
+    @VisibleForTesting
+    fun setRandomSourceForTest(random: Random) {
+        mRandomSource.value = random
+        prepareCalendarMapping()
+    }
 
     private fun obfuscateDaystamp(input: Daystamp): Daystamp {
         var year = input.year
         var dayOfYear = input.dayOfYear
-        if (dayOfYear < mCalendarMapping.size) {
-            dayOfYear = mCalendarMapping[dayOfYear]
+        if (dayOfYear < mCalendarMapping.value.size) {
+            dayOfYear = mCalendarMapping.value[dayOfYear]
         } else {
             // Shouldn't happen...
             Log.w(TAG, "Oops, got out of range day-of-year ($dayOfYear)")
@@ -81,7 +97,7 @@ object TripObfuscator {
         val minute = (input.minute + 2) / 5 * 5
 
         // Add a deviation of up to 350 minutes (5.5 hours) earlier or later.
-        val off = Random.nextInt(700) - 350
+        val off = mRandomSource.value.nextInt(700) - 350
 
         return daystamp.promote(input.tz, input.hour, minute) + Duration.mins(off)
     }

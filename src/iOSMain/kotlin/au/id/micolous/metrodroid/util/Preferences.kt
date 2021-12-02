@@ -42,12 +42,12 @@ actual object Preferences {
     actual val obfuscateBalance by BoolDelegate("pref_obfuscate_balance")
     actual val obfuscateTripFares by BoolDelegate("pref_obfuscate_trip_fares")
     actual val hideCardNumbers by BoolDelegate("pref_hide_card_numbers")
-    actual val obfuscateTripDates by BoolDelegate("pref_obfuscate_trip_dates")
+    actual var obfuscateTripDates by BoolDelegate("pref_obfuscate_trip_dates")
     actual val convertTimezone by BoolDelegate("pref_convert_timezones")
     actual val mfcFallbackReader: String get() = "" // useful only for reading really old dumps
     actual val mfcAuthRetry: Int get() = 5 // no MFC reader
     actual var retrieveLeapKeys by BoolDelegate("pref_retrieve_leap_keys")
-    actual val obfuscateTripTimes by BoolDelegate("pref_obfuscate_trip_times")
+    actual var obfuscateTripTimes by BoolDelegate("pref_obfuscate_trip_times")
     actual val debugSpans by BoolDelegate("pref_debug_spans")
     actual val localisePlaces by BoolDelegate("pref_localise_places")
 

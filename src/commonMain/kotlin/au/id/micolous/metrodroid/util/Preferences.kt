@@ -27,7 +27,7 @@ expect object Preferences {
     val obfuscateTripFares: Boolean
     val hideCardNumbers: Boolean
     var showRawStationIds:Boolean
-    val obfuscateTripDates: Boolean
+    var obfuscateTripDates: Boolean
     val convertTimezone: Boolean
     val mfcFallbackReader: String
     val mfcAuthRetry: Int
@@ -35,7 +35,7 @@ expect object Preferences {
     var showBothLocalAndEnglish: Boolean
     val language: String
     val region: String?
-    val obfuscateTripTimes: Boolean
+    var obfuscateTripTimes: Boolean
     val debugSpans: Boolean
     val localisePlaces: Boolean
     val metrodroidVersion: String

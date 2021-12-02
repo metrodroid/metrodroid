@@ -7,12 +7,12 @@ actual object Preferences {
     actual val obfuscateBalance: Boolean = false
     actual val obfuscateTripFares: Boolean = false
     actual val hideCardNumbers: Boolean = false
-    actual val obfuscateTripDates: Boolean = false
+    actual var obfuscateTripDates: Boolean = false
     actual val convertTimezone: Boolean = false
     actual val mfcFallbackReader: String = ""
     actual val mfcAuthRetry: Int = 5
     actual var retrieveLeapKeys: Boolean = false
-    actual val obfuscateTripTimes: Boolean = false
+    actual var obfuscateTripTimes: Boolean = false
     actual val debugSpans: Boolean = false
     actual val localisePlaces: Boolean = false
 

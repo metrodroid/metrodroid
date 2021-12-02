@@ -109,10 +109,10 @@ actual object Preferences {
     actual val obfuscateBalance by BoolDelegate(PREF_OBFUSCATE_BALANCE, false)
     actual val obfuscateTripFares by BoolDelegate(PREF_OBFUSCATE_TRIP_FARES, false)
     actual var showRawStationIds by BoolDelegate(PREF_SHOW_RAW_IDS, false)
-    actual val obfuscateTripDates by BoolDelegate(PREF_OBFUSCATE_TRIP_DATES, false)
+    actual var obfuscateTripDates by BoolDelegate(PREF_OBFUSCATE_TRIP_DATES, false)
     actual val convertTimezone by BoolDelegate(PREF_CONVERT_TIMEZONES, false)
 
-    actual val obfuscateTripTimes by BoolDelegate(PREF_OBFUSCATE_TRIP_TIMES, false)
+    actual var obfuscateTripTimes by BoolDelegate(PREF_OBFUSCATE_TRIP_TIMES, false)
 
     val hideUnsupportedRibbon by BoolDelegate(PREF_HIDE_UNSUPPORTED_RIBBON, false)
     actual val localisePlaces by BoolDelegate(PREF_LOCALISE_PLACES, false)
