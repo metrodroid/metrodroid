@@ -274,14 +274,15 @@ class ImmutableByteArray private constructor(
                 else input
 
         fun getHexDump(b: ByteArray, offset: Int, length: Int): FormattedString {
-            val result = StringBuilder()
+            val resultSb = StringBuilder()
             for (i in 0 until length) {
-                result.append(((b[i + offset].toInt() and 0xff) + 0x100).toString(16).substring(1))
+                resultSb.append(((b[i + offset].toInt() and 0xff) + 0x100).toString(16).substring(1))
                 if (i and 0xf == 0xf)
-                    result.append('\n')
+                    resultSb.append('\n')
                 else if (i and 3 == 3 && i and 0xf != 0xf)
-                    result.append(' ')
+                    resultSb.append(' ')
             }
+            val result = resultSb.removeSuffix("\n").removeSuffix(" ")
             return FormattedString.monospace(result.toString())
         }
 
