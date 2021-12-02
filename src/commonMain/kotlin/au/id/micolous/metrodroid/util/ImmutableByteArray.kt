@@ -110,13 +110,7 @@ class ImmutableByteArray private constructor(
     fun <T> fold(l: T, function: (T, Byte) -> T): T = mData.fold(l, function)
     fun all(function: (Byte) -> Boolean): Boolean = mData.all(function)
     fun any(function: (Byte) -> Boolean): Boolean = mData.any(function)
-    fun getHexString(offset: Int, length: Int): String {
-        val result = StringBuilder()
-        for (i in offset until offset + length) {
-            result.append(((mData[i].toInt() and 0xff) or 0x100).toString(16).substring(1))
-        }
-        return result.toString()
-    }
+    fun getHexString(offset: Int, length: Int): String = getHexString(mData, offset, length)
 
     fun byteArrayToIntReversed(off: Int, len: Int) = byteArrayToLongReversed(off, len).toInt()
     fun byteArrayToIntReversed() = byteArrayToIntReversed(0, size)
