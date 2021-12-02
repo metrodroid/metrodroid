@@ -195,10 +195,6 @@ class ImmutableByteArray private constructor(
         os.write(mData)
     }
 
-    fun writeTo(os: Output, offset: Int, length: Int) {
-        os.write(mData, offset, length)
-    }
-
     fun chunked(size: Int): List<ImmutableByteArray>
             = chunked(size).map {
         it.toByteArray().toImmutable()

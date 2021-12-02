@@ -73,7 +73,7 @@ class JavaStreamInput (private val stream: InputStream): Input {
 }
 
 class JavaStreamOutput (private val stream: OutputStream): Output {
-    override fun write(b: ByteArray, off: Int, sz: Int) {
-        stream.write(b, off, sz)
+    override fun write(b: ByteArray) {
+        stream.write(b)
     }
 }
