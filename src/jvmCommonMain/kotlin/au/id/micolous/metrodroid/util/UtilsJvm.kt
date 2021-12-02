@@ -24,10 +24,6 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.PushbackInputStream
 
-operator fun StringBuilder.plusAssign(other: String) {
-    this.append(other)
-}
-
 /**
  * Gets an error message for a [Throwable], preferring a localized message if available.
  */
