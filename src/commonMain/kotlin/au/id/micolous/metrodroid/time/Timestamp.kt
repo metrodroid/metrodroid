@@ -256,8 +256,8 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
         localDate + duration)
 
     fun adjust() : Daystamp = this
-    fun promote(tz: MetroTimeZone, hour: Int, min: Int): TimestampFull = TimestampFull(
-            tz = tz, localDateTime = localDate.atTime(hour, min))
+    fun promote(tz: MetroTimeZone, hour: Int, min: Int, second: Int = 0): TimestampFull = TimestampFull(
+            tz = tz, localDateTime = localDate.atTime(hour, min, second))
 
     /**
      * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
@@ -311,6 +311,7 @@ data class TimestampFull(val timeInMillis: Long,
 
     val hour: Int get() = ldt.hour
     val minute: Int get() = ldt.minute
+    val second: Int get() = ldt.second
     val ldt by lazy {
         Instant.fromEpochMilliseconds(timeInMillis).toLocalDateTime(tz.libTimeZone)
     }

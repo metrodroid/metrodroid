@@ -73,7 +73,7 @@ object TripObfuscator {
             input.toDaystamp(), obfuscateDates)
 
         if (!obfuscateTimes)
-            return daystamp.promote(input.tz, input.hour, input.minute)
+            return daystamp.promote(input.tz, input.hour, input.minute, input.second)
 
         // Reduce resolution of timestamps to 5 minutes.
         val minute = (input.minute + 2) / 5 * 5
