@@ -104,4 +104,5 @@ object FelicaConsts {
     const val SERVICE_FELICA_LITE_READONLY = 0x000b
     // FeliCa Lite, read-write mode
     const val SERVICE_FELICA_LITE_READWRITE = 0x0009
+    const val FELICA_LITE_BLOCK_MC = 0x88
 }

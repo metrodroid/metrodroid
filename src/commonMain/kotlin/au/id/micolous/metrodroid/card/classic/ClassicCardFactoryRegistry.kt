@@ -17,11 +17,14 @@ import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitD
 import au.id.micolous.metrodroid.transit.metromoney.MetroMoneyTransitFactory
 import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData
+import au.id.micolous.metrodroid.transit.ndef.NdefClassicTransitFactory
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.umarsh.UmarshTransitFactory
 import au.id.micolous.metrodroid.transit.otago.OtagoGoCardTransitFactory
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData
 import au.id.micolous.metrodroid.transit.oyster.OysterTransitData
+import au.id.micolous.metrodroid.transit.pilet.KievDigitalTransitFactory
+import au.id.micolous.metrodroid.transit.pilet.TartuTransitFactory
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
@@ -65,7 +68,6 @@ object ClassicCardFactoryRegistry {
             KievTransitData.FACTORY,
             MetroQTransitData.FACTORY,
             EasyCardTransitData.FACTORY,
-            TartuTransitFactory,
             SelectaFranceTransitData.FACTORY,
             SunCardTransitData.FACTORY,
             ZolotayaKoronaTransitData.FACTORY,
@@ -85,6 +87,9 @@ object ClassicCardFactoryRegistry {
             CifialTransitFactory,
             YarGorTransitFactory,
 
+            TartuTransitFactory, // Must be before NDEF as it's a special case of Ndef
+            NdefClassicTransitFactory,
+
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
@@ -99,6 +104,9 @@ object ClassicCardFactoryRegistry {
             FallbackFactory)
 
     val plusFactories = listOf(
+            KievDigitalTransitFactory,
+            NdefClassicTransitFactory,
+
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
