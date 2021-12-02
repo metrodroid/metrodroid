@@ -41,4 +41,6 @@ interface CardTransceiver {
      * @throws CardLostException If the card moves out of the field.
      */
     fun transceive(data: ImmutableByteArray): ImmutableByteArray
+
+    fun reconnect() {}
 }

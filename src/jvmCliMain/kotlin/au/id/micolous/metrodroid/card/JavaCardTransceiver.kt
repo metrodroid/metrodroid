@@ -124,6 +124,10 @@ class JavaCardTransceiver(
         if (printTrace) println("<<< ${r.getHexString()}")
         return r
     }
+
+    override fun reconnect() {
+        connect()
+    }
 }
 
 class JavaFeliCaTransceiver private constructor(

@@ -23,6 +23,5 @@ import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 interface UltralightTransceiver : CardTransceiver {
-    fun reconnect()
     fun readPages(pageNumber: Int): ImmutableByteArray
 }

@@ -28,10 +28,6 @@ import au.id.micolous.metrodroid.util.toImmutable
 
 class AndroidUltralightTransceiver(tag: Tag) : AndroidCardTransceiver<MifareUltralight>(tag, MifareUltralight::get),
     UltralightTransceiver {
-    override fun reconnect() {
-        connect()
-    }
-
     override fun readPages(pageNumber: Int): ImmutableByteArray = wrapAndroidExceptions {
         protocol!!.readPages(pageNumber).toImmutable()
     }

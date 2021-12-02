@@ -60,6 +60,10 @@ abstract class AndroidCardTransceiver<T: TagTechnology>
         }
     }
 
+    override fun reconnect() {
+        connect()
+    }
+
     override fun close() {
         val prot = this.protocol
         this.protocol = null
