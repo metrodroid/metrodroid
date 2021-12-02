@@ -1191,4 +1191,18 @@
     <string name="location_fukuoka_city">Fukuoka, Japan</string>
     <string name="purse_ride_counter">Aantal gereden ritten op portemonnee</string>
     <string name="clipper_base_date">Basisdatum</string>
+    <string name="mfu_get_version">Versie-respons ophalen</string>
+    <string name="mfu_get_version_raw">Onbewerkte respons ophalen</string>
+    <plurals name="mfu_num_pages">
+        <item quantity="one">Eén pagina</item>
+        <item quantity="other">%d pagina\'s</item>
+    </plurals>
+    <string name="mfu_vendor">Leverancier</string>
+    <string name="mfu_product_subtype">Soort product (sub)</string>
+    <string name="mfu_version">Versie</string>
+    <string name="mfu_size_id">Omvangsid</string>
+    <string name="mfu_size">Omvang</string>
+    <string name="mfu_model">Ultralicht model</string>
+    <string name="mfu_product_type">Soort product</string>
+    <string name="mfu_protocol_type">Soort protocol</string>
 </resources>
