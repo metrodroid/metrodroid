@@ -42,6 +42,13 @@ class ImmutableByteArrayTest : BaseInstrumentedTest() {
         assertEquals(-1, s.indexOf(s, 1))
         assertEquals(-1, s.indexOf(s, end = 1))
         assertEquals(-1, s.indexOf(s, end = 2))
+
+        assertEquals(0, s.indexOf(ImmutableByteArray.empty()))
+        assertEquals(1, s.indexOf(ImmutableByteArray.empty(), start = 1))
+        assertEquals(-1, s.indexOf(ImmutableByteArray.empty(), start = -1))
+        assertEquals(-1, s.indexOf(ImmutableByteArray.empty(), start = 0, end = 10))
+        assertEquals(-1, s.indexOf(ImmutableByteArray.empty(), start = 10))
+        assertEquals(-1, s.indexOf(ImmutableByteArray.empty(), start = 1, end = 0))
     }
 
     @Test
@@ -83,6 +90,11 @@ class ImmutableByteArrayTest : BaseInstrumentedTest() {
         assertEquals(-1, s.indexOf(n2, 3, 4))
         assertEquals(-1, s.indexOf(n2, 3, 5))
         assertEquals(-1, s.indexOf(n2, 3, 6))
+
+        assertEquals(2, ImmutableByteArray.fromASCII("ABABABCD")
+            .indexOf(ImmutableByteArray.fromASCII("ABABCD")))
+        assertEquals(3, ImmutableByteArray.fromASCII("ABCABCDABCD")
+            .indexOf(ImmutableByteArray.fromASCII("ABCDABCD")))
     }
 
     @Test
