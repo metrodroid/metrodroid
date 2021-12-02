@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.time.TimestampFull
 
 class OctopusData {
     companion object {
-        val OCTOPUS_TZ = MetroTimeZone.BEIJING
+        private val OCTOPUS_TZ = MetroTimeZone.BEIJING
 
         private val OCTOPUS_OFFSETS = listOf(
                 TimestampFull(OCTOPUS_TZ,
