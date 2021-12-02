@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.UriListItem
 
 abstract class SerialOnlyTransitData : TransitData() {
-    protected open val extraInfo: List<ListItem>?
+    protected open val extraInfo: List<ListItemInterface>?
         get() = null
 
     protected abstract val reason: Reason
