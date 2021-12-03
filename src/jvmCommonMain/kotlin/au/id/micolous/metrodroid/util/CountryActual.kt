@@ -1,4 +1,3 @@
-@file:JvmName("CountryKtActual")
 package au.id.micolous.metrodroid.util
 
 import java.util.*

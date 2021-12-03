@@ -1,4 +1,3 @@
-@file:JvmName("CountryKtActualAndroid")
 package au.id.micolous.metrodroid.util
 
 import android.os.Build
