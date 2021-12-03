@@ -40,27 +40,15 @@ interface StationTableReader {
                               operatorName: TransitName?, pl: Map<Int, TransitName?>?): Station {
             val hasLocation = ps.latitude != 0f && ps.longitude != 0f
 
-            var lines: MutableList<FormattedString>? = null
-            var lineIds: MutableList<String>? = null
-
-            if (pl != null) {
-                lines = ArrayList()
-                lineIds = ArrayList()
-                for ((first, second) in pl) {
-                    lines.addAll(listOfNotNull(second?.selectBestName(true)))
-                    lineIds.add(NumberUtils.intToHex(first))
-                }
-            }
-
             return Station(
                     humanReadableID,
                     operatorName?.selectBestName(true),
-                    lines,
+                    pl?.values?.mapNotNull { it?.selectBestName(true) },
                     ps.name.selectBestName(false),
                     ps.name.selectBestName(true),
                     if (hasLocation) ps.latitude else null,
                     if (hasLocation) ps.longitude else null,
-                    false, lineIds.orEmpty())
+                    false, pl?.keys?.map { NumberUtils.intToHex(it) }.orEmpty())
         }
 
         fun getStationNoFallback(reader: String?, id: Int,
