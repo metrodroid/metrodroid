@@ -38,7 +38,7 @@ interface StationTableReader {
 
         private fun fromProto(humanReadableID: String, ps: ProtoStation,
                               operatorName: TransitName?, pl: Map<Int, TransitName?>?): Station {
-            val hasLocation = ps.latitude != 0f && ps.longitude != 0f
+            val hasLocation = ps.latitude != 0f || ps.longitude != 0f
 
             return Station(
                     humanReadableID,
