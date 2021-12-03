@@ -39,9 +39,9 @@ actual object Preferences {
             NSUserDefaults.standardUserDefaults.setBool(value, forKey = name)
         }
     }
-    actual val obfuscateBalance by BoolDelegate("pref_obfuscate_balance")
-    actual val obfuscateTripFares by BoolDelegate("pref_obfuscate_trip_fares")
-    actual val hideCardNumbers by BoolDelegate("pref_hide_card_numbers")
+    actual var obfuscateBalance by BoolDelegate("pref_obfuscate_balance")
+    actual var obfuscateTripFares by BoolDelegate("pref_obfuscate_trip_fares")
+    actual var hideCardNumbers by BoolDelegate("pref_hide_card_numbers")
     actual var obfuscateTripDates by BoolDelegate("pref_obfuscate_trip_dates")
     actual val convertTimezone by BoolDelegate("pref_convert_timezones")
     actual val mfcFallbackReader: String get() = "" // useful only for reading really old dumps

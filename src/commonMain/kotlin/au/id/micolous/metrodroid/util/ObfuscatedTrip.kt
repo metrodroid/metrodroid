@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitCurrencyBase
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 
@@ -31,22 +31,22 @@ import au.id.micolous.metrodroid.transit.Trip
  * Special wrapper for Trip that handles obfuscation of Trip data.
  */
 @Parcelize
-internal class ObfuscatedTrip (
-        override val startTimestamp: Timestamp?,
-        override val endTimestamp: Timestamp?,
-        override val routeName: FormattedString?,
-        override val startStation: Station?,
-        override val mode: Mode,
-        override val endStation: Station?,
-        override val fare: TransitCurrency?,
-        override val humanReadableRouteID: String?,
-        override val vehicleID: String?,
-        override val machineID: String?,
-        override val passengerCount: Int,
-        private val mAgencyName: FormattedString?,
-        private val mShortAgencyName: FormattedString?,
-        private val rawFieldsUnknown: String? = null,
-        private val rawFieldsFull: String? = null,
+data class ObfuscatedTrip (
+    override val startTimestamp: Timestamp? = null,
+    override val endTimestamp: Timestamp? = null,
+    override val routeName: FormattedString? = null,
+    override val startStation: Station? = null,
+    override val mode: Mode,
+    override val endStation: Station? = null,
+    override val fare: TransitCurrencyBase? = null,
+    override val humanReadableRouteID: String? = null,
+    override val vehicleID: String? = null,
+    override val machineID: String? = null,
+    override val passengerCount: Int,
+    private val mAgencyName: FormattedString? = null,
+    private val mShortAgencyName: FormattedString? = null,
+    private val rawFieldsUnknown: String? = null,
+    private val rawFieldsFull: String? = null,
 ): Trip() {
 
     override fun getRawFields(level: TransitData.RawLevel): String? = when {

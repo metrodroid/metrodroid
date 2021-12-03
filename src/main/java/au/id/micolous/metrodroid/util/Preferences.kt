@@ -105,9 +105,9 @@ actual object Preferences {
      *
      * @return true if we should not show any card numbers
      */
-    actual val hideCardNumbers by BoolDelegate(PREF_HIDE_CARD_NUMBERS, false)
-    actual val obfuscateBalance by BoolDelegate(PREF_OBFUSCATE_BALANCE, false)
-    actual val obfuscateTripFares by BoolDelegate(PREF_OBFUSCATE_TRIP_FARES, false)
+    actual var hideCardNumbers by BoolDelegate(PREF_HIDE_CARD_NUMBERS, false)
+    actual var obfuscateBalance by BoolDelegate(PREF_OBFUSCATE_BALANCE, false)
+    actual var obfuscateTripFares by BoolDelegate(PREF_OBFUSCATE_TRIP_FARES, false)
     actual var showRawStationIds by BoolDelegate(PREF_SHOW_RAW_IDS, false)
     actual var obfuscateTripDates by BoolDelegate(PREF_OBFUSCATE_TRIP_DATES, false)
     actual val convertTimezone by BoolDelegate(PREF_CONVERT_TIMEZONES, false)

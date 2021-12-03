@@ -1,33 +1,23 @@
 package au.id.micolous.metrodroid.transit.troika
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
-
-// Troika doesn't store monetary price of trip. Only a fare code. So show this fare
-// code to the user.
-@Parcelize
-private class TroikaFare (private val mDesc: String): TransitCurrency(0, "RUB") {
-    override fun formatCurrencyString(isBalance: Boolean)= FormattedString(mDesc)
-}
 
 @Parcelize
 internal class TroikaTrip (override val startTimestamp: Timestamp?,
                            private val mTransportType: TroikaBlock.TroikaTransportType?,
                            private val mValidator: Int?,
                            private val mRawTransport: String?,
-                           private val mFareDesc: String?): Trip() {
+                           private val mFareDesc: StringResource?): Trip() {
     override val startStation: Station?
         get() = if (mValidator == null) null else StationTableReader.getStation(TROIKA_STR, mValidator)
 
-    override val fare: TransitCurrency?
-        get() = if (mFareDesc == null) null else TroikaFare(mFareDesc)
+    // Troika doesn't store monetary price of trip. Only a fare code. So show this fare
+    // code to the user.
+    override val fare: TransitCurrencyResource?
+        get() = mFareDesc?.let { TransitCurrencyResource(it) }
 
     override val mode: Mode
         get() = when (mTransportType) {

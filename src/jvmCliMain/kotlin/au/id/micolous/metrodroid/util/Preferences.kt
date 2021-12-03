@@ -4,9 +4,9 @@ import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
 
 actual object Preferences {
-    actual val obfuscateBalance: Boolean = false
-    actual val obfuscateTripFares: Boolean = false
-    actual val hideCardNumbers: Boolean = false
+    actual var obfuscateBalance: Boolean = false
+    actual var obfuscateTripFares: Boolean = false
+    actual var hideCardNumbers: Boolean = false
     actual var obfuscateTripDates: Boolean = false
     actual val convertTimezone: Boolean = false
     actual val mfcFallbackReader: String = ""

@@ -137,7 +137,7 @@ abstract class Trip : Parcelable {
      *
      * @return The cost of the fare formatted in the local currency of the card.
      */
-    abstract val fare: TransitCurrency?
+    abstract val fare: TransitCurrencyBase?
 
     abstract val mode: Mode
 

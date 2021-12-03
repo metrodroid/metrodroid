@@ -23,9 +23,9 @@ import au.id.micolous.metrodroid.transit.TransitData
 
 expect object Preferences {
     val rawLevel: TransitData.RawLevel
-    val obfuscateBalance: Boolean
-    val obfuscateTripFares: Boolean
-    val hideCardNumbers: Boolean
+    var obfuscateBalance: Boolean
+    var obfuscateTripFares: Boolean
+    var hideCardNumbers: Boolean
     var showRawStationIds:Boolean
     var obfuscateTripDates: Boolean
     val convertTimezone: Boolean

@@ -55,7 +55,7 @@ data class TransitDataStored internal constructor(
         fun store(original: TransitData): TransitDataStored = TransitDataStored(
             balances = original.balances,
             serialNumber = original.serialNumber,
-            trips = original.prepareTrips(safe=true),
+            trips = original.prepareTripsSafe(),
             subscriptions = original.subscriptions,
             info = original.info,
             cardName = original.cardName,

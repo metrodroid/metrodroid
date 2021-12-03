@@ -19,19 +19,45 @@
 
 package au.id.micolous.metrodroid.transit
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.VisibleForTesting
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.util.ISO4217
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlin.random.Random
 
 internal expect fun formatCurrency(value: Int, divisor: Int, currencyCode: String, isBalance: Boolean): FormattedString
 
+sealed class TransitCurrencyBase : TransitBalance, Parcelable {
+    abstract fun formatCurrencyString(isBalance: Boolean): FormattedString
+    abstract fun obfuscate(): TransitCurrencyBase
+
+    @Suppress("USELESS_CAST")
+    override fun equals(other: Any?): Boolean = when (this) {
+        is TransitCurrencyResource -> this as TransitCurrencyResource == other
+        is TransitCurrency -> this as TransitCurrency == other
+    }
+
+    @Suppress("USELESS_CAST")
+    override fun hashCode(): Int = when (this) {
+        is TransitCurrencyResource -> (this as TransitCurrencyResource).hashCode()
+        is TransitCurrency -> (this as TransitCurrency).hashCode()
+    }
+}
+
 @Parcelize
-open class TransitCurrency (
+data class TransitCurrencyResource (
+    private val mDesc: StringResource)
+    : TransitCurrencyBase () {
+    override fun formatCurrencyString(isBalance: Boolean) =
+        Localizer.localizeFormatted(mDesc)
+    override fun obfuscate(): TransitCurrencyResource = this
+    override val balance: TransitCurrency
+        get() = TransitCurrency.USD(0)
+}
+
+@Parcelize
+data class TransitCurrency (
         private val mCurrency: Int,
         /**
          * 3 character currency code (eg: AUD) per ISO 4217.
@@ -47,7 +73,7 @@ open class TransitCurrency (
          */
         @VisibleForTesting
         val mDivisor: Int
-): TransitBalance, Parcelable {
+): TransitCurrencyBase(), Parcelable {
 
     override val balance: TransitCurrency
         get() = this
@@ -146,10 +172,9 @@ open class TransitCurrency (
         return TransitCurrency(cur, mCurrencyCode, mDivisor)
     }
 
-    fun obfuscate(): TransitCurrency {
-        return obfuscate(Random.nextInt(100) - 50,
-                Random.nextDouble() * 0.4 + 0.8)
-    }
+    override fun obfuscate(): TransitCurrency =
+        obfuscate(TripObfuscator.randomSource.nextInt(100) - 50,
+            TripObfuscator.randomSource.nextDouble() * 0.4 + 0.8)
 
     /**
      * This handles Android-specific issues:
@@ -162,7 +187,7 @@ open class TransitCurrency (
      * special way)
      * @return Formatted currency string
      */
-    open fun formatCurrencyString(isBalance: Boolean): FormattedString {
+    override fun formatCurrencyString(isBalance: Boolean): FormattedString {
         return formatCurrency(mCurrency, mDivisor, mCurrencyCode, isBalance)
     }
 

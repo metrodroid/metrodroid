@@ -24,8 +24,8 @@ internal class TroikaPurseE3(val rawData: ImmutableByteArray) : TroikaBlock(
         mLastTransportLeadingCode = rawData.getBitsFromBuffer(178, 2),
         mLastTransportLongCode = rawData.getBitsFromBuffer(180, 8),
         mFareDesc = when (rawData.getBitsFromBuffer(210, 2)) {
-            1 -> Localizer.localizeString(R.string.troika_fare_single)
-            2 -> Localizer.localizeString(R.string.troika_fare_90mins)
+            1 -> R.string.troika_fare_single
+            2 -> R.string.troika_fare_90mins
             else -> null
         },
         //12 bits zero

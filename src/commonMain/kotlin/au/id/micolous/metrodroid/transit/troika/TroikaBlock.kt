@@ -1,9 +1,6 @@
 package au.id.micolous.metrodroid.transit.troika
 
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
@@ -65,7 +62,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                                                /**
                                                 * Text description of last fare.
                                                 */
-                                               private val mFareDesc: String?,
+                                               private val mFareDesc: StringResource?,
 
                                                private val mCheckSum: String?) : Parcelable {
 
@@ -138,7 +135,7 @@ abstract class TroikaBlock private constructor(private val mSerial: Long,
                 mValidityEnd: Timestamp? = null,
                 mRemainingTrips: Int? = null,
                 mTransfers: List<Int> = listOf(),
-                mFareDesc: String? = null,
+                mFareDesc: StringResource? = null,
                 mCheckSum: String? = null) : this(
             mSerial = getSerial(rawData),
             mLayout = getLayout(rawData),
