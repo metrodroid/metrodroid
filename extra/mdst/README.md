@@ -31,7 +31,7 @@ All the scripts here use Python 3.  You need `protoc` and `python3-protobuf`.
 
 To build the Python protobuf bindings, run `make stations_pb2.py`.
 
-The Kotlin implementation of MdST is located in `StationTableReader.kt` (in the main source tree).
+The Kotlin implementation of MdST is located in `StationTableReaderImpl.kt` (in the main source tree).
 
 ## Tools
 
