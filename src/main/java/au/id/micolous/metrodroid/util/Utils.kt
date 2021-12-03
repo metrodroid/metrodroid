@@ -122,14 +122,13 @@ object Utils {
      *
      * @return `true` if the activity was started, `false` if the activity could not be found.
      */
-    fun tryStartActivity(context: Context, action: String): Boolean {
-        return try {
+    fun tryStartActivity(context: Context, action: String): Boolean =
+        try {
             context.startActivity(Intent(action))
             true
         } catch (_: ActivityNotFoundException) {
             false
         }
-    }
 
     fun checkNfcEnabled(activity: Activity, adapter: NfcAdapter?) {
         if (adapter != null && adapter.isEnabled) {
