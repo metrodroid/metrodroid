@@ -53,7 +53,7 @@ data class AmiiboTransitData internal constructor(
 
     companion object {
         const val NAME = "Amiibo"
-        private const val AMIIBO_STR = "amiibo"
+        const val AMIIBO_STR = "amiibo"
         private val figureTypes = mapOf(
                 0 to R.string.amiibo_type_figure,
                 1 to R.string.amiibo_type_card,

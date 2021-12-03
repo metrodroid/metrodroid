@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideTransaction
+import au.id.micolous.metrodroid.transit.amiibo.AmiiboTransitData.Companion.AMIIBO_STR
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData
@@ -13,6 +14,7 @@ import au.id.micolous.metrodroid.util.StationTableReader
 
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.Companion.TRANSPORT_BUS
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.Companion.TRANSPORT_METRO
+import au.id.micolous.metrodroid.util.ProtoStation
 import kotlin.test.*
 
 /**
@@ -31,9 +33,59 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         Preferences.showRawStationIds = true
         s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
         assertEquals("Domestic Airport [0x9]", s.getStationName(false).unformatted)
+        assertEquals(
+            "Domestic Airport [0x9]",
+            StationTableReader.getStationNoFallback(
+                reader = SeqGoData.SEQ_GO_STR,
+                id = SeqGoData.DOMESTIC_AIRPORT
+            )?.getStationName(false)?.unformatted
+        )
+        assertEquals(
+            "Domestic Airport [ID 9]",
+            StationTableReader.getStationNoFallback(
+                reader = SeqGoData.SEQ_GO_STR,
+                id = SeqGoData.DOMESTIC_AIRPORT,
+                humanReadableId = "ID 9"
+            )?.getStationName(false)?.unformatted
+        )
+        // Reset back to default
+        Preferences.showRawStationIds = false
+    }
+
+    private fun withoutBase(dbName: String?) {
+        setLocale("en-US")
+        Preferences.showRawStationIds = false
+
+        val s1 = StationTableReader.getStation(dbName, 3)
+        assertEquals("Unknown (0x3)", s1.getStationName(false).unformatted)
+
+        // Try when Raw Station IDs are enabled.
+        Preferences.showRawStationIds = true
+        val s2 = StationTableReader.getStation(dbName, 3)
+        assertEquals("Unknown (0x3)", s2.getStationName(false).unformatted)
 
         // Reset back to default
         Preferences.showRawStationIds = false
+
+        val s3 = StationTableReader.getStation(dbName, 3, "Z-3")
+        assertEquals("Unknown (Z-3)", s3.getStationName(false).unformatted)
+
+        assertNull(StationTableReader.getStationNoFallback(dbName, 3))
+
+        assertNull(StationTableReader.getNotice(dbName))
+        assertNull(StationTableReader.getLineMode(dbName, 7))
+        assertEquals("Unknown (0x9)", StationTableReader.getLineName(dbName, 9).unformatted)
+        assertEquals("Unknown (U-6)", StationTableReader.getLineName(dbName, 6, "U-6").unformatted)
+    }
+
+    @Test
+    fun testDbNotFound() {
+        withoutBase("nonexistent")
+    }
+
+    @Test
+    fun testDbNull() {
+        withoutBase(null)
     }
 
     @Test
@@ -201,6 +253,87 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         assertEquals("Unknown (0xffff)", Trip.getRouteDisplayName(tripUnknown)?.unformatted)
         assertEquals("Unknown (0xffff)", tripUnknown.routeName?.unformatted)
         assertEquals("0xffff", tripUnknown.humanReadableRouteID)
+    }
+
+    @Test
+    fun testNoLocation() {
+        setLocale("en-US")
+        Preferences.showRawStationIds = false
+        val s = StationTableReader.getStation(AMIIBO_STR, 2)
+        assertEquals("Peach", s.stationName?.unformatted)
+        assertNull(s.latitude)
+        assertNull(s.longitude)
+    }
+
+    @Test
+    fun testOperator() {
+        setLocale("en-US")
+        Preferences.showRawStationIds = false
+        assertEquals("Super Mario Bros.",
+            StationTableReader.getOperatorName(AMIIBO_STR, 1, isShort = false)?.unformatted)
+        assertEquals("Unknown (0x77)",
+            StationTableReader.getOperatorName(AMIIBO_STR, 0x77, isShort = false)?.unformatted)
+
+    }
+
+    // TODO: make it less synthetic
+    @Test
+    fun testLocation() {
+        val s1 = StationTableReader.fromProto(
+            "A", ProtoStation(
+                operatorId = null,
+                name = TransitName(
+                    null, null,
+                    null, null, emptyList(), "en-US"
+                ),
+                latitude = 0f, longitude = 0f, lineIdList = emptyList()
+            ),
+            null, null
+        )
+        assertNull(s1.latitude)
+        assertNull(s1.longitude)
+        val s2 = StationTableReader.fromProto(
+            "A", ProtoStation(
+                operatorId = null,
+                name = TransitName(
+                    null, null,
+                    null, null, emptyList(), "en-US"
+                ),
+                latitude = 1f, longitude = 0f, lineIdList = emptyList()
+            ),
+            null, null
+        )
+        assertEquals(1f, s2.latitude!!, 1e-5f)
+        assertEquals(0f, s2.longitude!!, 1e-5f)
+        val s3 = StationTableReader.fromProto(
+            "A", ProtoStation(
+                operatorId = null,
+                name = TransitName(
+                    null, null,
+                    null, null, emptyList(), "en-US"
+                ),
+                latitude = 0f, longitude = 1f, lineIdList = emptyList()
+            ),
+            null, null
+        )
+        assertEquals(0f, s3.latitude!!, 1e-5f)
+        assertEquals(1f, s3.longitude!!, 1e-5f)
+        val s4 = StationTableReader.fromProto(
+            "A", ProtoStation(
+                operatorId = null,
+                name = TransitName(
+                    null, null,
+                    null, null, emptyList(), "en-US"
+                ),
+                latitude = 1f, longitude = 1f, lineIdList = emptyList()
+            ),
+            null, null
+        )
+        assertEquals(1f, s4.latitude!!, 1e-5f)
+        assertEquals(1f, s4.longitude!!, 1e-5f)
+
+        // Test station without explicit name
+        assertEquals("Unknown (A)", s4.stationName?.unformatted)
     }
 
     companion object {

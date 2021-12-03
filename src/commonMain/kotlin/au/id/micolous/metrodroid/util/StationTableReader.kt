@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.util
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitName
 import au.id.micolous.metrodroid.transit.Trip
@@ -36,8 +37,9 @@ interface StationTableReader {
 
         private fun getSTR(reader: String?): StationTableReader? = reader?.let { stationTableReaderGet(it) }
 
-        private fun fromProto(humanReadableID: String, ps: ProtoStation,
-                              operatorName: TransitName?, pl: Map<Int, TransitName?>?): Station {
+        @VisibleForTesting
+        fun fromProto(humanReadableID: String, ps: ProtoStation,
+                      operatorName: TransitName?, pl: Map<Int, TransitName?>?): Station {
             val hasLocation = ps.latitude != 0f || ps.longitude != 0f
 
             return Station(
