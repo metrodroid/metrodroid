@@ -1250,4 +1250,20 @@
     <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten OV-chipkaart week (2009)</string>
     <string name="purse_ride_counter">מונה נסיעות באמצעות ארנק</string>
     <string name="clipper_base_date">תאריך יסוד</string>
+    <string name="mfu_get_version">קבלת תגובת גירסה</string>
+    <plurals name="mfu_num_pages">
+        <item quantity="one">עמוד אחד</item>
+        <item quantity="two">%d עמודים</item>
+        <item quantity="many">%d עמודים</item>
+        <item quantity="other">%d עמודים</item>
+    </plurals>
+    <string name="mfu_product_subtype">תת־סוג מוצר</string>
+    <string name="mfu_protocol_type">סוג פרוטוקול</string>
+    <string name="mfu_size">גודל</string>
+    <string name="mfu_size_id">מזהה גודל</string>
+    <string name="mfu_model">דגם קל במיוחד</string>
+    <string name="mfu_get_version_raw">תגובה גולמית</string>
+    <string name="mfu_version">גירסה</string>
+    <string name="mfu_vendor">ספק</string>
+    <string name="mfu_product_type">סוג מוצר</string>
 </resources>
