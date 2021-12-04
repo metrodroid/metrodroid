@@ -1,6 +1,8 @@
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.calypso.CalypsoData
 import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.Preferences
 import kotlin.test.*
 
 class NumberTest : BaseInstrumentedTest() {
@@ -29,5 +31,32 @@ class NumberTest : BaseInstrumentedTest() {
     fun testDigits() {
         assertContentEquals(intArrayOf(1, 2, 3, 4, 5, 6, 7),
             NumberUtils.digitsOf(1234567))
+    }
+
+    @Test
+    fun testLookupLocalize() {
+        setLocale("en-US")
+        Preferences.showRawStationIds = false
+        assertEquals("Ascom", CalypsoData.getCompanyName(0x3))
+        assertEquals("Unknown (0x77)", CalypsoData.getCompanyName(0x77))
+        Preferences.showRawStationIds = true
+        assertEquals("Ascom [0x3]", CalypsoData.getCompanyName(0x3))
+        assertEquals("Unknown (0x77)", CalypsoData.getCompanyName(0x77))
+    }
+
+    @Test
+    fun testLookup() {
+        val mp = mapOf(
+            1 to "Test A",
+            2 to "Test B",
+            3 to "Test C"
+        )
+        setLocale("en-US")
+        Preferences.showRawStationIds = false
+        assertEquals("Test C", NumberUtils.mapLookup(0x3, mp))
+        assertEquals("Unknown (0x77)", NumberUtils.mapLookup(0x77, mp))
+        Preferences.showRawStationIds = true
+        assertEquals("Test C [0x3]", NumberUtils.mapLookup(0x3, mp))
+        assertEquals("Unknown (0x77)", NumberUtils.mapLookup(0x77, mp))
     }
 }
