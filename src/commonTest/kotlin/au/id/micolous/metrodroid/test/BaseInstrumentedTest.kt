@@ -3,6 +3,8 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.util.Input
 import kotlin.test.assertNotNull
 
+annotation class AndroidMinSdk(val minSdk: Int)
+
 expect abstract class BaseInstrumentedTestPlatform() {
     fun setLocale(languageTag: String)
     fun loadAssetSafe(path: String) : Input?

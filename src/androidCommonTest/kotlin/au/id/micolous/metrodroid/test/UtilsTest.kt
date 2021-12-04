@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.test
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Build
 import au.id.micolous.metrodroid.util.Utils
 import kotlin.test.Test
 import kotlin.test.assertContains
@@ -33,6 +34,12 @@ class UtilsTest : BaseInstrumentedTest() {
         assertContains(other = "Version", charSequence = Utils.deviceInfoStringEnglish)
         setLocale("ru-RU")
         assertContains(other = "Версия", charSequence = Utils.deviceInfoString)
+    }
+
+    @Test
+    @AndroidMinSdk(Build.VERSION_CODES.JELLY_BEAN_MR1) // deviceInfoStringEnglish needs 17
+    fun testDeviceInfoEnglish() {
+        setLocale("ru-RU")
         assertContains(other = "Version", charSequence = Utils.deviceInfoStringEnglish)
     }
 

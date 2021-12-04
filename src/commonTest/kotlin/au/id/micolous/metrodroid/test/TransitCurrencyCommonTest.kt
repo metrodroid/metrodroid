@@ -78,6 +78,7 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     }
 
     @Test
+    @AndroidMinSdk(19) // Currency names aren't available before 19
     fun testEnglishCurrencyName() {
         setLocale("en-US")
         assertEquals(actual=currencyNameByCode(840), expected="US Dollar")
@@ -85,6 +86,7 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     }
 
     @Test
+    @AndroidMinSdk(19) // Currency names aren't available before 19
     fun testRussianCurrencyName() {
         setLocale("ru-RU")
         assertEquals(actual=currencyNameByCode(840)?.lowercase(), expected="доллар сша")
