@@ -25,6 +25,7 @@ import java.util.*
 
 object LocaleTools {
     private val LOCALES = mapOf(
+        "ar-EG" to Locale("ar", "EG"),
         "en" to Locale.ENGLISH,
         "en-AU" to Locale("en", "AU"),
         "en-CA" to Locale.CANADA,
@@ -33,6 +34,8 @@ object LocaleTools {
         "fr" to Locale.FRENCH,
         "fr-CA" to Locale.CANADA_FRENCH,
         "fr-FR" to Locale.FRANCE,
+        "he-IL" to Locale("he", "IL"),
+        "in-IN" to Locale("in", "IN"),
         "ja" to Locale.JAPANESE,
         "ja-JP" to Locale.JAPAN,
         "ru" to Locale("ru"),
