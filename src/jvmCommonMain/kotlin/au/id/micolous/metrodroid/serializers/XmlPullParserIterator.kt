@@ -30,12 +30,12 @@ object XmlPullFactory {
     fun newSerializer(): XmlSerializer = factory!!.newSerializer()
 }
 
-internal fun iterateXmlCards(stream: InputStream, iter: (String) -> Card?): Iterator<Card> {
+internal fun readXmlCards(stream: InputStream): Iterator<Card> {
     val xpp = XmlPullFactory.newPullParser()
     val reader = stream.reader(Charsets.UTF_8)
     xpp.setInput(reader)
 
-    return IteratorTransformerNotNull(XmlPullParserIterator(xpp), iter)
+    return IteratorTransformerNotNull(XmlPullParserIterator(xpp)) { readCardXML(it) }
 }
 
 private class XmlPullParserIterator(
