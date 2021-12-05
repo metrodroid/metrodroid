@@ -47,6 +47,7 @@ class Cli: CliktCommand() {
             MakeJson(),
             SmartCard(),
             Notices(),
+            HwInfo()
         )
     }
 
@@ -94,6 +95,17 @@ class Parse: CliktCommand(
     override fun run() {
         for (card in loadCards(fname) ?: return) {
             printCard(card)
+        }
+    }
+}
+
+class HwInfo: CliktCommand(
+    help="Print the hardware info of card(s)") {
+    private val fname by argument()
+
+    override fun run() {
+        for (card in loadCards(fname) ?: return) {
+            printHwInfo(card)
         }
     }
 }
@@ -165,6 +177,14 @@ fun printCard(card: Card) {
 
     for (info in raw) {
         println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
+    }
+}
+
+fun printHwInfo(card: Card) {
+    println("card UID = ${card.tagId}")
+    println("type = ${card.cardType}")
+    for (info in card.manufacturingInfo.orEmpty()) {
+        println("     ${info.text1?.unformatted}: ${info.text2?.unformatted}")
     }
 }
 
