@@ -20,20 +20,21 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
 import androidx.viewpager2.widget.ViewPager2
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.Card
@@ -49,6 +50,9 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.ui.TabPagerAdapter
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * @author Eric Butler
@@ -56,15 +60,13 @@ import au.id.micolous.metrodroid.util.Utils
 class CardInfoActivity : MetrodroidActivity() {
 
     private var mCard: Card? = null
-    private var mTransitData: TransitData? = null
-    private var mTabsAdapter: TabPagerAdapter? = null
     private var mTTS: TextToSpeech? = null
 
     private var mCardSerial: String? = null
     private var mShowCopyCardNumber = true
-    private var mShowOnlineServices = false
-    private var mShowMoreInfo = false
     private var mMenu: Menu? = null
+    private var mMoreInfoPage: String? = null
+    private var mOnlineServicesPage: String? = null
 
     private fun speakTts(utt: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -75,157 +77,204 @@ class CardInfoActivity : MetrodroidActivity() {
         }
     }
 
-    private val mTTSInitListener = OnInitListener { status ->
-        if (status == TextToSpeech.SUCCESS && mTransitData!!.balances != null) {
-            for (balanceVal in mTransitData!!.balances!!) {
-                val balance = balanceVal.balance.formatCurrencyString(true).spanned
-                speakTts(getString(R.string.balance_speech, balance))
-            }
-        }
-    }
-
-
-    @SuppressLint("StaticFieldLeak")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_card_info)
-        val viewPager = findViewById<ViewPager2>(R.id.pager)
-        mTabsAdapter = TabPagerAdapter(this, viewPager)
 
         setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.loading)
+        val uri = intent.data
+        if (uri == null) {
+            handleCardError(Exception("Specified a null URI"))
+            return
+        }
 
-        object : AsyncTask<Void?, Void?, Void?>() {
-            private var mSpeakBalanceEnabled: Boolean = false
-            private var mException: Exception? = null
-
-            override fun doInBackground(vararg voids: Void?): Void? {
-                try {
-                    val uri = intent.data
-                    val cursor = contentResolver.query(uri!!, null, null, null, null)
-                    startManagingCursor(cursor)
-                    cursor!!.moveToFirst()
-
-                    val data = cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA))
-
-                    mCard = XmlOrJsonCardFormat.parseString(data)
-                    mTransitData = mCard!!.parseTransitData()
-
-                    mSpeakBalanceEnabled = Preferences.speakBalance
-                } catch (ex: Exception) {
-                    mException = ex
+        LoaderManager.getInstance(this).initLoader(0, null,
+            object : LoaderManager.LoaderCallbacks<Cursor> {
+                override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor> {
+                    return CursorLoader(this@CardInfoActivity, uri, null, null, null, null)
                 }
 
-                return null
-            }
+                override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor?) {
+                    CoroutineScope(Job()).launch {
+                        val card: Card?
+                        try {
+                            cursor!!.moveToFirst()
+                            val data =
+                                cursor.getString(cursor.getColumnIndexOrThrow(CardsTableColumns.DATA))
 
-            override fun onPostExecute(aVoid: Void?) {
-                findViewById<View>(R.id.loading).visibility = View.GONE
-                findViewById<View>(R.id.pager).visibility = View.VISIBLE
+                            card = XmlOrJsonCardFormat.parseString(data)
+                            if (card == null) {
+                                handleCardError(Exception("Card parsing returned null"))
+                                return@launch
+                            }
+                        } catch (exception: Exception) {
+                            handleCardError(exception)
+                            return@launch
+                        }
 
-                if (mException != null) {
-                    if (mCard == null) {
-                        Utils.showErrorAndFinish(this@CardInfoActivity, mException)
-                    } else {
-                        Log.e(TAG, "Error parsing transit data", mException)
-                        showAdvancedInfo(mException)
-                        finish()
-                    }
-                    return
-                }
+                        try {
+                            val transitData = card.parseTransitData()
 
-                if (mTransitData == null) {
-                    showAdvancedInfo(UnsupportedCardException())
-                    finish()
-                    return
-                }
-
-                try {
-                    mShowCopyCardNumber = !Preferences.hideCardNumbers
-                    mCardSerial = if (mShowCopyCardNumber) {
-                        Utils.weakLTR(mTransitData?.serialNumber ?: mCard?.tagId?.toHexString() ?: "")
-                    } else {
-                        ""
-                    }
-                    supportActionBar!!.title = mTransitData!!.cardName
-                    supportActionBar!!.subtitle = mCardSerial
-
-                    val args = Bundle()
-                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
-                            CardSerializer.toPersist(mCard!!))
-                    args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData)
-
-                    if (mTransitData is UnauthorizedClassicTransitData) {
-                        val ucView = findViewById<View>(R.id.unauthorized_card)
-                        val loadKeysView = findViewById<View>(R.id.load_keys)
-                        ucView.visibility = View.VISIBLE
-                        loadKeysView.setOnClickListener {
-                            AlertDialog.Builder(this@CardInfoActivity)
-                                    .setMessage(R.string.add_key_directions)
-                                    .setPositiveButton(android.R.string.ok, null)
-                                    .show()
+                            runOnUiThread {
+                                showCardInfo(savedInstanceState, card, transitData)
+                            }
+                        } catch (exception: Exception) {
+                            handleTransitDataError(card, exception)
                         }
                     }
-
-                    if (mTransitData!!.balances != null || mTransitData!!.subscriptions != null) {
-                        mTabsAdapter!!.addTab(R.string.balances_and_subscriptions,
-                                ::CardBalanceFragment, args)
-                    }
-
-                    if (mTransitData!!.trips != null) {
-                        mTabsAdapter!!.addTab(R.string.history, ::CardTripsFragment, args)
-                    }
-
-                    if (TransitData.hasInfo(mTransitData!!)) {
-                        mTabsAdapter!!.addTab(R.string.info, ::CardInfoFragment, args)
-                    }
-
-                    val w = mTransitData!!.warning
-                    val hasUnknownStation = mTransitData!!.hasUnknownStations
-                    if (w != null || hasUnknownStation) {
-                        findViewById<View>(R.id.need_stations).visibility = View.VISIBLE
-                        var txt = ""
-                        if (hasUnknownStation)
-                            txt = getString(R.string.need_stations)
-                        if (w != null && txt.isNotEmpty())
-                            txt += "\n"
-                        if (w != null)
-                            txt += w
-
-                        (findViewById<View>(R.id.need_stations_text) as TextView).text = txt
-                        findViewById<View>(R.id.need_stations_button).visibility = if (hasUnknownStation)
-                            View.VISIBLE
-                        else
-                            View.GONE
-                    }
-                    if (hasUnknownStation)
-                        findViewById<View>(R.id.need_stations_button).setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))) }
-
-                    mShowMoreInfo = mTransitData!!.moreInfoPage != null
-                    mShowOnlineServices = mTransitData!!.onlineServicesPage != null
-
-                    if (mMenu != null) {
-                        mMenu!!.findItem(R.id.online_services).isVisible = mShowOnlineServices
-                        mMenu!!.findItem(R.id.more_info).isVisible = mShowMoreInfo
-                    }
-
-                    val speakBalanceRequested = intent.getBooleanExtra(SPEAK_BALANCE_EXTRA, false)
-                    if (mSpeakBalanceEnabled && speakBalanceRequested) {
-                        mTTS = TextToSpeech(this@CardInfoActivity, mTTSInitListener)
-                    }
-
-                    if (savedInstanceState != null) {
-                        viewPager.currentItem = savedInstanceState.getInt(KEY_SELECTED_TAB, 0)
-                    }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error parsing transit data", e)
-                    showAdvancedInfo(e)
-                    finish()
                 }
 
+                override fun onLoaderReset(loader: Loader<Cursor>) {}
+            }).startLoading()
+    }
+
+    fun handleCardError(exception: Exception) {
+        runOnUiThread {
+            findViewById<View>(R.id.loading).visibility = View.GONE
+            findViewById<View>(R.id.pager).visibility = View.VISIBLE
+            Utils.showErrorAndFinish(this, exception)
+        }
+    }
+
+    fun handleTransitDataError(card: Card, exception: Exception) {
+        runOnUiThread {
+            findViewById<View>(R.id.loading).visibility = View.GONE
+            findViewById<View>(R.id.pager).visibility = View.VISIBLE
+            Log.e(TAG, "Error parsing transit data", exception)
+            showAdvancedInfo(card, exception)
+            finish()
+        }
+    }
+
+    fun showCardInfo(savedInstanceState: Bundle?, card: Card,
+                     transitData: TransitData?) {
+        val viewPager = findViewById<ViewPager2>(R.id.pager)
+
+        findViewById<View>(R.id.loading).visibility = View.GONE
+        viewPager.visibility = View.VISIBLE
+
+        if (transitData == null) {
+            showAdvancedInfo(card, UnsupportedCardException())
+            finish()
+            return
+        }
+        mCard = card
+        try {
+            mShowCopyCardNumber = !Preferences.hideCardNumbers
+            mCardSerial = if (mShowCopyCardNumber) {
+                Utils.weakLTR(
+                    transitData.serialNumber ?: card.tagId.toHexString()
+                )
+            } else {
+                ""
             }
-        }.execute()
+            supportActionBar!!.title = transitData.cardName
+            supportActionBar!!.subtitle = mCardSerial
+
+            val args = Bundle()
+            args.putString(
+                AdvancedCardInfoActivity.EXTRA_CARD,
+                CardSerializer.toPersist(card)
+            )
+            args.putParcelable(EXTRA_TRANSIT_DATA, transitData)
+
+            if (transitData is UnauthorizedClassicTransitData) {
+                val ucView = findViewById<View>(R.id.unauthorized_card)
+                val loadKeysView = findViewById<View>(R.id.load_keys)
+                ucView.visibility = View.VISIBLE
+                loadKeysView.setOnClickListener {
+                    AlertDialog.Builder(this)
+                        .setMessage(R.string.add_key_directions)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
+                }
+            }
+
+            val tabsAdapter = TabPagerAdapter(this, viewPager)
+
+            if (transitData.balances != null || transitData.subscriptions != null) {
+                tabsAdapter.addTab(
+                    R.string.balances_and_subscriptions,
+                    ::CardBalanceFragment, args
+                )
+            }
+
+            if (transitData.trips != null) {
+                tabsAdapter.addTab(
+                    R.string.history,
+                    ::CardTripsFragment,
+                    args
+                )
+            }
+
+            if (TransitData.hasInfo(transitData)) {
+                tabsAdapter.addTab(
+                    R.string.info,
+                    ::CardInfoFragment,
+                    args
+                )
+            }
+
+            val w = transitData.warning
+            val hasUnknownStation = transitData.hasUnknownStations
+            if (w != null || hasUnknownStation) {
+                findViewById<View>(R.id.need_stations).visibility = View.VISIBLE
+                var txt = ""
+                if (hasUnknownStation)
+                    txt = getString(R.string.need_stations)
+                if (w != null && txt.isNotEmpty())
+                    txt += "\n"
+                if (w != null)
+                    txt += w
+
+                findViewById<TextView>(R.id.need_stations_text).text = txt
+                findViewById<View>(R.id.need_stations_button).visibility =
+                    if (hasUnknownStation)
+                        View.VISIBLE
+                    else
+                        View.GONE
+            }
+            if (hasUnknownStation)
+                findViewById<View>(R.id.need_stations_button).setOnClickListener {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://micolous.github.io/metrodroid/unknown_stops")
+                        )
+                    )
+                }
+
+            mMoreInfoPage = transitData.moreInfoPage
+            mOnlineServicesPage = transitData.onlineServicesPage
+
+            mMenu?.let { menu ->
+                menu.findItem(R.id.online_services).isVisible =
+                    mOnlineServicesPage != null
+                menu.findItem(R.id.more_info).isVisible = mMoreInfoPage != null
+            }
+
+            val speakBalanceRequested =
+                intent.getBooleanExtra(SPEAK_BALANCE_EXTRA, false)
+            if (Preferences.speakBalance && speakBalanceRequested) {
+                mTTS = TextToSpeech(this) { status ->
+                    if (status == TextToSpeech.SUCCESS) {
+                        for (balanceVal in transitData.balances.orEmpty()) {
+                            val balance = balanceVal.balance.formatCurrencyString(true).spanned
+                            speakTts(getString(R.string.balance_speech, balance))
+                        }
+                    }
+                }
+            }
+
+            if (savedInstanceState != null) {
+                viewPager.currentItem =
+                    savedInstanceState.getInt(KEY_SELECTED_TAB, 0)
+            }
+        } catch (exception: Exception) {
+            handleTransitDataError(card, exception)
+        }
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -236,8 +285,8 @@ class CardInfoActivity : MetrodroidActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.card_info_menu, menu)
         menu.findItem(R.id.copy_card_number).isVisible = mShowCopyCardNumber
-        menu.findItem(R.id.online_services).isVisible = mShowOnlineServices
-        menu.findItem(R.id.more_info).isVisible = mShowMoreInfo
+        menu.findItem(R.id.online_services).isVisible = mOnlineServicesPage != null
+        menu.findItem(R.id.more_info).isVisible = mMoreInfoPage != null
         mMenu = menu
         return true
     }
@@ -259,19 +308,19 @@ class CardInfoActivity : MetrodroidActivity() {
             }
 
             R.id.advanced_info -> {
-                showAdvancedInfo(null)
+                showAdvancedInfo(mCard!!, null)
                 return true
             }
 
-            R.id.more_info -> if (mTransitData!!.moreInfoPage != null) {
+            R.id.more_info -> {
                 startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse(mTransitData!!.moreInfoPage)))
+                        Uri.parse(mMoreInfoPage ?: return false)))
                 return true
             }
 
-            R.id.online_services -> if (mTransitData!!.onlineServicesPage != null) {
+            R.id.online_services -> {
                 startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse(mTransitData!!.onlineServicesPage)))
+                        Uri.parse(mOnlineServicesPage ?: return false)))
                 return true
             }
         }
@@ -279,10 +328,10 @@ class CardInfoActivity : MetrodroidActivity() {
         return false
     }
 
-    private fun showAdvancedInfo(ex: Exception?) {
+    private fun showAdvancedInfo(card: Card, ex: Exception?) {
         val intent = Intent(this, AdvancedCardInfoActivity::class.java)
         intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD,
-                CardSerializer.toPersist(mCard!!))
+                CardSerializer.toPersist(card))
         if (ex != null) {
             intent.putExtra(AdvancedCardInfoActivity.EXTRA_ERROR, ex)
         }
