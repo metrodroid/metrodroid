@@ -25,7 +25,7 @@ import android.os.Bundle
 import android.util.Pair
 import au.id.micolous.metrodroid.activity.CardInfoActivity
 import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.UriListItem
 import com.unnamed.b.atv.model.TreeNode
 
@@ -33,7 +33,7 @@ class CardInfoFragment : TreeListFragment() {
 
     private var mTransitData: TransitData? = null
 
-    override val items: List<ListItem>
+    override val items: List<ListItemInterface>
         get() = TransitData.mergeInfo(mTransitData!!).orEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -32,7 +32,7 @@ class TripsViewController : UITableViewController, CardViewProtocol {
         trips = TripSection.Companion.init().sectionize(trips: t1)
         if (trips.count == 0) {
             let cell = UITableViewCell.init(style: .default, reuseIdentifier: "EmptyTrip")
-            cell.textLabel?.text = Utils.localizeString(RKt.R.string.no_trip_data)
+            cell.textLabel?.text = Utils.localizeString(Rstring.init().no_trip_data)
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.textAlignment = .center
             tableView.backgroundView = cell
@@ -54,7 +54,7 @@ class TripsViewController : UITableViewController, CardViewProtocol {
             return TimestampFormatter.init().longDateFormat(
                 ts: nd).unformatted
         } else {
-            return Utils.localizeString(RKt.R.string.unknown_date_title)
+            return Utils.localizeString(Rstring.init().unknown_date_title)
         }
     }
     

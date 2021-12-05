@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.Preferences
 
 /**
@@ -193,7 +194,7 @@ abstract class Subscription : Parcelable {
     open val transferEndTimestamp: Timestamp?
         get() = null
 
-    open fun getRawFields(level: TransitData.RawLevel): List<ListItem>? = null
+    open fun getRawFields(level: TransitData.RawLevel): List<ListItemInterface>? = null
 
     /**
      * Allows [Subscription] implementors to show extra information that doesn't fit within the
@@ -216,7 +217,7 @@ abstract class Subscription : Parcelable {
      *
      */
     // TODO: i18n
-    open val info: List<ListItem>?
+    open val info: List<ListItemInterface>?
         get() {
             val items = mutableListOf<ListItem>()
             if (saleAgencyName != null) {
@@ -379,7 +380,7 @@ abstract class Subscription : Parcelable {
         val subscriptionName: String?,
         val validity: FormattedString?,
         val remainingTrips: String?,
-        val info: List<ListItem>?,
+        val info: List<ListItemInterface>?,
         val subscriptionState: SubscriptionState,
         val remainingDayCount: Int?,
         val passengerCount: Int
@@ -402,7 +403,7 @@ abstract class Subscription : Parcelable {
     }
 
     companion object {
-        fun mergeInfo(sub: Subscription): List<ListItem>? {
+        fun mergeInfo(sub: Subscription): List<ListItemInterface>? {
             val rawLevel = Preferences.rawLevel
             val inf = sub.info
             if (rawLevel == TransitData.RawLevel.NONE)

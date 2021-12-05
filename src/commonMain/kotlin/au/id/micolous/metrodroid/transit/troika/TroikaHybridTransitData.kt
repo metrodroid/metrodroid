@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData
 import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.HashUtils
 
 /**
@@ -58,9 +59,9 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
     // has both serial numbers and both are printed on it.
     // We show Troika number as main serial as it's shorter
     // and printed in larger letters.
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() {
-            val items = mutableListOf<ListItem>()
+            val items = mutableListOf<ListItemInterface>()
 
             val troikaItems = mTroika.info
 
@@ -108,7 +109,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
     override val warning: String?
         get() = mTroika.warning
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = mTroika.debug
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? = mTroika.debug
 
     private constructor(card: ClassicCard) : this(
             mTroika = TroikaTransitData(card),

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -43,7 +44,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
     override val cardName: String
         get() = NAME
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>
         get() = super.info.orEmpty() + (
                 if (!Preferences.hideCardNumbers)
                     listOf(ListItem(R.string.lisboaviva_engraved_serial, tagId?.toString()))

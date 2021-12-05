@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.card.classic
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.hexString
 
@@ -48,7 +49,7 @@ class ClassicSectorValid(override val raw: ClassicSectorRaw) : ClassicSector() {
     }
 
 
-    override fun getRawData(idx: Int): ListItem {
+    override fun getRawData(idx: Int): ListItemInterface {
         val sectorIndex = idx.hexString
         val keyStrA = keyA?.key?.let { Localizer.localizeString(R.string.classic_key_format_a, it.toHexString()) }
         val keyStrB = keyB?.key?.let { Localizer.localizeString(R.string.classic_key_format_b, it.toHexString()) }
@@ -63,7 +64,7 @@ class ClassicSectorValid(override val raw: ClassicSectorRaw) : ClassicSector() {
             null
         }
 
-        val bli = mutableListOf<ListItem>()
+        val bli = mutableListOf<ListItemInterface>()
         for ((blockidx, block) in blocks.withIndex()) {
             val acsSlot = if (blocks.size == 4) blockidx else blockidx / 5
             val acsDescription = acs?.getSlotString(acsSlot)

@@ -65,10 +65,10 @@ class Utils {
     
     class func getDeviceStringReal(localize: (StringResource, Any?...) -> String) -> String {
         let modelId = getModelIdentifier()
-        let modelName = getModelName(modelId: modelId) ?? localize(RKt.R.string.unknown)
-        let version = getVersion() ?? localize(RKt.R.string.unknown)
-        return localize(RKt.R.string.app_version, version) + "\n" +
-            localize(RKt.R.string.device_model, modelName, modelId) + "\n" + localize(RKt.R.string.ios_version, UIDevice.current.systemVersion)
+        let modelName = getModelName(modelId: modelId) ?? localize(Rstring.init().unknown)
+        let version = getVersion() ?? localize(Rstring.init().unknown)
+        return localize(Rstring.init().app_version, version) + "\n" +
+            localize(Rstring.init().device_model, modelName, modelId) + "\n" + localize(Rstring.init().ios_version, UIDevice.current.systemVersion)
     }
     
     class func getDeviceString() -> String {
@@ -116,9 +116,9 @@ class Utils {
     }
     
     class func makeAlertDialog(msg: String) -> UIViewController {
-        let alertController = UIAlertController(title: Utils.localizeString(RKt.R.string.app_name), message:
+        let alertController = UIAlertController(title: Utils.localizeString(Rstring.init().app_name), message:
             msg, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_error_ok), style: .cancel))
+        alertController.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_error_ok), style: .cancel))
         return alertController
     }
     
@@ -170,15 +170,15 @@ class Utils {
         } else {
             paxLabel.text = "\(pax)"
             paxImage.image = UIImage(named: (pax == 1) ? "ic_person": "ic_group")
-            paxImage.accessibilityLabel = Utils.localizePlural(RKt.R.plurals.passengers, Int(pax), pax)
+            paxImage.accessibilityLabel = Utils.localizePlural(Rplurals.init().passengers, Int(pax), pax)
             Utils.setImageVisibility(image: paxImage, visible: true)
         }
     }
     
     class func makeErrorScreen(msg: String) -> UIViewController {
-        let fullMsg = Utils.localizeString(RKt.R.string.error) + ": " + msg
-        let a = UIAlertController(title: Utils.localizeString(RKt.R.string.error), message: fullMsg, preferredStyle: .alert)
-        a.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_error_ok), style: .cancel, handler: nil))
+        let fullMsg = Utils.localizeString(Rstring.init().error) + ": " + msg
+        let a = UIAlertController(title: Utils.localizeString(Rstring.init().error), message: fullMsg, preferredStyle: .alert)
+        a.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_error_ok), style: .cancel, handler: nil))
         return a
     }
     

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.sum
@@ -52,9 +53,9 @@ class MobibTransitData(
     val networkId
         get() = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>
         get() {
-            val li = mutableListOf<ListItem>()
+            val li = mutableListOf<ListItemInterface>()
             En1545FixedInteger.parseDate(purchase, TZ)?.let {
                     li.add(ListItem(R.string.purchase_date, TimestampFormatter.longDateFormat(it)))
             }

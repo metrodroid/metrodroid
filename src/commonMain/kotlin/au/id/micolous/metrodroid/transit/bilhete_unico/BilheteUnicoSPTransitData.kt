@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.HashUtils
@@ -64,7 +65,8 @@ class BilheteUnicoSPTransitData (private val mCredit: Int,
 
     companion object {
         private const val NAME = "Bilhete Único"
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 imageId = R.drawable.bilheteunicosp_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,

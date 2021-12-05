@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME2
 import au.id.micolous.metrodroid.transit.emv.EmvLogEntry.Companion.parseEmvTrip
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
 
@@ -136,8 +137,8 @@ data class EmvTransitData(
 
     override val serialNumber get() = splitby4(getPan(t2))
 
-    override val info get(): List<ListItem> {
-        val res = mutableListOf<ListItem>()
+    override val info get(): List<ListItemInterface> {
+        val res = mutableListOf<ListItemInterface>()
         val hideThings = Preferences.obfuscateTripDates || Preferences.hideCardNumbers
 
         if (t2 != null && !hideThings) {

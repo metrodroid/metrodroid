@@ -39,4 +39,5 @@ expect object Preferences {
     val debugSpans: Boolean
     val localisePlaces: Boolean
     val metrodroidVersion: String
+    var useIsoDateTimeStamps: Boolean
 }

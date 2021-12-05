@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
@@ -262,7 +263,7 @@ object ISO7816TLV {
     /**
      * Parses BER-TLV data, and builds [ListItem] and [ListItemRecursive] for each of the tags.
      */
-    fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
+    fun infoBerTLV(buf: ImmutableByteArray): List<ListItemInterface> {
         return berTlvIterate(buf).map { (id, header, data) ->
             if (id[0].toInt() and 0xe0 == 0xa0) {
                 try {

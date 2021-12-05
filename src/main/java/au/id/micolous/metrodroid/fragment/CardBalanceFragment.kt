@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.Utils
 
 class CardBalanceFragment : ListFragment() {
@@ -263,6 +263,6 @@ class CardBalanceFragment : ListFragment() {
 
         internal fun subHasExtraInfo(sub: Subscription): Boolean = Subscription.hasInfo(sub)
 
-        internal fun subMergeInfos(sub: Subscription): List<ListItem>? = Subscription.mergeInfo(sub)
+        internal fun subMergeInfos(sub: Subscription): List<ListItemInterface>? = Subscription.mergeInfo(sub)
     }
 }

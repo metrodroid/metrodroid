@@ -41,7 +41,7 @@ class AdvancedCardViewController: UITabBarController {
     func copyJsonAction(_: UIAlertAction) {
         if let json = CardPersister.loadJsonAtUrl(url: url!) {
             UIPasteboard.general.string = json
-            let alert = Utils.makeAlertDialog(msg: Utils.localizeString(RKt.R.string.copied_to_clipboard))
+            let alert = Utils.makeAlertDialog(msg: Utils.localizeString(Rstring.init().copied_to_clipboard))
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -55,27 +55,27 @@ class AdvancedCardViewController: UITabBarController {
     }
     
     @objc func menuAction() {
-        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.export_), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(Rstring.init().export_), preferredStyle: .actionSheet)
             optionMenu.addAction(
-                UIAlertAction(title: Utils.localizeString(RKt.R.string.copy_xml), style: .default, handler: copyJsonAction))
+                UIAlertAction(title: Utils.localizeString(Rstring.init().copy_xml), style: .default, handler: copyJsonAction))
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.share_xml), style: .default, handler: shareJsonAction))
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_menu_cancel), style: .cancel))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().share_xml), style: .default, handler: shareJsonAction))
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_menu_cancel), style: .cancel))
         
         self.present(optionMenu, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(RKt.R.string.export_), style: .plain, target: self, action: #selector(menuAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(Rstring.init().export_), style: .plain, target: self, action: #selector(menuAction))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         var hiddenSerial: String? = nil
         if (Preferences.init().hideCardNumbers) {
-            hiddenSerial = Utils.localizeString(RKt.R.string.hidden_card_number)
+            hiddenSerial = Utils.localizeString(Rstring.init().hidden_card_number)
         }
-        let unknown = Utils.localizeString(RKt.R.string.unknown)
+        let unknown = Utils.localizeString(Rstring.init().unknown)
         title = "\(card?.cardType.name ?? unknown) - \(hiddenSerial ?? card?.tagId.toHexString() ?? unknown)"
         self.viewControllers = self.viewControllers?.filter { v in
             ((v as? CardViewProtocol)?.setTransitData(card: card!, transitData: nil) ?? false)

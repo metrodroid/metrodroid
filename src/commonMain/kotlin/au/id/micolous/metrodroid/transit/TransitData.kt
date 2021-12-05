@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ObfuscatedTrip
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
@@ -111,7 +111,7 @@ abstract class TransitData : Parcelable {
      *   [TransitCurrency.maybeObfuscateBalance].
      *
      */
-    open val info: List<ListItem>?
+    open val info: List<ListItemInterface>?
         get() = null
 
     abstract val cardName: String
@@ -235,10 +235,10 @@ abstract class TransitData : Parcelable {
      * @param level Level of detail requested.
      * @see [info]
      */
-    open fun getRawFields(level: RawLevel): List<ListItem>? = null
+    open fun getRawFields(level: RawLevel): List<ListItemInterface>? = null
 
     companion object {
-        fun mergeInfo(transitData: TransitData): List<ListItem>? {
+        fun mergeInfo(transitData: TransitData): List<ListItemInterface>? {
             val rawLevel = Preferences.rawLevel
             val inf = transitData.info
             if (rawLevel == RawLevel.NONE)

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.*
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
@@ -39,7 +40,7 @@ abstract class DesfireFile {
     open val data: ImmutableByteArray
         get() = raw.data!!
 
-    open fun getRawData(id: Int): ListItem {
+    open fun getRawData(id: Int): ListItemInterface {
         return ListItemRecursive(Localizer.localizeString(R.string.file_title_format,
                 id.hexString),
                 fileSettings?.subtitle,

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -44,7 +45,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
     override val cardName: String
         get() = NAME
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOfNotNull(
                 HeaderListItem(R.string.kmt_other_data),
                 if (!Preferences.hideCardNumbers) {

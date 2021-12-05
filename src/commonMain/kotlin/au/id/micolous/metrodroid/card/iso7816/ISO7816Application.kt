@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -177,11 +177,11 @@ abstract class ISO7816Application {
     val appProprietaryBerTlv : ImmutableByteArray? get() = getProprietaryBerTlv(this.appFci)
 
     @Transient
-    open val rawData: List<ListItem>?
+    open val rawData: List<ListItemInterface>?
         get() = null
 
     @Transient
-    val rawFiles: List<ListItem>
+    val rawFiles: List<ListItemInterface>
         get() =
             files.map {(selector, file) ->
                 var selectorStr = selector.formatString()
@@ -199,7 +199,7 @@ abstract class ISO7816Application {
             }
 
     @Transient
-    open val manufacturingInfo: List<ListItem>?
+    open val manufacturingInfo: List<ListItemInterface>?
         get() = null
 
     protected open fun nameFile(selector: ISO7816Selector): String? = null

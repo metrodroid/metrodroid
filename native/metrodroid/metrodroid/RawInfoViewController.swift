@@ -39,7 +39,7 @@ class RawInfoViewController : UITableViewController, CardViewProtocol, ErrorLabe
     func setTransitData(card: Card, transitData: TransitData?) -> Bool {
         let info = card.rawData ?? []
         let scanTime = card.scannedAt
-        let scannedAt = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
+        let scannedAt = Utils.localizeFormatted(Rstring.init().scanned_at_format,
                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
                                                 TimestampFormatter.init().dateFormat(ts: scanTime))
         let infoCompleted = [ListItem(name_: scannedAt)] + info

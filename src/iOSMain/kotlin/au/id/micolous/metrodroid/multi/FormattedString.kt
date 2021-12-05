@@ -20,10 +20,15 @@
 package au.id.micolous.metrodroid.multi
 
 import au.id.micolous.metrodroid.util.Preferences
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import platform.Foundation.*
 import platform.UIKit.*
 
-actual class FormattedString (val attributed: NSAttributedString): Parcelable {
+actual typealias FormattedStringSerializer = FormattedStringSerializerSimple
+
+@Serializable(with=FormattedStringSerializerSimple::class)
+actual class FormattedString (@Transient val attributed: NSAttributedString): Parcelable {
     actual val unformatted: String
         get() = attributed.string()
     actual constructor(input: String): this(NSAttributedString.create(string = input))

@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.ezlink.CEPASPurse
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
@@ -43,7 +44,7 @@ data class CEPASApplication(
         private val purses: Map<Int, ImmutableByteArray>,
         private val histories: Map<Int, ImmutableByteArray>) : ISO7816Application() {
 
-    override val rawData: List<ListItem>?
+    override val rawData: List<ListItemInterface>?
         get() = purses.map { (key, value) ->
             ListItemRecursive.collapsedValue(
                 Localizer.localizeString(R.string.cepas_purse_num, key),
@@ -55,7 +56,7 @@ data class CEPASApplication(
         }
 
     // FIXME: What about other purses?
-    override val manufacturingInfo: List<ListItem>?
+    override val manufacturingInfo: List<ListItemInterface>?
         get() {
             val purseRaw = getPurse(3) ?: return listOf(
                     HeaderListItem(R.string.cepas_purse_info),

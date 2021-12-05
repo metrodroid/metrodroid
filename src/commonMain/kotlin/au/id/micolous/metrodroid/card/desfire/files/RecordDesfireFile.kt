@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
@@ -49,7 +49,7 @@ class RecordDesfireFile (override val fileSettings: RecordDesfireFileSettings,
             }
         }
 
-    override fun getRawData(id: Int): ListItem {
+    override fun getRawData(id: Int): ListItemInterface {
         val recs = recordsSafe ?: return super.getRawData(id)
 
         val sub = recs.mapIndexed { idx, value ->

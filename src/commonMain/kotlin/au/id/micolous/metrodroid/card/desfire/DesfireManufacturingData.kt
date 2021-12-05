@@ -26,10 +26,11 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class DesfireManufacturingData(val data: ImmutableByteArray) {
-    val info: List<ListItem>
+    val info: List<ListItemInterface>
         get() {
             val items = mutableListOf(
                     HeaderListItem(R.string.hardware_information),

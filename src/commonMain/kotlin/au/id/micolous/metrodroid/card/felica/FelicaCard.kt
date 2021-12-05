@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
@@ -138,9 +139,9 @@ data class FelicaCard(
             }.toList()
         }
 
-    override val manufacturingInfo: List<ListItem>
+    override val manufacturingInfo: List<ListItemInterface>
         get() {
-            val items = mutableListOf<ListItem>()
+            val items = mutableListOf<ListItemInterface>()
 
             items.add(HeaderListItem(R.string.felica_idm))
             items.add(ListItem(R.string.felica_manufacturer_code, NumberUtils.intToHex(manufacturerCode)))
@@ -186,7 +187,7 @@ data class FelicaCard(
             return items
         }
 
-    override val rawData: List<ListItem>
+    override val rawData: List<ListItemInterface>
         get() =
             listOfNotNull(
                 pMm?.let { ListItem(R.string.felica_pmm, it.toHexDump()) },

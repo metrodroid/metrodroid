@@ -37,26 +37,23 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat
-import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.TextListItem
 import com.unnamed.b.atv.model.TreeNode
 import com.unnamed.b.atv.view.AndroidTreeView
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.ui.ListItemRecursive
+import au.id.micolous.metrodroid.ui.*
 
 @JvmSuppressWildcards(false)
 abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
     private var tView: AndroidTreeView? = null
 
-    protected abstract val items: List<ListItem>
+    protected abstract val items: List<ListItemInterface>
 
-    class ListItemHolder(context: Context) : TreeNode.BaseNodeViewHolder<Pair<ListItem, Int>>(context) {
+    class ListItemHolder(context: Context) : TreeNode.BaseNodeViewHolder<Pair<ListItemInterface, Int>>(context) {
         private var mArrowView: ImageView? = null
 
-        private fun adjustListView(view: View, li: ListItem) {
+        private fun adjustListView(view: View, li: ListItemInterface) {
             val mText1 = li.text1?.spanned
             val mText2 = li.text2?.spanned
             val text1Empty = mText1?.toString().isNullOrEmpty()
@@ -90,7 +87,7 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             }
         }
 
-        private fun getListView(li: ListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
+        private fun getListView(li: ListItemInterface, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
             val view = inflater.inflate(android.R.layout.simple_list_item_2, root, attachToRoot)
             adjustListView(view, li)
             return view
@@ -105,7 +102,7 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             TextViewCompat.setTextAppearance(text, textAppearenceRes)
         }
 
-        private fun getTextListView(li: ListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
+        private fun getTextListView(li: TextListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
             val view = inflater.inflate(android.R.layout.simple_list_item_2, root, attachToRoot)
             adjustListView(view, li)
             val text1 = view.findViewById<TextView>(android.R.id.text1)
@@ -143,13 +140,13 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
             return if (level == 1) getHeaderListL1View(li, inflater) else getHeaderListL2View(li, inflater, root, attachToRoot)
         }
 
-        private fun getRecursiveListView(li: ListItem, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
+        private fun getRecursiveListView(li: ListItemRecursive, inflater: LayoutInflater, root: ViewGroup?, attachToRoot: Boolean): View {
             val view = inflater.inflate(R.layout.list_recursive, root, attachToRoot)
             adjustListView(view, li)
             return view
         }
 
-        override fun createNodeView(node: TreeNode, itemPair: Pair<ListItem, Int>): View {
+        override fun createNodeView(node: TreeNode, itemPair: Pair<ListItemInterface, Int>): View {
             val item = itemPair.first
             val level = itemPair.second
             val view: View = when (item) {
@@ -233,10 +230,10 @@ abstract class TreeListFragment : Fragment(), TreeNode.TreeNodeClickListener {
         return tv.view
     }
 
-    private fun getTreeNode(item: ListItem, level: Int): TreeNode {
+    private fun getTreeNode(item: ListItemInterface, level: Int): TreeNode {
         if (item !is ListItemRecursive)
             return TreeNode(Pair.create(item, level))
-        val root = TreeNode(Pair.create<ListItem, Int>(item, level))
+        val root = TreeNode(Pair.create<ListItemInterface, Int>(item, level))
         for (subItem in item.subTree.orEmpty()) {
             root.addChild(getTreeNode(subItem, level + 1))
         }

@@ -18,7 +18,7 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import kotlin.math.abs
 import kotlin.test.*
 
@@ -30,14 +30,14 @@ internal fun assertNear(expected: Double, actual: Double, tol: Double) {
 }
 
 internal fun assertContainsListItem(
-        expected: ListItem, actual: Iterable<ListItem>, message: String? = null) {
+        expected: ListItemInterface, actual: Iterable<ListItemInterface>, message: String? = null) {
     assertNotNull(actual.firstOrNull{
         it == expected
     }, message)
 }
 
 internal fun assertNotContainsListItem(
-        expected: ListItem, actual: Iterable<ListItem>, message: String? = null) {
+        expected: ListItemInterface, actual: Iterable<ListItemInterface>, message: String? = null) {
     assertNull(actual.firstOrNull{
         it == expected
     }, message)

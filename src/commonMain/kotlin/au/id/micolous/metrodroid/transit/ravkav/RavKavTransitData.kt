@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.ifTrue
@@ -44,7 +45,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
     override val cardName: String
         get() = Localizer.localizeString(R.string.card_name_ravkav)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>
         get() = listOfNotNull(
                 if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
                     ListItem(R.string.card_type, R.string.card_type_anonymous)

@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -36,7 +37,7 @@ data class OVChipIndex internal constructor(
         val recentCreditSlot: Boolean,         // Most recent credit index slot (0xF90(false) or 0xFA0(true))
         val subscriptionIndex: List<Int>
 ) : Parcelable {
-    fun getRawFields(level: TransitData.RawLevel): List<ListItem> =
+    fun getRawFields(level: TransitData.RawLevel): List<ListItemInterface> =
         if (level == TransitData.RawLevel.ALL)
             listOf(
                 HeaderListItem("Recent Slots"),

@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.transit.nextfare.record.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
@@ -106,7 +107,7 @@ abstract class NextfareTransitData : TransitData() {
 
     // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
     // data in Block 2.
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOf(
                 HeaderListItem(R.string.nextfare),
                 ListItem(R.string.nextfare_system_code, capsule.mSystemCode.toHexDump()),

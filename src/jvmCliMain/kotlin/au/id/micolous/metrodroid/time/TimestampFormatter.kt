@@ -1,53 +1,59 @@
 package au.id.micolous.metrodroid.time
 
 import au.id.micolous.metrodroid.multi.FormattedString
-import java.util.*
-import java.text.DateFormat
+import au.id.micolous.metrodroid.util.Preferences
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.Locale
 
 actual object TimestampFormatter {
-    private fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
+    private fun makeCalendar(ts: TimestampFull) =
+        makeRawCalendar(ts.adjust())
 
-    private fun makeRawCalendar(ts: TimestampFull): Calendar {
-        val g = GregorianCalendar(makeTimezone(ts.tz))
-        g.timeInMillis = ts.timeInMillis
-        return g
-    }
-
+    private fun makeRawCalendar(ts: TimestampFull) =
+        Instant.ofEpochMilli(ts.timeInMillis).atZone(ZoneId.of(ts.tz.resolvedOlson))
     actual fun longDateFormat(ts: Timestamp) = FormattedString(longDateFormat(makeDateCalendar(ts)))
 
-    private fun makeDateCalendar(ts: Timestamp): Calendar {
+    private fun makeDateCalendar(ts: Timestamp): ZonedDateTime =
         when (ts) {
-            is TimestampFull -> return makeCalendar(ts)
-            is Daystamp -> {
-                val adjusted = ts.adjust()
-                val g = GregorianCalendar(UTC)
-                g.timeInMillis = 0
-                g.add(Calendar.DAY_OF_YEAR, adjusted.daysSinceEpoch)
-                return g
-            }
+            is TimestampFull -> makeCalendar(ts)
+            is Daystamp -> Instant.ofEpochMilli(
+                ts.adjust().daysSinceEpoch * 86400L * 1000L)
+                .atZone(UTC)
         }
-    }
 
     actual fun dateTimeFormat(ts: TimestampFull) = FormattedString(dateTimeFormat(makeCalendar(ts)))
     actual fun timeFormat(ts: TimestampFull) = FormattedString(timeFormat(makeDateCalendar(ts)))
 
     /** Reference to UTC timezone.  */
-    val UTC = TimeZone.getTimeZone("Etc/UTC")!!
+    private val UTC = ZoneId.of ("Etc/UTC")!!
 
-    private fun formatCalendar(df: DateFormat, c: Calendar): String {
-        df.timeZone = c.timeZone
-        return df.format(c.time)
-    }
+    private fun formatCalendar(df: DateTimeFormatter, c: ZonedDateTime?): String =
+        c?.let { df.format(it) } ?: ""
 
-    private fun longDateFormat(date: Calendar?): String {
-        return formatCalendar(DateFormat.getDateInstance(DateFormat.LONG), date ?: return "")
-    }
+    private fun longDateFormat(date: ZonedDateTime?): String =
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ISO_LOCAL_DATE else
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG), date
+        )
 
-    private fun timeFormat(date: Calendar?): String {
-        return formatCalendar(DateFormat.getTimeInstance(), date ?: return "")
-    }
+    private fun timeFormat(date: ZonedDateTime?): String =
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ofPattern("HH:mm", Locale.US)
+            else
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM), date
+        )
 
-    private fun dateTimeFormat(date: Calendar?): String {
-        return formatCalendar(DateFormat.getDateTimeInstance(), date ?: return "")
-    }
+    private fun dateTimeFormat(date: ZonedDateTime?): String =
+        formatCalendar(
+            if (Preferences.useIsoDateTimeStamps)
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US)
+            else
+                DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM), date
+        )
 }

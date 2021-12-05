@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.transit.erg.record.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
@@ -77,9 +78,9 @@ abstract class ErgTransitData : TransitData() {
     override val trips: List<Trip>?
         get() = capsule.trips
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() {
-            val items = ArrayList<ListItem>()
+            val items = ArrayList<ListItemInterface>()
             items.add(HeaderListItem(R.string.general))
             items.add(ListItem(R.string.card_epoch,
                     TimestampFormatter.longDateFormat(TripObfuscator.maybeObfuscateTS(

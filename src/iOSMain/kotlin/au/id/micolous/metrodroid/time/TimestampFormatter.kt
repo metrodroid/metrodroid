@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.time
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
 import platform.Foundation.*
 
@@ -79,8 +80,17 @@ actual object TimestampFormatter {
     private fun formatCalendar(dateStyle: NSDateFormatterStyle,
             timeStyle: NSDateFormatterStyle, c: Calendar): String {
         val dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = dateStyle
-        dateFormatter.timeStyle = timeStyle
+        if (Preferences.useIsoDateTimeStamps) {
+            dateFormatter.locale = NSLocale(localeIdentifier = "en_US_POSIX")
+            when {
+                timeStyle == NSDateFormatterNoStyle -> dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateStyle == NSDateFormatterNoStyle -> dateFormatter.dateFormat = "HH:mm"
+                else -> dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+            }
+        } else {
+            dateFormatter.dateStyle = dateStyle
+            dateFormatter.timeStyle = timeStyle
+        }
         dateFormatter.timeZone = c.tz
 
         return dateFormatter.stringFromDate(c.time)

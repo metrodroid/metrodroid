@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
@@ -110,7 +111,7 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
     public override val balance: TransitBalance?
         get() = TransitBalanceStored(TransitCurrency.EUR(mBalance), null, mExpiryDate)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = listOfNotNull(
             ListItem(R.string.initialisation_date,
                     mInitDate.format()),

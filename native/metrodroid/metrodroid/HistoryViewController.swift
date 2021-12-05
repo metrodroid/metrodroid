@@ -81,7 +81,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
             )
             present(activity,animated: true, completion: nil)
         } catch {
-            let alert = Utils.makeAlertDialog(msg: Utils.localizeString( RKt.R.string.ios_nfcreader_exception,
+            let alert = Utils.makeAlertDialog(msg: Utils.localizeString( Rstring.init().ios_nfcreader_exception,
             "\(error)"))
             self.present(alert, animated: true, completion: nil)
         }
@@ -90,10 +90,10 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
     func dedupAction(_: UIAlertAction) {
         do {
             let deduped = try CardPersister.dedup()
-            let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(RKt.R.plurals.cards_deduped, deduped, deduped))
+            let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(Rplurals.init().cards_deduped, deduped, deduped))
             self.navigationController?.present(alert, animated: true, completion: nil)
         } catch {
-            let alert = Utils.makeErrorScreen(msg: Utils.localizeString(RKt.R.string.ios_nfcreader_exception, "\(error)"))
+            let alert = Utils.makeErrorScreen(msg: Utils.localizeString(Rstring.init().ios_nfcreader_exception, "\(error)"))
             self.navigationController?.present(alert, animated: true, completion: nil)
         }
         reload()
@@ -103,7 +103,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         DispatchQueue.global().async {
             do {
                 guard let t = UIPasteboard.general.string else {
-                    Utils.showError(viewController: self, msg: Utils.localizeString(RKt.R.string.clipboard_error))
+                    Utils.showError(viewController: self, msg: Utils.localizeString(Rstring.init().clipboard_error))
                     return
                 }
                 let card = try CardSerializer.init().fromPersist(input: t)
@@ -111,7 +111,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
                 let jsonString = try CardSerializer.init().toPersist(card: card)
                 DispatchQueue.main.async {
                     self.reload()
-                    let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(RKt.R.plurals.cards_imported, 1, 1))
+                    let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(Rplurals.init().cards_imported, 1, 1))
                     self.navigationController?.present(alert, animated: true) {
                         let cr = CardViewController.create(json: jsonString, url: url)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -134,14 +134,14 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
             let optionMenu = UIAlertController(
                 title: nil,
                 message: Utils.localizeString(
-                    RKt.R.string.large_file_warning,
+                    Rstring.init().large_file_warning,
                     ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)),
                 preferredStyle: .actionSheet)
-            optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.large_file_yes), style: .default, handler: {_ in
+            optionMenu.addAction(UIAlertAction(title: Utils.localizeString( Rstring.init().large_file_yes), style: .default, handler: {_ in
                 result = true
                 dg.leave()
             }) )
-            optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.large_file_no), style: .cancel, handler: {_ in
+            optionMenu.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().large_file_no), style: .cancel, handler: {_ in
                 result = false
                 dg.leave()
             }))
@@ -166,7 +166,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
                 }
                 DispatchQueue.main.async {
                     navigationController.viewControllers.forEach{ v in (v as? HistoryViewController)?.reload() }
-                    let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(RKt.R.plurals.cards_imported, count, count))
+                    let alert = Utils.makeAlertDialog(msg: Utils.localizePlural(Rplurals.init().cards_imported, count, count))
                     navigationController.present(alert, animated: true) {
                         let cr: UIViewController?
                         if json != nil && url != nil {
@@ -210,34 +210,34 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
     }
     
     func importAction(_: UIAlertAction) {
-        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.import_xml), preferredStyle: .actionSheet)
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.import_clipboard), style: .default, handler: importClipboard))
+        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(Rstring.init().import_xml), preferredStyle: .actionSheet)
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( Rstring.init().import_clipboard), style: .default, handler: importClipboard))
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.import_file), style: .default, handler: importFileAction))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().import_file), style: .default, handler: importFileAction))
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.export_all), style: .default, handler: exportAllAction))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().export_all), style: .default, handler: exportAllAction))
         
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_menu_cancel), style: .cancel))
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_menu_cancel), style: .cancel))
         
         self.present(optionMenu, animated: true, completion: nil)
     }
     
     @objc func menuAction() {
-        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(RKt.R.string.ios_menu_title), preferredStyle: .actionSheet)
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( RKt.R.string.import_xml), style: .default, handler: importAction))
+        let optionMenu = UIAlertController(title: nil, message: Utils.localizeString(Rstring.init().ios_menu_title), preferredStyle: .actionSheet)
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString( Rstring.init().import_xml), style: .default, handler: importAction))
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.deduplicate_cards), style: .default, handler: dedupAction))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().deduplicate_cards), style: .default, handler: dedupAction))
         optionMenu.addAction(
-            UIAlertAction(title: Utils.localizeString(RKt.R.string.export_all), style: .default, handler: exportAllAction))
+            UIAlertAction(title: Utils.localizeString(Rstring.init().export_all), style: .default, handler: exportAllAction))
         
-        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(RKt.R.string.ios_menu_cancel), style: .cancel))
+        optionMenu.addAction(UIAlertAction(title: Utils.localizeString(Rstring.init().ios_menu_cancel), style: .cancel))
         
         self.present(optionMenu, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(RKt.R.string.ios_menu_button), style: .plain, target: self, action: #selector(menuAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Utils.localizeString(Rstring.init().ios_menu_button), style: .plain, target: self, action: #selector(menuAction))
         tableView.register(UINib(nibName: "HistoryHeaderCell", bundle: Bundle.main), forHeaderFooterViewReuseIdentifier: "HistoryHeaderCell")
     }
     
@@ -254,9 +254,9 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         let el = effectiveHistory[section].entries.first
         var hiddenSerial: String? = nil
         if (Preferences.init().hideCardNumbers) {
-            hiddenSerial = Utils.localizeString(RKt.R.string.hidden_card_number)
+            hiddenSerial = Utils.localizeString(Rstring.init().hidden_card_number)
         }
-        let unknownCard = Utils.localizeString(RKt.R.string.unknown_card)
+        let unknownCard = Utils.localizeString(Rstring.init().unknown_card)
         let fallback = "\(unknownCard) \(Utils.directedDash) \(hiddenSerial ?? Utils.weakLTR(el?.uid ?? unknownCard))"
         guard let info = el?.info else {
             return fallback
@@ -274,7 +274,7 @@ class HistoryViewController : UITableViewController, UISearchBarDelegate, UIDocu
         // Configure the cell’s contents.
         let el = effectiveHistory[indexPath.section].entries[indexPath.item]
         let scanTime = Utils.date2Timestamp(date: el.date)
-        cell.textLabel!.attributedText = Utils.localizeFormatted(RKt.R.string.scanned_at_format,
+        cell.textLabel!.attributedText = Utils.localizeFormatted(Rstring.init().scanned_at_format,
                                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
                                                                 TimestampFormatter.init().dateFormat(ts: scanTime)).attributed
         return cell

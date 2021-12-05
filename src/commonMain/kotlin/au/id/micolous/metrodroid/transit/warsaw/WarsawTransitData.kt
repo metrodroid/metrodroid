@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.hexString
@@ -130,7 +131,7 @@ data class WarsawTransitData (private val mSerial: Pair<Int, Int>,
     override val subscriptions: List<Subscription>?
         get() = listOfNotNull(maxOf(sectorA, sectorB).subscription)
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = listOf(
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? = listOf(
             HeaderListItem("Sector 2")) + sectorA.getRawFields(level).orEmpty() +
             listOf(HeaderListItem("Sector 3")) + sectorB.getRawFields(level).orEmpty()
 

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -45,7 +46,7 @@ class LisboaVivaSubscription (override val parsed: En1545Parsed,
     override val lookup: En1545Lookup
         get() = LisboaVivaLookup
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = super.info.orEmpty() + ListItem(formatPeriod())
 
     override val validTo: Timestamp?

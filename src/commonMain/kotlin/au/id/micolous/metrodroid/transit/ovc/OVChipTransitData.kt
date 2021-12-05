@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
@@ -74,7 +75,7 @@ data class OVChipTransitData(
                     TransitCurrency.EUR(mTicketEnvParsed.getIntOrZero(AUTOCHARGE_CHARGE))
                             .maybeObfuscateBalance().formatCurrencyString(true)))
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? = super.getRawFields(level).orEmpty() +
+    override fun getRawFields(level: RawLevel): List<ListItemInterface> = super.getRawFields(level).orEmpty() +
             listOf(ListItem("Credit Slot ID", mCreditSlotId.toString()),
                     ListItem("Last Credit ID", mCreditId.toString())) + mIndex.getRawFields(level)
 

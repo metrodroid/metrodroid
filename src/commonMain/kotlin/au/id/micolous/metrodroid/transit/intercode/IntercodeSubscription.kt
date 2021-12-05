@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.intercode
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
 
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -51,7 +51,7 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
             } else null
         }
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = super.info.orEmpty() + parsed.getInfo(setOf(
                     CONTRACT_TARIFF,
                     CONTRACT_PRICE_AMOUNT,

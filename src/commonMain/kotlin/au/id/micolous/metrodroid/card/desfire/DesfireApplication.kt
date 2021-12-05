@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -39,7 +39,7 @@ data class DesfireApplication(
         private val dirListLocked: Boolean = false) {
     @Transient
     val interpretedFiles: Map<Int, DesfireFile> = files.mapValues { (_, v) -> DesfireFile.create(v) }
-    val rawData: List<ListItem>
+    val rawData: List<ListItemInterface>
         get() = interpretedFiles.map { (k, v) -> v.getRawData(k) } + authLog.map { it.rawData }
 
     fun getFile(fileId: Int) = interpretedFiles[fileId]

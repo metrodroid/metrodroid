@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -37,7 +37,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
     override val cardName: String
         get() = lookup.cardInfo { mTicketEnvParsed }?.name ?: fallbackCardName(networkId)
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>
         get() = super.info.orEmpty() +
                 mTicketEnvParsed.getInfo(setOf(
                         ENV_NETWORK_ID,

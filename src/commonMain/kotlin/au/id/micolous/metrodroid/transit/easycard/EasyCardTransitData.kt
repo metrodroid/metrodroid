@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
@@ -60,7 +61,8 @@ data class EasyCardTransitData internal constructor(
         private val EPOCH = Epoch.utc(tz = MetroTimeZone.TAIPEI, year = 1970)
 
         internal val NAME = R.string.card_name_easycard
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 imageId = R.drawable.tpe_easy_card,
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 name = NAME,

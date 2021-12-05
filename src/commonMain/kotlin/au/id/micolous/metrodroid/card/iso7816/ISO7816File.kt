@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLIgnore
 import au.id.micolous.metrodroid.serializers.XMLListIdx
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
@@ -49,8 +49,8 @@ data class ISO7816File internal constructor(
      */
     fun getRecord(index: Int): ImmutableByteArray? = records[index]
 
-    fun showRawData(selectorStr: String): ListItem {
-        val recList = mutableListOf<ListItem>()
+    fun showRawData(selectorStr: String): ListItemInterface {
+        val recList = mutableListOf<ListItemInterface>()
         if (binaryData != null)
             recList.add(ListItemRecursive.collapsedValue(Localizer.localizeString(R.string.binary_title_format),
                     binaryData.toHexDump()))

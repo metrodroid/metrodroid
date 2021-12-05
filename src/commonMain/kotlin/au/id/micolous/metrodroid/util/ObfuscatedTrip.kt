@@ -26,11 +26,14 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrencyBase
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Special wrapper for Trip that handles obfuscation of Trip data.
  */
 @Parcelize
+@Serializable
 data class ObfuscatedTrip (
     override val startTimestamp: Timestamp? = null,
     override val endTimestamp: Timestamp? = null,
@@ -43,7 +46,9 @@ data class ObfuscatedTrip (
     override val vehicleID: String? = null,
     override val machineID: String? = null,
     override val passengerCount: Int,
+    @SerialName("agencyName")
     private val mAgencyName: FormattedString? = null,
+    @SerialName("shortAgencyName")
     private val mShortAgencyName: FormattedString? = null,
     private val rawFieldsUnknown: String? = null,
     private val rawFieldsFull: String? = null,

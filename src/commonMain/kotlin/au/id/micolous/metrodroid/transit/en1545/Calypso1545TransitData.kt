@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransactionTripAbstract
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.ui.HeaderListItem
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.sum
 
@@ -67,7 +67,7 @@ abstract class Calypso1545TransitData constructor (
     val networkId
         get() = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID)
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? {
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? {
         if (contractList == null)
             return super.getRawFields(level)
         return super.getRawFields(level).orEmpty() + listOf(HeaderListItem("Contract List")) +

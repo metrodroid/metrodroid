@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -58,8 +59,8 @@ class VeneziaTransitData (val calypso: Calypso1545TransitDataCapsule) : Calypso1
             else -> Localizer.localizeString(R.string.unknown_format, profileNumber)
         }
 
-    override val info get(): List<ListItem> = super.info.orEmpty()+ listOf(
-                ListItem(Localizer.localizeString(R.string.venezia_profile), profileDescription)
+    override val info get(): List<ListItemInterface> = super.info.orEmpty() + listOf(
+                ListItem(R.string.venezia_profile, profileDescription)
         )
 
     companion object {

@@ -172,4 +172,6 @@ actual object Preferences {
 
     actual val metrodroidVersion: String
         get() = BuildConfig.VERSION_NAME
+
+    actual var useIsoDateTimeStamps = false
 }

@@ -94,9 +94,9 @@ class TripCell : UITableViewCell {
         stationsLabel?.attributedText = Trip.Companion.init().formatStationNames(trip: trip)?.attributed
         fareLabel.attributedText = trip.fare?.formatCurrencyString(isBalance: false).attributed
         if let machine = trip.vehicleID {
-            machineLabel.text = Utils.localizeString(RKt.R.string.vehicle_number, machine)
+            machineLabel.text = Utils.localizeString(Rstring.init().vehicle_number, machine)
         } else if let machine = trip.machineID {
-            machineLabel.text = Utils.localizeString(RKt.R.string.machine_id_format, machine)
+            machineLabel.text = Utils.localizeString(Rstring.init().machine_id_format, machine)
         } else {
             machineLabel.text = nil
         }

@@ -33,7 +33,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.*
 
@@ -47,12 +47,12 @@ abstract class CardProtocol {
     /**
      * Gets items to display when manufacturing information is requested for the card.
      */
-    open val manufacturingInfo: List<ListItem>?
+    open val manufacturingInfo: List<ListItemInterface>?
         get() = null
     /**
      * Gets items to display when raw data is requested for the card.
      */
-    open val rawData: List<ListItem>?
+    open val rawData: List<ListItemInterface>?
         get() = null
 
     @Transient
@@ -97,9 +97,9 @@ class Card(
     val allProtocols: List<CardProtocol>
         get() = listOfNotNull(mifareClassic, mifareDesfire, mifareUltralight, cepasCompat,
                 felica, iso7816, vicinity)
-    val manufacturingInfo: List<ListItem>?
+    val manufacturingInfo: List<ListItemInterface>?
         get() = allProtocols.mapNotNull { it.manufacturingInfo }.flatten().ifEmpty { null }
-    val rawData: List<ListItem>?
+    val rawData: List<ListItemInterface>?
         get() = allProtocols.mapNotNull { it.rawData }.flatten().ifEmpty { null }
     val isPartialRead: Boolean
         get() = allProtocols.any { it.isPartialRead }

@@ -38,11 +38,13 @@ import au.id.micolous.metrodroid.util.NumberUtils
 @Parcelize
 data class OysterTransitData(
         private val mSerial: Int,
-        override val balance: OysterPurse?,
+        val purse: OysterPurse?,
         val transactions: List<OysterTransaction>,
         val refills: List<OysterRefill>,
         val passes: List<OysterTravelPass>
 ) : TransitData() {
+
+    override val balance: TransitCurrency? get() = purse?.balance
 
     override val serialNumber get() = formatSerial(mSerial)
 
@@ -59,7 +61,7 @@ data class OysterTransitData(
 
     private constructor(card: ClassicCard) : this(
             mSerial = getSerial(card),
-            balance = OysterPurse.parse(card),
+            purse = OysterPurse.parse(card),
             transactions = OysterTransaction.parseAll(card).toList(),
             refills = OysterRefill.parseAll(card).toList(),
             passes = OysterTravelPass.parseAll(card).toList())

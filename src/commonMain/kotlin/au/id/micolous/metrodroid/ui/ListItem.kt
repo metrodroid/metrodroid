@@ -21,14 +21,17 @@
 
 package au.id.micolous.metrodroid.ui
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.PluralsResource
-import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.multi.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-open class ListItem(val text1: FormattedString?, val text2: FormattedString?) {
+@Parcelize
+@Serializable
+@SerialName("normal")
+data class ListItem(override val text1: FormattedString?,
+               override val text2: FormattedString?): ListItemInterface() {
 
-    protected constructor(nameResource: StringResource) : this(nameResource, null as FormattedString?)
+    constructor(nameResource: StringResource) : this(nameResource, null as FormattedString?)
 
     constructor(nameResource: StringResource, valueResource: StringResource) : this(nameResource, Localizer.localizeString(valueResource))
 

@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.ui.HeaderListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -112,13 +113,14 @@ data class RkfTransitData internal constructor(
                 ListItem(R.string.rkf_card_status, cardStatus)
             })
 
-    override fun getRawFields(level: RawLevel): List<ListItem>? {
+    override fun getRawFields(level: RawLevel): List<ListItemInterface>? {
         return mBalances.mapIndexed { index, rkfPurse -> listOf(HeaderListItem("Purse $index")) + rkfPurse.getRawFields(level) }.flatten() +
                 subscriptions.mapIndexed { index, rkfPurse -> listOf(HeaderListItem("Ticket $index")) + rkfPurse.getRawFields(level).orEmpty() }.flatten()
     }
 
     companion object {
-        private val issuerMap = mapOf(
+        @VisibleForTesting
+        val issuerMap = mapOf(
                 RkfLookup.SLACCESS to CardInfo(
                         name = "SLaccess",
                         locationId = R.string.location_stockholm,

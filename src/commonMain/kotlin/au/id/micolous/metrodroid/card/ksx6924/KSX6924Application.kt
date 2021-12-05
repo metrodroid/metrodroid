@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData
-import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
@@ -53,9 +53,9 @@ data class KSX6924Application (
     override val type: String
         get() = TYPE
 
-    override val rawData: List<ListItem>?
+    override val rawData: List<ListItemInterface>?
         get() {
-            val sli = mutableListOf<ListItem>()
+            val sli = mutableListOf<ListItemInterface>()
             sli.add(ListItemRecursive.collapsedValue(R.string.tmoney_balance,
                     balance.toHexDump()))
 

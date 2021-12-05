@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 @Parcelize
@@ -44,7 +45,7 @@ data class HSLKausi(public override val parsed: En1545Parsed): En1545Subscriptio
                 HSLLookup.getArea(parsed, prefix = CONTRACT_PREFIX,
                         isValidity = true))
 
-    override val info: List<ListItem>?
+    override val info: List<ListItemInterface>?
         get() = super.info.orEmpty() + listOf(
                 ListItem(R.string.hsl_period, formatPeriod()) // FIXME: put above separator
         )

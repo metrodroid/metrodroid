@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils.zeroPad
 
 private fun getNameUL(city: Int) = if (city == HSLLookup.CITY_UL_TAMPERE) "Tampere Ultralight" else "HSL Ultralight"
@@ -40,7 +41,7 @@ data class HSLUltralightTransitData(override val trips: List<Trip>,
                                     val city: Int) : TransitData() {
     override val cardName get() = getNameUL(city)
 
-    override fun getRawFields(level: RawLevel): List<ListItem> = super.getRawFields(level).orEmpty() + listOf(
+    override fun getRawFields(level: RawLevel): List<ListItemInterface> = super.getRawFields(level).orEmpty() + listOf(
             ListItem("Application version", applicationVersion.toString()),
             ListItem("Application key version", applicationKeyVersion.toString()),
             ListItem("Platform type", platformType.toString()),
