@@ -1,7 +1,7 @@
 package au.id.micolous.metrodroid.util
 
-import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.transit.TransitData
+import java.util.*
 
 actual object Preferences {
     actual var obfuscateBalance: Boolean = false
@@ -16,14 +16,11 @@ actual object Preferences {
     actual val debugSpans: Boolean = false
     actual val localisePlaces: Boolean = false
 
-    @VisibleForTesting
-    var languageActual = "en"
-
     actual var showRawStationIds = true
     actual val language: String
-        get() = languageActual
+        get() = Locale.getDefault().language
     actual val region: String?
-        get() = null
+        get() = Locale.getDefault().country
     actual var showBothLocalAndEnglish = true
     actual val rawLevel: TransitData.RawLevel
         get() = TransitData.RawLevel.UNKNOWN_ONLY

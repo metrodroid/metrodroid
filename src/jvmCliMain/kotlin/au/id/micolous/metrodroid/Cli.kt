@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.cli.SmartCard
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.multi.format
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat
@@ -54,8 +55,13 @@ class Cli: CliktCommand() {
     override fun run() = Unit
 }
 
-class Identify: CliktCommand(
-        help="Identifies the card(s) in a Metrodroid JSON file") {
+abstract class TranslatedCommand(private val helpRes: StringResource): CliktCommand() {
+    override val commandHelp: String
+        get() = Localizer.localizeString(helpRes)
+}
+
+class Identify: TranslatedCommand(
+        helpRes=R.string.cli_identify_command_help) {
     private val fname by argument()
 
     override fun run() {
@@ -73,8 +79,8 @@ class Identify: CliktCommand(
     }
 }
 
-class MakeJson: CliktCommand(
-        help="Converts Metrodroid XML/JSON into latest version of JSON") {
+class MakeJson: TranslatedCommand(
+        helpRes=R.string.cli_makejson_command_help) {
     private val fname by argument()
     private val output by argument()
 
@@ -89,8 +95,8 @@ class MakeJson: CliktCommand(
     }
 }
 
-class Parse: CliktCommand(
-        help="Parses the card(s) in a Metrodroid JSON file") {
+class Parse: TranslatedCommand(
+        helpRes=R.string.cli_parse_command_help) {
     private val fname by argument()
 
     override fun run() {
@@ -100,8 +106,8 @@ class Parse: CliktCommand(
     }
 }
 
-class HwInfo: CliktCommand(
-    help="Print the hardware info of card(s)") {
+class HwInfo: TranslatedCommand(
+    helpRes=R.string.cli_hwinfo_command_help) {
     private val fname by argument()
 
     override fun run() {
@@ -189,8 +195,9 @@ fun printHwInfo(card: Card) {
     }
 }
 
-class Unrecognized: CliktCommand(
-        help="Lists unrecognized card(s) in a Metrodroid JSON file") {
+
+class Unrecognized: TranslatedCommand(
+        helpRes=R.string.cli_unrecognized_command_help) {
     private val fname by argument()
 
     override fun run() {
@@ -213,8 +220,8 @@ class Unrecognized: CliktCommand(
     }
 }
 
-class Supported: CliktCommand(
-        help="Lists all cards supported by Metrodroid") {
+class Supported: TranslatedCommand(
+        helpRes=R.string.cli_supported_command_help) {
     override fun run() {
         for (card in CardInfoRegistry.allCardsAlphabetical) {
             println("card name = ${card.name}")
@@ -230,8 +237,8 @@ class Supported: CliktCommand(
     }
 }
 
-class Notices: CliktCommand(
-    help="List license notices") {
+class Notices: TranslatedCommand(
+    helpRes=R.string.cli_notices_command_help) {
 
     private fun readLicenseTextFromAsset(path: String) {
         val s = Notices::class.java.getResourceAsStream("/$path")?.readBytes()
@@ -252,7 +259,10 @@ class Notices: CliktCommand(
     }
 }
 
-fun main(args: Array<String>) = Cli().main(args)
+fun main(args: Array<String>) {
+    Localizer.loadDefaultLocale()
+    Cli().main(args)
+}
 
 private fun loadCards(fname: String): Iterator<Card>? {
     val by = File(fname).inputStream()

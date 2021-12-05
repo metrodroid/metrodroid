@@ -21,17 +21,18 @@ package au.id.micolous.metrodroid.cli
 import au.id.micolous.kotlin.pcsc.Context
 import au.id.micolous.kotlin.pcsc.ReaderState
 import au.id.micolous.kotlin.pcsc.getAllReaderStatus
+import au.id.micolous.metrodroid.TranslatedCommand
 import au.id.micolous.metrodroid.card.*
 import au.id.micolous.metrodroid.card.desfire.DesfireCardReader
 import au.id.micolous.metrodroid.card.felica.FelicaReader
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.printCard
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.util.JavaStreamOutput
 import au.id.micolous.metrodroid.util.makeFilename
-import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.validate
@@ -57,7 +58,7 @@ val ReaderState.ignored : Boolean
 /**
  * Communicates with a card using the PC/SC API.
  */
-class SmartCard: CliktCommand(help="Communicates with a card using the PC/SC API") {
+class SmartCard: TranslatedCommand(helpRes=R.string.cli_smartcard_command_help) {
 
     private val reader: String? by option("-r", "--reader", metavar = "DEVICE",
         help="Name of the reader device to use. If not specified, tries to pick the first reader " +

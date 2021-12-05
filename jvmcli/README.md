@@ -16,7 +16,6 @@ regular JRE (Java Runtime Environment).
 ### Limitations
 
 * No GUI
-* Not localised
 * **PC/SC support limitations:**
 
   * Only tested on macOS and Windows 10. It probably works on other systems.
