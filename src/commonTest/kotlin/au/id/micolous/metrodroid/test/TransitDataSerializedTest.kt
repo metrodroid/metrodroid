@@ -57,6 +57,9 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
         Preferences.showBothLocalAndEnglish = true
         Preferences.useIsoDateTimeStamps = true
         Preferences.showRawStationIds = false
+        Preferences.obfuscateTripDates = false
+        Preferences.obfuscateTripTimes = false
+        Preferences.obfuscateTripFares = false
         for (testcase in testcases) {
             val card = when (testcase.inputType) {
                 InputType.JSON -> JsonKotlinFormat.readCard(loadAsset(testcase.inputFile))
