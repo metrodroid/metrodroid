@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object NFCVCardReader {
-    const val MAX_PAGES = 255
+    private const val MAX_PAGES = 255
     fun dumpTag(
         tech: CardTransceiver,
         feedbackInterface: TagReaderFeedbackInterface
