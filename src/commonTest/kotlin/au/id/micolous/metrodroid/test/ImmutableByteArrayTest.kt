@@ -315,4 +315,18 @@ class ImmutableByteArrayTest : BaseInstrumentedTest() {
         assertEquals(u8, ImmutableByteArray.fromUTF8(STR))
         assertEquals(invChar, ImmutableByteArray.fromHex("41").readUTF16BOM(isLittleEndianDefault = true))
     }
+
+    @Test
+    fun testIndex() {
+        assertEquals(0,
+            ImmutableByteArray.fromASCII("ABCDABC").indexOfFirstStarting(0) { it == 'A'.code.toByte() })
+        assertEquals(-1,
+            ImmutableByteArray.fromASCII("ABCDABC").indexOfFirstStarting(0) { it == 'X'.code.toByte() })
+        assertEquals(4,
+            ImmutableByteArray.fromASCII("ABCDABC").indexOfFirstStarting(1) { it == 'A'.code.toByte() })
+        assertEquals(-1,
+            ImmutableByteArray.fromASCII("ABCDABC").indexOfFirstStarting(5) { it == 'A'.code.toByte() })
+        assertEquals(-1,
+            ImmutableByteArray.fromASCII("ABCDABC").indexOfFirstStarting(10) { it == 'A'.code.toByte() })
+    }
 }
