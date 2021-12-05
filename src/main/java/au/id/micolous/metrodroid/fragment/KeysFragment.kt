@@ -33,6 +33,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.fragment.app.ListFragment
 import androidx.loader.app.LoaderManager
@@ -51,6 +52,7 @@ import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.BetterAsyncTask
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.registerForActivityResultIfOkAndShowError
 import kotlinx.serialization.json.jsonObject
 import org.jetbrains.annotations.NonNls
 
@@ -121,7 +123,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                     i.type = "application/json"
                     i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME)
 
-                    startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
+                    requestSaveFileLauncher.launch(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)))
                 }
             }
 
@@ -197,7 +199,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_key) {
             val i = Utils.getContentIntent(listOf("application/json", "application/x-extension-bin"))
-            startActivityForResult(i, REQUEST_SELECT_FILE)
+            requestSelectFileLauncher.launch(i)
             return true
         } else if (item.itemId == R.id.key_more_info) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/key_formats")))
@@ -205,65 +207,60 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
         return false
     }
 
-    @Suppress("StaticFieldLeak")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val uri: Uri? = data?.data
-        try {
-            if (resultCode == Activity.RESULT_OK && uri != null) {
-                when (requestCode) {
-                    REQUEST_SELECT_FILE -> {
-                        val type = requireActivity().contentResolver.getType(uri)
+    private val requestSelectFileLauncher = registerForActivityResultIfOkAndShowError(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        val uri = result.data?.data ?: return@registerForActivityResultIfOkAndShowError
+        val type = requireActivity().contentResolver.getType(uri)
 
-                        Log.d(TAG, "REQUEST_SELECT_FILE content_type = $type")
+        Log.d(TAG, "REQUEST_SELECT_FILE content_type = $type")
 
-                        val f: KeyFormat = Utils.detectKeyFormat(requireActivity(), uri)
+        val f: KeyFormat = Utils.detectKeyFormat(requireActivity(), uri)
 
-                        Log.d(TAG, "Detected file format: " + f.name)
+        Log.d(TAG, "Detected file format: " + f.name)
 
-                        when (f) {
-                            KeyFormat.JSON_MFC_STATIC -> {
-                                // Static keys can't be prompted
-                                @StringRes val err = importKeysFromStaticJSON(requireActivity(), uri)
-                                if (err != 0) {
-                                    Toast.makeText(activity, err, Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            KeyFormat.JSON_MFC, KeyFormat.JSON_MFC_NO_UID, KeyFormat.RAW_MFC -> startActivity(Intent(Intent.ACTION_VIEW, uri, activity, AddKeyActivity::class.java))
-
-                            else -> Toast.makeText(activity, R.string.invalid_key_file, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    REQUEST_SAVE_FILE -> {
-                        Log.d(TAG, "REQUEST_SAVE_FILE")
-
-                        object : BetterAsyncTask<Void?>(requireActivity(), false, false) {
-                            override fun doInBackground(): Void? {
-                                val ctxt = MetrodroidApplication.instance
-                                val os = ctxt.contentResolver.openOutputStream(uri)!!
-
-                                val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
-                                val json = keys.toJSON().toString()
-
-                                os.write(json.encodeToByteArray())
-                                os.close()
-                                return null
-
-                            }
-
-                            override fun onResult(result: Void?) {
-                                Toast.makeText(MetrodroidApplication.instance, R.string.file_exported, Toast.LENGTH_SHORT).show()
-                                mActionMode!!.finish()
-                            }
-                        }.execute()
-                    }
+        when (f) {
+            KeyFormat.JSON_MFC_STATIC -> {
+                // Static keys can't be prompted
+                @StringRes val err = importKeysFromStaticJSON(requireActivity(), uri)
+                if (err != 0) {
+                    Toast.makeText(activity, err, Toast.LENGTH_SHORT).show()
                 }
             }
-        } catch (ex: Exception) {
-            Utils.showError(requireActivity(), ex)
-        }
 
+            KeyFormat.JSON_MFC, KeyFormat.JSON_MFC_NO_UID, KeyFormat.RAW_MFC -> startActivity(Intent(Intent.ACTION_VIEW, uri, activity, AddKeyActivity::class.java))
+
+            else -> Toast.makeText(activity, R.string.invalid_key_file, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    val requestSaveFileLauncher = registerForActivityResultIfOkAndShowError(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        val uri = result.data?.data ?: return@registerForActivityResultIfOkAndShowError
+        Log.d(TAG, "REQUEST_SAVE_FILE")
+
+        object : BetterAsyncTask<Void?>(requireActivity(), false, false) {
+            override fun doInBackground(): Void? {
+                val ctxt = MetrodroidApplication.instance
+                val os = ctxt.contentResolver.openOutputStream(uri)!!
+
+                val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
+                val json = keys.toJSON().toString()
+
+                os.write(json.encodeToByteArray())
+                os.close()
+                return null
+
+            }
+
+            override fun onResult(result: Void?) {
+                Toast.makeText(
+                    MetrodroidApplication.instance,
+                    R.string.file_exported,
+                    Toast.LENGTH_SHORT
+                ).show()
+                mActionMode!!.finish()
+            }
+        }.execute()
     }
 
     private class KeysAdapter(activity: Activity) : ResourceCursorAdapter(activity, android.R.layout.simple_list_item_2, null, false) {
@@ -335,9 +332,6 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
     }
 
     companion object {
-        private const val REQUEST_SELECT_FILE = 1
-        private const val REQUEST_SAVE_FILE = 2
-
         private const val STD_EXPORT_FILENAME = "Metrodroid-Keys.json"
 
         private const val TAG = "KeysFragment"

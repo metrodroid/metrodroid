@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -33,6 +32,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.CardSerializer
@@ -117,7 +117,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        try {
+        tryAndShowError {
             val xml: String
             val i: Intent
 
@@ -146,7 +146,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                         i.addCategory(Intent.CATEGORY_OPENABLE)
                         i.type = "application/json"
                         i.putExtra(Intent.EXTRA_TITLE, filename)
-                        startActivityForResult(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE)
+                        requestSaveFileLauncher.launch(Intent.createChooser(i, Localizer.localizeString(R.string.export_filename)))
                     }
 
                     // Intentionally not available on pre-Kitkat (for compatibility reasons).
@@ -158,39 +158,24 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
                     return true
                 }
             }
-        } catch (ex: Exception) {
-            Utils.showError(this, ex)
         }
 
         return false
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        try {
-            if (resultCode == Activity.RESULT_OK) {
-                when (requestCode) {
-                    REQUEST_SAVE_FILE -> {
-                        val uri: Uri? = data?.data
-                        Log.d(TAG, "REQUEST_SAVE_FILE")
-                        val os = contentResolver.openOutputStream(uri!!)!!
-                        val json = CardSerializer.toJson(mCard!!)
-                        os.write(json.toString().encodeToByteArray())
-                        os.close()
-                        Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        } catch (ex: Exception) {
-            Utils.showError(this, ex)
-        }
-
+    private val requestSaveFileLauncher = registerForActivityResultIfOkAndShowError(ActivityResultContracts.StartActivityForResult()) { result ->
+        val uri: Uri? = result.data?.data
+        Log.d(TAG, "REQUEST_SAVE_FILE")
+        val os = contentResolver.openOutputStream(uri!!)!!
+        val json = CardSerializer.toJson(mCard!!)
+        os.write(json.toString().encodeToByteArray())
+        os.close()
+        Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
         const val EXTRA_CARD = "au.id.micolous.farebot.EXTRA_CARD"
         const val EXTRA_ERROR = "au.id.micolous.farebot.EXTRA_ERROR"
-        private const val REQUEST_SAVE_FILE = 2
         private val TAG = AdvancedCardInfoActivity::class.java.name
     }
 }
