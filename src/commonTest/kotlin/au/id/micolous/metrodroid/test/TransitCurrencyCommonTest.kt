@@ -4,6 +4,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
+import au.id.micolous.metrodroid.util.countryCodeToName
 import au.id.micolous.metrodroid.util.currencyNameByCode
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -91,5 +92,13 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
         setLocale("ru-RU")
         assertEquals(actual=currencyNameByCode(840)?.lowercase(), expected="доллар сша")
         assertEquals(actual=currencyNameByCode(643)?.lowercase(), expected="российский рубль")
+    }
+
+    @Test
+    fun testCountryName() {
+        setLocale("en-US")
+        assertEquals("unknown (5)", countryCodeToName(5).lowercase())
+        assertEquals("Australia", countryCodeToName(36))
+        assertEquals("Switzerland", countryCodeToName(756))
     }
 }
