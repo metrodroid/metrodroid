@@ -1266,4 +1266,12 @@
     <string name="mfu_version">גירסה</string>
     <string name="mfu_vendor">ספק</string>
     <string name="mfu_product_type">סוג מוצר</string>
+    <string name="cli_makejson_command_help">ממיר XML/JSON של Metrodroid לגרסת ה־JSON העדכניות ביותר</string>
+    <string name="cli_unrecognized_command_help">הצגת כרטיסים בלתי מזוהים בקובץ Metrodroid</string>
+    <string name="cli_smartcard_command_help">מתקשר עם כרטיס באמצעות ה־API של PC/SC</string>
+    <string name="cli_notices_command_help">הצגת הצהרות רישוי</string>
+    <string name="cli_hwinfo_command_help">הצגת פרטי החומרה של הכרטיסים</string>
+    <string name="cli_supported_command_help">הצגת כל הכרטיסים שנתמכים על ידי Metrodroid</string>
+    <string name="cli_parse_command_help">מפענח את הכרטיסים בקובץ Metrodroid</string>
+    <string name="cli_identify_command_help">מזהה את הכרטיסים בקובץ Metrodroid</string>
 </resources>
