@@ -105,7 +105,7 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
             val values = mutableMapOf<String, ImmutableByteArray>()
             var p = 0
             val dol = ISO7816TLV.removeTlvHeader(format)
-            ISO7816TLV.pdolIterate(dol) { id, len ->
+            ISO7816TLV.pdolIterate(dol).forEach { (id, len) ->
                 if (p + len <= record.size)
                     values[id.toHexString()] = record.sliceArray(p until p + len)
                 p += len
