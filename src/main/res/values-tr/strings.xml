@@ -515,4 +515,12 @@
     <string name="large_file_no">İptal (güvenli)</string>
     <string name="app_logo_description">Metrodroid logosu</string>
     <string name="location_ekaterinburg">Yekaterinburg, Rusya</string>
+    <string name="cli_identify_command_help">Bir Metrodroid dosyasındaki kart(lar)ı tanımlar</string>
+    <string name="cli_parse_command_help">Bir Metrodroid dosyasındaki kart(lar)ı ayrıştırır</string>
+    <string name="cli_supported_command_help">Metrodroid tarafından desteklenen tüm kartları listeler</string>
+    <string name="cli_makejson_command_help">Metrodroid XML/JSON\'u en son JSON sürümüne dönüştürür</string>
+    <string name="cli_unrecognized_command_help">Bir Metrodroid dosyasında tanınmayan kart(lar)ı listeler</string>
+    <string name="cli_smartcard_command_help">PC/SC API kullanarak bir kartla iletişim kurar</string>
+    <string name="cli_notices_command_help">Lisans bildirimlerini listele</string>
+    <string name="cli_hwinfo_command_help">Kart(lar)ın donanım bilgilerini yazdır</string>
 </resources>
