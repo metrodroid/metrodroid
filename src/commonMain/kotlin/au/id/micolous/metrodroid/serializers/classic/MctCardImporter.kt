@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.serializers.classic
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.ClassicSectorRaw
@@ -60,12 +61,11 @@ class MctCardImporter : CardImporter {
         }
 
         flushSector(sectors, curSector, curBlocks, lastBlock)
-        val uid: ImmutableByteArray
-        if (sectors[0] !is UnauthorizedClassicSector) {
+        val uid = if (sectors[0] !is UnauthorizedClassicSector) {
             val block0 = sectors[0].getBlock(0).data
-            uid = MfcCardImporter.block0ToUid(block0)
+            MfcCardImporter.block0ToUid(block0)
         } else
-            uid = ImmutableByteArray.fromASCII("fake")
+            ImmutableByteArray.fromASCII("fake")
 
         when {
             maxSector <= 15 -> maxSector = 15 // 1K
@@ -95,7 +95,10 @@ class MctCardImporter : CardImporter {
             ImmutableByteArray.fromHex(lastBlock.substring(20, 32))
         } else
             null
-        val raw = ClassicSectorRaw(curBlocks, keyA, keyB, false, null)
+        val raw = if (keyA == null && keyB == null)
+            ClassicSectorRaw(curBlocks, keyA, keyB, true, "Unauthorized")
+        else
+            ClassicSectorRaw(curBlocks, keyA, keyB, false, null)
         sectors.add(ClassicSector.create(raw))
     }
 }
