@@ -22,7 +22,6 @@ import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.yearToDays
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import java.util.*
 
 /**
  * Testing the Date functions
@@ -35,33 +34,43 @@ class DateTest {
         // carriages, so we don't care
         for (year in 1600..10000) {
             val d = yearToDays(year)
-            val g = GregorianCalendar(TimeZone.getTimeZone("UTC"))
-            g.timeInMillis = 0
-            g.set(Calendar.YEAR, year)
-            val expectedD = g.timeInMillis / (86400L * 1000L)
-            assertEquals(d, expectedD.toInt(),
-                 "Wrong days for year $year: $d vs $expectedD")
+            val ly = year - 1
+            val expectedD = year * 365 + ly / 4 - ly / 100 + ly / 400 - 719527
+            assertEquals(actual=d, expected=expectedD,
+                 message="Wrong days for year $year: $d vs $expectedD")
         }
     }
 
     @Test
     fun testDaystamp() {
-        // years 1697 to 2517
-        for (days in (-100000)..200000) {
-            val ymd = Daystamp(days)
-            val g = GregorianCalendar(TimeZone.getTimeZone("UTC"))
-            g.timeInMillis = days * 86400L * 1000L
-            val expectedY = g.get(Calendar.YEAR)
-            val expectedM = g.get(Calendar.MONTH)
-            val expectedD = g.get(Calendar.DAY_OF_MONTH)
-            assertEquals (ymd.year, expectedY,
-                "Wrong year for days $days: ${ymd.year} vs $expectedY")
-            assertEquals (ymd.monthNumberZeroBased, expectedM,
-                "Wrong month for days $days: ${ymd.monthNumberZeroBased} vs $expectedM")
-            assertEquals (ymd.day, expectedD,
-            "Wrong days for days $days: ${ymd.day} vs $expectedD")
+        val monthDays = listOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        var days = 1600 * 365 + 1599 / 4 - 1599 / 100 + 1599 / 400 - 719527
+        for (year in 1600..2600) {
+            for (month in 1..12) {
+                for (day in 1..monthDays[month-1]) {
+                    if (day == 29 && month == 2 && !isBisextile(year))
+                        continue
+                    val ymd = Daystamp(days)
+                    days++
+                    assertEquals(
+                        actual=ymd.year, expected=year,
+                        message="Wrong year for $year-$month-$day vs $ymd"
+                    )
+                    assertEquals(
+                        actual=ymd.monthNumberOneBased, expected=month,
+                        message="Wrong month for $year-$month-$day vs $ymd"
+                    )
+                    assertEquals(
+                        actual=ymd.day, expected=day,
+                        message="Wrong days for $year-$month-$day vs $ymd"
+                    )
+                }
+            }
         }
     }
+
+    private fun isBisextile(year: Int): Boolean = year % 4 == 0 &&
+            (year % 100 != 0 || year % 400 == 0)
 
     @Test
     fun testRoundTrip() {
