@@ -25,7 +25,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -33,6 +32,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.viewpager2.widget.ViewPager2
 
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.serializers.CardSerializer
@@ -58,7 +58,7 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         val card = CardSerializer.fromPersist(intent.getStringExtra(EXTRA_CARD)!!)
         mCard = card
 
-        val viewPager = findViewById<ViewPager>(R.id.pager)
+        val viewPager = findViewById<ViewPager2>(R.id.pager)
         val tabsAdapter = TabPagerAdapter(this, viewPager)
 
         if (intent.hasExtra(EXTRA_ERROR)) {
@@ -97,12 +97,12 @@ class AdvancedCardInfoActivity : MetrodroidActivity() {
         }
 
         if (card.manufacturingInfo != null) {
-            tabsAdapter.addTab(R.string.hw_detail, CardHWDetailFragment::class.java,
+            tabsAdapter.addTab(R.string.hw_detail, ::CardHWDetailFragment,
                     intent.extras)
         }
 
         if (card.rawData != null) {
-            tabsAdapter.addTab(R.string.data, CardRawDataFragment::class.java,
+            tabsAdapter.addTab(R.string.data, ::CardRawDataFragment,
                     intent.extras)
         }
     }

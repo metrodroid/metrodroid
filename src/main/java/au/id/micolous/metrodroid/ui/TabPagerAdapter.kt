@@ -19,65 +19,50 @@
 
 package au.id.micolous.metrodroid.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Parcelable
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class TabPagerAdapter(private val mActivity: AppCompatActivity, private val mViewPager: ViewPager) : FragmentPagerAdapter(mActivity.supportFragmentManager) {
+class TabPagerAdapter(
+    mActivity: FragmentActivity,
+    mViewPager: ViewPager2) :
+    FragmentStateAdapter(mActivity) {
     private val mTabs = ArrayList<TabInfo>()
-    private var mCurTransaction: FragmentTransaction? = null
 
     init {
         mViewPager.adapter = this
+        addMediator(mActivity, mViewPager)
     }
 
-    fun addTab(nameResource: Int, clss: Class<*>, args: Bundle?) {
-        val info = TabInfo(clss, args, Localizer.localizeString(nameResource))
+    fun addTab(nameResource: Int, creator: () -> Fragment, args: Bundle?) {
+        val info = TabInfo(creator, args, Localizer.localizeString(nameResource))
         mTabs.add(info)
-        notifyDataSetChanged()
+        notifyItemInserted(mTabs.size - 1)
     }
 
-    override fun getCount(): Int = mTabs.size
+    override fun getItemCount(): Int = mTabs.size
 
-    override fun startUpdate(view: View) {}
-
-    override fun getItem(p0: Int): Fragment {
-        val info = mTabs[p0]
-        return Fragment.instantiate(mActivity, info.mClass.name, info.mArgs)
+    override fun createFragment(position: Int): Fragment {
+        val info = mTabs[position]
+        val frag = info.mCreator()
+        frag.arguments = info.mArgs
+        return frag
     }
 
-    override fun getPageTitle(p0: Int): CharSequence = mTabs[p0].mName
+    private class TabInfo(val mCreator: () -> Fragment,
+                          val mArgs: Bundle?, val mName: String)
 
-    @SuppressLint("CommitTransaction")
-    override fun destroyItem(view: View, i: Int, obj: Any) {
-        if (mCurTransaction == null) {
-            mCurTransaction = mActivity.supportFragmentManager.beginTransaction()
-        }
-        mCurTransaction!!.hide(obj as Fragment)
+    fun addMediator(activity: FragmentActivity, viewPager: ViewPager2) {
+        val tabLayout = activity.findViewById<TabLayout>(R.id.tabs) ?: return
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = mTabs[position].mName
+        }.attach()
     }
-
-    override fun finishUpdate(view: View) {
-        if (mCurTransaction != null) {
-            mCurTransaction?.commitAllowingStateLoss()
-            mCurTransaction = null
-            mActivity.supportFragmentManager.executePendingTransactions()
-        }
-    }
-
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return (obj as Fragment).view === view
-    }
-
-    override fun saveState(): Parcelable? = null
-
-    override fun restoreState(parcelable: Parcelable?, classLoader: ClassLoader?) {}
-
-    private class TabInfo(val mClass: Class<*>, val mArgs: Bundle?, val mName: String)
 }
