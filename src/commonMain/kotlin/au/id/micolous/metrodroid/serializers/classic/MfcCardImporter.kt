@@ -13,8 +13,9 @@ import au.id.micolous.metrodroid.util.Input
 import au.id.micolous.metrodroid.util.toImmutable
 
 class MfcCardImporter : CardImporter {
-    fun readCard(bin: ByteArray): Card = readCard(stream=ByteArrayInput(bin))
-    override fun readCard(stream: Input): Card {
+    fun readCard(bin: ByteArray, time: TimestampFull): Card =
+            readCard(stream=ByteArrayInput(bin), time)
+    fun readCard(stream: Input, time: TimestampFull): Card {
         // Read the blocks of the card.
         val sectors = mutableListOf<ClassicSector>()
         var uid: ImmutableByteArray? = null
@@ -68,9 +69,11 @@ class MfcCardImporter : CardImporter {
             sectors.add(UnauthorizedClassicSector())
         }
 
-        return Card(uid!!,
-                TimestampFull.now(), mifareClassic = ClassicCard(sectors))
+        return Card(uid!!, time, mifareClassic = ClassicCard(sectors))
     }
+
+    override fun readCard(stream: Input): Card =
+        readCard(stream, TimestampFull.now())
 
     companion object {
         private const val MAX_SECTORS = 40
