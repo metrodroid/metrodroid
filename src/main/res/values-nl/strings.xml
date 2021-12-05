@@ -1205,4 +1205,12 @@
     <string name="mfu_model">Ultralicht model</string>
     <string name="mfu_product_type">Soort product</string>
     <string name="mfu_protocol_type">Soort protocol</string>
+    <string name="cli_parse_command_help">Verwerkt één of meerdere kaarten uit een Metrodroid-bestand</string>
+    <string name="cli_unrecognized_command_help">Maakt een opsomming van één of meerdere niet-herkende kaarten uit een Metrodroid-bestand</string>
+    <string name="cli_supported_command_help">Maakt een opsomming van ondersteunde kaarten</string>
+    <string name="cli_notices_command_help">Toont licentie-opmerkingen</string>
+    <string name="cli_hwinfo_command_help">Toont hardware-informatie van één of meerdere kaarten</string>
+    <string name="cli_identify_command_help">Identificeert de kaart(en) uit een Metrodroid-bestand</string>
+    <string name="cli_makejson_command_help">Converteert Metrodroids xml/json naar de nieuwste json-versie</string>
+    <string name="cli_smartcard_command_help">Communiceert met een kaart middels de PC-/SC-api</string>
 </resources>
