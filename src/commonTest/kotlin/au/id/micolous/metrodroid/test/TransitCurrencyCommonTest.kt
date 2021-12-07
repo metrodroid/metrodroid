@@ -97,7 +97,7 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
     @Test
     fun testCountryName() {
         setLocale("en-US")
-        assertEquals("unknown (5)", countryCodeToName(5).lowercase())
+        assertEquals("Unknown (5)", countryCodeToName(5))
         assertEquals("Australia", countryCodeToName(36))
         assertEquals("Switzerland", countryCodeToName(756))
     }
