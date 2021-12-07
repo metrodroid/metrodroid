@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.multi
 
+import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializer
@@ -53,9 +54,15 @@ actual object Localizer: LocalizerInterface {
     }
     val language
         get() = getResource("meta.lang", "en")
+    private val bundle: NSBundle get() {
+        val baseBundle = NSBundle.bundleWithIdentifier("au.id.micolous.metrodroid.metrolib") ?: NSBundle.mainBundle
+        val overrideLang = Preferences.languageOverrideForTest.value ?: return baseBundle
+        val path = baseBundle.pathForResource(overrideLang, ofType="lproj") ?: return baseBundle
+        return NSBundle.bundleWithPath(path) ?: baseBundle
+    }
     private fun getResource(key: String, def: String): String =
-        NSBundle.bundleWithIdentifier("au.id.micolous.metrodroid.metrolib")?.localizedStringForKey(
-            key, value=def, table="Metrolib") ?: def
+        bundle.localizedStringForKey(
+            key, value=def, table="Metrolib")
     private fun getResource(res: StringResource): String = getResource("strings.${res.id}", res.english)
     private fun getPlural(res: PluralsResource, count: Int): String {            
         val def = if (count == 1) res.englishOne else res.englishMany

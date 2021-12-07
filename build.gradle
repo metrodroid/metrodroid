@@ -548,8 +548,15 @@ task copyTestAssetsIOS {
     outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
     inputs.dir new File(projectDir, "src/commonMain/assets")
     outputs.dir kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+    dependsOn iOSLanguages
     doLast {
         def outBase = kotlin.targets.iOS.binaries.getTest("DEBUG").outputFile.getParentFile()
+        for (lang in iOSLanguageList) {
+            def lproj = mapAndroidLanguageToIOS(lang) + '.lproj'
+            def target = new File(outBase, lproj)
+            delete target
+            ant.symlink(resource: "../../../xcode-frameworks/metrolib.framework/$lproj", link: target)
+        }
         testAssetsDirs.each { relativeDir ->
             new File(projectDir, relativeDir).list().each { subDir ->
                 def link = new File(outBase, subDir)
