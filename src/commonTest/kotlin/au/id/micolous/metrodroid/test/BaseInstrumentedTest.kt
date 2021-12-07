@@ -15,6 +15,7 @@ abstract class BaseInstrumentedTest : BaseInstrumentedTestPlatform() {
     fun loadSmallAssetBytesSafe(path: String): ByteArray? {
         val s = loadAssetSafe(path) ?: return null
         val out = s.readBytes(MAX_SMALL_SIZE + 1)
+        s.close()
         if (out.size > MAX_SMALL_SIZE) {
             throw Exception("Expected 0 - $MAX_SMALL_SIZE bytes")
         }

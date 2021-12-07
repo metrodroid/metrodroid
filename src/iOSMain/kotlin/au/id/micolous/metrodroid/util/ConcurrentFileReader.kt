@@ -49,6 +49,15 @@ class ConcurrentFileReader private constructor(
                 min(sz, available2G))
 
         override fun readToString(): String = realRead(available2G).decodeToString()
+
+        override fun close() {
+            reader.close()
+        }
+    }
+
+    fun close() {
+        munmap(mMapped, fileLength.toULong())
+        close(mFd)
     }
 
     fun makeInput(): Input = FileInput(this)

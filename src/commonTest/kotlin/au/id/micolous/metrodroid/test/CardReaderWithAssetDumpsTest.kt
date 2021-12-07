@@ -40,7 +40,9 @@ abstract class CardReaderWithAssetDumpsTest<I : CardImporter>(
      * @return Parsed [C] from the file.
      */
     inline fun <reified C: CardProtocol>loadCard(path: String): Card {
-        val card = importer.readCard(loadAsset(path))
+        val input = loadAsset(path)
+        val card = importer.readCard(input)
+        input.close()
         assertNotNull(card)
         val protocol = card.allProtocols[0]
         assertTrue(protocol is C)

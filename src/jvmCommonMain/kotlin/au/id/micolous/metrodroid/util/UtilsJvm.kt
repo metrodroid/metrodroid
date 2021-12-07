@@ -66,6 +66,10 @@ class JavaStreamInput (private val stream: InputStream): Input {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun readToString(): String = stream.readBytes().decodeToString()
+
+    override fun close() {
+        stream.close()
+    }
 }
 
 class JavaStreamOutput (private val stream: OutputStream): Output {
