@@ -49,7 +49,7 @@ object Cmac {
         return Pair(k1, k2)
     }
 
-        private fun cmac(macdata: ImmutableByteArray, tlen: Int?,
+    private fun cmac(macdata: ImmutableByteArray, tlen: Int?,
                      cipher: (ImmutableByteArray) -> ImmutableByteArray): ImmutableByteArray {
         var x = ImmutableByteArray.empty(16)
         val (k1, k2) = cmacSubkeys(cipher)
