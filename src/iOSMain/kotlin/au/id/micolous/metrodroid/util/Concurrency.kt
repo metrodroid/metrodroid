@@ -29,6 +29,10 @@ actual class AtomicRef<T> actual constructor(initial: T) {
         set(value) {
             backer.value = value
         }
+
+    init {
+        freeze()
+    }
 }
 
 actual fun Any?.nativeFreeze() = this.freeze()
