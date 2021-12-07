@@ -19,10 +19,7 @@
 
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.time.Daystamp
-import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.time.Month
-import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
@@ -41,9 +38,10 @@ class ObfuscatorTest : BaseInstrumentedTest() {
         TripObfuscator.randomSource = Random(43)
         Preferences.obfuscateTripDates = false
         Preferences.obfuscateTripTimes = false
-        TimestampFull.nowSource.value = {
-            TimestampFull(MetroTimeZone.HELSINKI, 2021, Month.OCTOBER, 5, 13, 21, 37)
-        }
+        TimestampFull.setNowSource(object : NowSource {
+            override fun now(): TimestampFull =
+                TimestampFull(MetroTimeZone.HELSINKI, 2021, Month.OCTOBER, 5, 13, 21, 37)
+        })
     }
 
     @Test
@@ -91,9 +89,10 @@ class ObfuscatorTest : BaseInstrumentedTest() {
             TripObfuscator.maybeObfuscateTS(TimestampFull(MetroTimeZone.HELSINKI, 2021,
                 Month.MAY, 10, 12, 17, 25)))
 
-        TimestampFull.nowSource.value = {
-            TimestampFull(MetroTimeZone.HELSINKI, 2019, Month.DECEMBER, 5, 13, 21, 37)
-        }
+        TimestampFull.setNowSource(object : NowSource {
+            override fun now(): TimestampFull =
+                TimestampFull(MetroTimeZone.HELSINKI, 2019, Month.DECEMBER, 5, 13, 21, 37)
+        })
         assertEquals(Daystamp(2019, Month.OCTOBER, 11),
             TripObfuscator.maybeObfuscateTS(Daystamp(2020, Month.MAY, 9)))
     }

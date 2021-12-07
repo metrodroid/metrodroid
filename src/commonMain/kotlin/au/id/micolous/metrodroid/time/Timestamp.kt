@@ -32,6 +32,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.native.concurrent.SharedImmutable
+import kotlin.native.concurrent.ThreadLocal
 
 @Parcelize
 @Serializable(with = MetroTimeZone.Companion::class)
@@ -306,6 +307,19 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
     }
 }
 
+interface NowSource {
+    fun now(): TimestampFull
+}
+
+object DefaultNowSource: NowSource {
+    override fun now(): TimestampFull = TimestampFull(
+        timeInMillis = Clock.System.now().toEpochMilliseconds(),
+        tz = MetroTimeZone(TimeZone.currentSystemDefault().id))
+}
+
+@ThreadLocal
+private var nowSource: NowSource = DefaultNowSource
+
 @Parcelize
 @Serializable
 @SerialName("full")
@@ -403,11 +417,10 @@ data class TimestampFull(val timeInMillis: Long,
 
     companion object {
         @VisibleForTesting
-        val nowSource = AtomicRef {
-            TimestampFull(
-                timeInMillis = Clock.System.now().toEpochMilliseconds(),
-                tz = MetroTimeZone(TimeZone.currentSystemDefault().id))
+        fun setNowSource(newSource: NowSource) {
+            nowSource = newSource
         }
-        fun now() = nowSource.value()
+
+        fun now() = nowSource.now()
     }
 }
