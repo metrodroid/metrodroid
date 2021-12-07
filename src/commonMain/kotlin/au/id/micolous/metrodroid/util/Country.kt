@@ -13,6 +13,6 @@ fun currencyNameByCode(code: Int): String? {
 }
 
 fun countryCodeToName(countryCode: Int): String {
-    val alpha = ISO3166.mapNumericToAlpha2(countryCode) ?: Localizer.localizeString(R.string.unknown_format, countryCode)
+    val alpha = ISO3166.mapNumericToAlpha2(countryCode) ?: return Localizer.localizeString(R.string.unknown_format, countryCode)
     return iso3166AlphaToName(alpha) ?: Localizer.localizeString(R.string.unknown_format, alpha)
 }
