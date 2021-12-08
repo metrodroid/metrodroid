@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.NumberUtils
 
 @Parcelize
@@ -36,7 +37,7 @@ data class NolTransitData (private val mSerial: Int?, private val mType: Int?): 
     override val reason: Reason
         get() = Reason.LOCKED
 
-    override val extraInfo: List<ListItem>?
+    override val extraInfo: List<ListItemInterface>?
         get() = super.extraInfo.orEmpty() + listOf(ListItem(R.string.card_type, when (mType) {
             0x4d5 -> Localizer.localizeString(R.string.nol_silver)
             0x4d9 -> Localizer.localizeString(R.string.nol_red)

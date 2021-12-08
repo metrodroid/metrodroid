@@ -1,6 +1,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
@@ -16,6 +17,10 @@ import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLUltralightTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLUltralightTransitFactory
+import au.id.micolous.metrodroid.transit.ndef.NdefClassicTransitFactory
+import au.id.micolous.metrodroid.transit.ndef.NdefData
+import au.id.micolous.metrodroid.transit.ndef.NdefFelicaTransitFactory
+import au.id.micolous.metrodroid.transit.ndef.NdefUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import au.id.micolous.metrodroid.transit.rkf.RkfLookup
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
@@ -228,7 +233,24 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
              */
             TestCase("anonymt_dump-20120814.mfd", "parsed/anonymt_dump-20120814.json",
                 RkfTransitData::class, CardType.MifareClassic, RkfTransitData.FACTORY, RkfTransitData.issuerMap[RkfLookup.REJSEKORT], InputType.MFC),
-	                // TODO: Use .xml
+            TestCase("ndef/felicandef.json", "parsed/ndefuri.json",
+                NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
+            TestCase("ndef/felicalitendef.json", "parsed/ndefuri.json",
+                NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
+            TestCase(
+                "ndef/mfcndef.json", "parsed/ndefuri.json",
+                NdefData::class, CardType.MifareClassic, NdefClassicTransitFactory, NdefData.CARD_INFO
+            ),
+            TestCase(
+                "ndef/ulndef.json", "parsed/ndeftxt.json",
+                NdefData::class, CardType.MifareUltralight, NdefUltralightTransitFactory, NdefData.CARD_INFO
+            ),
+            TestCase("ndef/felicatxt.json", "parsed/ndeftxt.json",
+                NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
+            TestCase("ndef/felicawifi.json", "parsed/ndefwifi.json",
+                NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
+            TestCase("ndef/felicapkg.json", "parsed/ndefpkg.json",
+                NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
             TestCase("cepas/legacy.json", "parsed/cepaslegacy.json",
                 EZLinkCompatTransitData::class, CardType.CEPAS, null, null),
             TestCase("hsl/hslul.json", "parsed/hslul.json",

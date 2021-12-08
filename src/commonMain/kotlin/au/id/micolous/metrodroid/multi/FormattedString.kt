@@ -88,11 +88,13 @@ expect class FormattedStringBuilder() {
     fun append(value: FormattedString): FormattedStringBuilder
     fun append(value: FormattedString, start: Int, end: Int): FormattedStringBuilder
     fun build(): FormattedString
+    fun isEmpty(): Boolean
+    fun isNotEmpty(): Boolean
 }
 
 @Parcelize
 @Serializable(with=FormattedStringFallbackSerializer::class)
-class FormattedStringFallback (private val input: String): Parcelable {
+data class FormattedStringFallback (private val input: String): Parcelable {
     override fun toString(): String = unformatted
     val unformatted get() = input
 
@@ -131,6 +133,9 @@ class FormattedStringBuilderFallback {
     }
 
     fun build(): FormattedStringFallback = FormattedStringFallback(sb.toString())
+
+    fun isEmpty(): Boolean = sb.isEmpty()
+    fun isNotEmpty(): Boolean = sb.isNotEmpty()
 
     private val sb: StringBuilder = StringBuilder()
 }

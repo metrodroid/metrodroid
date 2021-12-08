@@ -132,7 +132,7 @@ data class FarebotFelicaBlock(
     val address: Int,
     val data: String
 ) {
-    fun convert() = FelicaBlock(ImmutableByteArray.fromBase64(data))
+    fun convert() = Pair(address, FelicaBlock(ImmutableByteArray.fromBase64(data)))
 }
 
 @Serializable
@@ -140,7 +140,7 @@ data class FarebotFelicaService(
     val serviceCode: Int,
     val blocks: List<FarebotFelicaBlock>
 ) {
-    fun convert() = FelicaService(blocks = blocks.sortedBy { it.address }.map { it.convert() })
+    fun convert() = FelicaService(blocksMap = blocks.map { it.convert() }.toMap())
 }
 
 @Serializable

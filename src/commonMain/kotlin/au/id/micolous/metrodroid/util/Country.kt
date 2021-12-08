@@ -7,6 +7,8 @@ expect fun currencyNameBySymbol(symbol: String): String?
 
 expect fun iso3166AlphaToName(isoAlpha: String): String?
 
+expect fun languageCodeToName(isoAlpha: String): String?
+
 fun currencyNameByCode(code: Int): String? {
     val symbol = ISO4217.getInfoByCode(code)?.symbol ?: return null
     return currencyNameBySymbol(symbol)

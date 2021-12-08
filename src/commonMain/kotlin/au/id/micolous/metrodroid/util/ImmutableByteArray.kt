@@ -172,6 +172,30 @@ class ImmutableByteArray private constructor(
     fun readASCII() = readLatin1() // ASCII is subset of Latin-1
     fun readLatin1() = mData.map { (it.toInt() and 0xff).toChar() }.filter { it != 0.toChar() }.toCharArray()
         .concatToString()
+    fun readUTF8(start: Int = 0, end: Int = size) = mData.decodeToString(startIndex = start, endIndex = end)
+    fun readUTF16(isLittleEndian: Boolean, start: Int = 0, end: Int = size): String {
+        val ret = if (isLittleEndian)
+            CharArray((end - start) / 2) { byteArrayToIntReversed(start + it * 2, 2).toChar() }.concatToString()
+        else
+            CharArray((end - start) / 2) { byteArrayToInt(start + it * 2, 2).toChar() }.concatToString()
+
+        if ((end - start) % 2 != 0) {
+            return ret + "\uFFFD"
+        }
+        return ret
+    }
+
+    fun readUTF16BOM(isLittleEndianDefault: Boolean, start: Int = 0, end: Int = size): String {
+        if (end < start + 2) {
+            return "\uFFFD"
+        }
+        return when (byteArrayToInt(0, 2)) {
+            0xFEFF -> readUTF16(isLittleEndian = false, start = 2 + start, end = end)
+            0xFFFE -> readUTF16(isLittleEndian = true, start = 2 + start, end = end)
+            else -> readUTF16(isLittleEndian = isLittleEndianDefault, start = start, end = end)
+        }
+    }
+
     fun sliceOffLenSafe(off: Int, len: Int): ImmutableByteArray? {
         if (off < 0 || len < 0 || off >= size)
             return null
@@ -202,6 +226,14 @@ class ImmutableByteArray private constructor(
 
     infix fun xor(other: ImmutableByteArray) = ImmutableByteArray(size) {
         mData[it] xor other[it]
+    }
+
+    fun indexOfFirstStarting(start: Int, predicate: (Byte) -> Boolean): Int {
+        for (idx in start until size) {
+            if (predicate(mData[idx]))
+                return idx
+        }
+        return -1
     }
 
     @OptIn(ExperimentalSerializationApi::class)

@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME1
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME2
 import au.id.micolous.metrodroid.transit.emv.EmvLogEntry.Companion.parseEmvTrip
-import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -158,23 +157,7 @@ data class EmvTransitData(
             res += ListItem(
                     Localizer.localizePlural(R.plurals.emv_pin_attempts_remaining, pinTriesRemaining),
                     pinTriesRemaining.toString())
-        res += listOf(HeaderListItem(R.string.tlv_tags))
-        val unknownIds = mutableSetOf<String>()
-        for (tlv in tlvs) {
-            val li = if (hideThings) {
-                ISO7816TLV.infoBerTLV(tlv, TAGMAP)
-            } else {
-                val (li, unknowns) = ISO7816TLV.infoBerTLVWithUnknowns(tlv, TAGMAP)
-                unknownIds += unknowns
-                li
-            }
-
-            res += li
-        }
-
-        if (unknownIds.isNotEmpty()) {
-            res += ListItem(R.string.unknown_tags, unknownIds.joinToString(", "))
-        }
+        res += ISO7816TLV.infoBerTLVs(tlvs, TAGMAP, hideThings)
 
         return res
     }

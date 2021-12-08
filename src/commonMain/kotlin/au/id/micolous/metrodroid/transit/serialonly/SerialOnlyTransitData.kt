@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.UriListItem
 
 abstract class SerialOnlyTransitData : TransitData() {
-    protected open val extraInfo: List<ListItem>?
+    protected open val extraInfo: List<ListItemInterface>?
         get() = null
 
     protected abstract val reason: Reason
@@ -51,7 +51,7 @@ abstract class SerialOnlyTransitData : TransitData() {
         return li
     }
 
-    protected enum class Reason {
+    enum class Reason {
         UNSPECIFIED,
         /** The card doesn't store the balance */
         NOT_STORED,

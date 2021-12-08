@@ -36,14 +36,14 @@ class OctopusTest : BaseInstrumentedTest() {
         val data = ImmutableByteArray.fromHex(s)
 
         val blockBalance = FelicaBlock(data)
-        val serviceBalance = FelicaService(listOf(blockBalance))
+        val serviceBalance = FelicaService(mapOf(0 to blockBalance))
 
         // Don't know what the purpose of this is, but it appears empty.
         //
         // NOTE: The old card we tested doesn't respond to FeliCa discovery commands properly, so no
         // idea if that card had this service on it...
         val blockUnknown = FelicaBlock(ImmutableByteArray.empty(16))
-        val serviceUnknown = FelicaService(listOf(blockUnknown))
+        val serviceUnknown = FelicaService(mapOf(0 to blockUnknown))
 
         val system = FelicaSystem(
                 mapOf(OctopusTransitData.SERVICE_OCTOPUS to serviceBalance, 0x100b to serviceUnknown))

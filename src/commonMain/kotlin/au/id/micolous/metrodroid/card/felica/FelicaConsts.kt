@@ -101,7 +101,8 @@ object FelicaConsts {
 
     // SERVICE CODES
     // FeliCa Lite, read-only mode
-    const val SERVICE_FELICA_LITE_READONLY = 0x0b00
+    const val SERVICE_FELICA_LITE_READONLY = 0x000b
     // FeliCa Lite, read-write mode
-    const val SERVICE_FELICA_LITE_READWRITE = 0x0900
+    const val SERVICE_FELICA_LITE_READWRITE = 0x0009
+    const val FELICA_LITE_BLOCK_MC = 0x88
 }

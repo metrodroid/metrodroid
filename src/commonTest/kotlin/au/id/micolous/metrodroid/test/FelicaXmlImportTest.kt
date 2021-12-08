@@ -43,9 +43,9 @@ class FelicaXmlImportTest: BaseInstrumentedTest()  {
         val service = system.services[1]
         assertNotNull(service)
         assertFalse(service.skipped)
-        val blocks = service.blocks.toList()
-        assertEquals(1, blocks.count())
-        val data = blocks[0].data
+        val blocks = service.blocksMap
+        assertEquals(1, blocks.size)
+        val data = blocks[0]!!.data
         assertEquals(ImmutableByteArray.empty(16), data)
     }
 

@@ -34,6 +34,12 @@ internal object EmvData {
     const val TAG_TRACK1 = "56"
     const val TAG_TRACK2_EQUIV = "57"
     const val TAG_TRACK3_EQUIV = "58"
+    const val TAG_CARD_EXPIRATION_DATE = "59"
+    const val TAG_PAN = "5a"
+    const val TAG_EXPIRATION_DATE = "5f24"
+    const val TAG_CARD_EFFECTIVE = "5f26"
+    const val TAG_INTERCHANGE_PROTOCOL = "5f27"
+    const val TAG_ISSUER_COUNTRY = "5f28"
     const val TAG_TRANSACTION_CURRENCY_CODE = "5f2a"
     const val TAG_TERMINAL_VERIFICATION_RESULTS = "95"
     const val TAG_TRANSACTION_DATE = "9a"
@@ -54,13 +60,18 @@ internal object EmvData {
             TAG_TRACK1 to TagDesc(R.string.emv_track_1, ASCII, CARD_NUMBER),
             TAG_TRACK2_EQUIV to TagDesc(R.string.emv_track_2_equiv, DUMP_SHORT, CARD_NUMBER),
             TAG_TRACK3_EQUIV to TagDesc(R.string.emv_track_3_equiv, DUMP_SHORT, CARD_NUMBER),
-            "5a" to HIDDEN_TAG, // PAN, shown elsewhere
+            // TODO: show as date
+            TAG_CARD_EXPIRATION_DATE to TagDesc(R.string.emv_card_expiration_date, DUMP_SHORT, DATE),
+            TAG_PAN to HIDDEN_TAG, // PAN, shown elsewhere
             "5f20" to TagDesc(R.string.card_holders_name, ASCII, CARD_NUMBER),
             // TODO: show as date
-            "5f24" to TagDesc(R.string.expiry_date, DUMP_SHORT, DATE),
+            TAG_EXPIRATION_DATE to TagDesc(R.string.expiry_date, DUMP_SHORT, DATE),
             // TODO: show as date
             "5f25" to TagDesc(R.string.issue_date, DUMP_SHORT, DATE),
-            "5f28" to TagDesc(R.string.issuer_country, COUNTRY),
+            // TODO: show as date
+            TAG_CARD_EFFECTIVE to TagDesc(R.string.emv_card_effective, DUMP_SHORT, DATE),
+            TAG_INTERCHANGE_PROTOCOL to TagDesc(R.string.emv_interchange_control, DUMP_SHORT),
+            TAG_ISSUER_COUNTRY to TagDesc(R.string.issuer_country, COUNTRY_BCD),
             // TODO: show language
             "5f2d" to TagDesc(R.string.emv_language_preference, ASCII),
             // TODO: show as int
