@@ -19,14 +19,14 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
-import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.opal.OpalData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
-class OpalXmlDumpTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardFormat()) {
+class OpalXmlDumpTest: BaseInstrumentedTest() {
     @Test
     fun testLitter() {
         /*
@@ -42,7 +42,10 @@ class OpalXmlDumpTest: CardMultiReaderWithAssetDumpsTest<XmlCardFormat>(XmlCardF
          * See the comment in the file for details.
          */
         setLocale("en-US")
-        val c = loadAndParseCard<DesfireCard, OpalTransitData>("opal/opal-transit-litter.xml")
+        val card = loadCardXml("opal/opal-transit-litter.xml")
+        assertIs<DesfireCard>(card.mifareDesfire)
+        val c = card.parseTransitData()
+        assertIs<OpalTransitData>(c)
         assertEquals("3085 2200 7856 2242", c.serialNumber)
         assertEquals(TransitCurrency.AUD(-182), c.balance)
         assertEquals(21, c.lastTransactionNumber)

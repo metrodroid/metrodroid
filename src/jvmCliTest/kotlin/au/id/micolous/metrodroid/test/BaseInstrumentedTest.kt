@@ -23,10 +23,4 @@ actual abstract class BaseInstrumentedTestPlatform actual constructor() {
         loadAssetStream(path)?.let {
             JavaStreamInput(it)
         }
-
-    actual fun listAsset(path: String) : List <String>? {
-        val uri = BaseInstrumentedTest::class.java.getResource("/$path")?.toURI() ?: return null
-        val file = File(uri)
-        return file.list()?.toList()
-    }
 }
