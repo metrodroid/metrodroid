@@ -1,0 +1,111 @@
+<card partial_read="false" scanned_at="1234567890123" id="12345678" type="5">
+   <applications>
+      <application type="tmoney">
+         <application-data>bzGwLwAQAQgQEAMAABI0VgMZg1mUIBYHJyAhByYBAAAHoSDQAAAAAAAAAAAAAAAAAAAA</application-data>
+         <application-name>1BAAAAMAAQ==</application-name>
+         <records>
+            <file name="#d4100000030001:1">
+               <fci/>
+               <records/>
+               <selector>
+                  <path>
+                     <element kind="name">
+                        <name>1BAAAAMAAQ==</name>
+                     </element>
+                     <element kind="id">
+                        <id>1</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+            <file name="#d4100000030001:2">
+               <fci/>
+               <records>
+                  <record index="1">bzGwLwAQAQgQEAMAABY5MQMZg1mUIBYHJyAhByYBAAAHoSDQAAAAAAAAAAAAAAAAAAAA</record>
+               </records>
+               <selector>
+                  <path>
+                     <element kind="name">
+                        <name>1BAAAAMAAQ==</name>
+                     </element>
+                     <element kind="id">
+                        <id>2</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+            <file name="#d4100000030001:3">
+               <fci/>
+               <records>
+                  <record index="1">ATIAAAMAAGAAAzQgFhIRESYnAAAAADS8CKYNzwEBAAAAAAVGwAcAACGJlCwAAAAAAAAAAA==</record>
+                  <record index="2">ATIBAAIAAAKQAMkhiZQsAAAAADJkAAVGAAAAHwEBAAAAAAAKwAAAAATiAAALBgVGAAAAAA==</record>
+                  <record index="3">ATIAAAIAAAlQAMkhiY5mAAAAAAAAAATiAAAABAEBAAAAAAB9wAAAAATiAAALBQTiAAAAAA==</record>
+                  <record index="4">ATIAAAFAAXMAAzQgFhIIGTg2AAAAADS8CKYNdQAAAAAAAAVGwAQAAAAAAAAAAAAAAAAAAA==</record>
+               </records>
+               <selector>
+                  <path>
+                     <element kind="name">
+                        <name>1BAAAAMAAQ==</name>
+                     </element>
+                     <element kind="id">
+                        <id>3</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+            <file name="#d4100000030001:4">
+               <fci/>
+               <records>
+                  <record index="1">ASwAAETyAAAACAAANLwHIAkAIAGRNwADtUIgFhIRESYnAAAAAAAAAAAAAAAAAA==</record>
+                  <record index="2">ASwAAHmuAAAABwAAAGQHIAkAIABpKAAOzyAgFhIJGDMkAAAAAAAAACAEWAgAAA==</record>
+                  <record index="3">ASwAAHoSAAAABgAABOIHIAkAIAA1WAAQlhMgFhIJF1ESAAAAAAAAADABiAUAAA==</record>
+                  <record index="4">ASwAAH70AAAABQAANLwHIAkAIARYCAAARKsgFhIIGTg2AAAAAAAAAAAAAAAAAA==</record>
+                  <record index="5">AiwAALOwAAAABAAAs7AHIAkAMAGIBQAAPv7//////////////////////////w==</record>
+                  <record index="6">ASwAAAAAAAAABAAAAAAHIAEAIAAQCABAVH7//////////////////////////w==</record>
+                  <record index="7">ASwAAAAAAAAAAgAAAAAHIAEAIAAQCABAVH3//////////////////////////w==</record>
+                  <record index="8">ASwAAAAAAAAAAQAAAAAHIAkAIAI4AAAShJf//////////////////////////w==</record>
+               </records>
+               <selector>
+                  <path>
+                     <element kind="name">
+                        <name>1BAAAAMAAQ==</name>
+                     </element>
+                     <element kind="id">
+                        <id>4</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+            <file name="#d4100000030001:5">
+               <fci/>
+               <records>
+                  <record index="1">AiwAALOwAAAABAAAs7AHIAkAMAGIBQAAPv7//////////////////////////w==</record>
+               </records>
+               <selector>
+                  <path>
+                     <element kind="name">
+                        <name>1BAAAAMAAQ==</name>
+                     </element>
+                     <element kind="id">
+                        <id>5</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+            <file name=":df00">
+               <fci>h0RQAgEARwIAB0MBCBEFkEwAAARPB9QQAAADAAGfEAPjADRfJAIhBxIIEBADAAAWOTG/DBEBAQJQAAAAAAAAAAAAAAAAAA==</fci>
+               <records/>
+               <selector>
+                  <path>
+                     <element kind="id">
+                        <id>57088</id>
+                     </element>
+                  </path>
+               </selector>
+            </file>
+         </records>
+         <tagid>EjRWeA==</tagid>
+         <balance>17650</balance>
+      </application>
+   </applications>
+</card>

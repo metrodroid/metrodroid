@@ -42,7 +42,8 @@ import kotlin.test.*
 class TransitDataSerializedTest : BaseInstrumentedTest() {
     enum class InputType {
         JSON,
-        MFC
+        MFC,
+        XML
     }
 
     data class TestCase(
@@ -53,6 +54,7 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
         val factory: CardTransitFactory<*>?,
         val cardInfo: CardInfo?,
         val inputType: InputType = InputType.JSON,
+        val canonical: String? = null,
         val rawFile: String? = null,
         val manufFile: String? = null,
         val dynamicKeys: Set<Pair<Int, ClassicSectorKey.KeyType>> = emptySet()
@@ -71,9 +73,13 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
             val card = when (testcase.inputType) {
                 InputType.JSON -> JsonKotlinFormat.readCard(loadAsset(testcase.inputFile))
                 InputType.MFC -> MfcCardImporter().readCard(loadAsset(testcase.inputFile))
+                InputType.XML -> loadCardXml(testcase.inputFile)
             }
             assertNotNull(card)
             assertEquals(expected=testcase.cardType, actual=card.cardType)
+            if (testcase.canonical != null)
+                assertEquals(expected=jsonNoDefault.parseToJsonElement(loadSmallAssetBytes(testcase.canonical).decodeToString()), actual=JsonKotlinFormat.makeCardElement(card),
+                    message="Wrong card parsing for ${testcase.inputFile}->${testcase.canonical}")
             val parsed = card.parseTransitData()
             val ti = card.parseTransitIdentity()
             if (testcase.transitType != null && testcase.parsedFile != null) {
@@ -232,6 +238,29 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 cardInfo = OpalTransitData.CARD_INFO,
                 manufFile = "opal/opal-transit-litter-manuf.json"
             ),
+            TestCase(
+                inputFile = "opal/opal-transit-litter.xml",
+                parsedFile = "parsed/opal-transit-litter.json",
+                transitType = OpalTransitData::class,
+                cardType = CardType.MifareDesfire,
+                factory = OpalTransitData.FACTORY,
+                cardInfo = OpalTransitData.CARD_INFO,
+                inputType = InputType.XML,
+                canonical = "opal/opal-transit-litter.json",
+                manufFile = "opal/opal-transit-litter-manuf.json",
+                rawFile = "opal/opal-transit-litter-raw.json"
+            ),
+            TestCase(
+                inputFile = "opal/opal-transit-litter-nomanufdata.xml",
+                parsedFile = "parsed/opal-transit-litter.json",
+                transitType = OpalTransitData::class,
+                cardType = CardType.MifareDesfire,
+                factory = OpalTransitData.FACTORY,
+                cardInfo = OpalTransitData.CARD_INFO,
+                inputType = InputType.XML,
+                manufFile = "opal/opal-transit-litter-manuf.json",
+                rawFile = "opal/opal-transit-litter-raw.json"
+            ),
 
             TestCase("hsl/hslv2.json", "parsed/hslv2.json", HSLTransitData::class, CardType.MifareDesfire, HSLTransitData.FACTORY, HSLTransitData.HSL_CARD_INFO, manufFile = "hsl/hslv2-manuf.json", rawFile = "hsl/hslv2-raw.json"),
             /*
@@ -253,6 +282,11 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 NdefData::class, CardType.MifareClassic, NdefClassicTransitFactory, NdefData.CARD_INFO
             ),
             TestCase(
+                "ndef/mfcndef.xml", "parsed/ndefuri.json",
+                NdefData::class, CardType.MifareClassic, NdefClassicTransitFactory, NdefData.CARD_INFO,
+                InputType.XML, "ndef/mfcndefxml.json"
+            ),
+            TestCase(
                 "ndef/ulndef.json", "parsed/ndeftxt.json",
                 NdefData::class, CardType.MifareUltralight, NdefUltralightTransitFactory, NdefData.CARD_INFO
             ),
@@ -264,6 +298,8 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 NdefData::class, CardType.FeliCa, NdefFelicaTransitFactory, NdefData.CARD_INFO),
             TestCase("cepas/legacy.json", "parsed/cepaslegacy.json",
                 EZLinkCompatTransitData::class, CardType.CEPAS, null, null),
+            TestCase("cepas/legacy.xml", "parsed/cepaslegacy.json",
+                EZLinkCompatTransitData::class, CardType.CEPAS, null, null, InputType.XML, canonical="cepas/legacy.json"),
             TestCase("hsl/hslul.json", "parsed/hslul.json",
                 HSLUltralightTransitData::class, CardType.MifareUltralight, HSLUltralightTransitFactory,
                 HSLTransitData.HSL_CARD_INFO
@@ -271,11 +307,21 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
             TestCase("troika/troikaul.json", "parsed/troikaul.json",
                 TroikaUltralightTransitData::class, CardType.MifareUltralight,
                 TroikaUltralightTransitData.FACTORY, TroikaTransitData.CARD_INFO),
+            TestCase("tmoney/oldtmoney.json", "parsed/oldtmoney.json",
+                TMoneyTransitData::class, CardType.ISO7816, TMoneyTransitData.FACTORY,
+                TMoneyTransitData.CARD_INFO),
+            TestCase("tmoney/oldtmoney.xml", "parsed/oldtmoney.json",
+                TMoneyTransitData::class, CardType.ISO7816, TMoneyTransitData.FACTORY,
+                TMoneyTransitData.CARD_INFO, InputType.XML, canonical="tmoney/oldtmoney.json"),
             TestCase("selecta/selecta.json", "parsed/selecta.json",
                 SelectaFranceTransitData::class, CardType.MifareClassic,
                 SelectaFranceTransitData.FACTORY, SelectaFranceTransitData.CARD_INFO),
             TestCase("mfu/blank_old.json", null, null,
-                CardType.MifareUltralight, null, null),
+                     CardType.MifareUltralight, null, null),
+            TestCase(
+                "mfu/blank_old.xml", null, null,
+                CardType.MifareUltralight, null, null, InputType.XML
+            ),
             TestCase(
                 "iso7816/mobib_blank.xml", "parsed/mobib_blank.json",
                 MobibTransitData::class, CardType.ISO7816, MobibTransitData.FACTORY,
