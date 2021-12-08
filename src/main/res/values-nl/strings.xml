@@ -1213,4 +1213,17 @@
     <string name="cli_identify_command_help">Identificeert de kaart(en) uit een Metrodroid-bestand</string>
     <string name="cli_makejson_command_help">Converteert Metrodroids xml/json naar de nieuwste json-versie</string>
     <string name="cli_smartcard_command_help">Communiceert met een kaart middels de PC-/SC-api</string>
+    <string name="ndef_id">NDEF-id</string>
+    <string name="ndef_type">NDEF-type</string>
+    <string name="ndef_uri_record">URI-item</string>
+    <string name="ndef_text_record">Tekstitem</string>
+    <string name="ndef_text_encoding">Tekenset</string>
+    <string name="ndef_text_language">Taal</string>
+    <string name="ndef_text">Tekst</string>
+    <string name="ndef_empty_record">Blanco NDEF-item</string>
+    <string name="ndef_rtd_record">Bekend NFC-forumtype</string>
+    <string name="ndef_payload">NDEF-belasting</string>
+    <string name="card_name_kiev_digital">Kiev digitaal</string>
+    <string name="cli_mad_command_help">Toon kaarten met geldige MiFare Classic-toegangsmappen en de inhoud daarvan</string>
+    <string name="ndef_uri">URI</string>
 </resources>
