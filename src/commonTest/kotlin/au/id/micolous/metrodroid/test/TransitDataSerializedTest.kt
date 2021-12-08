@@ -1,7 +1,8 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
@@ -17,6 +18,7 @@ import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLUltralightTransitData
 import au.id.micolous.metrodroid.transit.hsl.HSLUltralightTransitFactory
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import au.id.micolous.metrodroid.transit.ndef.NdefClassicTransitFactory
 import au.id.micolous.metrodroid.transit.ndef.NdefData
 import au.id.micolous.metrodroid.transit.ndef.NdefFelicaTransitFactory
@@ -152,8 +154,17 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                     }
                 }
                 CardType.ISO7816 -> {
+                    val tmoney = card.iso7816?.applications?.firstOrNull { it is KSX6924Application }
+                    val calypso = card.iso7816?.applications?.firstOrNull { it is CalypsoApplication }
                     when {
-                        card.iso7816!!.applications.firstOrNull { it is KSX6924Application } != null -> {}
+                        tmoney != null -> {}
+                        calypso != null -> {
+                            val factory = testcase.factory as CalypsoCardTransitFactory
+                            val tenv = calypso.sfiFiles[CalypsoApplication.File.TICKETING_ENVIRONMENT.sfi]?.getRecord(1)
+                            assertNotNull(tenv)
+                            assertTrue(factory.check(tenv))
+                            assertEquals(testcase.cardInfo, factory.getCardInfo(tenv))
+                        }
                         else -> TODO()
                     }
                 }
@@ -265,6 +276,18 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 SelectaFranceTransitData.FACTORY, SelectaFranceTransitData.CARD_INFO),
             TestCase("mfu/blank_old.json", null, null,
                 CardType.MifareUltralight, null, null),
+            TestCase(
+                "iso7816/mobib_blank.xml", "parsed/mobib_blank.json",
+                MobibTransitData::class, CardType.ISO7816, MobibTransitData.FACTORY,
+                MobibTransitData.CARD_INFO, InputType.XML, "iso7816/mobib_blank.json",
+                "parsed/mobib_blank_raw.json", "parsed/mobib_blank_manuf.json"
+            ),
+            TestCase(
+                "iso7816/mobib_blank.json", "parsed/mobib_blank.json",
+                MobibTransitData::class, CardType.ISO7816, MobibTransitData.FACTORY,
+                MobibTransitData.CARD_INFO, InputType.JSON, null,
+                "parsed/mobib_blank_raw.json", "parsed/mobib_blank_manuf.json"
+            )
         )
     }
 }

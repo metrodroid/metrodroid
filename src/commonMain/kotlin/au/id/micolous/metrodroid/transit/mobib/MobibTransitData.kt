@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.*
@@ -96,7 +97,8 @@ class MobibTransitData(
         const val NAME = "Mobib"
         private const val EXT_HOLDER_NAME = "ExtHolderName"
 
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
                 name = NAME,
                 cardType = CardType.ISO7816,
                 imageId = R.drawable.mobib_card,
