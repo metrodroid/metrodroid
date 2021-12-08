@@ -19,73 +19,26 @@
 
 package au.id.micolous.metrodroid.card.felica
 
-import au.id.micolous.metrodroid.card.CardLostException
-import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.card.CardTransceiverIOSPlain
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import au.id.micolous.metrodroid.util.toNSData
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.runBlocking
+import platform.CoreNFC.NFCFeliCaTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.native.concurrent.freeze
 
-class FelicaTransceiverIOS(val tag: SwiftWrapper, defaultSysCode: NSData): FelicaTransceiver {
-    override val uid: ImmutableByteArray? = tag.getIdentifier().toImmutable()
-    override val defaultSystemCode : Int? = defaultSysCode.toImmutable().byteArrayToInt()
+class FelicaTransceiverIOS(val tag: NFCFeliCaTagProtocol): FelicaTransceiver, CardTransceiverIOSPlain() {
+    override val uid: ImmutableByteArray? = tag.currentIDm.toImmutable()
+    override val defaultSystemCode : Int? = tag.currentSystemCode.toImmutable().byteArrayToInt()
 
     init {
         freeze()
     }
 
-    data class Capsule (
-        val reply: NSData,
-        val err: NSError?) {
-        init {
-            freeze()
-        }
-    }
-
-    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        Log.d(TAG, ">>> $data")
-        val chan = Channel<Capsule>()
-        val (repl, err) = runBlocking {
-            chan.freeze()
-            // iOS adds the length byte itself
-            tag.transmit(data.sliceOffLen(1, data.size - 1).toNSData(), chan)
-            chan.receive()
-        }
-        if (err != null) {
-            Log.d(TAG, "<!< $err")
-            if (err.code == 100L)
-              throw CardLostException(err.toString())
-            throw CardTransceiveException(err.toString())
-        } else {
-            val rep = repl.toImmutable()
-            Log.d(TAG, "<<< $rep")
-            return rep
-        }
-    }
-
-    // Kotlin apparently lack imports for NFCTagMiFare
-    interface SwiftWrapper {
-        fun getIdentifier(): NSData
-        fun transmit(input: NSData, channel: SendChannel<Capsule>)
-    }
-
-    companion object {
-        private const val TAG = "FelicaTransceiver"
-
-        @Suppress("unused")  // Called from Swift
-        fun callback(channel: SendChannel<Capsule>, reply: NSData,
-            error: NSError?) {
-            val capsule = Capsule(reply, error)
-            runBlocking {
-                channel.send(capsule)
-                channel.close()
-            }
-        }
+    override fun send(dt: ImmutableByteArray, cb: (NSData?, NSError?) -> Unit) {
+        tag.sendFeliCaCommandPacket(
+            commandPacket = dt.drop(1).toNSData(),
+            completionHandler = cb)
     }
 }

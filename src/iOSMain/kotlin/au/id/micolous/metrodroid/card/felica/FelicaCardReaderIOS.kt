@@ -20,20 +20,16 @@
 package au.id.micolous.metrodroid.card.felica
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardReaderIOS
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.logAndSwiftWrap
+import platform.CoreNFC.NFCFeliCaTagProtocol
 
-import platform.Foundation.*
-
-@Suppress("unused") // Used from Swift
-object FelicaCardReaderIOS {
-    @Throws(Throwable::class)
-    fun dump(wrapper: FelicaTransceiverIOS.SwiftWrapper,
-             defaultSysCode: NSData,
-             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump"){
-        val xfer = FelicaTransceiverIOS(wrapper, defaultSysCode)
+object FelicaCardReaderIOS : CardReaderIOS<NFCFeliCaTagProtocol> {
+    override fun dump(tag: NFCFeliCaTagProtocol,
+             feedback: TagReaderFeedbackInterface): Card {
+        val xfer = FelicaTransceiverIOS(tag)
         Log.d(TAG, "Start dump ${xfer.uid}")
 
         /*
@@ -49,7 +45,7 @@ object FelicaCardReaderIOS {
          * Once iOS fixes this, do an iOS version check instead.
          */
         val df = FelicaReader.dumpTag(xfer, feedback, onlyFirst = true)
-        Card(
+        return Card(
             tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), felica = df
         )

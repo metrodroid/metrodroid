@@ -20,20 +20,19 @@
 package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardReaderIOS
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.logAndSwiftWrap
+import platform.CoreNFC.NFCISO7816TagProtocol
 
-@Suppress("unused") // Used from Swift
-object ISO7816CardReaderIOS {
-    @Throws(Throwable::class)
-    fun dump(wrapper: ISO7816Transceiver.SwiftWrapper,
-             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
-        val xfer = ISO7816Transceiver(wrapper)
+object ISO7816CardReaderIOS : CardReaderIOS<NFCISO7816TagProtocol> {
+    override fun dump(tag: NFCISO7816TagProtocol,
+             feedback: TagReaderFeedbackInterface): Card {
+        val xfer = ISO7816Transceiver(tag)
         Log.d(TAG, "Start dump ${xfer.uid}")
         val df = ISO7816Card.dumpTag(xfer, feedback, coreNFC = true)
-        Card(
+        return Card(
             tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), iso7816 = df
         )

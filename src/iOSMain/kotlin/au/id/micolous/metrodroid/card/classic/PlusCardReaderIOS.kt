@@ -20,18 +20,18 @@
 package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardReaderIOS
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransceiverIOS
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.key.CardKeysDummy
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.TimestampFull
+import platform.CoreNFC.NFCMiFareTagProtocol
 
-@Suppress("unused") // Used from Swift
-object PlusCardReaderIOS {
-    @Throws(Throwable::class)
-    fun dump(wrapper: UltralightTransceiverIOS.SwiftWrapper,
-             feedback: TagReaderFeedbackInterface): Card = logAndSwiftWrap (TAG, "Failed to dump") {
-        val xfer = UltralightTransceiverIOS(wrapper)
+object PlusCardReaderIOS : CardReaderIOS<NFCMiFareTagProtocol> {
+    override fun dump(tag: NFCMiFareTagProtocol,
+             feedback: TagReaderFeedbackInterface): Card {
+        val xfer = UltralightTransceiverIOS(tag)
         Log.d(TAG, "Start dump ${xfer.uid}")
         feedback.updateStatusText(Localizer.localizeString(R.string.mfp_reading))
         feedback.showCardType(null)
@@ -41,7 +41,7 @@ object PlusCardReaderIOS {
         val keyRetriever = CardKeysDummy()
 
         val p = ClassicReader.readCard(keyRetriever, techWrapper, feedback)
-        Card(
+        return Card(
             tagId = xfer.uid?.let { if (it.size == 10) it.sliceOffLen(0, 7) else it }!!,
             scannedAt = TimestampFull.now(), mifareClassic = p
         )

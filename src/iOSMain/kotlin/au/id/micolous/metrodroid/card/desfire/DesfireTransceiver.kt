@@ -1,5 +1,5 @@
 /*
- * UltralightTransceiverIOS.kt
+ * ISO7816Transceiver.kt
  *
  * Copyright 2019 Google
  *
@@ -17,25 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card.ultralight
+package au.id.micolous.metrodroid.card.desfire
 
-import au.id.micolous.metrodroid.card.CardTransceiverIOSPlain
+import au.id.micolous.metrodroid.card.CardTransceiverIOSISO
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
-import au.id.micolous.metrodroid.util.toNSData
+import platform.CoreNFC.NFCISO7816APDU
 import platform.CoreNFC.NFCMiFareTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
 import kotlin.native.concurrent.freeze
 
-class UltralightTransceiverIOS(val tag: NFCMiFareTagProtocol): CardTransceiverIOSPlain() {
+class DesfireTransceiver(val tag: NFCMiFareTagProtocol): CardTransceiverIOSISO() {
     override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
 
     init {
-        freeze()
+       freeze()
     }
 
-    override fun send(dt: ImmutableByteArray, cb: (NSData?, NSError?) -> Unit) {
-        tag.sendMiFareCommand(dt.toNSData(), cb)
+    override fun send(apdu: NFCISO7816APDU, completionHandler: (NSData?, UByte, UByte, NSError?) -> Unit) {
+        tag.sendMiFareISO7816Command(apdu,
+            completionHandler = completionHandler)
     }
 }
