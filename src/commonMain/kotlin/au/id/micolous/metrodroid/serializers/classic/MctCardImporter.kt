@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.serializers.classic
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.ClassicSectorRaw
