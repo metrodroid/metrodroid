@@ -555,7 +555,7 @@ task copyTestAssetsIOS {
             def lproj = mapAndroidLanguageToIOS(lang) + '.lproj'
             def target = new File(outBase, lproj)
             delete target
-            ant.symlink(resource: "../../../xcode-frameworks/metrolib.framework/$lproj", link: target)
+            ant.symlink(resource: "../../../generated/res/localize/iOS/$lproj", link: target)
         }
         testAssetsDirs.each { relativeDir ->
             new File(projectDir, relativeDir).list().each { subDir ->
