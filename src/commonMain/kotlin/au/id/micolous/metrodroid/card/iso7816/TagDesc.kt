@@ -43,6 +43,8 @@ data class TagDesc(val name: StringResource,
             }
             TagContents.COUNTRY_BCD -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
             TagContents.COUNTRY_ASCIINUM -> countryCodeToName(data.readASCII().toInt())
+            TagContents.LANGUAGE_LIST -> data.readASCII().chunked(2) {
+                languageCodeToName(it.toString()) ?: it.toString() }.joinToString(", ")
             else -> data.toHexString()
         }
     }
@@ -56,7 +58,8 @@ enum class TagContents {
     HIDE,
     CURRENCY,
     COUNTRY_BCD,
-    COUNTRY_ASCIINUM
+    COUNTRY_ASCIINUM,
+    LANGUAGE_LIST
 }
 
 enum class TagHiding {
