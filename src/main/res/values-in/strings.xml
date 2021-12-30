@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Metrodroid</string>
     <string name="license">Lisensi</string>
-    <string name="title_activity_license">Lisensi Open Source</string>
+    <string name="title_activity_license">Lisensi sumber terbuka</string>
     <string name="directions">Tempelkan kartu.</string>
     <string name="reading_card">Membaca kartu…</string>
     <string name="dont_move">Kartu jangan dipindah</string>
