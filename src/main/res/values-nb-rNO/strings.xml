@@ -201,8 +201,8 @@
         <item quantity="other">Type: %1$s, Lengde: %2$s byte</item>
     </plurals>
     <plurals name="desfire_record_format">
-        <item quantity="one">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
-        <item quantity="other">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+        <item quantity="one">Type: %1$s, %2$d oppføring (%3$d maksimalt), oppføringsstørrelse: %4$d</item>
+        <item quantity="other">Type: %1$s, %2$s oppføringer (%3$s maksimalt), oppføringsstørrelse: %4$d</item>
     </plurals>
     <string name="enabled">Påskrudd</string>
     <string name="disabled">Avskrudd</string>
@@ -368,7 +368,7 @@
     </plurals>
     <plurals name="troika_rides">
         <item quantity="one">Enkelttur</item>
-        <item quantity="other">%-tur</item>
+        <item quantity="other">%d-tur</item>
     </plurals>
     <string name="trip_description_unknown_start">til %s</string>
     <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;<xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
@@ -543,8 +543,8 @@
         <item quantity="other">%1$d turer gjenstår på %2$s</item>
     </plurals>
     <plurals name="travel_zones">
-        <item quantity="one">Reisesone</item>
-        <item quantity="other">Reisesoner</item>
+        <item quantity="one">%d reisesone</item>
+        <item quantity="other">%d reisesoner</item>
     </plurals>
     <string name="en1545_network_id">Nettverks-ID</string>
     <string name="card_issuer">Utsteder</string>
@@ -894,7 +894,7 @@
     <string name="raw_level_all">Alle felter</string>
     <plurals name="hsl_zones">
         <item quantity="one">sone %s</item>
-        <item quantity="other">soner 3</item>
+        <item quantity="other">soner %s</item>
     </plurals>
     <string name="hsl_zone_station">Sone %s</string>
     <string name="hsl_customer_profile">Kundeprofil</string>
@@ -1031,7 +1031,7 @@
     <string name="emv_pan_sequence_number">PAN-sekvensnummer</string>
     <string name="nfc_connection_failed">NFC-tilkobling til %s mislyktes</string>
     <string name="navigo_sector_station_id">Sektor %1$s, stasjons-ID %2$d</string>
-    <string name="mobib_jump_1_trip"></string>
+    <string name="mobib_jump_1_trip"/>
     <string name="rkf_stockholm_72_hours">72-timersbillett for Stockholm</string>
     <string name="closed_arrow">Sammenfold liste</string>
     <string name="rkf_stockholm_7_days">7-dagersbillett for Stockholm</string>
