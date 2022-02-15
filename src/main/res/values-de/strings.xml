@@ -15,7 +15,7 @@
     <string name="copy_xml">Kopieren</string>
     <string name="share_xml">Teilen</string>
     <string name="save_xml">In Datei speichern</string>
-    <string name="history">Geschichte</string>
+    <string name="history">Verlauf</string>
     <string name="no_trip_data">Keine Fahrten gefunden. Wurde diese Karte je verwendet\?</string>
     <string name="import_xml">Importieren</string>
     <string name="import_file">Aus Datei importieren</string>
@@ -48,7 +48,7 @@
     <string name="unknown_card_description">Diese Karte wird noch nicht von Metrodroid unterstützt. Es können nur Rohdaten angezeigt werden.</string>
     <string name="unknown_more_info">Weitere Informationen</string>
     <string name="lawyercats">Metrodroid und seine Autoren sind mit keiner öffentlichen Verkehrsagentur verbunden.</string>
-    <string name="scanned_cards">Geschichte</string>
+    <string name="scanned_cards">Verlauf</string>
     <string name="no_scanned_cards">Sie haben keine Karten gescannt.</string>
     <string name="block_title_format">Block: %s</string>
     <string name="application_title_format">Anwendung: %s</string>
@@ -110,7 +110,7 @@
     <string name="mfc_fallback">Fallback-Leser</string>
     <string name="requires_android_17">Erfordert Android 4.2 oder höher.</string>
     <string name="requires_android_21">Erfordert Android 5.0 oder höher.</string>
-    <string name="directions">Halten Sie die Karte am Telefon.</string>
+    <string name="directions">Halten Sie die Karte an das Telefon.</string>
     <string name="import_clipboard">Aus der Zwischenablage einfügen</string>
     <string name="export_filename">Dateiname für den Export</string>
     <string name="unknown_more_info_desc">Tippen Sie hier für weitere Informationen über die Metrodroid-Unterstützung für diese Karte.</string>
@@ -588,7 +588,7 @@
     <string name="manufacturer_name">Hersteller</string>
     <string name="location_act_australia">Australian Capital Territory, Australien</string>
     <string name="clipper_return">Hin und zurück (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
-    <string name="edy_file_history">Edy Geschichte</string>
+    <string name="edy_file_history">Edy Verlauf</string>
     <string name="edy_file_id">Edy Identität</string>
     <string name="edy_file_purse_balance">Edy Geldbörseguthaben</string>
     <string name="felica_terminal_portable">Tragbares Terminal</string>
@@ -604,12 +604,12 @@
     <string name="felica_process_admission_payment">Eintrittszahlung</string>
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
-    <string name="suica_file_history">Suica Geschichte</string>
+    <string name="suica_file_history">Suica Verlauf</string>
     <string name="suica_file_in_out">Suica rein/raus</string>
     <string name="kmt_extra_note">Nur für neue FeliCa-Karten.</string>
     <string name="kmt_other_data">Weitere Daten</string>
     <string name="kmt_last_trx_amount">Letzter Transaktionsbetrag</string>
-    <string name="kmt_file_history">KMT Geschichte</string>
+    <string name="kmt_file_history">KMT Verlauf</string>
     <string name="kmt_file_id">KMT Identität</string>
     <string name="kmt_file_purse_balance">KLT Saldo</string>
     <string name="card_name_kmt">Kartu Multi Trip</string>
@@ -661,7 +661,7 @@
     <string name="issue_date">Ausgabedatum</string>
     <string name="card_note_oyster">Nur die Karten der ersten Generation (MIFARE Classic) sind unterstützt. Karten der aktuellen Generation (mit einem D in der linken unteren Ecke) sind vollständig gesperrte DESFire-Karten und können daher nicht unterstützt werden.</string>
     <string name="card_name_kiev">Kiew U-Bahn</string>
-    <string name="serial_only_card_description_locked">Diese Karte ist gesperrt und nur die Seriennummer kann gelesen werden. Ihr Kontostand und ihre Geschichte sind möglicherweise darauf gespeichert, aber nicht zugänglich.</string>
+    <string name="serial_only_card_description_locked">Diese Karte ist gesperrt und nur die Seriennummer kann gelesen werden. Ihr Kontostand und ihr Verlauf sind möglicherweise darauf gespeichert, aber nicht zugänglich.</string>
     <string name="serial_only_card_description_more_research">Die Unterstützung für diese Karte ist in der Entwicklung, und derzeit kann nur die Seriennummer gelesen werden.</string>
     <string name="full_serial_number">Vollständige Seriennummer</string>
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
@@ -699,7 +699,7 @@
     <string name="card_note_chc_metrocard">Es können nur Karten vor 2016 (MIFARE Classic) gelesen werden. Neuere vollständig gesperrte DESFire-Karten sind nicht mehr unterstützbar.</string>
     <string name="import_mfc_file">Importieren aus MFC-Datei</string>
     <string name="cepas_purse_num">CEPAS Geldbörse Nummer %d</string>
-    <string name="cepas_purse_num_history">Geschichte der CEPAS Geldbörse Nummer %d</string>
+    <string name="cepas_purse_num_history">Verlauf der CEPAS Geldbörse Nummer %d</string>
     <string name="cepas_can">Kartenanwendungsnummer (CAN)</string>
     <string name="cepas_csn">Seriennummer der Karte (CSN)</string>
     <string name="cepas_trp">Transaktionszeiger (TRP)</string>
@@ -939,7 +939,7 @@
     <string name="hsl_region_lahiseutu_2">Umgebungsland 2 (ESP+VAN+KIR+KER+SIP)</string>
     <string name="hsl_region_lahiseutu_3">Umgebungsland 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
     <string name="show_debug_spans">Debugfarbe für LocaleSpans anzeigen</string>
-    <string name="show_debug_spans_desc">Standardsprache in Grün, Englisch in Gelb und Lokale Sprache blau markieren</string>
+    <string name="show_debug_spans_desc">Standardsprache in grün, Englisch in gelb und lokale Sprache blau markieren</string>
     <string name="compass_sub_four_zone_wce_one_way">Vier Zonen WCE (einfache Fahrt)</string>
     <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela nach Lissabon + Metropolregion</string>
@@ -1167,4 +1167,9 @@
     <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (40%% Rabatt außerhalb Stoßzeiten)</string>
     <string name="felica_terminal_ticket_gate_terminal">Einlass-Gate-Terminal</string>
     <string name="felica_process_booth_deduction">Bezahlung am Schalter</string>
+    <string name="location_nagoya">Nagoya, Japan</string>
+    <string name="location_vladimir">Wladimir, Russia</string>
+    <string name="location_fukuoka_prefecture">Fukuoka, Japan</string>
+    <string name="location_fukuoka_city">Fukuoka, Japan</string>
+    <string name="card_name_edy">Edy</string>
 </resources>
