@@ -32,6 +32,9 @@ import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.ndef.MifareClassicAccessDirectory
+import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
+import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.hexString
@@ -149,6 +152,16 @@ class HwInfo: TranslatedCommand(
     }
 }
 
+private fun printInfo(infos: List<ListItemInterface>, offset: Int) {
+    for (info in infos) {
+        val spaces = List(offset) { " " }.joinToString("")
+        val suffix = if(info.text2?.unformatted.isNullOrEmpty()) "" else ": ${info.text2?.unformatted}"
+        println("${spaces}${info.text1?.unformatted}${suffix}")
+        if (info is ListItemRecursive && info.subTree != null)
+            printInfo(info.subTree, offset + 3)
+    }
+}
+
 fun printCard(card: Card) {
     println("card UID = ${card.tagId}")
     val td = try {
@@ -173,19 +186,13 @@ fun printCard(card: Card) {
         if (infos.isNotEmpty()) {
             println("      info")
         }
-
-        for (info in infos) {
-            println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-        }
+        printInfo(infos, 9)
 
         val raw = sub.getRawFields(TransitData.RawLevel.ALL).orEmpty()
         if (raw.isNotEmpty()) {
             println("      raw")
         }
-
-        for (info in raw) {
-            println("         ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-        }
+        printInfo(raw, 9)
     }
     for ((idx, trip) in td?.trips.orEmpty().withIndex()) {
         println("   trip $idx")
@@ -204,27 +211,20 @@ fun printCard(card: Card) {
     if (infos.isNotEmpty()) {
         println("   info")
     }
-
-    for (info in infos) {
-        println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-    }
+    printInfo(infos, 6)
 
     val raw = td?.getRawFields(TransitData.RawLevel.ALL).orEmpty()
     if (raw.isNotEmpty()) {
         println("   raw")
     }
+    printInfo(raw, 6)
 
-    for (info in raw) {
-        println("      ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-    }
 }
 
 fun printHwInfo(card: Card) {
     println("card UID = ${card.tagId}")
     println("type = ${card.cardType}")
-    for (info in card.manufacturingInfo.orEmpty()) {
-        println("     ${info.text1?.unformatted}: ${info.text2?.unformatted}")
-    }
+    printInfo(card.manufacturingInfo.orEmpty(), 5)
 }
 
 
