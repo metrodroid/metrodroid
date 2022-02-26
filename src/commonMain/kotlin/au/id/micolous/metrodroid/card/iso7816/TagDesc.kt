@@ -21,10 +21,14 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.*
+import kotlinx.datetime.Month
+import kotlinx.datetime.number
 
 data class TagDesc(val name: StringResource,
                    val contents: TagContents,
@@ -119,6 +123,26 @@ enum class TagContents : TagContentsInterface {
             return ListItemRecursive(name, null, subList(data))
         }
     },
+    CONTENTS_DATE {
+        private fun adjustYear(yy: Int): Int {
+            if (yy < 80)
+                return 2000 + yy
+            if (yy in 81..99)
+                return 1900 + yy
+            return yy
+        }
+        override fun interpretTagString(data: ImmutableByteArray): String = when(data.size) {
+            3 -> Daystamp(
+                    adjustYear(data.convertBCDtoInteger(0, 1)),
+                    data.convertBCDtoInteger(1, 1) - 1,
+                    data.convertBCDtoInteger(2, 1)).format().unformatted
+            2 -> TripObfuscator.maybeObfuscateTS(Daystamp(
+                    adjustYear(data.convertBCDtoInteger(0, 1)),
+                    data.convertBCDtoInteger(1, 1) - 1,
+                    1)).let { "${it.month.number}/${it.year}" }
+            else -> if (Preferences.obfuscateTripDates) "" else data.toHexString()
+        }
+    }
 }
 
 enum class TagHiding {
