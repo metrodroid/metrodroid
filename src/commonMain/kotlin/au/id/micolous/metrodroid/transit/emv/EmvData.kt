@@ -73,6 +73,7 @@ internal object EmvData {
             TAG_INTERCHANGE_PROTOCOL to TagDesc(R.string.emv_interchange_control, DUMP_SHORT),
             TAG_ISSUER_COUNTRY to TagDesc(R.string.issuer_country, COUNTRY_BCD),
             "5f2d" to TagDesc(R.string.emv_language_preference, LANGUAGE_LIST),
+            "5f30" to TagDesc(R.string.emv_service_code, DUMP_SHORT, CARD_NUMBER),
             // TODO: show as int
             "5f34" to TagDesc(R.string.emv_pan_sequence_number, DUMP_SHORT, CARD_NUMBER),
             "82" to TagDesc(R.string.emv_application_interchange_profile, DUMP_SHORT),
