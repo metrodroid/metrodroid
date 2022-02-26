@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.china.ChinaRegistry
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_TRANSACTION_COUNTER
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
@@ -67,6 +68,8 @@ class EmvCardMain internal constructor(
         get() = dataResponse[LOG_FORMAT.toString(16)]
     val pinTriesRemaining: ImmutableByteArray?
         get() = dataResponse[PIN_RETRY.toString(16)]
+    val transactionCounter: ImmutableByteArray?
+        get() = dataResponse[TAG_TRANSACTION_COUNTER]
 
     val parserIgnore: Boolean
         get() = generic.appName?.let { appName ->
@@ -159,7 +162,7 @@ class EmvFactory : ISO7816ApplicationFactory {
                 val gpoResponse = readGpo(protocol, mainAppFci)
 
                 val dr = mutableMapOf<String, ImmutableByteArray>()
-                for (p1p2 in listOf(0x9f13, PIN_RETRY, 0x9f36, LOG_FORMAT)) {
+                for (p1p2 in listOf(0x9f13, PIN_RETRY, TAG_TRANSACTION_COUNTER.toInt(16), LOG_FORMAT)) {
                     val r = readData(protocol, p1p2)
                     if (r != null)
                         dr[p1p2.toString(16)] = r

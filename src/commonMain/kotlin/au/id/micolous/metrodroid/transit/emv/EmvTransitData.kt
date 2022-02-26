@@ -92,9 +92,13 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
         val pinTriesRemaining = card.pinTriesRemaining?.let {
             ISO7816TLV.removeTlvHeader(it).byteArrayToInt()
         }
+        val transactionCounter = card.transactionCounter?.let {
+            ISO7816TLV.removeTlvHeader(it).byteArrayToInt()
+        }
         return EmvTransitData(
             tlvs = allTlv,
             pinTriesRemaining = pinTriesRemaining,
+            transactionCounter = transactionCounter,
             logEntries = logEntries,
             t2 = findT2Data(allTlv),
             name = findName(allTlv))
@@ -126,6 +130,7 @@ data class EmvTransitData(
     private val tlvs: List<ImmutableByteArray>,
     private val name: String,
     private val pinTriesRemaining: Int?,
+    private val transactionCounter: Int?,
     private val t2: ImmutableByteArray?,
     private val logEntries: List<EmvLogEntry>?
 ) : TransitData() {
@@ -157,6 +162,10 @@ data class EmvTransitData(
             res += ListItem(
                     Localizer.localizePlural(R.plurals.emv_pin_attempts_remaining, pinTriesRemaining),
                     pinTriesRemaining.toString())
+        if (transactionCounter != null)
+            res += ListItem(
+                    Localizer.localizeString(R.string.transaction_counter, transactionCounter),
+                    transactionCounter.toString())
         res += ISO7816TLV.infoBerTLVs(tlvs, TAGMAP, hideThings)
 
         return res
