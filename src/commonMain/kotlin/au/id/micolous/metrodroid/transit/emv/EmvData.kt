@@ -113,6 +113,7 @@ internal object EmvData {
             "9f49" to HIDDEN_TAG, // DDOL
             "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
             LOG_ENTRY to HIDDEN_TAG, // Log entry
+            "9f69" to TagDesc(R.string.emv_card_authentication_related_data, DUMP_LONG, CARD_NUMBER), // TODO: parse this
             TAG_TRACK2 to TagDesc(R.string.emv_track_2, DUMP_SHORT, CARD_NUMBER),
             TAG_DISCRETIONARY_DATA to HIDDEN_TAG // Subtag
     )

@@ -1990,6 +1990,7 @@
     <string name="emv_gpo_response">Get Processing Options (GPO) response</string>
     <!-- Translators: argument is the tag ID sent in Get Data query. -->
     <string name="emv_data_response">Get Data %s response</string>
+    <string name="emv_card_authentication_related_data">Card Authentication Related Data</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
