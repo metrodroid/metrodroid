@@ -129,7 +129,7 @@ class EmvFactory : ISO7816ApplicationFactory {
         presentAids: List<ImmutableByteArray?>
     ): List<ISO7816Application>? {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_emv))
-        if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(presentAids.filterNotNull()).isEmpty()) {
+        if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(presentAids.filterNotNull().toSet()).isEmpty()) {
             feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
         }
         feedbackInterface.updateProgressBar(0, 32)
