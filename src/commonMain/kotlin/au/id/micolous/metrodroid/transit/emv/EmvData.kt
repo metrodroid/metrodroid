@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.card.iso7816.TagHiding.CARD_NUMBER
 import au.id.micolous.metrodroid.card.iso7816.TagHiding.DATE
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 internal object EmvData {
@@ -114,7 +115,7 @@ internal object EmvData {
             "9f49" to HIDDEN_TAG, // DDOL
             "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
             LOG_ENTRY to HIDDEN_TAG, // Log entry
-            "9f69" to TagDesc(R.string.emv_card_authentication_related_data, DUMP_LONG, CARD_NUMBER), // TODO: parse this
+            "9f69" to TagDesc(R.string.emv_card_fdda, FDDA, CARD_NUMBER),
             TAG_TRACK2 to TagDesc(R.string.emv_track_2, DUMP_SHORT, CARD_NUMBER),
             TAG_DISCRETIONARY_DATA to HIDDEN_TAG // Subtag
     )

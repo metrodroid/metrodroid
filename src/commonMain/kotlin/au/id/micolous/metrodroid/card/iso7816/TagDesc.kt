@@ -21,45 +21,104 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
+import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.*
 
 data class TagDesc(val name: StringResource,
                    val contents: TagContents,
-                   val hiding: TagHiding = TagHiding.NONE) {
-    fun interpretTag(data: ImmutableByteArray) : String {
-        when {
-            hiding == TagHiding.CARD_NUMBER && Preferences.hideCardNumbers -> return ""
-            // TODO: implement this properly
-            hiding == TagHiding.DATE && Preferences.obfuscateTripDates -> return ""
-        }
-
-        return when (contents) {
-            TagContents.ASCII -> data.readASCII()
-            TagContents.DUMP_SHORT -> data.toHexString()
-            TagContents.DUMP_LONG -> data.toHexString()
-            TagContents.CURRENCY -> {
-                val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
-                currencyNameByCode(n) ?: n.toString()
-            }
-            TagContents.COUNTRY_BCD -> countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
-            TagContents.COUNTRY_ASCIINUM -> countryCodeToName(data.readASCII().toInt())
-            TagContents.LANGUAGE_LIST -> data.readASCII().chunked(2) {
-                languageCodeToName(it.toString()) ?: it.toString() }.joinToString(", ")
-            else -> data.toHexString()
-        }
+                   val hiding: TagHiding = TagHiding.NONE
+) {
+    private val isHidden get() = when {
+        hiding == TagHiding.CARD_NUMBER && Preferences.hideCardNumbers -> true
+        // TODO: implement this properly
+        hiding == TagHiding.DATE && Preferences.obfuscateTripDates -> true
+        contents == TagContents.DUMP_LONG && Preferences.hideCardNumbers -> true
+        contents == TagContents.DUMP_UNKNOWN && (Preferences.hideCardNumbers || Preferences.obfuscateTripDates) -> true
+        else -> false
     }
+    fun interpretTag(data: ImmutableByteArray): ListItemInterface? =
+        if (isHidden)
+            null
+        else
+            contents.interpretTag(name, data)
+    fun interpretTagString(data: ImmutableByteArray): String =
+            if (isHidden)
+                ""
+            else
+                contents.interpretTagString(data)
 }
 
-enum class TagContents {
-    DUMP_SHORT,
-    DUMP_LONG,
-    ASCII,
-    DUMP_UNKNOWN,
-    HIDE,
-    CURRENCY,
-    COUNTRY_BCD,
-    COUNTRY_ASCIINUM,
-    LANGUAGE_LIST
+interface TagContentsInterface {
+    fun interpretTagString(data: ImmutableByteArray): String
+    fun interpretTag(name: StringResource, data: ImmutableByteArray): ListItemInterface? =
+            if (data.isEmpty())
+                null
+            else
+                ListItem(name, interpretTagString(data))
+}
+
+enum class TagContents : TagContentsInterface {
+    DUMP_SHORT {
+        override fun interpretTagString(data: ImmutableByteArray): String = data.toHexString()
+    },
+    DUMP_LONG {
+        override fun interpretTagString(data: ImmutableByteArray): String = data.toHexString()
+        override fun interpretTag(name: StringResource, data: ImmutableByteArray): ListItemInterface? =
+                if (data.isEmpty()) null else ListItem(name, data.toHexDump())
+    },
+    ASCII {
+        override fun interpretTagString(data: ImmutableByteArray): String = data.readASCII()
+    },
+    DUMP_UNKNOWN {
+        override fun interpretTagString(data: ImmutableByteArray): String = data.toHexString()
+        override fun interpretTag(name: StringResource, data: ImmutableByteArray): ListItemInterface? =
+                if (data.isEmpty()) null else ListItem(name, data.toHexDump())
+    },
+    HIDE {
+        override fun interpretTagString(data: ImmutableByteArray): String = ""
+        override fun interpretTag(name: StringResource, data: ImmutableByteArray): ListItemInterface? = null
+    },
+    CURRENCY {
+        override fun interpretTagString(data: ImmutableByteArray): String {
+            val n = NumberUtils.convertBCDtoInteger(data.byteArrayToInt())
+            return currencyNameByCode(n) ?: n.toString()
+        }
+    },
+    COUNTRY_BCD {
+        override fun interpretTagString(data: ImmutableByteArray): String = countryCodeToName(NumberUtils.convertBCDtoInteger(data.byteArrayToInt()))
+    },
+    COUNTRY_ASCIINUM {
+        override fun interpretTagString(data: ImmutableByteArray): String = countryCodeToName(data.readASCII().toInt())
+    },
+    LANGUAGE_LIST {
+        override fun interpretTagString(data: ImmutableByteArray): String = data.readASCII().chunked(2) {
+            languageCodeToName(it.toString()) ?: it.toString() }.joinToString(", ")
+    },
+    FDDA {
+        private fun subList(data: ImmutableByteArray): List<ListItem> {
+            val sl = mutableListOf(
+                    ListItem(R.string.emv_fdda_version_no, data.byteArrayToInt(0, 1).toString()),
+                    ListItem(R.string.emv_fdda_unpredictable_number, data.getHexString(1, 4)),
+                    ListItem(R.string.emv_fdda_transaction_qualifiers, data.getHexString(5, 2)),
+                    ListItem(R.string.emv_fdda_rfu, data.getHexString(7, 1)),
+            )
+            if (data.size > 8)
+                sl.add(ListItem(R.string.emv_fdda_tail, data.sliceOffLen(8, data.size - 8).toHexDump()))
+            return sl
+        }
+        override fun interpretTagString(data: ImmutableByteArray): String =
+                if (data.size < 8)
+                    data.toHexString()
+                else
+                    subList(data).map { it.text1?.unformatted.orEmpty() + ": " + it.text2?.unformatted.orEmpty() }.joinToString(", ")
+        override fun interpretTag(name: StringResource, data: ImmutableByteArray): ListItemInterface {
+            if (data.size < 8)
+                return ListItem(name, data.getHexString())
+            return ListItemRecursive(name, null, subList(data))
+        }
+    },
 }
 
 enum class TagHiding {
@@ -69,3 +128,4 @@ enum class TagHiding {
 }
 
 val HIDDEN_TAG = TagDesc(R.string.unknown, TagContents.HIDE)
+val UNKNOWN_TAG = TagDesc(R.string.unknown, TagContents.DUMP_UNKNOWN)

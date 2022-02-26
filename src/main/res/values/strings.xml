@@ -1990,7 +1990,12 @@
     <string name="emv_gpo_response">Get Processing Options (GPO) response</string>
     <!-- Translators: argument is the tag ID sent in Get Data query. -->
     <string name="emv_data_response">Get Data %s response</string>
-    <string name="emv_card_authentication_related_data">Card Authentication Related Data</string>
+    <string name="emv_card_fdda">fDDA card Authentication Related Data</string>
+    <string name="emv_fdda_version_no">fDDA version number</string>
+    <string name="emv_fdda_unpredictable_number">fDDA unpredictable number</string>
+    <string name="emv_fdda_transaction_qualifiers">fDDA transaction qualifiers</string>
+    <string name="emv_fdda_rfu">fDDA RFU</string>
+    <string name="emv_fdda_tail">fDDA remaining bytes</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>

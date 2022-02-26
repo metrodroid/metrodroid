@@ -308,25 +308,6 @@ object ISO7816TLV {
         return buf.sliceOffLen(p+startoffset, datalen)
     }
 
-    private fun makeListItem(tagDesc: TagDesc, data: ImmutableByteArray) : ListItem? {
-        return when (tagDesc.contents) {
-            TagContents.HIDE -> null
-            // TODO: Move into TagDesc
-            TagContents.DUMP_LONG -> if (Preferences.hideCardNumbers) {
-                null
-            } else {
-                ListItem(tagDesc.name, data.toHexDump())
-            }
-            else -> {
-                val v = tagDesc.interpretTag(data)
-                when {
-                    v.isEmpty() -> null
-                    else -> ListItem(tagDesc.name, v)
-                }
-            }
-        }
-    }
-
     /**
      * Parses BER-TLV data, and builds [ListItem] for each of the tags.
      *
@@ -348,7 +329,7 @@ object ISO7816TLV {
                         null
                     }
                 } else {
-                    makeListItem(d, data)
+                    d.interpretTag(data)
                 }
             }.toList()
 
@@ -360,7 +341,7 @@ object ISO7816TLV {
         tagMap: Map<String, TagDesc>,
         multihead: Boolean
     ):
-            Pair<List<ListItem>, Set<String>> {
+            Pair<List<ListItemInterface>, Set<String>> {
         val unknownIds = mutableSetOf<String>()
 
         return Pair(berTlvIterate(tlv, multihead).mapNotNull { (id, _, data) ->
@@ -371,7 +352,7 @@ object ISO7816TLV {
                 unknownIds.add(idStr)
                 ListItem(FormattedString(idStr), data.toHexDump())
             } else {
-                makeListItem(d, data)
+                d.interpretTag(data)
             }
         }.toList(), unknownIds.toSet())
     }
