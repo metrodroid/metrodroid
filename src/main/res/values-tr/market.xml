@@ -78,9 +78,9 @@
 \n
 \nKartları okumak için NFC uyumlu bir aygıta ihtiyacınız vardır.
 \n
-\nBazı acentalar şifreli kartlara sahiptir. Bunları okumak için genellikle her karta özgü olan şifreleme anahtarları edinmeniz gerekmektedir. Üzgünüm, bu konuda size yardımcı olamam.
+\nBazı şirketler şifreli kartlara sahiptir. Bunları okumak için genellikle her karta özgü olan şifreleme anahtarları edinmeniz gerekmektedir. Üzgünüm, bu konuda size yardımcı olamam.
 \n
-\nMetrodroid ve yazarları herhangi bir toplu taşıma acentasına bağlı değildir. MIFARE Classic üzerinde Cubic Nextfare veya ERG kullanan diğer acentaların kartları da çalışabilir.
+\nMetrodroid ve yazarları herhangi bir toplu taşıma şirketine bağlı değildir. MIFARE Classic üzerinde Cubic Nextfare veya ERG kullanan diğer şirketlerin kartları da çalışabilir.
 \n
 \nGereken izinler hakkında daha fazla bilgi için lütfen gizlilik politikasına bakın.
 \n
@@ -98,4 +98,112 @@
 \n
 \nDaha fazla ayrıntı ve bilinen sorunlar (İngilizce): https://www.metrodroid.org/changelog</string>
     <string name="market_short_desc">Metrodroid bazı NFC toplu taşıma akıllı kartlarından bilgileri okur.</string>
+    <string name="market_changelog_43">• Amiibo, Kırım Troleybüsü, Kazan, Rus Umarsh, Santiago bip ve Varşova kartı için destek ekler
+\n• Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go ve Troika kartları için iyileştirmeler ve düzeltmeler
+\n• Metrodroid\'in çökmesine neden olan bazı hataları ve MIFARE Classic kartlarıyla ilgili bazı hataları düzeltir
+\n
+\nDaha fazla ayrıntı ve bilinen sorunlar: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_41">* EMV bank, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, 1. nesil London Oyster, UAE Hafilat and Nol kartlarını okur.
+\n* EZ-Link ve ORCA kartları için yeni istasyonlar ekler.
+\n* Mobib okuyucu ile ilgili sorunları giderir.
+\n* İkili MFC dosyalarını içe aktarma ve kilitli dizin listelerine sahip DESFire kartlarını okuma desteği ekler.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı ve bilinen sorunlar: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_39">* Malaysia Tap ’n Go, Otago Gocard, Rotorua SmartRide, Waikato BUSIT ve Wellington Snapper kartları için destek ekler.
+\n* Birçok yeni güzergah ve istasyon kimliği ekler.
+\n* FeliCa okuyucu iyileştirmeleri.
+\n* EZ-Link ve Octopus kartlarıyla ilgili sorunları düzeltir.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_38">* Otago Gocard, Rotorua SmartRide, Waikato BUSIT ve Wellington Snapper kartları için destek ekler.
+\n* Birçok yeni güzergah ve istasyon kimliği ekler.
+\n* FeliCa okuyucu iyileştirmeleri.
+\n* EZ-Link ve Octopus kartlarıyla ilgili sorunları düzeltir.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_37">* Adelaide Metrocard, birçok Çin (PRC) kartı, Clipper tekli bilet, Kiev Metrosu, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus ve çoklu Zolotaya Korona tabanlı kartlar için destek ekler.
+\n* OV-Chipkaart okuyucuyu düzeltir.
+\n* AT-HOP için seri numarasını okur.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_36">* CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Fransa), IstanbulKart, Mobib, Leap, RicaciraMi ve Strelka kartları için destek ekler.
+\n* HSL okuyucuyu düzeltir.
+\n* Clipper ve Kartu Multi Trip için yeni istasyonlar ekler.
+\n* Suica artık en son 2 seyahatin zamanını gösteriyor.
+\n* MIFARE Classic anahtar yönetimi iyileştirmeleri.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_35">* Kartu Multi Trip, Opus, Podorozhnik, Rav-Kav, T-Money, Troika kartları ve tek binişlik Compass (Vancouver) kartları için destek ekler.
+\n* Bazı Clipper kartları için bir çökme hatasını düzeltir.
+\n* Perde arkasındaki birçok değişiklik.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_34">* Çoğu kart için saat dilimi desteği ekler.
+\n* Clipper: Yanlış seyahat sürelerini düzeltir.
+\n* Opal: Yaz saati uygulaması değişiklik günlerinde yanlış seyahat sürelerini düzeltir.
+\n* Yeni simgeler, erişilebilirlik iyileştirmeleri ve uygulama kurulum boyutu küçültüldü.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_32">* Gizleme Modu ekler.
+\n* Bilinmeyen CEPAS kartlarıyla bir çökmeyi düzeltir.
+\n* Ham kart ayrıntılarını görüntülerken kısmen okunan MIFARE Classic kartlarıyla bir çökmeyi düzeltir.
+\n* Cubic Nextfare kartlarında eksi bakiyeleri destekle.
+\n* Go card (Brisbane, Australia) için yeni durak kimlikleri.
+\n* @belkacem77 sayesinde Cezayir Berbericesi ve @comradekingu sayesinde Bokmål Norveççe kısmi çeviriler ekler.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_29">* MIFARE Classic kartlarıyla kimlik doğrulama güvenilirliğini artırır.
+\n* Octopus (Hong Kong), Shenzhen Tong ve Transit Access Pass (Los Angeles, CA, ABD) için destek ekler.
+\n* Cubic Nextfare MFC için genel bir okuyucu ekler (Go card okuyucusuna dayalı).
+\n* USB depolamaya aktarma artık Android 4.4 (KitKat) ve sonraki sürümlerde bir konum seçmenize olanak tanır.
+\n* Go card: Ücretler artık karttan alınır, bu nedenle tüm istasyonlarla çalışmalıdır. 7 yeni istasyon eklendi. Artık Yetişkin ve İndirim kartlarını algılıyor.</string>
+    <string name="market_changelog_28">* Bir harita sorununu çözmek için artık Android 4.1 gerektiriyor.
+\n* Ham FeliCa verilerini görüntülemek için destek eklendi.
+\n* Ham veriler dahil olmak üzere MIFARE Ultralight desteği eklendi.
+\n* Farklı günlerde 2 seyahatin önceki seyahatte tarih başlığını göstermemesi sorunu düzeltildi (Sorun #15).
+\n* Go card: Veri bağışları sayesinde 11 yeni durak eklendi. Bazı sınırlamalarla ücret hesaplaması eklendi.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_27">Farebot M artık Metrodroid.
+\n
+\n* Myki\'den (VIC, AU) kart numarasını okumak için destek eklendi.
+\n* Go Card\'ın (Brisbane, AU) son hanesi artık okunuyor.
+\n* MIFARE DESFire kartlarının kullanımı iyileştirildi.
+\n* Aynı zamanda kredi kartı olan NETS Flashpay (Singapur) kartları için destek düzeltildi (@chrisplus tarafından).
+\n* Japonca çeviri büyük ölçüde iyileştirildi (@naofum sayesinde).
+\n* Yolculuklar ve Dolumlar artık tüm kartlar için \"Geçmiş\" içinde birleştirildi.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_26">Mutlu yıllar!
+\n
+\n* Go card (Brisbane ve Güney Doğu Queensland, AU) için temel destek eklendi. Şifreleme anahtarları (her karta özel) ve MIFARE Classic destekli aygıt gerektiriyor. Sınırlı durak desteği.
+\n* Adelaide Metrocard, AT HOP ve Myki için kart tanımlama desteği eklendi.
+\n* XML dosyalarından tek tek kartları içe aktarma düzeltildi.
+\n* Çeşitli kullanıcı arayüzü iyileştirmeleri.
+\n* Küçük hata düzeltmeleri.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_33">* Metrocard (Christchurch, Yeni Zelanda) için deneysel destek ekler.
+\n* MIFARE Classic ve Ultralight kartlarla ilgili birden fazla sorunu düzeltir.
+\n* Bir kart okurken daha fazla bilgi gösterir.
+\n* Opal: 0xc bilinmeyen durumunu ele al.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_31">* SmartRider (WA, Avustralya) için destek ekler.
+\n* @Vistaus sayesinde Felemenkçeye, @Albirew sayesinde Fransızcaya, @steets250 sayesinde İbraniceye çeviriler ekler
+\n* MyWay: Yeni taranan kartlar için ortak anahtarla kartı otomatik olarak algılar.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_30">* Cubic Nextfare kartları için birçok düzeltme.
+\n* Fudan FM11RF08 kartları artık Bilhete Único olarak yanlış algılanmıyor.
+\n* MyWay (ACT, Avustralya) için deneysel destek ekler.
+\n* Bazı HTC ve Sony aygıtlarda MIFARE Classic hatalarını giderir.
+\n* Android 6 ve sonraki sürümlerde izin hatalarını düzeltir.
+\n
+\nDaha fazla ayrıntı: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
