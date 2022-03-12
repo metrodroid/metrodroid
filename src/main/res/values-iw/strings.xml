@@ -1339,4 +1339,6 @@
     <string name="ndef_wifi_enctype_aes">AES</string>
     <string name="ndef_wifi_uuid_enrollee">מזהה ייחודי אוניברסלי של נרשם</string>
     <string name="ndef_wifi_uuid_registrar">מזהה ייחודי אוניברסלי של רשם</string>
+    <string name="emv_fdda_version_no">מספר גירסת fDDA</string>
+    <string name="emv_fdda_unpredictable_number">מספר fDDA בלתי צפוי</string>
 </resources>
