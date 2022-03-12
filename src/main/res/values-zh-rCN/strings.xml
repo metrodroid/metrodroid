@@ -2,8 +2,7 @@
 <!-- Simplified Chinese --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="manufacturer_fudan_microelectronics">复旦微电子集团</string>
     <string name="nfc_settings">NFC设置</string>
-    <string name="trip_description">(从)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (到)<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
-    </string>
+    <string name="trip_description">(从)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (到)<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
     <string name="trip_description_unknown_start">到%s</string>
     <string name="location_adelaide">阿德莱德，澳大利亚</string>
     <string name="location_auckland">奥克兰，新西兰</string>
@@ -105,8 +104,7 @@
     <string name="checksum">校验和</string>
     <string name="saving_card">正在保存卡…</string>
     <plurals name="milliseconds_short">
-        <item quantity="other">
-            <xliff:g id="milliseconds" example="1.0">%s</xliff:g>毫秒</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> 毫秒</item>
     </plurals>
     <string name="location_malaysia">马拉西亚</string>
     <string name="location_singapore">新加坡</string>
@@ -115,8 +113,8 @@
     <string name="tmoney_issuer_seoul_bus">首尔巴士</string>
     <string name="card_number">卡号码</string>
     <string name="card_name_kiev">基辅地铁</string>
-    <string name="card_name_penza">奔萨</string>
-    <string name="card_name_kirov">基洛夫</string>
+    <string name="card_name_penza">奔萨交通卡</string>
+    <string name="card_name_kirov">基洛夫交通卡</string>
     <string name="sector_title_format_empty">扇区: %s (空白)</string>
     <string name="unauthorized_sector_title_format">扇区: %s (未授权)</string>
     <string name="sector_title_format">扇区: %s</string>
