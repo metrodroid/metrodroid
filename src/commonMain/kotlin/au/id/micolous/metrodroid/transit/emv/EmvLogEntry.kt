@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.emv
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
+import au.id.micolous.metrodroid.card.iso7816.UNKNOWN_TAG
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
@@ -72,23 +73,12 @@ data class EmvLogEntry(private val values: Map<String, ImmutableByteArray>) : Tr
     override val routeName get() = FormattedString(values.entries.filter {
         !HANDLED_TAGS.contains(it.key)
     }.joinToString {
-        when (val tag = TAGMAP[it.key]) {
-            // Unknown tag info
-            null -> if (Preferences.hideCardNumbers || Preferences.obfuscateTripDates) {
-                ""
-            } else {
-                it.key + "=" + it.value.toHexString()
-            }
-
-            // Unknown tag info
-            else -> {
-                val v = tag.interpretTag(it.value)
-                if (v.isEmpty()) {
-                    ""
-                } else {
-                    Localizer.localizeString(tag.name) + "=" + v
-                }
-            }
+        val tag = TAGMAP[it.key] ?: UNKNOWN_TAG
+        val v = tag.interpretTagString(it.value)
+        if (v.isEmpty()) {
+            ""
+        } else {
+            Localizer.localizeString(tag.name) + "=" + v
         }
     })
 

@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.card.iso7816
 
 object ISO7816Data {
+    const val TAG_TRANSACTION_COUNTER = "9f36"
     const val TAG_PROPRIETARY_BER_TLV = "a5"
     const val TAG_DISCRETIONARY_DATA = "bf0c"
 }

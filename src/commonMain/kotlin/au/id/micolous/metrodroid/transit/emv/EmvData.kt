@@ -60,19 +60,16 @@ internal object EmvData {
             TAG_TRACK1 to TagDesc(R.string.emv_track_1, ASCII, CARD_NUMBER),
             TAG_TRACK2_EQUIV to TagDesc(R.string.emv_track_2_equiv, DUMP_SHORT, CARD_NUMBER),
             TAG_TRACK3_EQUIV to TagDesc(R.string.emv_track_3_equiv, DUMP_SHORT, CARD_NUMBER),
-            // TODO: show as date
-            TAG_CARD_EXPIRATION_DATE to TagDesc(R.string.emv_card_expiration_date, DUMP_SHORT, DATE),
+            TAG_CARD_EXPIRATION_DATE to TagDesc(R.string.emv_card_expiration_date, CONTENTS_DATE, DATE),
             TAG_PAN to HIDDEN_TAG, // PAN, shown elsewhere
             "5f20" to TagDesc(R.string.card_holders_name, ASCII, CARD_NUMBER),
-            // TODO: show as date
-            TAG_EXPIRATION_DATE to TagDesc(R.string.expiry_date, DUMP_SHORT, DATE),
-            // TODO: show as date
-            "5f25" to TagDesc(R.string.issue_date, DUMP_SHORT, DATE),
-            // TODO: show as date
-            TAG_CARD_EFFECTIVE to TagDesc(R.string.emv_card_effective, DUMP_SHORT, DATE),
+            TAG_EXPIRATION_DATE to TagDesc(R.string.expiry_date, CONTENTS_DATE, DATE),
+            "5f25" to TagDesc(R.string.issue_date, CONTENTS_DATE, DATE),
+            TAG_CARD_EFFECTIVE to TagDesc(R.string.emv_card_effective, CONTENTS_DATE, DATE),
             TAG_INTERCHANGE_PROTOCOL to TagDesc(R.string.emv_interchange_control, DUMP_SHORT),
             TAG_ISSUER_COUNTRY to TagDesc(R.string.issuer_country, COUNTRY_BCD),
             "5f2d" to TagDesc(R.string.emv_language_preference, LANGUAGE_LIST),
+            "5f30" to TagDesc(R.string.emv_service_code, DUMP_SHORT, CARD_NUMBER),
             // TODO: show as int
             "5f34" to TagDesc(R.string.emv_pan_sequence_number, DUMP_SHORT, CARD_NUMBER),
             "82" to TagDesc(R.string.emv_application_interchange_profile, DUMP_SHORT),
@@ -113,6 +110,7 @@ internal object EmvData {
             "9f49" to HIDDEN_TAG, // DDOL
             "9f4a" to HIDDEN_TAG, // Static Data Authentication Tag List
             LOG_ENTRY to HIDDEN_TAG, // Log entry
+            "9f69" to TagDesc(R.string.emv_card_fdda, FDDA, CARD_NUMBER),
             TAG_TRACK2 to TagDesc(R.string.emv_track_2, DUMP_SHORT, CARD_NUMBER),
             TAG_DISCRETIONARY_DATA to HIDDEN_TAG // Subtag
     )
