@@ -1275,4 +1275,10 @@
     <string name="ndef_wifi_wfa_extension">WFA uzantısı</string>
     <string name="ndef_wifi_unknown_vendor_extension">Bilinmeyen satıcı uzantısı</string>
     <string name="ovc_sub_voordeelurenabonnement_twee_jaar">Dal Voordeel (Yoğun saatler dışında %%40 indirim)</string>
+    <string name="emv_fdda_version_no">fDDA sürüm numarası</string>
+    <string name="emv_fdda_transaction_qualifiers">fDDA işlem niteleyicileri</string>
+    <string name="emv_fdda_rfu">fDDA RFU</string>
+    <string name="emv_fdda_tail">fDDA kalan baytlar</string>
+    <string name="emv_card_fdda">fDDA kartı kimlik doğrulamayla ilgili verileri</string>
+    <string name="emv_fdda_unpredictable_number">tahmin edilemez fDDA numarası</string>
 </resources>
