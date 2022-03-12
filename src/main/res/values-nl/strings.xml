@@ -1278,4 +1278,10 @@
     <string name="ndef_wifi_band_2_4">2.4 GHz</string>
     <string name="ndef_wifi_uuid_enrollee">UUID-inrol</string>
     <string name="ndef_wifi_mac_address">MAC-adres</string>
+    <string name="emv_card_fdda">fDDA-kaart - Authenticatie-gerelateerde gegevens</string>
+    <string name="emv_fdda_unpredictable_number">fDDA - onvoorspelbaar getal</string>
+    <string name="emv_fdda_version_no">fDDA-versienummer</string>
+    <string name="emv_fdda_transaction_qualifiers">fDDA-transactiekwalificaties</string>
+    <string name="emv_fdda_rfu">fDDA - RFU</string>
+    <string name="emv_fdda_tail">fDDA - resterende bytes</string>
 </resources>
