@@ -72,14 +72,13 @@
 \nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen. 
 \n 
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
-    <string name="market_changelog_32">* Legger til obfuskerings-tilstand. 
-\n* Krasjfiks for ukjente CEPAS-kort. 
-\n* Krasjfiks for delvis leste MIFARE Classic-kort under visning av råkortdetaljer. 
-\n* Støtter negativ balanse på Cibic Nextfare-kort. 
-\n* Nye stopp-ID-er for Go-kort (Brisbane, Australia). 
-\n* Delvis oversettelse til Kabyle ved @belkacem77 og Norsk bokmål ved Allan Nordhøy. 
-\n 
-\n 
+    <string name="market_changelog_32">* Legger til obfuskerings-tilstand.
+\n* Krasjfiks for ukjente CEPAS-kort.
+\n* Krasjfiks for delvis leste MIFARE Classic-kort under visning av råkortdetaljer.
+\n* Støtter negativ balanse på Cibic Nextfare-kort.
+\n* Nye stopp-ID-er for Go-kort (Brisbane, Australia).
+\n* Delvis oversettelse til Kabyle ved @belkacem77 og Norsk bokmål ved Allan Nordhøy.
+\n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_31">* Støtte for SmartRider (VA, Australia).
 \n* Oversetteler til hollandsk, takket være @Vistaus, Fransk av @Albirew, Hebraisk av @streets250
@@ -95,6 +94,7 @@
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
     <string name="market_changelog_29">* Forbedret pålitelighet for identitetsbekreftelse med MIFARE Classic-kort.
 \n* Støtte for Octopus (Hongkong), Shenzhen Tong og Transit Access Pass (Los Angeles, CA, US).
+\n* Ny støtte for generisk leser for Cubic Nextfare MFC (basert på Go-kortleser).
 \n* Eksport til USB-lagring lar deg nå velge plassering på Android 4.4 (KitKat) og senere.
 \n* Go-kort: Reiser hentes nå inn fra kortet, så det bør virke med alle stasjoner. 7 ekstra stasjoner lagt til. Oppdager nå voksen- og honnør-kort.</string>
     <string name="market_changelog_28">* Krever nå Android 4.1 for å fikse et kartproblem.
