@@ -1038,4 +1038,5 @@
     <string name="russia_region_65_sakhalin">Sakhalin oblast</string>
     <string name="russia_region_66_sverdlovsk">Sverdlovsk oblast</string>
     <string name="russia_region_74_chelyabinsk">Tsjeljabinsk oblast</string>
+    <string name="emv_signed_static_application_data">Signert statisk programdata</string>
 </resources>
