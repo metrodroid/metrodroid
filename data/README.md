@@ -70,6 +70,32 @@ Don't do these anymore.
 * `ovc`, `suica`: These both import data from Farebot's sqlite3 format. This is
   not recommended anymore.
 
+## Git integration
+
+If you want to diff MdST files with `git diff`, add this to your `~/.gitconfig`:
+
+```ini
+[diff "mdst"]
+	textconv = /path/to/metrodroid/extra/mdst/dump2csv.py -o /dev/stdout -u
+```
+
+This will convert the MdST file to CSV before diffing:
+
+```diff
+diff --git a/mdst/seq_go.mdst b/mdst/seq_go.mdst
+index 00bddc7c6..233b3a33d 100644
+--- a/mdst/seq_go.mdst
++++ b/mdst/seq_go.mdst
+@@ -140,6 +140,7 @@
+ "90","Yeerongpilly","","","-27.525137","153.014023","","","","","",""
+ "89","Yeronga","","","-27.517588","153.017029","","","","","",""
+ "28491","Transit Authority #3","","","","","","","","","",""
++"268435455","Example station","","","","","","","","","",""
+ file version = 4664, local languages = [], tts_hint_language = en-AU
+ == START OF LICENSE NOTICE (455 bytes) ==
+ The SEQ Go Card stop database used in this software contains information derived from Translink's GTFS feed, made available under the Creative Commons Attribution 3.0 Australia license by the Queensland Department of Transport and Main Roads.
+```
+
 ## Other tools
 
 * `Makefile.common`: Common methods used by per-source Makefiles.
