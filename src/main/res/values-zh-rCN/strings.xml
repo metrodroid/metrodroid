@@ -179,7 +179,7 @@
     <string name="dont_move">请勿移动卡片</string>
     <string name="reading_card">读取中…</string>
     <string name="directions">拍上卡片。</string>
-    <string name="title_activity_license">开源证书</string>
-    <string name="license">证书</string>
-    <string name="copyright">版权所有© 2015 – 2020 Michael Farrell</string>
+    <string name="title_activity_license">开源许可证</string>
+    <string name="license">许可证</string>
+    <string name="copyright">版权所有© 2015 – 2021 Michael Farrell</string>
 </resources>
