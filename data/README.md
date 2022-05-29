@@ -37,7 +37,7 @@ These are recommended examples to copy from:
   distributed via HTTP.
 
 * `tfi_leap`: Shows how to build an MdST from GTFS data, where the GTFS files
-  are distrubuted via HTTP, and the operator names are written in both English
+  are distributed via HTTP, and the operator names are written in both English
   and Irish.
 
 * `compass`: Shows how to build an MdST from a static CSV file, where all the
