@@ -125,17 +125,9 @@ actual object Preferences {
 
     actual val debugSpans by BoolDelegate(PREF_DEBUG_SPANS, false)
 
-    val mapTileUrl: String
-        get () {
-            val def = Localizer.localizeString(R.string.default_map_tile_url)
-            return getStringPreference(PREF_MAP_TILE_URL, def)
-        }
+    val mapTileUrl get() = getStringPreference(PREF_MAP_TILE_URL, "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
 
-    val mapTileSubdomains: String
-        get() {
-            val def = Localizer.localizeString(R.string.default_map_tile_subdomains)
-            return getStringPreference(PREF_MAP_TILE_SUBDOMAINS, def)
-        }
+    val mapTileSubdomains get() = getStringPreference(PREF_MAP_TILE_SUBDOMAINS, "abc")
 
     actual val mfcAuthRetry get() = getIntPreference(PREF_MFC_AUTHRETRY, 5)
 

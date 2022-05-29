@@ -189,8 +189,6 @@
     <string name="raw_level_all">Todos campos</string>
     <string name="pref_theme">Tema</string>
     <string name="pref_theme_desc">Escolha a aparência</string>
-    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <string name="pref_show_local_and_english_title">Mostrar nomes das estações locais e inglesas</string>
     <plurals name="cards_imported">
         <item quantity="one">

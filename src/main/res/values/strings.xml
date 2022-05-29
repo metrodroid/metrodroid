@@ -445,23 +445,6 @@
         <item>farebot</item>
     </string-array>
 
-    <!--
-    This tile server gives "retina" tiles which are much nicer on modern
-    smartphones.
-
-    Metrodroid has been granted permission to use the tile server by
-    the tile server operator. Other projects will need to explicitly seek
-    permission from the tile server operator.
-
-    The tile stylesheets are available under an open source license at:
-    https://github.com/stackunderflow-stackptr/stackptr_tools/tree/master/osm-bright
-
-    You may wish to replace this in other translations with a localised tile server in place of
-    this one.
-    -->
-    <string name="default_map_tile_url" translatable="false">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
-    <string name="default_map_tile_subdomains" translatable="false">123456</string>
-
     <string name="pref_show_local_and_english_title">Show both local and English station names</string>
     <string name="pref_show_local_and_english_desc">Shows both local and English names regardless of locale, using the most appropriate variant when off.</string>
 
