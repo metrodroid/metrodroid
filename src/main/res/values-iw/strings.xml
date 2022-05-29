@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">מטרו-דרואיד</string>
-    <string name="copyright">כל הזכויות שמורות © 2015 - 2021 מייקל פארל</string>
+    <string name="copyright">כל הזכויות שמורות © 2015 - 2022 מייקל פארל</string>
     <string name="license">רישיונות</string>
     <string name="title_activity_license">רישיונות קוד פתוח</string>
     <string name="directions">נא להצמיד כרטיס.</string>
@@ -1341,4 +1341,8 @@
     <string name="ndef_wifi_uuid_registrar">מזהה ייחודי אוניברסלי של רשם</string>
     <string name="emv_fdda_version_no">מספר גירסת fDDA</string>
     <string name="emv_fdda_unpredictable_number">מספר fDDA בלתי צפוי</string>
+    <string name="emv_card_fdda">נתונים שקשורים באימות כרטיס fDDA</string>
+    <string name="emv_fdda_tail">בתים נותרים ב־fDDA</string>
+    <string name="emv_fdda_transaction_qualifiers">מגדירי עסקה ב־fDDA</string>
+    <string name="emv_fdda_rfu">שמור לשימוש עתידי (RFU) ב־fDDA</string>
 </resources>
