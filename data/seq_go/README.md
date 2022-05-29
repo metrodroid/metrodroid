@@ -26,23 +26,36 @@ _All bus events_ use a combination of GPS and driver interaction in order to sel
 stop. As a result, some information may be recorded incorrectly (if it has been locked on to a
 different stop, or the card was tapped off _before_ the bus stopped).
 
-_All top-up events_ use a different set of IDs. No attempt has been made at these yet.
+_All top-up events_ (AVVM) use a different set of IDs. No attempt has been made at these yet.
 
 ### Vending machines (best)
 
 _Go card vending machines_ are best source of data, but only show the last _10 tap events_ (there
 are 12 on the card).
 
+On vending machines, a typical trip looks like this:
+
+> 31/12/16 12:10 pm Location: Roma St Bus Station (SEB IB Services) \[10794\]
+>
+> Touch Off: $ 2.70
+>
+> 31/12/16 12:00 pm Location: South Bank busway station Platform 1 \[19052\]
+>
+> Touch On
+
 The bus stop names are different again (from GTFS and Go card website data), but the Stop ID (used
-in GTFS) is shown in square brackets.  For example:
+in GTFS) is shown in square brackets, with some caveats:
 
-```
-31/12/16 12:00 pm Location: South Bank busway station Platform 1 [19052]
-Touch On
-```
+* The GTFS stop ID needs to be padded with leading zeros to 6 digits, eg: `10794` becomes `010794`.
+* Sometimes the stop IDs shown have a suffix separated by a dash, eg: `12345-2`. When present, omit
+  the suffix, but put it in the note column.
 
-Sometimes bus stop IDs on Go card vending machines have a suffix separated by a dash, for example:
-`12345-2`. Omit the suffix, but put it in the note column if present.
+For this trip, the corresponding rows to be added to `mapping.csv` are:
+
+mapping.csv row   | GTFS stop name
+----------------- | --------------
+`0x3d29,010794,,` | [Roma Street busway](https://jp.translink.com.au/plan-your-journey/stops/010794)
+`0x1dcc,019052,,` | [South Bank busway, platform 1](https://jp.translink.com.au/plan-your-journey/stops/019052)
 
 ### Go card website
 
@@ -54,11 +67,29 @@ stations _only_.  It has some problems for bus stops:
 
 ## Pattern notes
 
+Go card timeline:
+
+* 2003: Contract awarded
+* 2005-07-14: First phase field test pilot:
+  * 5 QR stations:
+    * Petrie (Caboolture line)
+    * Sandgate (Shorncliffe line)
+    * Brunswick Street (now Fortitude Valley)
+    * Central
+    * Roma Street
+  * 1 private bus operator in Redcliffe
+* 2005-08-11: Cubic's PR about first phase field test
+* 2005-09: Second phase pilot?
+* 2006: Planned launch date (as at 2005-08-11)
+
 ### Train
 
 The rail lines appear to mostly be in line order (map: [2016][map16], [2018][map18]):
 
 * Stop IDs <= 0x16 appear in an arbitrary order -- these were probably used as test stations
+
+* Stop ID 0x35 is Milton. There isn't enough space before Bowen Hills (0x3a) for the rest of the
+  Ipswitch/Rosewood line, so Rosewood might start at 0x19.
 
 * Stop IDs 0x3a - 0x40 are Bowen Hills to Northgate.
 
@@ -142,7 +173,6 @@ Rail network additions since Go card rolled out (2008):
 
 * To attempt Springfield / Ipswitch / Rosewood lines:
 
-  * Milton
   * Darra
   * Wacol
   * Richlands
@@ -163,8 +193,8 @@ We always use the south-bound stops (which have lower stop IDs), because `stops.
 Bus lines are partly sequential, but lots of stops have been added and removed over time. Some
 reader IDs appear to be out-of-sequence with Stop Codes.
 
-There is [historical GTFS data avaliable which goes back to 2015-04][4]. This git repository doesn't
-get used for Metrodroid because shittypack removes stop IDs (rail uses `place_*` identifiers) and
+There is [historical GTFS data available which goes back to 2015-04][4]. This git repository doesn't
+get used for Metrodroid because [shittypack][] removes stop IDs (rail uses `place_*` identifiers) and
 the repository itself is huge (~2 GiB for a complete copy).
 
 We interpolate reader IDs where possible. These are special successful cases:
@@ -202,3 +232,4 @@ Reader IDs where interpolation was not attempted:
 [map18]: https://translink.com.au/sites/default/files/assets/resources/plan-your-journey/maps/180401-train-busway-ferry-tram-network-map.pdf
 [4]: https://bitbucket.org/micolous/queensland-gtfs/
 [goweb]: https://gocard.translink.com.au/
+[shittypack]: https://github.com/micolous/shittypack

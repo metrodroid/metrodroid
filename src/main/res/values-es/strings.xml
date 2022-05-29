@@ -408,7 +408,6 @@
     <string name="key_data">Datos de la clave</string>
     <string name="pref_theme">Tema</string>
     <string name="pref_theme_desc">Elija la apariencia y el estilo</string>
-    <string name="default_map_tile_subdomains">123456</string>
     <string name="pref_show_local_and_english_title">Mostrar los nombres de las estaciones locales y las inglesas</string>
     <string name="pref_show_local_and_english_desc">Mostrar los nombres locales y los ingleses independientemente de la localización. Utilizar la variante más apropiada cuando esté desactivada.</string>
     <plurals name="cards_imported">

@@ -38,7 +38,7 @@ def read_delimited_message(cls, f):
   f.seek(t + p)
   return cls.FromString(f.read(l))
 
-def dump2csv(database, output_fn):
+def dump2csv(database, output_fn, unix=False):
   f = open(database, 'rb')
   magic, ver, index_off = struct.unpack('!4sII', f.read(12))
 
@@ -55,7 +55,9 @@ def dump2csv(database, output_fn):
   #print(MessageToString(header, as_utf8=True))
 
   output_fh = open(output_fn, mode='w', encoding='utf-8')
-  writer = DictWriter(output_fh, fieldnames=FIELD_NAMES)
+  writer = DictWriter(output_fh,
+                      fieldnames=FIELD_NAMES,
+                      dialect='unix' if unix else 'excel')
   writer.writeheader()
   
   start_pos = f.tell()
@@ -90,10 +92,14 @@ def main():
   parser = ArgumentParser()
   parser.add_argument('input_mdst', help='Input MdST file', nargs=1)
   parser.add_argument('-o', '--output', help='Output CSV file')
+  parser.add_argument(
+    '-u', '--unix',
+    action='store_true',
+    help='Use UNIX line-feed characters (non-standard)')
   
   options = parser.parse_args()
   
-  dump2csv(options.input_mdst[0], options.output)
+  dump2csv(options.input_mdst[0], options.output, options.unix)
 
 if __name__ == '__main__':
   main()

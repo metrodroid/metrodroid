@@ -11,6 +11,9 @@ var attribution = 'Custom Map Tiles';
 if (tileUrl.indexOf('stackcdn.com') >= 0) {
     attribution = "&copy; <a href='http://www.openstreetmap.org/'>OpenStreetMap</a>. Tiles: <a href='https://stackptr.com/'>StackPtr</a>";
 }
+if (tileUrl.indexOf('openstreetmap.org') >= 0) {
+    attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+}
 L.tileLayer(tileUrl, {
     subdomains: subdomains,
     attribution: attribution
