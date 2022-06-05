@@ -1829,6 +1829,14 @@
     <string name="tmoney_usercode_child">Child</string>
     <!-- Translators: Youth fare type (Korean: 청소년) -->
     <string name="tmoney_usercode_youth">Youth</string>
+    <!-- Translators: Senior fare type (Korean: 경로) -->
+    <string name="tmoney_usercode_senior">Senior</string>
+    <!-- Translators: Fare type for a person with disabilities (Korean: 장애인) -->
+    <string name="tmoney_usercode_disabled">Disabled</string>
+    <!-- Translators: Fare type used for road tolls paid by a bus (Korean: 버스) -->
+    <string name="tmoney_usercode_bus">Bus (road toll)</string>
+    <!-- Translators: Fare type used for road tolls paid by a lorry/truck (Korean: 화물차) -->
+    <string name="tmoney_usercode_lorry">Lorry (road toll)</string>
     <!-- Translators: Test ticket type (Korean: 테스트) -->
     <string name="tmoney_usercode_test">Test</string>
     <!-- Translators: Inactive ticket type (Korean: 비활성) -->
@@ -1844,8 +1852,12 @@
     <!-- Translators: T-Money card for a person with disabilities (Korean: 장애, 기본) -->
     <string name="tmoney_disrate_disabled_basic">Disabled, basic</string>
     <!-- Translators: T-Money card for travelling companion of person with disabilities
-    (Korean: 장애, 동반 무임 -->
+    (Korean: 장애, 동반 무임) -->
     <string name="tmoney_disrate_disabled_companion">Disabled, companion</string>
+    <!-- Translators: T-Money card for veterans (Korean: 유공, 기본) -->
+    <string name="tmoney_disrate_veteran_basic">Veteran, basic</string>
+    <!-- Translators: T-Money card for travelling companion of a veteran (Korean: 유공, 동반 무임) -->
+    <string name="tmoney_disrate_veteran_companion">Veteran, companion</string>
 
     <!-- Translators: Used when something is explicitly unset, or has no data -->
     <string name="none">None</string>
@@ -1876,6 +1888,8 @@
     <string name="tmoney_ccode_citi">Citibank Korea</string>
     <!-- Translators: https://en.wikipedia.org/wiki/Korea_Exchange_Bank -->
     <string name="tmoney_ccode_exchange">Korea Exchange Bank</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Woori_Bank -->
+    <string name="tmoney_ccode_woori">Woori Bank</string>
     <!-- Translators: https://en.wikipedia.org/wiki/Hana_Financial_Group -->
     <string name="tmoney_ccode_hana_sk">Hana SK Card</string>
     <!-- Translators: https://en.wikipedia.org/wiki/Hyundai_Capital -->

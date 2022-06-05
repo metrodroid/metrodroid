@@ -18,4 +18,5 @@
     <string name="show_debug_spans">Show debug colour for locale spans</string>
     <string name="title_activity_license">Open source licences</string>
     <string name="license">Licences</string>
+    <string name="tmoney_usercode_lorry">Truck (road toll)</string>
 </resources>

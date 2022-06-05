@@ -35,10 +35,10 @@ object TMoneyPurseInfoResolver : KSX6924PurseInfoResolver() {
     override val issuers : Map<Int, StringResource> = mapOf(
             // 0x00: reserved
             0x01 to R.string.tmoney_issuer_kftci,
-            // 0x02: A-CASH (?) (에이캐시) (Also used by Snapper)
+            // 0x02: A-CASH (에이캐시) (Also used by Snapper)
             0x03 to R.string.tmoney_issuer_mybi,
             // 0x04: reserved
-            // 0x05: V-Cash (?) (브이캐시)
+            // 0x05: V-Cash (브이캐시)
             0x06 to R.string.tmoney_issuer_mondex,
             0x07 to R.string.tmoney_issuer_kec,
             0x08 to R.string.tmoney_issuer_kscc,
@@ -52,22 +52,26 @@ object TMoneyPurseInfoResolver : KSX6924PurseInfoResolver() {
     override val userCodes : Map<Int, StringResource> = mapOf(
             0x01 to R.string.tmoney_usercode_regular,
             0x02 to R.string.tmoney_usercode_child,
-            // 0x03: reserved
-            0x04 to R.string.tmoney_usercode_youth,
-            // 0x05: reserved
-            // 0x06: "route" (?) (경로)
-            // 0x07 - 0x0e: reserved
+            // TTAK.KO 12.0240 disagrees
+            0x03 to R.string.tmoney_usercode_youth,
+            // TTAK.KO 12.0240 disagrees
+            0x04 to R.string.tmoney_usercode_senior,
+            // TTAK.KO 12.0240 disagrees
+            0x05 to R.string.tmoney_usercode_disabled,
+            // Only in TTAK.KO 12.0240
             0x0f to R.string.tmoney_usercode_test,
+            0x11 to R.string.tmoney_usercode_bus,
+            0x12 to R.string.tmoney_usercode_lorry,
             0xff to R.string.tmoney_usercode_inactive
     )
 
     override val disRates : Map<Int, StringResource> = mapOf(
             0x00 to R.string.tmoney_disrate_none,
             0x10 to R.string.tmoney_disrate_disabled_basic,
-            0x11 to R.string.tmoney_disrate_disabled_companion
+            0x11 to R.string.tmoney_disrate_disabled_companion,
             // 0x12 - 0x1f: reserved
-            // 0x20: "Well" ?, basic (유공, 기본)
-            // 0x21: "Well" ?, companion (유공, 동반 무임)
+            0x20 to R.string.tmoney_disrate_veteran_basic,
+            0x21 to R.string.tmoney_disrate_veteran_companion
             // 0x22 - 0x2f: reserved
     )
 
@@ -88,7 +92,7 @@ object TMoneyPurseInfoResolver : KSX6924PurseInfoResolver() {
             0x06 to R.string.tmoney_ccode_shinhan,
             0x07 to R.string.tmoney_ccode_citi,
             0x08 to R.string.tmoney_ccode_exchange,
-            // 0x09: ?? (우리)
+            0x09 to R.string.tmoney_ccode_woori,
             0x0a to R.string.tmoney_ccode_hana_sk,
             0x0b to R.string.tmoney_ccode_hyundai
     )
