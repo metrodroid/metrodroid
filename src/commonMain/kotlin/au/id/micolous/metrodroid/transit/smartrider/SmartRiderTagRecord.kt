@@ -18,16 +18,11 @@
  */
 package au.id.micolous.metrodroid.transit.smartrider
 
-import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.Parcelize
-
-import au.id.micolous.metrodroid.time.*
-import au.id.micolous.metrodroid.transit.Station
-import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.multi.*
+import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 
 /**
@@ -35,17 +30,23 @@ import au.id.micolous.metrodroid.util.toImmutable
  */
 
 @Parcelize
-class SmartRiderTagRecord (private val mTimestamp: Long,
-                           public override val isTapOn: Boolean,
-                           private val mRoute: FormattedString,
-                           val cost: Int,
-                           private val mCardType: SmartRiderTransitData.CardType) : Transaction() {
+class SmartRiderTagRecord(
+    internal val mTimestamp: Long,
+    public override val isTapOn: Boolean,
+    private val mRoute: FormattedString,
+    val cost: Int,
+    override val mode: Trip.Mode,
+    override val isTransfer: Boolean,
+    private val mSmartRiderType: SmartRiderType,
+    private val mStopId: Int = 0,
+    private val mZone: Int = 0
+) : Transaction() {
 
     val isValid: Boolean
         get() = mTimestamp != 0L
 
     override val timestamp: Timestamp?
-        get() = addSmartRiderEpoch(mTimestamp)
+        get() = convertTime(mTimestamp, mSmartRiderType)
 
     override val isTapOff: Boolean
         get() = !isTapOn
@@ -56,53 +57,47 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
     override val routeNames: List<FormattedString>
         get() = listOf(mRoute)
 
-    // TODO: verify this
-    // There is also a bus with route number 300, but it is a free service.
-    override val mode: Trip.Mode
-        get() = when (mCardType) {
-            SmartRiderTransitData.CardType.MYWAY -> when {
-                "RAIL".equals(mRoute.unformatted, ignoreCase = true) -> Trip.Mode.TRAM
-                else -> Trip.Mode.BUS
-            }
-
-            SmartRiderTransitData.CardType.SMARTRIDER -> when {
-                "RAIL".equals(mRoute.unformatted, ignoreCase = true) -> Trip.Mode.TRAIN
-                "300" == mRoute.unformatted -> Trip.Mode.FERRY
-                else -> Trip.Mode.BUS
-            }
-
-            else -> Trip.Mode.OTHER
-        }
-
     override val station: Station?
         get() = null
 
-    private fun addSmartRiderEpoch(epochTime: Long): Timestamp = when (mCardType) {
-        SmartRiderTransitData.CardType.MYWAY -> MYWAY_EPOCH.seconds(epochTime)
-
-        SmartRiderTransitData.CardType.SMARTRIDER -> SMARTRIDER_EPOCH.seconds(epochTime)
-        else -> SMARTRIDER_EPOCH.seconds(epochTime)
-    }
-
     override fun shouldBeMerged(other: Transaction): Boolean =
         // Are the two trips within 90 minutes of each other (sanity check)
-            (other is SmartRiderTagRecord
-                    && other.mTimestamp - mTimestamp <= 5400
-                    && super.shouldBeMerged(other))
+        (other is SmartRiderTagRecord
+            && other.mTimestamp - mTimestamp <= 5400
+            && super.shouldBeMerged(other))
 
 
-    override fun getAgencyName(isShort: Boolean) = FormattedString(
-            when (mCardType) {
-                SmartRiderTransitData.CardType.MYWAY -> "ACTION"
-
-                SmartRiderTransitData.CardType.SMARTRIDER -> "TransPerth"
-
-                else -> ""
-            })
+    override fun getAgencyName(isShort: Boolean) = Localizer.localizeFormatted(
+        when (mSmartRiderType) {
+            SmartRiderType.MYWAY -> R.string.agency_name_action
+            SmartRiderType.SMARTRIDER -> R.string.agency_name_transperth
+            else -> R.string.unknown
+        }
+    )
 
     override fun isSameTrip(other: Transaction): Boolean =
         // SmartRider only ever records route names.
-        other is SmartRiderTagRecord && mRoute == other.mRoute
+        other is SmartRiderTagRecord && mRoute == other.mRoute && isTapOn != other.isTapOn
+
+    override fun getRawFields(level: TransitData.RawLevel): String? {
+        if (level == TransitData.RawLevel.ALL && (mStopId != 0 || mZone != 0)) {
+            return "stopId=${mStopId.hexString}, zone=$mZone"
+        }
+        return super.getRawFields(level)
+    }
+
+    /**
+     * Enriches a [SmartRiderTagRecord] created by [parse] with data from another
+     * [SmartRiderTagRecord] created by [parseRecentTransaction].
+     */
+    fun enrichWithRecentData(other: SmartRiderTagRecord): SmartRiderTagRecord {
+        require(other.mTimestamp == mTimestamp) { "trip timestamps must be equal" }
+        return SmartRiderTagRecord(
+            mTimestamp = mTimestamp, isTapOn = isTapOn, mSmartRiderType = mSmartRiderType,
+            cost = cost, mRoute = mRoute, mode = mode, isTransfer = isTransfer,
+            mZone = other.mZone, mStopId = other.mStopId
+        )
+    }
 
     companion object {
         private const val TAG = "SmartRiderTagRecord"
@@ -118,21 +113,53 @@ class SmartRiderTagRecord (private val mTimestamp: Long,
             return FormattedString(cleaned.toHexString())
         }
 
-        fun parse(cardType: SmartRiderTransitData.CardType, record: ImmutableByteArray): SmartRiderTagRecord {
+        /**
+         * Parse a transaction in a single block of sectors 10 - 13.
+         */
+        fun parse(
+            smartRiderType: SmartRiderType,
+            record: ImmutableByteArray
+        ): SmartRiderTagRecord {
             val mTimestamp = record.byteArrayToLongReversed(3, 4)
-
-            val isTapOn = record[7].toInt() and 0x10 == 0x10
-
+            val bitfield = SmartRiderTripBitfield(smartRiderType, record[7].toInt())
             val route = routeName(record.sliceOffLen(8, 4))
-
             val cost = record.byteArrayToIntReversed(13, 2)
 
-            Log.d(TAG,"ts: $mTimestamp, isTagOn: $isTapOn, route: $route, cost: $cost")
-            return SmartRiderTagRecord(mTimestamp = mTimestamp, isTapOn = isTapOn, mCardType = cardType,
-                    cost = cost, mRoute = route)
+            Log.d(TAG, "ts: $mTimestamp, bitfield: $bitfield, route: $route, cost: $cost")
+            return SmartRiderTagRecord(
+                mTimestamp = mTimestamp,
+                isTapOn = bitfield.isTapOn,
+                mSmartRiderType = smartRiderType,
+                cost = cost,
+                mRoute = route,
+                mode = bitfield.mode,
+                isTransfer = bitfield.isTransfer
+            )
         }
 
-        private val SMARTRIDER_EPOCH = Epoch.utc(2000, MetroTimeZone.PERTH, -8 * 60)
-        private val MYWAY_EPOCH = Epoch.utc(2000, MetroTimeZone.SYDNEY, -11 * 8) // Canberra
+        /**
+         * Parses a recent transaction inside block 2 - 3, bytes 5-18 and 19-32 inclusive.
+         */
+        fun parseRecentTransaction(
+            smartRiderType: SmartRiderType,
+            record: ImmutableByteArray
+        ): SmartRiderTagRecord {
+            require(record.size == 14) { "Recent transactions must be 14 bytes" }
+            val timestamp = record.byteArrayToLongReversed(0, 4)
+            // This is sometimes the vehicle number, sometimes the route name
+            val route = routeName(record.sliceOffLen(4, 4))
+            // 8 .. 9 unknown bitfield
+            // StopID may actually be binary-coded decimal
+            val stopId = record.byteArrayToInt(10, 2)
+            val zone = record[12].toInt()
+            // 13 unknown
+
+            Log.d(TAG, "ts: $timestamp, route: $route, stopId: $stopId, zone: $zone")
+            return SmartRiderTagRecord(
+                mTimestamp = timestamp, isTapOn = false, mSmartRiderType = smartRiderType,
+                cost = 0, mRoute = route, mStopId = stopId, mZone = zone, mode = Trip.Mode.OTHER,
+                isTransfer = false
+            )
+        }
     }
 }

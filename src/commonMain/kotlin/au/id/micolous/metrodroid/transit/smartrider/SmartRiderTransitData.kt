@@ -21,9 +21,7 @@ package au.id.micolous.metrodroid.transit.smartrider
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.HashUtils
 
@@ -34,74 +32,95 @@ import au.id.micolous.metrodroid.util.HashUtils
  */
 
 @Parcelize
-class SmartRiderTransitData (override val serialNumber: String?,
-                             private val mBalance: Int,
-                             override val trips: List<TransactionTripAbstract>,
-                             private val mCardType: CardType): TransitData() {
+class SmartRiderTransitData(
+    override val serialNumber: String?,
+    private val mBalance: Int,
+    override val trips: List<TransactionTripAbstract>,
+    private val mSmartRiderType: SmartRiderType
+) : TransitData() {
 
     public override val balance: TransitCurrency?
         get() = TransitCurrency.AUD(mBalance)
 
     override val cardName: String
-        get() = mCardType.friendlyName
-
-    enum class CardType constructor(val friendlyName: String) {
-        UNKNOWN("Unknown SmartRider"),
-        SMARTRIDER(SMARTRIDER_NAME),
-        MYWAY(MYWAY_NAME)
-    }
+        get() = Localizer.localizeString(mSmartRiderType.friendlyName)
 
     companion object {
-        private const val SMARTRIDER_NAME = "SmartRider"
-        private const val MYWAY_NAME = "MyWay"
         private const val TAG = "SmartRiderTransitData"
 
         private val SMARTRIDER_CARD_INFO = CardInfo(
-                imageId = R.drawable.smartrider_card,
-                name = SMARTRIDER_NAME,
-                locationId = R.string.location_wa_australia,
-                cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
-                keysRequired = true,
-                region = TransitRegion.AUSTRALIA,
-                preview = true) // We don't know about ferries.
+            imageId = R.drawable.smartrider_card,
+            name = R.string.card_name_smartrider,
+            locationId = R.string.location_wa_australia,
+            cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
+            region = TransitRegion.AUSTRALIA,
+            keysRequired = true
+        )
 
         private val MYWAY_CARD_INFO = CardInfo(
-                imageId = R.drawable.myway_card,
-                name = MYWAY_NAME,
-                locationId = R.string.location_act_australia,
-                cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
-                region = TransitRegion.AUSTRALIA,
-                keysRequired = true)
+            imageId = R.drawable.myway_card,
+            name = R.string.card_name_myway,
+            locationId = R.string.location_act_australia,
+            cardType = au.id.micolous.metrodroid.card.CardType.MifareClassic,
+            region = TransitRegion.AUSTRALIA,
+            keysRequired = true
+        )
 
         private fun parse(card: ClassicCard): SmartRiderTransitData {
             val mCardType = detectKeyType(card.sectors)
             val serialNumber = getSerialData(card)
 
+            // Read configuration
+            val config = card.getSector(1)
+            // 14 - 15
+            val purchasePrice = config[0].data.byteArrayToIntReversed(14, 2)
+            val config1 = config[1].data
+            // 16 - 17
+            val issueDate = config1.byteArrayToIntReversed(0, 2)
+            // 18 - 19
+            val tokenExpiryDate = config1.byteArrayToIntReversed(2, 2)
+            // 20 - 21
+            val autoLoadThreshold = TransitCurrency.AUD(config1.byteArrayToIntReversed(4, 2))
+            // 22 - 23
+            val autoLoadValue = TransitCurrency.AUD(config1.byteArrayToIntReversed(6, 2))
+            // 24
+            val tokenType = config1[8].toInt()
+
+            // Balance record
+            val balanceA = SmartRiderBalanceRecord(mCardType, card[2])
+            val balanceB = SmartRiderBalanceRecord(mCardType, card[3])
+            val sortedBalances =
+                listOf(balanceA, balanceB).sortedByDescending { it.transactionNumber }
+            Log.d(TAG, "\nbalanceA = $balanceA\nbalanceB = $balanceB")
+            val mBalance = sortedBalances[0].balance
+
             // Read trips.
-            val tagBlocks = (10..13).flatMap { s -> (0..2).map { b -> card[s,b] } }
-            val tagRecords = tagBlocks.map  { b ->
-                SmartRiderTagRecord.parse(mCardType, b.data) }.filter { it.isValid }
+            val tagBlocks = (10..13).flatMap { s -> (0..2).map { b -> card[s, b] } }
+            val tagRecords = tagBlocks.map {
+                SmartRiderTagRecord.parse(mCardType, it.data)
+            }.filter {
+                it.isValid
+            }.map {
+                // Check the Balances for a recent transaction with more data.
+                sortedBalances.forEach { b ->
+                    if (b.recentTagOn.isValid && b.recentTagOn.mTimestamp == it.mTimestamp) {
+                        return@map it.enrichWithRecentData(b.recentTagOn)
+                    }
+                    if (b.firstTagOn.isValid && b.firstTagOn.mTimestamp == it.mTimestamp) {
+                        return@map it.enrichWithRecentData(b.firstTagOn)
+                    }
+                }
+                // There was no extra data available.
+                return@map it
+            }
 
             // Build the Tag events into trips.
             val trips = TransactionTrip.merge(tagRecords)
 
-            // TODO: Figure out balance priorities properly.
-
-            // This presently only picks whatever balance is lowest. Recharge events aren't understood,
-            // and parking fees (SmartRider only) are also not understood.  So just pick whatever is
-            // the lowest balance, and we're probably right, unless the user has just topped up their
-            // card.
-            val recordA = card.getSector(2).getBlock(2).data
-            val recordB = card.getSector(3).getBlock(2).data
-
-            val balanceA = recordA.byteArrayToIntReversed(7, 2)
-            val balanceB = recordB.byteArrayToIntReversed(7, 2)
-
-            Log.d(TAG, "balanceA = $balanceA, balanceB = $balanceB")
-            val mBalance = if (balanceA < balanceB) balanceA else balanceB
-
-            return SmartRiderTransitData(mBalance = mBalance, trips = trips, mCardType = mCardType,
-                    serialNumber = serialNumber)
+            return SmartRiderTransitData(
+                mBalance = mBalance, trips = trips, mSmartRiderType = mCardType,
+                serialNumber = serialNumber
+            )
         }
 
         // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
@@ -111,34 +130,40 @@ class SmartRiderTransitData (override val serialNumber: String?,
         // We don't want to actually include these keys in the program, so include a hashed version of
         // this key.
         private const val MYWAY_KEY_SALT = "myway"
+
         // md5sum of Salt + Common Key 2 + Salt, used on sector 7 key A and B.
         private const val MYWAY_KEY_DIGEST = "29a61b3a4d5c818415350804c82cd834"
 
         private const val SMARTRIDER_KEY_SALT = "smartrider"
+
         // md5sum of Salt + Common Key 2 + Salt, used on Sector 7 key A.
         private const val SMARTRIDER_KEY2_DIGEST = "e0913518a5008c03e1b3f2bb3a43ff78"
+
         // md5sum of Salt + Common Key 3 + Salt, used on Sector 7 key B.
         private const val SMARTRIDER_KEY3_DIGEST = "bc510c0183d2c0316533436038679620"
 
-        private fun detectKeyType(sectors: List<ClassicSector>): CardType {
+        private fun detectKeyType(sectors: List<ClassicSector>): SmartRiderType {
             try {
                 val sector = sectors[7]
 
                 Log.d(TAG, "Checking for MyWay key...")
                 if (HashUtils.checkKeyHash(sector, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
-                    return CardType.MYWAY
+                    return SmartRiderType.MYWAY
                 }
 
                 Log.d(TAG, "Checking for SmartRider key...")
-                if (HashUtils.checkKeyHash(sector, SMARTRIDER_KEY_SALT,
-                                SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST) >= 0) {
-                    return CardType.SMARTRIDER
+                if (HashUtils.checkKeyHash(
+                        sector, SMARTRIDER_KEY_SALT,
+                        SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST
+                    ) >= 0
+                ) {
+                    return SmartRiderType.SMARTRIDER
                 }
             } catch (ignored: IndexOutOfBoundsException) {
                 // If that sector number is too high, then it's not for us.
             }
 
-            return CardType.UNKNOWN
+            return SmartRiderType.UNKNOWN
         }
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
@@ -150,17 +175,17 @@ class SmartRiderTransitData (override val serialNumber: String?,
                 get() = 8
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean =
-                    detectKeyType(sectors) != CardType.UNKNOWN
+                detectKeyType(sectors) != SmartRiderType.UNKNOWN
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity =
-                    TransitIdentity(detectKeyType(card.sectors).friendlyName, getSerialData(card))
+                TransitIdentity(detectKeyType(card.sectors).friendlyName, getSerialData(card))
 
             override fun earlyCardInfo(sectors: List<ClassicSector>): CardInfo? =
-                    when (detectKeyType(sectors)) {
-                        CardType.MYWAY -> MYWAY_CARD_INFO
-                        CardType.SMARTRIDER -> SMARTRIDER_CARD_INFO
-                        else -> null
-                    }
+                when (detectKeyType(sectors)) {
+                    SmartRiderType.MYWAY -> MYWAY_CARD_INFO
+                    SmartRiderType.SMARTRIDER -> SMARTRIDER_CARD_INFO
+                    else -> null
+                }
 
             override fun parseTransitData(card: ClassicCard) = parse(card)
         }

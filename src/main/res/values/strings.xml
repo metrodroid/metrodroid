@@ -2674,4 +2674,19 @@
     <string name="ndef_wifi_bitmap_unknown">Unknown (%d)</string>
     <string name="ndef_wifi_wfa_extension">WFA extension</string>
     <string name="ndef_wifi_unknown_vendor_extension">Unknown vendor extension</string>
+    <!--
+    Translators: Name of the transit agency in Canberra, Australia: "Australian Capital Territory
+    Internal Omnibus Network". Not many people use (or even know) the full name.
+    Wikipedia: https://en.wikipedia.org/wiki/ACTION
+    -->
+    <string name="agency_name_action">ACTION</string>
+    <!-- Translators: Name of transit card used in Canberra, Australia. -->
+    <string name="card_name_myway">MyWay</string>
+    <!--
+    Translators: Name of the transit agency in Perth, Australia. The "p" is not capitalised.
+    https://en.wikipedia.org/wiki/Transperth
+    -->
+    <string name="agency_name_transperth">Transperth</string>
+    <!-- Translators: Name of transit card used in Perth, Australia. -->
+    <string name="card_name_smartrider">SmartRider</string>
 </resources>
