@@ -179,6 +179,7 @@
     <string name="subscription_cost">Cost</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
+    <string name="never">Never</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="keys_loaded">Encryption keys for this card are loaded.</string>
     <string name="load_keys">Load Keys</string>

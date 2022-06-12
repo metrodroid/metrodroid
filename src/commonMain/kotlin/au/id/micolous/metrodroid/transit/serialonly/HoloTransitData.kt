@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
@@ -52,10 +53,10 @@ data class HoloTransitData(private val mSerial: Int?,
 
     public override val extraInfo: List<ListItem>
         get() = listOf(
-            ListItem(R.string.last_transaction, when (mLastTransactionTimestamp) {
-                0 -> "Never"
-                null -> "Never"
-                else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp)).toString()
+            ListItem(Localizer.localizeFormatted(R.string.last_transaction), when (mLastTransactionTimestamp) {
+                0 -> Localizer.localizeFormatted(R.string.never)
+                null -> Localizer.localizeFormatted(R.string.never)
+                else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))
             }),
             ListItem(R.string.manufacture_id, mManufacturingId?.let { formatMfgId(mManufacturingId)})
             )
