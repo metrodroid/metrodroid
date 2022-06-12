@@ -33,7 +33,7 @@ object DesfireCardTransitRegistry {
             MagnaCartaTransitData.FACTORY,
             IntercardTransitData.FACTORY,
             TPFCardTransitData.Factory,
-            HoloTransitData.FACTORY,
+            HoloTransitData.Companion.HoloTransitFactory,
             BlankDesfireTransitFactory,
             UnauthorizedDesfireTransitData.FACTORY)
 }

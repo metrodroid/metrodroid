@@ -98,7 +98,7 @@ data class HoloTransitData(private val mSerial: Int?,
         private fun parseSerial(app: DesfireApplication?) =
                 app?.getFile(0)?.data?.convertBCDtoInteger(0xe, 2)
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
+        object HoloTransitFactory : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = APP_ID in appIds
 
             override val allCards get() = listOf(CARD_INFO)
