@@ -218,8 +218,8 @@ class EmvFactory : ISO7816ApplicationFactory {
                 TAG_TRANSACTION_DATE -> ImmutableByteArray.fromHex("180101")
                 // Transaction Type
                 TAG_TRANSACTION_TYPE -> ImmutableByteArray(1)
-                // Amount, Authorised: 1 cent
-                TAG_AMOUNT_AUTHORISED -> ImmutableByteArray.fromHex("000000000001")
+                // Amount, Authorised: 0 cents
+                TAG_AMOUNT_AUTHORISED -> ImmutableByteArray(6)
                 // Amount, Other: 0 cents
                 TAG_AMOUNT_OTHER -> ImmutableByteArray(6)
                 // Country: USA

@@ -54,8 +54,14 @@ class ISO7816ApplicationMutableCapsule(val appFci: ImmutableByteArray?,
     fun dumpFileSFI(protocol: ISO7816Protocol, sfi: Int, recordLen: Int): ISO7816File? {
         val data = try {
             protocol.readBinary(sfi)
+        } catch (e: ISOFileNotFoundException) {
+            // Stop processing, the file doesn't exist.
+            return null
+        } catch (e: ISOSecurityStatusNotSatisfied) {
+            // Stop processing, the file is locked.
+            return null
         } catch (e: Exception) {
-            null
+            null // but continue
         }
 
         val records : MutableMap<Int, ImmutableByteArray> = mutableMapOf()
