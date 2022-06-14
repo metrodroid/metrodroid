@@ -1,0 +1,20 @@
+{
+  "tagId": "01020304",
+  "scannedAt": {
+    "timeInMillis": 1655177772134,
+    "tz": "Australia/Brisbane"
+  },
+  "iso7816": {
+    "applications": [
+      [
+        "androidhce",
+        {
+          "generic": {
+            "appFci": "14810000",
+            "appName": "a000000476416e64726f6964484345"
+          }
+        }
+      ]
+    ]
+  }
+}

@@ -20,14 +20,11 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
 class ISO7816XmlTest : BaseInstrumentedTest() {
     @Test
-    fun testIso7816Card() {
+    fun testMobibBlank() {
         // Load up a Mobib card that is basically empty
         val card = loadCardXml("iso7816/mobib_blank.xml")
         assertIs<ISO7816Card>(card.iso7816)
@@ -49,5 +46,33 @@ class ISO7816XmlTest : BaseInstrumentedTest() {
 
         val identity = rcard.parseTransitIdentity()
         assertEquals(MobibTransitData.NAME, identity?.name)
+    }
+
+    @Test
+    fun testAndroidHce() {
+        val card = loadCardXml("iso7816/androidhce.xml")
+        assertIs<ISO7816Card>(card.iso7816)
+        val cardIso7816 = card.iso7816
+        assertNotNull(cardIso7816)
+
+        // Environment check
+        assertNull(card.parseTransitData())
+        assertNull(card.parseTransitIdentity())
+        assertEquals(1, cardIso7816.applications.size)
+        assertEquals("androidhce", cardIso7816.applications[0].type)
+
+        // Load the card into the emulator
+        val vcard = VirtualISO7816Card(card)
+
+        // Try to dump the tag from the emulator
+        val rcard = ISO7816Card.dumpTag(vcard, MockFeedbackInterface.get())
+
+        // Check that we got an expected number of applications
+        assertEquals(cardIso7816.applications.size, rcard.applications.size)
+        assertEquals("androidhce", rcard.applications[0].type)
+        assertEquals(cardIso7816, rcard)
+
+        assertNull(rcard.parseTransitData())
+        assertNull(rcard.parseTransitIdentity())
     }
 }
