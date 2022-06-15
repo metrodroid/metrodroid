@@ -6,7 +6,14 @@ import java.util.*
 actual fun currencyNameBySymbol(symbol: String): String? =
     try {
         Currency.getInstance(symbol)?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // SDK >= 24 doesn't throw IllegalArgumentException for unknown currency codes, despite
+            // the documentation (still) saying it should:
+            // https://developer.android.com/reference/java/util/Currency#getInstance(java.lang.String)
+            //
+            // Thankfully its lies are easily exposed: unknown currencies have numericCode == 0.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && it.numericCode == 0) {
+                null
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 it.displayName
             } else {
                 it.currencyCode

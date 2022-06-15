@@ -86,7 +86,7 @@ class TransitCurrencyCommonTest:BaseInstrumentedTest() {
         assertEquals(actual=currencyNameByCode(840), expected="US Dollar")
         assertEquals(actual=currencyNameByCode(643), expected="Russian Ruble")
         assertEquals(actual=currencyNameByCode(5), expected=null)
-        assertEquals(actual=currencyNameBySymbol("AAA"), expected = null)
+        assertEquals(actual=currencyNameBySymbol("AQD"), expected = null)
     }
 
     @Test
