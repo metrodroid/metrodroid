@@ -48,7 +48,8 @@ import au.id.micolous.metrodroid.ui.ListItem
 @Parcelize
 data class HoloTransitData(
     private val mSerial: Int?,
-    private val mLastTransactionTimestamp: Int?, private val mManufacturingId: String?
+    private val mLastTransactionTimestamp: Int,
+    private val mManufacturingId: String,
 ) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>
@@ -57,13 +58,10 @@ data class HoloTransitData(
                 Localizer.localizeFormatted(R.string.last_transaction),
                 when (mLastTransactionTimestamp) {
                     0 -> Localizer.localizeFormatted(R.string.never)
-                    null -> Localizer.localizeFormatted(R.string.never)
                     else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))
                 }
             ),
-            ListItem(
-                R.string.manufacture_id,
-                mManufacturingId?.let { formatMfgId(mManufacturingId) })
+            ListItem(R.string.manufacture_id, mManufacturingId),
         )
 
     override val reason: Reason
@@ -90,12 +88,12 @@ data class HoloTransitData(
 
         private fun parse(card: DesfireCard): HoloTransitData? {
             val app = card.getApplication(APP_ID) ?: return null
-            val file1 = app.getFile(1)?.data
-            val serial = parseSerial(app)
-            val mfgId = (app.getFile(0)?.data?.convertBCDtoInteger(8, 3)
-                .toString() + app.getFile(0)?.data?.byteArrayToInt(0xb, 3).toString())
-            val lastTransactionTimestamp = file1?.byteArrayToInt(8, 4)
-            if (serial == null && lastTransactionTimestamp == null) return null
+            val file0 = app.getFile(0)?.data ?: return null
+            val file1 = app.getFile(1)?.data ?: return null
+            val serial = parseSerial(app) ?: return null
+
+            val mfgId = "1-001-${file0.convertBCDtoInteger(8, 3)}${file0.byteArrayToInt(0xb, 3)}-XA"
+            val lastTransactionTimestamp = file1.byteArrayToInt(8, 4)
 
             return HoloTransitData(
                 mSerial = serial,
@@ -121,12 +119,6 @@ data class HoloTransitData(
         private fun formatSerial(ser: Int?) =
             if (ser != null)
                 "31059300 1 ***** *${ser}"
-            else
-                null
-
-        private fun formatMfgId(mfgId: String?) =
-            if (mfgId != null)
-                "1-001-${mfgId}-XA"
             else
                 null
 

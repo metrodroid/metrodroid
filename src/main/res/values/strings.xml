@@ -1385,10 +1385,6 @@
     IDs" is enabled in the preferences. -->
     <string name="suica_area_line_station">Area %1$s, line %2$s, station %3$s</string>
 
-    <!--
-        Myki (Victoria, AU)
-        These are deliberately separated strings in order to match the terminology of the agency.
-    -->
     <string name="card_note_card_number_only">Only the card number can be read.</string>
 
     <!--
