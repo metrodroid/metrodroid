@@ -40,26 +40,31 @@ import au.id.micolous.metrodroid.ui.ListItem
 /**
  * Transit data type for HOLO card.
  *
- *
  * This is a very limited implementation of reading HOLO, because only
  * little data is stored on the card
- *
  *
  * Documentation of format: https://github.com/metrodroid/metrodroid/wiki/HOLO
  */
 @Parcelize
-data class HoloTransitData(private val mSerial: Int?,
-                                private val mLastTransactionTimestamp: Int?, private val mManufacturingId: String?) : SerialOnlyTransitData() {
+data class HoloTransitData(
+    private val mSerial: Int?,
+    private val mLastTransactionTimestamp: Int?, private val mManufacturingId: String?
+) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>
         get() = listOf(
-            ListItem(Localizer.localizeFormatted(R.string.last_transaction), when (mLastTransactionTimestamp) {
-                0 -> Localizer.localizeFormatted(R.string.never)
-                null -> Localizer.localizeFormatted(R.string.never)
-                else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))
-            }),
-            ListItem(R.string.manufacture_id, mManufacturingId?.let { formatMfgId(mManufacturingId)})
-            )
+            ListItem(
+                Localizer.localizeFormatted(R.string.last_transaction),
+                when (mLastTransactionTimestamp) {
+                    0 -> Localizer.localizeFormatted(R.string.never)
+                    null -> Localizer.localizeFormatted(R.string.never)
+                    else -> TimestampFormatter.dateTimeFormat(parseTime(mLastTransactionTimestamp))
+                }
+            ),
+            ListItem(
+                R.string.manufacture_id,
+                mManufacturingId?.let { formatMfgId(mManufacturingId) })
+        )
 
     override val reason: Reason
         get() = Reason.NOT_STORED
@@ -75,29 +80,32 @@ data class HoloTransitData(private val mSerial: Int?,
         private val TZ = MetroTimeZone.HONOLULU
 
         private val CARD_INFO = CardInfo(
-                name = NAME,
-                cardType = CardType.MifareDesfire,
-                imageId = R.drawable.holo_card,
-                locationId = R.string.location_oahu,
-                region = TransitRegion.USA,
-                resourceExtraNote = R.string.card_note_card_number_only)
+            name = NAME,
+            cardType = CardType.MifareDesfire,
+            imageId = R.drawable.holo_card,
+            locationId = R.string.location_oahu,
+            region = TransitRegion.USA,
+            resourceExtraNote = R.string.card_note_card_number_only
+        )
 
         private fun parse(card: DesfireCard): HoloTransitData? {
             val app = card.getApplication(APP_ID) ?: return null
             val file1 = app.getFile(1)?.data
             val serial = parseSerial(app)
-            val mfgId = (app.getFile(0)?.data?.convertBCDtoInteger(8, 3).toString() + app.getFile(0)?.data?.byteArrayToInt(0xb, 3).toString())
+            val mfgId = (app.getFile(0)?.data?.convertBCDtoInteger(8, 3)
+                .toString() + app.getFile(0)?.data?.byteArrayToInt(0xb, 3).toString())
             val lastTransactionTimestamp = file1?.byteArrayToInt(8, 4)
             if (serial == null && lastTransactionTimestamp == null) return null
 
             return HoloTransitData(
-                    mSerial = serial,
+                mSerial = serial,
                 mLastTransactionTimestamp = lastTransactionTimestamp,
-                mManufacturingId = mfgId)
+                mManufacturingId = mfgId
+            )
         }
 
         private fun parseSerial(app: DesfireApplication?) =
-                app?.getFile(0)?.data?.convertBCDtoInteger(0xe, 2)
+            app?.getFile(0)?.data?.convertBCDtoInteger(0xe, 2)
 
         object HoloTransitFactory : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = APP_ID in appIds
@@ -107,20 +115,20 @@ data class HoloTransitData(private val mSerial: Int?,
             override fun parseTransitData(card: DesfireCard) = parse(card)
 
             override fun parseTransitIdentity(card: DesfireCard) =
-                    TransitIdentity(NAME, formatSerial(parseSerial(card.getApplication(APP_ID))))
+                TransitIdentity(NAME, formatSerial(parseSerial(card.getApplication(APP_ID))))
         }
 
         private fun formatSerial(ser: Int?) =
-                if (ser != null)
-                    "31059300 1 ***** *${ser}"
-                else
-                    null
+            if (ser != null)
+                "31059300 1 ***** *${ser}"
+            else
+                null
 
         private fun formatMfgId(mfgId: String?) =
-                if (mfgId != null)
-                    "1-001-${mfgId}-XA"
-                else
-                    null
+            if (mfgId != null)
+                "1-001-${mfgId}-XA"
+            else
+                null
 
         private fun parseTime(date: Int) = Epoch.utc(1970, TZ).seconds(date.toLong())
     }
