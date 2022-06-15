@@ -197,9 +197,12 @@ class ImmutableByteArray private constructor(
     }
 
     fun sliceOffLenSafe(off: Int, len: Int): ImmutableByteArray? {
-        if (off < 0 || len < 0 || off >= size)
+        if (off < 0 || len < 0 || off > size)
             return null
-        return sliceOffLen(off, minOf(len, size - off))
+        val safeLen = minOf(len, size - off)
+        if (safeLen == 0)
+            return empty()
+        return sliceOffLen(off, safeLen)
     }
 
     fun last() = mData.last()

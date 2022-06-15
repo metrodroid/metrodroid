@@ -89,4 +89,16 @@ class BERTLVTest {
         // Should fail
         assertNull(ISO7816TLV.findBERTLV(d, "51", false))
     }
+
+    @Test
+    fun testZeroLengthAtEnd() {
+        // tag 50 (parent, definite short)
+        // -> tag 51: "hello world"
+        // -> tag 52: (zero bytes at end of value)
+        val d = ImmutableByteArray.fromHex("5010510b68656c6c6f20776f726c645201")
+        val e = ImmutableByteArray.fromASCII("hello world")
+
+        assertEquals(e, ISO7816TLV.findBERTLV(d, "51", false))
+        assertEquals(ImmutableByteArray.empty(), ISO7816TLV.findBERTLV(d, "52", false))
+    }
 }

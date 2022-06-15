@@ -105,7 +105,7 @@ data class FelicaCard(
         s[0].toInt() == 0)
 
     private fun getVersion(b: ImmutableByteArray, off: Int): Int? {
-        val s =  b.sliceOffLenSafe(off, 2) ?: return null
+        val s = b.sliceOffLenSafe(off, 2) ?: return null
         return s.reverseBuffer().convertBCDtoInteger() % 1000
     }
 
@@ -134,7 +134,7 @@ data class FelicaCard(
                 return null
             }
 
-            return 0.rangeTo(count).mapNotNull { i ->
+            return 0.until(count).mapNotNull { i ->
                 getVersion(s, (2 * i) + 4)
             }.toList()
         }
