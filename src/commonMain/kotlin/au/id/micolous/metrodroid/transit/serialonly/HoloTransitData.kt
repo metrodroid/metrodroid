@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
@@ -77,7 +78,8 @@ data class HoloTransitData(
 
         private val TZ = MetroTimeZone.HONOLULU
 
-        private val CARD_INFO = CardInfo(
+        @VisibleForTesting
+        val CARD_INFO = CardInfo(
             name = NAME,
             cardType = CardType.MifareDesfire,
             imageId = R.drawable.holo_card,
