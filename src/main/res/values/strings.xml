@@ -179,6 +179,7 @@
     <string name="subscription_cost">Cost</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
+    <string name="never">Never</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="keys_loaded">Encryption keys for this card are loaded.</string>
     <string name="load_keys">Load Keys</string>
@@ -481,6 +482,7 @@
 
     <string name="manufacture_week">Week of manufacture</string>
     <string name="manufacture_year">Year of manufacture</string>
+    <string name="manufacture_id">Manufacturing ID</string>
     <!-- Translators: This is data sent by the card in response to an ISO 14443 SELECT command.
     Do not translate "SAK". -->
     <string name="select_acknowledge">SAK (Select Acknowledge)</string>
@@ -823,6 +825,8 @@
     <string name="location_moscow">Moscow, Russia</string>
     <string name="location_nagoya">Nagoya, Japan</string>
     <string name="location_nizhniy_novgorod">Nizhniy Novgorod, Russia</string>
+    <!-- Translators: "Oʻahu" refers to the island of Oʻahu in the state of Hawaii, not a city -->
+    <string name="location_oahu">O&#x02bb;ahu, HI, USA</string>
     <string name="location_orenburg">Orenburg, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_otago">Otago, New Zealand</string>
@@ -1381,10 +1385,6 @@
     IDs" is enabled in the preferences. -->
     <string name="suica_area_line_station">Area %1$s, line %2$s, station %3$s</string>
 
-    <!--
-        Myki (Victoria, AU)
-        These are deliberately separated strings in order to match the terminology of the agency.
-    -->
     <string name="card_note_card_number_only">Only the card number can be read.</string>
 
     <!--

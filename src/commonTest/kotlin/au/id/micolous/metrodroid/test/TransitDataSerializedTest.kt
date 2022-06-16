@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import au.id.micolous.metrodroid.transit.rkf.RkfLookup
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
 import au.id.micolous.metrodroid.transit.selecta.SelectaFranceTransitData
+import au.id.micolous.metrodroid.transit.serialonly.HoloTransitData
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
@@ -36,6 +37,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.modules.SerializersModule
 import kotlin.reflect.KClass
 import kotlin.test.*
 
@@ -201,6 +203,10 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
     companion object {
         val jsonNoDefault = Json {
             encodeDefaults = false
+            serializersModule = SerializersModule {
+                polymorphic(TransitBalance::class, TransitBalanceStored::class,
+                    TransitBalanceStored.serializer())
+            }
         }
         private val testcases = listOf(
             TestCase("7eb2258a.mfd", "parsed/7eb2258a.json", BilheteUnicoSPTransitData::class, CardType.MifareClassic, BilheteUnicoSPTransitData.FACTORY, BilheteUnicoSPTransitData.CARD_INFO, InputType.MFC, manufFile = "parsed/7eb2258a_manuf.json"),
@@ -333,6 +339,10 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 MobibTransitData::class, CardType.ISO7816, MobibTransitData.FACTORY,
                 MobibTransitData.CARD_INFO, InputType.JSON, null,
                 "parsed/mobib_blank_raw.json", "parsed/mobib_blank_manuf.json"
+            ),
+            TestCase("holo/unused.json", "parsed/holo-unused.json",
+                HoloTransitData::class, CardType.MifareDesfire,
+                HoloTransitData.Companion.HoloTransitFactory, HoloTransitData.CARD_INFO
             )
         )
     }
