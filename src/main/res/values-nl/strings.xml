@@ -1284,4 +1284,7 @@
     <string name="emv_fdda_transaction_qualifiers">fDDA-transactiekwalificaties</string>
     <string name="emv_fdda_rfu">fDDA - RFU</string>
     <string name="emv_fdda_tail">fDDA - resterende bytes</string>
+    <string name="never">Nooit</string>
+    <string name="manufacture_id">Productie-id</string>
+    <string name="location_oahu">Oahu, HI, VS</string>
 </resources>
