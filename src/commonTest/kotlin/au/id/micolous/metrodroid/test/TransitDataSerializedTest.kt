@@ -36,6 +36,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.modules.SerializersModule
 import kotlin.reflect.KClass
 import kotlin.test.*
 
@@ -201,6 +202,10 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
     companion object {
         val jsonNoDefault = Json {
             encodeDefaults = false
+            serializersModule = SerializersModule {
+                polymorphic(TransitBalance::class, TransitBalanceStored::class,
+                    TransitBalanceStored.serializer())
+            }
         }
         private val testcases = listOf(
             TestCase("7eb2258a.mfd", "parsed/7eb2258a.json", BilheteUnicoSPTransitData::class, CardType.MifareClassic, BilheteUnicoSPTransitData.FACTORY, BilheteUnicoSPTransitData.CARD_INFO, InputType.MFC, manufFile = "parsed/7eb2258a_manuf.json"),
