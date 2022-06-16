@@ -1281,4 +1281,7 @@
     <string name="emv_fdda_tail">fDDA kalan baytlar</string>
     <string name="emv_card_fdda">fDDA kartı kimlik doğrulamayla ilgili verileri</string>
     <string name="emv_fdda_unpredictable_number">tahmin edilemez fDDA numarası</string>
+    <string name="never">Hiçbir zaman</string>
+    <string name="manufacture_id">Üretim kimliği</string>
+    <string name="location_oahu">Oʻahu, HI, ABD</string>
 </resources>
