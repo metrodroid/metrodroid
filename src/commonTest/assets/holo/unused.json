@@ -5,7 +5,7 @@
     "tz": "Australia/Brisbane"
   },
   "mifareDesfire": {
-    "manufacturingData": "",
+    "manufacturingData": "0420c41461c824a2cc34e3d04524d45565d86400420c41461c824a2c",
     "applications": {
       "6296562": {
         "files": {
