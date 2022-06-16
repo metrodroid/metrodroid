@@ -1345,4 +1345,7 @@
     <string name="emv_fdda_tail">בתים נותרים ב־fDDA</string>
     <string name="emv_fdda_transaction_qualifiers">מגדירי עסקה ב־fDDA</string>
     <string name="emv_fdda_rfu">שמור לשימוש עתידי (RFU) ב־fDDA</string>
+    <string name="manufacture_id">מזהה ייצור</string>
+    <string name="location_oahu">אואהו, הוואי, ארה״ב</string>
+    <string name="never">לעולם לא</string>
 </resources>
