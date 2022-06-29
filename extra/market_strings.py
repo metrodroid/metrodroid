@@ -259,8 +259,9 @@ def show_changelog(version: Optional[int] = None) -> None:
     raise KeyError('Could not find specific English notes for that version')
 
   print(f'## Release notes for version {version}')
-
-  print(f'<en> {bool_to_emoji(len(english_notes) <= CHANGELOG_MAX_LENGTH)}')
+  ok = bool_to_emoji(len(english_notes) <= CHANGELOG_MAX_LENGTH)
+  print(f'## {ok} {len(english_notes)}/{CHANGELOG_MAX_LENGTH} chars')
+  print(f'<en>')
   print(english_notes)
   print('</en>')
   print()
@@ -275,8 +276,9 @@ def show_changelog(version: Optional[int] = None) -> None:
     if notes:
       if not found_version:
         print(f'## Generic changelog for {lang_code}:')
-      print(f'<{lang_code}> '
-            f'{bool_to_emoji(len(notes) <= CHANGELOG_MAX_LENGTH)}')
+      ok = bool_to_emoji(len(notes) <= CHANGELOG_MAX_LENGTH)
+      print(f'## {ok} {len(notes)} / {CHANGELOG_MAX_LENGTH} chars')
+      print(f'<{lang_code}>')
       print(notes)
       print(f'</{lang_code}>')
     else:
