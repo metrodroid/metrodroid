@@ -1,7 +1,7 @@
 /*
  * BaseInstrumentedTestPlatform.kt
  *
- * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2022 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,6 +52,7 @@ actual abstract class BaseInstrumentedTestPlatform {
      */
     actual fun setLocale(languageTag: String) {
         LocaleTools.setLocale(languageTag, context.resources)
+        setAndroidLanguage(languageTag)
     }
 
     /**
@@ -62,12 +63,10 @@ actual abstract class BaseInstrumentedTestPlatform {
      *
      * @param languageTag ITEF BCP-47 language tag string
      */
-    @Suppress("unused") // Used by ExportHelperTest
     fun setAndroidLanguage(languageTag: String?) {
         val l = languageTag?.let { LocaleTools.compatLocaleForLanguageTag(it) }
         LocaleTools.setResourcesLocale(l, MetrodroidApplication.instance.resources)
     }
-
 
     actual fun loadAssetSafe(path: String) : Input? = loadAssetStream(path)?.let {
         JavaStreamInput(it)
