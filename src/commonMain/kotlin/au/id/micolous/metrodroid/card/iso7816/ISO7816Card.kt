@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.androidhce.AndroidHceApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
@@ -125,11 +126,12 @@ data class ISO7816Card (
     companion object {
         private const val TAG = "ISO7816Card"
         val factories = listOf(
+                AndroidHceApplication.FACTORY,
                 CalypsoApplication.FACTORY,
                 KROCAPConfigDFApplication.FACTORY,
                 KSX6924Application.FACTORY,
                 ChinaCard.FACTORY,
-		EmvFactory())
+		        EmvFactory())
 
         /**
          * Dumps a ISO7816 tag in the field.
@@ -152,10 +154,9 @@ data class ISO7816Card (
                 feedbackInterface.updateProgressBar(0, 1)
 
                 /*
-             * It's tempting to try to iterate over the apps on the card.
-             * Unfortunately many cards don't reply to iterating requests
-             *
-             */
+                 * It's tempting to try to iterate over the apps on the card.
+                 * Unfortunately many cards don't reply to iterating requests.
+                 */
 
                 // CEPAS specification makes selection by AID optional. I couldn't find an AID that
                 // works on my cards. But CEPAS needs to have CEPAS app implicitly selected,

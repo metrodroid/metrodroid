@@ -1,7 +1,8 @@
 /*
  * EmvCard.kt
  *
- * Copyright 2018 Google
+ * Copyright 2018-2022 Google
+ * Copyright 2019-2022 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 package au.id.micolous.metrodroid.card.emv
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
+import au.id.micolous.metrodroid.card.androidhce.AndroidHceApplication
 import au.id.micolous.metrodroid.card.china.ChinaRegistry
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
@@ -129,11 +131,17 @@ class EmvFactory : ISO7816ApplicationFactory {
         presentAids: List<ImmutableByteArray?>
     ): List<ISO7816Application>? {
         feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_emv))
-        if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(presentAids.filterNotNull().toSet()).isEmpty()) {
+        val aids = presentAids.filterNotNull().toSet()
+        if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(aids).isEmpty()) {
             feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
         }
+        val isAndroidHCE = AndroidHceApplication.FACTORY.applicationNames.toSet().intersect(aids).isNotEmpty()
         feedbackInterface.updateProgressBar(0, 32)
-        capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
+        // Skip dumping SFIs for Android HCE. Google Pay doesn't return any SFIs in the EMV anchor
+        // application, and enforces an error budget (after which it disconnects).
+        if (!isAndroidHCE) {
+            capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
+        }
 
         val fci = capsule.appFci
 
@@ -158,7 +166,13 @@ class EmvFactory : ISO7816ApplicationFactory {
                 val mainAppFci = protocol.selectByNameOrNull(aid)
                 val mainAppCapsule = ISO7816ApplicationMutableCapsule(appFci = mainAppFci,
                         appName = aid)
-                mainAppCapsule.dumpAllSfis(protocol, feedbackInterface, 32, 64)
+                if (isAndroidHCE) {
+                    // Google Pay doesn't have any data except in SFI 1, and brute force uses up
+                    // our error budget.
+                    mainAppCapsule.dumpFileSFI(protocol, 1, 0)
+                } else {
+                    mainAppCapsule.dumpAllSfis(protocol, feedbackInterface, 32, 64)
+                }
                 val gpoResponse = readGpo(protocol, mainAppFci)
 
                 val dr = mutableMapOf<String, ImmutableByteArray>()
@@ -204,8 +218,8 @@ class EmvFactory : ISO7816ApplicationFactory {
                 TAG_TRANSACTION_DATE -> ImmutableByteArray.fromHex("180101")
                 // Transaction Type
                 TAG_TRANSACTION_TYPE -> ImmutableByteArray(1)
-                // Amount, Authorised: 1 cent
-                TAG_AMOUNT_AUTHORISED -> ImmutableByteArray.fromHex("000000000001")
+                // Amount, Authorised: 0 cents
+                TAG_AMOUNT_AUTHORISED -> ImmutableByteArray(6)
                 // Amount, Other: 0 cents
                 TAG_AMOUNT_OTHER -> ImmutableByteArray(6)
                 // Country: USA

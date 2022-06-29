@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.card.androidhce.AndroidHceApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
@@ -528,6 +529,7 @@ class ISO7816ApplicationXmlAdapter(
 
     fun convert(): ISO7816Application =
         when (type) {
+            "androidhce" -> AndroidHceApplication(generic = makeCapsule())
             "calypso" -> CalypsoApplication(generic = makeCapsule())
             "cepas" -> CEPASApplication(generic = makeCapsule(),
                     histories = histories, purses = purses)

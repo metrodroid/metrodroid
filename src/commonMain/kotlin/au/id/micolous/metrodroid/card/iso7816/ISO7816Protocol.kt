@@ -102,9 +102,12 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
      * @param p2         Reference byte completing the INS.
      * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
-     * @throws ISOFileNotFoundException If a requested file can not be found
+     * @throws ISOClassNotSupported If an instruction class is not supported by the card
      * @throws ISOEOFException If a requested record can not be found
+     * @throws ISOFileNotFoundException If a requested file can not be found
+     * @throws ISOInstructionCodeNotSupported If an instruction code is not supported by the card
      * @throws ISONoCurrentEF If the command is not allowed, because there is no selected EF
+     * @throws ISOSecurityStatusNotSatisfied If a command does not meet security restrictions
      * @throws CardTransceiveException If there is a communication error
      * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.
@@ -120,10 +123,9 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         if (sw1 == ERROR_WRONG_LENGTH && sw2 != length) {
             Log.d(TAG, "Wrong length, trying with corrected length")
             recvBuffer = sendRequestReal(cla, ins, p1, p2, sw2, parameters)
+            sw1 = recvBuffer[recvBuffer.size - 2]
+            sw2 = recvBuffer[recvBuffer.size - 1]
         }
-
-        sw1 = recvBuffer[recvBuffer.size - 2]
-        sw2 = recvBuffer[recvBuffer.size - 1]
 
         if (sw1 != STATUS_OK) {
             when (sw1) {
@@ -133,6 +135,10 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                     ->
                         // Emitted by Android HCE when doing a CEPAS probe
                         throw ISONoCurrentEF()
+                    CNA_SECURITY_STATUS_NOT_SATISFIED
+                    ->
+                        // Emitted by CEPAS on SFI=3 before app selection
+                        throw ISOSecurityStatusNotSatisfied()
                 }
 
                 ERROR_WRONG_PARAMETERS // Wrong Parameters P1 - P2
@@ -142,6 +148,11 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
                     WP_RECORD_NOT_FOUND // Record not found
                     -> throw ISOEOFException()
                 }
+
+                ERROR_INS_NOT_SUPPORTED_OR_INVALID // Instruction code not supported or invalid
+                -> if (sw2 == 0.toByte()) throw ISOInstructionCodeNotSupported()
+                ERROR_CLASS_NOT_SUPPORTED
+                -> if (sw2 == 0.toByte()) throw ISOClassNotSupported()
             }
 
             // we get error?
@@ -254,7 +265,13 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         @VisibleForTesting
         const val ERROR_WRONG_LENGTH = 0x6C.toByte()
         @VisibleForTesting
+        const val ERROR_INS_NOT_SUPPORTED_OR_INVALID = 0x6D.toByte()
+        @VisibleForTesting
+        const val ERROR_CLASS_NOT_SUPPORTED = 0x6E.toByte()
+        @VisibleForTesting
         const val CNA_NO_CURRENT_EF = 0x86.toByte()
+        @VisibleForTesting
+        const val CNA_SECURITY_STATUS_NOT_SATISFIED = 0x82.toByte()
         @VisibleForTesting
         const val WP_FILE_NOT_FOUND = 0x82.toByte()
         @VisibleForTesting

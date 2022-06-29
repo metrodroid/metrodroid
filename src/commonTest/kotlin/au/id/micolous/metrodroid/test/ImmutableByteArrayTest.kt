@@ -202,17 +202,35 @@ class ImmutableByteArrayTest : BaseInstrumentedTest() {
         assertFails {
             ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(3, 7)
         }
-        assertFails {
-            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(7, 1)
-        }
+
+        // Invalid inputs should return null
         assertEquals(null,
             ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(-1, 3))
         assertEquals(null,
             ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(3, -1))
-        assertEquals(ImmutableByteArray.fromASCII("DE"),
-            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(3, 7))
+
+        // Starting from beyond the end of input should return null
+        assertEquals(null,
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(7, 0))
+        assertFails {
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(7, 1)
+        }
         assertEquals(null,
             ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(7, 1))
+
+        // Slice length that exceeds the length of the buffer should be truncated
+        assertEquals(ImmutableByteArray.fromASCII("DE"),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(3, 7))
+
+        // Slicing 0 inside the valid range should return an empty array
+        assertEquals(ImmutableByteArray.empty(),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(0, 0))
+        assertEquals(ImmutableByteArray.empty(),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(0, 0))
+        assertEquals(ImmutableByteArray.empty(),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLen(5, 0))
+        assertEquals(ImmutableByteArray.empty(),
+            ImmutableByteArray.fromASCII("ABCDE").sliceOffLenSafe(5, 0))
     }
 
     @Test

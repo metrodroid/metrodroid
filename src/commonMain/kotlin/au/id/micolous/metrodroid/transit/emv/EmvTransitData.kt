@@ -1,8 +1,8 @@
 /*
  * EmvTransitData.kt
  *
- * Copyright 2019 Google
- * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019-2022 Google
+ * Copyright 2019-2022 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRACK2_EQUIV
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAGMAP
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME1
 import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_NAME2
+import au.id.micolous.metrodroid.transit.emv.EmvData.TAG_TRACK2
 import au.id.micolous.metrodroid.transit.emv.EmvLogEntry.Companion.parseEmvTrip
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
@@ -63,7 +64,10 @@ object EmvTransitFactory : CardTransitFactory<EmvCardMain> {
 
     private fun findT2Data(tlvs: List<ImmutableByteArray>): ImmutableByteArray? {
         for (tlv in tlvs) {
-            val t2 = ISO7816TLV.findBERTLV(tlv, TAG_TRACK2_EQUIV, false)
+            val t2e = ISO7816TLV.findBERTLV(tlv, TAG_TRACK2_EQUIV, false)
+            if (t2e != null)
+                return t2e
+            val t2 = ISO7816TLV.findBERTLV(tlv, TAG_TRACK2, false)
             if (t2 != null)
                 return t2
         }
