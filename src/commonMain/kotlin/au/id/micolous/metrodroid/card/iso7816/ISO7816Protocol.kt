@@ -102,9 +102,12 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
      * @param p2         Reference byte completing the INS.
      * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
-     * @throws ISOFileNotFoundException If a requested file can not be found
+     * @throws ISOClassNotSupported If an instruction class is not supported by the card
      * @throws ISOEOFException If a requested record can not be found
+     * @throws ISOFileNotFoundException If a requested file can not be found
+     * @throws ISOInstructionCodeNotSupported If an instruction code is not supported by the card
      * @throws ISONoCurrentEF If the command is not allowed, because there is no selected EF
+     * @throws ISOSecurityStatusNotSatisfied If a command does not meet security restrictions
      * @throws CardTransceiveException If there is a communication error
      * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.

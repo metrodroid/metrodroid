@@ -196,6 +196,19 @@ class ImmutableByteArray private constructor(
         }
     }
 
+    /**
+     * Returns a slice of the buffer, starting at [off], for up to [len] bytes (such that `off +
+     * len <= size`). This attempts to slice the buffer in a "safe" way (not returning exceptions),
+     * but returns `null` for invalid parameters (array out of bounds).
+     *
+     * @param off Starting offset of the buffer to read from. If `off < 0` or `off > size`, this
+     * method returns `null`.
+     *
+     * @param len Number of bytes to read from the buffer starting at [off]. If `len < 0`, this
+     * returns `null`. If `off + len > size`, [len] is truncated to not exceed the buffer.
+     *
+     * @returns A slice of the buffer in that range.
+     */
     fun sliceOffLenSafe(off: Int, len: Int): ImmutableByteArray? {
         if (off < 0 || len < 0 || off > size)
             return null
