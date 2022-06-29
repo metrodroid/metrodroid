@@ -23,6 +23,8 @@ package au.id.micolous.metrodroid.util
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.PushbackInputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 
 /**
  * Gets an error message for a [Throwable], preferring a localized message if available.
@@ -75,5 +77,30 @@ class JavaStreamInput (private val stream: InputStream): Input {
 class JavaStreamOutput (private val stream: OutputStream): Output {
     override fun write(b: ByteArray) {
         stream.write(b)
+    }
+}
+
+class ZipIterator(private val zi: ZipInputStream)
+    : Iterator<Pair<ZipEntry, InputStream>> {
+    constructor(stream: InputStream) : this(ZipInputStream(stream))
+
+    private var needAdvance = true
+    private var nextEntry: ZipEntry? = null
+    override fun hasNext(): Boolean {
+        advance()
+        return nextEntry != null
+    }
+
+    override fun next(): Pair<ZipEntry, InputStream> {
+        advance()
+        needAdvance = true
+        return Pair(nextEntry!!, zi)
+    }
+
+    private fun advance() {
+        if (!needAdvance)
+            return
+        needAdvance = false
+        nextEntry = zi.nextEntry
     }
 }

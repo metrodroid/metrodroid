@@ -1,7 +1,8 @@
 /*
- * IteratorTransformer.kt
+ * IteratorUtils.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2021 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.serializers
+
+package au.id.micolous.metrodroid.util
+
+class FlatIterator<T>(private val outerIterator: Iterator<Iterator<T>>)
+        : Iterator<T> {
+            private var innerIterator: Iterator<T>? = null
+    override fun hasNext(): Boolean {
+        ensureInner()
+        return innerIterator != null
+    }
+
+    override fun next(): T {
+        ensureInner()
+        return innerIterator!!.next()
+    }
+
+    private fun ensureInner() {
+        while (innerIterator?.hasNext() != true) {
+            if (!outerIterator.hasNext()) {
+                innerIterator = null
+                return
+            }
+            innerIterator = outerIterator.next()
+        }
+    }
+}
+
+fun <T> Iterator<Iterator<T>>.flatten() = FlatIterator(this)
 
 /**
  * IteratorTransformer converts an [Iterator] of type [T] into one of type [R].
@@ -29,7 +57,7 @@ package au.id.micolous.metrodroid.serializers
  * @param R The destination type
  */
 class IteratorTransformer<T, out R>(
-        private val iterator: Iterator<T>,
+    private val iterator: Iterator<T>,
     private val transform: (T) -> R
 ) : Iterator<R> {
     override fun hasNext() = iterator.hasNext()
@@ -38,11 +66,13 @@ class IteratorTransformer<T, out R>(
 
 // Same but filter out nulls
 class IteratorTransformerNotNull<T, out R>(
-        private val iterator: Iterator<T>,
-        private val transform: (T) -> R?
+    private val iterator: Iterator<T>,
+    private val transform: (T) -> R?
 ) : Iterator<R> {
     private var peek: R? = null
     override fun hasNext(): Boolean {
+        if (peek != null)
+            return true
         while (iterator.hasNext()) {
             peek = transform(iterator.next())
             if (peek != null)
@@ -53,6 +83,11 @@ class IteratorTransformerNotNull<T, out R>(
     override fun next(): R {
         if (peek == null)
             hasNext()
-        return peek!!
+        val ret = peek!!
+        peek = null
+        return ret
     }
 }
+
+fun <T, R> Iterator<T>.map(transform: (T) -> R) = IteratorTransformer(this, transform)
+fun <T, R> Iterator<T>.mapNotNull(transform: (T) -> R) = IteratorTransformerNotNull(this, transform)
