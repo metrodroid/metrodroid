@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- A resource file is needed to trigger localised station names for Touch N Go. -->
+</resources>
