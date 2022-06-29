@@ -142,13 +142,13 @@ def android_resource_unescape(value: Optional[str]) -> Optional[str]:
 def show_language(lang: Optional[Text] = None) -> None:
   """Shows Market strings for a given language.
 
-    Args:
-        lang: language code to display strings for, or None for the default
-              language.
-    Raises:
-        ValueError: on invalid input
-        IOError: when the market resource file cannot be loaded
-    """
+  Args:
+    lang: language code to display strings for, or None for the default
+          language.
+  Raises:
+    ValueError: on invalid input
+    IOError: when the market resource file cannot be loaded
+  """
   market_path = DEFAULT_MARKET
 
   if lang:
@@ -196,15 +196,15 @@ def get_changelog_for_version(
     version: Optional[int] = None) -> Tuple[Optional[int], Optional[Text]]:
   """Gets the changelog for a given version code.
 
-    Args:
-        path: path to market.xml file
-        version: the version to fetch, or None for the latest
+  Args:
+    path: path to market.xml file
+    version: the version to fetch, or None for the latest
 
-    Returns:
-        tuple of (version_code, notes).
-        If a generic changelog was returned, version_code = None.
-        If no notes are available, notes = None.
-    """
+  Returns:
+    tuple of (version_code, notes).
+    If a generic changelog was returned, version_code = None.
+    If no notes are available, notes = None.
+  """
 
   version_tag = None if version is None else (CHANGELOG + str(version))
 
@@ -243,13 +243,12 @@ def get_changelog_for_version(
 def show_changelog(version: Optional[int] = None) -> None:
   """Shows the changelog for each language.
 
-    The default changelog will be shown if the latest version does not have
-    an available changelog.
+  The default changelog will be shown if the latest version does not have
+  an available changelog.
 
-    Args:
-        version: the version to display, or None for the latest.
-
-    """
+  Args:
+    version: the version to display, or None for the latest.
+  """
   # Figure out what the changelog is in English -- this gives the latest
   # version.
 
