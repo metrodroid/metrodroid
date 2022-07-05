@@ -1284,4 +1284,11 @@
     <string name="never">Hiçbir zaman</string>
     <string name="manufacture_id">Üretim kimliği</string>
     <string name="location_oahu">Oʻahu, HI, ABD</string>
+    <string name="tmoney_usercode_disabled">Engelli</string>
+    <string name="tmoney_usercode_bus">Otobüs (yol ücreti)</string>
+    <string name="tmoney_usercode_lorry">Kamyon (yol ücreti)</string>
+    <string name="tmoney_disrate_veteran_basic">Emekli, temel</string>
+    <string name="tmoney_ccode_woori">Woori Bank</string>
+    <string name="tmoney_usercode_senior">Yaşlı</string>
+    <string name="tmoney_disrate_veteran_companion">Emekli, refakatçi</string>
 </resources>
