@@ -39,7 +39,8 @@ object KSX6924PurseInfoDefaultResolver : KSX6924PurseInfoResolver()
  * The "default" implementation is [KSX6924PurseInfoDefaultResolver], which uses the default
  * implementations in this abstract class.
  *
- * For an example of a card-specific implementation, see `TMoneyPurseInfoResolver`.
+ * For an example of a card-specific implementation, see
+ * [au.id.micolous.metrodroid.transit.tmoney.TMoneyPurseInfoResolver].
  *
  * See https://github.com/micolous/metrodroid/wiki/T-Money for more information about these fields.
  */
