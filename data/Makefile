@@ -40,6 +40,7 @@ WEB_TARGETS := \
 	mobib \
 	ricaricami \
 	seq_go \
+	smartrider \
 	tfi_leap
 
 ALL_TARGETS := $(HERMETIC_TARGETS) $(WEB_TARGETS)

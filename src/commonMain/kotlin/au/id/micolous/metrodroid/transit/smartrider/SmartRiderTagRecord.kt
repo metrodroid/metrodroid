@@ -22,6 +22,7 @@ import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
 
@@ -58,7 +59,14 @@ class SmartRiderTagRecord(
         get() = listOf(mRoute)
 
     override val station: Station?
-        get() = null
+        get() = when {
+            mStopId == 0 -> null
+            mSmartRiderType == SmartRiderType.SMARTRIDER && mode == Trip.Mode.TRAIN ->
+                StationTableReader.getStation(SMARTRIDER_STR, mStopId)
+            // TODO: Handle other modes of transit. Stops there are a combination of the
+            // route + Stop (ie: route A stop 3 != route B stop 3)
+            else -> Station.unknown(mStopId)
+        }
 
     override fun shouldBeMerged(other: Transaction): Boolean =
         // Are the two trips within 90 minutes of each other (sanity check)

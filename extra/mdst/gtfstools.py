@@ -25,6 +25,7 @@ import zipfile, csv, codecs
 
 class GtfsDialect(csv.excel):
   lineterminator = '\n'
+  skipinitialspace = True
 
 class Gtfs(object):
   def __init__(self, gtfs_f):
@@ -33,6 +34,7 @@ class Gtfs(object):
   def open(self, filename):
     return csv.DictReader(
       codecs.getreader('utf-8-sig')(self.gtfs_zip.open(filename)),
+      dialect=GtfsDialect,
       restval=None)
 
   def infolist(self):

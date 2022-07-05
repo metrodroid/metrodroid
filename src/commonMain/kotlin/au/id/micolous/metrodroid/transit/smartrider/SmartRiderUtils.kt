@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.Trip
 
 val SMARTRIDER_EPOCH = Epoch.utc(2000, MetroTimeZone.PERTH, -8 * 60)
 val MYWAY_EPOCH = Epoch.utc(2000, MetroTimeZone.SYDNEY, -11 * 60) // Canberra
+val SMARTRIDER_STR = "smartrider"
 
 enum class SmartRiderType constructor(val friendlyName: StringResource) {
     UNKNOWN(R.string.unknown),

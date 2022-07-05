@@ -1,0 +1,7 @@
+The SmartRider stop database used in this software contains information derived from Transperth's GTFS feed provided by the Public Transport Authority.
+
+You may obtain a copy of the raw GTFS data free of charge, and its full license at:
+
+   https://www.transperth.wa.gov.au/About/Spatial-Data-Access
+
+Stop mapping information is available in Metrodroid's source repository.
