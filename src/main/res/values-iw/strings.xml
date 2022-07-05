@@ -1348,4 +1348,11 @@
     <string name="manufacture_id">מזהה ייצור</string>
     <string name="location_oahu">אואהו, הוואי, ארה״ב</string>
     <string name="never">לעולם לא</string>
+    <string name="tmoney_usercode_senior">אזרח ותיק</string>
+    <string name="tmoney_usercode_disabled">בעל נכות</string>
+    <string name="tmoney_usercode_bus">אוטובוס (כביש אגרה)</string>
+    <string name="tmoney_disrate_veteran_basic">גמלאי, בסיסי</string>
+    <string name="tmoney_disrate_veteran_companion">גמלאי, מלווה</string>
+    <string name="tmoney_ccode_woori">וורי בנק</string>
+    <string name="tmoney_usercode_lorry">משאית (כביש אגרה)</string>
 </resources>
