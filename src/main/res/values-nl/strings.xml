@@ -1287,4 +1287,11 @@
     <string name="never">Nooit</string>
     <string name="manufacture_id">Productie-id</string>
     <string name="location_oahu">Oahu, HI, VS</string>
+    <string name="tmoney_disrate_veteran_companion">Veteraan (begeleider)</string>
+    <string name="tmoney_usercode_lorry">Vrachtwagen (tol)</string>
+    <string name="tmoney_ccode_woori">Wooribank</string>
+    <string name="tmoney_usercode_bus">Bus (tol)</string>
+    <string name="tmoney_usercode_senior">65+</string>
+    <string name="tmoney_usercode_disabled">Gehandicapt</string>
+    <string name="tmoney_disrate_veteran_basic">Veteraan</string>
 </resources>
