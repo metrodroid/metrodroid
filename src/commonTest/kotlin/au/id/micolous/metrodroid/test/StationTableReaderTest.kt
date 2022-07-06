@@ -96,7 +96,7 @@ class StationTableReaderTest : BaseInstrumentedTest() {
 
     @Test
     fun testNotices() {
-        assertEquals(13, StationTableReader.allNotices.size)
+        assertEquals(14, StationTableReader.allNotices.size)
         assertTrue(StationTableReader.allNotices.any { it.contains("Translink") })
     }
 
