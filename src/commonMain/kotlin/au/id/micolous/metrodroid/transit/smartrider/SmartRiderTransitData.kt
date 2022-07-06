@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.HashUtils
+import au.id.micolous.metrodroid.util.ifTrue
 
 /**
  * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)
@@ -89,14 +90,18 @@ class SmartRiderTransitData(
             ListItem(
                 R.string.ticket_type, mTokenType.toString()
             ),
-            ListItem(
-                R.string.smartrider_autoload_threshold,
-                TransitCurrency.AUD(mAutoloadThreshold).formatCurrencyString(true)
-            ).takeIf { mSmartRiderType == SmartRiderType.SMARTRIDER },
-            ListItem(
-                R.string.smartrider_autoload_value,
-                TransitCurrency.AUD(mAutoloadValue).formatCurrencyString(true)
-            ).takeIf { mSmartRiderType == SmartRiderType.SMARTRIDER },
+            (mSmartRiderType == SmartRiderType.SMARTRIDER).ifTrue {
+                ListItem(
+                    R.string.smartrider_autoload_threshold,
+                    TransitCurrency.AUD(mAutoloadThreshold).formatCurrencyString(true)
+                )
+            },
+            (mSmartRiderType == SmartRiderType.SMARTRIDER).ifTrue {
+                ListItem(
+                    R.string.smartrider_autoload_value,
+                    TransitCurrency.AUD(mAutoloadValue).formatCurrencyString(true)
+                )
+            },
         )
 
     companion object {
