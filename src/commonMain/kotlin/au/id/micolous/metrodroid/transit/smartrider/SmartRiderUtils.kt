@@ -20,14 +20,20 @@ package au.id.micolous.metrodroid.transit.smartrider
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Trip
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.Month
 
 val SMARTRIDER_EPOCH = Epoch.utc(2000, MetroTimeZone.PERTH, -8 * 60)
 val MYWAY_EPOCH = Epoch.utc(2000, MetroTimeZone.SYDNEY, -11 * 60) // Canberra
 val SMARTRIDER_STR = "smartrider"
+
+// "We've had one epoch, yes... but what about *second* epoch?"
+val DATE_EPOCH = Daystamp(1997, Month.JANUARY, 1)
 
 enum class SmartRiderType constructor(val friendlyName: StringResource) {
     UNKNOWN(R.string.unknown),
@@ -63,3 +69,5 @@ fun convertTime(epochTime: Long, smartRiderType: SmartRiderType): Timestamp =
         SmartRiderType.SMARTRIDER -> SMARTRIDER_EPOCH.seconds(epochTime)
         else -> SMARTRIDER_EPOCH.seconds(epochTime)
     }
+
+fun convertDate(days: Int): Daystamp = DATE_EPOCH + DatePeriod(days=days)

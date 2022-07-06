@@ -23,6 +23,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.HashUtils
 
 /**
@@ -36,14 +38,66 @@ class SmartRiderTransitData(
     override val serialNumber: String?,
     private val mBalance: Int,
     override val trips: List<TransactionTripAbstract>,
-    private val mSmartRiderType: SmartRiderType
+    private val mSmartRiderType: SmartRiderType,
+    private val mIssueDate: Int,
+    private val mTokenType: Int,
+    private val mTokenExpiryDate: Int,
+    private val mAutoloadThreshold: Int,
+    private val mAutoloadValue: Int,
 ) : TransitData() {
 
-    public override val balance: TransitCurrency?
-        get() = TransitCurrency.AUD(mBalance)
+    private val aud = TransitCurrency.AUD(mBalance)
+
+    public override val balance: TransitBalance
+        get() = when {
+            mIssueDate > 0 && mTokenExpiryDate > 0 ->
+                TransitBalanceStored(
+                    aud, localisedTokenType, convertDate(mIssueDate), convertDate(mTokenExpiryDate)
+                )
+            mIssueDate > 0 ->
+                TransitBalanceStored(
+                    aud, localisedTokenType, convertDate(mIssueDate), null
+                )
+            mTokenExpiryDate > 0 ->
+                TransitBalanceStored(
+                    aud, localisedTokenType, convertDate(mTokenExpiryDate)
+                )
+            else -> TransitBalanceStored(aud, localisedTokenType)
+        }
+
+    private val localisedTokenType: String?
+        get() = when (mSmartRiderType) {
+            SmartRiderType.SMARTRIDER -> when (mTokenType) {
+                0x1 -> R.string.smartrider_fare_standard
+                0x2 -> R.string.smartrider_fare_student
+                0x4 -> R.string.smartrider_fare_tertiary
+                0x6 -> R.string.smartrider_fare_senior
+                0x7 -> R.string.smartrider_fare_concession
+                0xe -> R.string.smartrider_fare_staff
+                0xf -> R.string.smartrider_fare_pensioner
+                0x10 -> R.string.smartrider_fare_convention
+                else -> null
+            }
+            else -> null
+        }?.let { Localizer.localizeString(it) }
 
     override val cardName: String
         get() = Localizer.localizeString(mSmartRiderType.friendlyName)
+
+    override val info: List<ListItemInterface>
+        get() = listOfNotNull(
+            ListItem(
+                R.string.ticket_type, mTokenType.toString()
+            ),
+            ListItem(
+                R.string.smartrider_autoload_threshold,
+                TransitCurrency.AUD(mAutoloadThreshold).formatCurrencyString(true)
+            ).takeIf { mSmartRiderType == SmartRiderType.SMARTRIDER },
+            ListItem(
+                R.string.smartrider_autoload_value,
+                TransitCurrency.AUD(mAutoloadValue).formatCurrencyString(true)
+            ).takeIf { mSmartRiderType == SmartRiderType.SMARTRIDER },
+        )
 
     companion object {
         private const val TAG = "SmartRiderTransitData"
@@ -71,20 +125,16 @@ class SmartRiderTransitData(
             val serialNumber = getSerialData(card)
 
             // Read configuration
-            val config = card.getSector(1)
-            // 14 - 15
-            val purchasePrice = config[0].data.byteArrayToIntReversed(14, 2)
-            val config1 = config[1].data
-            // 16 - 17
-            val issueDate = config1.byteArrayToIntReversed(0, 2)
-            // 18 - 19
-            val tokenExpiryDate = config1.byteArrayToIntReversed(2, 2)
-            // 20 - 21
-            val autoLoadThreshold = TransitCurrency.AUD(config1.byteArrayToIntReversed(4, 2))
-            // 22 - 23
-            val autoLoadValue = TransitCurrency.AUD(config1.byteArrayToIntReversed(6, 2))
-            // 24
-            val tokenType = config1[8].toInt()
+            val config = card.getSector(1).allData
+            // val initialToken = config.byteArrayToIntReversed(5, 2)
+            // val purchasePrice = config.byteArrayToIntReversed(14, 2)
+            val issueDate = config.byteArrayToIntReversed(16, 2)
+            val tokenExpiryDate = config.byteArrayToIntReversed(18, 2)
+            // SmartRider only
+            val autoloadThreshold = config.byteArrayToIntReversed(20, 2)
+            // SmartRider only
+            val autoloadValue = config.byteArrayToIntReversed(22, 2)
+            val tokenType = config[24].toInt()
 
             // Balance record
             val balanceA = SmartRiderBalanceRecord(mCardType, card[2])
@@ -119,7 +169,9 @@ class SmartRiderTransitData(
 
             return SmartRiderTransitData(
                 mBalance = mBalance, trips = trips, mSmartRiderType = mCardType,
-                serialNumber = serialNumber
+                serialNumber = serialNumber, mIssueDate = issueDate, mTokenType = tokenType,
+                mTokenExpiryDate = tokenExpiryDate, mAutoloadThreshold = autoloadThreshold,
+                mAutoloadValue = autoloadValue
             )
         }
 

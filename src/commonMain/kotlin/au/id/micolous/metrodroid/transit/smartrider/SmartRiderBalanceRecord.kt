@@ -19,6 +19,8 @@
 package au.id.micolous.metrodroid.transit.smartrider
 
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.util.hexString
+import kotlinx.datetime.DatePeriod
 
 class SmartRiderBalanceRecord(smartRiderType: SmartRiderType, sector: ClassicSector) {
     private val b = sector.allData
@@ -41,11 +43,16 @@ class SmartRiderBalanceRecord(smartRiderType: SmartRiderType, sector: ClassicSec
     } else {
         1
     }
+    val date = DATE_EPOCH + DatePeriod(days=b.byteArrayToIntReversed(41, 2))
+    val journeyNumber = b.byteArrayToIntReversed(43, 2)
+    val zoneBitfield = b.byteArrayToInt(45, 1)
 
     override fun toString(): String {
         return "bitfield=[$bitfield], " +
             "transactionNumber=$transactionNumber, totalFarePaid=$totalFarePaid, " +
             "defaultFare=$defaultFare, remainingChargableFare=$remainingChargableFare, " +
-            "balance=$balance,\n  trip1=[$firstTagOn]\n  trip2=[$recentTagOn]\n"
+            "balance=$balance, date=$date, journeyNumber=$journeyNumber, " +
+            "zoneBitfield=${zoneBitfield.hexString}\n" +
+            "  trip1=[$firstTagOn]\n  trip2=[$recentTagOn]\n"
     }
 }
