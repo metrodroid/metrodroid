@@ -1294,4 +1294,9 @@
     <string name="tmoney_usercode_senior">65+</string>
     <string name="tmoney_usercode_disabled">Gehandicapt</string>
     <string name="tmoney_disrate_veteran_basic">Veteraan</string>
+    <string name="location_omsk">Omsk, Rusland</string>
+    <string name="card_name_russia_omsk_pensioner">Ouderenkaart</string>
+    <string name="card_name_russia_omsk_citizen">Inwonerskaart</string>
+    <string name="card_name_omka">OMKA</string>
+    <string name="card_name_russia_omsk_social">Sociale kaart</string>
 </resources>
