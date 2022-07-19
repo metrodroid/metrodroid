@@ -181,6 +181,41 @@ private val systemsMap = mapOf(
                         )
                 )
         ),
+        55 to UmarshSystem(
+                CardInfo(
+                        name = R.string.card_name_omka,
+                        cardType = CardType.MifareClassic,
+                        locationId = R.string.location_omsk,
+                        imageId = R.drawable.omka,
+                        imageAlphaId = R.drawable.iso7810_id1_alpha,
+                        keysRequired = true,
+                        region = TransitRegion.RUSSIA,
+                        preview = true
+                ),
+                tariffs = mapOf(
+                        0x5700ff to UmarshTariff(
+                                name = R.string.umarsh_school,
+                                denomination = UmarshDenomination.RUB,
+                        ),
+                        0x6300ff to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_citizen,
+                                denomination = UmarshDenomination.RUB,
+                        ),
+                        0x5800ff to UmarshTariff(
+                                name = R.string.umarsh_student,
+                                denomination = UmarshDenomination.RUB,
+                        ),
+                        0x5900ff to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_pensioner,
+                                denomination = UmarshDenomination.RUB,
+
+                                ),
+                        0x15eaff to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_social,
+                                denomination = UmarshDenomination.TRIPS,
+                        )
+                )
+        ),
         58 to UmarshSystem(
                 CardInfo(
                         name = R.string.card_name_penza,

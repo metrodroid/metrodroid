@@ -780,6 +780,7 @@
     <string name="location_crimea">Crimea</string>
     <string name="location_dubai">Dubai, UAE</string>
     <string name="location_ekaterinburg">Yekaterinburg, Russia</string>
+    <string name="location_omsk">Omsk, Russia</string>
     <string name="location_finland">Finland</string>
     <string name="location_france">France</string>
     <string name="location_fribourg_ch">Fribourg, Switzerland</string>
@@ -2327,6 +2328,7 @@
     <string name="card_name_kirov">Kirov transport card</string>
     <!-- Translators: card name used in Ekaterinburg, Russia. -->
     <string name="card_name_ekarta">Ekarta</string>
+    <string name="card_name_omka">OMKA</string>
     <string name="siticard_aerial_tramway">Aerial tramway</string>
     <!-- Translators: this is balance usable for travelling in Nizhny Novgorod
          and after the fare is deducted once, all transfers within 60 minutes
@@ -2350,6 +2352,12 @@
          but we don't have samples of it. -->
     <string name="card_name_crimea_parus_school">Parus school card</string>
     <string name="card_name_yoshkar_ola">Yoshkar-Ola transport card</string>
+    <!-- Translators: Russian "Карта гражданина". -->
+    <string name="card_name_russia_omsk_citizen">Citizen Card</string>
+    <!-- Translators: Russian "Карта пенсионера". -->
+    <string name="card_name_russia_omsk_pensioner">Pensioner card</string>
+    <!-- Translators: Russian "Социальная карта". -->
+    <string name="card_name_russia_omsk_social">Social Card</string>
     <string name="card_name_umarsh">Umarsh</string>
     <!-- Translators: card used by young people going to mandatory school. -->
     <string name="umarsh_school">School student</string>
