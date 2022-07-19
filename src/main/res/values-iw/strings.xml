@@ -1355,4 +1355,9 @@
     <string name="tmoney_disrate_veteran_companion">גמלאי, מלווה</string>
     <string name="tmoney_ccode_woori">וורי בנק</string>
     <string name="tmoney_usercode_lorry">משאית (כביש אגרה)</string>
+    <string name="location_omsk">אומסק, רוסיה</string>
+    <string name="card_name_omka">OMKA</string>
+    <string name="card_name_russia_omsk_social">כרטיס חברתי</string>
+    <string name="card_name_russia_omsk_citizen">כרטיס אזרח</string>
+    <string name="card_name_russia_omsk_pensioner">כרטיס אזרח ותיק</string>
 </resources>
