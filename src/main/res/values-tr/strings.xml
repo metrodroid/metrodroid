@@ -1291,4 +1291,9 @@
     <string name="tmoney_ccode_woori">Woori Bank</string>
     <string name="tmoney_usercode_senior">Yaşlı</string>
     <string name="tmoney_disrate_veteran_companion">Emekli, refakatçi</string>
+    <string name="location_omsk">Omsk, Rusya</string>
+    <string name="card_name_omka">OMKA</string>
+    <string name="card_name_russia_omsk_pensioner">Emekli Kartı</string>
+    <string name="card_name_russia_omsk_citizen">Vatandaş Kartı</string>
+    <string name="card_name_russia_omsk_social">Sosyal Kart</string>
 </resources>
