@@ -1,2 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="market_long_desc">Metrodroid считывает информацию с некоторых карт NFC для транспорта.
+\n
+\nПоддерживаемые карты:
+\n• Amiibo 🆕
+\n• AT HOP - Окленд, Новая Зеландия 🆕🆔
+\n• Beijing Municipal Card, Shenzhen Tong, T-Union, Wuhan Tong - Китай 🆕
+\n• Bilhete Único - Сан-Паулу, Бразилия 📜🗝
+\n• bip! - Сантьяго, Чили 🆕📜🗝
+\n• BUS-IT - Большой Гамильтон (Вайкато), Новая Зеландия 🆕📜🗝
+\n• Carta Mobile - Пиза, Италия 🆕
+\n• CEPAS (EZ-Link, NETS Flashpay) - Сингапур 🇸🇬
+\n• CharlieCard - Бостон, США 🆕📜🗝
+\n• Cifial 🆕📜
+\n• City Union, T-Union - Материковый Китай 🆕
+\n• Clipper - Сан-Франциско, Калифорния, США
+\n• Compass (single-use tickets) - Ванкувер, Британская Колумбия, Канада 🆕
+\n• Крымский троллейбус 🆕📜🗝
+\n• EasyCard - Тайбэй 📜🗝
+\n• Банковские карты EMV 🆕
+\n• Go card - Брисбен, Квинсленд, Австралия 🆕📜🗝
+\n• GoCard - Отаго (Данедин и Квинстаун), Новая Зеландия 🆕📜
+\n• Go-to Card - Миннеаполис-Ст. Пол, Миннесота, США 🆕📜🗝
+\n• Hafilat - Абу-даби, ОАЭ 🆕
+\n• Hop Fastpass - Портленд, Орегон, США 🆕🆔
+\n• HSL, Matkakortti, Waltti - Финляндия
+\n• IC (Suica, ICOCA, PASMO), Edy - Япония
+\n• Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Франция
+\n• IstanbulKart - Турция 🆕🆔
+\n• Kartu Multi Trip - Джакарта, Индонезия
+\n• Киевское Метро - Украина 🆕📜🗝
+\n• KomuterLink - Малазия 🆕📜🗝
+\n• Leap - Ирландия 🆕🇮🇪
+\n• Lisboa Viva - Лиссабон, Португалия 🆕
+\n• Manly Fast Ferry - Сидней, Новый Южный Уэльс, Австралия 🆕📜🗝
+\n• metroCARD - Аделаида, Австралия 🆕
+\n• Metrocard (1st-gen) - Крайстчерч, Новая Зеландия 🆕📜🗝
+\n• Metromoney - Тбилиси, Грузия 🆕📜🗝
+\n• Mobib - Брюссель, Бельгия 🆕
+\n• Myki - Мельбурн, Виктория, Австралия 🆕🆔
+\n• MyWay - Канберра, Австралия 🆕📜🗝
+\n• Nol - Дубай, ОАЭ 🆕🆔
+\n• Octopus - Гонконг 🆕
+\n• Opal - Сидней, Новый Южный Уэльс, Австралия 🆕
+\n• Opus - Квебек, Канада 🆕
+\n• ORCA - Сиэттл, США
+\n• OV-chipkaart - Нидерланды 📜🗝
+\n• Oyster (1st-gen) - Лондон, Великобритания 🆕📜🗝
+\n• Подорожник - Санкт-петербург, Россия 🆕📜🗝
+\n• Rav-Kav - Израиль 🆕
+\n• Rejsekort - Дания 🆕📜🗝
+\n• RicaricaMi - Милан, Италия 🆕
+\n• Selecta - Франция 🆕
+\n• SLAccess - Стокгольм, Швеция 🆕📜🗝
+\n• Smartride - Роторуа, Новая Зеландия 🆕📜
+\n• SmartRider - Перт, Вашингтон, Австралия 🆕📜🗝
+\n• Snapper (plus) - Веллингтон, Новая Зеландия 🆕
+\n• Стрелка - Москва, Россия 🆕📜🆔
+\n• SunCard - Орландо, Флорида, США 🆕📜🗝🆔
+\n• Tartu Bus - Эстония 🆕📜🆔
+\n• T-Money - Южная Корея 🆕
+\n• Touch ’n Go - Малайзия 🆕📜🗝
+\n• TPF card - Фрибург, Швейцария 🆕🆔
+\n• Transit Access Pass - Лос-Анджелес, Калифорния, США 🆕📜🗝
+\n• Troika - Москва, Россия 🆕📜🗝
+\n• Умарш (Барнул, Киров, Екарта, Стриж, Ситикард, Пенза, Йошкар-ола) - Россия 🆕📜🗝
+\n• Ventra (single-use tickets) - Чикаго, Иллинойс, США 🆕
+\n• Warszawska Karta Miejska - Варшава, Польша 🆕📜🗝🆔
+\n• Золотая корона (Краснодар, Оренбург, Самара, Ярославль) - Россия 🆕📜🗝
+\n
+\n🆕 Новое в Metrodroid.
+\n📜 MIFARE Classic: совместим не со всеми устройствами — для чтения этого требуется устройство с чипсетом NXP NFC.
+\n🗝 Для чтения этой карты необходимы ключи шифрования.
+\n🇸🇬 CEPAS совместим не со всеми устройствами (ISO 14443-B).
+\n🆔 Читается только номер карты.
+\n🇮🇪 Ключи шифрования скачиваются у оператора.
+\n
+\nДля чтения карт требуется NFC-совместимое устройство.
+\n
+\nНекоторые агентства имеют зашифрованные карты. Вам необходимо приобрести ключи шифрования, чтобы прочитать их, которые, как правило, уникальны для каждой карты. Извините, я не могу помочь вам с этим.
+\n
+\nMetrodroid и его авторы не связаны с агентством общественного транспорта. Карты других агентств, использующие Cubic Nextfare или ERG на MIFARE Classic, также могут работать.
+\n
+\nДополнительные сведения о необходимых разрешениях см. в политике конфиденциальности.
+\n
+\nЭто форк Farebot Эрика Батлера с поддержкой дополнительных карт и исправлениями ошибок.
+\n
+\nЭто программное обеспечение находится под лицензией GNU GPLv3+, исходный код доступен по адресу https://github.com/metrodroid/.</string>
+    <string name="market_changelog_300">• Добавлена поддержка карт Cifial, Fribourg TPF, Waltti и blue HSL.
+\n• Исправлены ошибки для Amiibo, SLaccess, Troika и Viva.
+\n• Новые данные для карт Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch \'n Go и Viva.
+\n• Добавлен поиск по истории, поддержка MIFARE Plus
+\n• Исправлены ошибки на Android 4.3 и более ранних версиях.
+\n
+\nДополнительные сведения и известные проблемы (на английском языке): https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_39">* Добавлена поддержка карт Malaysia Tap \'n Go, Otago Gocard, Rotorua SmartRide, Waikato BUSIT и Wellington Snapper.
+\n* Добавляет много новых идентификаторов маршрутов и станций.
+\n* Улучшен считыватель FeliCa.
+\n* Исправлены проблемы с картами EZ-Link и Octopus.
+\n* Множество внутренних изменений.
+\n
+\nПодробнее: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_43">• Добавлена поддержка Amiibo, крымского троллейбуса, казанского, русского Умарша, бипа Сантьяго и карты Варшавы.
+\n• Улучшения и исправления для карт Intercode, Kartu Multi Trip, RicaricaMi, Touch ’n Go и Troika.
+\n• Исправлены некоторые ошибки, приводившие к сбою Metrodroid, а также некоторые ошибки с картами MIFARE Classic.
+\n
+\nБолее подробная информация и известные проблемы: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_short_desc">Metrodroid считывает информацию с некоторых карт NFC для транспорта.</string>
+    <string name="market_changelog_41">* Читает карты EMV, Malaysia KomuterLink, Pisa Carta Mobile, Georgia Metromoney, карты London Oyster 1-го поколения, UAE Hafilat и Nol.
+\n* Добавляет новые станции для карт EZ-Link и ORCA.
+\n* Исправлены проблемы с читателем Mobib.
+\n* Добавлена поддержка импорта двоичных файлов MFC и чтения карт DESFire с заблокированными списками каталогов.
+\n* Множество внутренних изменений.
+\n
+\nБолее подробная информация и известные проблемы: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_generic">Исправляет ошибки, добавляет новые функции и данные.
+\n
+\nДополнительные сведения и известные проблемы (на английском языке): https://www.metrodroid.org/changelog</string>
+</resources>
