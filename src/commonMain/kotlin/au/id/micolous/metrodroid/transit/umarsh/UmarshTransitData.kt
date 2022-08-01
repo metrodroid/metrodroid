@@ -213,7 +213,35 @@ private val systemsMap = mapOf(
                         0x15eaff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_social,
                                 denomination = UmarshDenomination.TRIPS,
-                        )
+                        ),
+                        0x5500ff to to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_school_unlimited_15d,
+                                denomination = UmarshDenomination.UNLIMITED,
+                        ),
+                        0x5600ff to to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_school_unlimited_1m,
+                                denomination = UmarshDenomination.UNLIMITED,
+                        ),
+                        0x5b00ff to to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_adult_unlimited_15d,
+                                denomination = UmarshDenomination.UNLIMITED,
+                        ),
+                        0x5c00ff to to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_adult_unlimited_1m,
+                                denomination = UmarshDenomination.UNLIMITED,
+                        ),
+                        0x6000ff to UmarshTariff( //old
+                                name = R.string.card_name_russia_omsk_citizen,
+                                denomination = UmarshDenomination.RUB,
+                        ),
+                        0x6100ff to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_adult_60d_60t,
+                                denomination = UmarshDenomination.TRIPS,
+                        ),
+                        0x6100ff to UmarshTariff(
+                                name = R.string.card_name_russia_omsk_adult_60d_30t,
+                                denomination = UmarshDenomination.TRIPS,
+                        ),
                 )
         ),
         58 to UmarshSystem(
