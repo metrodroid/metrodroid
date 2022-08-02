@@ -238,7 +238,7 @@ private val systemsMap = mapOf(
                                 name = R.string.card_name_russia_omsk_adult_60d_60t,
                                 denomination = UmarshDenomination.TRIPS,
                         ),
-                        0x6100ff to UmarshTariff(
+                        0x6200ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_adult_60d_30t,
                                 denomination = UmarshDenomination.TRIPS,
                         ),
