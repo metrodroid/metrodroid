@@ -1,6 +1,6 @@
 operator_id,reader_id,stop_name,short_name,line_id,stop_lat,stop_lon
-4,277211,Seattle Center Station,Seattle Center,,47.6200841,-122.3489667
-4,277212,Westlake Center Station,Westlake Center,,47.6121787,-122.3368513
+4,277211,Seattle Center Station,Seattle Center,,47.621297,-122.3498483
+4,277212,Westlake Center Station,Westlake Center,,47.6121183,-122.3371289
 7,458753,Everett Station,Everett,6,47.9754544,-122.19764
 7,458754,Edmonds Station,Edmonds,6,47.8110791,-122.384302
 7,458755,King Street,King St,"6,7",47.598445,-122.330161
