@@ -134,7 +134,7 @@ class OrcaTransaction (private val mTimestamp: Long,
 
     private val isMonorail: Boolean
         get() = (mAgency == OrcaTransitData.AGENCY_KCM &&
-            mFtpType == FTP_TYPE_PURSE_DEBIT && mCoachNum == COACH_NUM_MONORAIL)
+            mFtpType == FTP_TYPE_BRT && mCoachNum == COACH_NUM_MONORAIL)
 
     // TODO: Determine if CoachID is used for Water Taxis
     private val isWaterTaxi: Boolean
