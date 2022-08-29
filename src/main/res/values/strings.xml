@@ -2358,7 +2358,20 @@
     <string name="card_name_russia_omsk_pensioner">Pensioner card</string>
     <!-- Translators: Russian "Социальная карта". -->
     <string name="card_name_russia_omsk_social">Social Card</string>
-    <string name="card_name_umarsh">Umarsh</string>
+    <!-- Translators: Russian "Школьный (Безлимит на 15 дней)". -->
+    <string name="card_name_russia_omsk_school_unlimited_15d">School unlimited (15 days)</string>
+    <!-- Translators: Russian "Школьный (Безлимит на 1 месяц)". -->
+    <string name="card_name_russia_omsk_school_unlimited_1m">School unlimited (1 month)</string>
+    <!-- Translators: Russian "Взрослый (Безлимит на 15 дней)". -->
+    <string name="card_name_russia_omsk_adult_unlimited_15d">Adult unlimited (15 days)</string>
+    <!-- Translators: Russian "Взрослый (Безлимит на 1 месяц)". -->
+    <string name="card_name_russia_omsk_adult_unlimited_1m">Adult unlimited (1 month)</string>
+    <!-- Translators: Russian "Взрослый (60 поездок на 60 дней)". -->
+    <string name="card_name_russia_omsk_adult_60d_60t">Adult 60 days (60 trips)</string>
+    <!-- Translators: Russian "Взрослый (30 поездок на 60 дней)". -->
+    <string name="card_name_russia_omsk_adult_60d_30t">Adult 60 days (30 trips)</string>
+	
+    <string name="card_name_umarsh">Umarsh</string> 	
     <!-- Translators: card used by young people going to mandatory school. -->
     <string name="umarsh_school">School student</string>
     <string name="umarsh_student">Student</string>
