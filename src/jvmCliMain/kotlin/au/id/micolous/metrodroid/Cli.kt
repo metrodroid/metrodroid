@@ -204,6 +204,8 @@ fun printCard(card: Card) {
         trip.startStation?.let { println("      from ${it.stationName}") }
         trip.endStation?.let { println("      to ${it.stationName}") }
         trip.fare?.let { println("      fare ${it.formatCurrencyString(false).unformatted}") }
+        if (trip.isTransfer) { println("      transfer") }
+        if (trip.isRejected) { println("      rejected") }
         trip.vehicleID?.let { println("      vehicle $it") }
         trip.getRawFields(TransitData.RawLevel.ALL)?.let { println("      raw $it") }
     }

@@ -412,7 +412,7 @@ data class TimestampFull(val timeInMillis: Long,
                 NumberUtils.zeroPad(ldtUtc.second, 2)
     }
 
-    override fun toString(): String = isoDateTimeFormat() + "/$tz"
+    override fun toString(): String = isoDateTimeFormat() + " UTC ($tz)"
 
     override fun obfuscateDelta(delta: Long) = TimestampFull(timeInMillis = timeInMillis + delta, tz = tz)
 

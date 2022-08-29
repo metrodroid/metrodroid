@@ -2709,4 +2709,49 @@
     <string name="ndef_wifi_bitmap_unknown">Unknown (%d)</string>
     <string name="ndef_wifi_wfa_extension">WFA extension</string>
     <string name="ndef_wifi_unknown_vendor_extension">Unknown vendor extension</string>
+    <!--
+    Translators: Name of the transit agency in Canberra, Australia: "Australian Capital Territory
+    Internal Omnibus Network". Not many people use (or even know) the full name.
+    Wikipedia: https://en.wikipedia.org/wiki/ACTION
+    -->
+    <string name="agency_name_action">ACTION</string>
+    <!-- Translators: Name of transit card used in Canberra, Australia. -->
+    <string name="card_name_myway">MyWay</string>
+    <!--
+    Translators: Name of the transit agency in Perth, Australia. The "p" is not capitalised.
+    https://en.wikipedia.org/wiki/Transperth
+    -->
+    <string name="agency_name_transperth">Transperth</string>
+    <!-- Translators: Name of transit card used in Perth, Australia. -->
+    <string name="card_name_smartrider">SmartRider</string>
+    <!-- Translators: The card can automatically top up its value from a linked
+    bank account. If the card's balance goes below this amount, it triggers an
+    autoload. -->
+    <string name="smartrider_autoload_threshold">Autoload threshold</string>
+    <!-- Translators: The card can automatically top up its value from a linked
+    bank account. If the card's balance goes below a set amount, it is topped up
+    by this amount. -->
+    <string name="smartrider_autoload_value">Autoload value</string>
+    <!-- Translators: Smartrider fare class, used for ordinary, non-discounted
+    fares. -->
+    <string name="smartrider_fare_standard">Standard</string>
+    <!-- Translators: Smartrider fare class, used by concession card holders. -->
+    <string name="smartrider_fare_concession">Concession</string>
+    <!-- Translators: Smartrider fare class, used by Seniors Card holders. -->
+    <string name="smartrider_fare_senior">Seniors</string>
+    <!-- Translators: Smartrider fare class, used by those receiving a
+    government pension. -->
+    <string name="smartrider_fare_pensioner">Pensioner</string>
+    <!-- Translators: Smartrider fare class, used by children in primary and
+    secondary school. -->
+    <string name="smartrider_fare_student">School Student</string>
+    <!-- Translators: Smartrider fare class, used by TAFE and university
+    students. -->
+    <string name="smartrider_fare_tertiary">Tertiary Student</string>
+    <!-- Translators: Smartrider fare class, used by Public Transit Authority
+    staff. -->
+    <string name="smartrider_fare_staff">Staff</string>
+    <!-- Translators: Smartrider fare class, time-limited ticket for those
+    attending a special event. -->
+    <string name="smartrider_fare_convention">Convention Pass</string>
 </resources>
