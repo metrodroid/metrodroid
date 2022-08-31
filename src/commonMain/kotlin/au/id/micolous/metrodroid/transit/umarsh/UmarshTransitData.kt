@@ -214,19 +214,19 @@ private val systemsMap = mapOf(
                                 name = R.string.card_name_russia_omsk_social,
                                 denomination = UmarshDenomination.TRIPS,
                         ),
-                        0x5500ff to to UmarshTariff(
+                        0x5500ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_school_unlimited_15d,
                                 denomination = UmarshDenomination.UNLIMITED,
                         ),
-                        0x5600ff to to UmarshTariff(
+                        0x5600ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_school_unlimited_1m,
                                 denomination = UmarshDenomination.UNLIMITED,
                         ),
-                        0x5b00ff to to UmarshTariff(
+                        0x5b00ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_adult_unlimited_15d,
                                 denomination = UmarshDenomination.UNLIMITED,
                         ),
-                        0x5c00ff to to UmarshTariff(
+                        0x5c00ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_adult_unlimited_1m,
                                 denomination = UmarshDenomination.UNLIMITED,
                         ),
