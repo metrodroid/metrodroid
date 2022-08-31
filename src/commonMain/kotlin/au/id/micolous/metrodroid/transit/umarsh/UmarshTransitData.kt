@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.zolotayakorona.RussiaTaxCodes
 import au.id.micolous.metrodroid.ui.HeaderListItem
@@ -48,7 +49,7 @@ internal data class UmarshTariff(
 
 internal data class UmarshSystem(
         val cardInfo: CardInfo,
-        val tariffs: Map<Int, UmarshTariff> = emptyMap()
+	val tariffs: Map<Int, UmarshTariff> = emptyMap()
 )
 
 // This implements reader for umarsh format: https://umarsh.com
@@ -310,12 +311,42 @@ private val systemsMap = mapOf(
 
 private fun formatSerial(sn: Int) = NumberUtils.formatNumber(sn.toLong(), " ", 3, 3, 3)
 
-private fun parseDate(raw: ImmutableByteArray, off: Int) = if (raw.getBitsFromBuffer(off, 16) == 0) null else Daystamp(
+private fun parseDate(raw: ImmutableByteArray, off: Int) = if (raw.getBitsFromBuffer(off, 16) in listOf(0, 0xffff)) null else Daystamp(
         year = raw.getBitsFromBuffer(off, 7) + 2000,
         month = raw.getBitsFromBuffer(off + 7, 4) - 1,
         day = raw.getBitsFromBuffer(off + 11, 5)
 )
 
+
+@Parcelize
+class UmarshValidationSector(override val startTimestamp: TimestampFull,
+			     val routeNameUnformatted: String,
+			     override val vehicleID: String,
+			     val transportType: Int) : Trip() {
+    override val routeName get() = FormattedString(routeNameUnformatted)
+    override val fare get() = null 
+    override val mode get() = when(transportType) {
+	1 -> Mode.BUS
+	2 -> Mode.TROLLEYBUS
+	/* 3-7 and 0 are unknown */
+	else -> Mode.OTHER
+    }
+    companion object {
+	fun parse(raw: ImmutableByteArray, region: Int): UmarshValidationSector? {
+	    val trans = raw.getBitsFromBuffer(0, 3)
+	    val tm = raw.getBitsFromBuffer(3, 13)
+	    val dat = parseDate(raw, 16) ?: return null
+	    val route = raw.sliceOffLen(4, 6).readASCII()
+	    val veh = raw.sliceOffLen(10, 6).readASCII()
+	    return UmarshValidationSector(startTimestamp = dat.promote(
+					      RussiaTaxCodes.codeToTimeZone(region),
+					      tm / 100, tm % 100),
+					  routeNameUnformatted = route,
+					  vehicleID = veh,
+					  transportType = trans)
+	}
+    }
+}
 
 @Parcelize
 data class UmarshSector(val counter: Int, val serialNumber: Int,
@@ -440,7 +471,7 @@ data class UmarshSector(val counter: Int, val serialNumber: Int,
 }
 
 @Parcelize
-data class UmarshTransitData(val sectors: List<UmarshSector>) : TransitData() {
+data class UmarshTransitData(val sectors: List<UmarshSector>, val validation: UmarshValidationSector?) : TransitData() {
 
     override val serialNumber get() = formatSerial(sectors.first().serialNumber)
 
@@ -454,6 +485,8 @@ data class UmarshTransitData(val sectors: List<UmarshSector>) : TransitData() {
 
     override val info: List<ListItemInterface>
         get() = sectors.flatMap { it.genericInfo }
+
+    override val trips get() = validation?.let { listOf(it) }
 
     override fun getRawFields(level: RawLevel): List<ListItemInterface>? = sectors.flatMap { it.getRawFields(level) }
 }
@@ -488,6 +521,6 @@ object UmarshTransitFactory : ClassicCardTransitFactory {
             listOf(sec8)
         else
             listOf(sec8, UmarshSector.parse(card[7], 7))
-        return UmarshTransitData(secs)
+        return UmarshTransitData(secs, UmarshValidationSector.parse(card[0,1].data, sec8.region))
     }
 }
