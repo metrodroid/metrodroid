@@ -47,6 +47,11 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
             RkfLookup.SLACCESS -> {
                 NumberUtils.formatNumber(mHwSerial, " ", 5, 5)
             }
+            RkfLookup.VASTTRAFIK -> {
+                val main = NumberUtils.zeroPad(mHwSerial, 10)
+                val allDigits = "2401" + main + NumberUtils.calculateLuhn(main)
+                NumberUtils.groupString(allDigits, " ", 4, 4, 6)
+            }
             else -> mHwSerial.toString()
         }
 }
@@ -136,6 +141,14 @@ data class RkfTransitData internal constructor(
                         cardType = CardType.MifareClassic,
                         keysRequired = true, keyBundle = "rejsekort",
                         region = TransitRegion.DENMARK,
+                        preview = true),
+                RkfLookup.VASTTRAFIK to CardInfo(
+                        name = "Vasttrafikkortet",
+                        locationId = R.string.location_gothenburg,
+                        cardType = CardType.MifareClassic,
+                        imageId = R.drawable.vasttrafik,
+                        keysRequired = true, keyBundle = "gothenburg",
+                        region = TransitRegion.SWEDEN,
                         preview = true)
         )
 

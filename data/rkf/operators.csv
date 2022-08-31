@@ -1,5 +1,6 @@
 id,name,short_name,mode
 101,SL - StorstockHolms Lokaltrafik AB,SL,METRO
+240,Vasttrafik,Vasttrafik,BUS
 1002,Norges Statsbaner,Norges Statsbaner,TRAM
 2000,Rejsekort,Rejsekort,OTHER
 2001,Hovedstadens Udviklingsråd,HUR,BUS

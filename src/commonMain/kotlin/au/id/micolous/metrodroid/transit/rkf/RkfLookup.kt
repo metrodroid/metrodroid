@@ -95,6 +95,7 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
 
     companion object {
         const val SLACCESS = 101
+        const val VASTTRAFIK = 240
         const val REJSEKORT = 2000
     }
 }
