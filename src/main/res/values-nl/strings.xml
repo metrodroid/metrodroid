@@ -1299,4 +1299,17 @@
     <string name="card_name_russia_omsk_citizen">Inwonerskaart</string>
     <string name="card_name_omka">OMKA</string>
     <string name="card_name_russia_omsk_social">Sociale kaart</string>
+    <string name="card_name_russia_omsk_adult_unlimited_1m">Onbeperkt reizen (volwassenen, 1 maand)</string>
+    <string name="card_name_russia_omsk_school_unlimited_1m">Onbeperkte schoolreizen (1 maand)</string>
+    <string name="location_gothenburg">Gotenburg, Zweden</string>
+    <string name="card_name_russia_omsk_adult_unlimited_15d">Onbeperkt reizen (volwassenen, 15 dagen)</string>
+    <string name="card_name_russia_omsk_adult_60d_60t">60-rittenkaart (volwassenen, 60 dagen)</string>
+    <string name="card_name_russia_omsk_adult_60d_30t">60-rittenkaart (volwassenen, 30 dagen)</string>
+    <string name="card_name_myway">MyWay</string>
+    <string name="agency_name_transperth">Transperth</string>
+    <string name="card_name_smartrider">SmartRider</string>
+    <string name="smartrider_autoload_threshold">Automatisch opladen bij</string>
+    <string name="smartrider_autoload_value">Automatische oplaadwaarde</string>
+    <string name="card_name_russia_omsk_school_unlimited_15d">Onbeperkte schoolreizen (15 dagen)</string>
+    <string name="agency_name_action">ACTION</string>
 </resources>
