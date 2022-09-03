@@ -1312,4 +1312,12 @@
     <string name="smartrider_autoload_value">Automatische oplaadwaarde</string>
     <string name="card_name_russia_omsk_school_unlimited_15d">Onbeperkte schoolreizen (15 dagen)</string>
     <string name="agency_name_action">ACTION</string>
+    <string name="smartrider_fare_student">Studenten</string>
+    <string name="smartrider_fare_tertiary">Universiteitsstudenten</string>
+    <string name="smartrider_fare_concession">Concessie</string>
+    <string name="smartrider_fare_senior">65+</string>
+    <string name="smartrider_fare_pensioner">Pensioengerechtigden</string>
+    <string name="smartrider_fare_standard">Standaard</string>
+    <string name="smartrider_fare_staff">Medewerkers</string>
+    <string name="smartrider_fare_convention">Evenementenkaart</string>
 </resources>
