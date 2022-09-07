@@ -147,11 +147,13 @@ data class HSLKausi(public override val parsed: En1545Parsed): En1545Subscriptio
                 HSLTransitData.Variant.WALTTI -> {
                     trip = HSLTransaction.parseEmbed(raw = raw, version = version, offset = 280)
                     load = En1545Parser.parse(raw, off = 160, field = FIELDS_WALTTI_LOAD)
-                    products = listOfNotNull(
-                        parseNonZero(raw, offByte = 0, lenByte = 10, field = FIELDS_WALTTI_PRODUCT),
-                        parseNonZero(raw, offByte = 10, lenByte = 10, field = FIELDS_WALTTI_PRODUCT))
+                    products = listOf(0, 10).mapNotNull {
+                        parseNonZero(raw, offByte = it, lenByte = 10, field = FIELDS_WALTTI_PRODUCT) }.filter {
+			it.getInt(CONTRACT_START + "Date") != 999 || it.getInt(CONTRACT_END + "Date") != 0 }
                 }
             }
+	    if (products.isEmpty() && version == HSLTransitData.Variant.WALTTI && load.getInt(CONTRACT_PERIOD_DAYS) == 511)
+                return ParseResult(emptyList(), trip)
             if (products.isEmpty())
                 return ParseResult(listOf(HSLKausi(load)), trip)
             return ParseResult(products.map { HSLKausi(load + it) }, trip)
