@@ -139,7 +139,7 @@ actual object TimestampFormatter {
         else
             DateFormat.getTimeFormat(MetrodroidApplication.instance)
         val t = formatCalendar(tf, date)
-        val separator = if (Preferences.useIsoDateTimeStamps) "T" else "0"
+        val separator = if (Preferences.useIsoDateTimeStamps) "T" else " "
 
         val b = SpannableString("$d$separator$t")
 
