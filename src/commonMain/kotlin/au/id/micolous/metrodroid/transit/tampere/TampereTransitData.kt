@@ -27,84 +27,20 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.time.*
+import au.id.micolous.metrodroid.time.Daystamp
+import au.id.micolous.metrodroid.time.Epoch
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.hexString
-
-private val EPOCH = Epoch.utc(1900, MetroTimeZone.HELSINKI)
-private fun parseTimestamp(day: Int, minute: Int): TimestampFull = EPOCH.dayMinute(day,
-        minute)
-
-private fun parseDaystamp(day: Int): Daystamp = EPOCH.days(day)
-
-@Parcelize
-class TampereTrip(private val mDay: Int, private val mMinute: Int,
-                  private val mFare: Int,
-                  private val mMinutesSinceFirstStamp: Int,
-                  private val mTransport: Int,
-                  private val mA: Int, // 0x8b for first trip in a day, 0xb otherwise, 0 for refills
-                  private val mB: Int, // Always 4
-                  private val mC: Int, // Always 0
-                  private val mRoute: Int,
-                  private val mEventCode: Int, // 3 = topup, 5 = first tap, 11 = transfer
-                  private val mFlags: Int
-                  ): Trip() {
-    override val startTimestamp: Timestamp?
-        get() = parseTimestamp(mDay, mMinute)
-    override val fare: TransitCurrency?
-        get() = TransitCurrency.EUR(mFare)
-    override val mode: Mode
-        get() = when (mTransport) {
-            0xba, 0xde -> Mode.BUS // ba = bus. de = ?? (used for subscriptions)
-            0x4c -> Mode.TICKET_MACHINE // 4c is ASCII for 'L' from Finnish "lataa" = "top-up"
-            else -> Mode.OTHER
-        }
-
-    override val isTransfer: Boolean
-        get() = (mFlags and 0x40000) != 0
-
-    override val humanReadableRouteID get() = mRoute.toString()
-
-    override val routeName get() = TampereTransitData.getRouteName(mRoute)
-
-    override fun getRawFields(level: TransitData.RawLevel) = "A=${mA.hexString}/B=$mB/C=$mC" +
-            (if (level != TransitData.RawLevel.UNKNOWN_ONLY) "/EventCode=$mEventCode/flags=${mFlags.hexString}/sinceFirstStamp=$mMinutesSinceFirstStamp/transport=${mTransport.hexString}" else "")
-
-    companion object {
-        fun parse(raw: ImmutableByteArray): TampereTrip? {
-            val type = raw.byteArrayToIntReversed(4, 1)
-            val fare = raw.byteArrayToIntReversed(8, 2).let {
-                if (type == 0x4c)
-                    -it
-                else
-                    it
-            }
-            val minuteField = raw.byteArrayToIntReversed(6, 2)
-            val cField = raw.byteArrayToIntReversed(10, 2)
-            return TampereTrip(mDay = raw.byteArrayToIntReversed(0, 2),
-                    mMinute = minuteField shr 5,
-                    mFare = fare,
-                    mMinutesSinceFirstStamp = raw.byteArrayToIntReversed(2, 1),
-                    mTransport = type,
-                    mA = raw.byteArrayToIntReversed(3, 1),
-                    mB = raw.byteArrayToIntReversed(5, 1),
-                    mC = cField and 3,
-                    mRoute = cField shr 2,
-                    mEventCode = minuteField and 0x1f,
-                    mFlags = raw.byteArrayToIntReversed(12, 3)
-            // Last byte: CRC-8-maxim checksum of the record
-            )
-        }
-    }
-}
+import au.id.micolous.metrodroid.util.NumberUtils
 
 @Parcelize
 class TampereTransitData (
         override val serialNumber: String?,
         private val mBalance: Int?,
         override val trips: List<Trip>?,
+        override val subscriptions: List<TampereSubscription>?,
         private val mHolderName: String?,
         private val mHolderBirthDate: Int?,
         private val mIssueDate: Int?): TransitData() {
@@ -116,9 +52,10 @@ class TampereTransitData (
         get() = mBalance?.let { TransitCurrency.EUR(it) }
 
     override val info: List<ListItem>?
-        get() = listOf(
-                ListItem(R.string.card_holders_name, mHolderName),
-                ListItem(R.string.date_of_birth, mHolderBirthDate?.let { parseDaystamp(it) }?.format()),
+        get() = listOfNotNull(
+                if (mHolderName?.isEmpty() != false) null else ListItem(R.string.card_holders_name, mHolderName),
+                if (mHolderBirthDate == 0 || mHolderBirthDate == null) null else
+                    ListItem(R.string.date_of_birth, parseDaystamp(mHolderBirthDate).format()),
                 ListItem(R.string.issue_date, mIssueDate?.let { parseDaystamp(it) }?.format())
         )
 
@@ -128,21 +65,58 @@ class TampereTransitData (
         val NAME = R.string.card_name_tampere
         const val APP_ID = 0x121ef
 
-        private fun getSerialNumber(app: DesfireApplication?) = app?.getFile(0x07)?.data?.toHexString()?.substring(2, 20)
+        private fun getSerialNumber(app: DesfireApplication?) =
+                app?.getFile(0x07)?.data?.toHexString()?.substring(2, 20)?.let {
+                    NumberUtils.groupString(it, " ", 6, 4, 4, 3)
+                }
 
-        private fun parse(desfireCard: DesfireCard): TampereTransitData? {
+        private fun parse(desfireCard: DesfireCard): TampereTransitData {
             val app = desfireCard.getApplication(APP_ID)
             val file4 = app?.getFile(0x04)?.data
             val holderName = file4?.sliceOffLen(6, 24)?.readASCII()
             val holderBirthDate = file4?.byteArrayToIntReversed(0x22, 2)
             val issueDate = file4?.byteArrayToIntReversed(0x2a, 2)
+            val file2 = app?.getFile(0x02)?.data
+            var balance: Int? = null
+            val subs = mutableListOf<TampereSubscription>()
+            if (file2 != null && file2.size >= 96) {
+                val blockPtr = if ((file2.byteArrayToInt(0, 1) - file2.byteArrayToInt(48, 1)) and 0xff > 0x80)
+                    48
+                else
+                    0
+                for (i in 0..2) {
+                    val contractRaw = file2.sliceOffLen(blockPtr + 4 + 12 * i, 12)
+                    val type = contractRaw.byteArrayToInt(2, 1)
+                    when (type) {
+                        0 -> continue
+                        0x3 -> subs += TampereSubscription(
+                                mA = contractRaw.sliceOffLen(0, 2),
+                                mB = contractRaw.sliceOffLen(3, 3),
+                                mStart = null,
+                                mEnd = contractRaw.byteArrayToInt(6, 2),
+                                mC = contractRaw.sliceOffLen(8, 4),
+                                mType = type)
+                        7 -> balance = contractRaw.byteArrayToInt(7, 2)
+                        0xf -> subs += TampereSubscription(
+                                mA = contractRaw.sliceOffLen(0, 2),
+                                mB = contractRaw.sliceOffLen(3, 3),
+                                mStart = contractRaw.byteArrayToInt(6, 2),
+                                mEnd = contractRaw.byteArrayToInt(8, 2),
+                                mC = contractRaw.sliceOffLen(10, 2),
+                                mType = type
+                        )
+                        else -> subs += TampereSubscription(mA = contractRaw, mType = type)
+                    }
+                }
+            }
             return TampereTransitData(
                     serialNumber = getSerialNumber(app),
-                    mBalance = app?.getFile(0x01)?.data?.byteArrayToIntReversed(),
-                    trips = (app?.getFile(0x03) as? RecordDesfireFile)?.records?.mapNotNull { TampereTrip.parse(it) },
+                    mBalance = balance ?: app?.getFile(0x01)?.data?.byteArrayToIntReversed(),
+                    trips = (app?.getFile(0x03) as? RecordDesfireFile)?.records?.map { TampereTrip.parse(it) },
                     mHolderName = holderName,
                     mHolderBirthDate = holderBirthDate,
-                    mIssueDate = issueDate
+                    mIssueDate = issueDate,
+                    subscriptions = subs.ifEmpty { null }
             )
         }
 
@@ -153,8 +127,6 @@ class TampereTransitData (
                 imageAlphaId = R.drawable.iso7810_id1_alpha,
                 region = TransitRegion.FINLAND,
                 cardType = CardType.MifareDesfire)
-
-        fun getRouteName(routeNumber: Int) = FormattedString("${routeNumber/100}/${routeNumber%100}")
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override val allCards: List<CardInfo>
@@ -167,5 +139,12 @@ class TampereTransitData (
             override fun parseTransitIdentity(card: DesfireCard) = TransitIdentity(NAME,
                     getSerialNumber(card.getApplication(APP_ID)))
         }
+
+        private val EPOCH = Epoch.local(1900, MetroTimeZone.HELSINKI)
+
+        fun parseDaystamp(day: Int): Daystamp = EPOCH.days(day)
+
+        fun parseTimestamp(day: Int, minute: Int): TimestampFull = EPOCH.dayMinute(day,
+                minute)
     }
 }
