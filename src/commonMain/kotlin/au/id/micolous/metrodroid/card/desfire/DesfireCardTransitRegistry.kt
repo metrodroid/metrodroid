@@ -34,6 +34,7 @@ object DesfireCardTransitRegistry {
             IntercardTransitData.FACTORY,
             TPFCardTransitData.Factory,
             HoloTransitData.Companion.HoloTransitFactory,
+            NorticDesfireTransitData.FACTORY,
             BlankDesfireTransitFactory,
             UnauthorizedDesfireTransitData.FACTORY)
 }
