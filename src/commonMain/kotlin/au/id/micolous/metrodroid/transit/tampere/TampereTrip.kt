@@ -8,7 +8,6 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.hexString
 
 @Parcelize
@@ -49,7 +48,11 @@ class TampereTrip(private val mDay: Int, private val mMinute: Int,
 
     companion object {
         private fun getRouteName(routeNumber: Int) =
-                FormattedString("${routeNumber/100}" + if(Preferences.showRawStationIds) "/${routeNumber%100}" else "")
+                when {
+                    Preferences.showRawStationIds -> FormattedString("${routeNumber / 100}/${routeNumber % 100}")
+                    routeNumber == 0 || routeNumber == 1 -> null
+                    else -> FormattedString("${routeNumber / 100}")
+                }
         fun parse(raw: ImmutableByteArray): TampereTrip {
             val minuteField = raw.byteArrayToIntReversed(6, 2)
             val cField = raw.byteArrayToIntReversed(10, 2)
