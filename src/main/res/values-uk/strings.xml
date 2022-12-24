@@ -29,8 +29,8 @@
     <string name="key_file_empty">Порожній файл ключів!</string>
     <string name="invalid_key_file">Недійсний файл ключів</string>
     <string name="invalid_json">Недійсний JSON</string>
-    <string name="emv_application_currency_exponent">Показник валюти програми</string>
-    <string name="emv_application_currency">Валюта програми</string>
+    <string name="emv_application_currency_exponent">Показник валюти застосунку</string>
+    <string name="emv_application_currency">Валюта застосунку</string>
     <plurals name="trips_remaining_total">
         <item quantity="one">Залишилася %d поїздка вiд %d</item>
         <item quantity="few">Залишилося %d поїздки вiд %d</item>
@@ -110,8 +110,8 @@
     <string name="mfc_default_key">Спроба відомих ключів для сектора %d…</string>
     <string name="unsupported_tag">Непідтримуваний носій картки NFC</string>
     <string name="lang_default">Системне значення за промовчанням</string>
-    <string name="lang_override_desc">Змінення мови програми. Потрібно перезапустити програму, щоб застосувати</string>
-    <string name="lang_override">Мова програми</string>
+    <string name="lang_override_desc">Змінення мови застосунку. Потрібно перезапустити застосунок, щоб застосувати</string>
+    <string name="lang_override">Мова застосунку</string>
     <string name="localise_places_longdesc">Голоси перетворення тексту в мову зазвичай працюють добре лише для однієї мови.
 \n
 \nПідказки LocaleSpan використовуються для позначення тексту іншою мовою. При застосуванні до назви станції, зупинки, лінії або маршруту програма зчитування з екрана, яка підтримує ці підказки, вимовлятиме назву, використовуючи синтезовані голоси з рідної мови місця, а не мови, яку ви налаштували для використання Android.
@@ -242,5 +242,5 @@
     <string name="machine_id">Ідентифікатор машини</string>
     <string name="machine_id_format">Ідентифікатор машини %s</string>
     <string name="scanned_at_format">Прочитано %2$s у %1$s</string>
-    <string name="about">Про програму</string>
+    <string name="about">Про застосунок</string>
 </resources>
