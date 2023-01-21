@@ -1172,4 +1172,10 @@
     <string name="location_fukuoka_prefecture">Fukuoka, Japan</string>
     <string name="location_fukuoka_city">Fukuoka, Japan</string>
     <string name="card_name_edy">Edy</string>
+    <string name="tmoney_usercode_disabled">Deaktiviert</string>
+    <string name="tmoney_usercode_lorry">Lkw (Straßenmaut)</string>
+    <string name="location_omsk">Omsk, Russland</string>
+    <string name="tmoney_usercode_bus">Bus (Straßenmaut)</string>
+    <string name="location_gothenburg">Göteborg, Schweden</string>
+    <string name="never">Nie</string>
 </resources>
