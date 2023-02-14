@@ -73,6 +73,14 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 region = TransitRegion.FRANCE,
                 cardType = CardType.ISO7816)
 
+        private val KORRIGO_CARD_INFO = CardInfo(
+            name = "KorriGo",
+            locationId = R.string.location_bretagne,
+            imageId = R.drawable.korrigo,
+            imageAlphaId = R.drawable.iso7810_id1_alpha,
+            region = TransitRegion.FRANCE,
+            cardType = CardType.ISO7816)
+
         val TICKET_ENV_FIELDS = En1545Container(
                 En1545FixedInteger(ENV_VERSION_NUMBER, 6),
                 En1545Bitmap(
@@ -160,6 +168,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 0x250064 to IntercodeLookupUnknown(TAM_MONTPELLIER_CARD_INFO),
                 0x250502 to IntercodeLookupOura,
                 0x250901 to IntercodeLookupNavigo,
+                0x250908 to IntercodeLookupUnknown(KORRIGO_CARD_INFO),
                 0x250916 to IntercodeLookupTisseo,
                 0x250920 to IntercodeLookupUnknown(ENVIBUS_CARD_INFO),
                 0x250921 to IntercodeLookupGironde)
