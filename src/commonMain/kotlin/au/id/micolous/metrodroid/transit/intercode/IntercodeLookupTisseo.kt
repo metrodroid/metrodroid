@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitRegion
 
@@ -38,4 +39,16 @@ internal object IntercodeLookupTisseo : IntercodeLookupSTR("tisseo"), IntercodeL
                     preview = true)
 
     private const val AGENCY_TISSEO = 1
+
+    override val subscriptionMap: Map<Int, StringResource> = mapOf(
+        300 to R.string.tisseo_10_tickets,
+        307 to R.string.tisseo_1_ticket,
+        335 to R.string.tisseo_mensuel,
+        336 to R.string.tisseo_mensuel,
+        455 to R.string.tisseo_annuel,
+        672 to R.string.tisseo_annuel_26,
+        674 to R.string.tisseo_mensuel_26,
+        676 to R.string.tisseo_10_tickets_26,
+        950 to R.string.tisseo_velo,
+    )
 }

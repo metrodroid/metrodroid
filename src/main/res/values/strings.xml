@@ -2552,6 +2552,22 @@
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
     <string name="gironde_line">Line number %d</string>
+    <!-- Translators: French "Carnet de 10 tickets" -->
+    <string name="tisseo_10_tickets">10 tickets</string>
+    <!-- Translators: French "Ticket individuel" -->
+    <string name="tisseo_1_ticket">Single ticket</string>
+    <!-- Translators: French "Abonnement mensuel" -->
+    <string name="tisseo_mensuel">Monthly subscription</string>
+    <!-- Translators: French "Abonnement annuel" -->
+    <string name="tisseo_annuel">Yearly subscription</string>
+    <!-- Translators: French "Abonnement mensuel -26 ans" -->
+    <string name="tisseo_mensuel_26">Monthly subscription -26 yo</string>
+    <!-- Translators: French "Abonnement annuel -26 ans" -->
+    <string name="tisseo_annuel_26">Yearly subscription -26 yo</string>
+    <!-- Translators: French "Carnet de 10 tickets -26 ans" -->
+    <string name="tisseo_10_tickets_26">10 tickets -26 yo</string>
+    <!-- Translators: French "Accès parking à vélo" -->
+    <string name="tisseo_velo">Bycicle parking access</string>
 
     <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
     <string name="mobib_jump_1_trip">Jump 1 trip</string>
