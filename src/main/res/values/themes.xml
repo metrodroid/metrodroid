@@ -49,6 +49,7 @@
         <item>@drawable/trolleybus</item>
         <item>@drawable/car</item>
         <item>@drawable/monorail</item>
+        <item>@drawable/cablecar</item>
     </integer-array>
 
     <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
@@ -82,6 +83,7 @@
         <item>@drawable/trolleybus</item>
         <item>@drawable/car</item>
         <item>@drawable/monorail</item>
+        <item>@drawable/cablecar</item>
     </integer-array>
 
     <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
@@ -178,5 +180,7 @@
         <item>@drawable/ic_transaction_unknown_32dp</item>
         <!-- TODO: Add monorail icon -->
         <item>@drawable/ic_transaction_train_32dp</item>
+        <!-- TODO: Add cablecar icon -->
+        <item>@drawable/ic_transaction_unknown_32dp</item>
     </integer-array>
 </resources>

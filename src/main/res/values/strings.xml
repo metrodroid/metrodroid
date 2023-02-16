@@ -902,6 +902,8 @@
     <string name="mode_toll_road">Toll road</string>
     <!-- Used as descriptive text for the monorail icon. -->
     <string name="mode_monorail">Monorail</string>
+    <!-- Used as descriptive text for the cable car icon. -->
+    <string name="mode_cablecar">Cable car</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 

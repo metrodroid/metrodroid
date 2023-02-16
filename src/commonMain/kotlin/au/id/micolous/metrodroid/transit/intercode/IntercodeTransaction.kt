@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
 
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -30,6 +31,16 @@ internal data class IntercodeTransaction(private val networkId: Int,
 
     override val lookup: En1545Lookup
         get() = IntercodeTransitData.getLookup(networkId)
+
+    override val mode: Trip.Mode
+        get() {
+            val line = super.routeNumber
+            if(networkId == 0x250916 && line == 0x3ef) {
+                // network Tisseo, line Téléo is wrongly identified as a metro line
+                return Trip.Mode.CABLECAR
+            }
+            return super.mode
+        }
 
     companion object {
         fun parse (data: ImmutableByteArray, networkId: Int): IntercodeTransaction {
