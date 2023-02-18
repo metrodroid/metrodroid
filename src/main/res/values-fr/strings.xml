@@ -872,8 +872,12 @@
     <string name="hsl_transport_u_linja">Ligne U</string>
     <string name="navigo_sector_station_id">Identifiant de secteur : %1$s, Identifiant de la station : %2$d</string>
     <string name="navigo_sector_id_station_id">Identifiant du secteur %1$d, Identifiant de la station %2$d</string>
-    <string name="navigo_forfait_jour">Billet journalier</string>
-    <string name="navigo_forfait">Billet saisonnier</string>
+    <string name="navigo_forfait_jour">Forfait jour</string>
+    <string name="navigo_forfait_semaine">Forfait semaine</string>
+    <string name="navigo_forfait_semaine_75">Forfait solidarité 75%% semaine</string>
+    <string name="navigo_forfait_mois">Forfait mois</string>
+    <string name="navigo_forfait_mois_75">Forfait solidarité 75%% mois</string>
+    <string name="navigo_forfait_liberte">Abonnement Navigo Libetré+</string>
     <string name="oura_billet_tarif_normal">Billet à tarif normal</string>
     <string name="gironde_line">Ligne %d</string>
     <string name="ilevia_trajet_unitaire">Ilévia trajet unitaire</string>

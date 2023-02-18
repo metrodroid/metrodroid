@@ -69,8 +69,12 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
 
 
     override val subscriptionMap: Map<Int, StringResource> = mapOf(
-            0 to R.string.navigo_forfait,
-            3 to R.string.navigo_forfait_jour
+            0 to R.string.navigo_forfait_mois,
+            1 to R.string.navigo_forfait_semaine,
+            3 to R.string.navigo_forfait_jour,
+            4096 to R.string.navigo_forfait_liberte,
+            16384 to R.string.navigo_forfait_mois_75,
+            16385 to R.string.navigo_forfait_semaine_75,
     )
 
     private val SECTOR_NAMES = mapOf(
