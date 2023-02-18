@@ -2546,8 +2546,16 @@
     <string name="navigo_sector_id_station_id">Sector ID %1$d, station ID %2$d</string>
     <!-- Translators: ticket for the whole day. French "Forfait jour". -->
     <string name="navigo_forfait_jour">Day ticket</string>
-    <!-- Translators: ticket for long period. French "Forfait". -->
-    <string name="navigo_forfait">Season ticket</string>
+    <!-- Translators: ticket for the whole week. French "Forfait semaine". -->
+    <string name="navigo_forfait_semaine">Week ticket</string>
+    <!-- Translators: ticket for the whole week with 75% discount. French "Forfait solidarité 75% semaine". -->
+    <string name="navigo_forfait_semaine_75">Solidarity 75%% week ticket</string>
+    <!-- Translators: ticket for a month. French "Forfait mois". -->
+    <string name="navigo_forfait_mois">Month ticket</string>
+    <!-- Translators: ticket for a month with 75% discount. French "Forfait solidarité 75% mois". -->
+    <string name="navigo_forfait_mois_75">Solidarity 75%% month ticket</string>
+    <!-- Translators: subscription to Navigo Liberté+ service and pay at the end of each month. French "Abonnement Navigo Libetré+". -->
+    <string name="navigo_forfait_liberte">Navigo Liberté+ subscription</string>
     <!-- Translators: French "Billet Tarif Normal" -->
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
