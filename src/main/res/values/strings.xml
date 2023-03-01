@@ -2557,6 +2557,10 @@
     <string name="navigo_forfait_mois">Month ticket</string>
     <!-- Translators: ticket for a month with 75% discount. French "Forfait solidarité 75% mois". -->
     <string name="navigo_forfait_mois_75">Solidarity 75%% month ticket</string>
+    <!-- Translators: ticket for the whole year. French "Forfait annuel". -->
+    <string name="navigo_forfait_annuel">Year ticket</string>
+    <!-- Translators: free ticket for a few months when when receiving social aids. French "Solidarité Gratuité". -->
+    <string name="navigo_forfait_solidarite_gratuite">Free Solidarity Ticket</string>
     <!-- Translators: subscription to ImagineR student, yearly subscription with a discount. French "Abonnement ImagineR Étudiant". -->
     <string name="navigo_forfait_imagineR_etudiant">ImagineR student subscription</string>
     <!-- Translators: subscription to Navigo Liberté+ service and pay at the end of each month. French "Abonnement Navigo Libetré+". -->

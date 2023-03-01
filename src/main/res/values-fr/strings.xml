@@ -877,6 +877,8 @@
     <string name="navigo_forfait_semaine_75">Forfait solidarité 75%% semaine</string>
     <string name="navigo_forfait_mois">Forfait mois</string>
     <string name="navigo_forfait_mois_75">Forfait solidarité 75%% mois</string>
+    <string name="navigo_forfait_annuel">Forfait annuel</string>
+    <string name="navigo_forfait_solidarite_gratuite">Solidarité Gratuité</string>
     <string name="navigo_forfait_imagineR_etudiant">Abonnement ImagineR Étudiant</string>
     <string name="navigo_forfait_liberte">Abonnement Navigo Libetré+</string>
     <string name="oura_billet_tarif_normal">Billet à tarif normal</string>
