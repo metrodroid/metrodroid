@@ -96,8 +96,8 @@
     <string name="emv_cryptogram_information_data">נתוני פרטי קריפטוגרמה</string>
     <string name="emv_gpo_response">תגובת Get Processing Options (GPO)</string>
     <string name="emv_data_response">תגובת Get Data %s</string>
-    <string name="device_manufacturer">יצרן: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"manufacturer\" example=\"HTC\"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"brand\" example=\"Google\"&gt;%2$s&lt;/xliff:g&gt;)<xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
-    <string name="device_model">דגם: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"model_name\" example=\"Pixel 2\"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"model_codename\" example=\"walleye\"&gt;%2$s&lt;/xliff:g&gt;)<xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
+    <string name="device_manufacturer">יצרן: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
+    <string name="device_model">דגם: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
     <string name="app_version">גרסה: %s</string>
     <string name="no_data_in_clipboard">אין נתונים בלוח הגזירים.</string>
     <string name="unknown_tags">תגים לא מוכרים</string>
@@ -1029,13 +1029,13 @@
     <string name="pref_show_raw_station_ids">הצגת מזהים גולמיים של תחנות ומסלולים</string>
     <string name="card_number">מספר כרטיס</string>
     <string name="balances_and_subscriptions">כרטיסים</string>
-    <string name="ios_version">גרסת iOS:‏ &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;<xliff:g id="version" example="10.3">%1$s</xliff:g></string>
+    <string name="ios_version">גרסת iOS:‏ <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
     <string name="mfc_not_supported">MIFARE Classic: לא נתמך</string>
     <string name="mfc_supported">MIFARE Classic: נתמך</string>
     <string name="nfc_not_available">NFC: לא זמין</string>
     <string name="nfc_disabled">NFC: כבוי</string>
     <string name="nfc_enabled">NFC: פעיל</string>
-    <string name="android_os">מערכת הפעלה Android:‏ &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"9.0\"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"build_id\" example=\"PPR2.180905.006\"&gt;%2$s&lt;/xliff:g&gt;)<xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
+    <string name="android_os">מערכת הפעלה Android:‏ <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
     <string name="card_name_strizh">סטריז׳</string>
     <string name="card_name_orenburg_student">כרטיס סטודנט לאורנבורג</string>
     <string name="card_name_orenburg_ekg">אורנבורג EKG (כרטיס מאוחד לתושבים - ЕКГ)</string>
@@ -1141,8 +1141,8 @@
     <string name="location_krasnodar">קרסנודאר, רוסיה</string>
     <string name="location_kirov">קירוב, רוסיה</string>
     <string name="location_kazan">קאזאן, רוסיה</string>
-    <string name="clipper_return">חזרה (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"ticket_class\" example=\"Adult\"&gt;%1$s&lt;/xliff:g&gt;)<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
-    <string name="clipper_single">נסיעה בודדת (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"ticket_class\" example=\"Adult\"&gt;%1$s&lt;/xliff:g&gt;)<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">חזרה (<xliff:g id="ticket_class" example="מבוגר">%1$s</xliff:g>)</string>
+    <string name="clipper_single">נסיעה בודדת (<xliff:g id="ticket_class" example="מבוגר">%1$s</xliff:g>)</string>
     <string name="clipper_ticket_type_youth">נוער</string>
     <string name="clipper_ticket_type_senior">אזרח ותיק</string>
     <string name="clipper_ticket_type_adult">מבוגר</string>
@@ -1381,4 +1381,5 @@
     <string name="smartrider_fare_tertiary">השכלה גבוהה</string>
     <string name="smartrider_fare_convention">מעבר לכנס</string>
     <string name="smartrider_fare_staff">סגל</string>
+    <string name="location_bretagne">ברטאן, צרפת</string>
 </resources>
