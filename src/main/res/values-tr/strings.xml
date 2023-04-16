@@ -1317,4 +1317,5 @@
     <string name="smartrider_fare_student">Okul Öğrencisi</string>
     <string name="smartrider_fare_tertiary">Yükseköğretim Öğrencisi</string>
     <string name="smartrider_fare_convention">Etkinlik Geçişi</string>
+    <string name="location_bretagne">Breton, Fransa</string>
 </resources>
