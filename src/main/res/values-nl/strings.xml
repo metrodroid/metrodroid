@@ -1321,4 +1321,5 @@
     <string name="smartrider_fare_staff">Medewerkers</string>
     <string name="smartrider_fare_convention">Evenementenkaart</string>
     <string name="location_bretagne">Brentagne, Frankrijk</string>
+    <string name="location_ontario">Ontario, Canada</string>
 </resources>
