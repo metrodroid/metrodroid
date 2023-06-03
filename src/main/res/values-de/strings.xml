@@ -1178,4 +1178,7 @@
     <string name="tmoney_usercode_bus">Bus (Straßenmaut)</string>
     <string name="location_gothenburg">Göteborg, Schweden</string>
     <string name="never">Nie</string>
+    <string name="location_ontario">Ontario, Kanada</string>
+    <string name="manufacture_id">Herstellungskennung</string>
+    <string name="location_bretagne">Bretagne, Frankreich</string>
 </resources>
