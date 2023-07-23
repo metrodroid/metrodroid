@@ -48,7 +48,9 @@ OVC_OPERATORS = {
 
   0x0C: 'DUO', # Dienst Uitvoering Onderwijs
   0x19: 'Reseller', # used by Albert Heijn, Primera and Hermes busses and maybe even more
-  0x2C: 'DUO'
+  0x2C: 'DUO',
+
+  0x2711: 'GVB Flex'
 }
 
 lines = {}
