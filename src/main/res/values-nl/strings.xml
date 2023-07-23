@@ -1029,6 +1029,8 @@
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Reizen op saldo (2-1 Dag)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Reizen op saldo (1-2 Dag)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Reizen op saldo (2-1 Dag met korting)</string>
+    <string name="ovc_sub_reizen_op_rekening_trein">Reizen op Rekening Trein</string>
+    <string name="ovc_sub_reizen_op_rekening_bus_tram_metro">Reizen op Rekening Bus Tram Metro</string>
     <string name="ovc_sub_dalkorting">Dal Korting</string>
     <string name="ovc_sub_daluren_oost_nederland">Dal Voordeel Oost</string>
     <string name="ovc_sub_student_weekend_vrij">Student weekend-vrij</string>
@@ -1036,6 +1038,7 @@
     <string name="ovc_sub_student_week_vrij">Student week-vrij</string>
     <string name="ovc_sub_student_weekend_korting">Student weekend-korting</string>
     <string name="ovc_sub_fietssupplement">OV-fietsabonnement</string>
+    <string name="ovc_sub_gvb_nachtbus_saldo">GVB Nachtbus Saldo</string>
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
     <string name="ovc_sub_studenten_ov_chipkaart_week_2009">Studenten ov-chipkaart week (2009)</string>
     <string name="ovc_sub_studenten_ov_chipkaart_weekend_2009">Studenten ov-chipkaart weekend (2009)</string>
