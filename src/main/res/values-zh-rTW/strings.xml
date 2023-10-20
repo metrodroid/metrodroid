@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Traditional Chinese -->
-<resources>
+<!-- Traditional Chinese --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- A resource file is needed to trigger localised station names for EasyCard. -->
+    <string name="import_xml">匯入</string>
+    <string name="delete_card">移除卡片</string>
+    <string name="lawyercats">Metrodroid 及其作者與任何公共交通機構都沒有關聯。</string>
+    <string name="unknown_card">不明卡片</string>
+    <string name="export_filename">匯出檔案名</string>
+    <string name="copy_xml">複製</string>
+    <string name="export">匯出</string>
+    <string name="machine_id">機器 ID</string>
+    <string name="save_xml">儲存到檔案</string>
+    <string name="preferences">偏好設定</string>
+    <string name="no_trip_data">找不到旅程。這張卡有使用過嗎？</string>
+    <string name="hw_detail">生產商資訊</string>
+    <string name="scanned_cards">歷史記錄</string>
+    <string name="data">原始資料</string>
+    <string name="fully_locked_desc">此卡沒有任何可以無需密鑰便可讀取的部分，而且沒有可用作解密的弱點。
+\n
+\n除非有取得密鑰的方法，否則此卡很可能永遠都無法使用 Metrodroid 讀取。
+\n
+\n請您要求發卡機構允許開放讀取此卡。以現代的智能卡而言，允許讀取是安全的，有些機構甚至會提供資料格式的開放文件！</string>
+    <string name="reading_card">讀取中…</string>
+    <string name="unknown_card_description">Metrodroid 尚未支援此卡。只能顯示原始資料。</string>
+    <string name="balance_speech">餘額 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="locked_mfd_card">上鎖的 MIFARE DESFire 卡</string>
+    <string name="nfc_off_error">NFC 功能關閉</string>
+    <string name="transaction_counter">交易數量</string>
+    <string name="license">授權條款</string>
+    <string name="import_clipboard">從剪貼簿貼上</string>
+    <string name="dont_move">請勿移動卡片</string>
+    <string name="about">關於</string>
+    <string name="advanced_info">進階資訊</string>
+    <string name="no_scanned_cards">您沒有掃描過任何卡片。</string>
+    <string name="unknown_more_info_desc">點選以瞭解更多有關 Metrodroid 支援此卡的資訊。</string>
+    <string name="share_xml">分享</string>
+    <string name="directions">請拍卡。</string>
+    <string name="title_activity_license">開放原始碼授權條款</string>
+    <string name="turn_on_nfc">請開啓 NFC 而讀取卡片資料。</string>
+    <string name="unknown_more_info">更多資訊</string>
+    <string name="last_refill">最近一次充值</string>
+    <string name="nfc_settings">NFC 設定</string>
+    <string name="history">歷史</string>
+    <string name="locked_mfu_card">上鎖的 MIFARE Ultralight 卡</string>
+    <string name="export_all">全部匯出</string>
+    <string name="fully_locked_title">完全鎖上的卡。</string>
+    <string name="unknown_card_header">不支援的卡格式</string>
+    <string name="locked_mfc_card">上鎖的 MIFARE Classic 卡</string>
+    <string name="fully_locked_desc_unlockable">此卡在沒有密鑰的情況下沒有任何可讀的資料。您沒有安裝有效的密鑰。
+\n
+\n當密鑰安裝後，此卡便能讀取。密鑰通常每張卡都不同。您可以在說明文件找到更多取得和安裝密鑰的資訊。
+\n
+\n請您要求發卡機構允許開放讀取此卡。以現代的智能卡而言，允許讀取是安全的，有些機構甚至會提供資料格式的開放文件！</string>
+    <string name="loading">載入中…</string>
+    <string name="import_file">從檔案匯入</string>
+    <string name="copyright">© 2015 – 2022 Michael Farrell 著作權所有</string>
+    <string name="supported_cards">支援的卡片列表</string>
+    <string name="machine_id_format">機器 ID %s</string>
 </resources>
