@@ -238,7 +238,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
     }
 
     companion object {
-        private const val LEAP_API_URL = "https://tnfc.leapcard.ie//ReadCard/V0"
+        private const val LEAP_API_URL = "https://tnfc.leaptopup.com/ReadCard/V0"
         private const val TAG = "LeapUnlocker"
 
         @OptIn(ExperimentalSerializationApi::class)
