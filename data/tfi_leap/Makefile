@@ -1,8 +1,8 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
 MDROOT = ../..
 
-IRISHRAIL_URL = "https://www.transportforireland.ie/transitData/google_transit_irishrail.zip"
-LUAS_URL = "https://www.transportforireland.ie/transitData/google_transit_luas.zip"
+IRISHRAIL_URL = "https://www.transportforireland.ie/transitData/Data/GTFS_Irish_Rail.zip"
+LUAS_URL = "https://www.transportforireland.ie/transitData/Data/GTFS_LUAS.zip"
 
 MAPPING_FILES := \
     mapping_irishrail.csv \
