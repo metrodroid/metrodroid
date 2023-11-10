@@ -10,7 +10,7 @@ allprojects {
 
 buildscript {
     ext {
-        kotlin_version = '1.5.31'
+        kotlin_version = '1.6.21'
         kotlinserial_version = '1.3.0'
         coroutines_version = '1.5.2'
         lint_version = '26.2.1'
@@ -19,7 +19,7 @@ buildscript {
         build_version = '31.0.0'
         android_sdk_version = 31
         android_min_version = 16
-        android_gradle_version = '7.0.2'
+        android_gradle_version = '7.4.2'
         protobuf_version = '3.18.1'
         protobuf_gradle_version = '0.8.17'
     }
@@ -598,8 +598,8 @@ android {
         testApplicationId "au.id.micolous.farebot.test"
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
+        resConfigs androidLanguageList
 
-        resConfigs(androidLanguageList)
         buildConfigField "String[]", "AVAILABLE_TRANSLATIONS", "new String[]{\"" + androidLanguageList.join("\", \"") + "\"}"
         vectorDrawables {
             useSupportLibrary = true
@@ -668,44 +668,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
     packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/kotlinx-io.kotlin_module'
-        exclude 'META-INF/atomicfu.kotlin_module'
-        exclude 'META-INF/main.kotlin_module'
-        exclude 'META-INF/kotlinx-serialization-runtime.kotlin_module'
+        resources {
+            excludes += ['META-INF/LICENSE.txt', 'META-INF/NOTICE.txt', 'META-INF/kotlinx-io.kotlin_module', 'META-INF/atomicfu.kotlin_module', 'META-INF/main.kotlin_module', 'META-INF/kotlinx-serialization-runtime.kotlin_module']
+        }
     }
 
-    lintOptions {
-        abortOnError(project.hasProperty('LINT_FATAL'))
-        warningsAsErrors(project.hasProperty('LINT_FATAL'))
-        disable 'MissingTranslation'
-        // Lint doesn't understand our multiplatform setup
-        disable 'UnusedResources'
-        // We make a link from valuen-en to values and hence
-        // all untranslatable strings are considered as "translated"
-        disable 'Untranslatable'
-        // We link between id<->in and he <-> iw so usage of in/he
-        // is of no issue
-        disable 'LocaleFolder'
-        // We use vector images for card images mainly to decrease size
-        // and improve the look
-        disable 'VectorPath'
-        disable 'VectorRaster'
-        // We don't want translations to make lint fail
-        disable 'ImpliedQuantity'
-        disable 'Typos'
-        disable 'TypographyDashes'
-        // Disable following temporarily until we get them in order
-        disable 'ObsoleteLintCustomCheck'
-        disable 'IconDensities'
-        disable 'IconMissingDensityFolder'
-        disable 'StaticFieldLeak'
-        disable 'AppLinkUrlError'
-        disable 'RelativeOverlap'
-    }
 
     testOptions {
         unitTests {
@@ -718,11 +686,17 @@ android {
             }
         }
     }
+    namespace 'au.id.micolous.farebot'
+//    installation {
+//        timeOutInMs '10 * 60 * 1000'
+//    }
+    lint {
+//        abortOnError 'LINT_FATAL'
+        disable 'MissingTranslation', 'UnusedResources', 'Untranslatable', 'LocaleFolder', 'VectorPath', 'VectorRaster', 'ImpliedQuantity', 'Typos', 'TypographyDashes', 'ObsoleteLintCustomCheck', 'IconDensities', 'IconMissingDensityFolder', 'StaticFieldLeak', 'AppLinkUrlError', 'RelativeOverlap'
+//        warningsAsErrors 'LINT_FATAL'
+    }
 
     // Long timeouts needed for slow environments (like Travis CI)
-    adbOptions {
-        timeOutInMs 10 * 60 * 1000 // 10 minutes
-    }
 }
 
 kotlin.sourceSets.all {
