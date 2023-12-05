@@ -876,6 +876,10 @@
     <string name="navigo_forfait">Billet saisonnier</string>
     <string name="oura_billet_tarif_normal">Billet à tarif normal</string>
     <string name="gironde_line">Ligne %d</string>
+    <string name="ilevia_trajet_unitaire">Ilévia trajet unitaire</string>
+    <string name="ilevia_trajet_unitaire_x10">Ilévia trajets unitaires x10</string>
+    <string name="ilevia_mensuel">Ilévia abonnement mensuel</string>
+    <string name="ilevia_10mois">Ilévia abonnement 10 mois</string>
     <string name="mobib_jump_1_trip">Jump 1 voyage</string>
     <string name="mobib_jump_10_trips">Jump 10 voyages</string>
     <string name="mobib_airport_bus">1 aller simple bus de l\'aéroport</string>
@@ -1175,6 +1179,7 @@
     <string name="card_name_siticard_vladimir">SitiCard (Vladimir)</string>
     <string name="card_name_smartrider">SmartRider</string>
     <string name="location_bretagne">Bretagne, France</string>
+    <string name="location_hauts_de_france">Hauts-de-France, France</string>
     <string name="ndef_android_pkg_value">Paquet Android</string>
     <string name="emv_card_effective">Carte valide a partir du</string>
     <string name="location_nagoya">Nagoya, Japon</string>
