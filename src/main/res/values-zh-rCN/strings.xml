@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Simplified Chinese --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<!-- Simplified Chinese --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
     <string name="manufacturer_fudan_microelectronics">复旦微电子集团</string>
     <string name="nfc_settings">NFC设置</string>
     <string name="trip_description">(从)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (到)<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
@@ -182,4 +182,258 @@
     <string name="title_activity_license">开源许可证</string>
     <string name="license">许可证</string>
     <string name="copyright">版权所有© 2015 – 2022 Michael Farrell</string>
+    <string name="desfire_type">类型</string>
+    <string name="location_nagoya">日本名古屋</string>
+    <string name="mode_pos">销售点</string>
+    <string name="location_gothenburg">瑞典哥德堡</string>
+    <string name="location_yaroslavl">俄罗斯雅罗斯拉夫尔</string>
+    <string name="location_yoshkar_ola">俄罗斯，约什卡尔奥拉</string>
+    <string name="clipper_zone_number">区域#%s</string>
+    <string name="clipper_single">单车(<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">返回 (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="edy_file_id">死亡身份</string>
+    <string name="card_name_japan_ic">日本IC</string>
+    <plurals name="block_count">
+        <item quantity="other">%d 扇区</item>
+    </plurals>
+    <plurals name="record_count">
+        <item quantity="other">%d记录</item>
+    </plurals>
+    <string name="desfire_standard_file">标准文件</string>
+    <string name="desfire_unknown_file">未知文件类型</string>
+    <string name="desfire_confirmation">确认</string>
+    <string name="desfire_keyex">密钥交换</string>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="other">有效期为%d个月</item>
+    </plurals>
+    <string name="desfire_protocol">协议</string>
+    <string name="manufacturer_name">制造商</string>
+    <string name="location_germany_and_switzerland">德国和瑞士</string>
+    <string name="location_gironde">吉伦特，法国</string>
+    <string name="location_kirov">基洛夫，俄罗斯</string>
+    <string name="location_otago">新西兰奥塔哥</string>
+    <string name="clipper_ticket_type_adult">成人</string>
+    <string name="mode_tram">有轨电车</string>
+    <string name="mode_metro">地铁</string>
+    <string name="mode_ferry">渡船</string>
+    <string name="clipper_end_of_line">（行尾）</string>
+    <string name="card_name_edy">死亡</string>
+    <string name="edy_file_history">生命史</string>
+    <string name="felica_specification_version">规范版本</string>
+    <string name="raw_level_all">所有领域</string>
+    <string name="raw_level_none">无(已禁用)</string>
+    <string name="cepas_credit_trp">信用交易指针（TRP）</string>
+    <string name="cepas_can">卡号（CAN）</string>
+    <string name="desfire_batch_number">批号</string>
+    <string name="desfire_general_info">一般信息</string>
+    <string name="desfire_storage_size">存储大小</string>
+    <string name="desfire_vendor_id">供应商ID</string>
+    <string name="location_barnaul">俄罗斯巴瑙尔</string>
+    <string name="location_penza">俄罗斯奔萨</string>
+    <string name="location_orenburg">俄罗斯奥伦堡</string>
+    <string name="location_izhevsk">俄罗斯伊热夫斯克</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.Zip保存到USB存储。</string>
+    <string name="enabled">开</string>
+    <string name="theme_dark">黑暗</string>
+    <string name="theme_light">明亮</string>
+    <string name="location_fribourg_ch">瑞士弗里堡</string>
+    <string name="location_finland">芬兰</string>
+    <string name="date">日期</string>
+    <string name="keys">密钥</string>
+    <string name="location_crimea">克里米亚</string>
+    <plurals name="bytes">
+        <item quantity="other">%d byte</item>
+    </plurals>
+    <string name="manufacture_week">制造周期</string>
+    <string name="location_gauteng">南非豪登省</string>
+    <string name="calypso_manufacture_country">制造国</string>
+    <string name="location_saint_petersburg">俄罗斯圣彼得堡</string>
+    <string name="calypso_serial_number">序列号</string>
+    <string name="felica_pmm">制造参数（PMm）</string>
+    <string name="cepas_purse_info">钱包信息</string>
+    <string name="cepas_issuer_data_length">发卡机构数据长度</string>
+    <string name="cepas_last_txn_info">关于上次交易的信息</string>
+    <string name="cepas_credit_header">信用社名称</string>
+    <string name="cepas_purse_balance">钱包余额</string>
+    <string name="cepas_purse_id">钱包ID</string>
+    <string name="cepas_version">CEPAS版本</string>
+    <string name="hardware_information">硬件信息</string>
+    <string name="desfire_linear_record">线性记录</string>
+    <string name="desfire_value_file">值文件</string>
+    <string name="map_tiles_help">查看TileLayer文档说明</string>
+    <string name="map_tiles_help_summary">有关使用地图瓦片URL的帮助，请参阅LEAFLE的在线文档(仅有英文版本)。</string>
+    <string name="location_act_australia">澳大利亚首都直辖区</string>
+    <string name="location_shenzhen">中国深圳</string>
+    <string name="auth_retries">身份验证重试</string>
+    <string name="mifare_classic">MIFARE经典版</string>
+    <string name="about_card_format">关于此卡片格式</string>
+    <string name="need_stations_submit">报告</string>
+    <string name="need_stations">有些站点名称未知。</string>
+    <string name="transaction_type">交易类型</string>
+    <string name="card_epoch">卡片纪元</string>
+    <string name="vehicle_type">车辆类型</string>
+    <string name="last_transaction">最后一笔交易</string>
+    <string name="launch_from_background">从后台启动</string>
+    <string name="nfc_unavailable">NFC不可用</string>
+    <string name="card_keys_not_supported">Metrodroid不支持这种类型的卡的密钥。</string>
+    <string name="pref_theme">主题</string>
+    <string name="file_exported">文件已导出。</string>
+    <string name="cant_delete_with_obfuscation">删除密钥当前不可用</string>
+    <string name="delete_key_confirm_title">确实要删除密钥吗？</string>
+    <plurals name="passengers">
+        <item quantity="other">乘客</item>
+    </plurals>
+    <string name="desfire_response">响应</string>
+    <string name="info">信息</string>
+    <string name="never">从不</string>
+    <plurals name="trips_remaining">
+        <item quantity="other">%d剩余行程</item>
+    </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="other">剩余%d次过闸（共%d次）</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="other">%d单车</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="other">有效期%d天</item>
+    </plurals>
+    <string name="cepas_purse_num">CEPAS钱包编号%d</string>
+    <string name="felica_response_time_auth2">身份验证2命令</string>
+    <string name="felica_response_time_read">读取命令（1块）</string>
+    <string name="felica_response_time_write">写入命令（1个块）</string>
+    <string name="location_dubai">阿联酋迪拜</string>
+    <string name="location_ekaterinburg">俄罗斯叶卡捷琳堡</string>
+    <string name="location_krasnodar">俄罗斯克拉斯诺达尔</string>
+    <string name="location_moscow">俄罗斯莫斯科</string>
+    <string name="location_nizhniy_novgorod">俄罗斯下诺夫哥罗德</string>
+    <string name="location_vladimir">弗拉基米尔，俄罗斯</string>
+    <string name="mode_ticket_machine">售票机</string>
+    <string name="mode_vending_machine">自动售货机</string>
+    <string name="ez_bus_number">公共汽车 #%s</string>
+    <string name="ez_topup">加满</string>
+    <string name="location_omsk">俄罗斯鄂木斯克</string>
+    <string name="location_bretagne">布列塔尼，法国</string>
+    <string name="location_oahu">欧胡岛，夏威夷州，美国</string>
+    <string name="location_russia">俄罗斯</string>
+    <string name="location_ontario">加拿大安大略省</string>
+    <string name="location_samara">俄罗斯萨马拉</string>
+    <string name="location_wuhan">中国武汉</string>
+    <string name="mode_banned">禁止</string>
+    <string name="mode_trolleybus">无轨电车</string>
+    <string name="mode_monorail">单轨铁路</string>
+    <string name="mode_unknown">未知</string>
+    <string name="ez_first_use">第一次使用</string>
+    <string name="edy_file_purse_balance">Edy钱包余额</string>
+    <string name="invalid_sector_title_format">扇区: %1$s (无效: %2$s)</string>
+    <string name="felica_system_title_format">系统: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">服务: %1$s (%2$s)</string>
+    <string name="record_title_format">记录:%s</string>
+    <string name="valid_format">有效期从%1$s 到 %2$s</string>
+    <string name="valid_to_format">有效期至%1$s</string>
+    <string name="valid_from_format">有效日期为 %1$s</string>
+    <string name="valid_origin_destination">有效期从%1$s 到 %2$s</string>
+    <string name="valid_origin_destination_via">有效期从 %1$s 到 %2$s 通过 %3$s</string>
+    <string name="subscription_cost">费用</string>
+    <string name="unknown_format">未知 (%s)</string>
+    <string name="unknown">未知</string>
+    <string name="keys_required">需要加密密钥才能读取此卡。</string>
+    <string name="keys_loaded">已加载此卡的加密密钥。</string>
+    <string name="load_keys">加载密钥</string>
+    <string name="add_key">添加密钥</string>
+    <string name="rejected">拒绝</string>
+    <string name="delete_key_confirm_message">密钥文件 <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (包含 <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) 将永远消失。</string>
+    <string name="cant_delete_with_obfuscation_message">出于安全考虑，在启用卡号混淆的情况下不能删除密钥。如果要删除密钥，请禁用该选项。</string>
+    <string name="add_key_directions">将密钥的二进制转储保存为扩展名为.farebotkey的文件，将其作为附件通过电子邮件发送给您自己，然后在此设备上打开它。</string>
+    <string name="no_keys">没有密钥。</string>
+    <string name="time">时间</string>
+    <string name="card_not_supported_on_device">您的设备不支持此卡。</string>
+    <string name="card_preview_reader">测试版读卡器。</string>
+    <string name="visit_website">访问网站</string>
+    <string name="title_activity_about">关于</string>
+    <string name="card_format">卡片格式</string>
+    <string name="select_file">选择文件</string>
+    <string name="copied_to_clipboard">复制到剪贴板</string>
+    <string name="saved_xml_custom">已将XML保存到USB存储。</string>
+    <string name="map_tiles_url">地图切片URL</string>
+    <string name="map_tiles_url_summary">对嵌入的地图使用自定义切片服务器，并使用LEAFLET TileLayer语法。</string>
+    <string name="map_tiles_subdomains">地图切片子域</string>
+    <string name="map_tiles_subdomains_summary">如果在映射URL中使用{S}，则使用逗号分隔的子域列表或单字符的子域列表。</string>
+    <string name="online_services">在线服务</string>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> 启用模糊处理标志</item>
+    </plurals>
+    <string name="raw_level_unknown_only">仅未知字段</string>
+    <string name="pref_theme_desc">选择外观和样式</string>
+    <string name="pref_show_local_and_english_title">同时显示本地和英语车站名称</string>
+    <string name="pref_show_local_and_english_desc">无论区域设置如何，都显示本地名称和英文名称，禁用时使用最合适的变量。</string>
+    <plurals name="cards_imported">
+        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> 卡已导入。</item>
+    </plurals>
+    <string name="answer_to_request">ATQA（对请求的答复）</string>
+    <plurals name="felica_service_count">
+        <item quantity="other">%d 服务</item>
+    </plurals>
+    <string name="manufacture_year">制造年份</string>
+    <string name="manufacture_id">制造ID</string>
+    <string name="select_acknowledge">SAK（选择确认）</string>
+    <plurals name="cards_deduped">
+        <item quantity="other">%d已删除复制卡</item>
+    </plurals>
+    <string name="desfire_value_format">类型：%1$s，范围：%2$s-%3$s，有限信用：%4$s（%5$s）</string>
+    <string name="cepas_debit_options">借记选项</string>
+    <string name="desfire_subtype">子类型</string>
+    <string name="desfire_major_version">主要版本</string>
+    <string name="desfire_minor_version">次要文本</string>
+    <string name="disabled">关</string>
+    <string name="cepas_purse_status">钱包状态</string>
+    <string name="cepas_purse_creation_date">钱包创建日期</string>
+    <string name="cepas_autoload_amount">自动加载数量</string>
+    <string name="cepas_other_purse_info">其他钱包信息</string>
+    <string name="cepas_logfile_record_count">日志文件记录计数</string>
+    <string name="cepas_issuer_data">发卡机构特定数据</string>
+    <string name="cepas_purse_num_history" tools:ignore="PluralsCandidate">CEPAS钱包编号%d历史记录</string>
+    <string name="cepas_csn">卡序列号（CSN）</string>
+    <string name="cepas_trp">事务指针（TRP）</string>
+    <string name="felica_manufacturer_code">制造商代码</string>
+    <string name="felica_idm">制造商ID（IDm）</string>
+    <string name="felica_card_identification_number">卡识别号</string>
+    <string name="felica_rom_type">ROM类型</string>
+    <string name="felica_ic_type">IC类型</string>
+    <string name="felica_maximum_response_time">最大响应时间</string>
+    <string name="felica_response_time_variable">请求服务命令（1个节点）</string>
+    <string name="felica_response_time_fixed">固定响应时间命令</string>
+    <string name="felica_response_time_auth1">身份验证1命令（1个节点）</string>
+    <string name="felica_response_time_other">发布命令</string>
+    <string name="felica_basic_version">基本规范版本</string>
+    <string name="felica_option_version_list">可选版本列表</string>
+    <string name="manufacture_date">制造日期</string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="mfc_uid_mode">UID 长度</string>
+    <string name="desfire_backup_file">备份文件</string>
+    <string name="desfire_challenge">挑战</string>
+    <string name="desfire_cyclic_record">循环记录</string>
+    <string name="desfire_key_number">密钥 %s</string>
+    <plurals name="desfire_standard_format">
+        <item quantity="other">类型：%1$s，长度：%2$s字节</item>
+    </plurals>
+    <plurals name="desfire_record_format">
+        <item quantity="other">类型：%1$s，%2$d条记录（最多%3$d），记录大小：%4$d</item>
+    </plurals>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
+    <string name="location_worldwide">全球</string>
+    <string name="location_abu_dhabi">阿布扎比,阿联酋</string>
+    <string name="location_fukuoka_city">日本福冈</string>
+    <string name="location_fukuoka_prefecture">日本福冈</string>
+    <string name="location_kansai">日本关西</string>
+    <string name="location_kazan">俄罗斯喀山</string>
+    <string name="card_note_clipper">支持塑料（可重新加载）和纸质（金门轮渡和穆尼发行的一次性卡）单次卡。</string>
+    <string name="location_sophia_antipolis">索菲娅 安提波利斯，法国</string>
+    <string name="mode_toll_road">收费公路</string>
+    <string name="free_transfers_until">免费转账至</string>
+    <string name="location_waikato">瓦卡托,新西兰</string>
+    <string name="ez_bus_refund">巴士退款</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_retail_purchase">零售价</string>
+    <string name="ez_service_charge">服务费</string>
 </resources>
