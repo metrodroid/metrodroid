@@ -191,7 +191,7 @@
     <string name="clipper_zone_number">区域#%s</string>
     <string name="clipper_single">单车(<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
     <string name="clipper_return">返回 (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
-    <string name="edy_file_id">死亡身份</string>
+    <string name="edy_file_id">Edy身份</string>
     <string name="card_name_japan_ic">日本IC</string>
     <plurals name="block_count">
         <item quantity="other">%d 扇区</item>
@@ -436,4 +436,76 @@
     <string name="ez_mrt">MRT</string>
     <string name="ez_retail_purchase">零售价</string>
     <string name="ez_service_charge">服务费</string>
+    <string name="card_name_hayakaken">Hayakaken</string>
+    <string name="card_name_kitaca">Kitaca</string>
+    <string name="felica_process_merchandise_admission_cash">商品/入场券（部分使用现金）</string>
+    <string name="felica_terminal_ticket">售票机</string>
+    <string name="felica_terminal_tvm_tokyo_monorail">东京单轨列车售票机</string>
+    <string name="felica_terminal_tvm_etc">自动售票机等。</string>
+    <string name="suica_file_in_out">Suica 出入记录</string>
+    <string name="mfc_key_b">密钥B</string>
+    <string name="mfc_key_a">密钥A</string>
+    <string name="general">概况</string>
+    <string name="lang_default">系统默认</string>
+    <string name="requires_android_17">需要安卓 4.2 或更高版本。</string>
+    <string name="localise_places_longdesc_button">关于语言提示…</string>
+    <string name="localise_places_longdesc_title">关于语言提示</string>
+    <string name="mfd_reading">读取 MIFARE DESFire 卡…</string>
+    <string name="mfc_reading_blocks">读取扇区 %d…</string>
+    <string name="mfc_other_key">为扇区 %d 尝试用户提供的备用密钥…</string>
+    <string name="mfc_have_key">尝试用户提供的 %d 扇区密钥…</string>
+    <string name="obfuscation_fares">混淆票价</string>
+    <string name="obfuscation_fares_desc">随机更改显示的票价</string>
+    <string name="obfuscation_times_desc">对行程、订阅和扫描的时间戳进行模糊处理并降低分辨率</string>
+    <string name="obfuscation_times">混淆时间</string>
+    <string name="obfuscation_dates_desc">将行程、订购、到期和扫描日期显示为不同的随机日期</string>
+    <string name="obfuscation_title">混淆</string>
+    <string name="mfc_fallback">反馈阅读器</string>
+    <string name="speak_balance">大声说出平衡</string>
+    <string name="pref_hide_unsupported_ribbon">隐藏 \"不支持 \"功能区</string>
+    <string name="mfc_key_ab">密钥A|B</string>
+    <string name="card_name_toica">TOICA</string>
+    <string name="felica_process_payment_thirdparty">付款（第三方）</string>
+    <string name="card_name_manaca">manaca</string>
+    <string name="card_name_nimoca">nimoca</string>
+    <string name="card_name_pitapa">PiTaPa</string>
+    <string name="card_name_sugoca">SUGOCA</string>
+    <string name="felica_terminal_vehicle">车辆终点站(公共汽车)</string>
+    <string name="felica_terminal_deposit_quick_charge">快速加注机</string>
+    <string name="felica_process_admission_thirdparty">支付接口费(第三方)</string>
+    <string name="suica_file_history">穗卡历史</string>
+    <string name="felica_terminal_fare_adjustment">票价调整机</string>
+    <string name="felica_terminal_portable">便携式终端</string>
+    <string name="auth_retries_summary">每个扇区尝试验证的次数</string>
+    <string name="mfc_fallback_desc">有些机构的卡片上没有识别魔法。要读取它们，您必须明确选择一个机构。</string>
+    <string name="requires_android_21">需要安卓 5.0 或更高版本。</string>
+    <string name="pref_hide_unsupported_ribbon_desc_off">该设备无法读取的卡将在其图样上显示红色的 \"不支持 \"警告</string>
+    <string name="pref_hide_unsupported_ribbon_desc_on">不支持的卡将不会有任何东西覆盖其图样</string>
+    <string name="obfuscation_card_numbers">隐藏卡号</string>
+    <string name="obfuscation_card_numbers_desc">不要在任何地方显示卡号</string>
+    <string name="obfuscation_balance">混淆平衡</string>
+    <string name="obfuscation_balance_desc">随机更改显示的余额</string>
+    <string name="obfuscation_dates">混淆日期</string>
+    <string name="accessibility">无障碍环境</string>
+    <string name="speak_balance_summary">扫描卡片时，余额会自动朗读。即使屏幕阅读器没有运行，也能正常工作。</string>
+    <string name="localise_places_desc">将语言提示(LocaleSpan)添加到地名中，例如桩号、停靠点、线路和路线名称。这改变了屏幕阅读器和其他辅助功能软件使用的发音。</string>
+    <string name="localise_places">为地名添加语言提示</string>
+    <string name="localise_places_longdesc">文本到语音语音通常只适用于一种语言。
+\n
+\nLocaleSpan 提示用于将文本标记为不同的语言。当应用到车站、停靠站、线路或路线名称时，支持这些提示的屏幕阅读器将使用地名母语的合成语音来发音，而不是您配置 Android 使用的语言。
+\n
+\n启用此选项通常会改善非国际知名外国地名的发音，但你可能会发现它更难理解。
+\n
+\n这通常不会改变地名的屏幕显示，但有些设备可能会使用不同的字体。
+\n
+\n这要求无障碍软件支持 LocaleSpan API（如 Google TalkBack），并且安装了适当的语音。</string>
+    <string name="lang_override">应用语言</string>
+    <string name="lang_override_desc">更改应用程序语言。需要重新启动应用程序才能应用</string>
+    <string name="unsupported_tag">不支持 NFC 卡介质</string>
+    <string name="mfp_reading">阅读MIFARE 附加卡…</string>
+    <string name="mfc_default_key">正在尝试 %d 扇区的知名密钥…</string>
+    <string name="iso14a_detect">检测ISO 14443卡类型..…</string>
+    <string name="mfc_reading">读取 MIFARE 经典卡…</string>
+    <string name="mfc_rwid">读取：%1$s，写入：%2$s，递增：%3$s，递减：%4$s</string>
+    <string name="mfc_key_never">从不</string>
 </resources>
