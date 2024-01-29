@@ -79,6 +79,13 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         return true
     }
 
+    override fun compareTo(other: Transaction): Int {
+        if (other is OVChipTransaction) {
+            return id.compareTo(other.id)
+        }
+        return super.compareTo(other)
+    }
+
     override val mode get(): Trip.Mode {
         val startStationId = stationId ?: 0
 
