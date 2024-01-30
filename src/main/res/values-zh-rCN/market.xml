@@ -1,2 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="market_changelog_generic">修正错误，添加新功能和数据。
+\n
+\n更多详情和已知问题（英文）：https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_300">- 新增对 Cifial、Fribourg TPF、Waltti 和蓝色 HSL 卡的支持
+\n- 修正 Amiibo、SLaccess、Troika 和 Viva 的错误
+\n- 阿德莱德地铁卡、Bonobus、Compass、Gautrain、Rav-Kav、RicaricaMi、ORCA、OùRA、Touch \'n Go 和 Viva 的新数据
+\n- 增加历史搜索和 MIFARE Plus 支持
+\n- 安卓 4.3 及更高版本的错误修复
+\n
+\n更多详情和已知问题（英文）：https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_43">- 添加了对 Amiibo、克里米亚无轨电车、喀山、俄罗斯乌玛什、圣地亚哥 bip 和华沙卡的支持
+\n- 改进和修复了 Intercode、Kartu Multi Trip、RicaricaMi、Touch \'n Go 和 Troika 卡的问题
+\n- 修复了导致 Metrodroid 崩溃的一些错误，以及 MIFARE Classic 卡的一些错误
+\n
+\n更多详情和已知问题： https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_41">* 可读取 EMV 银行卡、马来西亚 KomuterLink 卡、比萨 Carta Mobile 卡、格鲁吉亚 Metromoney 卡、第一代伦敦 Oyster 卡、阿联酋 Hafilat 卡和 Nol 卡。
+\n* 为 EZ-Link 卡和 ORCA 卡增加了新的站点。
+\n* 修复了 Mobib 阅读器的问题。
+\n* 支持导入二进制 MFC 文件和读取带锁定目录列表的 DESFire 卡。
+\n* 许多底层更改。
+\n
+\n更多详情和已知问题：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_39">* 新增对马来西亚 Tap \'n Go、奥塔哥 Gocard、罗托鲁瓦 SmartRide、怀卡托 BUSIT 和惠灵顿 Snapper 卡的支持。
+\n* 增加了许多新的路线和站点 ID。
+\n* 改进了 FeliCa 阅读器。
+\n* 修复了 EZ-Link 和八达通卡的问题。
+\n* 许多底层更改。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_36">* 新增对 CharlieCard、Go-to（明尼阿波利斯）、Hop Fastpass、Intercode（法国）、IstanbulKart、Mobib、Leap、RicaciraMi 和 Strelka 卡的支持。
+\n* 修复 HSL 读卡器。
+\n* 为 Clipper 和 Kartu Multi Trip 添加新站点。
+\n* Suica 现在可显示最近 2 次旅行的时间。
+\n* 改进了 MIFARE Classic 密钥管理。
+\n* 改进了 MIFARE Classic 密钥管理。
+\n
+\n更多详情： https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_34">* 为大多数卡添加时区支持。
+\n* Clipper： 修复错误的旅行时间。
+\n* Opal： 修复夏令时变更日的错误旅行时间。
+\n* 新图标、可访问性改进以及应用程序安装大小减小。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_32">* 添加混淆模式。
+\n* 修复未知 CEPAS 卡崩溃问题。
+\n* 修复了查看原始卡详细信息时，部分读取的 MIFARE Classic 卡崩溃的问题。
+\n* 支持 Cubic Nextfare 卡的负余额。
+\n* 为 Go 卡（澳大利亚布里斯班）添加新的停止标识。
+\n* 感谢 @belkacem77 和 @comradekingu 提供卡比尔语和挪威语的部分翻译。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_31">* 增加了对 SmartRider（澳大利亚西澳大利亚州）的支持。
+\n* 添加荷兰语翻译，感谢 @Vistaus；法语翻译，感谢 @Albirew；希伯来语翻译，感谢 @steets250
+\n* MyWay： 对于新扫描的卡片，可通过常用键自动检测卡片。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_28">* 现在需要 Android 4.1，以修复地图问题。
+\n* 增加了对查看 FeliCa 原始数据的支持。
+\n* 新增对 MIFARE Ultralight 的支持，包括原始数据。
+\n* 修复了一个问题，即不同日期的两次旅行可能无法显示较早旅行的日期标题（问题 #15）。
+\n* 围棋卡： 由于数据捐赠，增加了 11 个站点。实现票价计算，但有一些限制。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_26">新年快乐！
+\n
+\n* 添加了对 Go 卡的基本支持（澳大利亚布里斯班和昆士兰东南部）。需要加密密钥（每张卡都是唯一的）和支持 MIFARE Classic 的设备。有限的停止支持。
+\n* 为阿德莱德 Metrocard、AT HOP 和 Myki 添加了卡识别支持。
+\n* 修复了从 XML 文件导入单张卡的问题。
+\n* 各种用户界面改进。
+\n* 小错误修复。
+\n
+\n更多详情： https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_short_desc">Metrodroid 可从一些用于公共交通的 NFC 智能卡中读取信息。</string>
+    <string name="market_long_desc">Metrodroid 可读取一些用于公共交通的 NFC 智能卡。
+\n
+\n支持的卡
+\n- Amiibo 🆕
+\n- AT HOP - 新西兰奥克兰 🆕🆔
+\n- 北京市政卡、深圳通、T-Union、武汉通 - 中国 🆕
+\n- Bilhete Único - 巴西圣保罗 📜🗝
+\n- bip！- 智利圣地亚哥 🆕📜🗝
+\n- BUS-IT - 新西兰大汉密尔顿（怀卡托） 🆕📜🗝
+\n- Carta Mobile - 意大利比萨 🆕
+\n- CEPAS (EZ-Link, NETS Flashpay) - 新加坡 🇸🇬
+\n- CharlieCard - 美国马萨诸塞州波士顿 🆕📜🗝
+\n- Cifial 🆕📜
+\n- City Union, T-Union - 中国大陆 🆕
+\n- Clipper - 美国加利福尼亚州旧金山
+\n- Compass（一次性车票）- 加拿大不列颠哥伦比亚省温哥华 🆕
+\n- 克里米亚无轨电车 🆕📜🗝
+\n- 悠游卡 - 台北 📜 🗝
+\n- EMV 银行卡 🆕
+\n- Go card - 澳大利亚昆士兰州布里斯班 🆕 📜 🗝
+\n- GoCard - 新西兰奥塔哥（达尼丁和皇后镇） 🆕 📜
+\n- Go-to Card - 美国明尼苏达州明尼阿波利斯-圣保罗 🆕📜🗝
+\n- Hafilat - 阿联酋阿布扎比 🆕
+\n- Hop Fastpass - 美国俄勒冈州波特兰市 🆕🆔
+\n- HSL、Matkakortti、Waltti - 芬兰
+\n- IC（Suica、ICOCA、PASMO）、Edy - 日本
+\n- Intercode（Envibus、Navigo、OùRA、TaM、TransGironde）- 法国
+\n- IstanbulKart - 土耳其 🆕🆔
+\n- Kartu Multi Trip - 印度尼西亚雅加达
+\n- Kiev Metro - 乌克兰 🆕📜🗝
+\n- KomuterLink - 马来西亚 🆕📜🗝
+\n- Leap - 爱尔兰 🆕🇮🇪
+\n- Lisboa Viva - 葡萄牙里斯本 🆕
+\n- Manly Fast Ferry - 澳大利亚新南威尔士州悉尼 🆕📜🗝
+\n- metroCARD - 澳大利亚阿德莱德 🆕
+\n- Metrocard (1st-gen) - 新西兰基督城 🆕 📜 🗝
+\n- Metromoney - 第比利斯，格鲁吉亚 🆕 📜 🗝
+\n- Mobib - 比利时布鲁塞尔 🆕
+\n- Myki - 澳大利亚维多利亚州墨尔本 🆕🆔
+\n- MyWay - 澳大利亚首都直辖区堪培拉 🆕📜🗝
+\n- Nol - 阿联酋迪拜 🆕🆔
+\n- Octopus - 香港 🆕
+\n- Opal - 澳大利亚新南威尔士州悉尼 🆕
+\n- Opus - 加拿大魁北克 🆕
+\n- ORCA - 美国华盛顿州西雅图市
+\n- OV-chipkaart - 荷兰 📜 🗝
+\n- Oyster（第一代） - 英国伦敦 🆕📜🗝
+\n- Podorozhnik - 俄罗斯圣彼得堡 🆕📜🗝
+\n- Rav-Kav - 以色列 🆕
+\n- Rejsekort - 丹麦 🆕📜🗝
+\n- RicaricaMi - 意大利米兰 🆕
+\n- Selecta - 法国 🆕
+\n- SLAccess - 瑞典斯德哥尔摩 🆕📜🗝
+\n- Smartride - 新西兰罗托鲁瓦 🆕📜
+\n- SmartRider - 澳大利亚西澳大利亚州珀斯 🆕📜🗝
+\n- Snapper (plus) - 新西兰惠灵顿 🆕
+\n- Strelka - 俄罗斯莫斯科 🆕📜🆔
+\n- SunCard - 美国佛罗里达州奥兰多 🆕📜🗝🆔
+\n- Tartu Bus - 爱沙尼亚 🆕📜🆔
+\n- T-Money - 韩国 🆕
+\n- Touch \'n Go - 马来西亚 🆕 📜 🗝
+\n- TPF 卡 - 瑞士弗里堡 🆕 🆔
+\n- Transit Access Pass - 美国加利福尼亚州洛杉矶 🆕📜🗝
+\n- Troika - 俄罗斯莫斯科 🆕📜🗝
+\n- Umarsh（Electronic Barnaul、Kirov、Ekaterinburg Ekarta、Izhevsk Strizh、Nizhniy Novgorod Siticard、Penza、Yoshkar-Ola） - 俄罗斯 🆕📜🗝
+\n- Ventra（一次性门票）- 美国伊利诺伊州芝加哥 🆕
+\n- Warszawska Karta Miejska - 波兰，华沙 🆕 📜 🗝 🆔
+\n- Zolotaya Korona（克拉斯诺达尔、奥伦堡、萨马拉、雅罗斯拉夫尔） - 俄罗斯 🆕📜🗝
+\n
+\nMetrodroid 中的新功能。
+\n📜 MIFARE Classic：不与所有设备兼容 - 您需要 NXP NFC 芯片组的设备才能读取。
+\n🗝 读取此卡需要加密密钥。
+\n🇸🇬 CEPAS 不兼容所有设备（ISO 14443-B）。
+\n🆔 只能读取卡号。
+\n🇮🇪 从操作员处下载加密密钥。
+\n
+\n读卡需要 NFC 兼容设备。
+\n
+\n有些机构有加密卡。您需要获取加密密钥才能读卡，通常每张卡的加密密钥都是独一无二的。很抱歉，我在这方面帮不上忙。
+\n
+\nMetrodroid 及其作者与公共交通机构没有任何关系。使用 Cubic Nextfare 或 ERG on MIFARE Classic 的其他机构的卡也可以使用。
+\n
+\n有关所需权限的更多详情，请参阅隐私政策。
+\n
+\n本软件是 Eric Butler 的 Farebot 的分叉版，支持更多卡片并进行了错误修复。
+\n
+\n本软件采用 GNU GPLv3+ 许可，获取源代码可从 https://github.com/metrodroid/</string>
+    <string name="market_changelog_38">* 新增对奥塔哥 Gocard、罗托鲁瓦 SmartRide、怀卡托 BUSIT 和惠灵顿 Snapper 卡的支持。
+\n* 增加了许多新的路线和车站 ID。
+\n* 改进了 FeliCa 阅读器。
+\n* 修复了 EZ-Link 和八达通卡的问题。
+\n* 许多底层更改。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_37">* 增加了对阿德莱德地铁卡、多种中国（PRC）卡、Clipper 单票、基辅地铁、奥兰多太阳卡、Rejsekort、SLAccess、Selecta、塔尔图公交卡和多种基于 Zolotaya Korona 的卡的支持。
+\n* 修复 OV-Chipkaart 读卡器。
+\n* 读取 AT-HOP 的序列号。
+\n* 许多底层改动。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_35">* 增加了对 Kartu Multi Trip、Opus、Podorozhnik、Rav-Kav、T-Money、Troika 卡和单程 Compass（温哥华）卡的支持。
+\n* 修复了某些 Clipper 卡的崩溃错误。
+\n* 许多底层更改。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_33">* 添加对 Metrocard（新西兰基督城）的试验性支持。
+\n* 修复了 MIFARE Classic 和 Ultralight 卡的多个问题。
+\n* 读卡时显示更多信息。
+\n* Opal：处理未知状态 0xc。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_30">* 针对 Cubic Nextfare 卡的多项修复。
+\n* 复旦 FM11RF08 卡不再被错误地检测为 Bilhete Único 卡。
+\n* 添加对 MyWay（澳大利亚首都地区）的试验性支持。
+\n* 解决某些 HTC 和索尼设备上的 MIFARE Classic 错误。
+\n* 修复 Android 6 及更高版本上的权限错误。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_29">* 提高使用 MIFARE Classic 卡进行身份验证的可靠性。
+\n* 增加了对八达通（香港）、深圳通和交通通行证（美国加利福尼亚州洛杉矶）的支持。
+\n* 为 Cubic Nextfare MFC 添加通用读卡器（基于 Go 读卡器）。
+\n* 导出到 USB 存储现在可以在 Android 4.4 (KitKat) 及更高版本上选择位置。
+\n* Go 卡： 现在可从卡中获取票价，因此应适用于所有车站。新增 7 个车站。现在可以检测成人卡和优惠卡。</string>
+    <string name="market_changelog_27">Farebot M 现在是 Metrodroid。
+\n
+\n* 支持从 Myki（维多利亚州、澳大利亚）读取卡号。
+\n* 现在可读取 Go 卡（澳大利亚布里斯班）的最后一位数字。
+\n* 改进了对 MIFARE DESFire 卡的处理。
+\n* 修复了对同时也是信用卡的 NETS Flashpay（新加坡）卡的支持（由 @chrisplus 提供补丁）。
+\n* 大大改进了日语翻译（感谢 @naofum）。
+\n* 旅行和充值现在合并到所有卡的 \"历史记录 \"中。
+\n
+\n更多详情：https://github.com/micolous/metrodroid/wiki/Changelog</string>
+</resources>
