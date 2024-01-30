@@ -121,7 +121,7 @@
     <string name="nfcv_system_info">系统信息</string>
     <string name="unauthorized_page_title_format">页: %s (未授权)</string>
     <string name="page_title_format_empty">页: %s (空白)</string>
-    <string name="page_title_format">页: %s</string>
+    <string name="page_title_format">虚拟页：%s</string>
     <string name="invalid_file_title_format">文件: %1$s (无效的: %2$s)</string>
     <string name="unauthorized_file_title_format">文件: %s (未授权)</string>
     <string name="file_title_format">文件: %s</string>
