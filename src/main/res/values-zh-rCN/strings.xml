@@ -830,7 +830,7 @@
     <string name="emv_fdda_transaction_qualifiers">fDDA 交易限定符</string>
     <string name="app_version">版本：%s</string>
     <string name="ios_version">iOS 版本: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
-    <string name="balances_and_subscriptions">门票</string>
+    <string name="balances_and_subscriptions">票</string>
     <string name="pref_show_raw_station_ids_desc_on">除名称外，还显示车站和路线 ID</string>
     <string name="developer_options_desc">使用台站数据库、混淆模式…</string>
     <string name="nfc">近场通信</string>
