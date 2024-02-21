@@ -1,3 +1,24 @@
 reader_id,stop_name,stop_lat,stop_lon
+0x10017,Arènes,43.5934040,1.4185414
+0x1001d,Capitole,43.6044043,1.4452397
+0x1001e,Esquirol,43.6001307,1.4439629
+0x10023,Jolimont,43.6153044,1.4633851
+0x10025,Basso Cambo,43.5699769,1.3922743
+0x10028,Patte d'Oie,43.5964459,1.4232471
+0x1002c,Borderouge,43.6407791,1.4525675
+0x1002e,Canal du Midi,43.6153706,1.4337630
+0x1002f,Carmes,43.5977639,1.4454502
+0x10032,Francois Verdier,43.6006753, 1.4522564
+0x10033,Jeanne d'Arc,43.6088889,1.4454351
 0x10034,Jean Jaures,43.6061093, 1.4488129
+0x10035,Jean Jaures (transit ligne A vers B),43.6061093, 1.4488129
 0x10036,Francois Verdier,43.6006753, 1.4522564
+0x10039,Palais de Justice,43.5923856,1.4445085
+0x1003b,Ramonville (entrée ouest),43.5556850,1.4757991
+0x1003c,Ramonville (entrée est), 43.5558335,1.4769488
+0x1003e,Saint-Agne SNCF,43.5803390,1.4498764
+0x10042,Université Paul Sabatier, 43.5609723, 1.4632229
+0x1004b,Basso Cambo,43.5700128,1.3917919
+0x10052,Hôpital Rangueil — Louis Lareng (vers Université Paul Sabatier),43.5583661,1.4530144
+0x10053,Université Paul Sabatier,43.5602002,1.4646540
+0x10056,Hôpital Rangueil — Louis Lareng (vers Oncopole),43.5582888,1.4530303

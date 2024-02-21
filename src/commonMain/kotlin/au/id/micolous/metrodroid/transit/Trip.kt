@@ -207,6 +207,7 @@ abstract class Trip : Parcelable {
         TROLLEYBUS(10, R.string.mode_trolleybus),
         TOLL_ROAD(11, R.string.mode_toll_road),
         MONORAIL(12, R.string.mode_monorail),
+        CABLECAR(13, R.string.mode_cablecar),
     }
 
     class Comparator : kotlin.Comparator<Trip> {
