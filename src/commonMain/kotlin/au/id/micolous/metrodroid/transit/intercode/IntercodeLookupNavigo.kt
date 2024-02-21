@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit.intercode
 
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
@@ -126,4 +127,12 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             locationId = R.string.location_paris,
             region = TransitRegion.FRANCE,
             cardType = CardType.ISO7816)
+
+    override fun getRouteName(routeNumber: Int?, routeVariant: Int?,
+                              agency: Int?, transport: Int?): FormattedString? {
+        if (agency == RATP && routeNumber != null)
+            return StationTableReader.getLineName(NAVIGO_STR, routeNumber)
+        return super.getRouteName(routeNumber, routeNumber, agency, transport)
+    }
+
 }
