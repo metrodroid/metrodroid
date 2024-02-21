@@ -764,6 +764,7 @@
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
     <string name="location_bretagne">Brittany, France</string>
+    <string name="location_hauts_de_france">Hauts-de-France, France</string>
     <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
     <string name="location_cadiz">Cádiz, Spain</string>
@@ -2554,6 +2555,10 @@
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
     <string name="gironde_line">Line number %d</string>
+    <string name="ilevia_trajet_unitaire">Ilévia 1 trip</string>
+    <string name="ilevia_trajet_unitaire_x10">Ilévia 10 trips</string>
+    <string name="ilevia_mensuel">Ilévia month ticket</string>
+    <string name="ilevia_10mois">Ilévia 10-month ticket</string>
 
     <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
     <string name="mobib_jump_1_trip">Jump 1 trip</string>
