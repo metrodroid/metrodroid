@@ -28,7 +28,7 @@ package au.id.micolous.metrodroid.transit.clipper
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelize
 
-import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
@@ -46,10 +46,10 @@ class ClipperTrip (private val mTimestamp: Long,
                    private val mVehicleNum: Int,
                    private val mTransportCode: Int): Trip() {
 
-    override val startTimestamp: Timestamp?
+    override val startTimestamp: TimestampFull?
         get() = ClipperTransitData.clipperTimestampToCalendar(mTimestamp)
 
-    override val endTimestamp: Timestamp?
+    override val endTimestamp: TimestampFull?
         get() = ClipperTransitData.clipperTimestampToCalendar(mExitTimestamp)
 
     // Bus doesn't record line
