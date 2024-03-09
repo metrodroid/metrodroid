@@ -150,27 +150,27 @@ abstract class TransactionTripAbstract: Trip() {
         fun merge(transactionsIn: List<Transaction>,
                   factory: (Transaction) -> TransactionTripAbstract):
                 List<TransactionTripAbstract> {
-            val timedTransactions = mutableListOf<Transaction>()
+            val timedTransactions = mutableListOf<Pair<Transaction, TimestampFull>>()
             val unmergeableTransactions = mutableListOf<Transaction>()
             for (transaction in transactionsIn) {
                 val ts = transaction.timestamp
                 if (!transaction.isTransparent && ts is TimestampFull)
-                    timedTransactions.add(transaction)
+                    timedTransactions.add(Pair(transaction, ts))
                 else
                     unmergeableTransactions.add(transaction)
             }
-            val transactions = timedTransactions.sorted()
+            val transactions = timedTransactions.sortedBy { it.second.timeInMillis }
             val trips = mutableListOf<TransactionTripAbstract>()
-            for (it in transactions) {
+            for ((first) in transactions) {
                 if (trips.isEmpty()) {
-                    trips.add(factory(it))
+                    trips.add(factory(first))
                     continue
                 }
                 val previous = trips[trips.size - 1]
-                if (previous.end == null && previous.start?.shouldBeMerged(it) == true)
-                    previous.capsule.end = it
+                if (previous.end == null && previous.start?.shouldBeMerged(first) == true)
+                    previous.capsule.end = first
                 else
-                    trips.add(factory(it))
+                    trips.add(factory(first))
             }
             return trips + unmergeableTransactions.map { factory(it) }
         }
