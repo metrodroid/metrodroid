@@ -10,16 +10,16 @@ allprojects {
 
 buildscript {
     ext {
-        kotlin_version = '1.5.31'
-        kotlinserial_version = '1.3.0'
-        coroutines_version = '1.5.2'
+        kotlin_version = '2.0.0'
+        kotlinserial_version = '1.6.3'
+        coroutines_version = '1.8.1'
         lint_version = '26.2.1'
-        support_version = '31.0.0'
+        support_version = '34.0.0'
         android_test_version = '1.4.0'
-        build_version = '31.0.0'
+        build_version = '34.0.0'
         android_sdk_version = 31
         android_min_version = 16
-        android_gradle_version = '7.0.2'
+        android_gradle_version = '8.4.1'
         protobuf_version = '3.18.1'
         protobuf_gradle_version = '0.8.17'
     }
@@ -87,7 +87,7 @@ def svgDir = new File(projectDir, "cardimages/svg")
 def drawableDir = new File(projectDir, "cardimages/android/drawable")
 def relativeDrawableHdpiDir = "cardimages/android/drawable-hdpi"
 def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
-def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
+def stringsXmlFile = new File(projectDir, "src/androidMain/res/values/strings.xml")
 def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
 def testAssetsDirs = [
         'src/commonTest/assets',
@@ -481,9 +481,9 @@ static def mapAndroidLanguageToIOS(String alang) {
 def langSources(String alang) {
     def baseLang = alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang" }
     if (baseLang == "en")
-        return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml"),
-                new File(projectDir, "src/main/res/values-" + baseLang + "/strings.xml")]
-    return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml")]
+        return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml"),
+                new File(projectDir, "src/androidMain/res/values-" + baseLang + "/strings.xml")]
+    return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml")]
 }
 
 task iOSLanguages {
@@ -589,8 +589,10 @@ task iOSSimulatorTest {
 }
 
 android {
+    namespace "au.id.micolous.farebot"
     compileSdkVersion android_sdk_version
     buildToolsVersion build_version
+    buildFeatures.buildConfig true
 
     defaultConfig {
         minSdkVersion android_min_version
