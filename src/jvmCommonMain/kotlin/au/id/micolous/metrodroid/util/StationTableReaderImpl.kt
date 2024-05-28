@@ -29,11 +29,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
-expect object ResourceAccessor {
-    fun openMdstFile(dbName: String): InputStream?
-    fun stationTableReaderList(): List<String>
-}
-
 internal actual fun stationTableReaderGet(name: String): StationTableReader? =
     StationTableReaderImpl.getSTR(name)
 internal actual fun stationTableReaderList(): List<String> = ResourceAccessor.stationTableReaderList()
