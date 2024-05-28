@@ -22,7 +22,7 @@
 package au.id.micolous.metrodroid.transit.edy
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData

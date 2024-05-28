@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.msp_goto
 
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule

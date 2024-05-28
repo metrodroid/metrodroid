@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.transit.mobib
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.VisibleForTesting

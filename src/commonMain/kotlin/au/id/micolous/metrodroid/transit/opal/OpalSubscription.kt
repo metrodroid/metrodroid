@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Subscription
 
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Month

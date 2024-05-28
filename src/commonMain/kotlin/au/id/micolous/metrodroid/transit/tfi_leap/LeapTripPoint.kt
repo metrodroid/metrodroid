@@ -20,7 +20,7 @@
 package au.id.micolous.metrodroid.transit.tfi_leap
 
 import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.TimestampFull
 
 internal fun<T> valuesCompatible(a: T?, b: T?): Boolean =

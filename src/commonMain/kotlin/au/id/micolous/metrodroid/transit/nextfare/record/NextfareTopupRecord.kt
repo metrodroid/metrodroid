@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.nextfare.record
 
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull

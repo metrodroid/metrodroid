@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.*

@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.hafilat
 
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.en1545.En1545Parser
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription

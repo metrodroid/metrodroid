@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.multi
 
-actual interface Parcelable: android.os.Parcelable
-actual typealias Parcelize = kotlinx.parcelize.Parcelize
+actual typealias Parcelable = android.os.Parcelable
 actual typealias IgnoredOnParcel = kotlinx.parcelize.IgnoredOnParcel
 actual typealias VisibleForTesting = androidx.annotation.VisibleForTesting

@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.logAndSwiftWrap
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.ui.ListItemInterface

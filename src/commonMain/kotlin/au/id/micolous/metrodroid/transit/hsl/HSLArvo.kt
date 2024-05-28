@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.hsl
 
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils

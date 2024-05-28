@@ -28,7 +28,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.NumberUtils

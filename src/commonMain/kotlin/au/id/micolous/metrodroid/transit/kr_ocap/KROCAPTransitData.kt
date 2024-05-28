@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.card.ksx6924.KROCAPConfigDFApplication
 import au.id.micolous.metrodroid.card.ksx6924.KROCAPData.TAGMAP
 import au.id.micolous.metrodroid.card.ksx6924.KROCAPData.TAG_SERIAL_NUMBER
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData
 import au.id.micolous.metrodroid.ui.ListItemInterface

@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.time
 
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.util.AtomicRef
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences

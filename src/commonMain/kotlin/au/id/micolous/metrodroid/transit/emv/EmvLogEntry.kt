@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.card.iso7816.UNKNOWN_TAG
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp

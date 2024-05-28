@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.rkf
 
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency

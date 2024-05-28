@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.multi.*
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Parcelize

@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.card.ksx6924.KSX6924CardTransitFactory
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924PurseInfo
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924PurseInfoResolver
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.ListItem
 

@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.hexString
 import au.id.micolous.metrodroid.util.toImmutable
+import kotlinx.parcelize.Parcelize
 
 /**
  * Represents a single "tag on" / "tag off" event.

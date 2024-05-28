@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory
 import au.id.micolous.metrodroid.card.china.ChinaCard
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.NumberUtils

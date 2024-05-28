@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.ui
 
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

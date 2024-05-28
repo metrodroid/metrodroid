@@ -24,7 +24,7 @@ package au.id.micolous.metrodroid.transit.ezlinkcompat
 
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity

@@ -4,7 +4,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV
 import au.id.micolous.metrodroid.card.iso7816.TagContents
 import au.id.micolous.metrodroid.card.iso7816.TagDesc
 import au.id.micolous.metrodroid.card.iso7816.TagHiding
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.emv.EmvData
 import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData

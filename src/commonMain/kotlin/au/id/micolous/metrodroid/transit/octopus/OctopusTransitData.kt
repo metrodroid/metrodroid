@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaService
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 
 /**

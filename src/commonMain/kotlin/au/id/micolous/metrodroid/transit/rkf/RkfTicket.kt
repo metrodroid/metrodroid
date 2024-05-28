@@ -1,7 +1,7 @@
 package au.id.micolous.metrodroid.transit.rkf
 
 import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData.Companion.ID_FIELD
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData.Companion.STATUS_FIELD

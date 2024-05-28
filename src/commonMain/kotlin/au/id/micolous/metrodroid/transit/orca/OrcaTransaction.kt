@@ -25,7 +25,7 @@ package au.id.micolous.metrodroid.transit.orca
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone

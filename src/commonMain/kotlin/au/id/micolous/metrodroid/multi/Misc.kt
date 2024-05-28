@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.multi
 
 expect annotation class VisibleForTesting()
-expect annotation class Parcelize()
 expect annotation class IgnoredOnParcel()
 expect interface Parcelable
 // Swift doesn't propagate RuntimeException, hence we need this ugly wrapper

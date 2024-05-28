@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.multi
 
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable

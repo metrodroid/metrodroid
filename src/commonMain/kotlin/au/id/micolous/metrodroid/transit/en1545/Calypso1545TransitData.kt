@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.en1545
 
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransactionTripAbstract
 import au.id.micolous.metrodroid.transit.TransitBalance

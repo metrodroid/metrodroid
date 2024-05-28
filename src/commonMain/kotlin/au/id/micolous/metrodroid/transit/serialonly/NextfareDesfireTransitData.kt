@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
 

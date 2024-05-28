@@ -21,7 +21,7 @@
 
 package au.id.micolous.metrodroid.transit.ovc
 
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 

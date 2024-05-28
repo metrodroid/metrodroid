@@ -19,7 +19,7 @@
 package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.FormattedString
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.AIRPORT_STATIONS

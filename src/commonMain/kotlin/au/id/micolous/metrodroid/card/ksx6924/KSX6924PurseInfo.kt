@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.card.ksx6924
 
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Utils.parseHexDate
 import au.id.micolous.metrodroid.multi.Parcelable
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.transit.TransitBalance

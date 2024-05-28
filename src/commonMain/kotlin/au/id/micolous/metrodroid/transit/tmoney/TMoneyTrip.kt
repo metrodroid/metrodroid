@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.transit.tmoney
 
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Utils.INVALID_DATETIME
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Utils.parseHexDateTime
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency

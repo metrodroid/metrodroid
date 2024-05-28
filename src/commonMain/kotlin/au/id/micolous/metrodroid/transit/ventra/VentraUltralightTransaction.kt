@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.ventra
 
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.nextfareul.NextfareUltralightTransaction

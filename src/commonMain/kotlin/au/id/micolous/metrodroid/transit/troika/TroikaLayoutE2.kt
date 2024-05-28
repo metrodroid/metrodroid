@@ -1,6 +1,6 @@
 package au.id.micolous.metrodroid.transit.troika
 
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 // This layout is found on some newer multi-ride passes

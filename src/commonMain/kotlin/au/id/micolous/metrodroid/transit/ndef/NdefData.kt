@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaConsts
 import au.id.micolous.metrodroid.card.felica.FelicaSystem
 import au.id.micolous.metrodroid.card.nfcv.NFCVCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData

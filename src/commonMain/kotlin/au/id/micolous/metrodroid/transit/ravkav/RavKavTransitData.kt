@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV.findBERTLV
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity

@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
 import au.id.micolous.metrodroid.multi.*
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.ui.HeaderListItem

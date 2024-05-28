@@ -25,7 +25,7 @@ package au.id.micolous.metrodroid.transit.ezlink
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
-import au.id.micolous.metrodroid.multi.Parcelize
+import kotlinx.parcelize.Parcelize
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.*
