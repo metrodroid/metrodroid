@@ -87,7 +87,7 @@ def svgDir = new File(projectDir, "cardimages/svg")
 def drawableDir = new File(projectDir, "cardimages/android/drawable")
 def relativeDrawableHdpiDir = "cardimages/android/drawable-hdpi"
 def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
-def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
+def stringsXmlFile = new File(projectDir, "src/androidMain/res/values/strings.xml")
 def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
 def testAssetsDirs = [
         'src/commonTest/assets',
@@ -481,9 +481,9 @@ static def mapAndroidLanguageToIOS(String alang) {
 def langSources(String alang) {
     def baseLang = alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang" }
     if (baseLang == "en")
-        return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml"),
-                new File(projectDir, "src/main/res/values-" + baseLang + "/strings.xml")]
-    return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml")]
+        return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml"),
+                new File(projectDir, "src/androidMain/res/values-" + baseLang + "/strings.xml")]
+    return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml")]
 }
 
 task iOSLanguages {
