@@ -149,7 +149,7 @@ class CardBalanceFragment : ListFragment() {
                 paxIcon.contentDescription = Localizer.localizePlural(R.plurals.passengers, pax)
 
                 paxIcon.setImageDrawable(AppCompatResources.getDrawable(context,
-                        if (pax == 1) R.drawable.material_ic_person_24dp else R.drawable.material_ic_group_24dp))
+                        if (pax == 1) com.google.material_design_icons.R.drawable.material_ic_person_24dp else com.google.material_design_icons.R.drawable.material_ic_group_24dp))
 
                 paxLayout.visibility = View.VISIBLE
                 // company and pax have the same height dictated by company
