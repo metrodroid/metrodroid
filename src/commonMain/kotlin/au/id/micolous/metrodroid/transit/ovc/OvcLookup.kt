@@ -44,10 +44,14 @@ object OvcLookup : En1545LookupSTR(OVCHIP_STR) {
         0x00e5 to R.string.ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas,
         0x00e6 to R.string.ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas,
         0x00e7 to R.string.ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting,
+        0x0226 to R.string.ovc_sub_reizen_op_rekening_trein,
+        0x0227 to R.string.ovc_sub_reizen_op_rekening_bus_tram_metro,
         /* Arriva */
         0x059a to R.string.ovc_sub_dalkorting,
         /* Veolia */
         0x0626 to R.string.ovc_sub_dalu_dalkorting,
+        /* GVB */
+        0x0675 to R.string.ovc_sub_gvb_nachtbus_saldo,
         /* Connexxion */
         0x0692 to R.string.ovc_sub_daluren_oost_nederland,
         0x069c to R.string.ovc_sub_daluren_oost_nederland,
@@ -56,6 +60,6 @@ object OvcLookup : En1545LookupSTR(OVCHIP_STR) {
         0x09c7 to R.string.ovc_sub_student_week_korting,
         0x09c9 to R.string.ovc_sub_student_week_vrij,
         0x09ca to R.string.ovc_sub_student_weekend_korting,
-        /* GVB */
+        /* GVB (continued) */
         0x0bbd to R.string.ovc_sub_fietssupplement)
 }
