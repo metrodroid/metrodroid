@@ -47,9 +47,11 @@ object ChinaTransitData {
     // upper bit is some garbage
     fun parseBalance(card: ChinaCard): Int? = card.getBalance(0)?.getBitsFromBufferSigned(1, 31)
 
-    fun getFile(card: ChinaCard, id: Int): ISO7816File? {
-        val f = card.getFile(ISO7816Selector.makeSelector(0x1001, id))
-        return f ?: card.getFile(ISO7816Selector.makeSelector(id))
+    fun getFile(card: ChinaCard, id: Int, trySfi: Boolean = true): ISO7816File? {
+        val f = card.getFile(ISO7816Selector.makeSelector(0x1001, id)) ?: card.getFile(ISO7816Selector.makeSelector(id))
+        if (f != null)
+            return f
+        return if (!trySfi) null else card.getSfiFile(id)
     }
 
     fun parseHexDate(value: Int?): Timestamp? {
