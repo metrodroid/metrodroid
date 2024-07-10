@@ -228,8 +228,8 @@
         <item quantity="other">%d blok</item>
     </plurals>
     <plurals name="cards_imported">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; kart içe aktarıldı.</item>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kart içe aktarıldı.</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kart içe aktarıldı.</item>
     </plurals>
     <string name="pref_show_local_and_english_desc">Yerel ayardan bağımsız olarak hem yerel hem de İngilizce adları, kapalıyken en uygun çeşidini kullanarak gösterir.</string>
     <string name="pref_show_local_and_english_title">Hem yerel hem de İngilizce istasyon adlarını göster</string>
@@ -241,18 +241,18 @@
     <string name="raw_level_unknown_only">Yalnızca bilinmeyen alanlar</string>
     <string name="raw_level_none">Yok (devre dışı)</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; gizleme işareti açık</item>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> gizleme işareti açık</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> gizleme işareti açık</item>
     </plurals>
     <string name="key_data">Anahtar verileri</string>
     <plurals name="hidden_key_data">
-        <item quantity="one">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
-        <item quantity="other">Gizli anahtar verileri (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; bayt)</item>
+        <item quantity="one">Gizli anahtar verileri (<xliff:g id="count" example="1">%d</xliff:g> bayt)</item>
+        <item quantity="other">Gizli anahtar verileri (<xliff:g id="count" example="3">%d</xliff:g> bayt)</item>
     </plurals>
     <string name="hidden_card_number">Gizli kart numarası</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
     <string name="card_partial_read_desc">Okurken kart aralık dışına çıktı.
 \n
