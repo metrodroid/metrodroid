@@ -198,6 +198,10 @@ private val systemsMap = mapOf(
                                 name = R.string.umarsh_school,
                                 denomination = UmarshDenomination.RUB,
                         ),
+			0x5780ff to UmarshTariff(
+                                name = R.string.umarsh_school,
+                                denomination = UmarshDenomination.RUB,
+                        ),
                         0x6300ff to UmarshTariff(
                                 name = R.string.card_name_russia_omsk_citizen,
                                 denomination = UmarshDenomination.RUB,
@@ -328,6 +332,9 @@ class UmarshValidationSector(override val startTimestamp: TimestampFull,
     override val mode get() = when(transportType) {
 	1 -> Mode.BUS
 	2 -> Mode.TROLLEYBUS
+	3 -> Mode.TRAM
+	4 -> Mode.BUS
+	5 -> Mode.BUS
 	/* 3-7 and 0 are unknown */
 	else -> Mode.OTHER
     }

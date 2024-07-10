@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reading_card">Čtení karty…</string>
+    <string name="import_clipboard">Vložit ze schránky</string>
+    <string name="directions">Přiložit kartu.</string>
+    <string name="license">Licence</string>
+    <string name="dont_move">Nehýbat kartou</string>
+    <string name="advanced_info">Další informace</string>
+    <string name="delete_card">Odstranit kartu</string>
+    <string name="unknown_card">Neznámá karta</string>
+    <string name="locked_mfc_card">Zamknutá MIFARE Classic karta</string>
+    <string name="locked_mfu_card">Zamknutá MIFARE Ultralight karta</string>
+    <string name="locked_mfd_card">Zamknutá MIFARE DESFire karta</string>
+    <string name="hw_detail">Informace o výrobci</string>
+    <string name="data">Syrová data</string>
+    <string name="copy_xml">Kopie</string>
+    <string name="share_xml">Sdílet</string>
+    <string name="save_xml">Uložit do souboru</string>
+    <string name="history">Historie</string>
+    <string name="import_file">Import ze souboru</string>
+    <string name="export_all">Exportovat vše</string>
+    <string name="about">O...</string>
+    <string name="preferences">Možnosti</string>
+    <string name="loading">Nahrávám…</string>
+    <string name="supported_cards">Podporované karty</string>
+    <string name="title_activity_license">Open source licence</string>
+</resources>

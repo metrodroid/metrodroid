@@ -117,7 +117,7 @@ City Union | :cn: Mainland China | :new: `IOS`
 [Metrocard][adl] | :australia: Adelaide, SA, Australia | :new: `IOS`
 [Metrocard][chc] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Metromoney][tbs] | :georgia: Tbilisi, Georgia | :new: :closed_lock_with_key: `MFC`
-[Mobib][mobib] | :belgium: Brussels, Belgium | :new: `IOS`
+[Mobib][mobib] | :belgium: Belgium | :new: `IOS`
 [MRT Jakarta][mrtj] | :indonesia: Jakarta, Indonesia | :new:
 [Myki][myki] | :australia: Melbourne (and surrounds), VIC, Australia | :new: :id: `IOS`
 [MyWay][myway] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`

@@ -763,6 +763,8 @@
       "Brisbane, Australia" instead.
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
+    <string name="location_bretagne">Brittany, France</string>
+    <string name="location_hauts_de_france">Hauts-de-France, France</string>
     <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
     <string name="location_cadiz">Cádiz, Spain</string>
@@ -829,6 +831,7 @@
     <string name="location_nizhniy_novgorod">Nizhniy Novgorod, Russia</string>
     <!-- Translators: "Oʻahu" refers to the island of Oʻahu in the state of Hawaii, not a city -->
     <string name="location_oahu">O&#x02bb;ahu, HI, USA</string>
+    <string name="location_ontario">Ontario, Canada</string>
     <string name="location_orenburg">Orenburg, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_otago">Otago, New Zealand</string>
@@ -2548,8 +2551,22 @@
     <string name="navigo_sector_id_station_id">Sector ID %1$d, station ID %2$d</string>
     <!-- Translators: ticket for the whole day. French "Forfait jour". -->
     <string name="navigo_forfait_jour">Day ticket</string>
-    <!-- Translators: ticket for long period. French "Forfait". -->
-    <string name="navigo_forfait">Season ticket</string>
+    <!-- Translators: ticket for the whole week. French "Forfait semaine". -->
+    <string name="navigo_forfait_semaine">Week ticket</string>
+    <!-- Translators: ticket for the whole week with 75% discount. French "Forfait solidarité 75% semaine". -->
+    <string name="navigo_forfait_semaine_75">Solidarity 75%% week ticket</string>
+    <!-- Translators: ticket for a month. French "Forfait mois". -->
+    <string name="navigo_forfait_mois">Month ticket</string>
+    <!-- Translators: ticket for a month with 75% discount. French "Forfait solidarité 75% mois". -->
+    <string name="navigo_forfait_mois_75">Solidarity 75%% month ticket</string>
+    <!-- Translators: ticket for the whole year. French "Forfait annuel". -->
+    <string name="navigo_forfait_annuel">Year ticket</string>
+    <!-- Translators: free ticket for a few months when when receiving social aids. French "Solidarité Gratuité". -->
+    <string name="navigo_forfait_solidarite_gratuite">Free Solidarity Ticket</string>
+    <!-- Translators: subscription to ImagineR student, yearly subscription with a discount. French "Abonnement ImagineR Étudiant". -->
+    <string name="navigo_forfait_imagineR_etudiant">ImagineR student subscription</string>
+    <!-- Translators: subscription to Navigo Liberté+ service and pay at the end of each month. French "Abonnement Navigo Libetré+". -->
+    <string name="navigo_forfait_liberte">Navigo Liberté+ subscription</string>
     <!-- Translators: French "Billet Tarif Normal" -->
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
@@ -2570,6 +2587,10 @@
     <string name="tisseo_10_tickets_26">10 tickets -26 yo</string>
     <!-- Translators: French "Accès parking à vélo" -->
     <string name="tisseo_velo">Bycicle parking access</string>
+    <string name="ilevia_trajet_unitaire">Ilévia 1 trip</string>
+    <string name="ilevia_trajet_unitaire_x10">Ilévia 10 trips</string>
+    <string name="ilevia_mensuel">Ilévia month ticket</string>
+    <string name="ilevia_10mois">Ilévia 10-month ticket</string>
 
     <!-- Translators: French "JUMP 1 Voyage", Dutch "JUMP 1 rit" -->
     <string name="mobib_jump_1_trip">Jump 1 trip</string>

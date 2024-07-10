@@ -235,9 +235,9 @@ data class FelicaCard(
 
         // Position is offset by 2.
         val configurationByte = pMm[position + 2].toInt() and 0xFF
-        val e = NumberUtils.getBitsFromInteger(configurationByte, 0, 2)
-        val b = NumberUtils.getBitsFromInteger(configurationByte, 2, 3) + 1
-        val a = NumberUtils.getBitsFromInteger(configurationByte, 5, 3) + 1
+        val a = NumberUtils.getBitsFromInteger(configurationByte, 0, 3) + 1
+        val b = NumberUtils.getBitsFromInteger(configurationByte, 3, 3) + 1
+        val e = NumberUtils.getBitsFromInteger(configurationByte, 6, 2)
 
         return T * (b * n + a).toDouble() * (1 shl 2 * e).toDouble() // seconds
     }

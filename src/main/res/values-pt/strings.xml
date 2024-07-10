@@ -142,8 +142,9 @@
         <item quantity="other">%d blocos</item>
     </plurals>
     <plurals name="cards_imported">
-        <item quantity="one">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; cartão importado."</item>
-        <item quantity="other">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; cartões improtados."</item>
+        <item quantity="one"> <xliff:g id="count" example="1">%d</xliff:g> cartão importado.</item>
+        <item quantity="many"></item>
+        <item quantity="other"> <xliff:g id="count" example="3">%d</xliff:g> cartões improtados.</item>
     </plurals>
     <string name="pref_show_local_and_english_title">Mostrar nomes das estações locais e inglesas</string>
     <string name="pref_theme_desc">Escolha a aparência</string>
@@ -152,18 +153,21 @@
     <string name="raw_level_unknown_only">Apenas campos desconhecidos</string>
     <string name="raw_level_none">Nenhum (desativado)</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; bandeira de ofuscação"</item>
-        <item quantity="other">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; bandeiras de ofuscação"</item>
+        <item quantity="one"> <xliff:g id="count" example="1">%d</xliff:g> bandeira de ofuscação</item>
+        <item quantity="many"></item>
+        <item quantity="other"> <xliff:g id="count" example="3">%d</xliff:g> bandeiras de ofuscação</item>
     </plurals>
     <string name="key_data">Dados da chave</string>
     <plurals name="hidden_key_data">
-        <item quantity="one">Dados da chave oculta (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; byte)</item>
-        <item quantity="other">Dados da chave oculta (&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; bytes)</item>
+        <item quantity="one">Dados da chave oculta (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="many"></item>
+        <item quantity="other">Dados da chave oculta (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
     </plurals>
     <string name="hidden_card_number">Número do cartão oculto</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms"</item>
-        <item quantity="other">" &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms"</item>
+        <item quantity="one"> <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="many"></item>
+        <item quantity="other"> <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
     <string name="show_partial_data">Mostrar dados incompletos</string>
     <string name="card_partial_read_title">Cartão parcialmente lido!</string>
