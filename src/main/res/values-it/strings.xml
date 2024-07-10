@@ -24,7 +24,7 @@
     <string name="export_all">Esporta tutto</string>
     <string name="about">A proposito</string>
     <string name="preferences">Preferenze</string>
-    <string name="balance_speech">Saldo &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Caricamento…</string>
     <string name="supported_cards">Tessere supportate</string>
     <string name="transaction_counter">Contatore delle transazioni</string>
@@ -199,8 +199,9 @@
     <string name="last_refill">Ultima ricarica</string>
     <string name="pref_theme_desc">Scegli l\'aspetto grafico</string>
     <plurals name="cards_imported">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; carta importata.</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; carte importate.</item>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> carta importata.</item>
+        <item quantity="many"></item>
+        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> carte importate.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d blocco</item>
@@ -566,9 +567,9 @@
     <string name="felica_response_time_write">Comando di scrittura (1 blocco)</string>
     <string name="felica_response_time_other">Comandi di emissione</string>
     <string name="calypso_serial_number">Numero di serie</string>
-    <string name="trip_description">(Da )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_station\" example=\"Tokyo\"&gt;%1$s&lt;/xliff:g&gt; [→] (a )&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_station\" example=\"Osaka\"&gt;%2$s&lt;/xliff:g&gt;</string>
-    <string name="time_from_to">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"start_time\" example=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%2$s&lt;/xliff:g&gt;</string>
-    <string name="time_from_unknown_to">\?\?:\?\? → &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"end_time\" example=\"12:51\"&gt;%s&lt;/xliff:g&gt;</string>
+    <string name="trip_description">(Da )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (a )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
     <string name="location_china_mainland">Cina continentale</string>
     <string name="location_gironde">Gironda, Francia</string>
     <string name="location_grenoble">Grenoble, Francia</string>
@@ -776,7 +777,7 @@
     <string name="venezia_ticket_24h">Biglietto di 24 ore</string>
     <string name="venezia_bus_ticket_75min">Biglietto autobus da 75 minuti</string>
     <string name="venezia_airport_bus_ticket">Biglietto dell\'autobus per l\'aeroporto</string>
-    <string name="ios_version">Versione di iOS: &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"version\" example=\"10.3\"&gt;%1$s&lt;/xliff:g&gt;</string>
+    <string name="ios_version">Versione di iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
     <string name="ios_nfcreader_exception">Eccezione: %s</string>
     <string name="ios_unknown_mifare">MIFARE sconosciuto: %s</string>
     <string name="ios_unknown_tag">Tipo di tag sconosciuto: %s</string>
@@ -801,8 +802,9 @@
     <string name="mfd_unlocking">Sblocco della carta <xliff:g id="card_name" example="Leap">%s</xliff:g> …</string>
     <string name="iso7816_probing">Sondare carta ISO/IEC 7816…</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"1.0\"&gt;%s&lt;/xliff:g&gt; ms</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"milliseconds\" example=\"20.6\"&gt;%s&lt;/xliff:g&gt; ms</item>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="many"></item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
     <plurals name="hidden_key_data">
         <item quantity="one">Dati della chiave nascosti (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
@@ -1070,8 +1072,9 @@
     <string name="mode_monorail">Monorotaia</string>
     <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"1\"&gt;%d&lt;/xliff:g&gt; offuscamento attivato</item>
-        <item quantity="other">&lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"count\" example=\"3\"&gt;%d&lt;/xliff:g&gt; o offuscamenti attivati</item>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> offuscamento attivato</item>
+        <item quantity="many"></item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> o offuscamenti attivati</item>
     </plurals>
     <string name="desfire_standard_file">File standard</string>
     <string name="desfire_backup_file">File di backup</string>
