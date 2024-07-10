@@ -23,7 +23,7 @@
     <string name="accessibility">アクセシビリティ</string>
     <string name="speak_balance">残高を大きく読み上げ</string>
     <string name="speak_balance_summary">カードをスキャンするとき、残高を自動的に読み上げます。これは、他の音声合成のソフトウェアが利用できない場合でも機能します。</string>
-    <string name="balance_speech">残高 &lt;xliff:g xmlns:xliff=\"urn:oasis:names:tc:xliff:document:1.2\" id=\"balance\" example=\"$13.37\"&gt;%s&lt;/xliff:g&gt;</string>
+    <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
