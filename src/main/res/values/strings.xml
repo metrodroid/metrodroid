@@ -905,6 +905,8 @@
     <string name="mode_toll_road">Toll road</string>
     <!-- Used as descriptive text for the monorail icon. -->
     <string name="mode_monorail">Monorail</string>
+    <!-- Used as descriptive text for the cable car icon. -->
+    <string name="mode_cablecar">Cable car</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
@@ -2569,6 +2571,22 @@
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
     <string name="gironde_line">Line number %d</string>
+    <!-- Translators: French "Carnet de 10 tickets" -->
+    <string name="tisseo_10_tickets">10 tickets</string>
+    <!-- Translators: French "Ticket individuel" -->
+    <string name="tisseo_1_ticket">Single ticket</string>
+    <!-- Translators: French "Abonnement mensuel" -->
+    <string name="tisseo_mensuel">Monthly subscription</string>
+    <!-- Translators: French "Abonnement annuel" -->
+    <string name="tisseo_annuel">Yearly subscription</string>
+    <!-- Translators: French "Abonnement mensuel -26 ans" -->
+    <string name="tisseo_mensuel_26">Monthly subscription -26 yo</string>
+    <!-- Translators: French "Abonnement annuel -26 ans" -->
+    <string name="tisseo_annuel_26">Yearly subscription -26 yo</string>
+    <!-- Translators: French "Carnet de 10 tickets -26 ans" -->
+    <string name="tisseo_10_tickets_26">10 tickets -26 yo</string>
+    <!-- Translators: French "Accès parking à vélo" -->
+    <string name="tisseo_velo">Bycicle parking access</string>
     <string name="ilevia_trajet_unitaire">Ilévia 1 trip</string>
     <string name="ilevia_trajet_unitaire_x10">Ilévia 10 trips</string>
     <string name="ilevia_mensuel">Ilévia month ticket</string>
