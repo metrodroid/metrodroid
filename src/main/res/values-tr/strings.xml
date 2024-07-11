@@ -1319,4 +1319,26 @@
     <string name="smartrider_fare_convention">Etkinlik Geçişi</string>
     <string name="location_bretagne">Breton, Fransa</string>
     <string name="location_ontario">Ontario, Kanada</string>
+    <string name="location_hauts_de_france">Hauts-de-France, Fransa</string>
+    <string name="mode_cablecar">Teleferik</string>
+    <string name="navigo_forfait_semaine_75">%%75 indirimli haftalık bilet</string>
+    <string name="navigo_forfait_mois">Aylık bilet</string>
+    <string name="navigo_forfait_mois_75">%%75 indirimli aylık bilet</string>
+    <string name="navigo_forfait_annuel">Yıllık bilet</string>
+    <string name="navigo_forfait_solidarite_gratuite">Ücretsiz Geçiş Bileti</string>
+    <string name="navigo_forfait_imagineR_etudiant">ImagineR öğrenci aboneliği</string>
+    <string name="navigo_forfait_liberte">Navigo Liberté+ aboneliği</string>
+    <string name="tisseo_mensuel">Aylık abonelik</string>
+    <string name="tisseo_10_tickets_26">10 bilet - 26 yaş</string>
+    <string name="tisseo_velo">Bisiklet park erişimi</string>
+    <string name="ilevia_trajet_unitaire">Ilévia 1 yolculuk</string>
+    <string name="ilevia_trajet_unitaire_x10">Ilévia 10 yolculuk</string>
+    <string name="ilevia_mensuel">Ilévia aylık bilet</string>
+    <string name="navigo_forfait_semaine">Haftalık bilet</string>
+    <string name="tisseo_10_tickets">10 bilet</string>
+    <string name="tisseo_1_ticket">Tek bilet</string>
+    <string name="tisseo_annuel">Yıllık abonelik</string>
+    <string name="tisseo_mensuel_26">Aylık abonelik - 26 yaş</string>
+    <string name="tisseo_annuel_26">Yıllık abonelik - 26 yaş</string>
+    <string name="ilevia_10mois">Ilévia 10-aylık bilet</string>
 </resources>
