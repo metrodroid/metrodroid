@@ -27,33 +27,30 @@ import au.id.micolous.metrodroid.util.Preferences
 
 sealed class TransitRegion {
     abstract val translatedName: String
-    open val sortingKey: Pair<Int, String>
-        get() = Pair(SECTION_MAIN, translatedName)
+    abstract val section: Int
+    val sortingKey: Pair<Int, String>
+        get() = Pair(section, translatedName)
 
     data class Iso (val code: String): TransitRegion () {
         override val translatedName: String
             get() = iso3166AlphaToName(code) ?: code
-        override val sortingKey: Pair<Int, String>
-            get() = Pair(
-                if (code == deviceRegion) SECTION_NEARBY else SECTION_MAIN,
-                translatedName)
+        override val section: Int
+            get() =
+                if (deviceRegions?.contains(code) == true) SECTION_NEARBY else SECTION_MAIN
     }
 
     object Crimea : TransitRegion () {
         override val translatedName: String
             get() = Localizer.localizeString(R.string.location_crimea)
-        override val sortingKey
-            get() = Pair(
-                 if (deviceRegion in listOf("RU", "UA")) SECTION_NEARBY else SECTION_MAIN,
-                 translatedName)
+        override val section
+            get() =
+                if (deviceRegions?.intersect(listOf("RU", "UA"))?.isNotEmpty() == true) SECTION_NEARBY else SECTION_MAIN
     }
 
     data class SectionItem(val res: StringResource,
-                           val section: Int): TransitRegion () {
+                           override val section: Int): TransitRegion () {
         override val translatedName: String
             get() = Localizer.localizeString(res)
-        override val sortingKey
-            get() = Pair(section, translatedName)
     }
 
     object RegionComparator : Comparator<TransitRegion> {
@@ -75,7 +72,7 @@ sealed class TransitRegion {
         const val SECTION_WORLDWIDE = -1
         // Then goes the rest
         const val SECTION_MAIN = 0
-        private val deviceRegion = Preferences.region
+        private val deviceRegions by lazy { Preferences.regions }
         val AUSTRALIA = Iso("AU")
         val BELGIUM = Iso("BE")
         val BRAZIL = Iso("BR")
