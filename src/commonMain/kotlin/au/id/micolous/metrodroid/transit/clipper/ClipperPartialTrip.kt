@@ -79,6 +79,7 @@ class ClipperPartialTrip(private val mFormat: Int, private val mPartialAgency: I
         0xb4 -> ClipperData.AGENCY_SMART
         0xb5 -> ClipperData.AGENCY_CALTRAIN
         0xb8 -> ClipperData.AGENCY_BART
+        0xb9 -> ClipperData.AGENCY_BART
         else -> 0
     }
     val stationId = when (agency) {
