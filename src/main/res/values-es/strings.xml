@@ -89,7 +89,7 @@
     <string name="nfc_unavailable">NFC no disponible</string>
     <string name="general">General</string>
     <string name="launch_from_background">Lanzar en segundo plano</string>
-    <string name="checksum">suma de verificación</string>
+    <string name="checksum">Suma de verificación</string>
     <string name="last_transaction">Última transacción</string>
     <string name="date">Fecha</string>
     <string name="time">Hora</string>
@@ -218,6 +218,7 @@
     <string name="remaining_trip_count">Viajes restantes</string>
     <plurals name="travel_zones">
         <item quantity="one">%d zona de viaje</item>
+        <item quantity="many">%d zonas de viaje</item>
         <item quantity="other">%d zonas de viaje</item>
     </plurals>
     <string name="en1545_network_id">ID de red</string>
@@ -360,7 +361,7 @@
     <string name="hsl_transport_u_linja">U-línea</string>
     <string name="ravkav_generic_trips">Viajes</string>
     <string name="cepas_csn">Número de serie de la tarjeta (CSN)</string>
-    <string name="copyright">Copyright © 2015 – 2021 Michael Farrell</string>
+    <string name="copyright">Derechos de autor © 2015 – 2021 Michael Farrell</string>
     <string name="card_epoch">Tarjeta Epoch</string>
     <string name="map_tiles_url">Mapa web en mosaico</string>
     <string name="map_tiles_url_summary">Usar un servidor personalizado para mapas incrustados utilizando la sintaxis de Leaflet TileLayer.</string>
@@ -387,7 +388,7 @@
     <string name="mfc_default_key">Probando claves validadas para el sector %d.…</string>
     <string name="mfd_unlocking">"Desbloqueando la tarjeta  "<xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
     <string name="iso7816_probing">Comprobando la tarjeta ISO/IEC 7816…</string>
-    <string name="card_partial_read_title">Tarjeta parcialmente leída</string>
+    <string name="card_partial_read_title">¡Tarjeta parcialmente leída!</string>
     <string name="card_partial_read_desc">La tarjeta está fuera del alcance de lectura.
 \n
 \n Se leyeron algunos datos, pero puede que no sean suficientes.
@@ -395,14 +396,14 @@
 \nLas cajas gruesas y el metal pueden interferir con el funcionamiento del NFC. El fallo podría indicar que la tarjeta o la antena NFC de su dispositivo están dañadas.</string>
     <string name="show_partial_data">Mostrar datos incompletos</string>
     <plurals name="milliseconds_short">
-        <item quantity="one">Única
-\n<xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other">Plural
-\n<xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="many"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
     <string name="hidden_card_number">Número de tarjeta oculto</string>
     <plurals name="hidden_key_data">
         <item quantity="one">Datos clave ocultos (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="many">Datos clave ocultos (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
         <item quantity="other">Datos clave ocultos (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
     </plurals>
     <string name="key_data">Datos de la clave</string>
@@ -412,23 +413,27 @@
     <string name="pref_show_local_and_english_desc">Mostrar los nombres locales y los ingleses independientemente de la localización. Utilizar la variante más apropiada cuando esté desactivada.</string>
     <plurals name="cards_imported">
         <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> tarjeta importada.</item>
-        <item quantity="many"></item>
+        <item quantity="many"><xliff:g id="count" example="3">%d</xliff:g> tarjetas importadas.</item>
         <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> tarjetas importadas.</item>
     </plurals>
     <plurals name="block_count">
         <item quantity="one">%d bloque</item>
+        <item quantity="many">%d bloques</item>
         <item quantity="other">%d bloques</item>
     </plurals>
     <plurals name="record_count">
-        <item quantity="one">%d documento</item>
-        <item quantity="other">%d documentos</item>
+        <item quantity="one">%d registro</item>
+        <item quantity="many">%d registros</item>
+        <item quantity="other">%d registros</item>
     </plurals>
     <plurals name="felica_service_count">
         <item quantity="one">%d servicio</item>
+        <item quantity="many">%d servicios</item>
         <item quantity="other">%d servicios</item>
     </plurals>
     <plurals name="passengers">
         <item quantity="one">pasajero</item>
+        <item quantity="many">pasajeros</item>
         <item quantity="other">pasajeros</item>
     </plurals>
     <string name="desfire_standard_file">Archivo estándar</string>
@@ -442,23 +447,28 @@
     <string name="desfire_key_number">Clave %s</string>
     <plurals name="desfire_standard_format">
         <item quantity="one">Tipo: %1$s, tamaño: %2$s byte</item>
+        <item quantity="many">Tipo: %1$s, tamaño: %2$s bytes</item>
         <item quantity="other">Tipo: %1$s, tamaño: %2$s bytes</item>
     </plurals>
     <plurals name="trips_remaining">
         <item quantity="one">%d viaje restante</item>
+        <item quantity="many">%d viajes restantes</item>
         <item quantity="other">%d viajes restantes</item>
     </plurals>
     <plurals name="trips_remaining_total">
-        <item quantity="one">"Le queda %d viaje de  %d"</item>
-        <item quantity="other">"Le quedan %d viajes de  %d"</item>
+        <item quantity="one">Le queda %d viaje de %d</item>
+        <item quantity="many">Le quedan %d viajes de %d</item>
+        <item quantity="other">Le quedan %d viajes de %d</item>
     </plurals>
     <plurals name="lisboaviva_valid_days">
-        <item quantity="one">Válido por %d día</item>
-        <item quantity="other">Válido por %d días</item>
+        <item quantity="one">Válido para %d día</item>
+        <item quantity="many">Válido para %d días</item>
+        <item quantity="other">Válido para %d días</item>
     </plurals>
     <plurals name="lisboaviva_valid_months">
         <item quantity="one">Válido para %d mes</item>
-        <item quantity="other">Válido por %d meses</item>
+        <item quantity="many">Válido para %d meses</item>
+        <item quantity="other">Válido para %d meses</item>
     </plurals>
     <string name="hardware_information">Información del equipo</string>
     <string name="cepas_version">Versión del CEPAS</string>
@@ -479,6 +489,7 @@
     <string name="answer_to_request">ATQA (Respuesta a la solicitud)</string>
     <plurals name="bytes">
         <item quantity="one">%d byte</item>
+        <item quantity="many">%d bytes</item>
         <item quantity="other">%d bytes</item>
     </plurals>
     <string name="mfc_uid_mode">Longitud de la UID</string>
@@ -491,33 +502,34 @@
     <string name="desfire_batch_number">Número de serie</string>
     <string name="cepas_purse_num">Número de monedero CEPAS %d</string>
     <string name="cepas_purse_num_history">Historial del número de monedero CEPAS %d</string>
-    <string name="raw_level_none">desactivado</string>
+    <string name="raw_level_none">Ninguno (desactivado)</string>
     <string name="raw_level_unknown_only">Mostrar solo campos desconocidos</string>
     <string name="raw_level_all">Todos los campos</string>
     <string name="desfire_linear_record">Registro lineal de datos</string>
     <string name="desfire_cyclic_record">Registro de datos cíclico</string>
     <plurals name="desfire_record_format">
         <item quantity="one">Tipo: %1$s, %2$d registro (%3$d máximo), tamaño del registro: %4$d</item>
-        <item quantity="other">Tipos: %1$s, %2$d registros (%3$d máximo), tamaño de los registros: %4$d</item>
+        <item quantity="many">Tipo: %1$s, %2$d registros (%3$d máximo), tamaño de los registros: %4$d</item>
+        <item quantity="other">Tipo: %1$s, %2$d registros (%3$d máximo), tamaño de los registros: %4$d</item>
     </plurals>
     <plurals name="troika_rides">
         <item quantity="one">Billete para %d viaje</item>
+        <item quantity="many">Billete para %d viajes</item>
         <item quantity="other">Billete para %d viajes</item>
     </plurals>
-    <string name="cepas_autoload_amount">importe de recarga</string>
+    <string name="cepas_autoload_amount">Importe de recarga</string>
     <string name="desfire_subtype">Subtipo</string>
     <string name="mfp_reading">Leyendo tarjeta MIFARE Plus.…</string>
     <plurals name="cards_deduped">
         <item quantity="one">%d tarjeta deduplicada</item>
+        <item quantity="many">%d tarjetas deduplicadas</item>
         <item quantity="other">%d tarjetas deduplicadas</item>
     </plurals>
     <string name="calypso_manufacture_country">País de fabricación</string>
-    <string name="trip_description">(De )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (a )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
-    </string>
+    <string name="trip_description">(De )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (a )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
     <string name="trip_description_unknown_start">a %s</string>
     <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
-    </string>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
     <string name="location_adelaide">Adelaida, Australia</string>
     <string name="location_auckland">Auckland, Nueva Zelanda</string>
     <string name="location_beijing">Beijing, China</string>
@@ -585,7 +597,8 @@
     <string name="key_file_empty">¡Archivo de claves vacío!</string>
     <string name="untitled_key_group">Grupo de claves sin título</string>
     <plurals name="keytype_mfc_static">
-        <item quantity="one">"%d clave  estática para MIFARE Classic"</item>
+        <item quantity="one">%d clave estática para MIFARE Classic</item>
+        <item quantity="many">%d claves estáticas para MIFARE Classic</item>
         <item quantity="other">%d claves estáticas para MIFARE Classic</item>
     </plurals>
     <string name="vehicle_number">Vehículo %s</string>
@@ -692,22 +705,27 @@
     <string name="hsl_period">Período de validez</string>
     <plurals name="hsl_valid_days_24h">
         <item quantity="one">%d día</item>
+        <item quantity="many">%d días</item>
         <item quantity="other">%d días</item>
     </plurals>
     <plurals name="hsl_valid_days_calendar">
-        <item quantity="one">%d día calendario</item>
-        <item quantity="other">%d días calendarios</item>
+        <item quantity="one">%d día del calendario</item>
+        <item quantity="many">%d días del calendario</item>
+        <item quantity="other">%d días del calendario</item>
     </plurals>
     <plurals name="hsl_valid_hours">
         <item quantity="one">%d hora</item>
+        <item quantity="many">%d horas</item>
         <item quantity="other">%d horas</item>
     </plurals>
     <plurals name="hsl_valid_mins">
         <item quantity="one">%d minuto</item>
+        <item quantity="many">%d minutos</item>
         <item quantity="other">%d minutos</item>
     </plurals>
     <plurals name="hsl_zones">
         <item quantity="one">zona %s</item>
+        <item quantity="many">zonas %s</item>
         <item quantity="other">zonas %s</item>
     </plurals>
     <string name="hsl_zone_station">Zona %s</string>
@@ -875,7 +893,7 @@
     <string name="leap_retrieve_keys">Recuperar claves para las tarjetas Leap</string>
     <string name="leap_retrieve_keys_longdesc">Comparte los detalles de tu tarjeta con Transport for Ireland, para responder al desafío de autenticación de la tarjeta Leap. TFI sabrá que usó Metrodroid en esta tarjeta. La tarjeta no se puede leer sin esta clave.</string>
     <string name="locked_leap">Leap bloqueado</string>
-    <string name="leap_locked_warning">Esta tarjeta no estaba desbloqueada. Activa \"Recuperar claves para tarjetas Leap\" en las preferencias NFC.</string>
+    <string name="leap_locked_warning">Esta tarjeta no estaba desbloqueada. Activa \"Recuperar claves para tarjetas Leap\" en los ajustes de NFC.</string>
     <string name="card_note_leap">Requiere recuperar claves de TFI, que deben estar activadas en las preferencias NFC.</string>
     <string name="no_static_key_assignment">Las claves estáticas no se pueden asignar a una sola tarjeta.</string>
     <string name="card_note_kiev">Solo tarjetas anteriores a 2016. Solo se puede leer la historia de viajes.</string>
@@ -931,22 +949,22 @@
     <string name="card_name_emv_long">EMV (tarjetas de crédito y débito)</string>
     <string name="card_reading_emv">Lectura EMV (tarjeta de crédito o débito) …</string>
     <string name="card_name_tampere">Tarjeta de viaje de Tampere</string>
-    <string name="show_debug_spans">Mostrar color de depuración para LocaleSpans</string>
-    <string name="show_debug_spans_desc">Resalte el idioma predeterminado en verde, inglés en amarillo y idioma local en azul</string>
+    <string name="show_debug_spans">Mostrar color de depuración para ámbitos locales</string>
+    <string name="show_debug_spans_desc">Resaltar el idioma predeterminado en verde, el inglés en amarillo y el idioma local en azul</string>
     <string name="compass_sub_free_sea_island">Entrada gratuita a Sea Island</string>
     <string name="lisboaviva_sub_fertagus_pal_lis_ml">Fertagus Palmela a Lisboa + Área Metropolitana</string>
-    <string name="navigo_forfait_jour">Boleto de un día</string>
+    <string name="navigo_forfait_jour">Billete de un día</string>
     <string name="oura_billet_tarif_normal">Boleto de tarifo normal</string>
-    <string name="ios_version">Versión de iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g>
-    </string>
+    <string name="ios_version">versión de iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
     <string name="ios_nfcreader_tap">Coloca una tarjeta</string>
     <string name="ios_nfcreader_exception">Excepción: %s</string>
     <string name="large_file_no">Cancelar (seguro)</string>
-    <string name="large_file_warning">El archivo que ha elegido es grande (%s) y puede bloquear la aplicación. ¿Quieres continuar\?</string>
+    <string name="large_file_warning">El archivo que has seleccionado es grande (%s) y puede bloquear la aplicación. ¿Quieres continuar?</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_light">Claro</string>
     <plurals name="supported_cards_format">
         <item quantity="one">%d tarjeta</item>
+        <item quantity="many">%d tarjetas</item>
         <item quantity="other">%d tarjetas</item>
     </plurals>
     <string name="lisboaviva_engraved_serial">Número grabado</string>
@@ -993,6 +1011,7 @@
     <string name="agency_card_serial_number">Número de serie de agencia de la tarjeta</string>
     <plurals name="emv_pin_attempts_remaining">
         <item quantity="one">Intento de PIN restante</item>
+        <item quantity="many">Intentos de PIN restantes</item>
         <item quantity="other">Intentos de PIN restantes</item>
     </plurals>
     <string name="emv_application_interchange_profile">Perfil de intercambio de aplicacion</string>
@@ -1008,6 +1027,7 @@
     <string name="lisboaviva_sub_navegante_urbano">Navegante urbano</string>
     <plurals name="keytype_mfc">
         <item quantity="one">%d clave para MIFARE Classic</item>
+        <item quantity="many">%d claves para MIFARE Classic</item>
         <item quantity="other">%d claves para MIFARE Classic</item>
     </plurals>
     <string name="rkf_status_ok">OK, habilitado</string>
@@ -1063,8 +1083,8 @@
     <string name="mode_monorail">Monorraíl</string>
     <plurals name="obfuscation_mode_notice">
         <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> ofuscación activada</item>
-        <item quantity="many"></item>
-        <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> ofuscaciónes activadas</item>
+        <item quantity="many"><xliff:g id="count" example="3">%d</xliff:g> ofuscaciones activadas</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> ofuscaciones activadas</item>
     </plurals>
     <string name="cepas_credit_header">Encabezado de crédito</string>
     <string name="ez_bus_refund">Reembolso del autobús</string>
@@ -1087,10 +1107,12 @@
     <string name="card_name_beijing">Tarjeta de transporte público de Beijing</string>
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d viaje restante al %2$s</item>
+        <item quantity="many">%1$d viajes restantes al %2$s</item>
         <item quantity="other">%1$d viajes restantes al %2$s</item>
     </plurals>
     <plurals name="remaining_day_count">
         <item quantity="one">1 día restante</item>
+        <item quantity="many">%d días restantes</item>
         <item quantity="other">%d días restantes</item>
     </plurals>
     <string name="troika_layout">Disposición de la troika</string>
@@ -1113,7 +1135,7 @@
 \nIdentificador de tarjeta: %1$s
 \nTecnologías soportadas:
 \n%2$s</string>
-    <string name="unknown_ultralight_message">Tarjeta MIFARE Ultralight desconocida</string>
+    <string name="unknown_ultralight_message">Etiqueta MIFARE Ultralight desconocida</string>
     <string name="ovc_sub_voordeelurenabonnement_reizen_op_saldo">Dal Voordeel, Viaje con saldo</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas">Viaje con saldo (2-1 Día)</string>
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Viaje con saldo (1-2 Día)</string>
@@ -1135,10 +1157,12 @@
     <string name="felica_skipped_system">Sistema omitida</string>
     <plurals name="felica_empty_service_codes">
         <item quantity="one">%d código de servicio vacío</item>
+        <item quantity="many">%d códigos de servicio vacíos</item>
         <item quantity="other">%d códigos de servicio vacíos</item>
     </plurals>
     <plurals name="felica_skipped_service_codes">
         <item quantity="one">%d código de servicio omitido</item>
+        <item quantity="many">%d códigos de servicio omitidos</item>
         <item quantity="other">%d códigos de servicio omitidos</item>
     </plurals>
     <string name="felica_first_system_notice">Las lecturas de FeliCa estarán incompletas.</string>
@@ -1173,4 +1197,57 @@
     <string name="mrtj_file_id">Identidad de MRTJ</string>
     <string name="mrtj_extra_note">Saldo y información sobre última transacción.</string>
     <string name="felica_specification_version">Versión de la especificación</string>
+    <string name="location_vladimir">Vladímir, Rusia</string>
+    <string name="location_gothenburg">Gotemburgo, Sweden</string>
+    <string name="location_nagoya">Nagoya, Japón</string>
+    <string name="tmoney_ccode_woori">Banco Woori</string>
+    <string name="mfu_size">Tamaño</string>
+    <string name="card_name_hayakaken">Hayakaken</string>
+    <string name="card_name_manaca">manaca</string>
+    <string name="never">Nunca</string>
+    <string name="manufacture_id">ID de fabricante</string>
+    <string name="cli_parse_command_help">Analiza la(s) tarjeta(s) en un archivo Metrodroid</string>
+    <string name="tmoney_usercode_disabled">Persona con discapacidad</string>
+    <string name="mfu_vendor">Distribuidor</string>
+    <string name="location_bretagne">Bretaña, Francia</string>
+    <string name="location_oahu">O‘ahu, HI, USA</string>
+    <string name="card_name_sugoca">SUGOCA</string>
+    <string name="card_name_toica">TOICA</string>
+    <string name="suica_file_id">Identidad Suica</string>
+    <string name="suica_file_admission">Admisión Suica</string>
+    <string name="tmoney_usercode_lorry">Camión (peaje por carretera)</string>
+    <string name="mfu_version">Versión</string>
+    <string name="mfu_protocol_type">Tipo de protocolo</string>
+    <string name="cli_identify_command_help">Identifica la(s) tarjeta(s) en un archivo Metrodroid</string>
+    <string name="cli_makejson_command_help">Convierte XML/JSON de Metrodroid en la versión más reciente de JSON</string>
+    <string name="location_hauts_de_france">Alta Francia, Francia</string>
+    <string name="location_omsk">Omsk, Rusia</string>
+    <string name="location_fukuoka_city">Fukuoka, Japón</string>
+    <string name="location_ontario">Ontario, Canadá</string>
+    <string name="card_name_nimoca">nimoca</string>
+    <string name="mode_cablecar">Telesilla</string>
+    <string name="card_name_edy">Edy</string>
+    <string name="card_name_kitaca">Kitaca</string>
+    <string name="tmoney_usercode_bus">Bus (peaje por carretera)</string>
+    <string name="navigo_forfait_semaine">Billete de una semana</string>
+    <string name="navigo_forfait_mois">Billete de un mes</string>
+    <string name="navigo_forfait_solidarite_gratuite">Billete solidario gratuito</string>
+    <string name="tisseo_10_tickets_26">Abono 10 viajes menores de 26 años</string>
+    <string name="mfu_get_version_raw">Respuesta sin procesar</string>
+    <string name="location_fukuoka_prefecture">Fukuoka, Japón</string>
+    <string name="card_name_japan_ic">IC de Japón</string>
+    <string name="card_name_pitapa">PiTaPa</string>
+    <string name="tmoney_usercode_senior">Senior</string>
+    <string name="tmoney_disrate_veteran_basic">Veterano de guerra, básico</string>
+    <string name="tmoney_disrate_veteran_companion">Veterano de guerra, compañero</string>
+    <string name="navigo_forfait_semaine_75">Billete 75%% solidario de una semana</string>
+    <string name="navigo_forfait_mois_75">Billete 75%% solidario de un mes</string>
+    <string name="navigo_forfait_annuel">Billete de un año</string>
+    <string name="tisseo_10_tickets">Abono de 10 viajes</string>
+    <string name="tisseo_1_ticket">Billete sencillo</string>
+    <string name="tisseo_mensuel">Abono mensual</string>
+    <string name="tisseo_annuel">Abono anual</string>
+    <string name="tisseo_mensuel_26">Abono mensual menores de 26 años</string>
+    <string name="tisseo_annuel_26">Abono anual menores de 26 años</string>
+    <string name="tisseo_velo">Acceso al aparcamiento para bicicletas</string>
 </resources>
