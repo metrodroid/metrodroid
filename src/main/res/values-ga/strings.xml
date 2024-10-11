@@ -1173,4 +1173,7 @@
     <string name="smartrider_fare_pensioner">Pinsinéir</string>
     <string name="smartrider_fare_student">Dalta Scoile</string>
     <string name="smartrider_fare_tertiary">Mac Léinn Treasach</string>
+    <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> á léamh…</string>
+    <string name="mfd_unlocking">Cárta <xliff:g id="card_name" example="Leap"> %s</xliff:g> á dhíghlasáil…</string>
+    <string name="delete_key_confirm_message">Comhad na heochrach <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (ina bhfuil <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) imithe go deo.</string>
 </resources>
