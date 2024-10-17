@@ -1176,4 +1176,240 @@
     <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> á léamh…</string>
     <string name="mfd_unlocking">Cárta <xliff:g id="card_name" example="Leap"> %s</xliff:g> á dhíghlasáil…</string>
     <string name="delete_key_confirm_message">Comhad na heochrach <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (ina bhfuil <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) imithe go deo.</string>
+    <plurals name="record_count">
+        <item quantity="one">%d taifead</item>
+        <item quantity="two">%d taifead</item>
+        <item quantity="few">%d taifead</item>
+        <item quantity="many">%d taifead</item>
+        <item quantity="other">%d taifead</item>
+    </plurals>
+    <plurals name="hsl_valid_days_calendar">
+        <item quantity="one">%d lá féilire</item>
+        <item quantity="two">%d laethanta fhéilire</item>
+        <item quantity="few">%d laethanta fhéilire</item>
+        <item quantity="many">%d laethanta fhéilire</item>
+        <item quantity="other">%d laethanta fhéilire</item>
+    </plurals>
+    <plurals name="travel_zones">
+        <item quantity="one">%d crios taistil</item>
+        <item quantity="two">%d criosanna taistil</item>
+        <item quantity="few">%d criosanna taistil</item>
+        <item quantity="many">%d criosanna taistil</item>
+        <item quantity="other">%d criosanna taistil</item>
+    </plurals>
+    <plurals name="mfu_num_pages">
+        <item quantity="one">leathanach amháin</item>
+        <item quantity="two">%d leathanach</item>
+        <item quantity="few">%d leathanach</item>
+        <item quantity="many">%d leathanach</item>
+        <item quantity="other">%d leathanach</item>
+    </plurals>
+    <plurals name="bytes">
+        <item quantity="one">%d beart</item>
+        <item quantity="two">%d beart</item>
+        <item quantity="few">%d beart</item>
+        <item quantity="many">%d beart</item>
+        <item quantity="other">%d beart</item>
+    </plurals>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" sampla="12:51"> %s</xliff:g></string>
+    <string name="clipper_return">Fill ar ais (<xliff:g id="ticket_class" example="Fásta">%1$s</xliff:g>)</string>
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">Fanann %1$d turas ar %2$s</item>
+        <item quantity="two">%1$d turas fágtha ar %2$s</item>
+        <item quantity="few">%1$d turas fágtha ar %2$s</item>
+        <item quantity="many">%1$d turas fágtha ar %2$s</item>
+        <item quantity="other">%1$d turas fágtha ar %2$s</item>
+    </plurals>
+    <plurals name="hsl_valid_mins">
+        <item quantity="one">%d nóiméad</item>
+        <item quantity="two">%d nóiméad</item>
+        <item quantity="few">%d nóiméad</item>
+        <item quantity="many">%d nóiméad</item>
+        <item quantity="other">%d nóiméad</item>
+    </plurals>
+    <plurals name="hsl_zones">
+        <item quantity="one">crios %s</item>
+        <item quantity="two">criosanna %s</item>
+        <item quantity="few">criosanna %s</item>
+        <item quantity="many">criosanna %s</item>
+        <item quantity="other">criosanna %s</item>
+    </plurals>
+    <string name="pref_show_raw_station_ids">Taispeáin amhaitheantais stáisiúin &amp; bealaigh</string>
+    <plurals name="keytype_mfc_static">
+        <item quantity="one">%d eochair statach MIFARE Clasaiceach</item>
+        <item quantity="two">%d Eochracha statacha MIFARE Clasaiceach</item>
+        <item quantity="few">%d Eochracha statacha MIFARE Clasaiceach</item>
+        <item quantity="many">%d Eochracha statacha MIFARE Clasaiceach</item>
+        <item quantity="other">%d Eochracha statacha MIFARE Clasaiceach</item>
+    </plurals>
+    <plurals name="milliseconds_short">
+        <item quantity="one"><xliff:g id="milliseconds" sampla="1.0"> %s</xliff:g> ms</item>
+        <item quantity="two"><xliff:g id="milliseconds" sampla="20.6"> %s</xliff:g> ms</item>
+        <item quantity="few"><xliff:g id="milliseconds" sampla="20.6"> %s</xliff:g> ms</item>
+        <item quantity="many"><xliff:g id="milliseconds" sampla="20.6"> %s</xliff:g> ms</item>
+        <item quantity="other"><xliff:g id="milliseconds" sampla="20.6"> %s</xliff:g> ms</item>
+    </plurals>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Sonraí eochrach folaithe (<xliff:g id="count" example="1">%d</xliff:g> beart)</item>
+        <item quantity="two">Sonraí eochrach folaithe (<xliff:g id="count" example="3">%d</xliff:g> beart)</item>
+        <item quantity="few">Sonraí eochrach folaithe (<xliff:g id="count" example="3">%d</xliff:g> beart)</item>
+        <item quantity="many">Sonraí eochrach folaithe (<xliff:g id="count" example="3">%d</xliff:g> beart)</item>
+        <item quantity="other">Sonraí eochrach folaithe (<xliff:g id="count" example="3">%d</xliff:g> beart)</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="one">Aon-turas</item>
+        <item quantity="two">%d-turas</item>
+        <item quantity="few">%d-turas</item>
+        <item quantity="many">%d-turas</item>
+        <item quantity="other">%d-turas</item>
+    </plurals>
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> bratach imshuí ar</item>
+        <item quantity="two"><xliff:g id="count" example="3">%d</xliff:g> bratacha imshuí ar</item>
+        <item quantity="few"><xliff:g id="count" example="3">%d</xliff:g> bratacha imshuí ar</item>
+        <item quantity="many"><xliff:g id="count" example="3">%d</xliff:g> bratacha imshuí ar</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> bratacha imshuí ar</item>
+    </plurals>
+    <plurals name="cards_imported">
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> cárta iompórtáilte.</item>
+        <item quantity="two"><xliff:g id="count" example="3">%d</xliff:g> cártaí iompórtáilte.</item>
+        <item quantity="few"><xliff:g id="count" example="3">%d</xliff:g> cártaí iompórtáilte.</item>
+        <item quantity="many"><xliff:g id="count" example="3">%d</xliff:g> cártaí iompórtáilte.</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cártaí iompórtáilte.</item>
+    </plurals>
+    <plurals name="felica_service_count">
+        <item quantity="one">%d seirbhís</item>
+        <item quantity="two">%d seirbhísí</item>
+        <item quantity="few">%d seirbhísí</item>
+        <item quantity="many">%d seirbhísí</item>
+        <item quantity="other">%d seirbhísí</item>
+    </plurals>
+    <plurals name="desfire_record_format">
+        <item quantity="one">Cineál: %1$s, taifead %2$d (%3$d uasta), méid taifead: %4$d</item>
+        <item quantity="two">Cineál: %1$s, taifeadann %2$d (%3$d uasta), méid taifead: %4$d</item>
+        <item quantity="few">Cineál: %1$s, taifeadann %2$d (%3$d uasta), méid taifead: %4$d</item>
+        <item quantity="many">Cineál: %1$s, taifeadann %2$d (%3$d uasta), méid taifead: %4$d</item>
+        <item quantity="other">Cineál: %1$s, taifeadann %2$d (%3$d uasta), méid taifead: %4$d</item>
+    </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d turas fágtha as %d</item>
+        <item quantity="two">%d turas fágtha as %d</item>
+        <item quantity="few">%d turas fágtha as %d</item>
+        <item quantity="many">%d turas fágtha as %d</item>
+        <item quantity="other">%d turas fágtha as %d</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Bailí do %d lá</item>
+        <item quantity="two">Bailí ar feadh %d lá</item>
+        <item quantity="few">Bailí ar feadh %d lá</item>
+        <item quantity="many">Bailí ar feadh %d lá</item>
+        <item quantity="other">Bailí ar feadh %d lá</item>
+    </plurals>
+    <plurals name="hsl_valid_hours">
+        <item quantity="one">%d uair</item>
+        <item quantity="two">%d uair an chloig</item>
+        <item quantity="few">%d uair an chloig</item>
+        <item quantity="many">%d uair an chloig</item>
+        <item quantity="other">%d uair an chloig</item>
+    </plurals>
+    <plurals name="cards_deduped">
+        <item quantity="one">%d cárta dí-dhúbailte</item>
+        <item quantity="two">%d cártaí dí-dhúbailte</item>
+        <item quantity="few">%d cártaí dí-dhúbailte</item>
+        <item quantity="many">%d cártaí dí-dhúbailte</item>
+        <item quantity="other">%d cártaí dí-dhúbailte</item>
+    </plurals>
+    <string name="time_from_to">&lt;xliff:g id=\"start_time\" sampla=\"12:35\"&gt;%1$s&lt;/xliff:g&gt; → &lt;xliff:g id=\"end_time\" sampla=\"12:51\"&gt;%2$s&lt; /xliff:g&gt;</string>
+    <string name="location_brisbane_seq_australia">Brisbane agus SE QLD, An Astráil</string>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="one">Bailí ar feadh %d mí</item>
+        <item quantity="two">Bailí ar feadh %d mí</item>
+        <item quantity="few">Bailí ar feadh %d mí</item>
+        <item quantity="many">Bailí ar feadh %d mí</item>
+        <item quantity="other">Bailí ar feadh %d mí</item>
+    </plurals>
+    <plurals name="remaining_day_count">
+        <item quantity="one">1 lá fágtha</item>
+        <item quantity="two">%d lá fágtha</item>
+        <item quantity="few">%d lá fágtha</item>
+        <item quantity="many">%d lá fágtha</item>
+        <item quantity="other">%d lá fágtha</item>
+    </plurals>
+    <string name="trip_description">(Ó ) <xliff:g id="start_station" example="Tóiceo">%1$s</xliff:g> [→] (chuig ) <xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <plurals name="emv_pin_attempts_remaining">
+        <item quantity="one">Iarracht UAP fágtha</item>
+        <item quantity="two">Iarrachtaí UAP fágtha</item>
+        <item quantity="few">Iarrachtaí UAP fágtha</item>
+        <item quantity="many">Iarrachtaí UAP fágtha</item>
+        <item quantity="other">Iarrachtaí UAP fágtha</item>
+    </plurals>
+    <plurals name="felica_skipped_service_codes">
+        <item quantity="one">Rinne %d scipeáil ar chód seirbhíse</item>
+        <item quantity="two">Rinne %d scipeáil ar chóid seirbhíse</item>
+        <item quantity="few">Rinne %d scipeáil ar chóid seirbhíse</item>
+        <item quantity="many">Rinne %d scipeáil ar chóid seirbhíse</item>
+        <item quantity="other">Rinne %d scipeáil ar chóid seirbhíse</item>
+    </plurals>
+    <plurals name="felica_empty_service_codes">
+        <item quantity="one">%d cód seirbhíse folamh</item>
+        <item quantity="two">%d cóid seirbhíse folamh</item>
+        <item quantity="few">%d cóid seirbhíse folamh</item>
+        <item quantity="many">%d cóid seirbhíse folamh</item>
+        <item quantity="other">%d cóid seirbhíse folamh</item>
+    </plurals>
+    <plurals name="supported_cards_format">
+        <item quantity="one">%d cárta</item>
+        <item quantity="two">%d cártaí</item>
+        <item quantity="few">%d cártaí</item>
+        <item quantity="many">%d cártaí</item>
+        <item quantity="other">%d cártaí</item>
+    </plurals>
+    <plurals name="block_count">
+        <item quantity="one">%d bloc</item>
+        <item quantity="two">%d bloic</item>
+        <item quantity="few">%d bloic</item>
+        <item quantity="many">%d bloic</item>
+        <item quantity="other">%d bloic</item>
+    </plurals>
+    <plurals name="passengers">
+        <item quantity="one">paisinéir</item>
+        <item quantity="two">paisinéirí</item>
+        <item quantity="few">paisinéirí</item>
+        <item quantity="many">paisinéirí</item>
+        <item quantity="other">paisinéirí</item>
+    </plurals>
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Cineál: %1$s, fad: %2$s beart</item>
+        <item quantity="two">Cineál: %1$s, fad: %2$s beart</item>
+        <item quantity="few">Cineál: %1$s, fad: %2$s beart</item>
+        <item quantity="many">Cineál: %1$s, fad: %2$s beart</item>
+        <item quantity="other">Cineál: %1$s, fad: %2$s beart</item>
+    </plurals>
+    <plurals name="trips_remaining">
+        <item quantity="one">%d turas fágtha</item>
+        <item quantity="two">%d turas fágtha</item>
+        <item quantity="few">%d turas fágtha</item>
+        <item quantity="many">%d turas fágtha</item>
+        <item quantity="other">%d turas fágtha</item>
+    </plurals>
+    <string name="clipper_single">Taisteal singil (<xliff:g id="ticket_class" example="Fásta">%1$s</xliff:g>)</string>
+    <plurals name="hsl_valid_days_24h">
+        <item quantity="one">%d lá</item>
+        <item quantity="two">%d laethanta</item>
+        <item quantity="few">%d laethanta</item>
+        <item quantity="many">%d laethanta</item>
+        <item quantity="other">%d laethanta</item>
+    </plurals>
+    <string name="card_name_beijing">Cárta Riaracháin &amp; Cumarsáide Bardasach Beijing</string>
+    <string name="device_model">Múnla: &lt;xliff:g id=\"model_name\" example=\"Pixel 2\"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g id=\"model_codename\" sampla=\"wallye\"&gt;%2$s&lt;/ xliff:g&gt;)</string>
+    <string name="device_manufacturer">Monaróir: &lt;xliff:g id=\"manufacturer\" example=\"HTC\"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g id=\"brand\" example=\"Google\"&gt;%2$s&lt;/xliff :g&gt;)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" sampla="PPR2.180905.006"> %2$s </xliff:g>)</string>
+    <string name="ios_version">leagan iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d MIFARE eochair chlasaiceach</item>
+        <item quantity="two">%d Eochracha Clasaiceach MIFARE</item>
+        <item quantity="few">%d Eochracha Clasaiceach MIFARE</item>
+        <item quantity="many">%d Eochracha Clasaiceach MIFARE</item>
+        <item quantity="other">%d Eochracha Clasaiceach MIFARE</item>
+    </plurals>
 </resources>
