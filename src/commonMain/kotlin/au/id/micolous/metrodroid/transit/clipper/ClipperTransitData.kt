@@ -96,7 +96,41 @@ class ClipperTransitData (private val mSerialNumber: Long?,
                 result.add(trip)
                 pos -= RECORD_LENGTH
             }
-            return result
+
+            val partialTrips = parsePartialTrips(card)
+            val newPartialTrips = partialTrips.filter { partial ->
+                !result.any { trip ->
+                    partial.startTimestamp == trip.startTimestamp
+                }
+            }
+            result.addAll(newPartialTrips)
+            return result.sortedBy { it.startTimestamp?.timeInMillis }
+        }
+
+        private fun parsePartialTrips(card: DesfireCard): List<ClipperTrip> {
+            val file = card.getApplication(APP_ID)?.getFile(0x0f)
+            val data = file?.data ?: return emptyList()
+
+            val partials = mutableListOf<ClipperPartialTrip>()
+            var pos = data.size - RECORD_LENGTH
+            while (pos >= 0) {
+                val slice = data.sliceOffLen(pos, RECORD_LENGTH)
+                val parsed = ClipperPartialTrip.parse(slice)
+                if (parsed != null) {
+                    partials.add(parsed)
+                }
+                pos -= RECORD_LENGTH
+            }
+            val tagOns = partials.filter { it.isTagOn }
+            val tagOffs = partials.filter { it.isTagOff }
+            val open: List<ClipperPartialTrip> = tagOns.filter { tagOn ->
+                !tagOffs.any { tagOff ->
+                    tagOff.isCorrelated(tagOn)
+                }
+            }
+            return open.sortedBy { it.timestamp }.map {
+                it.convertToTrip()
+            }
         }
 
         private fun parseRefills(card: DesfireCard): List<ClipperRefill> {
