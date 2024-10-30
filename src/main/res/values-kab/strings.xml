@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="license">Iselkinen</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="license">Iselkinen</string>
     <string name="advanced_info">Talqayt</string>
     <string name="delete_card">Kkes</string>
     <string name="unknown_card">Arussin</string>
@@ -40,9 +41,7 @@
     <string name="seqgo_ticket_type_child">aqrur</string>
     <string name="nextfare_system_code">Anagraw</string>
     <string name="app_name">Amitṛudroid</string>
-
-    <string name="copyright">Copyright 2015 - 2019 Mikayel Farrell</string>
-
+    <string name="copyright">Copyright 2015 - 2022 Mikayel Farrell</string>
     <string name="title_activity_license">Turagin yeldin</string>
     <string name="directions">Ssit ɣef takarḍa</string>
     <string name="reading_card">Takarḍa n tɣuri</string>
@@ -53,4 +52,4 @@
     <string name="no_trip_data">Ulac asikil yellan.wis takarḍa yagi ma tettwaseqdec?</string>
     <string name="import_clipboard">Kter seg ɣef afus</string>
     <string name="import_file">Kter seg afaylu</string>
-    </resources>
+</resources>
