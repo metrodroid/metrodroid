@@ -1299,4 +1299,6 @@
     <string name="card_name_russia_omsk_social">Tarjeta social</string>
     <string name="russia_region_33_vladimir">Vladimir Oblast</string>
     <string name="smartrider_fare_staff">Plantilla de personal</string>
+    <string name="emv_card_fdda">Datos relacionados con la autenticación de la tarjeta fDDA</string>
+    <string name="emv_fdda_version_no">Número de versión de fDDA</string>
 </resources>
