@@ -128,6 +128,7 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         private const val AGENCY_ARRIVA = 0x08
         private const val AGENCY_DUO = 0x0C    // Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
         private const val AGENCY_STORE = 0x19
+        private const val AGENCY_GVB_FLEX = 0x2711
 
         const val TRANSACTION_TYPE = "TransactionType"
 
