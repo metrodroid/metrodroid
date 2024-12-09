@@ -1,12 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-<string name="market_title">Metrodroid (oli Farebot M)</string>
-
+    <string name="market_title">Metrodroid (oli Farebot M)</string>
     <string name="market_short_desc">Metrodroidilla voi lukea tietoa joistain julkisen liikenteen NFC-älykorteista.</string>
-
     <string name="market_long_desc"/>
-
-    <string name="market_changelog_29"></string>
-
-    </resources>
+    <string name="market_changelog_29"/>
+    <string name="market_changelog_300">• Lisää tuen Cifial-, Fribourg TPF-, Waltti- ja sinisille HSL-korteille\n• Viankorjauksia Amiiboon, SLaccessiin, Troikaan ja Vivaan\n• Uudet tiedot: Adelaide Metrocard, Bonobus, Compass, Gautrain, Rav-Kav, RicaricaMi, ORCA, OùRA, Touch \'n Go ja Viva\n• Lisää historiahaun, MIFARE Plus -tuen\n• Viankorjauksia Android v. 4.3:lle ja sitä vanhemmille\n\nLisätietoja ja tunnetut ongelmat (englanniksi): https://www.metrodroid.org/changelog</string>
+    <string name="market_changelog_generic">Korjaa vikoja, lisää uusia ominaisuuksia ja tietoja.\n\nLisätietoja ja tunnetut ongelmat (englanniksi): https://www.metrodroid.org/changelog</string>
+</resources>
