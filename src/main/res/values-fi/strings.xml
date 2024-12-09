@@ -19,7 +19,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="directions">Napauta korttia.</string>
     <string name="reading_card">Luetaan korttia</string>
     <string name="dont_move">Älä liikuta korttia</string>
@@ -43,7 +43,7 @@
     <string name="accessibility">Helppokäyttöisyys</string>
     <string name="speak_balance">Sano saldo</string>
     <string name="speak_balance_summary"/>
-    <string name="balance_speech">Saldo <xliff:g xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" id="balance" example="$13.37">%s</xliff:g>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
     </string>
     <string name="loading">Lataa…</string>
     <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
@@ -143,4 +143,86 @@
     <string name="hsl_transport_juna">Juna</string>
     <string name="hsl_transport_lautta">Lautta</string>
     <string name="hsl_transport_u_linja">U-linja</string>
+    <string name="unauthorized_file_title_format">Tiedosto: %s (luvaton)</string>
+    <string name="copyright">Tekijänoikeus © 2015–2022 Michael Farrell</string>
+    <string name="last_refill">Viimeinen täyttö</string>
+    <string name="nfcv_system_info">Järjestelmätiedot</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip tallennettu USB-tallennustilaan.</string>
+    <string name="general">Yleinen</string>
+    <string name="time">Aika</string>
+    <string name="page_title_format_empty">Sivu: %s (tyhjä)</string>
+    <string name="block_title_format_unauthorized">Lohko: %s (luvaton)</string>
+    <string name="rejected">Hylätty</string>
+    <string name="subscription_cost">Kustannus</string>
+    <string name="date">Päivämäärä</string>
+    <string name="card_format">Kortin muoto</string>
+    <string name="binary_title_format">Binääritiedot</string>
+    <string name="valid_origin_destination_via">Voimassa %1$s:sta %2$s:een %3$s:n kautta</string>
+    <string name="keys_loaded">Tämän kortin salausavaimet on ladattu.</string>
+    <string name="nfc_settings">NFC-asetukset</string>
+    <string name="machine_id">Laitetunnus</string>
+    <string name="felica_system_title_format">Järjestelmä: %1$s (%2$s)</string>
+    <string name="application_title_format">Sovellus: %s</string>
+    <string name="unauthorized_page_title_format">Sivu: %s (luvaton)</string>
+    <string name="export_filename">Vie tiedostonimi</string>
+    <string name="saved_xml_custom">XML tallennettu USB-tallennustilaan.</string>
+    <string name="unknown">Tuntematon</string>
+    <string name="page_title_format">Sivu: %s</string>
+    <string name="lawyercats">Metrodroid ja sen kirjoittajat eivät ole yhteydessä mihinkään julkisen liikenteen virastoon.</string>
+    <string name="unknown_more_info">Lisätietoja</string>
+    <string name="unknown_card_header">Ei tuettu korttimuotoa</string>
+    <string name="select_file">Valitse tiedosto</string>
+    <string name="copied_to_clipboard">Kopioitu leikepöydälle</string>
+    <string name="visit_website">Vieraile verkkosivustolla</string>
+    <string name="title_activity_about">Tietoja</string>
+    <string name="card_not_supported_on_device">Laitteesi ei tue tätä korttia.</string>
+    <string name="need_stations">Joidenkin asemien nimiä ovat tuntemattomia.</string>
+    <string name="need_stations_submit">Ilmoita</string>
+    <string name="card_epoch">Kortin aikakausi</string>
+    <string name="transaction_type">Tapahtumatyyppi</string>
+    <string name="last_transaction">Viimeisin tapahtuma</string>
+    <string name="launch_from_background">Käynnistä taustalta</string>
+    <string name="checksum">Tarkistussumma</string>
+    <string name="no_keys">Ei avaimia.</string>
+    <string name="delete">Poista</string>
+    <string name="unknown_format">Tuntematon (%s)</string>
+    <string name="load_keys">Lataa avaimet</string>
+    <string name="valid_format">Voimassa %1$s–%2$s</string>
+    <string name="valid_from_format">Voimassa %1$s alkaen</string>
+    <string name="machine_id_format">Laitetunnus %s</string>
+    <string name="file_exported">Tiedosto viety.</string>
+    <string name="delete_key_confirm_title">Poistetaanko avain todella?</string>
+    <string name="transaction_counter">Tapahtumalaskuri</string>
+    <string name="info">Tiedot</string>
+    <string name="invalid_sector_title_format">Sektori: %1$s (virheellinen: %2$s)</string>
+    <string name="sector_title_format">Sektori: %s</string>
+    <string name="block_title_format">Lohko: %s</string>
+    <string name="no_scanned_cards">Et ole skannatnut yhtään korttia.</string>
+    <string name="scanned_cards">Historia</string>
+    <string name="fully_locked_title">Täysin lukittu kortti.</string>
+    <string name="title_activity_license">Avoimen lähdekoodin lisenssit</string>
+    <string name="never">Ei koskaan</string>
+    <string name="add_key">Lisää avain</string>
+    <string name="keys">Avaimet</string>
+    <string name="cant_delete_with_obfuscation">Avaimien poistaminen ei ole tällä hetkellä käytettävissä</string>
+    <string name="delete_key_confirm_message">Avaintiedosto <xliff:g id="kuvaus" example="a1b2c3d4">%1$s</xliff:g> (sisältää <xliff:g id="key_type" example="1 MIFARE Classic -avain">%2$s</xliff:g>) on poissa ikuisesti.</string>
+    <string name="sector_title_format_empty">Sektori: %s (tyhjä)</string>
+    <string name="card_keys_not_supported">Metrodroid ei tue avaimia tämän tyyppisille korteille.</string>
+    <string name="fully_locked_desc_unlockable">Mikään tämän kortin osa ei ole vapaasti luettavissa ilman avainta. Sinulle ei ole asennettu kelvollisia avaimia.\n\nKortti toimii, kun siihen on asennettu avaimet. Nämä ovat yleensä erilaisia kullekin kortille. Lisätietoja avainten hankinnasta ja asentamisesta löytyy dokumentaatiosta.\n\nOta kortinmyöntäjään yhteyttä, jotta myönnettyjen korttien tietoihin pääsee vapaasti. Nykyaikaisella älykorttitekniikalla on turvallista sallia avoin, vain luku -käyttöoikeus. Jotkut virastot tarjoavat jopa avoimen dokumentaation tietomuodosta!</string>
+    <string name="fully_locked_desc">Mikään tämän kortin osa ei ole vapaasti luettavissa ilman avainta, eikä tällä muodolla ole tällä hetkellä käytännön haavoittuvuuksia.\n\n Metrodroid ei tue korttiasi, ja on epätodennäköistä, että se tulee koskaan olemaan, ellei sen avainta ole purettu.\n\n Ota kortinmyöntäjään yhteyttä, jotta myönnettyjen korttien tietoihin pääsee vapaasti. Nykyaikaisella älykorttitekniikalla on turvallista sallia avoin, vain luku -käyttöoikeus. Jotkut virastot tarjoavat jopa avoimen dokumentaation tietomuodosta!</string>
+    <string name="unknown_more_info_desc">Napauta saadaksesi lisätietoja Metrodroid-tuesta tälle kortille.</string>
+    <string name="valid_origin_destination">Voimassa %1$s:sta %2$s:een</string>
+    <string name="keys_required">Salausavaimia edellytetään tämän kortin lukemiseksi.</string>
+    <string name="file_title_format">Tiedosto: %s</string>
+    <string name="invalid_file_title_format">Tiedosto: %1$s (virheellinen: %2$s)</string>
+    <string name="valid_to_format">Voimassa %1$s asti</string>
+    <string name="cant_delete_with_obfuscation_message">Turvallisuussyistä et voi poistaa avaimia, kun korttinumeroiden hämärtäminen on käytössä. Sammuta se, jos haluat poistaa avaimia.</string>
+    <string name="unauthorized_sector_title_format">Sektori: %s (luvaton)</string>
+    <string name="felica_service_title_format">Palvelu: %1$s (%2$s)</string>
+    <string name="record_title_format">Tietue: %s</string>
+    <string name="card_preview_reader">Kortinlukijan beta-versio.</string>
+    <string name="error">Virhe</string>
+    <string name="nfc_unavailable">NFC ei saatavilla</string>
+    <string name="vehicle_type">Ajoneuvon tyyppi</string>
+    <string name="add_key_directions">Tallenna avaimistasi binäärivedos tiedostoksi laajennuksella .farebotkeys, lähetä se sähköpostitse liitteenä itsellesi ja avaa se sitten tällä laitteella.</string>
 </resources>
