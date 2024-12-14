@@ -7,8 +7,7 @@
 
   For English dialect usage details, please see:
   https://github.com/metrodroid/metrodroid/wiki/Translating#translations-for-english-dialects
--->
-<resources>
+--><resources>
     <string name="location_auckland">Auckland</string>
     <string name="location_christchurch_nz">Christchurch</string>
     <string name="payment_method_cheque">Cheque</string>
@@ -16,4 +15,48 @@
     <string name="license">Licences</string>
     <string name="title_activity_license">Open source licences</string>
     <string name="tmoney_usercode_lorry">Truck (road toll)</string>
+    <string name="unknown_card">Unknown card</string>
+    <string name="nfcv_system_info">System info</string>
+    <string name="last_refill">Last refill</string>
+    <string name="dont_move">Do not move card</string>
+    <string name="import_clipboard">Paste from clipboard</string>
+    <string name="unknown_more_info_desc">Tap for more info on Metrodroid support for this card.</string>
+    <string name="subscription_cost">Cost</string>
+    <string name="binary_title_format">Binary data</string>
+    <string name="nfc_settings">NFC settings</string>
+    <string name="machine_id">Machine ID</string>
+    <string name="unknown">Unknown</string>
+    <string name="lawyercats">Metrodroid and its authors are not associated with any public transit agency.</string>
+    <string name="unknown_card_header">Unsupported card format</string>
+    <string name="unknown_more_info">More info</string>
+    <string name="info">Info</string>
+    <string name="no_scanned_cards">You have not scanned any cards.</string>
+    <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
+    <string name="scanned_cards">History</string>
+    <string name="turn_on_nfc">Please enable NFC to read card info.</string>
+    <string name="copy_xml">Copy</string>
+    <string name="nfc_off_error">NFC off</string>
+    <string name="fully_locked_title">Fully locked card.</string>
+    <string name="supported_cards">Supported cards</string>
+    <string name="loading">Loading…</string>
+    <string name="preferences">Preferences</string>
+    <string name="about">About</string>
+    <string name="export">Export</string>
+    <string name="export_all">Export all</string>
+    <string name="import_file">Import from file</string>
+    <string name="import_xml">Import</string>
+    <string name="no_trip_data">No trips found. Has this card been used?</string>
+    <string name="save_xml">Save to File</string>
+    <string name="history">History</string>
+    <string name="share_xml">Share</string>
+    <string name="hw_detail">Manufacturing info</string>
+    <string name="data">Raw Data</string>
+    <string name="delete_card">Delete card</string>
+    <string name="advanced_info">Advanced info</string>
+    <string name="directions">Tap a card.</string>
+    <string name="reading_card">Reading card…</string>
+    <string name="copyright">Copyright © 2015 – 2022 Michael Farrell</string>
+    <string name="never">Never</string>
+    <string name="keys_required">Encryption keys are required to read this card.</string>
+    <string name="keys_loaded">Encryption keys for this card are loaded.</string>
 </resources>
