@@ -1287,4 +1287,9 @@
     <string name="ndef_wifi_key_provided_automatically_no">否</string>
     <string name="agency_name_action">行动</string>
     <string name="smartrider_fare_staff">工作人员</string>
+    <string name="navigo_forfait_mois">月票</string>
+    <string name="navigo_forfait_annuel">年票</string>
+    <string name="tisseo_mensuel">月度订阅</string>
+    <string name="tisseo_annuel">年度订阅</string>
+    <string name="navigo_forfait_semaine">周票</string>
 </resources>
