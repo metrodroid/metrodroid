@@ -310,4 +310,6 @@
     <string name="page_title_format_empty">ページ: %s(空)</string>
     <string name="block_title_format_unauthorized">ブロック: %s(認証が必要)</string>
     <string name="nfc_settings">NFC 設定</string>
+    <string name="subscription_cost">コスト</string>
+    <string name="valid_origin_destination">%1$s から %2$s まで有効</string>
 </resources>
