@@ -43,8 +43,7 @@
     <string name="accessibility">Helppokäyttöisyys</string>
     <string name="speak_balance">Sano saldo</string>
     <string name="speak_balance_summary"/>
-    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Saldo <xliff:g id="saldo" esimerkki="$13.37">%s</xliff:g></string>
     <string name="loading">Lataa…</string>
     <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
     <string name="supported_cards">Tuetut kortit</string>
