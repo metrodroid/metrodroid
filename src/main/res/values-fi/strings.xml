@@ -163,7 +163,7 @@
     <string name="felica_system_title_format">Järjestelmä: %1$s (%2$s)</string>
     <string name="application_title_format">Sovellus: %s</string>
     <string name="unauthorized_page_title_format">Sivu: %s (luvaton)</string>
-    <string name="export_filename">Vie tiedostonimi</string>
+    <string name="export_filename">Vie tiedoston nimi</string>
     <string name="saved_xml_custom">XML tallennettu USB-tallennustilaan.</string>
     <string name="unknown">Tuntematon</string>
     <string name="page_title_format">Sivu: %s</string>
