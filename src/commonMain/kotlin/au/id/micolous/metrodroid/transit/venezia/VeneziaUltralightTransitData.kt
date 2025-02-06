@@ -145,7 +145,7 @@ private fun parse(card: UltralightCard): VeneziaUltralightTransitData {
 
 class VeneziaUltralightTransitFactory : UltralightCardTransitFactory {
     override fun check(card: UltralightCard) =
-            card.getPage(3).data.byteArrayToInt(0, 2) in listOf(0x30de, 0x3186, 0x4ca8, 0x6221)
+            card.getPage(3).data.byteArrayToInt(0, 2) in listOf(0x30de, 0x3186, 0x4ca8, 0x6221, 0x3c2a, 0x3c41)
 
     override fun parseTransitData(card: UltralightCard) = parse(card)
 
