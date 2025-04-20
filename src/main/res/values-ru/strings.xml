@@ -20,8 +20,7 @@
     <string name="export_all">Экспортировать всё</string>
     <string name="about">О программе</string>
     <string name="preferences">Настройки</string>
-    <string name="balance_speech">Остаток <xliff:g id="balance" example="$13.37">%s</xliff:g>
-    </string>
+    <string name="balance_speech">Остаток <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="supported_cards">Поддерживаемые карты</string>
     <string name="nfc_off_error">NFC оключён</string>
     <string name="turn_on_nfc">Пожалуйста, включите NFC чтобы прочитать карту.</string>
@@ -53,12 +52,10 @@
     <string name="disabled">Выключено</string>
     <string name="card_name_ravkav">Рав Кав</string>
     <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
-    <string name="trip_description">(Из )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (в )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
-    </string>
+    <string name="trip_description">(Из )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (в )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
     <string name="trip_description_unknown_start">До %s</string>
     <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
-    </string>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
     <string name="location_san_francisco">Сан Франциско, Калифорния, США</string>
     <string name="location_singapore">Сингапур</string>
@@ -656,7 +653,7 @@
     <string name="map_tiles_url_summary">Использовать пользовательский сервер для карт, используя синтаксис Leaflet TileLayer.</string>
     <string name="map_tiles_subdomains">Поддомены для карты</string>
     <string name="map_tiles_help">Просмотр документации Leaflet TileLayer</string>
-    <string name="map_tiles_help_summary">"Информацию об использовании URL-адресов для карты см. в онлайн-документации к  Leaflet (доступна только на английском языке)."</string>
+    <string name="map_tiles_help_summary">Информацию об использовании URL-адресов для карты см. в онлайн-документации к Leaflet (доступна только на английском языке).</string>
     <string name="obfuscation_fares_desc">Изменить показанные тарифы на случайную сумму</string>
     <string name="accessibility">Специальные возможности</string>
     <plurals name="obfuscation_mode_notice">
@@ -759,7 +756,7 @@
     <string name="mfc_fallback">Резервный парсер</string>
     <string name="pref_hide_unsupported_ribbon">Скрыть ленту «не поддерживается»</string>
     <string name="last_refill">Последнее пополнение</string>
-    <string name="map_tiles_subdomains_summary">"При использовании {s} в URL-адресах карты,  список субдоменов разделенных запятой или односимвольный список поддоменов."</string>
+    <string name="map_tiles_subdomains_summary">При использовании {s} в URL-адресах карты, список субдоменов разделенных запятой или односимвольный список поддоменов.</string>
     <string name="obfuscation_dates_desc">Показывать даты поездки, проездного, срока действия и сканирования как разные, случайные дни</string>
     <string name="obfuscation_times_desc">Исказить время поездок, проездных и сканов</string>
     <string name="localise_places_desc">Добавить языковые подсказки (LocaleSpan) для названий мест, таких как названия станций, остановок, линий и маршрутов. Это изменяет произношение, используемое программами чтения с экрана и другим программным обеспечением для специальных возможностей.</string>
@@ -964,7 +961,7 @@
     <string name="cepas_can">Номер приложения карты (CAN)</string>
     <string name="cepas_csn">Серийный номер карты (CSN)</string>
     <string name="cepas_trp">Указатель транзакции (TRP)</string>
-    <string name="cepas_credit_trp">"Указатель транзакции  пополнения (Credit TRP)"</string>
+    <string name="cepas_credit_trp">Указатель транзакции пополнения (Credit TRP)</string>
     <string name="tmoney_balance">Баланс T-Money</string>
     <string name="china_balance">Остаток номер %d</string>
     <string name="emv_gpo_response">Ответ на запрос GPO (чтение опций процессинга)</string>
@@ -973,9 +970,7 @@
     <string name="iso7816_raw">Необработанные данные</string>
     <string name="iso7816_tlv">Теги TLV</string>
     <string name="touchngo_cardno">Альтернативный номер («CardNo»)</string>
-    <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid. 
-\nИдентификатор тега:%1$s
-\nПоддерживаемые технологии:%2$s</string>
+    <string name="unsupported_tag_message">Этот тег в настоящее время не поддерживается Metrodroid.\n Идентификатор тега:%1$s\n Поддерживаемые технологии:\n %2$s</string>
     <string name="unknown_ultralight_message">Неизвестный тег MIFARE Ultralight</string>
     <string name="nfc_connection_failed">NFC подключение к %s не удалось</string>
     <string name="unknown_date_title">Неизвестная дата</string>
@@ -1114,8 +1109,7 @@
     <string name="hotel_checkin">Время заселения</string>
     <string name="hotel_checkout">Время выселения</string>
     <string name="oyster_travelpass">Проездной билет</string>
-    <string name="ios_version">Версия iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g>
-    </string>
+    <string name="ios_version">Версия iOS: <xliff:g id="version" example="10.3">%1$s</xliff:g></string>
     <string name="ios_error_ok">ОК</string>
     <string name="ios_unknown_tag">Неизвестный тип тега: %s</string>
     <string name="rkf_stockholm_7_days">Стокгольм 7-дневный проездной</string>
@@ -1338,4 +1332,8 @@
     <string name="navigo_forfait_semaine_75">Недельный проездной «Солидарность» 75%%</string>
     <string name="ndef_wifi_band_2_4">2.4 ГГц</string>
     <string name="ndef_wifi_band_5">5 ГГц</string>
+    <string name="ndef_wifi_device_name">Название устройства</string>
+    <string name="ndef_wifi_enctype_unencrypted">Не защищённый</string>
+    <string name="ndef_wifi_manufacturer">Производитель</string>
+    <string name="ndef_wifi_mac_address">MAC адрес</string>
 </resources>
