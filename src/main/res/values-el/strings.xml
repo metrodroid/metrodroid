@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Μετρόδροειδ</string>
     <string name="license">Άδειες</string>
-    <string name="directions">Αγγίξτε μια κάρτα.</string>
+    <string name="directions">Aκουμπήστε μια κάρτα.</string>
     <string name="reading_card">Ανάγνωση κάρτας…</string>
     <string name="dont_move">Μην μετακινείτε την κάρτα</string>
     <string name="advanced_info">Προηγμένες πληροφορίες</string>
@@ -124,4 +124,27 @@
     <string name="mobib_jump_1_trip">Jump 1 ταξίδι</string>
     <string name="mobib_jump_10_trips">Jump 10 ταξίδια</string>
     <string name="title_activity_license">Άδειες Ανοιχτού Κώδικα</string>
+    <string name="unknown_more_info_desc">Πατήστε για περισσότερες πληροφορίες σχετικά με την υποστήριξη Metrodroid για αυτήν την κάρτα.</string>
+    <string name="last_refill">Τελευταίο γέμισμα</string>
+    <string name="page_title_format_empty">Σελίδα: %s (κενή)</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="block_title_format_unauthorized">Μπλοκ: %s (μη εξουσιοδοτημένο)</string>
+    <string name="invalid_file_title_format">Αρχείο: %1$s (μη έγκυρο: %2$s)</string>
+    <string name="file_title_format">Αρχείο: %s</string>
+    <string name="application_title_format">Εφαρμογή: %s</string>
+    <string name="page_title_format">Σελίδα: %s</string>
+    <string name="lawyercats">Το Metrodroid και οι δημιουργοί του δεν συνδέονται με κανένα φορέα δημόσιας συγκοινωνίας.</string>
+    <string name="balance_speech">Υπόλοιπο <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="data">Ακατέργαστα δεδομένα (Raw Data)</string>
+    <string name="no_trip_data">Δεν βρέθηκαν διαδρομές. Έχει χρησιμοποιηθεί αυτή η κάρτα;</string>
+    <string name="copyright">Πνευματικά δικαιώματα © 2015 – 2022 Michael Farrell</string>
+    <string name="scanned_at_format">Σαρώθηκε στις %1$s σε %2$s</string>
+    <string name="nfc_off_error">NFC απενεργοποιημένο</string>
+    <string name="fully_locked_desc">Κανένα μέρος αυτής της κάρτας δεν είναι αναγνώσιμο ελεύθερα χωρίς κλειδί και επί του παρόντος αυτή η μορφή δεν έχει πρακτικά τρωτά σημεία. \n\nΗ κάρτα σας δεν υποστηρίζεται από το Metrodroid και είναι απίθανο να γίνει ποτέ, εκτός εάν αποκρυπτογραφηθεί το κλειδί για αυτήν. \n\nΠαρακαλούμε ασκήστε πίεση στον εκδότη της κάρτας για να επιτραπεί η ανοιχτή πρόσβαση σε δεδομένα στις εκδοθείσες κάρτες. Είναι ασφαλές να επιτραπεί η ανοιχτή πρόσβαση μόνο για ανάγνωση σε δεδομένα με τη σύγχρονη τεχνολογία έξυπνων καρτών. Ορισμένοι φορείς παρέχουν ακόμη και ανοιχτή τεκμηρίωση σχετικά με τη μορφή δεδομένων!</string>
+    <string name="fully_locked_desc_unlockable">Κανένα μέρος αυτής της κάρτας δεν είναι ευανάγνωστο χωρίς κλειδί. Δεν έχετε εγκαταστήσει έγκυρα κλειδιά για αυτό.\n\nΗ κάρτα θα λειτουργήσει μόλις εγκατασταθούν τα κλειδιά για αυτήν. Αυτά είναι γενικά διαφορετικά για κάθε κάρτα. Περισσότερες πληροφορίες σχετικά με την απόκτηση και την εγκατάσταση κλειδιών μπορείτε να βρείτε στην τεκμηρίωση.\n\nΠαρακαλούμε ασκήστε πίεση στον εκδότη της κάρτας για να επιτραπεί η ανοιχτή πρόσβαση σε δεδομένα στις εκδοθείσες κάρτες. Είναι ασφαλές να επιτραπεί η ανοιχτή πρόσβαση μόνο για ανάγνωση σε δεδομένα με τη σύγχρονη τεχνολογία έξυπνων καρτών. Ορισμένοι φορείς παρέχουν ακόμη και ανοιχτή τεκμηρίωση σχετικά με τη μορφή δεδομένων!</string>
+    <string name="block_title_format">Μπλοκ: %s</string>
+    <string name="turn_on_nfc">Ενεργοποιήστε το NFC για την ανάγνωση των πληροφοριών της κάρτας.</string>
+    <string name="unknown_card_description">Αυτή η κάρτα δεν υποστηρίζεται ακόμη από το Metrodroid. Μπορούν να εμφανιστούν μόνο ανεπεξέργαστα δεδομένα (Raw Data).</string>
+    <string name="no_scanned_cards">Δεν έχετε σαρώσει καμία κάρτα.</string>
+    <string name="unauthorized_file_title_format">Αρχείο: %s (μη εξουσιοδοτημένο)</string>
 </resources>
