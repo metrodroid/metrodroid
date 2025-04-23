@@ -114,6 +114,7 @@ data class ThessUltralightTransitData(
             .setLocationName("Thessaloniki")
             .setCardType(CardType.MifareUltralight)
             .setRegion(TransitRegion.GREECE)
+            .setImageId(R.drawable.thess_card)
             .build()
     }
 }
