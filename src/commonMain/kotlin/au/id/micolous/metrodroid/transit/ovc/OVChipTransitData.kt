@@ -144,7 +144,9 @@ data class OVChipTransitData(
                 else
                 // handle two consecutive (duplicate) logins, skip the first one
                     nextTransaction
-            }.values.toMutableList()
+            }.values.sortedBy {
+                it.id
+            }.toMutableList()
 
             return TransactionTripLastPrice.merge(transactions)
         }
