@@ -846,7 +846,7 @@
     <string name="card_name_siticard">SitiCard</string>
     <string name="card_name_kirov">Kirov-vervoerskaart</string>
     <string name="card_name_ekarta">Ekarta</string>
-    <string name="siticard_aerial_tramway">Kabelbaan</string>
+    <string name="siticard_aerial_tramway">Kabeltram</string>
     <string name="siticard_adult_60min_xfer_purse">Overstapkaart - 60 minuten (volwassene)</string>
     <string name="siticard_adult_90min_xfer_purse">Overstapkaart - 90 minuten (volwassene)</string>
     <string name="siticard_edinyj_16_trips">Edinyj (één kaartje) - 16 ritten</string>
@@ -1322,4 +1322,26 @@
     <string name="smartrider_fare_convention">Evenementenkaart</string>
     <string name="location_bretagne">Brentagne, Frankrijk</string>
     <string name="location_ontario">Ontario, Canada</string>
+    <string name="location_hauts_de_france">Hauts-de-France, Frankrijk</string>
+    <string name="mode_cablecar">Kabelbaan</string>
+    <string name="navigo_forfait_semaine">Weekkaart</string>
+    <string name="navigo_forfait_semaine_75">Weekkaart met 75% korting</string>
+    <string name="navigo_forfait_mois">Maandkaart</string>
+    <string name="tisseo_10_tickets">10 kaartjes</string>
+    <string name="tisseo_mensuel_26">Maandabonnement 26-</string>
+    <string name="tisseo_annuel_26">Jaarabonnement 26-</string>
+    <string name="tisseo_10_tickets_26">10 kaartjes 26-</string>
+    <string name="tisseo_velo">Fietsparkeerkaart</string>
+    <string name="navigo_forfait_imagineR_etudiant">ImagineR-studentenabonnement</string>
+    <string name="navigo_forfait_liberte">Navigo Liberté+-abonnement</string>
+    <string name="ilevia_trajet_unitaire">Ilévia - 1 rit</string>
+    <string name="ilevia_trajet_unitaire_x10">Ilévia - 10 ritten</string>
+    <string name="ilevia_mensuel">Ilévia - maandkaart</string>
+    <string name="ilevia_10mois">Ilévia - 10-maandenkaart</string>
+    <string name="tisseo_mensuel">Maandabonnement</string>
+    <string name="navigo_forfait_solidarite_gratuite">Gratis kaart</string>
+    <string name="navigo_forfait_mois_75">Maandkaart met 75% korting</string>
+    <string name="navigo_forfait_annuel">Jaarkaart</string>
+    <string name="tisseo_1_ticket">Eén kaartje</string>
+    <string name="tisseo_annuel">Jaarabonnement</string>
 </resources>
