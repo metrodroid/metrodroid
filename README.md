@@ -6,10 +6,10 @@
 <img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
 <a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
-<a href="https://github.com/metrodroid/metrodroid/releases/latest">Direct APK download</a>
+<a href="https://github.com/metrodroid/metrodroid/releases/latest">Direct APK download - ***Recommended***</a>
 <a href="https://www.metrodroid.org/metrodroid/ios">iOS version coming soon!</a>
 
-Version: 3.0.xx
+Version: 3.0.0
 
 View remaining balance, recent trips, and other info from contactless public transit
 cards using NFC on Android and [iOS (coming soon)][ios].
