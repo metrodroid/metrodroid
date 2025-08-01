@@ -34,7 +34,7 @@ expect object Preferences {
     var retrieveLeapKeys: Boolean
     var showBothLocalAndEnglish: Boolean
     val language: String
-    val region: String?
+    val regions: Set<String>?
     var obfuscateTripTimes: Boolean
     val debugSpans: Boolean
     val localisePlaces: Boolean
