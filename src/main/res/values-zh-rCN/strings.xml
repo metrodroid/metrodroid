@@ -474,7 +474,7 @@
     <string name="felica_terminal_deposit_quick_charge">快速加注机</string>
     <string name="felica_process_admission_thirdparty">支付接口费(第三方)</string>
     <string name="suica_file_history">穗卡历史</string>
-    <string name="felica_terminal_fare_adjustment">票价调整机</string>
+    <string name="felica_terminal_fare_adjustment">补票机</string>
     <string name="felica_terminal_portable">便携式终端</string>
     <string name="auth_retries_summary">每个扇区尝试验证的次数</string>
     <string name="mfc_fallback_desc">有些机构的卡片上没有识别魔法。要读取它们，您必须明确选择一个机构。</string>
@@ -508,9 +508,9 @@
     <string name="mfc_reading">读取 MIFARE 经典卡…</string>
     <string name="mfc_rwid">读取：%1$s，写入：%2$s，递增：%3$s，递减：%4$s</string>
     <string name="mfc_key_never">从不</string>
-    <string name="hsl_transport_bussi">公共汽车</string>
-    <string name="hsl_transport_bussi_2">2 路公共汽车</string>
-    <string name="hsl_transport_bussi_3">3 路公共汽车</string>
+    <string name="hsl_transport_bussi">公交车</string>
+    <string name="hsl_transport_bussi_2">2 路公交</string>
+    <string name="hsl_transport_bussi_3">3 路公交</string>
     <string name="card_note_adelaide">只能读取序列、行程和订阅信息</string>
     <string name="purse_serial_number">钱包序列号</string>
     <string name="ticket_type">机票类型</string>
@@ -558,7 +558,7 @@
     <string name="felica_terminal_vending">自动售货机</string>
     <string name="felica_process_fare_exit_gate">出口转门</string>
     <string name="felica_process_charge">填充</string>
-    <string name="felica_process_purchase_magnetic">磁性门票</string>
+    <string name="felica_process_purchase_magnetic">磁票</string>
     <string name="felica_process_admission_payment">支付接口费</string>
     <string name="felica_process_booth_exit">站长室出口</string>
     <string name="kmt_file_history">KMT 历史</string>
@@ -652,7 +652,7 @@
     <string name="felica_process_register_deposit">在收银台补货</string>
     <string name="suica_file_id">Suica 身份</string>
     <string name="kmt_file_purse_balance">KMT钱包余额</string>
-    <string name="mrtj_extra_note">余额和上次交易信息。</string>
+    <string name="mrtj_extra_note">零钱和上次交易信息。</string>
     <string name="hsl_pass_ticket">季节性门票</string>
     <string name="hsl_arvo_format">%s 的电子票</string>
     <string name="hsl_child">儿 童</string>
@@ -686,7 +686,7 @@
     <string name="felica_process_entry_a_autocharge">输入 A（自动填充）</string>
     <string name="felica_process_exit_a_autocharge">出口 A（自动充值）</string>
     <string name="felica_process_deposit_bus">公共汽车押金</string>
-    <string name="felica_process_purchase_special_ticket">车票（专线巴士/路面电车）</string>
+    <string name="felica_process_purchase_special_ticket">车票（专用客车/有轨电车票）</string>
     <string name="kmt_other_data">其他数据</string>
     <string name="card_name_mrtj">MRTJ 多次乘车卡</string>
     <plurals name="hsl_valid_days_calendar">
@@ -697,7 +697,7 @@
     <string name="hsl_region_vihti">维赫蒂</string>
     <string name="hsl_region_kerava_sipoo_tuusula">凯拉瓦-西普-图苏拉</string>
     <string name="hsl_region_lahiseutu_3">周边国家3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
-    <string name="hsl_transport_bussi_4">4 路公共汽车</string>
+    <string name="hsl_transport_bussi_4">4 路公交</string>
     <string name="hsl_transport_raitiovaunu">有轨电车</string>
     <string name="hsl_transport_juna">火车</string>
     <string name="hsl_transport_u_linja">U 型线</string>
@@ -775,7 +775,7 @@
     <string name="hsl_region_seutu">地区（赫尔辛基+埃斯波-万塔）</string>
     <string name="hsl_transport_metro">地铁</string>
     <string name="hsl_transport_lautta">渡船</string>
-    <string name="metroq_fare_card">车票卡</string>
+    <string name="metroq_fare_card">公交卡</string>
     <string name="metroq_day_pass">每日通行证</string>
     <string name="seqgo_ticket_type_adult_explore">成人探索/观看 Q</string>
     <string name="nextfare_ticket_class">票务类别代码 %d</string>
