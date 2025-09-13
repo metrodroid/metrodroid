@@ -101,10 +101,16 @@
     <string name="hsl_transport_juna">火車</string>
     <string name="hsl_transport_lautta">渡輪船</string>
     <string name="hsl_transport_u_linja">U-line</string>
-    <string name="metroq_fare_card">交通卡</string>
+    <string name="metroq_fare_card">通勤月票</string>
     <string name="opal_automatic_top_up">自動儲值</string>
     <string name="opal_vehicle_bus">公車</string>
     <string name="opal_vehicle_ferry_lr">渡輪或輕軌</string>
     <string name="opal_vehicle_rail">鐵路</string>
     <string name="opal_action_none">無（全新未使用卡片）</string>
+    <string name="convert_timezones_summary_off">行程時間將以運輸機構所在地的時區顯示。</string>
+    <string name="convert_timezones_summary_on">行程時間將轉換為您目前的時區。</string>
+    <string name="szt_bus">深圳公車</string>
+    <string name="payment_method_debit_card">簽帳金融卡</string>
+    <string name="payment_method_credit_card">信用卡</string>
+    <string name="payment_method_transit_card">交通票券</string>
 </resources>
