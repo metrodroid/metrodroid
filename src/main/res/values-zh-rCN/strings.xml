@@ -756,7 +756,7 @@
     <string name="subscription_unused">未使用</string>
     <string name="payment_method_credit_card">信用卡</string>
     <string name="payment_method_debit_card">借记卡</string>
-    <string name="payment_method_transit_card">公交卡</string>
+    <string name="payment_method_transit_card">通用乘车卡</string>
     <string name="card_holders_name">持卡人姓名</string>
     <string name="ravkav_agency_topup_app">Rav-Kav 移动充值</string>
     <string name="ravkav_generic_trips">旅行</string>
@@ -775,7 +775,7 @@
     <string name="hsl_region_seutu">地区（赫尔辛基+埃斯波-万塔）</string>
     <string name="hsl_transport_metro">地铁</string>
     <string name="hsl_transport_lautta">渡船</string>
-    <string name="metroq_fare_card">公交卡</string>
+    <string name="metroq_fare_card">公交储值卡</string>
     <string name="metroq_day_pass">每日通行证</string>
     <string name="seqgo_ticket_type_adult_explore">成人探索/观看 Q</string>
     <string name="nextfare_ticket_class">票务类别代码 %d</string>
