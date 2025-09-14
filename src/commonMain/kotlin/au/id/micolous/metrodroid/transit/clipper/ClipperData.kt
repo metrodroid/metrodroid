@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 
 internal object ClipperData {
+    const val AGENCY_BART = 0x04
     const val AGENCY_CALTRAIN = 0x06
     private const val AGENCY_GGT = 0x0b
     const val AGENCY_SMART = 0x0c
