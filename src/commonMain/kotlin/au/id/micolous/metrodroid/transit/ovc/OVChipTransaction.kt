@@ -112,10 +112,12 @@ data class OVChipTransaction(override val parsed: En1545Parsed) : En1545Transact
         }
     }
 
+    val tripLength get() = parsed.getIntOrZero("TripDurationMinutes")
+
     companion object {
         private const val PROCESS_PURCHASE = 0x00
-        private const val PROCESS_CHECKIN = 0x01
-        private const val PROCESS_CHECKOUT = 0x02
+        internal const val PROCESS_CHECKIN = 0x01
+        internal const val PROCESS_CHECKOUT = 0x02
         private const val PROCESS_TRANSFER = 0x06
         private const val PROCESS_BANNED = 0x07
         private const val PROCESS_CREDIT = -0x02
