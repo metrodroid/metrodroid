@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.transit.nextfareul.NextfareUnknownUltralightTra
 import au.id.micolous.metrodroid.transit.pisa.PisaUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.serialonly.MRTUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData
+import au.id.micolous.metrodroid.transit.thess.ThessUltralightTransitFactory
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitFactory
@@ -30,6 +31,7 @@ object UltralightTransitRegistry {
             AmiiboTransitFactory,
             HSLUltralightTransitFactory,
             NdefUltralightTransitFactory,
+            ThessUltralightTransitFactory,
 
             BlankUltralightTransitFactory,
             // This check must be LAST.

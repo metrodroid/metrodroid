@@ -33,6 +33,7 @@ Package            | Location(s)
 `seq_go`           | :australia: Brisbane and South East Queensland, Australia
 `smartrider`       | :australia: Western Australia, Australia, :australia: Australian Capital Territory, Australia
 `suica`            | :jp: Japan
+`thess`            | :greece: Thessaloniki, Greece
 
 [0]: https://github.com/micolous/metrodroid/wiki#card-data-formats
 [1]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
