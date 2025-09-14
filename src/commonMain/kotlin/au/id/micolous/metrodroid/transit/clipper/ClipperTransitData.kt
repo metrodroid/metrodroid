@@ -96,7 +96,7 @@ class ClipperTransitData (private val mSerialNumber: Long?,
                 result.add(trip)
                 pos -= RECORD_LENGTH
             }
-            return result
+            return result.sortedBy { it.startTimestamp?.timeInMillis }
         }
 
         private fun parseRefills(card: DesfireCard): List<ClipperRefill> {
@@ -108,7 +108,8 @@ class ClipperTransitData (private val mSerialNumber: Long?,
             val data = card.getApplication(APP_ID)?.getFile(0x04)?.data ?: return emptyList()
             return (data.indices step RECORD_LENGTH).reversed().
                     map { pos -> data.sliceOffLen(pos, RECORD_LENGTH) }.
-                    mapNotNull { slice -> createRefill(slice) }
+                    mapNotNull { slice -> createRefill(slice) }.
+                    sortedBy { it.startTimestamp?.timeInMillis }
         }
 
         private fun createRefill(useData: ImmutableByteArray): ClipperRefill? {
