@@ -60,7 +60,6 @@ class FormattedStringFallbackSerializer : KSerializer<FormattedStringFallback> {
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = FormattedString::class)
 expect class FormattedStringSerializer : KSerializer<FormattedString>
 
 @Serializable(with=FormattedStringSerializer::class)

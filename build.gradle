@@ -50,8 +50,8 @@ jacoco {
 task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+//        xml.enabled = true
+//        html.enabled = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'main/au/id/micolous/metrodroid/multi/R*.class']
@@ -67,8 +67,8 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 task androidDebugUnitJacoco(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+//        xml.enabled = true
+ //       html.enabled = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'au/id/micolous/metrodroid/multi/R*.class']
@@ -294,14 +294,15 @@ task copyThirdPartyNotices(type: Copy) {
 }
 
 kotlin {
+    jvmToolchain(21)
     targets {
         fromPreset(presets.android, 'android')
         fromPreset(presets.jvm, 'jvmCli') {
             compilations.all {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
-                kotlinOptions {
+        /*        kotlinOptions {
                     jvmTarget = "9"
-                }
+                }*/
             }
         }
 
@@ -390,7 +391,6 @@ kotlin {
                     'src/jvmCommonTest/kotlin'
             ]
         }
-
 
         jvmCliTest {
             dependencies {
@@ -662,14 +662,14 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
     }
 
-    kotlinOptions {
+/*    kotlinOptions {
         jvmTarget = "1.8"
-    }
+    }*/
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'

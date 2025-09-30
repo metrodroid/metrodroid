@@ -29,7 +29,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
+//apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -63,6 +63,6 @@ tasks.withType(AbstractArchiveTask) {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+//    sourceCompatibility = JavaVersion.VERSION_1_8
+//    targetCompatibility = JavaVersion.VERSION_1_8
 }

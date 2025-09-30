@@ -21,10 +21,10 @@ apply plugin: 'java-library'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'objective-c'
 
-compileJava {
+/*compileJava {
      sourceCompatibility = JavaVersion.VERSION_1_8
      targetCompatibility = JavaVersion.VERSION_1_8
-}
+}*/
 
 dependencies {
     implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
@@ -139,7 +139,7 @@ configurations {
     compileClasspath
 }
 
-java {
+/*java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
+}*/
