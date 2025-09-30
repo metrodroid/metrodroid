@@ -3,7 +3,7 @@ MDROOT = ../..
 
 BART_URL = https://www.bart.gov/dev/schedules/google_transit.zip
 VTA_URL = https://gtfs.vta.org/gtfs_vta.zip
-MUNI_URL = http://gtfs.sfmta.com/transitdata/google_transit.zip
+MUNI_URL = https://gtfs.sfmta.com/transitdata/google_transit.zip
 SFBF_URL = https://transitfeeds.com/p/golden-gate-bridge-highway-transportation-district/344/latest/download
 GGT_URL = https://transitfeeds.com/p/golden-gate-bridge-highway-transportation-district/349/latest/download
 ZIP_FILES := bart_gtfs.zip vta_gtfs.zip muni_gtfs.zip sfbf_gtfs.zip ggt_gtfs.zip
