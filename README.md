@@ -4,6 +4,8 @@
 
 <a href="https://metrodroid.github.io/metrodroid/fdroid" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
+<a href="https://apt.izzysoft.de/packages/au.id.micolous.farebot" target="_blank">
+<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" alt="Get it at IzzyOnDroid"></a>
 <a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
 <a href="https://github.com/metrodroid/metrodroid/releases/latest">Direct APK download</a>
