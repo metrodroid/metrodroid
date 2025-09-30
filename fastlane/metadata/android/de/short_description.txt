@@ -1,0 +1,1 @@
+Liest Informationen von NFC SmartCards einiger öffentlicher Verkehrsbetriebe aus
