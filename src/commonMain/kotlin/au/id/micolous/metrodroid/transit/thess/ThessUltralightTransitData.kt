@@ -29,8 +29,6 @@ import au.id.micolous.metrodroid.transit.TransitRegion
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemInterface
 
-private const val NAME = "ThessCard"
-
 @Parcelize
 data class ThessUltralightTransitData(
     private val mSerial: String,
@@ -44,7 +42,11 @@ data class ThessUltralightTransitData(
         get() = mSerial
 
     override val cardName: String
-        get() = NAME
+        get() = if (mIsSingleUse) {
+            Localizer.localizeString(R.string.card_thessticket)
+        } else {
+            Localizer.localizeString(R.string.card_thesscard)
+        }
 
     override val balance: TransitBalance?
         get() {
@@ -59,9 +61,18 @@ data class ThessUltralightTransitData(
 
     override val info: List<ListItemInterface>?
         get() = listOfNotNull(
-            ListItem(Localizer.get(R.string.ticket_type),
-                if (mIsSingleUse) Localizer.get(R.string.ticket_type_single_use) else Localizer.get(R.string.ticket_type_multi_trip)),
-            ListItem(Localizer.get(R.string.product_code), "0x${mProductCode.toString(16)}")
+            ListItem(
+                Localizer.localizeString(R.string.ticket_type),
+                if (mIsSingleUse) {
+                    Localizer.localizeString(R.string.ticket_type_single_use)
+                } else {
+                    Localizer.localizeString(R.string.ticket_type_multi_trip)
+                }
+            ),
+            ListItem(
+                Localizer.localizeString(R.string.product_code),
+                "0x${mProductCode.toString(16)}"
+            )
         )
 
     companion object {
@@ -105,10 +116,9 @@ data class ThessUltralightTransitData(
             )
         }
 
-        // Note: Using hardcoded strings since we can't add resources directly
         val CARD_INFO = CardInfo.Builder()
-            .setName(NAME)
-            .setLocationName("Thessaloniki")
+            .setName(Localizer.localizeString(R.string.card_thesscard))
+            .setLocation(R.string.location_thessaloniki)
             .setCardType(CardType.MifareUltralight)
             .setRegion(TransitRegion.GREECE)
             .setImageId(R.drawable.thess_card)

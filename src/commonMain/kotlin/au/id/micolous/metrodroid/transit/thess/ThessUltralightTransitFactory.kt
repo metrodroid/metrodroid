@@ -14,6 +14,8 @@ package au.id.micolous.metrodroid.transit.thess
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
@@ -44,7 +46,11 @@ object ThessUltralightTransitFactory : UltralightCardTransitFactory {
         val statusByte = card.getPage(6).data[0].toInt() and 0xFF
         val (_, _, isSingleUse) = ThessUltralightTransaction.parseStatusByte(statusByte)
         
-        val cardName = if (isSingleUse) "ThessTicket" else "ThessCard"
+        val cardName = if (isSingleUse) {
+            Localizer.localizeString(R.string.card_thessticket)
+        } else {
+            Localizer.localizeString(R.string.card_thesscard)
+        }
         // Use the tag ID as the serial number
         return TransitIdentity(cardName, card.tagId.toHexString())
     }

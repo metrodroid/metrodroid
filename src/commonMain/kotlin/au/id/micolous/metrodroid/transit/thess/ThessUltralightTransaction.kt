@@ -13,7 +13,9 @@
 package au.id.micolous.metrodroid.transit.thess
 
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.Transaction
@@ -40,14 +42,17 @@ data class ThessUltralightTransaction(
     override val machineID get() = null // Not implemented for now
     
     override fun getAgencyName(isShort: Boolean) = 
-    FormattedString(Localizer.get(R.string.agency_thessaloniki_metro))
+        FormattedString(Localizer.localizeString(R.string.agency_thessaloniki_metro))
     
     override fun getRawFields(level: Int) = super.getRawFields(level).orEmpty() + listOfNotNull(
-        FormattedString(Localizer.get(R.string.product_code)) to FormattedString("0x${mProductCode.toString(16)}"),
-        FormattedString(Localizer.get(R.string.ticket_type)) to FormattedString(
-            if (mIsSingleUse) Localizer.get(R.string.ticket_type_single_use) else Localizer.get(R.string.ticket_type_multi_trip)
+        FormattedString(Localizer.localizeString(R.string.product_code)) to FormattedString("0x${mProductCode.toString(16)}"),
+        FormattedString(Localizer.localizeString(R.string.ticket_type)) to FormattedString(
+            if (mIsSingleUse) {
+                Localizer.localizeString(R.string.ticket_type_single_use)
+            } else {
+                Localizer.localizeString(R.string.ticket_type_multi_trip)
+            } + " (0x${if (mIsSingleUse) "80" else "f0"})"
         ),
-        FormattedString("ticketType (raw)") to FormattedString("0x${mProductCode.toString(16)}/0xf0"),
         FormattedString("Used") to FormattedString(mIsUsed.toString())
     )
 
