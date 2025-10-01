@@ -40,14 +40,14 @@ data class ThessUltralightTransaction(
     override val machineID get() = null // Not implemented for now
     
     override fun getAgencyName(isShort: Boolean) = 
-        FormattedString("Thessaloniki Metro")
+    FormattedString(Localizer.get(R.string.agency_thessaloniki_metro))
     
     override fun getRawFields(level: Int) = super.getRawFields(level).orEmpty() + listOfNotNull(
-        FormattedString("Product code") to FormattedString("0x${mProductCode.toString(16)}"),
-        if (mIsSingleUse)
-            FormattedString("Ticket type") to FormattedString("Single-use")
-        else
-            FormattedString("Ticket type") to FormattedString("Multi-trip"),
+        FormattedString(Localizer.get(R.string.product_code)) to FormattedString("0x${mProductCode.toString(16)}"),
+        FormattedString(Localizer.get(R.string.ticket_type)) to FormattedString(
+            if (mIsSingleUse) Localizer.get(R.string.ticket_type_single_use) else Localizer.get(R.string.ticket_type_multi_trip)
+        ),
+        FormattedString("ticketType (raw)") to FormattedString("0x${mProductCode.toString(16)}/0xf0"),
         FormattedString("Used") to FormattedString(mIsUsed.toString())
     )
 

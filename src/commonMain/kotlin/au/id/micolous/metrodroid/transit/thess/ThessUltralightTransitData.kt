@@ -59,16 +59,13 @@ data class ThessUltralightTransitData(
 
     override val info: List<ListItemInterface>?
         get() = listOfNotNull(
-            ListItem("Ticket type",
-                if (mIsSingleUse) "Single-use" else "Multi-trip"),
-            ListItem("Product code", "0x${mProductCode.toString(16)}")
+            ListItem(Localizer.get(R.string.ticket_type),
+                if (mIsSingleUse) Localizer.get(R.string.ticket_type_single_use) else Localizer.get(R.string.ticket_type_multi_trip)),
+            ListItem(Localizer.get(R.string.product_code), "0x${mProductCode.toString(16)}")
         )
 
     companion object {
-        private fun getSerial(card: UltralightCard): String {
-            // UID is in pages 0-1, plus a BCC byte
-            return card.tagId.toHexString()
-        }
+        private fun getSerial(card: UltralightCard): String = card.tagId.toHexString()
 
         private fun getProductCode(card: UltralightCard): Int {
             // Batch code & key-ID at pages 12-13
