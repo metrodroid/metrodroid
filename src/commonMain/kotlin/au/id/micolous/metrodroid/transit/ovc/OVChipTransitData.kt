@@ -137,6 +137,9 @@ data class OVChipTransitData(
             val transactions = (0..27).mapNotNull { transactionId ->
                 OVChipTransaction.parseClassic(card[35 + transactionId / 7]
                         .readBlocks(transactionId % 7 * 2, 2))
+            }
+            val taggedTransactions = transactions.filter {
+                !it.isTransparent   // don't include Reload transactions when grouping, which might have conflicting IDs
             }.groupingBy { it.id }.reduce { _, transaction, nextTransaction ->
                 if (transaction.isTapOff)
                 // check for two consecutive (duplicate) logouts, skip the second one
@@ -144,9 +147,12 @@ data class OVChipTransitData(
                 else
                 // handle two consecutive (duplicate) logins, skip the first one
                     nextTransaction
-            }.values.toMutableList()
+            }.values
+            val fullTransactions = taggedTransactions + transactions.filter {
+                it.isTransparent
+            }
 
-            return TransactionTripLastPrice.merge(transactions)
+            return TransactionTripLastPrice.merge(fullTransactions.toMutableList())
         }
 
         fun<T: En1545Subscription> getSubscriptions(card: ClassicCard, index: OVChipIndex,  factory: (data: ImmutableByteArray, type1: Int, used: Int) -> T): List<T> {

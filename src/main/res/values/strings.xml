@@ -1479,6 +1479,11 @@
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_tweede_klas">Travel on Credit (1-2 Day)</string>
     <!-- Translators: Dutch "Reizen op saldo (2-1 Dag met korting)" -->
     <string name="ovc_sub_reizen_op_saldo_tijdelijk_eerste_klas_korting">Travel on Credit (2-1 Discount)</string>
+    <!-- Translators: Dutch "Reizen op Rekening Trein" -->
+    <string name="ovc_sub_reizen_op_rekening_trein">Travel via monthly bill (Train)</string>
+    <!-- Translators: Dutch "Reizen op Rekening Bus Tram Metro" -->
+    <string name="ovc_sub_reizen_op_rekening_bus_tram_metro">Travel via monthly bill (Bus/Tram/Metro)</string>
+
     <!--  Arriva -->
     <!-- Translators: Dutch "Dal Korting" -->
     <string name="ovc_sub_dalkorting">Dal Korting</string>
@@ -1497,6 +1502,8 @@
     <!-- GVB -->
     <!-- Translators: Dutch "OV-fietsabonnement" -->
     <string name="ovc_sub_fietssupplement">OV-fiets Season Ticket</string>
+    <!-- Translators: Dutch "GVB Nachtbus Saldo" -->
+    <string name="ovc_sub_gvb_nachtbus_saldo">Travel on credit (night bus)</string>
     <!-- Defunct cards. They are no longer used but may still show up on old cards -->
     <!-- Translators: Dutch "DALU Dalkorting" -->
     <string name="ovc_sub_dalu_dalkorting">DALU Dalkorting</string>
