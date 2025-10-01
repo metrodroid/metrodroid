@@ -19,8 +19,8 @@ actual object Preferences {
     actual var showRawStationIds = true
     actual val language: String
         get() = Locale.getDefault().language
-    actual val region: String?
-        get() = Locale.getDefault().country
+    actual val regions: Set<String>?
+        get() = setOf(Locale.getDefault().country)
     actual var showBothLocalAndEnglish = true
     actual val rawLevel: TransitData.RawLevel
         get() = TransitData.RawLevel.UNKNOWN_ONLY

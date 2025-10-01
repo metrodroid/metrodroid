@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.util
 import android.content.Context
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
+import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.preference.PreferenceManager
 import au.id.micolous.farebot.BuildConfig
@@ -137,22 +138,25 @@ actual object Preferences {
 
     actual val language: String get() = Locale.getDefault().language
 
-    actual val region: String? get() {
+    actual val regions: Set<String>? get() {
+        val ret = mutableSetOf<String>()
         val tm = MetrodroidApplication.instance.getSystemService(Context.TELEPHONY_SERVICE)
         if (tm is TelephonyManager && (
                 tm.phoneType == TelephonyManager.PHONE_TYPE_GSM ||
                 tm.phoneType == TelephonyManager.PHONE_TYPE_CDMA)) {
-            val netCountry = tm.networkCountryIso
-            if (netCountry != null && netCountry.length == 2)
-                return netCountry.uppercase(Locale.US)
-
-            val simCountry = tm.simCountryIso
-            if (simCountry != null && simCountry.length == 2)
-                return simCountry.uppercase(Locale.US)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                for (sim in 0 until tm.activeModemCount) {
+                    ret.add(tm.getNetworkCountryIso(sim).uppercase(Locale.US))
+                }
+            } else {
+                tm.networkCountryIso?.uppercase(Locale.US)?.let { ret.add(it) }
+            }
+            tm.simCountryIso?.uppercase(Locale.US)?.let { ret.add(it) }
         }
 
         // Fall back to using the Locale settings
-        return Locale.getDefault().country.uppercase(Locale.US)
+        ret.add(Locale.getDefault().country.uppercase(Locale.US))
+        return ret
     }
 
     actual val rawLevel: TransitData.RawLevel get() = TransitData.RawLevel.fromString(getStringPreference(PREF_RAW_LEVEL,

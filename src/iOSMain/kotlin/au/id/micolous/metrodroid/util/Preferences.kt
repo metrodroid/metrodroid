@@ -20,6 +20,8 @@
 package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.transit.TransitData
+import platform.CoreTelephony.CTCarrier
+import platform.CoreTelephony.CTTelephonyNetworkInfo
 import platform.Foundation.NSBundle
 import platform.Foundation.NSLocale
 import platform.Foundation.NSUserDefaults
@@ -54,11 +56,23 @@ actual object Preferences {
 
     actual val language: String
         get() = languageOverrideForTest.value ?: NSLocale.preferredLanguages[0] as String
-    actual val region: String?
-        get() = currentLocale.countryCode
+    actual val regions: Set<String>?
+        get() {
+            val over = regionOverrideForTest.value
+            if (over != null)
+                return setOf(over)
+            val tm = CTTelephonyNetworkInfo()
+            return (tm.serviceSubscriberCellularProviders
+                ?.values
+                ?.filterIsInstance<CTCarrier>()?.mapNotNull { it.isoCountryCode?.uppercase() }
+                ?.toSet().orEmpty()
+                    + setOfNotNull(tm.subscriberCellularProvider?.isoCountryCode?.uppercase())
+                    + setOfNotNull(currentLocale.countryCode)).ifEmpty { null }
+        }
     val languageOverrideForTest = AtomicReference<String?>(null)
     val currentLocale: NSLocale get() = localeOverrideForTest.value ?: NSLocale.currentLocale
     val localeOverrideForTest = AtomicReference<NSLocale?>(null)
+    val regionOverrideForTest = AtomicReference<String?>(null)
 
     actual var showRawStationIds by BoolDelegate("pref_show_raw_ids")
     actual var showBothLocalAndEnglish by BoolDelegate("pref_show_local_and_english")
