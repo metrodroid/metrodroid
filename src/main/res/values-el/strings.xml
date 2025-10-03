@@ -91,6 +91,7 @@
     <string name="location_sydney_australia">Σύδνεϋ, Αυστραλία</string>
     <string name="location_tampere">Τάμπερε, Φινλανδία</string>
     <string name="location_tartu">Ταρτού, Εσθονία</string>
+    <string name="location_thessaloniki">Θεσσαλονίκη, Ελλάδα</string>
     <string name="location_the_netherlands">Ολλανδία</string>
     <string name="location_tokyo">Τόκιο, Ιαπωνία</string>
     <string name="location_toulouse">Τουλούζη, Γαλλία</string>
@@ -98,6 +99,13 @@
     <string name="location_victoria_australia">Βικτώρια, Αυστραλία</string>
     <string name="location_wellington_nz">Ουέλινγκτον, Νέα Ζηλανδία</string>
     <string name="location_wa_australia">Δυτική Αυστραλία, Αυστραλία</string>
+    <string name="agency_thessaloniki_metro">Μετρό Θεσσαλονίκης</string>
+    <string name="card_thesscard">ThessCard</string>
+    <string name="card_thessticket">ThessTicket</string>
+    <string name="ticket_type">Τύπος εισιτηρίου</string>
+    <string name="ticket_type_single_use">Μονής χρήσης</string>
+    <string name="ticket_type_multi_trip">Πολλαπλών διαδρομών</string>
+    <string name="product_code">Κωδικός προϊόντος</string>
     <string name="location_barnaul">Μπαρναούλ, Ρωσία</string>
     <string name="location_santiago_chile">Σαντιάγο της Χιλής, Χιλή</string>
     <string name="location_warsaw">Βαρσοβία, Πολωνία</string>
