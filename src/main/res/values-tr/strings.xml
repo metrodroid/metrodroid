@@ -1341,4 +1341,7 @@
     <string name="tisseo_mensuel_26">Aylık abonelik - 26 yaş</string>
     <string name="tisseo_annuel_26">Yıllık abonelik - 26 yaş</string>
     <string name="ilevia_10mois">Ilévia 10-aylık bilet</string>
+    <string name="ovc_sub_reizen_op_rekening_trein">Aylık ücretle seyahat (Tren)</string>
+    <string name="ovc_sub_reizen_op_rekening_bus_tram_metro">Aylık ücretle seyahat (Otobüs/Tramvay/Metro)</string>
+    <string name="ovc_sub_gvb_nachtbus_saldo">Krediyle seyahat (gece otobüsü)</string>
 </resources>
