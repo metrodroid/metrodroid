@@ -1,0 +1,1 @@
+Pode ler informações de algumas smartcards NFC de transporte público
