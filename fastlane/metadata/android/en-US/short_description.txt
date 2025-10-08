@@ -1,0 +1,1 @@
+Metrodroid can read information from some public transport NFC smartcards
