@@ -52,9 +52,17 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
 
 import kotlinx.serialization.Serializable
 
+val factories = listOf(
+    AndroidHceApplication.FACTORY,
+    CalypsoApplication.FACTORY,
+    KROCAPConfigDFApplication.FACTORY,
+    KSX6924Application.FACTORY,
+    ChinaCard.FACTORY,
+    EmvFactory())
+
 object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
     private val klasses =
-            (ISO7816Card.factories.flatMap {
+            (factories.flatMap {
                 it.typeMap.entries.map { (k,v) -> k to v} }
                     + (CEPASApplication.TYPE to CEPASApplication.serializer())).toMap()
 
@@ -125,13 +133,6 @@ data class ISO7816Card (
 
     companion object {
         private const val TAG = "ISO7816Card"
-        val factories = listOf(
-                AndroidHceApplication.FACTORY,
-                CalypsoApplication.FACTORY,
-                KROCAPConfigDFApplication.FACTORY,
-                KSX6924Application.FACTORY,
-                ChinaCard.FACTORY,
-		        EmvFactory())
 
         /**
          * Dumps a ISO7816 tag in the field.
