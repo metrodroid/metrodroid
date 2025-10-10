@@ -57,7 +57,7 @@
     <string name="locked_leap">Léim Faoi Ghlas</string>
     <string name="leap_accumulator_region">Réigiún</string>
     <string name="oyster_travelpass">Travelpass / Ticéad Séasúir</string>
-    <string name="lisboaviva_unknown_period">Bailíocht anaithnid% 1$x/%2$x</string>
+    <string name="lisboaviva_unknown_period">Bailíocht anaithnid %1$x/%2$x</string>
     <string name="lisboaviva_sub_ass_fog_lis">Fogueteiro go Liospóin</string>
     <string name="lisboaviva_sub_ass_pra_lis">Pragal go Liospóin</string>
     <string name="lisboaviva_sub_vermelho_a1">Dearg A1</string>
@@ -113,7 +113,7 @@
     <string name="touchngo_cardno">Uimhir mhalartach (\"CardNo\")</string>
     <string name="card_name_hafilat">Hafilat</string>
     <string name="nol_red">Dearg</string>
-    <string name="navigo_sector_station_id">Earnáil%1$s, aitheantas stáisiúin% 2$d</string>
+    <string name="navigo_sector_station_id">Earnáil %1$s, ID stáisiúin %2$d</string>
     <string name="oura_billet_tarif_normal">Ticéad gnáthphraghais</string>
     <string name="gironde_line">Uimhir líne %d</string>
     <string name="mobib_jump_1_trip">Léim 1 turas</string>
@@ -212,7 +212,7 @@
     <string name="hsl_transport_bussi">Bus</string>
     <string name="opal_action_manly_new_journey">Turas nua (Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Aistriú (ó mhodh eile go Manly Ferry)</string>
-    <string name="suica_bus_area_line_stop">Limistéar Bus% 1$s, líne%2$s, stop% 3$s</string>
+    <string name="suica_bus_area_line_stop">Limistéar Bus %1$s, líne %2$s, stad %3$s</string>
     <string name="card_note_card_number_only">Ní féidir ach uimhir an chárta a léamh.</string>
     <string name="nextfare">Nextfare Ciúbach</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
@@ -257,7 +257,7 @@
     <string name="mfc_key_b">eochair B</string>
     <string name="mfc_key_ab">eochair A|B</string>
     <string name="mfc_key_never">riamh</string>
-    <string name="mfc_rwid">Léigh:% 1$s, scríobh:% 2$s, incrimint:% 3$s, decrement:% 4$s</string>
+    <string name="mfc_rwid">Léigh: %1$s, scríobh: %2$s, incriminate: %3$s, laghdú: %4$s</string>
     <string name="nfcv_system_info">Eolas faoin gcóras</string>
     <string name="vicinity_reading">Cárta Vicinity á léamh…</string>
     <string name="saved_metrodroid_zip">Metrodroid-Export.zip shábháil ar stóráil USB.</string>
@@ -267,7 +267,7 @@
     <string name="lang_override_desc">Athraigh teanga an fheidhmchláir. Atosú feidhmchláir de dhíth chun iarratas a dhéanamh</string>
     <string name="lang_override">Teanga iarratais</string>
     <string name="general">Ginearálta</string>
-    <string name="mfc_aid_title_format">CÚNAMH Clasaiceach MIFARE: % 1 $ s #% 2 $ d</string>
+    <string name="mfc_aid_title_format">CÚNAMH Clasaiceach MIFARE: %1$s #%2$d</string>
     <string name="block_title_format_unauthorized">Bloc: %s (neamhúdaraithe)</string>
     <string name="requires_android_17">Éilíonn Android 4.2 nó níos déanaí.</string>
     <string name="rejected">Diúltaithe</string>
@@ -279,8 +279,8 @@
     <string name="keys_loaded">Luchtaítear eochracha criptithe don chárta seo.</string>
     <string name="nfc_settings">Socruithe NFC</string>
     <string name="machine_id">Aitheantas meaisín</string>
-    <string name="felica_service_title_format">Seirbhís:% 1$s (% 2$s)</string>
-    <string name="felica_system_title_format">Córas:% 1$s (% 2$s)</string>
+    <string name="felica_service_title_format">Seirbhís: %1$s (%2$s)</string>
+    <string name="felica_system_title_format">Córas: %1$s (%2$s)</string>
     <string name="localise_places_longdesc_title">Maidir le leideanna teanga</string>
     <string name="localise_places_longdesc_button">Maidir le leideanna teanga…</string>
     <string name="hardware_information">Eolas crua-earraí</string>
@@ -307,12 +307,12 @@
     <string name="obfuscation_balance_desc">Athraigh an t-iarmhéid a thaispeántar le méid randamach</string>
     <string name="obfuscation_card_numbers_desc">Ná taispeáin uimhreacha cártaí in áit ar bith</string>
     <string name="obfuscation_card_numbers">Folaigh uimhreacha cártaí</string>
-    <string name="obfuscation_title">Obfuscation</string>
+    <string name="obfuscation_title">Doiléiriú</string>
     <string name="mfc_fallback_desc">Níl aon draíocht aitheanta ag roinnt gníomhaireachtaí ar a gcárta. Chun iad a léamh, ní mór duit gníomhaireacht a roghnú go sainráite.</string>
     <string name="mfc_fallback">Léitheoir cúltaca</string>
     <string name="saved_xml_custom">XML shábháil ar USB stóráil.</string>
     <string name="export_filename">Easpórtáil ainm comhaid</string>
-    <string name="valid_to_format">Bailí go dtí% 1$s</string>
+    <string name="valid_to_format">Bailí go dtí %1$s</string>
     <string name="online_services">Seirbhísí ar líne</string>
     <string name="about_card_format">Maidir leis an bhformáid chárta seo</string>
     <string name="map_tiles_subdomains_summary">Má tá {s} á úsáid in URLanna léarscáile, liosta scartha camóg d\'fho-ailt, nó liosta aoncharachtair d\'fho-ailt.</string>
@@ -359,7 +359,7 @@
     <string name="sector_title_format">Earnáil: %s</string>
     <string name="unknown_card_description">Ní thacaíonn Metrodroid leis an gcárta seo go fóill. Ní féidir ach sonraí loma a thaispeáint.</string>
     <string name="fully_locked_title">Cárta faoi ghlas go hiomlán.</string>
-    <string name="scanned_at_format">Scanta ag% 1$s ar%2$s</string>
+    <string name="scanned_at_format">Scanta ag %1$s ar %2$s</string>
     <string name="loading">Á Luchtú…</string>
     <string name="accessibility">Inrochtaineacht</string>
     <string name="balance_speech">Iarmhéid <xliff:g id="balance" example="$13.37"> %s</xliff:g></string>
@@ -666,7 +666,7 @@
     <string name="seqgo_ticket_type_concession">Lamháltas</string>
     <string name="seqgo_ticket_type_child">Leanbh</string>
     <string name="seqgo_ticket_type_senior">Sinsearach</string>
-    <string name="suica_area_line_station">Achar% 1$s, líne %2$s, stáisiún% 3$s</string>
+    <string name="suica_area_line_station">Limistéar %1$s, líne %2$s, stáisiún %3$s</string>
     <string name="nextfare_ticket_class">Cód aicme ticéad %d</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_tunion">T-Aontas</string>
@@ -761,7 +761,7 @@
     <string name="export_all">Easpórtáil gach rud</string>
     <string name="supported_cards">Cártaí tacaithe</string>
     <string name="fully_locked_desc">Níl aon chuid den chárta seo inléite go héasca gan eochair agus faoi láthair níl aon leochaileachtaí praiticiúla ag baint leis an bhformáid seo.\n\nNí thacaíonn Metrodroid le do chárta agus ní dócha go mbeidh sé riamh, mura bhfuil an eochair dó deciphered.\n\nDéan stocaireacht ar eisitheoir an chárta chun rochtain oscailte ar chártaí eisithe a cheadú. Tá sé sábháilte rochtain oscailte, inléite amháin a cheadú ar shonraí le teicneolaíocht cárta cliste nua-aimseartha. Soláthraíonn roinnt gníomhaireachtaí doiciméadú oscailte faoin bhformáid sonraí fiú!</string>
-    <string name="fully_locked_desc_unlockable">Níl aon chuid den chárta seo inléite go héasca gan eochair. Níl aon eochracha bailí suiteáilte agat dó.\n\nOibreoidh an cárta nuair a bheidh eochracha suiteáilte dó. Tá siad seo difriúil de ghnáth do gach cárta. Is féidir tuilleadh eolais faoi eochracha a fháil agus a shuiteáil a fháil sna doiciméid.\n\nDéan stocaireacht ar eisitheoir an chárta chun rochtain oscailte ar chártaí eisithe a cheadú. Tá sé sábháilte rochtain oscailte, inléite amháin a cheadú ar shonraí le teicneolaíocht cárta cliste nua-aimseartha. Soláthraíonn roinnt gníomhaireachtaí doiciméadú oscailte faoin bhformáid sonraí fiú!</string>
+    <string name="fully_locked_desc_unlockable">Níl aon chuid den chárta seo inléite go héasca gan eochair. Níl aon eochracha bailí suiteáilte agat dó.\n\nOibreoidh an cárta a luaithe a bheidh na heochracha suiteáilte dó. Bíonn siad seo difriúil i gcoitinne do gach cárta. Is féidir tuilleadh eolais faoi eochracha a fháil agus a shuiteáil a fháil sa doiciméadacht.\n\nDéan brústocaireacht ar eisitheoir an chárta le do thoil chun rochtain oscailte ar shonraí a cheadú ar chártaí eisithe. Tá sé sábháilte rochtain oscailte, inléite amháin ar shonraí a cheadú le teicneolaíocht nua-aimseartha cárta cliste. Soláthraíonn roinnt gníomhaireachtaí fiú doiciméadacht oscailte faoin bhformáid sonraí!</string>
     <string name="nfc_off_error">CBÉ as</string>
     <string name="turn_on_nfc">Cuir ar chumas CBÉ faisnéis cárta a léamh.</string>
     <string name="machine_id_format">Aitheantas meaisín %s</string>
@@ -770,23 +770,23 @@
     <string name="scanned_cards">Stair</string>
     <string name="no_scanned_cards">Níor scanraigh tú aon chártaí.</string>
     <string name="unauthorized_sector_title_format">Earnáil: %s (neamhúdaraithe)</string>
-    <string name="invalid_sector_title_format">Earnáil:% 1$s (neamhbhailí:% 2$s)</string>
+    <string name="invalid_sector_title_format">Earnáil: %1$s (neamhbhailí: %2$s</string>
     <string name="block_title_format">Bloc: %s</string>
     <string name="application_title_format">Feidhmchlár: %s</string>
     <string name="file_title_format">Comhad: %s</string>
     <string name="unauthorized_file_title_format">Comhad: %s (neamhúdaraithe)</string>
-    <string name="invalid_file_title_format">Comhad:% 1$s (neamhbhailí:% 2$s)</string>
+    <string name="invalid_file_title_format">Comhad: %1$s (neamhbhailí: %2$s)</string>
     <string name="page_title_format">Leathanach: %s</string>
     <string name="page_title_format_empty">Leathanach: %s (folamh)</string>
-    <string name="valid_from_format">Bailí ó% 1$s</string>
-    <string name="valid_origin_destination">Bailí ó% 1$s go%2$s</string>
-    <string name="valid_origin_destination_via">Bailí ó% 1$s go%2$s trí%3$s</string>
+    <string name="valid_from_format">Bailí ó %1$s</string>
+    <string name="valid_origin_destination">Bailí ó %1$s go %2$s</string>
+    <string name="valid_origin_destination_via">Bailí ó %1$s go %2$s trí %3$s</string>
     <string name="delete">Scrios</string>
     <string name="vehicle_type">Cineál feithicle</string>
     <string name="card_epoch">Epoch Cárta</string>
     <string name="record_title_format">Taifead: %s</string>
     <string name="binary_title_format">Sonraí dénártha</string>
-    <string name="valid_format">Bailí ó% 1$s go%2$s</string>
+    <string name="valid_format">Bailí ó %1$s go %2$s</string>
     <string name="visit_website">Tabhair cuairt ar Láithreán Gréasáin</string>
     <string name="mifare_classic">Clasaiceach MIFARE</string>
     <string name="pref_hide_unsupported_ribbon">Folaigh ribín \'gan tacaíocht\'</string>
@@ -806,7 +806,7 @@
     <string name="calypso_reading">Cárta Calypso á léamh…</string>
     <string name="show_partial_data">Taispeáin sonraí neamhiomlána</string>
     <string name="desfire_unknown_file">Cineál comhaid neamhaithnid</string>
-    <string name="desfire_value_format">Cineál:% 1$s, raon:% 2$s -% 3$s, creidmheas teoranta:% 4 $ s (% 5 $ s)</string>
+    <string name="desfire_value_format">Cineál: %1$s, raon: %2$s - %3$s, creidmheas teoranta: %4$s (%5$s)</string>
     <string name="desfire_vendor_id">Aitheantas an Díoltóra</string>
     <string name="cepas_credit_trp">Pointeoir Idirbhirt Creidmheasa (TRP)</string>
     <string name="felica_idm">Aitheantas Monaraithe (IDm)</string>
@@ -881,7 +881,7 @@
     <string name="hsl_transport_juna">Traein</string>
     <string name="hsl_transport_lautta">Bád farantóireachta</string>
     <string name="hsl_transport_u_linja">U-líne</string>
-    <string name="waltti_city_zone">%1$s, crios% 2$s</string>
+    <string name="waltti_city_zone">%1$s, crios %2$s</string>
     <string name="opal_action_transfer_diff_mode">Aistriú (ó mhód difriúil)</string>
     <string name="opal_action_manly_transfer_same_mode">Aistriú (ó bhád farantóireachta eile go Manly Ferry)</string>
     <string name="opal_action_journey_completed_distance">Turas críochnaithe (táille faid)</string>
@@ -1099,7 +1099,7 @@
     <string name="russia_region_55_omsk">Omsk Oblast</string>
     <string name="russia_region_60_pskov">Pskov Oblast</string>
     <string name="russia_region_79_jewish_autonomous">Oblast Uathrialach na nGiúdach</string>
-    <string name="unsupported_tag_message">Ní thacaíonn Metrodroid leis an gclib seo faoi láthair.\n Aitheantóir clibe:% 1$s\n Teicneolaíochtaí tacaithe:\n %2$s</string>
+    <string name="unsupported_tag_message">Ní thacaíonn Metrodroid leis an gclib seo faoi láthair.\n Aitheantóir clibe: %1$s\n Teicneolaíochtaí a dtacaítear leo:\n %2$s</string>
     <string name="card_name_metromoney">MetromoneyName</string>
     <string name="card_name_tampere">An Domhan Uimh 2015-2016</string>
     <string name="card_name_nol">Náid</string>
@@ -1155,7 +1155,7 @@
     <string name="ndef_android_pkg_record">Taifead pacáiste Android</string>
     <string name="ndef_wifi_ap_channel">Cainéal AP</string>
     <string name="ndef_wifi_auth_types">Cineálacha fíordheimhnithe</string>
-    <string name="ndef_wifi_authtype_open">authtype_open</string>
+    <string name="ndef_wifi_authtype_open">cineál_údaraithe_oscailte</string>
     <string name="ndef_wifi_manufacturer">Monaróir</string>
     <string name="ndef_wifi_model_name">Ainm an mhúnla</string>
     <string name="ndef_wifi_band_5">5 GHz</string>
@@ -1412,4 +1412,7 @@
         <item quantity="many">%d Eochracha Clasaiceach MIFARE</item>
         <item quantity="other">%d Eochracha Clasaiceach MIFARE</item>
     </plurals>
+    <string name="ovc_sub_reizen_op_rekening_trein">Taisteal trí bhille míosúil (Traein)</string>
+    <string name="ovc_sub_reizen_op_rekening_bus_tram_metro">Taisteal trí bhille míosúil (Bus/Tram/Metro)</string>
+    <string name="ovc_sub_gvb_nachtbus_saldo">Taisteal ar chreidmheas (bus oíche)</string>
 </resources>
