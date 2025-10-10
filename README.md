@@ -150,6 +150,7 @@ Penza transport card | :ru: Penza, Russia | :new: :closed_lock_with_key: `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan |
 [SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: :id: `MFC`
 [TaM][tam] | :fr: Montpellier, France | :new: `IOS`
+[ThessCard][thesscard] | :greece: Thessaloniki, Greece | :new: `IOS`
 [Tartu Bus][tartu] | :estonia: Tartu, Estonia | :new: :id: `MFC`
 [T-Money][tmoney] | :kr: South Korea | :new: `IOS`
 [TPF card][tpf] | :switzerland: Fribourg, Switzerland | :new: :id:
@@ -332,6 +333,7 @@ This software and it's authors are not associated with any public transit agency
 [tam]: http://www.tam-voyages.com/
 [tartu]: https://www.tartu.ee/en/tartu-bus-card
 [tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
+[thesscard]: https://oseth.com.gr/el
 [tmoney]: https://www.t-money.co.kr/
 [tpf]: https://www.tpf.ch/abonnements-billets/tpf-card
 [troika]: http://troika.mos.ru/
