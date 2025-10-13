@@ -50,11 +50,9 @@ import kotlinx.serialization.encoding.CompositeDecoder.Companion.DECODE_DONE
 import kotlinx.serialization.encoding.CompositeDecoder.Companion.UNKNOWN_NAME
 import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
-import kotlin.native.concurrent.SharedImmutable
 
 private const val TAG = "XmlCardFormat"
 
-@SharedImmutable
 private val aliases = mapOf(
         "partial_read" to "isPartialRead")
 

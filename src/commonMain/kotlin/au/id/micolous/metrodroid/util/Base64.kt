@@ -1,7 +1,5 @@
 package au.id.micolous.metrodroid.util
 
-import kotlin.native.concurrent.SharedImmutable
-
 /*
  * Base64 encoding/decoding (RFC1341)
  * Copyright (c) 2005-2011, Jouni Malinen <j@w1.fi>
@@ -39,7 +37,6 @@ import kotlin.native.concurrent.SharedImmutable
  */
 
 private const val base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-@SharedImmutable
 private val dtable = base64_table.mapIndexed { k, v -> v to k }.toMap() + mapOf('=' to 0)
 
 /**
