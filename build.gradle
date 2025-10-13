@@ -298,10 +298,13 @@ kotlin {
     targets {
         fromPreset(presets.android, 'android') {
             compilerOptions {
-                freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=au.id.micolous.metrodroid.multi.Parcelize")
+                freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=au.id.micolous.metrodroid.multi.Parcelize", "-Xexpect-actual-classes")
             }
         }
         fromPreset(presets.jvm, 'jvmCli') {
+            compilerOptions {
+                freeCompilerArgs.addAll("-Xexpect-actual-classes")
+            }
             compilations.all {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
             }
@@ -311,6 +314,9 @@ kotlin {
                                ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'iOS') {
+            compilerOptions {
+                freeCompilerArgs.addAll("-Xexpect-actual-classes")
+            }
             binaries {
                 framework("metrolib") {
                     linkTask.dependsOn += 'generateLocalize'
