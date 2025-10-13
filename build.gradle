@@ -295,7 +295,11 @@ task copyThirdPartyNotices(type: Copy) {
 
 kotlin {
     targets {
-        fromPreset(presets.android, 'android')
+        fromPreset(presets.android, 'android') {
+            compilerOptions {
+                freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=au.id.micolous.metrodroid.multi.Parcelize")
+            }
+        }
         fromPreset(presets.jvm, 'jvmCli') {
             compilations.all {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
