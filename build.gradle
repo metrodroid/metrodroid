@@ -50,8 +50,8 @@ jacoco {
 task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'main/au/id/micolous/metrodroid/multi/R*.class']
@@ -67,8 +67,8 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 task androidDebugUnitJacoco(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'au/id/micolous/metrodroid/multi/R*.class']
