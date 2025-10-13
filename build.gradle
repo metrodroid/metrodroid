@@ -294,6 +294,7 @@ task copyThirdPartyNotices(type: Copy) {
 }
 
 kotlin {
+    jvmToolchain(21)
     targets {
         fromPreset(presets.android, 'android') {
             compilerOptions {
@@ -303,9 +304,6 @@ kotlin {
         fromPreset(presets.jvm, 'jvmCli') {
             compilations.all {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
-                kotlinOptions {
-                    jvmTarget = "9"
-                }
             }
         }
 
@@ -664,13 +662,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     packagingOptions {

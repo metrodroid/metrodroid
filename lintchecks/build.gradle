@@ -10,9 +10,6 @@ dependencies {
     testImplementation "com.android.tools:testutils:$lint_version"
 }
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 jar {
     manifest {
         // Only use the "-v2" key here if your checks have been updated to the
