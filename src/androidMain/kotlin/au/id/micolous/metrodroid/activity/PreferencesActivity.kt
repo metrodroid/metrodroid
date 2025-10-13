@@ -28,15 +28,15 @@ import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Log
 
 class PreferencesActivity : FragmentWrapperActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
-    override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat?, pref: PreferenceScreen?): Boolean {
-        Log.d("PreferencesActivity", "pref=$pref, key=${pref?.key}")
+    override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat, pref: PreferenceScreen): Boolean {
+        Log.d("PreferencesActivity", "pref=$pref, key=${pref.key}")
         val ft = supportFragmentManager.beginTransaction()
         val frag = PreferencesFragment()
         val args = Bundle()
-        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref?.key)
+        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.key)
         frag.arguments = args
-        ft.replace(R.id.content, frag, pref?.key)
-        ft.addToBackStack(pref?.key)
+        ft.replace(R.id.content, frag, pref.key)
+        ft.addToBackStack(pref.key)
         ft.commit()
         return true
     }

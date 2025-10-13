@@ -10,10 +10,10 @@ import au.id.micolous.metrodroid.multi.Log
 class NumberPickerPreferenceFragment : PreferenceDialogFragmentCompat() {
     var numberPicker: NumberPicker? = null
 
-    override fun onBindDialogView(view: View?) {
+    override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
 
-        numberPicker = view?.findViewById(R.id.edit)
+        numberPicker = view.findViewById(R.id.edit)
         Log.d("NumberPicker", "numberPicker = $numberPicker, preference = $preference")
         val pref = preference as? NumberPickerPreference ?: return
         Log.d("NumberPicker", "pref value = ${pref.value}")
