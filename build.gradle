@@ -44,7 +44,7 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.13"
 }
 
 task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
