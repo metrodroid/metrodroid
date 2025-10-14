@@ -32,7 +32,6 @@ import kotlinx.serialization.encoding.Encoder
 
 // This loses formatting but we use it only for tests
 @OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = FormattedString::class)
 class FormattedStringSerializerSimple : KSerializer<FormattedString> {
     override fun deserialize(decoder: Decoder) = FormattedString(
         String.serializer().deserialize(decoder)
@@ -59,7 +58,6 @@ class FormattedStringFallbackSerializer : KSerializer<FormattedStringFallback> {
 }
 
 @OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = FormattedString::class)
 expect class FormattedStringSerializer : KSerializer<FormattedString>
 
 @Serializable(with=FormattedStringSerializer::class)
