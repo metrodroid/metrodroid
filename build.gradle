@@ -296,12 +296,12 @@ task copyThirdPartyNotices(type: Copy) {
 kotlin {
     jvmToolchain(21)
     targets {
-        fromPreset(presets.android, 'android') {
+        androidTarget() {
             compilerOptions {
                 freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=au.id.micolous.metrodroid.multi.Parcelize", "-Xexpect-actual-classes")
             }
         }
-        fromPreset(presets.jvm, 'jvmCli') {
+        jvm('jvmCli') {
             compilerOptions {
                 freeCompilerArgs.addAll("-Xexpect-actual-classes")
             }
