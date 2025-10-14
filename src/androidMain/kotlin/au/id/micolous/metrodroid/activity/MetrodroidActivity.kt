@@ -26,6 +26,9 @@ import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import android.content.Context
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 abstract class MetrodroidActivity : AppCompatActivity() {
     private var mAppliedTheme: Int = 0
@@ -57,6 +60,7 @@ abstract class MetrodroidActivity : AppCompatActivity() {
         setTheme(theme)
         if (mAppliedLang != "")
             Utils.resetActivityTitle(this)
+        installInsetsCallback()
         super.onCreate(savedInstanceState)
     }
 
@@ -73,6 +77,27 @@ abstract class MetrodroidActivity : AppCompatActivity() {
 
         if (chooseTheme() != mAppliedTheme || Utils.effectiveLocale() != mAppliedLang)
             recreate()
+    }
+
+    private fun insetsCallback(v: View)
+    {
+        val insets = ViewCompat.getRootWindowInsets(v)?.getInsets(
+            WindowInsetsCompat.Type.systemBars()
+        ) ?: return
+        v.setPadding(v.paddingLeft,
+            insets.top,
+            v.paddingRight,
+            insets.bottom
+        )
+    }
+
+    private fun installInsetsCallback() {
+        val main = findViewById<View>(android.R.id.content) ?: return
+        insetsCallback(main)
+        ViewCompat.setOnApplyWindowInsetsListener(main) {
+            v, insets -> insetsCallback(v)
+            insets
+        }
     }
 
     companion object {
