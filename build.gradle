@@ -387,13 +387,14 @@ kotlin {
             }
         }
 
-        androidTest {
+        androidInstrumentedTest {
             dependencies {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
                 implementation project(':proto')
             }
+	    dependsOn(commonTest)
             kotlin.srcDirs += [
                     'src/jvmCommonTest/kotlin'
             ]
