@@ -362,6 +362,14 @@ kotlin {
             }
         }
 
+	jvmCommonMain {
+	    dependsOn(commonMain)
+	}
+
+	jvmCommonTest {
+	    dependsOn(commonTest)
+	}
+
         androidMain {
             dependencies {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -369,7 +377,7 @@ kotlin {
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'androidMain/kotlin')
-            kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+            dependsOn(jvmCommonMain)
         }
 
         iOSMain {
@@ -395,9 +403,7 @@ kotlin {
                 implementation project(':proto')
             }
 	    dependsOn(commonTest)
-            kotlin.srcDirs += [
-                    'src/jvmCommonTest/kotlin'
-            ]
+            dependsOn(jvmCommonTest)
         }
 
 
@@ -411,9 +417,7 @@ kotlin {
                     'third_party/vpereira_bilhete/',
                     'third_party/RejsekortReader/dumps/'
             ]
-            kotlin.srcDirs += [
-                    'src/jvmCommonTest/kotlin'
-            ]
+            dependsOn(jvmCommonTest)
         }
 
         jvmCliMain {
@@ -431,7 +435,7 @@ kotlin {
             resources.srcDirs += new File("$projectDir/src/commonMain/assets")
             resources.srcDirs += new File("$projectDir/src/main/res")
             resources.srcDirs += ["$buildDir/assets"]
-            kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+            dependsOn(jvmCommonMain) 
             preBuild.dependsOn copyThirdPartyNotices
         }
     }
@@ -661,7 +665,6 @@ android {
 
     sourceSets {
         androidTest.assets.srcDirs += testAssetsDirs
-        androidTest.java.srcDirs += ['src/jvmCommonTest/kotlin']
         androidTest.java.srcDirs += ['src/androidCommonTest/kotlin']
         main.assets.srcDirs += ['build/assets', 'mdst', 'src/commonMain/assets']
         main.res.srcDirs += ['cardimages/android']
