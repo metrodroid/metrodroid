@@ -21,15 +21,11 @@
 
 package au.id.micolous.metrodroid.activity
 
+import android.app.ActivityOptions
 import android.app.PendingIntent
 import android.content.Intent
 import android.nfc.NfcAdapter
-import android.nfc.tech.IsoDep
-import android.nfc.tech.MifareClassic
-import android.nfc.tech.MifareUltralight
-import android.nfc.tech.NfcA
-import android.nfc.tech.NfcF
-import android.nfc.tech.NfcV
+import android.nfc.tech.*
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -37,12 +33,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-
+import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
-
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.ifTrue
 
 class MainActivity : MetrodroidActivity() {
@@ -76,7 +70,13 @@ class MainActivity : MetrodroidActivity() {
                     PendingIntent.FLAG_MUTABLE
                 else
                     0
-            mPendingIntent = PendingIntent.getActivity(this, 0, intent, pendingFlags)
+            mPendingIntent = if (Build.VERSION.SDK_INT >= 34) {
+                val options = ActivityOptions.makeBasic()
+                options.pendingIntentCreatorBackgroundActivityStartMode = ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOW_IF_VISIBLE
+                PendingIntent.getActivity(this, 0, intent, pendingFlags, options.toBundle())
+            } else {
+                PendingIntent.getActivity(this, 0, intent, pendingFlags)
+            }
         }
 
         updateObfuscationNotice(mNfcAdapter != null)
