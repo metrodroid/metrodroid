@@ -78,6 +78,7 @@ internal object IntercodeLookupNavigo : IntercodeLookupSTR(NAVIGO_STR) {
             4096 to R.string.navigo_forfait_liberte,
             16384 to R.string.navigo_forfait_mois_75,
             16385 to R.string.navigo_forfait_semaine_75,
+            20480 to R.string.navigo_ticket_tplus,
             32771 to R.string.navigo_forfait_solidarite_gratuite,
     )
 

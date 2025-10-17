@@ -36,6 +36,8 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
             if (parsed.getIntOrZero(CONTRACT_DEBIT_SOLD) != 0 && parsed.getIntOrZero(CONTRACT_SOLD) != 0) {
                 return ctr!! / parsed.getIntOrZero(CONTRACT_DEBIT_SOLD)
             }
+            if (networkId == IntercodeTransitData.NETWORK_NAVIGO && parsed.getIntOrZero(CONTRACT_JOURNEYS) != 0 && ctr != null)
+                return ctr shr 18
             return if (parsed.getIntOrZero(CONTRACT_JOURNEYS) != 0) {
                 ctr
             } else null
@@ -46,6 +48,8 @@ data class IntercodeSubscription(override val parsed: En1545Parsed, private val 
             if (parsed.getIntOrZero(CONTRACT_DEBIT_SOLD) != 0 && parsed.getIntOrZero(CONTRACT_SOLD) != 0) {
                 return parsed.getIntOrZero(CONTRACT_SOLD) / parsed.getIntOrZero(CONTRACT_DEBIT_SOLD)
             }
+            if (networkId == IntercodeTransitData.NETWORK_NAVIGO && parsed.getIntOrZero(CONTRACT_JOURNEYS) != 0)
+                return parsed.getIntOrZero(CONTRACT_JOURNEYS) and 0xfff
             return if (parsed.getIntOrZero(CONTRACT_JOURNEYS) != 0) {
                 parsed.getIntOrZero(CONTRACT_JOURNEYS)
             } else null
