@@ -54,6 +54,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
     companion object {
         private const val COUNTRY_ID_FRANCE = 0x250
         const val NETWORK_NAVIGO = 0x250901
+        const val NETWORK_TISSEO = 0x250916
 
         // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
         // de transport" (ticket). Here they take the name of the transit agency.
@@ -171,7 +172,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
                 0x250502 to IntercodeLookupOura,
                 NETWORK_NAVIGO to IntercodeLookupNavigo,
                 0x250908 to IntercodeLookupUnknown(KORRIGO_CARD_INFO),
-                0x250916 to IntercodeLookupTisseo,
+                NETWORK_TISSEO to IntercodeLookupTisseo,
                 0x250920 to IntercodeLookupUnknown(ENVIBUS_CARD_INFO),
                 0x250921 to IntercodeLookupGironde)
 

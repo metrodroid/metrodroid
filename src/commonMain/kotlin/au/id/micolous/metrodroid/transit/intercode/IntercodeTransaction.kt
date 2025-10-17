@@ -35,7 +35,7 @@ internal data class IntercodeTransaction(private val networkId: Int,
     override val mode: Trip.Mode
         get() {
             val line = super.routeNumber
-            if(networkId == 0x250916 && line == 0x3ef) {
+            if(networkId == IntercodeTransitData.NETWORK_TISSEO && line == 1007) {
                 // network Tisseo, line Téléo is wrongly identified as a metro line
                 return Trip.Mode.CABLECAR
             }
