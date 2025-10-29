@@ -736,6 +736,7 @@ android {
 kotlin.sourceSets.all {
     languageSettings {
         optIn('kotlin.ExperimentalUnsignedTypes')
+        optIn('kotlinx.cinterop.ExperimentalForeignApi')
         optIn('kotlin.Experimental')
     }
 }
