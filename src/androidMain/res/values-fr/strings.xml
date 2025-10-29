@@ -882,6 +882,7 @@
     <string name="navigo_forfait_imagineR_etudiant">Abonnement ImagineR Étudiant</string>
     <string name="navigo_forfait_liberte">Abonnement Navigo Libetré+</string>
     <string name="navigo_ticket_tplus">Ticket T+</string>
+    <string name="navigo_metro_train_rer">Metro-Train-RER ticket</string>
     <string name="oura_billet_tarif_normal">Billet à tarif normal</string>
     <string name="gironde_line">Ligne %d</string>
     <string name="ilevia_trajet_unitaire">Ilévia trajet unitaire</string>
