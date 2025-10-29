@@ -553,7 +553,7 @@ fun readCardXML(root: NodeWrapper): Card = logAndSwiftWrap("XmlCardFormat", "XML
     val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
             ignore = setOf("type", "id", "scanned_at", "label"),
             skippable = setOf("ultralightType", "idm"),
-            serializersModule = EmptySerializersModule)
+            serializersModule = EmptySerializersModule())
     val tagId = ImmutableByteArray.fromHex(root.attributes.getValue("id"))
     val scannedAt = TimestampFull(timeInMillis = root.attributes.getValue("scanned_at").toLong(),
             tz = MetroTimeZone.LOCAL)

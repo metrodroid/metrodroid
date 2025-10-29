@@ -26,14 +26,9 @@ import platform.CoreNFC.NFCISO7816APDU
 import platform.CoreNFC.NFCISO7816TagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 class ISO7816Transceiver(val tag: NFCISO7816TagProtocol): CardTransceiverIOSISO() {
     override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
-
-    init {
-       freeze()
-    }
 
     override fun send(apdu: NFCISO7816APDU, completionHandler: (NSData?, UByte, UByte, NSError?) -> Unit) {
         tag.sendCommandAPDU(

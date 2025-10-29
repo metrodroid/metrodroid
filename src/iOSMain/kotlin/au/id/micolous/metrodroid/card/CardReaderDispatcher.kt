@@ -35,9 +35,8 @@ import kotlinx.coroutines.launch
 import platform.CoreNFC.*
 import platform.Foundation.NSError
 import platform.darwin.NSObject
-import kotlin.native.concurrent.AtomicInt
-import kotlin.native.concurrent.AtomicReference
-import kotlin.native.concurrent.freeze
+import kotlin.concurrent.AtomicInt
+import kotlin.concurrent.AtomicReference
 
 object CardReaderDispatcher {
     @OptIn(DelicateCoroutinesApi::class)
@@ -72,7 +71,6 @@ object CardReaderDispatcher {
                 }
             }
         }
-        lambda.freeze()
         println("Connecting")
         session.connectToTag(tag, completionHandler = lambda)
         println("Connecting called")
@@ -140,7 +138,6 @@ class CardReaderFeedbackIOS: TagReaderFeedbackIOS {
 
     init {
         msg.value = Localizer.localizeString(R.string.ios_nfcreader_tap)
-        freeze()
     }
     
     private fun refresh() {
@@ -164,9 +161,6 @@ class CardReaderFeedbackIOS: TagReaderFeedbackIOS {
 
 class CardReaderDelegateIOS(private val postDump: (card: Card) -> Unit): NFCTagReaderSessionDelegateProtocol, NSObject() {
     private val feedback = CardReaderFeedbackIOS()
-    init {
-        freeze()
-    }
     override fun tagReaderSessionDidBecomeActive(session: NFCTagReaderSession) {
         println("NFC Session became active")
     }

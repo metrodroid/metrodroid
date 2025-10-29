@@ -32,7 +32,6 @@ import platform.darwin.NSUInteger
 import platform.darwin.NSUIntegerVar
 import platform.posix.memcpy
 import platform.posix.uint8_tVar
-import kotlin.native.concurrent.freeze
 
 object XmlFormat {
     class XMLAST(override val nodeName: String,
@@ -158,10 +157,6 @@ object XmlFormat {
             private val inputStream: NSInputStream,
             private var lookAhead: AtomicRef<ImmutableByteArray?> = AtomicRef(null)
     ) : NSInputStream(NSData()) {
-        init {
-            freeze()
-        }
-
         override fun open() {
             inputStream.open()
         }
