@@ -2576,6 +2576,8 @@
     <string name="navigo_forfait_liberte">Navigo Liberté+ subscription</string>
     <!-- Translators: a single ride ticket. French "Ticket T+" -->
     <string name="navigo_ticket_tplus">T+ ticket</string>
+    <!-- Translators: a single ride ticket. French "Metro-Train-RER" -->
+    <string name="navigo_metro_train_rer">Metro-Train-RER ticket</string>
     <!-- Translators: French "Billet Tarif Normal" -->
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
