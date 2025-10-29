@@ -311,7 +311,7 @@ kotlin {
         }
 
         final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
-                               ? presets.iosArm64 : presets.iosX64
+                               ? presets.iosArm64 : presets.iosSimulatorArm64
 
         fromPreset(iOSTarget, 'iOS') {
             compilerOptions {
