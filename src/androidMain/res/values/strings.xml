@@ -2574,6 +2574,8 @@
     <string name="navigo_forfait_imagineR_etudiant">ImagineR student subscription</string>
     <!-- Translators: subscription to Navigo Liberté+ service and pay at the end of each month. French "Abonnement Navigo Libetré+". -->
     <string name="navigo_forfait_liberte">Navigo Liberté+ subscription</string>
+    <!-- Translators: a single ride ticket. French "Ticket T+" -->
+    <string name="navigo_ticket_tplus">T+ ticket</string>
     <!-- Translators: French "Billet Tarif Normal" -->
     <string name="oura_billet_tarif_normal">Normal-price ticket</string>
     <!-- Translators: French "Ligne %d" -->
