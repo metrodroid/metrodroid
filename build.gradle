@@ -10,17 +10,17 @@ allprojects {
 
 buildscript {
     ext {
-        kotlin_version = '1.5.31'
-        kotlinserial_version = '1.3.0'
-        coroutines_version = '1.5.2'
+        kotlin_version = '2.0.0'
+        kotlinserial_version = '1.6.3'
+        coroutines_version = '1.8.1'
         lint_version = '26.2.1'
-        support_version = '31.0.0'
+        support_version = '36.0.0'
         android_test_version = '1.4.0'
-        build_version = '31.0.0'
-        android_sdk_version = 31
+        build_version = '36.0.0'
+        android_sdk_version = 36
         android_min_version = 16
-        android_gradle_version = '7.0.2'
-        protobuf_version = '3.18.1'
+        android_gradle_version = '8.12.0'
+        protobuf_version = '4.28.2'
         protobuf_gradle_version = '0.8.17'
     }
     repositories {
@@ -44,14 +44,14 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.13"
 }
 
 task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'main/au/id/micolous/metrodroid/multi/R*.class']
@@ -67,8 +67,8 @@ task jvmCliJacoco(type: JacocoReport, dependsOn: 'jvmCliTest') {
 task androidDebugUnitJacoco(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*', 'au/id/micolous/metrodroid/multi/R*.class']
@@ -87,7 +87,7 @@ def svgDir = new File(projectDir, "cardimages/svg")
 def drawableDir = new File(projectDir, "cardimages/android/drawable")
 def relativeDrawableHdpiDir = "cardimages/android/drawable-hdpi"
 def drawableHdpiDir = new File(projectDir, relativeDrawableHdpiDir)
-def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
+def stringsXmlFile = new File(projectDir, "src/androidMain/res/values/strings.xml")
 def cardAssetsDir = new File(projectDir, "native/metrodroid/metrodroid/Cards.xcassets")
 def testAssetsDirs = [
         'src/commonTest/assets',
@@ -260,8 +260,8 @@ task checkstyle(type: Checkstyle) {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.annotation:annotation:1.3.0"
-    implementation "androidx.preference:preference:1.1.1"
+    implementation "androidx.annotation:annotation:1.9.1"
+    implementation "androidx.preference:preference:1.2.1"
     implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
     implementation project(':leaflet')
     implementation project(':material-design-icons')
@@ -275,7 +275,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation "androidx.multidex:multidex:2.0.1"
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 
     androidTestUtil "androidx.test:orchestrator:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
@@ -294,14 +294,19 @@ task copyThirdPartyNotices(type: Copy) {
 }
 
 kotlin {
+    jvmToolchain(21)
     targets {
-        fromPreset(presets.android, 'android')
-        fromPreset(presets.jvm, 'jvmCli') {
+        androidTarget() {
+            compilerOptions {
+                freeCompilerArgs.addAll("-P", "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=au.id.micolous.metrodroid.multi.Parcelize", "-Xexpect-actual-classes")
+            }
+        }
+        jvm('jvmCli') {
+            compilerOptions {
+                freeCompilerArgs.addAll("-Xexpect-actual-classes")
+            }
             compilations.all {
                 tasks[compileKotlinTaskName].dependsOn += generateLocalize
-                kotlinOptions {
-                    jvmTarget = "9"
-                }
             }
         }
 
@@ -309,6 +314,9 @@ kotlin {
                                ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'iOS') {
+            compilerOptions {
+                freeCompilerArgs.addAll("-Xexpect-actual-classes")
+            }
             binaries {
                 framework("metrolib") {
                     linkTask.dependsOn += 'generateLocalize'
@@ -354,6 +362,14 @@ kotlin {
             }
         }
 
+	jvmCommonMain {
+	    dependsOn(commonMain)
+	}
+
+	jvmCommonTest {
+	    dependsOn(commonTest)
+	}
+
         androidMain {
             dependencies {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
@@ -361,13 +377,13 @@ kotlin {
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'androidMain/kotlin')
-            kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+            dependsOn(jvmCommonMain)
         }
 
         iOSMain {
             dependencies {
                 implementation project(':proto')
-                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}-native-mt"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
             }
 
             kotlin.srcDirs += new File(generatedLocalizeDir, 'iOSMain/kotlin')
@@ -379,16 +395,15 @@ kotlin {
             }
         }
 
-        androidTest {
+        androidInstrumentedTest {
             dependencies {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
                 implementation project(':proto')
             }
-            kotlin.srcDirs += [
-                    'src/jvmCommonTest/kotlin'
-            ]
+	    dependsOn(commonTest)
+            dependsOn(jvmCommonTest)
         }
 
 
@@ -402,9 +417,7 @@ kotlin {
                     'third_party/vpereira_bilhete/',
                     'third_party/RejsekortReader/dumps/'
             ]
-            kotlin.srcDirs += [
-                    'src/jvmCommonTest/kotlin'
-            ]
+            dependsOn(jvmCommonTest)
         }
 
         jvmCliMain {
@@ -422,7 +435,7 @@ kotlin {
             resources.srcDirs += new File("$projectDir/src/commonMain/assets")
             resources.srcDirs += new File("$projectDir/src/main/res")
             resources.srcDirs += ["$buildDir/assets"]
-            kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+            dependsOn(jvmCommonMain) 
             preBuild.dependsOn copyThirdPartyNotices
         }
     }
@@ -481,9 +494,9 @@ static def mapAndroidLanguageToIOS(String alang) {
 def langSources(String alang) {
     def baseLang = alang.replaceAll(/^([a-z]*)-r([A-Z]*)$/) { all, lang, region -> "$lang" }
     if (baseLang == "en")
-        return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml"),
-                new File(projectDir, "src/main/res/values-" + baseLang + "/strings.xml")]
-    return [new File(projectDir, "src/main/res/values-" + alang + "/strings.xml")]
+        return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml"),
+                new File(projectDir, "src/androidMain/res/values-" + baseLang + "/strings.xml")]
+    return [new File(projectDir, "src/androidMain/res/values-" + alang + "/strings.xml")]
 }
 
 task iOSLanguages {
@@ -589,8 +602,10 @@ task iOSSimulatorTest {
 }
 
 android {
+    namespace "au.id.micolous.farebot"
     compileSdkVersion android_sdk_version
     buildToolsVersion build_version
+    buildFeatures.buildConfig true
 
     defaultConfig {
         minSdkVersion android_min_version
@@ -650,7 +665,6 @@ android {
 
     sourceSets {
         androidTest.assets.srcDirs += testAssetsDirs
-        androidTest.java.srcDirs += ['src/jvmCommonTest/kotlin']
         androidTest.java.srcDirs += ['src/androidCommonTest/kotlin']
         main.assets.srcDirs += ['build/assets', 'mdst', 'src/commonMain/assets']
         main.res.srcDirs += ['cardimages/android']
@@ -660,13 +674,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     packagingOptions {

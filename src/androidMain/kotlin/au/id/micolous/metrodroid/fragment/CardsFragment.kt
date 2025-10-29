@@ -607,7 +607,7 @@ class CardsFragment : ExpandableListFragment(), SearchView.OnQueryTextListener {
             Toast.makeText(ctx, Localizer.localizePlural(
                     R.plurals.cards_imported, uriCount, uriCount), Toast.LENGTH_SHORT).show()
             if (uriCount == 1 && firstUri != null) {
-                ctx.startActivity(Intent(Intent.ACTION_VIEW, firstUri))
+                ctx.startActivity(Intent(ctx, CardInfoActivity::class.java).also { it.data = firstUri })
             }
         }
     }

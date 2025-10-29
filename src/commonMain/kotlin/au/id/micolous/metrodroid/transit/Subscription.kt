@@ -355,7 +355,7 @@ abstract class Subscription : Parcelable {
         return when {
             validFrom != null && validTo != null -> Localizer.localizeFormatted(R.string.valid_format, validFrom, validTo)
             validTo != null -> Localizer.localizeFormatted(R.string.valid_to_format, validTo)
-            validFrom != null -> Localizer.localizeFormatted(R.string.valid_to_format, validFrom)
+            validFrom != null -> Localizer.localizeFormatted(R.string.valid_from_format, validFrom)
             else -> null
         }
     }

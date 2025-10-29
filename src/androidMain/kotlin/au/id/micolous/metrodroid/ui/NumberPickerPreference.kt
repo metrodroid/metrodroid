@@ -86,9 +86,9 @@ class NumberPickerPreference : DialogPreference {
         value = if (restoreValue) getPersistedInt(value) else defaultValue as? Int ?: 0
     }
 
-    override fun onSaveInstanceState(): Parcelable {
+    override fun onSaveInstanceState(): Parcelable? {
         val superState = super.onSaveInstanceState()
-        if (isPersistent) {
+        if (isPersistent || superState == null) {
             // No need to save instance state since it's persistent
             return superState
         }

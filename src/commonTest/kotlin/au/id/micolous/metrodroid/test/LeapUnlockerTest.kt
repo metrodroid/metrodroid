@@ -188,7 +188,7 @@ class LeapUnlockerTest: BaseInstrumentedTest() {
                 )
             ),
             uuid1,
-            "https://tnfc.leapcard.ie//ReadCard/V0"
+            "https://tnfc.leaptopup.com/ReadCard/V0"
         )
         networkMock.nativeFreeze()
         networkHelper = networkMock

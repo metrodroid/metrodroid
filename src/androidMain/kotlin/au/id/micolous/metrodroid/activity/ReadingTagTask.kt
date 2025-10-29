@@ -71,7 +71,8 @@ internal class ReadingTagTask private constructor(
     private fun showCard(cardUri: Uri?) {
         if (cardUri == null)
             return
-        val intent = Intent(Intent.ACTION_VIEW, cardUri)
+        val intent = Intent(readingTagActivity, CardInfoActivity::class.java)
+        intent.data = cardUri
         intent.putExtra(CardInfoActivity.SPEAK_BALANCE_EXTRA, true)
         readingTagActivity.startActivity(intent)
         readingTagActivity.finish()
