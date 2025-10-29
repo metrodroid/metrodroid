@@ -17,10 +17,10 @@ buildscript {
     }
 }
 
+apply plugin: 'kotlin-multiplatform'
 apply plugin: 'java-library'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'objective-c'
-apply plugin: 'kotlin-multiplatform'
 
 dependencies {
 }
@@ -47,17 +47,15 @@ protobuf {
 final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
                               ? "ios_arm64" : "ios_x86_64"
 
+dependencies {
+    implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
+}
+
 kotlin {
     jvm()
     iosArm64()
     iosSimulatorArm64()
     iosX64()
-
-    sourceSets {
-        jvmMain.dependencies {
-            implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
-        }
-    }
 }
 
 tasks.register('generateProtoWrapper') {
