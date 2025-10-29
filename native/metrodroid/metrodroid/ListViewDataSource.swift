@@ -100,7 +100,7 @@ class ListViewDataSource : NSObject, UITableViewDataSource, UITableViewDelegate 
             if let rec = cur as? metrolib.ListItemRecursive {
                 if cur.text2 == nil {
                     if let title = cur.text1 {
-                        res.append(ListItemRender(li: HeaderListItem(title_: title), level: 0))
+                        res.append(ListItemRender(li: HeaderListItem(title: title), level: 0))
                     }
                     if let subTree = rec.subTree {
                         flatRecurse(output: &res, input: subTree, level: 0)
