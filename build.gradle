@@ -382,7 +382,7 @@ kotlin {
 
         iOSMain {
             dependencies {
-                implementation project(':proto')
+                // implementation project(':proto')
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
             }
 
@@ -391,7 +391,7 @@ kotlin {
 
         iOSTest {
             dependencies {
-                implementation project(':proto')
+                // implementation project(':proto')
             }
         }
 
@@ -402,7 +402,7 @@ kotlin {
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
                 implementation project(':proto')
             }
-	    dependsOn(commonTest)
+            dependsOn(commonTest)
             dependsOn(jvmCommonTest)
         }
 
@@ -642,14 +642,14 @@ android {
             applicationIdSuffix '.dev'
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard.cfg'
             matchingFallbacks = ['debug']
         }
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard.cfg'
         }
     }

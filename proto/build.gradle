@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 allprojects {
     repositories {
         google()
@@ -17,13 +19,9 @@ buildscript {
     }
 }
 
-apply plugin: 'kotlin-multiplatform'
 apply plugin: 'java-library'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'objective-c'
-
-dependencies {
-}
 
 protobuf {
     protoc {
@@ -51,11 +49,9 @@ dependencies {
     implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
 }
 
-kotlin {
-    jvm()
-    iosArm64()
-    iosSimulatorArm64()
-    iosX64()
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.register('generateProtoWrapper') {
