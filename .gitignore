@@ -30,4 +30,4 @@ manifest-merger-release-report.txt
 *.py[co]
 *_pb2.py
 .~lock*
-
+.kotlin/
