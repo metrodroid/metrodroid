@@ -310,8 +310,9 @@ kotlin {
             }
         }
 
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
-                               ? presets.iosArm64 : presets.iosSimulatorArm64
+        final def isArm64Host = "uname -m".execute().text.trim() == "arm64"
+        final def isPhone = System.getenv('SDK_NAME')?.startsWith("iphoneos")
+        final def iOSTarget = isPhone ? presets.iosArm64 : (isArm64Host ? presets.iosSimulatorArm64 : presets.iosX64)
 
         fromPreset(iOSTarget, 'iOS') {
             compilerOptions {
