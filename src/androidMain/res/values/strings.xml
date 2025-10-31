@@ -815,7 +815,7 @@
     -->
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_kazan">Kazan, Russia</string>
-    <string name="location_kiev">Kiev, Ukraine</string>
+    <string name="location_kiev">Kyiv, Ukraine</string>
     <string name="location_kirov">Kirov, Russia</string>
     <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
@@ -2265,9 +2265,9 @@
     <!-- Translators: used as a preference category label, for settings related to the display of maps -->
     <string name="maps">Maps</string>
     <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read.</string>
-    <string name="card_name_kiev">Kiev Metro</string>
-    <!-- Translators: New card used in Kiev. In Ukrainian "Київ Цифровий". -->
-    <string name="card_name_kiev_digital">Kiev digital</string>
+    <string name="card_name_kiev">Kyiv Metro</string>
+    <!-- Translators: New card used in Kyiv. In Ukrainian "Київ Цифровий". -->
+    <string name="card_name_kiev_digital">Kyiv digital</string>
     <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
     within a time period. -->
     <string name="transfer">Transfer</string>

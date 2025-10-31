@@ -78,6 +78,7 @@ data class MetroTimeZone(val olson: String): Parcelable {
         val JERUSALEM = MetroTimeZone(olson = "Asia/Jerusalem")
         val JOHANNESBURG = MetroTimeZone(olson ="Africa/Johannesburg")
         val KAMCHATKA = MetroTimeZone(olson = "Asia/Kamchatka")
+        // Note: uses old spelling for compatibility with old tzdata
         val KIEV = MetroTimeZone(olson = "Europe/Kiev")
         val KIROV = MetroTimeZone(olson = "Europe/Kirov")
         val KRASNOYARSK = MetroTimeZone(olson = "Asia/Krasnoyarsk")

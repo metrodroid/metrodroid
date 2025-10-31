@@ -109,10 +109,10 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 | [IstanbulKart][istanbul]                       | :tr: Istanbul, Turkey                                                      | :new: :id: `IOS`                        |
 | [Kartu Multi Trip][kmt]                        | :indonesia: Jakarta, Indonesia                                             | `KMT` `IOS`                             |
 | [Kazan transport card][kazan]                  | :ru: Kazan, Russia                                                         | :new: :closed_lock_with_key: `MFC`      |
-| [Kiev Metro][kievm]                            | :ukraine: Kiev, Ukraine                                                    | :new: :closed_lock_with_key: `MFC`      |
 | [Kirov transport card][kirov]                  | :ru: Kirov, Russia                                                         | :new: :closed_lock_with_key: `MFC`      |
 | [KomuterLink][komuterlink]                     | :malaysia: Malaysia                                                        | :new: :closed_lock_with_key: `MFC`      |
 | [Krasnodar ETK][krasnodar]                     | :ru: Krasnodar, Russia                                                     | :new: :closed_lock_with_key: `MFC`      |
+| [Kyiv Metro][kievm]                            | :ukraine: Kyiv, Ukraine                                                    | :new: :closed_lock_with_key: `MFC`      |
 | [Leap][leap]                                   | :ireland: Ireland                                                          | :new: :unlock:                          |
 | [Lisboa Viva][lisboa]                          | :portugal: Lisbon, Portugal                                                | :new: `IOS`                             |
 | [Manly Fast Ferry][manly]                      | :australia: Sydney, NSW, Australia                                         | :new: :closed_lock_with_key: `MFC`      |
