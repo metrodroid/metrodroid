@@ -42,7 +42,7 @@ class RawInfoViewController : UITableViewController, CardViewProtocol, ErrorLabe
         let scannedAt = Utils.localizeFormatted(Rstring.init().scanned_at_format,
                                                 TimestampFormatter.init().timeFormat(ts: scanTime),
                                                 TimestampFormatter.init().dateFormat(ts: scanTime))
-        let infoCompleted = [ListItem(name_: scannedAt)] + info
+        let infoCompleted = [ListItem(name: scannedAt)] + info
         delegate = ListViewDataSource(items: infoCompleted)
         tableView.delegate = delegate
         tableView.dataSource = delegate

@@ -6,7 +6,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 abstract class CardTransceiverIOSCommon<CAPSULE: CardTransceiverIOSCommon.CapsuleInterface>: CardTransceiver {
     interface CapsuleInterface {
@@ -19,7 +18,6 @@ abstract class CardTransceiverIOSCommon<CAPSULE: CardTransceiverIOSCommon.Capsul
         Log.d(TAG, ">>> $data")
         val (repl, err) = runBlocking {
             val chan = Channel<CAPSULE>()
-            chan.freeze()
             sendData(chan, data)
             chan.receive().makeData()
         }

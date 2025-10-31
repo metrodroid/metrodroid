@@ -145,6 +145,16 @@ object Utils {
 
         }
 
+    /** Returns `true` if we're running in a test environment. */
+    private val isRunningTest: Boolean by lazy {
+        try {
+            Class.forName("androidx.test.espresso.Espresso")
+            true
+        } catch (_: ClassNotFoundException) {
+            false
+        }
+    }
+
     /**
      * Tries to start the activity associated with [action].
      *
@@ -215,17 +225,42 @@ object Utils {
         return KeyFormat.detectKeyFormat(data)
     }
 
-    fun copyTextToClipboard(context: Context, label: String, text: String) {
+    /**
+     * Copy plain text to the clipboard, and shows a toast on success or failure.
+     *
+     * Returns `true` on success.
+     */
+    fun copyTextToClipboard(context: Context, label: String, text: String): Boolean {
         val data = ClipData.newPlainText(label, text)
 
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         if (clipboard == null) {
             Log.w(TAG, "Unable to access ClipboardManager.")
-            Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
-            return
+
+            if (!isRunningTest) {
+                Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
+            }
+            return false
         }
-        clipboard.setPrimaryClip(data)
-        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
+
+        try {
+            clipboard.setPrimaryClip(data)
+        } catch (e: Exception) {
+            Log.e(TAG, "Unable to set clipboard", e)
+
+            if (!isRunningTest) {
+                Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show()
+            }
+
+            return false
+        }
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2 && !isRunningTest) {
+            // Android 13+ has its own confirmation UI.
+            Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show()
+        }
+
+        return true
     }
 
     fun weakLTR(input: String): String {

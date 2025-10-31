@@ -26,14 +26,9 @@ import platform.CoreNFC.NFCISO7816APDU
 import platform.CoreNFC.NFCMiFareTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 class DesfireTransceiver(val tag: NFCMiFareTagProtocol): CardTransceiverIOSISO() {
     override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
-
-    init {
-       freeze()
-    }
 
     override fun send(apdu: NFCISO7816APDU, completionHandler: (NSData?, UByte, UByte, NSError?) -> Unit) {
         tag.sendMiFareISO7816Command(apdu,

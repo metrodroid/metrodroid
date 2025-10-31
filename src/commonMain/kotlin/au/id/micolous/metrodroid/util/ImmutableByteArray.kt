@@ -51,10 +51,6 @@ class ImmutableByteArray private constructor(
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
     constructor(len: Int) : this(mData = ByteArray(len))
 
-    init {
-        nativeFreeze()
-    }
-
     @Transient
     val dataCopy: ByteArray
         get() = mData.copyOf()

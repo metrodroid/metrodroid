@@ -31,7 +31,6 @@ import kotlinx.coroutines.runBlocking
 import platform.CoreNFC.NFCISO15693TagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 
 object VicinityReaderIOS : CardReaderIOS<NFCISO15693TagProtocol> {
@@ -42,25 +41,23 @@ object VicinityReaderIOS : CardReaderIOS<NFCISO15693TagProtocol> {
         var partialRead = false
         for (sectorIdx in 0..255) {
             val chan = Channel<Capsule>()
-            chan.freeze()
             val lambda = { data: NSData?, errorIn: NSError? ->
                 print("Read $sectorIdx -> $data, $errorIn")
                 runBlocking {
                     when (errorIn?.code) {
                         102.toLong() -> {
-                            chan.send(Capsule(null, reachedEnd = true, partialRead = false).freeze())
+                            chan.send(Capsule(null, reachedEnd = true, partialRead = false))
                         }
                         100.toLong() -> {
-                            chan.send(Capsule(null, reachedEnd = false, partialRead = true).freeze())
+                            chan.send(Capsule(null, reachedEnd = false, partialRead = true))
                         }
                         else -> {
-                            chan.send(Capsule(data?.toImmutable(), reachedEnd = false, partialRead = false).freeze())
+                            chan.send(Capsule(data?.toImmutable(), reachedEnd = false, partialRead = false))
                         }
                     }
                 }
             }
-            lambda.freeze()
-            tag.readSingleBlockWithRequestFlags(0x22,
+            tag.readSingleBlockWithRequestFlags(0x22u,
                     blockNumber = sectorIdx.toUByte(),
                     completionHandler = lambda)
             val cap = runBlocking {

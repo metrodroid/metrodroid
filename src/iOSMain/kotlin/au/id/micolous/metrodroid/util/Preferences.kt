@@ -26,8 +26,8 @@ import platform.Foundation.NSUserDefaults
 import platform.Foundation.countryCode
 import platform.Foundation.currentLocale
 import platform.Foundation.preferredLanguages
-import kotlin.native.concurrent.AtomicInt
-import kotlin.native.concurrent.AtomicReference
+import kotlin.concurrent.AtomicInt
+import kotlin.concurrent.AtomicReference
 import kotlin.reflect.KProperty
 
 actual object Preferences {

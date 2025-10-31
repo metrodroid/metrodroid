@@ -26,14 +26,9 @@ import au.id.micolous.metrodroid.util.toNSData
 import platform.CoreNFC.NFCMiFareTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 class UltralightTransceiverIOS(val tag: NFCMiFareTagProtocol): CardTransceiverIOSPlain() {
     override val uid: ImmutableByteArray? = tag.identifier.toImmutable()
-
-    init {
-        freeze()
-    }
 
     override fun send(dt: ImmutableByteArray, cb: (NSData?, NSError?) -> Unit) {
         tag.sendMiFareCommand(dt.toNSData(), cb)

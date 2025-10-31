@@ -26,15 +26,10 @@ import au.id.micolous.metrodroid.util.toNSData
 import platform.CoreNFC.NFCFeliCaTagProtocol
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 class FelicaTransceiverIOS(val tag: NFCFeliCaTagProtocol): FelicaTransceiver, CardTransceiverIOSPlain() {
     override val uid: ImmutableByteArray? = tag.currentIDm.toImmutable()
     override val defaultSystemCode : Int? = tag.currentSystemCode.toImmutable().byteArrayToInt()
-
-    init {
-        freeze()
-    }
 
     override fun send(dt: ImmutableByteArray, cb: (NSData?, NSError?) -> Unit) {
         tag.sendFeliCaCommandPacket(

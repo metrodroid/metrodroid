@@ -8,4 +8,3 @@ expect class AtomicCounter() {
     fun getAndIncrement(): Int
     fun set(i: Int)
 }
-expect fun Any?.nativeFreeze(): Any?

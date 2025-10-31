@@ -5,9 +5,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.runBlocking
 import platform.Foundation.*
-import kotlin.native.concurrent.AtomicReference
-import kotlin.native.concurrent.SharedImmutable
-import kotlin.native.concurrent.freeze
+import kotlin.concurrent.AtomicReference
 
 private const val TAG = "NetworkHelper"
 
@@ -26,12 +24,10 @@ object NetworkHelperReal : NetworkHelper {
 
         fun frozenLambda(channel: SendChannel<ImmutableByteArray?>): ((dat: NSData?, response: NSURLResponse?,
                      error: NSError?)->Unit) {
-            channel.freeze()
             val l = { dat: NSData?, response: NSURLResponse?, error: NSError? ->
                 callback(channel, dat, response, error)
             }
 
-            l.freeze()
             return l
         }
     }
@@ -50,7 +46,6 @@ object NetworkHelperReal : NetworkHelper {
             conn.setValue("Metrodroid/" + Preferences.metrodroidVersion, "User-Agent")
             conn.HTTPBody = request.toNSData()
             val channel = Channel<ImmutableByteArray?>()
-            channel.freeze()
             val callback = Callback.frozenLambda(channel)
             val task =
                     session.dataTaskWithRequest(conn, completionHandler = callback)
@@ -64,7 +59,6 @@ object NetworkHelperReal : NetworkHelper {
     override fun randomUUID() = NSUUID().UUIDString
 }
 
-@SharedImmutable
 private val networkHelperRef = AtomicReference<NetworkHelper>(NetworkHelperReal)
 actual var networkHelper: NetworkHelper
     get() = networkHelperRef.value

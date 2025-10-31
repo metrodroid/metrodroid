@@ -38,10 +38,6 @@ class PlusProtocol private constructor(private val tag: CardTransceiver,
     private val kmac = AtomicRef<ImmutableByteArray?>(null)
     private val ti = AtomicRef<ImmutableByteArray?>(null)
     private val rctr = AtomicCounter()
-
-    init {
-        nativeFreeze()
-    }
     
     override fun getBlockCountInSector(sectorIndex: Int) = if (sectorIndex >= 32) 16 else 4
 

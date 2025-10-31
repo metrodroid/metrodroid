@@ -17,7 +17,7 @@ actual object Aes {
                         outputSize.usePinned { outputSizePinned ->
                             CCCrypt(mode,
                                     kCCAlgorithmAES,
-                                    0,
+                                    0u,
                                     keyPinned.addressOf(0),
                                     key.size.toULong(),
                                     ivPinned.addressOf(0),

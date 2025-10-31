@@ -147,6 +147,7 @@ Requirements:
 * Android SDK (for technical reasons)
 * Xcode 11.0 or later
 * Java runtime environment
+* Inkscape (must be in your `$PATH`; installing with Homebrew is fine)
 
 **Note:** If you want to deploy your build to a physical device [and use NFC support][dev-caps], you
 must also enroll in the [Apple Developer Program][apple-dev]. _This has an annual membership fee._

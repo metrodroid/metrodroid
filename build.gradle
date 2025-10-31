@@ -238,7 +238,7 @@ task iOSImages {
 """
             def render = new File(imageset, basename + ".png")
             exec {
-                commandLine System.getenv('INKSCAPE') ?: "inkscape", "-z", "-e", render, "-w", "380", details.file.path
+                commandLine System.getenv('INKSCAPE') ?: "inkscape", "--batch-process", "--export-type", "png", "-w", "380", details.file.path, "-o", render
             }
         }
     }
@@ -310,8 +310,9 @@ kotlin {
             }
         }
 
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
-                               ? presets.iosArm64 : presets.iosX64
+        final def isArm64Host = "uname -m".execute().text.trim() == "arm64"
+        final def isPhone = System.getenv('SDK_NAME')?.startsWith("iphoneos")
+        final def iOSTarget = isPhone ? presets.iosArm64 : (isArm64Host ? presets.iosSimulatorArm64 : presets.iosX64)
 
         fromPreset(iOSTarget, 'iOS') {
             compilerOptions {
@@ -382,7 +383,7 @@ kotlin {
 
         iOSMain {
             dependencies {
-                implementation project(':proto')
+                // implementation project(':proto')
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}"
             }
 
@@ -391,7 +392,7 @@ kotlin {
 
         iOSTest {
             dependencies {
-                implementation project(':proto')
+                // implementation project(':proto')
             }
         }
 
@@ -402,7 +403,7 @@ kotlin {
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
                 implementation project(':proto')
             }
-	    dependsOn(commonTest)
+            dependsOn(commonTest)
             dependsOn(jvmCommonTest)
         }
 
@@ -642,14 +643,14 @@ android {
             applicationIdSuffix '.dev'
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard.cfg'
             matchingFallbacks = ['debug']
         }
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard.cfg'
         }
     }
@@ -736,6 +737,7 @@ android {
 kotlin.sourceSets.all {
     languageSettings {
         optIn('kotlin.ExperimentalUnsignedTypes')
+        optIn('kotlinx.cinterop.ExperimentalForeignApi')
         optIn('kotlin.Experimental')
     }
 }

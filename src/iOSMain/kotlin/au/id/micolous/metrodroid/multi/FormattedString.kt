@@ -17,9 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(BetaInteropApi::class)
+
 package au.id.micolous.metrodroid.multi
 
 import au.id.micolous.metrodroid.util.Preferences
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import platform.Foundation.*

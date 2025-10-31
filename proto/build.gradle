@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 allprojects {
     repositories {
         google()
@@ -21,10 +23,6 @@ apply plugin: 'java-library'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'objective-c'
 
-dependencies {
-    implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
-}
-
 protobuf {
     protoc {
         // You still need protoc like in the non-Android case
@@ -44,10 +42,20 @@ protobuf {
     }
 }
 
-final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
-                              ? "ios_arm64" : "ios_x86_64"
+final def isArm64Host = "uname -m".execute().text.trim() == "arm64"
+final def isPhone = System.getenv('SDK_NAME')?.startsWith("iphoneos")
+final def iOSTarget = isPhone ? "ios_arm64" : (isArm64Host ? "ios_simulator_arm64" : "ios_x86_64")
 
-task generateProtoWrapper() {
+dependencies {
+    implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.register('generateProtoWrapper') {
     ext {
         sourceDir = new File(buildDir, 'generated/source/proto/main/objc')
         headerDir = sourceDir
@@ -64,6 +72,20 @@ model {
                     args << '-arch'
                     args << 'arm64'
                     args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'arm64'
+                }
+            }
+            target("ios_simulator_arm64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'arm64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-mios-simulator-version-min=8.0'
                     args << '-D_Nullable_result=_Nullable'
                 }
                 linker.withArguments { args ->
@@ -90,6 +112,9 @@ model {
     }
     platforms {
         ios_arm64 {
+            architecture "arm64"
+        }
+        ios_simulator_arm64 {
             architecture "arm64"
         }
         ios_x86_64 {
