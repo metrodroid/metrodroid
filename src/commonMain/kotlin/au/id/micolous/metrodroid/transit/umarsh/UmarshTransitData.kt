@@ -33,8 +33,6 @@ import au.id.micolous.metrodroid.ui.ListItemInterface
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 
-import kotlin.native.concurrent.SharedImmutable
-
 internal enum class UmarshDenomination {
     UNLIMITED,
     TRIPS,
@@ -54,7 +52,6 @@ internal data class UmarshSystem(
 
 // This implements reader for umarsh format: https://umarsh.com
 // Reference: https://github.com/micolous/metrodroid/wiki/Umarsh
-@SharedImmutable
 private val systemsMap = mapOf(
         12 to UmarshSystem(
                 CardInfo(

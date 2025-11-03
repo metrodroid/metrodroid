@@ -251,5 +251,5 @@ object LocalizeGenerator {
         }
     }
 
-    private fun typeName(type: String): String = type[0].toUpperCase() + type.substring(1) + "Resource"
+    private fun typeName(type: String): String = type[0].uppercaseChar() + type.substring(1) + "Resource"
 }

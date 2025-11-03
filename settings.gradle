@@ -8,6 +8,6 @@ include ':jvmcli'
 include ':proto'
 includeBuild('third_party/kotlin-pcsc') {
     dependencySubstitution {
-        substitute module('au.id.micolous:kotlin-pcsc') with project(':')
+        substitute module('au.id.micolous:kotlin-pcsc') using project(':')
     }
 }

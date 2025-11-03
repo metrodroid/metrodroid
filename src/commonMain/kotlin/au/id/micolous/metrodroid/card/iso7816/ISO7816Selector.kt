@@ -85,7 +85,6 @@ data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
     override fun toString() = formatString()
 
     @OptIn(ExperimentalSerializationApi::class)
-    @Serializer(forClass = ISO7816Selector::class)
     companion object : KSerializer<ISO7816Selector> {
 
         fun makeSelector(vararg path: Int) = ISO7816Selector(path.map {ISO7816SelectorById(it)})

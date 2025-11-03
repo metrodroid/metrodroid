@@ -31,7 +31,6 @@ import kotlinx.datetime.*
 import kotlinx.serialization.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.native.concurrent.SharedImmutable
 import kotlin.native.concurrent.ThreadLocal
 
 @Parcelize
@@ -122,7 +121,6 @@ internal const val MIN = 60L * SEC
 internal const val HOUR = 60L * MIN
 internal const val DAY = 24L * HOUR
 
-@SharedImmutable
 val epochLocalDate = LocalDate(1970, Month.JANUARY, 1)
 
 fun yearToDays(year: Int): Int = epochLocalDate.daysUntil(
