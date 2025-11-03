@@ -45,12 +45,12 @@ data class ThessUltralightTransaction(
         FormattedString(Localizer.localizeString(R.string.agency_thessaloniki_metro))
     
     override fun getRawFields(level: Int) = super.getRawFields(level).orEmpty() + listOfNotNull(
-        FormattedString(Localizer.localizeString(R.string.product_code)) to FormattedString("0x${mProductCode.toString(16)}"),
+        FormattedString("Product code") to FormattedString("0x${mProductCode.toString(16)}"),
         FormattedString(Localizer.localizeString(R.string.ticket_type)) to FormattedString(
             if (mIsSingleUse) {
-                Localizer.localizeString(R.string.ticket_type_single_use)
+                FormattedString("Ticket type") to FormattedString("Single-use")
             } else {
-                Localizer.localizeString(R.string.ticket_type_multi_trip)
+                FormattedString("Ticket type") to FormattedString("Multi-trip")
             } + " (0x${if (mIsSingleUse) "80" else "f0"})"
         ),
         FormattedString("Used") to FormattedString(mIsUsed.toString())
