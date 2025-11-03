@@ -859,6 +859,7 @@
     <string name="location_taipei">Taipei</string>
     <string name="location_tampere">Tampere, Finland</string>
     <string name="location_tartu">Tartu, Estonia</string>
+    <string name="location_thessaloniki">Thessaloniki, Greece</string>
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_toulouse">Toulouse, France</string>
@@ -1581,6 +1582,14 @@
     https://www.adelaidemetro.com.au/Tickets-fares/Concession-Cards#student
     -->
     <string name="adelaide_ticket_type_student">Student</string>
+
+    <!-- Thessaloniki Metro -->
+    <string name="agency_thessaloniki_metro">Thessaloniki Metro</string>
+    <string name="card_thesscard">ThessCard</string>
+    <string name="card_thessticket">ThessTicket</string>
+    <string name="ticket_type_single_use">Single-use</string>
+    <string name="ticket_type_multi_trip">Multi-trip</string>
+    <string name="product_code">Product code</string>
 
     <!-- En1545 and related cards -->
 
