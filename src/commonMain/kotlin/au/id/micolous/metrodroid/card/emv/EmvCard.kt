@@ -21,7 +21,6 @@
 package au.id.micolous.metrodroid.card.emv
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
-import au.id.micolous.metrodroid.card.androidhce.AndroidHceApplication
 import au.id.micolous.metrodroid.card.china.ChinaRegistry
 import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Data.TAG_DISCRETIONARY_DATA
@@ -135,11 +134,11 @@ class EmvFactory : ISO7816ApplicationFactory {
         if (ChinaRegistry.allFactories.flatMap { it.appNames }.toSet().intersect(aids).isEmpty()) {
             feedbackInterface.showCardType(EmvTransitFactory.CARD_INFO)
         }
-        val isAndroidHCE = AndroidHceApplication.FACTORY.applicationNames.toSet().intersect(aids).isNotEmpty()
+        val isHCE = hceApplications.intersect(aids).isNotEmpty()
         feedbackInterface.updateProgressBar(0, 32)
-        // Skip dumping SFIs for Android HCE. Google Pay doesn't return any SFIs in the EMV anchor
-        // application, and enforces an error budget (after which it disconnects).
-        if (!isAndroidHCE) {
+        // Skip dumping SFIs for HCE cards. Apple and Google Pay don't return any SFIs in the EMV
+        // anchor application, and enforces an error budget (after which it disconnects).
+        if (!isHCE) {
             capsule.dumpAllSfis(protocol, feedbackInterface, 0, 64)
         }
 
@@ -166,9 +165,9 @@ class EmvFactory : ISO7816ApplicationFactory {
                 val mainAppFci = protocol.selectByNameOrNull(aid)
                 val mainAppCapsule = ISO7816ApplicationMutableCapsule(appFci = mainAppFci,
                         appName = aid)
-                if (isAndroidHCE) {
-                    // Google Pay doesn't have any data except in SFI 1, and brute force uses up
-                    // our error budget.
+                if (isHCE) {
+                    // Apple and Google Pay don't have any data except in SFI 1, and brute force
+                    // uses up our error budget.
                     mainAppCapsule.dumpFileSFI(protocol, 1, 0)
                 } else {
                     mainAppCapsule.dumpAllSfis(protocol, feedbackInterface, 32, 64)
