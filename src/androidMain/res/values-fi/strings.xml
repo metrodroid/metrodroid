@@ -143,7 +143,7 @@
     <string name="hsl_transport_lautta">Lautta</string>
     <string name="hsl_transport_u_linja">U-linja</string>
     <string name="unauthorized_file_title_format">Tiedosto: %s (luvaton)</string>
-    <string name="copyright">Tekijänoikeus © 2015–2022 Michael Farrell</string>
+    <string name="copyright">Tekijänoikeus © 2015–2025 Michael Farrell</string>
     <string name="last_refill">Viimeinen täyttö</string>
     <string name="nfcv_system_info">Järjestelmätiedot</string>
     <string name="saved_metrodroid_zip">Metrodroid-Export.zip tallennettu USB-tallennustilaan.</string>

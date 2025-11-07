@@ -1068,7 +1068,7 @@
     <string name="compass_sub_bulk_daypass">Massen-Tageskarte</string>
     <string name="pisa_carnet_10_bgl_70_min_pisa">Mehrfahrtkarte mit 10 Fahrten für je 70 Minuten</string>
     <string name="mode_monorail">Einschienenbahn</string>
-    <string name="copyright">Urheberrecht © 2015 – 2022 Michael Farrell</string>
+    <string name="copyright">Urheberrecht © 2015 – 2025 Michael Farrell</string>
     <plurals name="obfuscation_mode_notice">
         <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> Verschleierung ein</item>
         <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> Verschleierungen ein</item>

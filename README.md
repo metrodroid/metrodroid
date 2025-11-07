@@ -193,14 +193,16 @@ interpreted locally, and _connectivity is disabled by default._
 
 **Metrodroid for Android** requires Android 4.1 or later, with NFC support.
 
-Some devices do not support MIFARE Classic. MIFARE Classic is not an NFC-compliant card format, so they can only be read on devices with NXP chipsets.
+Some transit cards use MIFARE Classic, a proprietary card media which is not supported by all
+Android devices. These cards can only be read on devices with NXP NFC chipsets and a limited set of
+NFC chipsets from other vendors.
 
 **Metrodroid for iOS** requires iOS 13.0 or later, and iPhone 7 or later. It does not support other
-iOS devices, even those that support Apple Pay.
+iOS devices (even those that support Apple Pay), and does not support MIFARE Classic cards.
 
 ## License and copyright
 
-Copyright © 2015–2019 Michael Farrell
+Copyright © 2015–2025 Michael Farrell
 
 Copyright © 2011–2013 Eric Butler
 
