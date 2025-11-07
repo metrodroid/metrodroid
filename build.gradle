@@ -685,6 +685,7 @@ android {
         exclude 'META-INF/atomicfu.kotlin_module'
         exclude 'META-INF/main.kotlin_module'
         exclude 'META-INF/kotlinx-serialization-runtime.kotlin_module'
+        exclude '**/*.proto'
     }
 
     lintOptions {
