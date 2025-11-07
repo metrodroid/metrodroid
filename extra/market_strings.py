@@ -30,7 +30,7 @@ from typing import Iterator, Optional, Text, Tuple
 from xml.etree import ElementTree
 
 METRODROID_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-RESOURCES_DIR = os.path.join(METRODROID_ROOT, 'src/main/res')
+RESOURCES_DIR = os.path.join(METRODROID_ROOT, 'src/androidMain/res')
 DEFAULT_LANG = 'values'
 OTHER_LANG = 'values-'
 RESC_FILE = 'market.xml'
@@ -240,7 +240,7 @@ def get_changelog_for_version(
   return None, None
 
 
-def show_changelog(version: Optional[int] = None) -> None:
+def show_changelog(version: Optional[int] = None, quiet: bool = False) -> None:
   """Shows the changelog for each language.
 
   The default changelog will be shown if the latest version does not have
@@ -248,18 +248,27 @@ def show_changelog(version: Optional[int] = None) -> None:
 
   Args:
     version: the version to display, or None for the latest.
+    quiet: don't add comments to the output.
   """
   # Figure out what the changelog is in English -- this gives the latest
   # version.
 
-  version, english_notes = get_changelog_for_version(DEFAULT_MARKET, version)
+  found_version, english_notes = get_changelog_for_version(DEFAULT_MARKET, version)
 
-  if version is None or english_notes is None:
+  if english_notes is None:
     raise KeyError('Could not find specific English notes for that version')
 
-  print(f'## Release notes for version {version}')
-  ok = bool_to_emoji(len(english_notes) <= CHANGELOG_MAX_LENGTH)
-  print(f'## {ok} {len(english_notes)}/{CHANGELOG_MAX_LENGTH} chars')
+  if not version:
+    # Ensure consistent lookups for "latest" version.
+    version = found_version
+
+  if not quiet:
+    if found_version:
+      print(f'## Release notes for version {version}')
+    else:
+      print(f'## Generic changelog for English:')
+    ok = bool_to_emoji(len(english_notes) <= CHANGELOG_MAX_LENGTH)
+    print(f'## {ok} {len(english_notes)}/{CHANGELOG_MAX_LENGTH} chars')
   print(f'<en>')
   print(english_notes)
   print('</en>')
@@ -273,17 +282,18 @@ def show_changelog(version: Optional[int] = None) -> None:
     found_version, notes = get_changelog_for_version(path, version)
 
     if notes:
-      if not found_version:
-        print(f'## Generic changelog for {lang_code}:')
-      ok = bool_to_emoji(len(notes) <= CHANGELOG_MAX_LENGTH)
-      print(f'## {ok} {len(notes)} / {CHANGELOG_MAX_LENGTH} chars')
+      if not quiet:
+        if not found_version:
+          print(f'## Generic changelog for {lang_code}:')
+        ok = bool_to_emoji(len(notes) <= CHANGELOG_MAX_LENGTH)
+        print(f'## {ok} {len(notes)} / {CHANGELOG_MAX_LENGTH} chars')
       print(f'<{lang_code}>')
       print(notes)
       print(f'</{lang_code}>')
-    else:
+      print()
+    elif not quiet:
       print(f'## No changelog for {lang_code}')
 
-    print()
 
 
 def main() -> None:
@@ -307,11 +317,18 @@ def main() -> None:
         instead of the latest.
       ''')
 
+  parser.add_argument(
+      '-q',
+      '--quiet',
+      action='store_true',
+      help='''Don't include check results for release notes.'''
+  )
+
   options = parser.parse_args()
 
   if options.language:
     if options.language == 'notes':
-      show_changelog(options.version)
+      show_changelog(options.version, options.quiet)
     elif options.language == 'default':
       show_language()
     else:
