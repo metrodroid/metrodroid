@@ -94,8 +94,8 @@ Metrodroid requires some permissions to function correctly:
 
   1. Used by the map viewer to show the start and end location(s) of a trip, if available.
 
-     _By default,_ this uses tiles from [StackPtr][], but Metrodroid can be configured to use an
-     arbitrary map tile server of your choice.
+     _By default,_ this uses tiles from [OpenStreetMap][], but Metrodroid can be configured to use
+     a map tile server of your choice.
 
   2. _With your consent_, it is used for [challenge-response authentication for Leap cards](#leap).
 
@@ -114,5 +114,5 @@ If in doubt, on Android 6.0 and later, you can selectively revoke permissions.
 
 [crauth]: https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication
 [gps]: https://play.google.com/store/apps/details?id=au.id.micolous.farebot
-[stackptr]: https://stackptr.com
+[OpenStreetMap]: https://www.openstreetmap.org/
 [saf]: https://developer.android.com/guide/topics/providers/document-provider
