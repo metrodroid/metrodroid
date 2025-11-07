@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="copyright">பதிப்புரிமை © 2015 - 2022 மைக்கேல் ஃபாரெல்</string>
+    <string name="copyright">பதிப்புரிமை © 2015 - 2025 மைக்கேல் ஃபாரெல்</string>
     <string name="license">உரிமங்கள்</string>
     <string name="title_activity_license">திறந்த மூல உரிமங்கள்</string>
     <string name="directions">ஒரு அட்டையைத் தட்டவும்.</string>

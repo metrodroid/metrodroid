@@ -49,7 +49,7 @@ class KievTransitData (private val mSerial: String,
 
     companion object {
         // It doesn't really have a name and is just called
-        // "Ticket for Kiev Metro".
+        // "Ticket for Kyiv Metro".
         private val CARD_INFO = CardInfo(
                 name = R.string.card_name_kiev,
                 locationId = R.string.location_kiev,

@@ -31,7 +31,7 @@
     <string name="scanned_at_format">تم المسح في %1$s بتاريخ %2$s</string>
     <string name="seqgo_refill_automatic">إعادة تَعبئة تلقائية</string>
     <string name="opal_vehicle_rail">سكة حديدية</string>
-    <string name="copyright">حقوق النشر © 2015 – 2022 مايكل فاريل</string>
+    <string name="copyright">حقوق النشر © 2015 – 2025 مايكل فاريل</string>
     <string name="supported_cards">البطاقات المدعومة</string>
     <string name="transaction_counter">عداد المعاملات</string>
     <string name="fully_locked_title">بطاقة مقفلة بالكامل.</string>

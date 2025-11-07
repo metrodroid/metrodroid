@@ -1,8 +1,7 @@
 package au.id.micolous.metrodroid.util
 
-import kotlin.native.concurrent.AtomicInt
-import kotlin.native.concurrent.AtomicReference
-import kotlin.native.concurrent.freeze
+import kotlin.concurrent.AtomicInt
+import kotlin.concurrent.AtomicReference
 
 actual class AtomicCounter {
     private val backer = AtomicInt(0)
@@ -29,10 +28,4 @@ actual class AtomicRef<T> actual constructor(initial: T) {
         set(value) {
             backer.value = value
         }
-
-    init {
-        freeze()
-    }
 }
-
-actual fun Any?.nativeFreeze() = this.freeze()

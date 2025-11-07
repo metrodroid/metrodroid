@@ -8,14 +8,12 @@ import kotlinx.coroutines.runBlocking
 import platform.CoreNFC.NFCISO7816APDU
 import platform.Foundation.NSData
 import platform.Foundation.NSError
-import kotlin.native.concurrent.freeze
 
 abstract class CardTransceiverIOSISO: CardTransceiverIOSCommon<CardTransceiverIOSISO.Companion.Capsule>() {
     override fun sendData(chan: SendChannel<Capsule>, data: ImmutableByteArray) {
         val lambda = { dataBack: NSData?, sw1: UByte, sw2: UByte, err: NSError? ->
             callback(channel = chan, reply = dataBack, sw1 = sw1, sw2 = sw2, error = err)
         }
-        lambda.freeze()
         send(NFCISO7816APDU(data = data.toNSData()), lambda)
     }
 
@@ -40,10 +38,6 @@ abstract class CardTransceiverIOSISO: CardTransceiverIOSCommon<CardTransceiverIO
             val sw2: UByte,
             val err: NSError?
         ): CapsuleInterface {
-            init {
-                freeze()
-            }
-
             override fun makeData(): Pair<ImmutableByteArray?, NSError?> = Pair(
                 rep?.toImmutable()?.plus(ImmutableByteArray.of(sw1.toByte(), sw2.toByte())),
                 err)

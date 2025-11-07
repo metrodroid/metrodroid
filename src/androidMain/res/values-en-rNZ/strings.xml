@@ -55,7 +55,6 @@
     <string name="advanced_info">Advanced info</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading card…</string>
-    <string name="copyright">Copyright © 2015 – 2022 Michael Farrell</string>
     <string name="never">Never</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="keys_loaded">Encryption keys for this card are loaded.</string>

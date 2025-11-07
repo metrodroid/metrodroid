@@ -53,7 +53,7 @@
 \n請您要求發卡機構允許開放讀取此卡。以現代的智能卡而言，允許讀取是安全的，有些機構甚至會提供資料格式的開放文件！</string>
     <string name="loading">載入中…</string>
     <string name="import_file">從檔案匯入</string>
-    <string name="copyright">© 2015 – 2022 Michael Farrell 著作權所有</string>
+    <string name="copyright">© 2015 – 2025 Michael Farrell 著作權所有</string>
     <string name="supported_cards">支援的卡片列表</string>
     <string name="machine_id_format">機器 ID %s</string>
     <string name="felica_process_purchase_special_ticket">車票（特殊公車／路面電車）</string>
