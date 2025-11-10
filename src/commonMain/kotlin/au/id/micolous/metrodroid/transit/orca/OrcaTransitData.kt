@@ -62,7 +62,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
 
         private fun parseTrips(card: DesfireCard, fileId: Int, isTopup: Boolean): List<TransactionTripAbstract> {
             val file = card.getApplication(APP_ID)?.getFile(fileId) as? RecordDesfireFile ?: return emptyList()
-            val useLog = file.records.map { OrcaTransaction(it, isTopup) }
+            val useLog = file.records.mapIndexed { i, d -> OrcaTransaction(d, isTopup, fileId, i) }
             return TransactionTrip.merge(useLog)
         }
 
