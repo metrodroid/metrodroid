@@ -80,18 +80,18 @@ class OrcaTransaction (private val mTimestamp: Long,
         get() {
             if (mIsTopup)
                 return null
-            if (isSeattleStreetcar) {
-                return StationTableReader.getStation(ORCA_STR_STREETCAR, mCoachNum)
-            } else if (isRapidRide || isSwift) {
-                return StationTableReader.getStation(ORCA_STR_BRT, mCoachNum)
-            }
             val id = (mAgency shl 16) or (mCoachNum and 0xffff)
             val s = StationTableReader.getStationNoFallback(ORCA_STR, id,
-                    NumberUtils.intToHex(id))
+                NumberUtils.intToHex(id))
             if (s != null)
                 return s
             if (isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF) {
                 return Station.unknown(mCoachNum)
+            }
+            if (isSeattleStreetcar) {
+                return StationTableReader.getStation(ORCA_STR_STREETCAR, mCoachNum)
+            } else if (isRapidRide || isSwift) {
+                return StationTableReader.getStation(ORCA_STR_BRT, mCoachNum)
             }
 
             return null
@@ -134,7 +134,7 @@ class OrcaTransaction (private val mTimestamp: Long,
 
     private val isMonorail: Boolean
         get() = (mAgency == OrcaTransitData.AGENCY_KCM &&
-            mFtpType == FTP_TYPE_PURSE_DEBIT && mCoachNum == COACH_NUM_MONORAIL)
+            mFtpType == FTP_TYPE_BRT && (mCoachNum >= 0x3adb))
 
     // TODO: Determine if CoachID is used for Water Taxis
     private val isWaterTaxi: Boolean
