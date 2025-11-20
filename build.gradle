@@ -662,6 +662,14 @@ android {
         }
     }
 
+    dependenciesInfo {
+        // This metadata is added to the APK in an encrypted form, which isn't useful to anyone but
+        // Google, and is a source of non-determinism.
+        // https://izzyondroid.org/about/security/ApkScans/#signingblock-checks
+        includeInApk = false
+        includeInBundle = false
+    }
+
     preBuild.dependsOn copyThirdPartyNotices
 
     sourceSets {
