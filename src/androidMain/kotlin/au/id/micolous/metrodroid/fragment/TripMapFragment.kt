@@ -64,7 +64,13 @@ class TripMapFragment: Fragment() {
 
         val settings = webView.settings
         settings.javaScriptEnabled = true
-        settings.allowUniversalAccessFromFileURLs = true
+        // The map page (file:///android_asset/map.html) only uses Leaflet
+        // to render tile images via L.tileLayer, which fetches tiles with
+        // <img> tags rather than XHR. <img> loads from a file:// page to
+        // any origin are not gated by allowUniversalAccessFromFileURLs,
+        // so the flag is not needed for the existing map flow, and
+        // leaving it on lets the TripMapShim JS bridge be reached from a
+        // same-origin file:// page that exfiltrates to any host.
 
         settings.userAgentString = "${settings.userAgentString} metrodroid/${BuildConfig.VERSION_NAME}"
 
