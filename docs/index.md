@@ -17,8 +17,8 @@ version of Metrodroid][repo]. [The release version][release] may be missing some
 but it'll be available soon!
 
 | Card / Agency                                  | Location                                                                   | Notes                                   |
-|------------------------------------------------|----------------------------------------------------------------------------|-----------------------------------------|
-| [Amiibo][amiibo]                               | :earth_asia: _worldwide_                                                   | :new: `IOS`                             |
+| ---------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------- |
+| [Amiibo][amiibo]                               | :earth*asia: \_worldwide*                                                  | :new: `IOS`                             |
 | [AT HOP][athop]                                | :new_zealand: Auckland, New Zealand                                        | :new: :id: `IOS`                        |
 | [Beijing Municipal Card][beijing]              | :cn: Beijing, China                                                        | :new:                                   |
 | [bip!][bip]                                    | :chile: Santiago de Chile, Chile                                           | :new: :closed_lock_with_key: `MFC`      |
@@ -30,14 +30,14 @@ but it'll be available soon!
 | [Clipper][clipper]                             | :us: San Francisco, CA, USA                                                | `IOS`                                   |
 | [Compass][compass]                             | :canada: Vancouver, BC, Canada                                             | :new: :one: `IOS`                       |
 | [Crimea Trolleybus][crimea]                    | Crimea                                                                     | :new: :closed_lock_with_key: `MFC`      |
-| [Cubic Nextfare][nextfare]                     | :earth_americas: _many locations_                                          | :new: :closed_lock_with_key: `MFC`      |
+| [Cubic Nextfare][nextfare]                     | :earth*americas: \_many locations*                                         | :new: :closed_lock_with_key: `MFC`      |
 | [EasyCard][easycard]                           | Taipei                                                                     | :closed_lock_with_key: `MFC`            |
 | [Edy][edy]                                     | :jp: Japan                                                                 |                                         |
 | [Ekarta][ekarta]                               | :ru: Yekaterinburg, Russia                                                 | :new: :closed_lock_with_key: `MFC`      |
 | [Electronic Barnaul][barnaul]                  | :ru: Barnaul, Russia                                                       | :new: :closed_lock_with_key: `MFC`      |
-| [EMV][emv]                                     | :earth_africa: _worldwide_                                                 | :new:                                   |
+| [EMV][emv]                                     | :earth*africa: \_worldwide*                                                | :new:                                   |
 | [Envibus][envibus]                             | :fr: Sophia Antipolis, France                                              | :new: `IOS`                             |
-| [ERG][erg]                                     | :earth_asia: _many locations_                                              | :new: :closed_lock_with_key: `MFC`      |
+| [ERG][erg]                                     | :earth*asia: \_many locations*                                             | :new: :closed_lock_with_key: `MFC`      |
 | [EZ-Link][ezlink]                              | :singapore: Singapore                                                      |                                         |
 | [Go card][seqgo]                               | :australia: Brisbane and South East Queensland, Australia                  | :new: :closed_lock_with_key: `MFC`      |
 | [GoCard][otago]                                | :new_zealand: Otago, including Greater Dunedin and Queenstown, New Zealand | :new: `MFC`                             |
@@ -70,7 +70,7 @@ but it'll be available soon!
 | [Opus][opus]                                   | :canada: Québec, Canada                                                    | :new: `IOS`                             |
 | [ORCA][orca]                                   | :us: Seattle, WA, USA                                                      | `IOS`                                   |
 | [Orenburg EKG][orenburg]                       | :ru: Orenburg, Russia                                                      | :new: :closed_lock_with_key: `MFC`      |
-| [OùRA][oura]                                   | :fr: Grenoble, France                                                      | :new: `IOS`                             |
+| [OùRA][oura]                                   | :fr: Auvergne-Rhônes-Alpes, France                                         | :new: `IOS`                             |
 | [OV-chipkaart][ovc]                            | :netherlands: Netherlands                                                  | :closed_lock_with_key: `MFC`            |
 | [Oyster][oyster]                               | :gb: London, United Kingdom                                                | :new: :closed_lock_with_key: `MFC`      |
 | Penza transport card                           | :ru: Penza, Russia                                                         | :new: :closed_lock_with_key: `MFC`      |
@@ -106,7 +106,7 @@ but it'll be available soon!
 | [Zolotaya Korona][zolotaya]                    | :ru: _multiple cities in Russia_                                           | :new: :closed_lock_with_key: `MFC`      |
 
 | Note                   | Meaning                                                                                                 |
-|------------------------|---------------------------------------------------------------------------------------------------------|
+| ---------------------- | ------------------------------------------------------------------------------------------------------- |
 | :new:                  | New in Metrodroid.                                                                                      |
 | :closed_lock_with_key: | Encryption keys required to read this card.                                                             |
 | :unlock:               | Encryption keys are downloaded from the operator.                                                       |
@@ -129,16 +129,16 @@ interpreted locally, and _connectivity is disabled by default._
 
 ## Supported card media
 
-* [FeliCa][felica]
-* [FeliCa Lite][felica]
-* ISO/IEC 7816-4
-  * [Calypso][calypso]
-  * [CEPAS][cepas] (not compatible with all devices)
-  * [T-Money][tmoney]
-* [ISO/IEC 15693 "Vicinity"][nfcv]
-* [MIFARE Classic][mfc] (Not compatible with all devices)
-* [MIFARE DESFire][mfd]
-* [MIFARE Ultralight][mfu] (Not compatible with all devices)
+- [FeliCa][felica]
+- [FeliCa Lite][felica]
+- ISO/IEC 7816-4
+  - [Calypso][calypso]
+  - [CEPAS][cepas] (not compatible with all devices)
+  - [T-Money][tmoney]
+- [ISO/IEC 15693 "Vicinity"][nfcv]
+- [MIFARE Classic][mfc] (Not compatible with all devices)
+- [MIFARE DESFire][mfd]
+- [MIFARE Ultralight][mfu] (Not compatible with all devices)
 
 [repo]: {{ site.github.repository_url }}
 [release]: {{ site.github.repository_url }}/releases/latest
@@ -154,7 +154,6 @@ interpreted locally, and _connectivity is disabled by default._
 [mfc]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic
 [mfd]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
 [mfu]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
-
 [adl]: https://adelaidemetro.com.au/Tickets-fares/metroCARD
 [amiibo]: https://www.nintendo.com/amiibo/
 [athop]: https://at.govt.nz/bus-train-ferry/at-hop-card/
