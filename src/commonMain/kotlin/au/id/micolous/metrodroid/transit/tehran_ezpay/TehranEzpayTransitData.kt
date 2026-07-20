@@ -86,11 +86,13 @@ object TehranEzpayTransitFactory : ClassicCardTransitFactory {
     override fun check(card: ClassicCard): Boolean {
         if (card.sectors.size != 16 || card.tagId.size != 4)
             return false
-        // Consult the raw representation first: accessing an unread block throws.
-        if (listOf(0, 3, 4, 5).any { sector ->
+        // Consult the raw representation first: accessing an unread block throws. Ignore
+        // unread blocks that are not used by this parser, as partial dumps may omit them.
+        val requiredBlocks = listOf(0 to 0, 3 to 0, 3 to 1, 4 to 0, 5 to 0)
+        if (requiredBlocks.any { (sector, block) ->
                     val raw = card.sectorsRaw[sector]
-                    raw.isUnauthorized || raw.error != null || raw.blocks.size < 2 ||
-                            raw.blocks.any { it.size != 16 }
+                    raw.isUnauthorized || raw.error != null || raw.blocks.size <= block ||
+                            raw.blocks[block].size != 16
                 })
             return false
 
