@@ -106,9 +106,9 @@ object TehranEzpayTransitFactory : ClassicCardTransitFactory {
         if ((manufacturer[4].toInt() and 0xff) != bcc)
             return false
 
+        // Bytes 14..15 contain version-dependent metadata and are not identification fields.
         if (state[0] != 0x18.toByte() || state[1] != 0x40.toByte() ||
-                state.sliceOffLen(2, 4) != card.tagId.reverseBuffer() ||
-                state[15] != 0x02.toByte())
+                state.sliceOffLen(2, 4) != card.tagId.reverseBuffer())
             return false
 
         val first = parseTehranEzpayRecord(balanceA) ?: return false
