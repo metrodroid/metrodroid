@@ -56,27 +56,37 @@ internal fun selectTehranEzpayRecord(first: TehranEzpayRecord,
                                      second: TehranEzpayRecord): TehranEzpayRecord =
         if (isTehranEzpayCounterNewer(second.counter, first.counter)) second else first
 
+private fun requiredBlock(card: ClassicCard, sector: Int, block: Int): ImmutableByteArray? {
+    val rawSector = card.sectorsRaw.getOrNull(sector) ?: return null
+    if (rawSector.isUnauthorized || rawSector.error != null)
+        return null
+    return rawSector.blocks.getOrNull(block)?.takeIf { it.size == 16 }
+}
+
 private fun serial(card: ClassicCard): String =
-        (card.tagId + card[0, 0].data[4]).toHexString().uppercase()
+        (card.tagId + requiredBlock(card, 0, 0)!![4]).toHexString().uppercase()
 
 @Parcelize
 data class TehranEzpayTransitData(private val mSerial: String,
                                   private val mBalance: Int,
                                   internal val recordCounter: Long,
-                                  private val mJourneyState: Int) : TransitData() {
+                                  private val mJourneyState: Int?) : TransitData() {
     override val serialNumber get() = mSerial
     override val cardName get() = Localizer.localizeString(NAME)
     override val balance get() = TransitCurrency(mBalance, "IRR", 1)
 
     override fun getRawFields(level: RawLevel): List<ListItem> {
         val state = when (mJourneyState) {
-            0 -> "entered / journey open"
-            1 -> "exited or journey closed"
-            else -> "unknown (0x${mJourneyState.toString(16).uppercase()})"
+            0 -> Localizer.localizeString(R.string.tehran_ezpay_entered)
+            1 -> Localizer.localizeString(R.string.tehran_ezpay_exited)
+            null -> null
+            else -> Localizer.localizeString(R.string.tehran_ezpay_unknown,
+                    mJourneyState.toString(16).uppercase().padStart(2, '0'))
         }
-        return listOf(
-                ListItem("Record counter", "0x${recordCounter.toString(16).uppercase()}"),
-                ListItem("Journey state", state))
+        return listOf(ListItem(R.string.tehran_ezpay_record_counter,
+                "$recordCounter (0x${recordCounter.toString(16).uppercase()})")) +
+                if (state == null) emptyList() else listOf(
+                        ListItem(R.string.tehran_ezpay_journey_state, state))
     }
 }
 
@@ -86,28 +96,23 @@ object TehranEzpayTransitFactory : ClassicCardTransitFactory {
     override fun check(card: ClassicCard): Boolean {
         if (card.sectors.size != 16 || card.tagId.size != 4)
             return false
-        // Consult the raw representation first: accessing an unread block throws. Ignore
-        // unread blocks that are not used by this parser, as partial dumps may omit them.
-        val requiredBlocks = listOf(0 to 0, 3 to 0, 3 to 1, 4 to 0, 5 to 0)
-        if (requiredBlocks.any { (sector, block) ->
-                    val raw = card.sectorsRaw[sector]
-                    raw.isUnauthorized || raw.error != null || raw.blocks.size <= block ||
-                            raw.blocks[block].size != 16
-                })
-            return false
-
-        val manufacturer = card[0, 0].data
-        if (manufacturer.size != 16 || manufacturer.sliceOffLen(0, 4) != card.tagId)
+        val manufacturer = requiredBlock(card, 0, 0) ?: return false
+        val state = requiredBlock(card, 3, 0) ?: return false
+        val balanceA = requiredBlock(card, 4, 0) ?: return false
+        val balanceB = requiredBlock(card, 5, 0) ?: return false
+        if (manufacturer.sliceOffLen(0, 4) != card.tagId)
             return false
         val bcc = card.tagId.fold(0) { value, byte -> value xor (byte.toInt() and 0xff) }
         if ((manufacturer[4].toInt() and 0xff) != bcc)
             return false
 
-        if (card[3, 0].data.sliceOffLen(2, 4) != card.tagId.reverseBuffer())
+        if (state[0] != 0x18.toByte() || state[1] != 0x40.toByte() ||
+                state.sliceOffLen(2, 4) != card.tagId.reverseBuffer() ||
+                state[15] != 0x02.toByte())
             return false
 
-        val first = parseTehranEzpayRecord(card[4, 0].data) ?: return false
-        val second = parseTehranEzpayRecord(card[5, 0].data) ?: return false
+        val first = parseTehranEzpayRecord(balanceA) ?: return false
+        val second = parseTehranEzpayRecord(balanceB) ?: return false
         val counterDifference = (first.counter - second.counter) and UINT32_MASK
         return counterDifference == 1L || counterDifference == UINT32_MASK
     }
@@ -117,13 +122,14 @@ object TehranEzpayTransitFactory : ClassicCardTransitFactory {
 
     override fun parseTransitData(card: ClassicCard): TehranEzpayTransitData {
         val record = selectTehranEzpayRecord(
-                parseTehranEzpayRecord(card[4, 0].data)!!,
-                parseTehranEzpayRecord(card[5, 0].data)!!)
+                parseTehranEzpayRecord(requiredBlock(card, 4, 0)!!)!!,
+                parseTehranEzpayRecord(requiredBlock(card, 5, 0)!!)!!)
+        val journeyState = requiredBlock(card, 3, 1)?.get(0)?.toInt()?.and(0xff)
         // Based conservatively on three sequential before-entry, after-entry and after-exit samples.
         return TehranEzpayTransitData(
                 mSerial = serial(card),
                 mBalance = record.balance,
                 recordCounter = record.counter,
-                mJourneyState = card[3, 1].data[0].toInt() and 0xff)
+                mJourneyState = journeyState)
     }
 }

@@ -9,8 +9,11 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.tehran_ezpay.TehranEzpayRecord
 import au.id.micolous.metrodroid.transit.tehran_ezpay.TehranEzpayTransitData
 import au.id.micolous.metrodroid.transit.tehran_ezpay.TehranEzpayTransitFactory
@@ -23,6 +26,17 @@ import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class TehranEzpayTest : CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotlinFormat) {
+    private fun copyWithBlock(card: ClassicCard, sector: Int, block: Int,
+                              data: ImmutableByteArray): ClassicCard {
+        val sectors = card.sectorsRaw.toMutableList()
+        val blocks = sectors[sector].blocks.toMutableList()
+        blocks[block] = data
+        sectors[sector] = sectors[sector].copy(blocks = blocks)
+        return ClassicCard(sectors, card.subType, card.isPartialRead).also {
+            it.postCreate(Card(card.tagId, card.scannedAt, mifareClassic = it))
+        }
+    }
+
     private fun checkDump(path: String, expectedBalance: Int, expectedCounter: Long) {
         val card = loadCard<ClassicCard>(path)
         val data = card.parseTransitData()
@@ -51,8 +65,12 @@ class TehranEzpayTest : CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotli
 
     @Test
     fun testCounterWraparound() {
+        assertTrue(isTehranEzpayCounterNewer(0xee, 0xed))
+        assertTrue(isTehranEzpayCounterNewer(0xef, 0xee))
         assertTrue(isTehranEzpayCounterNewer(0, 0xffffffffL))
         assertFalse(isTehranEzpayCounterNewer(0xffffffffL, 0))
+        assertFalse(isTehranEzpayCounterNewer(1, 1))
+        assertFalse(isTehranEzpayCounterNewer(0x80000000L, 0))
         assertEquals(TehranEzpayRecord(0, 2), selectTehranEzpayRecord(
                 TehranEzpayRecord(0xffffffffL, 1), TehranEzpayRecord(0, 2)))
     }
@@ -64,5 +82,49 @@ class TehranEzpayTest : CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotli
 
         val incomplete = loadCard<ClassicCard>("mfc/mfc-incomplete0.json").mifareClassic!!
         assertFalse(TehranEzpayTransitFactory.check(incomplete))
+    }
+
+    @Test
+    fun testRequiredAndOptionalBlocks() {
+        val card = loadCard<ClassicCard>("tehran_ezpay/after-entry.json")
+        // This captured dump already has unread, unrelated blocks in sector 0.
+        assertTrue(TehranEzpayTransitFactory.check(card))
+
+        val noJourney = copyWithBlock(card, 3, 1, ImmutableByteArray.empty())
+        assertTrue(TehranEzpayTransitFactory.check(noJourney))
+        val data = noJourney.parseTransitData()
+        assertIs<TehranEzpayTransitData>(data)
+        assertEquals(TransitCurrency(587332, "IRR", 1), data.balance)
+
+        assertFalse(TehranEzpayTransitFactory.check(
+                copyWithBlock(card, 4, 0, ImmutableByteArray.empty())))
+        assertFalse(TehranEzpayTransitFactory.check(
+                copyWithBlock(card, 5, 0, ImmutableByteArray.fromHex("00"))))
+    }
+
+    @Test
+    fun testIdentificationFields() {
+        val card = loadCard<ClassicCard>("tehran_ezpay/before-entry.json")
+        assertEquals("D319460F83", TehranEzpayTransitFactory.parseTransitIdentity(card).serialNumber)
+
+        val badBcc = card.sectorsRaw[0].blocks[0].dataCopy.also { it[4] = 0 }
+        assertFalse(TehranEzpayTransitFactory.check(
+                copyWithBlock(card, 0, 0, ImmutableByteArray.fromByteArray(badBcc))))
+
+        val badReversedUid = card.sectorsRaw[3].blocks[0].dataCopy.also { it[2] = 0 }
+        assertFalse(TehranEzpayTransitFactory.check(
+                copyWithBlock(card, 3, 0, ImmutableByteArray.fromByteArray(badReversedUid))))
+    }
+
+    @Test
+    fun testRawFields() {
+        setLocale("en-US")
+        val data = loadCard<ClassicCard>("tehran_ezpay/after-entry.json").parseTransitData()
+        assertIs<TehranEzpayTransitData>(data)
+        val fields = data.getRawFields(TransitData.RawLevel.ALL)
+        assertEquals("Record counter", fields[0].text1?.unformatted)
+        assertEquals("238 (0xEE)", fields[0].text2?.unformatted)
+        assertEquals("Journey state", fields[1].text1?.unformatted)
+        assertEquals("Entered / journey open", fields[1].text2?.unformatted)
     }
 }
