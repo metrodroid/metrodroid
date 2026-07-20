@@ -56,6 +56,34 @@ class TehranEzpayTest : CardReaderWithAssetDumpsTest<JsonKotlinFormat>(JsonKotli
     }
 
     @Test
+    fun testOldGenerationThroughRegistry() {
+        setLocale("en-US")
+        val data = loadCard<ClassicCard>("tehran_ezpay/old-generation.json").parseTransitData()
+        assertIs<TehranEzpayTransitData>(data)
+        assertEquals("121B852FA3", data.serialNumber)
+        assertEquals(TransitCurrency(449745, "IRR", 1), data.balance)
+        assertEquals(0x3f, data.recordCounter)
+        val fields = data.getRawFields(TransitData.RawLevel.ALL)
+        assertEquals("Journey state", fields[1].text1?.unformatted)
+        assertEquals("Exited / journey closed", fields[1].text2?.unformatted)
+    }
+
+    @Test
+    fun testHeaderAloneIsInsufficient() {
+        val card = loadCard<ClassicCard>("tehran_ezpay/old-generation.json")
+        val headerOnly = card.sectorsRaw[3].blocks[0].dataCopy.also {
+            it[2] = 0
+            it[3] = 0
+            it[4] = 0
+            it[5] = 0
+        }
+        assertEquals(0x18.toByte(), headerOnly[0])
+        assertEquals(0x40.toByte(), headerOnly[1])
+        assertFalse(TehranEzpayTransitFactory.check(copyWithBlock(card, 3, 0,
+                ImmutableByteArray.fromByteArray(headerOnly))))
+    }
+
+    @Test
     fun testAlternatingRecordSelection() {
         val older = TehranEzpayRecord(0xed, 660332)
         val newer = TehranEzpayRecord(0xee, 587332)
