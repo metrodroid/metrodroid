@@ -91,6 +91,7 @@ sealed class TransitRegion {
         val GERMANY = Iso("DE")
         val HONG_KONG = Iso("HK")
         val INDONESIA = Iso("ID")
+        val IRAN = Iso("IR")
         val IRELAND = Iso("IE")
         val ISRAEL = Iso("IL")
         val ITALY = Iso("IT")
