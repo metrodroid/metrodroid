@@ -290,6 +290,7 @@ data class TransitCurrency (
         fun EUR(cents: Int) = TransitCurrency(cents, "EUR")
         fun GBP(pence: Int) = TransitCurrency(pence, "GBP")
         fun HKD(cents: Int) = TransitCurrency(cents, "HKD")
+        fun INR(paise: Int) = TransitCurrency(paise, "INR")
         fun IDR(cents: Int) = TransitCurrency(cents, "IDR", 1)
         fun ILS(agorot: Int) = TransitCurrency(agorot, "ILS")
         fun JPY(yen: Int) = TransitCurrency(yen, "JPY", 1)

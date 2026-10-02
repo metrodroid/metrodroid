@@ -17,6 +17,7 @@ HERMETIC_TARGETS := \
 	hafilat \
 	kmt \
 	navigo \
+	ncmc \
 	passpass \
 	orca \
 	orca_brt \

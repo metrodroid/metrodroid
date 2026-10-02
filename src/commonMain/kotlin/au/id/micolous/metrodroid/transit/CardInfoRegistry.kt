@@ -6,6 +6,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardFactoryRegistry
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitRegistry
 import au.id.micolous.metrodroid.card.felica.FelicaRegistry
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Registry
+import au.id.micolous.metrodroid.card.ncmc.NCMCRegistry
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransitRegistry
 import au.id.micolous.metrodroid.transit.emv.EmvTransitFactory
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitFactory
@@ -19,6 +20,7 @@ object CardInfoRegistry {
             UltralightTransitRegistry.allFactories +
             ChinaRegistry.allFactories +
             KSX6924Registry.allFactories +
+            NCMCRegistry.allFactories +
             EmvTransitFactory +
             EZLinkTransitFactory
 
