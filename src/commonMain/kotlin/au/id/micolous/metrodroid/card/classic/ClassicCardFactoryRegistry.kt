@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
 import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.transit.touchngo.TouchnGoTransitFactory
+import au.id.micolous.metrodroid.transit.tehran_ezpay.TehranEzpayTransitFactory
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitFactory
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
@@ -89,6 +90,8 @@ object ClassicCardFactoryRegistry {
 
             TartuTransitFactory, // Must be before NDEF as it's a special case of Ndef
             NdefClassicTransitFactory,
+
+            TehranEzpayTransitFactory,
 
             // This check must be THIRD TO LAST.
             //

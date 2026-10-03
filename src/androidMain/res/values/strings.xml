@@ -2420,6 +2420,13 @@
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_not_ok">Permanently suspended</string>
     <string name="location_tbilisi">Tbilisi, Georgia</string>
+    <string name="location_tehran">Tehran, Iran</string>
+    <string name="card_name_tehran_ezpay">Tehran Ezpay</string>
+    <string name="tehran_ezpay_record_counter">Record counter</string>
+    <string name="tehran_ezpay_journey_state">Journey state</string>
+    <string name="tehran_ezpay_entered">Entered / journey open</string>
+    <string name="tehran_ezpay_exited">Exited / journey closed</string>
+    <string name="tehran_ezpay_unknown">Unknown (0x%1$s)</string>
     <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
     <string name="subscription_id">Subscription ID</string>
