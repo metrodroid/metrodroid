@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.androidhce.AndroidHceApplication
+import au.id.micolous.metrodroid.card.vas.VasApplication
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
@@ -54,11 +55,16 @@ import kotlinx.serialization.Serializable
 
 val factories = listOf(
     AndroidHceApplication.FACTORY,
+    VasApplication.FACTORY,
     CalypsoApplication.FACTORY,
     KROCAPConfigDFApplication.FACTORY,
     KSX6924Application.FACTORY,
     ChinaCard.FACTORY,
     EmvFactory())
+
+val hceApplications = AndroidHceApplication.FACTORY.applicationNames.toSet().union(
+    VasApplication.FACTORY.applicationNames
+)
 
 object ISO7816AppSerializer : MultiTypeSerializer<ISO7816Application>() {
     private val klasses =
