@@ -1,3 +1,6 @@
 id,name,short_name
-2,SNCF,SNCF
-3,TAG,TAG
+0x2,SNCF,SNCF
+0x3,M Réso,M
+0x26,Auvergne Rhône Alpes,AURA
+0x45,Synchro Bus,Synchro
+0x53,SIBRA,SIBRA

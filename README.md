@@ -16,68 +16,68 @@ Version: 3.1.0
 View remaining balance, recent trips, and other info from contactless public transit
 cards using NFC on Android and [iOS (coming soon)][ios].
 
-* [Michael Farrell](https://github.com/micolous)
+- [Michael Farrell](https://github.com/micolous)
 
 View the presentation of work undergone to support a number of Australian agencies' cards, given at
 linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M)_.
 
 ## Thanks to
 
-* [Eric Butler][5] (Farebot, on which this project is based)
-* [Karl Koscher][3] (ORCA)
-* [Sean Cross][4] (CEPAS/EZ-Link)
-* Anonymous Contributor (Clipper)
-* [nfc-felica][13] and [IC SFCard Fan][14] projects (Suica)
-* [Chris Norden](https://github.com/cnorden) (Edy)
-* [Wilbert Duijvenvoorde](https://github.com/wandcode) (MIFARE Classic/OV-chipkaart)
-* [tbonang](https://github.com/tbonang) (NETS FlashPay)
-* [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
-* [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay, MIFARE Ultralight, ERG, Christchurch Metrocard)
-* [Steven Steiner](https://github.com/steets250) (LAX TAP)
-* [Rob O'Regan](https://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
-* [The Noun Project][15] (Various icons)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejsekort)
-* [Toomas Losin](http://www.lenrek.net) (Compass)
-* [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
-* Maria Komar (Podorozhnik database and dumps)
-* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, MRT Jakarta)
+- [Eric Butler][5] (Farebot, on which this project is based)
+- [Karl Koscher][3] (ORCA)
+- [Sean Cross][4] (CEPAS/EZ-Link)
+- Anonymous Contributor (Clipper)
+- [nfc-felica][13] and [IC SFCard Fan][14] projects (Suica)
+- [Chris Norden](https://github.com/cnorden) (Edy)
+- [Wilbert Duijvenvoorde](https://github.com/wandcode) (MIFARE Classic/OV-chipkaart)
+- [tbonang](https://github.com/tbonang) (NETS FlashPay)
+- [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
+- [Lauri Andler](https://github.com/landler/) (HSL)
+- [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay, MIFARE Ultralight, ERG, Christchurch Metrocard)
+- [Steven Steiner](https://github.com/steets250) (LAX TAP)
+- [Rob O'Regan](https://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
+- [The Noun Project][15] (Various icons)
+- [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejsekort)
+- [Toomas Losin](http://www.lenrek.net) (Compass)
+- [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
+- Maria Komar (Podorozhnik database and dumps)
+- [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, MRT Jakarta)
 
 ## Translated by
 
 Thanks to those who have [helped to make Metrodroid available in languages other than English][weblate]:
 
-* Dutch: [Vistaus](https://github.com/Vistaus)
-* Finnish: Lari Oesch, Lauri Andler
-* French: [Albirew](https://github.com/Albirew)
-* Hebrew: [Steven Steiner](https://github.com/steets250), [Yaron Shahrabani](https://github.com/yarons)
-* Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
-* Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
-* Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
-* Norwegian Bokmål: [Allan Nordhøy](https://github.com/comradekingu), [Petter Reinholdtsen](https://github.com/petterreinholdtsen)
-* Portuguese (Brazil): [Marlon Colhado](https://github.com/MarlonColhado)
-* Russian: [Vladimir Serbinenko](https://github.com/phcoder)
-* Spanish: [NokisDemox](https://github.com/NokisDemox)
-* Turkish: [omersiar](https://github.com/omersiar)
+- Dutch: [Vistaus](https://github.com/Vistaus)
+- Finnish: Lari Oesch, Lauri Andler
+- French: [Albirew](https://github.com/Albirew)
+- Hebrew: [Steven Steiner](https://github.com/steets250), [Yaron Shahrabani](https://github.com/yarons)
+- Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
+- Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
+- Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
+- Norwegian Bokmål: [Allan Nordhøy](https://github.com/comradekingu), [Petter Reinholdtsen](https://github.com/petterreinholdtsen)
+- Portuguese (Brazil): [Marlon Colhado](https://github.com/MarlonColhado)
+- Russian: [Vladimir Serbinenko](https://github.com/phcoder)
+- Spanish: [NokisDemox](https://github.com/NokisDemox)
+- Turkish: [omersiar](https://github.com/omersiar)
 
 ## Supported card protocols
 
-* [FeliCa][felica]
-* [FeliCa Lite][felica]
-* ISO/IEC 7816-4
-  * [Calypso][calypso]
-  * [CEPAS][cepas]
-  * [T-Money][tmoney]
-* [ISO/IEC 15693 "Vicinity"][nfcv]
-* [MIFARE Classic][mfc] (Not compatible with all devices)
-* [MIFARE DESFire][mfd]
-* [MIFARE Ultralight][mfu] (Not compatible with all devices)
+- [FeliCa][felica]
+- [FeliCa Lite][felica]
+- ISO/IEC 7816-4
+  - [Calypso][calypso]
+  - [CEPAS][cepas]
+  - [T-Money][tmoney]
+- [ISO/IEC 15693 "Vicinity"][nfcv]
+- [MIFARE Classic][mfc] (Not compatible with all devices)
+- [MIFARE DESFire][mfd]
+- [MIFARE Ultralight][mfu] (Not compatible with all devices)
 
 ## Supported cards / agencies
 
 | Card / Agency                                  | Location                                                                   | Notes                                   |
-|------------------------------------------------|----------------------------------------------------------------------------|-----------------------------------------|
-| [Amiibo][amiibo]                               | :earth_asia: _worldwide_                                                   | :new: `IOS`                             |
+| ---------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------- |
+| [Amiibo][amiibo]                               | :earth*asia: \_worldwide*                                                  | :new: `IOS`                             |
 | [AT HOP][athop]                                | :new_zealand: Auckland, New Zealand                                        | :new: :id: `IOS`                        |
 | [Beijing Municipal Card][beijing]              | :cn: Beijing, China                                                        | :new:                                   |
 | [bip!][bip]                                    | :chile: Santiago de Chile, Chile                                           | :new: :closed_lock_with_key: `MFC`      |
@@ -85,19 +85,19 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 | [BUS-IT][busit]                                | :new_zealand: Greater Hamilton (Waikato), New Zealand                      | :new: :closed_lock_with_key: `MFC`      |
 | [Carta Mobile][pisa]                           | :it: Pisa, Italy                                                           | :new: `IOS`                             |
 | [CharlieCard][charlie]                         | :us: Boston, MA, USA                                                       | :new: :closed_lock_with_key: `MFC`      |
-| Cifial                                         | :earth_africa: _worldwide_                                                 | :new: `MFC`                             |
+| Cifial                                         | :earth*africa: \_worldwide*                                                | :new: `MFC`                             |
 | City Union                                     | :cn: Mainland China                                                        | :new: `IOS`                             |
 | [Clipper][clipper]                             | :us: San Francisco, CA, USA                                                | `IOS`                                   |
 | [Compass][compass]                             | :canada: Vancouver, BC, Canada                                             | :new: :one: `IOS`                       |
 | [Crimea Trolleybus][crimea]                    | Crimea                                                                     | :new: :closed_lock_with_key: `MFC`      |
-| [Cubic Nextfare][nextfare]                     | :earth_americas: _many locations_                                          | :new: :closed_lock_with_key: `MFC`      |
+| [Cubic Nextfare][nextfare]                     | :earth*americas: \_many locations*                                         | :new: :closed_lock_with_key: `MFC`      |
 | [EasyCard][easycard]                           | Taipei                                                                     | :closed_lock_with_key: `MFC`            |
 | [Edy][edy]                                     | :jp: Japan                                                                 |                                         |
 | [Ekarta][ekarta]                               | :ru: Ekaterinburg, Russia                                                  | :new: :closed_lock_with_key: `MFC`      |
 | [Electronic Barnaul][barnaul]                  | :ru: Barnaul, Russia                                                       | :new: :closed_lock_with_key: `MFC`      |
-| [EMV][emv]                                     | :earth_africa: _worldwide_                                                 | :new:                                   |
+| [EMV][emv]                                     | :earth*africa: \_worldwide*                                                | :new:                                   |
 | [Envibus][envibus]                             | :fr: Sophia Antipolis, France                                              | :new: `IOS`                             |
-| [ERG][erg]                                     | :earth_asia: _many locations_                                              | :new: :closed_lock_with_key: `MFC`      |
+| [ERG][erg]                                     | :earth*asia: \_many locations*                                             | :new: :closed_lock_with_key: `MFC`      |
 | [EZ-Link][ezlink]                              | :singapore: Singapore                                                      |                                         |
 | [Go card][seqgo]                               | :australia: Brisbane and South East Queensland, Australia                  | :new: :closed_lock_with_key: `MFC`      |
 | [GoCard][otago]                                | :new_zealand: Otago, including Greater Dunedin and Queenstown, New Zealand | :new: `MFC`                             |
@@ -131,7 +131,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 | [Opus][opus]                                   | :canada: Québec, Canada                                                    | :new: `IOS`                             |
 | [ORCA][orca]                                   | :us: Seattle, WA, USA                                                      | `IOS`                                   |
 | [Orenburg EKG][orenburg]                       | :ru: Orenburg, Russia                                                      | :new: :closed_lock_with_key: `MFC`      |
-| [OùRA][oura]                                   | :fr: Grenoble, France                                                      | :new: `IOS`                             |
+| [OùRA][oura]                                   | :fr: Auvergne-Rhônes-Alpes, France                                         | :new: `IOS`                             |
 | [OV-chipkaart][ovc]                            | :netherlands: Netherlands                                                  | :closed_lock_with_key: `MFC`            |
 | [Oyster][oyster]                               | :gb: London, United Kingdom                                                | :new: :closed_lock_with_key: `MFC`      |
 | Penza transport card                           | :ru: Penza, Russia                                                         | :new: :closed_lock_with_key: `MFC`      |
@@ -168,7 +168,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 | [Zolotaya Korona][zolotaya]                    | :ru: _multiple cities in Russia_                                           | :new: :closed_lock_with_key: `MFC`      |
 
 | Note                   | Meaning                                                                                                 |
-|------------------------|---------------------------------------------------------------------------------------------------------|
+| ---------------------- | ------------------------------------------------------------------------------------------------------- |
 | :new:                  | New in Metrodroid.                                                                                      |
 | :closed_lock_with_key: | Encryption keys required to read this card.                                                             |
 | :unlock:               | Encryption keys are downloaded from the operator.                                                       |
@@ -217,7 +217,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 This program contains Leaflet, a JavaScript mapping library, licensed under the BSD license.
 
@@ -248,7 +248,6 @@ This software and it's authors are not associated with any public transit agency
 [15]: https://www.thenounproject.com/
 [weblate]: https://hosted.weblate.org/engage/metrodroid/
 [travis]: https://travis-ci.org/metrodroid/metrodroid
-
 [calypso]: http://www.calypsotechnology.net/
 [cepas]: https://en.wikipedia.org/wiki/CEPAS
 [felica]: https://en.wikipedia.org/wiki/FeliCa
@@ -257,7 +256,6 @@ This software and it's authors are not associated with any public transit agency
 [mfd]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
 [mfu]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
 [ios]: https://www.metrodroid.org/metrodroid/ios
-
 [adl]: https://adelaidemetro.com.au/Tickets-fares/metroCARD
 [amiibo]: https://www.nintendo.com/amiibo/
 [athop]: https://at.govt.nz/bus-train-ferry/at-hop-card/
