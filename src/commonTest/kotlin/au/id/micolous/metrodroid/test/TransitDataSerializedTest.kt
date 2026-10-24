@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
 import au.id.micolous.metrodroid.transit.selecta.SelectaFranceTransitData
 import au.id.micolous.metrodroid.transit.serialonly.HoloTransitData
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData
+import au.id.micolous.metrodroid.transit.trans_semarang_e_card.TransSemarangECardTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
 import au.id.micolous.metrodroid.ui.ListItemInterface
@@ -340,6 +341,15 @@ class TransitDataSerializedTest : BaseInstrumentedTest() {
                 MobibTransitData.CARD_INFO, InputType.JSON, null,
                 "parsed/mobib_blank_raw.json", "parsed/mobib_blank_manuf.json"
             ),
+            TestCase("trans_semarang_e_card/trans_semarang_student.json", "parsed/trans_semarang_e_card_student.json",
+                TransSemarangECardTransitData::class, CardType.MifareClassic,
+                TransSemarangECardTransitData.FACTORY, TransSemarangECardTransitData.CARD_INFO),
+            TestCase("trans_semarang_e_card/trans_semarang_general_card1.json", "parsed/trans_semarang_e_card_general_card1.json",
+                TransSemarangECardTransitData::class, CardType.MifareClassic,
+                TransSemarangECardTransitData.FACTORY, TransSemarangECardTransitData.CARD_INFO),
+            TestCase("trans_semarang_e_card/trans_semarang_general_card2.json", "parsed/trans_semarang_e_card_general_card2.json",
+                TransSemarangECardTransitData::class, CardType.MifareClassic,
+                TransSemarangECardTransitData.FACTORY, TransSemarangECardTransitData.CARD_INFO),
             TestCase("holo/unused.json", "parsed/holo-unused.json",
                 HoloTransitData::class, CardType.MifareDesfire,
                 HoloTransitData.Companion.HoloTransitFactory, HoloTransitData.CARD_INFO

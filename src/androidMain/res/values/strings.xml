@@ -849,6 +849,7 @@
     <string name="location_santiago_chile">Santiago de Chile, Chile</string>
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_semarang">Semarang, Jawa Tengah, Indonesia</string>
     <string name="location_seoul">Seoul, Korea</string>
     <string name="location_shanghai">Shanghai, China</string>
     <string name="location_shenzhen">Shenzhen, China</string>
@@ -1233,6 +1234,8 @@
     <string name="mrtj_file_id">MRTJ Identity</string>
     <string name="mrtj_file_purse_balance">MRTJ purse balance</string>
 
+    <string name="card_name_trans_semarang_e_card">Trans Semarang E-Card</string>
+
     <!-- HSL -->
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
@@ -1517,6 +1520,7 @@
     <string name="ovc_sub_studentenkaart_korting_weekend_2009">Studentenkaart korting weekend (2009)</string>
 
 
+    <string name="place_of_birth">Place of birth</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="software_information">Software info</string>
     <string name="clipboard_error">Could not access the clipboard</string>
@@ -1669,6 +1673,7 @@
     <!-- Translators: This refers to a person's name. -->
     <string name="card_holders_name">Cardholder\'s name</string>
     <string name="card_holders_id">Cardholder\'s ID number</string>
+    <string name="phone_number">Phone number</string>
 
     <!--
     Translators: This is used to describe whether a card is personalised (registered to an

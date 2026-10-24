@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
 import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.transit.touchngo.TouchnGoTransitFactory
+import au.id.micolous.metrodroid.transit.trans_semarang_e_card.TransSemarangECardTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitFactory
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
@@ -80,6 +81,7 @@ object ClassicCardFactoryRegistry {
             GautrainTransitFactory,
             MetroMoneyTransitFactory,
             OysterTransitData.FACTORY,
+            TransSemarangECardTransitData.FACTORY,
             KazanTransitFactory,
             UmarshTransitFactory,
             ChileBipTransitFactory,

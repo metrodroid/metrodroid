@@ -42,6 +42,7 @@ linux.conf.au 2018, in the talk _[Tap on to reverse engineering](https://youtu.b
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
 * [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, MRT Jakarta)
+* [Fadhil Prawira](https://github.com/FadhilPrawira) (Trans Semarang E-Card Umum, Trans Semarang E-Card Pelajar)
 
 ## Translated by
 
@@ -155,6 +156,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 | [Tartu Bus][tartu]                             | :estonia: Tartu, Estonia                                                   | :new: :id: `MFC`                        |
 | [T-Money][tmoney]                              | :kr: South Korea                                                           | :new: `IOS`                             |
 | [TPF card][tpf]                                | :switzerland: Fribourg, Switzerland                                        | :new: :id:                              |
+| [Trans Semarang E-Card][transsemarangecard]    | :indonesia: Semarang, Jawa Tengah, Indonesia                               | :new: `MFC`                             |
 | [TransGironde][gironde]                        | :fr: Gironde, France                                                       | :new: `IOS`                             |
 | [Transit Access Pass][laxtap]                  | :us: Los Angeles, CA, USA                                                  | :new: :closed_lock_with_key: `MFC`      |
 | [Troika][troika]                               | :ru: Moscow, Russia                                                        | :new: :closed_lock_with_key: `MFC`      |
@@ -338,6 +340,7 @@ This software and it's authors are not associated with any public transit agency
 [tbs]: http://ttc.com.ge/?lang_id=ENG&sec_id=155
 [tmoney]: https://www.t-money.co.kr/
 [tpf]: https://www.tpf.ch/abonnements-billets/tpf-card
+[transsemarangecard]: https://en.wikipedia.org/wiki/Trans_Semarang
 [troika]: http://troika.mos.ru/
 [umarsh]: https://umarsh.com/
 [ventra]: https://www.ventrachicago.com/
