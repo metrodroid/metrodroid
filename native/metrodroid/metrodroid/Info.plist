@@ -29,7 +29,7 @@
 	<key>NFCReaderUsageDescription</key>
 	<string>App to show balance on transit cards</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string></string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
